@@ -1,0 +1,78 @@
+%menu-properties {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: cover;
+}
+
+.icon {
+    display: inline-block;
+    background-size: cover;
+}
+
+.menu-fold-icon {
+    @extend %menu-properties;
+    width: 24px;
+    height: 24px;
+    background-image: url("../images/menu-fold-icon.svg");
+}
+
+.menu-fold-icon:hover {
+    background-image: url("../images/menu-fold-active-icon.svg");
+}
+
+.menu-unfold-icon {
+    @extend %menu-properties;
+    width: 24px;
+    height: 24px;
+    background-image: url("../images/menu-unfold-icon.svg");
+}
+
+.menu-unfold-icon:hover {
+    background-image: url("../images/menu-unfold-active-icon.svg");
+}
+
+.arrow-down-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-down-icon.svg");
+}
+
+.arrow-up-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-up-icon.svg");
+}
+
+.close-icon {
+    @extend %menu-properties;
+    background-image: url("../images/close-icon.svg");
+}
+
+.close-white-icon {
+    @extend %menu-properties;
+    background-image: url("../images/close-white-icon.svg");
+}
+
+.circle-check-white-icon {
+    @extend %menu-properties;
+    background-image: url("../images/circle-check-white-icon.svg");
+}
+
+.circle-close-white-icon {
+    @extend %menu-properties;
+    background-image: url("../images/circle-close-white-icon.svg");
+}
+
+.circle-info-white-icon {
+    @extend %menu-properties;
+    background-image: url("../images/circle-info-white-icon.svg");
+}
+
+.calendar-icon {
+    @extend %menu-properties;
+    background-image: url("../images/calendar-icon.svg");
+}
+
+.time-icon {
+    @extend %menu-properties;
+    background-image: url("../images/time-icon.svg");
+}

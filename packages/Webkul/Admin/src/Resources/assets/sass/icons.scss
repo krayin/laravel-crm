@@ -1,0 +1,33 @@
+// Left Side Menu Icon
+%menu-properties {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: cover;
+}
+
+.icon {
+    display: inline-block;
+    background-size: cover;
+}
+
+.dashboard-icon {
+    @extend %menu-properties;
+    background-image: url("../images/dashboard-icon.svg");
+}
+
+.leads-icon {
+    @extend %menu-properties;
+    background-image: url("../images/leads-icon.svg");
+}
+
+.menu-item.active,
+.menu-item:hover {
+    .dashboard-icon {
+        background-image: url("../images/dashboard-active-icon.svg");
+    }
+
+    .leads-icon {
+        background-image: url("../images/leads-active-icon.svg");
+    }
+}

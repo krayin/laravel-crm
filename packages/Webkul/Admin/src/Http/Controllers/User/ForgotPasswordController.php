@@ -1,0 +1,79 @@
+<?php
+
+namespace Webkul\Admin\Http\Controllers\User;
+
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\Support\Facades\Password;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Notifications\User\AdminResetPassword;
+
+class ForgotPasswordController extends Controller
+{
+    use SendsPasswordResetEmails;
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {        
+        if (auth()->guard('admin')->check()) {
+            return redirect()->route('admin.dashboard.index');
+        } else {
+            if (strpos(url()->previous(), 'admin') !== false) {
+                $intendedUrl = url()->previous();
+            } else {
+                $intendedUrl = route('admin.dashboard.index');
+            }
+
+            session()->put('url.intended', $intendedUrl);
+
+            return view('admin::users.sessions.forgot-password');
+        }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function store()
+    {
+        try {
+            $this->validate(request(), [
+                'email' => 'required|email',
+            ]);
+
+            $response = $this->broker()->sendResetLink(request(['email']), function($user, $token) {
+                $user->notify(new AdminResetPassword($token));
+            });
+
+            if ($response == Password::RESET_LINK_SENT) {
+                session()->flash('success', trans('admin::app.users.sessions.forgot-password.reset-link-sent'));
+
+                return back();
+            }
+
+            return back()
+                ->withInput(request(['email']))
+                ->withErrors([
+                    'email' => trans('admin::app.users.sessions.forgot-password.email-not-exist'),
+                ]);
+        } catch(\Exception $e) {
+            session()->flash('error', trans($e->getMessage()));
+
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * Get the broker to be used during password reset.
+     *
+     * @return \Illuminate\Contracts\Auth\PasswordBroker
+     */
+    public function broker()
+    {
+        return Password::broker('admins');
+    }
+}
