@@ -107,18 +107,18 @@ body {
     bottom: 0;
     z-index: 2;
     background-color: #fff;
-    transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+    // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     ul.menubar {
         // padding-bottom: 60px;
 
         li.menu-item {
             font-size: $font-size-sm;
-            border-left: 3px solid #fff;
+            position: relative;
+            overflow: hidden;
 
-            a {
-                padding: 12px;
+            > a {
+                padding: 16px 12px;
                 display: block;
                 color: $secondary-font-color;
                 width: 150px;
@@ -139,21 +139,50 @@ body {
                 margin: auto;
             }
 
+            ul.sub-menubar {
+                display: none;
+                min-width: 150px;
+                position: absolute;
+                top: 0;
+                left: 48px;
+                background-color: #fff;
+                box-shadow: 2px 1px 3px #CDCECF;
+                border: 1px solid #eee;
+                border-left: 0;
+                border-radius: 0 3px 3px 0;
+                
+                li.sub-menu-item {
+                    a {
+                        display: block;
+                        padding: 8px 12px;
+                        color: $secondary-font-color;
+                        font-size: $font-size-sm;
+                    }
+
+                    &.active, &:hover {
+                        a {
+                            color: $primary-color;
+                        }
+                    }
+                }
+            }
+
             &.active, &:hover {
-                border-left: solid 3px $primary-color;
+                box-shadow: inset 4px 0px 0px $primary-color;
 
                 a {
                     color: $primary-color;
                 }
             }
-        }
-    }
 
-    .menubar-bottom {
-        padding: 12px;
-        position: absolute;
-        bottom: 0;
-        cursor: pointer;
+            &:hover {
+                overflow: visible;
+
+                ul.sub-menubar {
+                    display: block;
+                }
+            }
+        }
     }
 
     &.open {
@@ -166,8 +195,36 @@ body {
                         display: inline-block;
                     }
                 }
+
+                ul.sub-menubar {
+                    display: none;
+                    position: unset;
+                    background-color: transparent;
+                    border-radius: 0;
+                    box-shadow: unset;
+                    border: 0;
+                
+                    li.sub-menu-item {
+                        a {
+                            padding-left: 45px;
+                        }
+                    }
+                }
+
+                &.active {
+                    ul.sub-menubar {
+                        display: block;
+                    }
+                }
             }
         }
+    }
+
+    .menubar-bottom {
+        padding: 12px;
+        position: absolute;
+        bottom: 0;
+        cursor: pointer;
     }
 }
 
@@ -182,7 +239,7 @@ body {
     height: calc(100% - 60px);
     width: 100%;
     background: $body-background;
-    transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     .inner-section {
         height: 100%;

@@ -1,5 +1,19 @@
 <?php
     return [
+        'layouts' => [
+            'dashboard' => 'Dashboard',
+            'leads' => 'Leads',
+            'contacts' => 'Contacts',
+            'customers' => 'Customers',
+            'companies' => 'Companies',
+        ],
+
+        'contacts' => [
+            'customers' => [
+                'title' => 'Customers'
+            ]
+        ],
+
         'users' => [
             'sessions' => [
                 'login' => [

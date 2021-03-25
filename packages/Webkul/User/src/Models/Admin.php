@@ -4,7 +4,6 @@ namespace Webkul\User\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Webkul\User\Models\Role;
 use Webkul\User\Contracts\Admin as AdminContract;
 
 

@@ -23,12 +23,24 @@ Route::group(['middleware' => ['web']], function () {
 
 
         // Admin Routes
-        // Route::group(['middleware' => ['admin']], function () {
+        Route::group(['middleware' => ['admin']], function () {
             Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
 
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
-        // });
+
+            // Leads Routes
+            Route::prefix('leads')->group(function () {
+                Route::get('', 'Webkul\Admin\Http\Controllers\Lead\LeadController@index')->name('admin.leads.index');
+            });
+
+            // Contacts Routes
+            Route::prefix('contacts')->group(function () {
+                Route::get('customers', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.customers.index');
+
+                Route::get('companies', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.companies.index');
+            });
+        });
 
     });
 });
