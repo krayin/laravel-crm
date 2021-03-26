@@ -1,0 +1,12 @@
+<?php
+
+namespace Webkul\Lead\Providers;
+
+use Webkul\Core\Providers\CoreModuleServiceProvider;
+
+class ModuleServiceProvider extends CoreModuleServiceProvider
+{
+    protected $models = [
+        \Webkul\Lead\Models\Lead::class
+    ];
+}

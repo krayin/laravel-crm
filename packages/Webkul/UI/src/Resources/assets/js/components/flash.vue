@@ -22,9 +22,10 @@
         },
 
         created: function() {
-            var this_this = this;
+            var self = this;
+            
             setTimeout(function() {
-                this_this.$emit('onRemoveFlash', this_this.flash);
+                self.$emit('onRemoveFlash', self.flash);
             }, 5000)
         },
 

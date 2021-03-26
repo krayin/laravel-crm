@@ -7,7 +7,9 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 use Webkul\Admin\Exceptions\Handler;
+use Webkul\Admin\Menu;
 use Webkul\Admin\Bouncer;
+use Webkul\Admin\Facades\Menu as MenuFacade;
 use Webkul\Admin\Facades\Bouncer as BouncerFacade;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 
@@ -34,7 +36,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->bind(ExceptionHandler::class, Handler::class);
 
-        $router->aliasMiddleware('admin', BouncerMiddleware::class);
+        $router->aliasMiddleware('user', BouncerMiddleware::class);
     }
 
     /**
@@ -44,7 +46,9 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerBouncer();
+        $this->registerFacades();
+
+        $this->registerConfig();
     }
 
     /**
@@ -52,13 +56,31 @@ class AdminServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    protected function registerBouncer()
+    protected function registerFacades()
     {
         $loader = AliasLoader::getInstance();
+
         $loader->alias('Bouncer', BouncerFacade::class);
+        $loader->alias('Menu', MenuFacade::class);
 
         $this->app->singleton('bouncer', function () {
             return new Bouncer();
         });
+
+        $this->app->singleton('menu', function () {
+            return new Menu();
+        });
+    }
+
+    /**
+     * Register package config.
+     *
+     * @return void
+     */
+    protected function registerConfig()
+    {
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/menu.php', 'menu.admin'
+        );
     }
 }

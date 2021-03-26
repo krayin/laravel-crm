@@ -1,7 +1,8 @@
 $(function() {
     $(document).click(function(e) {
         var target = e.target;
-        if(!$(target).parents('.dropdown-open').length || $(target).is('li') || $(target).is('a')) {
+
+        if (! $(target).parents('.dropdown-open').length || $(target).is('li') || $(target).is('a')) {
             $('.dropdown-list').hide();
             $('.dropdown-toggle').removeClass('active');
         }
@@ -14,9 +15,9 @@ $(function() {
     function toggleDropdown(e) {
         var currentElement = $(e.currentTarget);
 
-
         $('.dropdown-list').hide();
-        if(currentElement.hasClass('active')) {
+
+        if (currentElement.hasClass('active')) {
             currentElement.removeClass('active');
         } else {
             currentElement.addClass('active');
@@ -28,13 +29,16 @@ $(function() {
 
     $('.dropdown-list .search-box .control').on('input', function() {
         var currentElement = $(this);
+
         currentElement.parents(".dropdown-list").find('li').each(function() {
             var text = $(this).text().trim().toLowerCase();
             var value = $(this).attr('data-id');
-            if(value) {
+
+            if (value) {
                 var isTextContained = text.search(currentElement.val().toLowerCase());
                 var isValueContained = value.search(currentElement.val());
-                if(isTextContained < 0 && isValueContained < 0) {
+                
+                if (isTextContained < 0 && isValueContained < 0) {
                     $(this).hide();
                 } else {
                     $(this).show();
@@ -42,6 +46,7 @@ $(function() {
                 }
             } else {
                 var isTextContained = text.search(currentElement.val().toLowerCase());
+
                 if(isTextContained < 0) {
                     $(this).hide();
                 } else {
@@ -53,14 +58,16 @@ $(function() {
 
     function autoDropupDropdown() {
         dropdown = $(".dropdown-open");
-        if(!dropdown.find('.dropdown-list').hasClass('top-left') && !dropdown.find('.dropdown-list').hasClass('top-right') && dropdown.length) {
+
+        if (! dropdown.find('.dropdown-list').hasClass('top-left') && ! dropdown.find('.dropdown-list').hasClass('top-right') && dropdown.length) {
             dropdown = dropdown.find('.dropdown-list');
             height = dropdown.height() + 50;
             var topOffset = dropdown.offset().top - 70;
             var bottomOffset = $(window).height() - topOffset - dropdown.height();
 
-            if(bottomOffset > topOffset || height < bottomOffset) {
+            if (bottomOffset > topOffset || height < bottomOffset) {
                 dropdown.removeClass("bottom");
+                
                 if(dropdown.hasClass('top-right')) {
                     dropdown.removeClass('top-right')
                     dropdown.addClass('bottom-right')
@@ -83,5 +90,4 @@ $(function() {
     $('div').scroll(function() {
         autoDropupDropdown()
     });
-
 });

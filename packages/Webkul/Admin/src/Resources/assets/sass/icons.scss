@@ -21,6 +21,22 @@
     background-image: url("../images/leads-icon.svg");
 }
 
+.phone-icon {
+    @extend %menu-properties;
+    background-image: url("../images/phone-icon.svg");
+}
+
+.settings-icon {
+    @extend %menu-properties;
+    background-image: url("../images/settings-icon.svg");
+}
+
+.avatar-icon {
+    width: 16px;
+    height: 21px;
+    background-image: url("../images/avatar-icon.svg");
+}
+
 .menu-item.active,
 .menu-item:hover {
     .dashboard-icon {
@@ -29,5 +45,13 @@
 
     .leads-icon {
         background-image: url("../images/leads-active-icon.svg");
+    }
+
+    .phone-icon {
+        background-image: url("../images/phone-active-icon.svg");
+    }
+
+    .settings-icon {
+        background-image: url("../images/settings-active-icon.svg");
     }
 }

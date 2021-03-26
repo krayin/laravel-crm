@@ -403,9 +403,9 @@
                         <h3 slot="header-title">Modal Title</h3>
                         
                         <div slot="header-actions">
-                            <button class="btn btn-secondary-outline" @click="closeModal('modelId')">Cancel</button>
+                            <button class="btn btn-sm btn-secondary-outline" @click="closeModal('modelId')">Cancel</button>
 
-                            <button class="btn btn-primary">Save</button>
+                            <button class="btn btn-sm btn-primary">Save</button>
                         </div>
 
                         <div slot="body">

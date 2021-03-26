@@ -14,8 +14,8 @@ return [
     */
 
     'defaults' => [
-        'guard' => 'admin',
-        'passwords' => 'admins',
+        'guard' => 'user',
+        'passwords' => 'users',
     ],
 
     /*
@@ -36,9 +36,9 @@ return [
     */
 
     'guards' => [
-        'admin' => [
+        'user' => [
             'driver' => 'session',
-            'provider' => 'admins'
+            'provider' => 'users'
         ],
     ],
 
@@ -60,9 +60,9 @@ return [
     */
 
     'providers' => [
-        'admins' => [
+        'users' => [
             'driver' => 'eloquent',
-            'model' => Webkul\User\Models\Admin::class,
+            'model' => Webkul\User\Models\User::class,
         ]
     ],
 
@@ -82,9 +82,9 @@ return [
     */
 
     'passwords' => [
-        'admins' => [
-            'provider' => 'admins',
-            'table' => 'admin_password_resets',
+        'users' => [
+            'provider' => 'users',
+            'table' => 'user_password_resets',
             'expire' => 60,
         ],
     ],

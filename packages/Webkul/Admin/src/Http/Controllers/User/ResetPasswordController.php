@@ -23,7 +23,7 @@ class ResetPasswordController extends Controller
      */
     public function create($token = null)
     {
-        return view('admin::users.sessions.reset-password')->with([
+        return view('admin::sessions.reset-password')->with([
             'token' => $token,
             'email' => request('email'),
         ]);
@@ -82,7 +82,7 @@ class ResetPasswordController extends Controller
 
         event(new PasswordReset($admin));
 
-        auth()->guard('admin')->login($admin);
+        auth()->guard('user')->login($admin);
     }
 
     /**

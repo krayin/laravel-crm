@@ -16,7 +16,7 @@ class Bouncer
     * @param  string|null  $guard
     * @return mixed
     */
-    public function handle($request, Closure $next, $guard = 'admin')
+    public function handle($request, Closure $next, $guard = 'user')
     {
         if (! Auth::guard($guard)->check()) {
             return redirect()->route('admin.session.create');
@@ -35,7 +35,7 @@ class Bouncer
     */
     public function checkIfAuthorized($request)
     {
-        if (! $role = auth()->guard('admin')->user()->role) {
+        if (! $role = auth()->guard('user')->user()->role) {
             abort(401, 'This action is unauthorized.');
         }
 
