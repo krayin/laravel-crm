@@ -14,10 +14,10 @@ class SessionController extends Controller
      */
     public function create()
     {
-        if (auth()->guard('admin')->check()) {
+        if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');
         } else {
-            if (strpos(url()->previous(), 'admin') !== false) {
+            if (strpos(url()->previous(), 'user') !== false) {
                 $intendedUrl = url()->previous();
             } else {
                 $intendedUrl = route('admin.dashboard.index');
@@ -41,7 +41,7 @@ class SessionController extends Controller
             'password' => 'required',
         ]);
 
-        if (! auth()->guard('admin')->attempt(request(['email', 'password']), request('remember'))) {
+        if (! auth()->guard('user')->attempt(request(['email', 'password']), request('remember'))) {
             session()->flash('error', trans('admin::app.users.sessions.login.login-error'));
 
             return redirect()->back();
@@ -58,7 +58,7 @@ class SessionController extends Controller
      */
     public function destroy($id)
     {
-        auth()->guard('admin')->logout();
+        auth()->guard('user')->logout();
 
         return redirect()->route('admin.session.create');
     }

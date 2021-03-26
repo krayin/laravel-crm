@@ -47,6 +47,7 @@ body {
     .navbar-top-right {
         width: 50%;
         height: 60px;
+        padding: 10px;
         text-align: right;
         display: inline-block;
         vertical-align: middle;
@@ -55,43 +56,23 @@ body {
             display: inline-block;
             vertical-align: middle;
             text-align: left;
-            min-width: 50px;
             position: relative;
-            padding: 12px 0px;
-            margin: 0px 25px 0px 30px;
-            font-size: $font-size-md;
             cursor: pointer;
-            position: relative;
 
-            .app-version {
-                padding: 10px 20px 0px 20px;
-                margin-bottom: -10px;
-                display: block;
-                cursor: default;
-                color: #a2a2a2;
+            .avatar {
+                width: 42px;
+                height: 42px;
+                border-radius: 43px;
+                background-color: $body-background;
+                border: 1px solid $border-color;
+                text-align: center;
+                padding: 8px;
             }
 
             .dropdown-list {
-                top: 63px;
+                top: 50px;
                 right: 0px;
                 bottom: inherit !important;
-            }
-
-            .name {
-                color: #000311;
-                display: block;
-                text-align: left;
-            }
-
-            .role {
-                font-size: $font-size-sm;
-                color: #8e8e8e;
-                display: block;
-                text-align: left;
-            }
-
-            i.icon {
-                margin-left: 10px;
             }
         }
     }

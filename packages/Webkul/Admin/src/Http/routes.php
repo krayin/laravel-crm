@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web']], function () {
 
 
         // Admin Routes
-        Route::group(['middleware' => ['admin']], function () {
+        Route::group(['middleware' => ['user']], function () {
             Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
 
             // Dashboard Route
@@ -36,9 +36,16 @@ Route::group(['middleware' => ['web']], function () {
 
             // Contacts Routes
             Route::prefix('contacts')->group(function () {
-                Route::get('customers', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.customers.index');
+                Route::get('customers', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.contacts.customers.index');
 
-                Route::get('companies', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.companies.index');
+                Route::get('companies', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.contacts.companies.index');
+            });
+
+            // Contacts Routes
+            Route::prefix('settings')->group(function () {
+                Route::get('users', 'Webkul\Admin\Http\Controllers\Setting\UserController@index')->name('admin.settings.users.index');
+
+                Route::get('roles', 'Webkul\Admin\Http\Controllers\Setting\RoleController@index')->name('admin.settings.roles.index');
             });
         });
 

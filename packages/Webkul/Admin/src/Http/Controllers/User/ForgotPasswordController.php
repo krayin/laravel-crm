@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\User;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Admin\Notifications\User\AdminResetPassword;
+use Webkul\Admin\Notifications\User\UserResetPassword;
 
 class ForgotPasswordController extends Controller
 {
@@ -18,10 +18,10 @@ class ForgotPasswordController extends Controller
      */
     public function create()
     {        
-        if (auth()->guard('admin')->check()) {
+        if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');
         } else {
-            if (strpos(url()->previous(), 'admin') !== false) {
+            if (strpos(url()->previous(), 'user') !== false) {
                 $intendedUrl = url()->previous();
             } else {
                 $intendedUrl = route('admin.dashboard.index');
@@ -46,7 +46,7 @@ class ForgotPasswordController extends Controller
             ]);
 
             $response = $this->broker()->sendResetLink(request(['email']), function($user, $token) {
-                $user->notify(new AdminResetPassword($token));
+                $user->notify(new UserResetPassword($token));
             });
 
             if ($response == Password::RESET_LINK_SENT) {

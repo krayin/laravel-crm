@@ -16,7 +16,7 @@ class Handler extends AppExceptionHandler
         404 => 'Resource not found',
         403 => '403 forbidden Error',
         401 => 'Unauthenticated',
-        500 => '500 Internal Server Error'
+        500 => '500 Internal Server Error',
     ];
 
     /**

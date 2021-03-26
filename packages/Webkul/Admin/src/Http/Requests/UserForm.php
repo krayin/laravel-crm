@@ -4,7 +4,7 @@ namespace Webkul\Admin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminForm extends FormRequest
+class UserForm extends FormRequest
 {
     protected $rules;
 
@@ -27,7 +27,7 @@ class AdminForm extends FormRequest
     {
         $this->rules = [
             'name'                  => 'required',
-            'email'                 => 'email|unique:admins,email',
+            'email'                 => 'email|unique:users,email',
             'password'              => 'nullable',
             'password_confirmation' => 'nullable|required_with:password|same:password',
             'status'                => 'sometimes',
@@ -35,7 +35,7 @@ class AdminForm extends FormRequest
         ];
 
         if ($this->method() == 'PUT') {
-            $this->rules['email'] = 'email|unique:admins,email,' . $this->route('id');
+            $this->rules['email'] = 'email|unique:users,email,' . $this->route('id');
         }
 
         return $this->rules;

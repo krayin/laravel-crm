@@ -12,10 +12,10 @@ class Bouncer
      */
     public function hasPermission($permission)
     {
-        if (auth()->guard('admin')->check() && auth()->guard('admin')->user()->role->permission_type == 'all') {
+        if (auth()->guard('user')->check() && auth()->guard('user')->user()->role->permission_type == 'all') {
             return true;
         } else {
-            if (! auth()->guard('admin')->check() || ! auth()->guard('admin')->user()->hasPermission($permission)) {
+            if (! auth()->guard('user')->check() || ! auth()->guard('user')->user()->hasPermission($permission)) {
                 return false;
             }
         }
@@ -31,7 +31,7 @@ class Bouncer
      */
     public static function allow($permission)
     {
-        if (! auth()->guard('admin')->check() || ! auth()->guard('admin')->user()->hasPermission($permission)) {
+        if (! auth()->guard('user')->check() || ! auth()->guard('user')->user()->hasPermission($permission)) {
             abort(401, 'This action is unauthorized');
         }
     }

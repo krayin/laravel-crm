@@ -4,10 +4,10 @@ namespace Webkul\User\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Webkul\User\Contracts\Admin as AdminContract;
+use Webkul\User\Contracts\User as UserContract;
 
 
-class Admin extends Authenticatable implements AdminContract
+class User extends Authenticatable implements UserContract
 {
     use Notifiable;
 
@@ -37,7 +37,7 @@ class Admin extends Authenticatable implements AdminContract
     ];
 
     /**
-     * Get the role that owns the admin.
+     * Get the role that owns the user.
      */
     public function role()
     {
@@ -45,7 +45,7 @@ class Admin extends Authenticatable implements AdminContract
     }
 
     /**
-     * Checks if admin has permission to perform certain action.
+     * Checks if user has permission to perform certain action.
      *
      * @param  String  $permission
      * @return Boolean

@@ -16,18 +16,34 @@ return [
     ], [
         'key'        => 'contacts',
         'name'       => 'admin::app.layouts.contacts',
-        'route'      => 'admin.customers.index',
+        'route'      => 'admin.contacts.customers.index',
         'sort'       => 3,
         'icon-class' => 'phone-icon',
     ], [
         'key'        => 'contacts.customers',
         'name'       => 'admin::app.layouts.customers',
-        'route'      => 'admin.customers.index',
+        'route'      => 'admin.contacts.customers.index',
         'sort'       => 1,
     ], [
         'key'        => 'contacts.companies',
         'name'       => 'admin::app.layouts.companies',
-        'route'      => 'admin.companies.index',
+        'route'      => 'admin.contacts.companies.index',
+        'sort'       => 2,
+    ], [
+        'key'        => 'settings',
+        'name'       => 'admin::app.layouts.settings',
+        'route'      => 'admin.settings.users.index',
+        'sort'       => 3,
+        'icon-class' => 'settings-icon',
+    ], [
+        'key'        => 'settings.roles',
+        'name'       => 'admin::app.layouts.roles',
+        'route'      => 'admin.settings.roles.index',
+        'sort'       => 1,
+    ], [
+        'key'        => 'settings.users',
+        'name'       => 'admin::app.layouts.users',
+        'route'      => 'admin.settings.users.index',
         'sort'       => 2,
     ]
 ];

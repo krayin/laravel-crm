@@ -6,26 +6,26 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class AdminUpdatePassword extends Mailable
+class UserUpdatePassword extends Mailable
 {
     use Queueable, SerializesModels;
 
     /**
      * The admin instance.
      *
-     * @var  \Webkul\User\Contracts\Admin  $admin
+     * @var  \Webkul\User\Contracts\User  $user
      */
     public $admin;
 
     /**
      * Create a new admin instance.
      *
-     * @param  \Webkul\User\Contracts\Admin  $admin
+     * @param  \Webkul\User\Contracts\User  $user
      * @return void
      */
-    public function __construct($admin)
+    public function __construct($user)
     {
-        $this->admin = $admin;
+        $this->user = $user;
     }
 
     /**
@@ -36,8 +36,8 @@ class AdminUpdatePassword extends Mailable
     public function build()
     {
         return $this->from(core()->getSenderEmailDetails()['email'], core()->getSenderEmailDetails()['name'])
-                    ->to($this->admin->email, $this->admin->name)
+                    ->to($this->user->email, $this->user->name)
                     ->subject(trans('shop::app.mail.update-password.subject'))
-                    ->view('shop::emails.admin.update-password', ['user' => $this->admin]);
+                    ->view('shop::emails.users.update-password', ['user' => $this->user]);
     }
 }

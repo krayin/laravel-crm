@@ -6,13 +6,13 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
-class AdminsTableSeeder extends Seeder
+class UsersTableSeeder extends Seeder
 {
     public function run()
     {
-        DB::table('admins')->delete();
+        DB::table('users')->delete();
 
-        DB::table('admins')->insert([
+        DB::table('users')->insert([
             'id'         => 1,
             'name'       => 'Example',
             'email'      => 'admin@example.com',

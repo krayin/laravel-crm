@@ -6,6 +6,11 @@
             'contacts' => 'Contacts',
             'customers' => 'Customers',
             'companies' => 'Companies',
+            'settings' => 'Settings',
+            'roles' => 'Roles',
+            'users' => 'Users',
+            'my-account' => 'My Account',
+            'sign-out' => 'Sign Out'
         ],
 
         'contacts' => [

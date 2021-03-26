@@ -40,7 +40,7 @@ class Menu
     {
         $tree = Tree::create();
 
-        $userRole = auth()->guard('admin')->user()->role;
+        $userRole = auth()->guard('user')->user()->role;
 
         foreach (config('menu.admin') as $index => $item) {
             if (! bouncer()->hasPermission($item['key'])) {

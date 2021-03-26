@@ -36,7 +36,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->app->bind(ExceptionHandler::class, Handler::class);
 
-        $router->aliasMiddleware('admin', BouncerMiddleware::class);
+        $router->aliasMiddleware('user', BouncerMiddleware::class);
     }
 
     /**

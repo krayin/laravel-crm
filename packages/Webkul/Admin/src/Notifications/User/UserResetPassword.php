@@ -5,7 +5,7 @@ namespace Webkul\Admin\Notifications\User;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Auth\Notifications\ResetPassword;
 
-class AdminResetPassword extends ResetPassword
+class UserResetPassword extends ResetPassword
 {
     /**
      * Build the mail representation of the notification.
