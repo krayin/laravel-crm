@@ -17,7 +17,7 @@ class SessionController extends Controller
         if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');
         } else {
-            if (strpos(url()->previous(), 'user') !== false) {
+            if (strpos(url()->previous(), 'admin') !== false) {
                 $intendedUrl = url()->previous();
             } else {
                 $intendedUrl = route('admin.dashboard.index');
@@ -25,7 +25,7 @@ class SessionController extends Controller
 
             session()->put('url.intended', $intendedUrl);
 
-            return view('admin::users.sessions.login');
+            return view('admin::sessions.login');
         }
     }
 
@@ -42,7 +42,7 @@ class SessionController extends Controller
         ]);
 
         if (! auth()->guard('user')->attempt(request(['email', 'password']), request('remember'))) {
-            session()->flash('error', trans('admin::app.users.sessions.login.login-error'));
+            session()->flash('error', trans('admin::app.sessions.login.login-error'));
 
             return redirect()->back();
         }
@@ -53,10 +53,9 @@ class SessionController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
         auth()->guard('user')->logout();
 
