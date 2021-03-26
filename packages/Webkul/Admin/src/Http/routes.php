@@ -28,6 +28,13 @@ Route::group(['middleware' => ['web']], function () {
 
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
+
+            // datagrid designs
+            Route::get('datagrid', 'Webkul\Core\Http\Controllers\CoreController@index')
+                ->defaults('_config', [
+                    'view' => 'admin::leads.index',
+                ])
+                ->name('admin.datagrid.index');
         // });
 
     });

@@ -24,3 +24,5 @@ package-lock.json
 /storage/*.key
 /storage/dcc-data/
 /vendor
+/docker/*
+/config/*

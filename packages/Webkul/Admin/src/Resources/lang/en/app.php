@@ -29,6 +29,11 @@
                     'reset-password' => 'Reset Password'
                 ]
             ]
+        ],
+
+        'datagrid' => [
+            'id' => 'Id',
+            'name' => 'Name',
         ]
     ];
 ?>

@@ -67,6 +67,9 @@
             @if (isset($errors) && count($errors))
                 window.serverErrors = @json($errors->getMessages());
             @endif
+
+            window._translations = {};
+            window._translations['ui'] = @json(app('Webkul\Core\Helpers\Helper')->jsonTranslations("UI"));
         </script>
 
         <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
