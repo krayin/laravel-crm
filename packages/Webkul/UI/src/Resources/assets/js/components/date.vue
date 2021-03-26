@@ -13,47 +13,47 @@
 </template>
 
 <script>
-import Flatpickr from "flatpickr";
+    import Flatpickr from "flatpickr";
 
-export default {
-    props: {
-        name: String,
+    export default {
+        props: {
+            name: String,
 
-        value: String,
+            value: String,
 
-        minDate: String,
+            minDate: String,
 
-        maxDate: String,
-    },
+            maxDate: String,
+        },
 
-    data() {
-        return {
-            datepicker: null,
-        };
-    },
+        data() {
+            return {
+                datepicker: null,
+            };
+        },
 
-    mounted() {
-        var this_this = this;
-        var options = {
-            allowInput: true,
-            altFormat: "Y-m-d",
-            dateFormat: "Y-m-d",
-            weekNumbers: true,
-            onChange: function(selectedDates, dateStr, instance) {
-                this_this.$emit("onChange", dateStr);
-            },
-        };
+        mounted() {
+            var self = this;
 
-        if (this.minDate) {
-            options.minDate = this.minDate;
-        }
+            var options = {
+                allowInput: true,
+                altFormat: "Y-m-d",
+                dateFormat: "Y-m-d",
+                weekNumbers: true,
+                onChange: function(selectedDates, dateStr, instance) {
+                    self.$emit("onChange", dateStr);
+                },
+            };
 
-        if (this.maxDate) {
-            options.maxDate = this.maxDate;
-        }
+            if (this.minDate) {
+                options.minDate = this.minDate;
+            }
 
-        var element = this.$el.getElementsByTagName("input")[0];
-        this.datepicker = new Flatpickr(element, options);
-    },
-};
+            if (this.maxDate) {
+                options.maxDate = this.maxDate;
+            }
+
+            this.datepicker = new Flatpickr(this.$el.getElementsByTagName("input")[0], options);
+        },
+    };
 </script>

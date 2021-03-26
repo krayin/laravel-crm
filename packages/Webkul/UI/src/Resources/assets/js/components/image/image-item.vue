@@ -43,7 +43,7 @@
         },
 
         mounted () {
-            if(this.image.id && this.image.url) {
+            if (this.image.id && this.image.url) {
                 this.imageData = this.image.url;
             }
         },
@@ -59,7 +59,7 @@
                 var imageInput = this.$refs.imageInput;
 
                 if (imageInput.files && imageInput.files[0]) {
-                    if(imageInput.files[0].type.includes('image/')) {
+                    if (imageInput.files[0].type.includes('image/')) {
                         var reader = new FileReader();
 
                         reader.onload = (e) => {
