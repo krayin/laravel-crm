@@ -1,6 +1,7 @@
 <?php
     return [
         'datagrid' => [
+            'title' => 'DataGrid',
             'actions' => 'Actions',
             'id' => 'Index columns have value greater than zero only',
 
