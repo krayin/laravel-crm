@@ -56,6 +56,11 @@
             'users' => [
                 'title' => 'Users'
             ]
+        ],
+
+        'datagrid' => [
+            'id' => 'Id',
+            'name' => 'Name',
         ]
     ];
 ?>

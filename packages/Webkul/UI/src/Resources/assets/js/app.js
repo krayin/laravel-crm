@@ -17,6 +17,11 @@ import TimeComponent from './components/time';
 import Debounce from './directives/debounce';
 import OverlayLoader from './components/overlay-loader';
 import VTooltip from 'v-tooltip';
+import TableComponent from './components/datagrid/table';
+import FiltersComponent from './components/datagrid/filters';
+import PaginationComponent from './components/datagrid/pagination';
+import TableHeadComponent from './components/datagrid/table-head';
+import TableBodyComponent from './components/datagrid/table-body';
 
 VTooltip.options.disposeTimeout = 0;
 
@@ -42,6 +47,14 @@ Vue.component('date', DateComponent);
 Vue.component("time-component", TimeComponent);
 Vue.directive('debounce', Debounce);
 Vue.component('overlay-loader', OverlayLoader);
+Vue.component('table-component', TableComponent);
+Vue.component('filter-component', FiltersComponent);
+Vue.component('pagination-component', PaginationComponent);
+Vue.component('thead-component', TableHeadComponent);
+Vue.component('tbody-component', TableBodyComponent);
+
+Vue.mixin(require('./components/trans'));
+
 Vue.filter('truncate', function (value, limit, trail) {
 	if (! value)
         value = '';

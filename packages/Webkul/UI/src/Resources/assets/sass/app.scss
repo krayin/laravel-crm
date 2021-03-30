@@ -272,17 +272,17 @@ h5 {
         border-collapse: collapse;
         text-align: left;
         width: 100%;
-        background: $white;
+        // background: $white;
         font-size: $font-size-md;
-        border: solid 1px $border-color;
+        // border: solid 1px $border-color;
 
         thead {
             th {
                 font-weight: $font-weight-medium;
                 padding: 10px;
                 color: $secondary-font-color;
-                border-bottom: 1px solid $border-color;
-                border-right: 1px solid $border-color;
+                // border-bottom: 1px solid $border-color;
+                // border-right: 1px solid $border-color;
             }
         }
 
@@ -291,8 +291,8 @@ h5 {
                 td {
                     padding: 10px;
                     color: $secondary-font-color;
-                    border-bottom: 1px solid $border-color;
-                    border-right: 1px solid $border-color;
+                    // border-bottom: 1px solid $border-color;
+                    // border-right: 1px solid $border-color;
                     vertical-align: top;
 
                     &.actions {
