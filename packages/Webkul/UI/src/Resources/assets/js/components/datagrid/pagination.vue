@@ -1,31 +1,36 @@
 <template>
-    <div class="pagination" v-if="paginationData.has_pages" :style="`margin-top: ${tabView ? '0px' : '20px'}`">
+    <div :class="`pagination ${tabView ? 'tab-view' : 'full-view'}`" v-if="paginationData.has_pages">
         <template v-if="tabView">
             <!-- <span>{{ paginationData.current_page *  perPage }}-{{ (paginationData.current_page *  perPage) + perPage }} of {{ paginationData.total_rows }}</span> -->
 
-            <!-- TODO stop redirecting redirect -->
-            <a class="page-item previous" v-if="paginationData.on_first_page">
-                <i class="fa fa-arrow-left"></i>
+            <a class="page-item previous m-0" v-if="paginationData.on_first_page">
+                <i class="fa fa-angle-left"></i>
             </a>
             <a
                 v-else
                 id="previous"
-                class="page-item previous"
-                :href="paginationData.previous_page_url"
+                class="page-item previous cursor-pointer m-0"
+                @click="changePage({
+                    url: paginationData.previous_page_url,
+                    page_number: paginationData.current_page - 1
+                })"
             >
-                <i class="fa fa-arrow-left"></i>
+                <i class="fa fa-angle-left"></i>
             </a>
             
             <a
                 id="next"
-                class="page-item next"
+                class="page-item next cursor-pointer m-0"
                 v-if="paginationData.has_more_pages"
-                :href="paginationData.next_page_url"
+                @click="changePage({
+                    url: paginationData.next_page_url,
+                    page_number: paginationData.current_page + 1
+                })"
             >
-                <i class="fa fa-arrow-right"></i>
+                <i class="fa fa-angle-right"></i>
             </a>
-            <a class="page-item next" v-else>
-                <i class="fa fa-arrow-right"></i>
+            <a class="page-item next m-0" v-else>
+                <i class="fa fa-angle-right"></i>
             </a>
         </template>
 
@@ -93,20 +98,32 @@
         },
 
         methods: {
-            changePage: function () {
-                // paginationData.previous_page_url
-
-                // EventBus.$emit('update_filter', {
-                //     key: page
-                // });
+            changePage: function ({url, page_number}) {
+                EventBus.$emit('update_filter', {
+                    key     : 'page',
+                    value   : page_number
+                });
             }
         }
     };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
     i, a {
         font-weight: 700;
         font-size: 16px !important;
+    }
+
+    .tab-view {
+        margin-top: 0;
+
+        .previous {
+            float: left;
+            border-right: 0;
+        }
+    }
+
+    .full-view {
+        margin-top: 120px;
     }
 </style>

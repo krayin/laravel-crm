@@ -50,23 +50,5 @@
                 padding: 5px 15px;
             }
         }
-
-        &.border-tabs {
-            li {
-                border: 1px solid;
-
-                &:not(:last-child) {
-                    border-right: 0px;
-                }
-
-                &.active {
-                    border-radius: 0;
-                }
-
-                a {
-                    padding: 5px 10px;
-                }
-            }
-        }
     }
 </style>

@@ -1,64 +1,46 @@
-import FlashWrapper from './components/flash-wrapper.vue';
-import Flash from './components/flash.vue';
-import Tabs from './components/tabs/tabs';
-import Tab from './components/tabs/tab';
-import Accordian from './components/accordian';
-import Modal from './components/modal';
-import ImageUpload from './components/image/image-upload';
-import ImageWrapper from './components/image/image-wrapper';
-import ImageItem from './components/image/image-item';
-import Slugify from './directives/slugify';
-import SlugifyTarget from './directives/slugify-target';
-import Code from './directives/code';
-import Alert from './directives/alert';
-import DatetimeComponent from './components/datetime';
-import DateComponent from './components/date';
-import TimeComponent from './components/time';
-import Debounce from './directives/debounce';
-import OverlayLoader from './components/overlay-loader';
-import VTooltip from 'v-tooltip';
-import TableComponent from './components/datagrid/table';
-import FiltersComponent from './components/datagrid/filters';
-import PaginationComponent from './components/datagrid/pagination';
-import TableHeadComponent from './components/datagrid/table-head';
-import TableBodyComponent from './components/datagrid/table-body';
-import TableTabComponent from './components/datagrid/table-tab';
 import axios from 'axios';
+import store from './store';
+import VTooltip from 'v-tooltip';
 
-window.EventBus = new Vue();
 window.axios = axios;
+window.EventBus = new Vue();
 
 VTooltip.options.disposeTimeout = 0;
 
 Vue.directive('tooltip', VTooltip.VTooltip)
+Vue.directive('debounce', require('./directives/debounce').default);
 
 Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
-Vue.component('flash-wrapper', FlashWrapper);
-Vue.component('flash', Flash);
-Vue.component('tabs', Tabs);
-Vue.component('tab', Tab);
-Vue.component('accordian', Accordian);
-Vue.component('modal', Modal);
-Vue.component('image-upload', ImageUpload);
-Vue.component('image-wrapper', ImageWrapper);
-Vue.component('image-item', ImageItem);
-Vue.directive('slugify', Slugify);
-Vue.directive('slugify-target', SlugifyTarget);
-Vue.directive('code', Code);
-Vue.directive('alert', Alert);
-Vue.component('datetime', DatetimeComponent);
-Vue.component('date', DateComponent);
-Vue.component("time-component", TimeComponent);
-Vue.directive('debounce', Debounce);
-Vue.component('overlay-loader', OverlayLoader);
-Vue.component('table-component', TableComponent);
-Vue.component('filter-component', FiltersComponent);
-Vue.component('pagination-component', PaginationComponent);
-Vue.component('thead-component', TableHeadComponent);
-Vue.component('tbody-component', TableBodyComponent);
-Vue.component('table-tab', TableTabComponent);
+Vue.mixin({
+	store
+});
+
+Vue.component('flash-wrapper', require('./components/flash-wrapper.vue').default);
+Vue.component('flash', require('./components/flash.vue').default);
+Vue.component('tabs', require('./components/tabs/tabs').default);
+Vue.component('tab', require('./components/tabs/tab').default);
+Vue.component('modal', require('./components/modal').default);
+Vue.component('accordian', require('./components/accordian').default);
+Vue.component('image-upload', require('./components/image/image-upload').default);
+Vue.component('image-wrapper', require('./components/image/image-wrapper').default);
+Vue.component('image-item', require('./components/image/image-item').default);
+Vue.directive('slugify', require('./directives/slugify').default);
+Vue.directive('slugify-target', require('./directives/slugify-target').default);
+Vue.directive('code', require('./directives/code').default);
+Vue.directive('alert', require('./directives/alert').default);
+Vue.component('datetime', require('./components/datetime').default);
+Vue.component('date', require('./components/date').default);
+Vue.component("time-component", require('./components/time').default);
+Vue.component('overlay-loader', require('./components/overlay-loader').default);
+Vue.component('table-component', require('./components/datagrid/table').default);
+Vue.component('filter-component', require('./components/datagrid/filters').default);
+Vue.component('pagination-component', require('./components/datagrid/pagination').default);
+Vue.component('thead-component', require('./components/datagrid/table-head').default);
+Vue.component('tbody-component', require('./components/datagrid/table-body').default);
+Vue.component('table-tab', require('./components/datagrid/table-tab').default);
+Vue.component('sidebar-filter', require('./components/datagrid/side-filter').default);
 
 Vue.mixin(require('./components/trans'));
 
