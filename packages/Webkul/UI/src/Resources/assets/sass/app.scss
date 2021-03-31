@@ -5,6 +5,7 @@
 @import "variables";
 @import "mixins";
 @import "animations";
+@import "common";
 
 * {
     box-sizing: border-box;
@@ -266,23 +267,24 @@ h5 {
 
 .table {
     width: 100%;
-    // overflow-x: auto !important;
+    overflow-x: auto !important;
 
     table {
-        border-collapse: collapse;
-        text-align: left;
         width: 100%;
-        // background: $white;
+        text-align: left;
+        margin-top: 20px;
+        background: $white;
         font-size: $font-size-md;
-        // border: solid 1px $border-color;
+        border-collapse: collapse;
+        border: solid 1px $border-color;
 
         thead {
             th {
                 font-weight: $font-weight-medium;
                 padding: 10px;
                 color: $secondary-font-color;
-                // border-bottom: 1px solid $border-color;
-                // border-right: 1px solid $border-color;
+                border-bottom: 1px solid $border-color;
+                border-right: 1px solid $border-color;
             }
         }
 
@@ -291,8 +293,8 @@ h5 {
                 td {
                     padding: 10px;
                     color: $secondary-font-color;
-                    // border-bottom: 1px solid $border-color;
-                    // border-right: 1px solid $border-color;
+                    border-bottom: 1px solid $border-color;
+                    border-right: 1px solid $border-color;
                     vertical-align: top;
 
                     &.actions {
@@ -323,10 +325,165 @@ h5 {
             }
         }
     }
+
+    .control-group {
+        width: 100%;
+        margin-bottom: 0;
+        min-width: 140px;
+
+        .control {
+            width: 100%;
+            margin: 0;
+        }
+    }
+
+    .grid-dropdown-header {
+        display: inline-flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 36px;
+        font-size: 15px;
+        width: 200px;
+        border: 2px solid $control-border-color;
+        border-radius: 3px;
+        color: #8E8E8E;
+        padding: 0px 5px 0px 5px;
+        background-color: $white;
+    
+        .arrow-icon-down {
+            float: right;
+        }
+    }
+
+    .dropdown-container {
+        width: 100%;
+        padding: 0px;
+        position: relative;
+        margin-bottom: 0px;
+
+        &.dropdown-list {
+            ul {
+                position: absolute;
+                padding: 15px;
+                margin-bottom: 20px;
+                background-color: $white;
+                width: 100%;
+                margin-top: 10px;
+                
+                li {
+                    .control-group {
+                        margin-bottom: 15px;
+                    }
+                }
+            }
+        
+            .apply-filter {
+                padding: 10px;
+                width: 100%;
+            }
+        }
+    }
+
+    .filter-tag {
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: space-between;
+        // align-items: center;
+        // font-size: 14px;
+        // height: 40px;
+        // border-radius: 2px;
+        margin-right: 20px;
+        display: inline-block;
+
+        .wrapper {
+            margin-left: 10px;
+            padding: 5px 10px 5px 10px;
+            align-items: center;
+            background: #E7E7E7;
+            font-size: 14px;
+            height: 40px;
+            color: #000311;
+            letter-spacing: -0.22px;
+            @include border-radius(2px);
+    
+            .icon.cross-icon {
+                margin-left: 10px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .search-filter {
+        .control {
+            font-size: 15px;
+            border: 2px solid $control-border-color;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+            height: 36px;
+            width: 280px;
+            padding-left: 10px;
+            -webkit-appearance: none;
+        }
+
+        .contorl:focus {
+            border-color: $brand-color;
+        }
+
+        .icon-wrapper {
+            border: 2px solid $control-border-color;
+            border-radius: 3px;
+            border-top-left-radius: 0px;
+            border-bottom-left-radius: 0px;
+            height: 36px;
+            width: 36px;
+            padding: 3px;
+            float: right;
+        }
+    }
+
+    .datagrid-filters {
+        display: inline-flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+
+        .filter-left {
+            float: left;
+        }
+
+        .filter-right {
+            float: right;
+        }
+
+        .dropdown-filters {
+            display: inline-block;
+            
+            &.per-page {
+                margin-right: 10px;
+                
+                .control-group {
+                    label {
+                        width: auto;
+                        float: left;
+                        margin-top: 7px;
+                        margin-right: 10px;
+                    }
+
+                    .control {
+                        width: auto;
+                        margin: 0;
+                    }
+                }
+            }
+        }
+    }
 }
 
 // This can be modify
 .pagination {
+    margin-top: 20px;
+    
     .page-item {
         background: $white;
         border: 2px solid $border-color;
@@ -672,7 +829,6 @@ h5 {
 
 .tabs {
     ul {
-
         li {
             display: inline-block;
 

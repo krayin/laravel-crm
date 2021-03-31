@@ -7,7 +7,7 @@ use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Foundation\Validation\ValidatesRequests;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
-class CoreController extends BaseController
+class DatagridAPIController extends BaseController
 {
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 
@@ -35,6 +35,9 @@ class CoreController extends BaseController
      */
     public function index()
     {
-        return view($this->_config['view'], $this->_config);
+        $params = request()->all();
+        $result = app($params['table'])->data();
+
+        return response()->json($result);
     }
 }

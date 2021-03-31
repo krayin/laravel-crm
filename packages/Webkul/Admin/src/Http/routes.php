@@ -29,10 +29,14 @@ Route::group(['middleware' => ['web']], function () {
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
 
+            Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')
+                ->name('admin.datagrid.api');
+
             // datagrid designs
             Route::get('datagrid', 'Webkul\Core\Http\Controllers\CoreController@index')
                 ->defaults('_config', [
-                    'view' => 'admin::leads.index',
+                    'view'          => 'admin::leads.index',
+                    'tableClass'    => '\Webkul\Admin\DataGrids\UserDataGrid'
                 ])
                 ->name('admin.datagrid.index');
         // });

@@ -3,14 +3,13 @@
         <div class="datagrid-filters" id="datagrid-filters">
             <div class="filter-left">
                 <div class="search-filter">
-                    <!-- @TODO:- ADD debounce -->
                     <input
-                        type="search"
+                        type="text"
                         class="control"
                         id="search-field"
                         v-model="searchValue"
                         :placeholder="__('ui.datagrid.search')"
-                        @keyup.enter="searchCollection(searchValue)"
+                        @keyup="searchCollection(searchValue)"
                     />
                 </div>
             </div>
@@ -38,7 +37,7 @@
                     </div>
                 </div>
 
-                <div class="dropdown-filters">
+                <!-- <div class="dropdown-filters">
                     <div class="dropdown-toggle">
                         <div class="grid-dropdown-header">
                             <span class="name">
@@ -60,12 +59,6 @@
                                         <option selected disabled>
                                             {{ __('ui.datagrid.column') }}
                                         </option>
-
-                                        <!-- <template v-for="(column, index) in columns">
-                                            <option :key="index" :value="column['index']" v-if="column['filterable']">
-                                                {{ column['label'] }}
-                                            </option>
-                                        </template> -->
                                     </select>
                                 </div>
                             </li>
@@ -224,9 +217,6 @@
                                             {{ __('ui.datagrid.lesse') }}
                                         </option>
 
-                                        <!-- <option value="btw">
-                                            {{ __('ui.datagrid.between') }}</option> -->
-
                                     </select>
                                 </div>
                             </li>
@@ -245,8 +235,44 @@
                             </button>
                         </ul>
                     </div>
-                </div>
+                </div> -->
             </div>
+        </div>
+
+        <div class="filtered-tags">
+            <template v-for="(filter, index) in filters">
+                <div
+                    :key="index"
+                    class="filter-tag"
+                    style="text-transform: capitalize;"
+                    v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
+                >
+                    <span v-text="filter.column"></span>
+
+                    <span class="wrapper">
+                        {{ filter.prettyValue ? filter.prettyValue : decodeURIComponent(filter.val) }}
+                        <i class="fa fa-times" @click="removeFilter(filter)"></i>
+                    </span>
+                </div>
+            </template>
+        </div>
+
+        <table-tab
+            :tabs="tabs.type"
+            tab-key="type"
+        ></table-tab>
+
+        <div class="tabs-right-container">
+            <section>
+                <pagination-component :pagination-data="paginationData" tab-view="true" :per-page="perPage"></pagination-component>
+            </section>
+
+            <table-tab
+                tab-key="duration"
+                :tabs="tabs.duration"
+                tab-class="border-tabs"
+            >
+            </table-tab>
         </div>
     </div>
 </template>
@@ -254,7 +280,9 @@
 <script>
     export default {
         props: [
-            'results'
+            'results',
+            'tabs',
+            'paginationData',
         ],
 
         data: function () {
@@ -299,6 +327,8 @@
                 datetimeConditionSelect: false,
                 perPage: 10,
                 extraFilters: this.results['extraFilters'],
+                debounce: {},
+                ignoreDisplayFilter: ['duration', 'type'],
             }
         },
 
@@ -312,6 +342,8 @@
                     }
                 }
             }
+
+            EventBus.$on('update_filter', this.updateFilter);
         },
 
         methods: {
@@ -434,8 +466,11 @@
             },
 
             searchCollection: function (searchValue) {
-                debugger
-                this.formURL("search", 'all', searchValue, 'Search');
+                clearTimeout(this.debounce['search']);
+
+                this.debounce['search'] = setTimeout(() => {
+                    this.formURL("search", 'all', searchValue, 'Search');
+                }, 1000);
             },
 
             // function triggered to check whether the query exists or not and then call the make filters from the url
@@ -460,6 +495,8 @@
                         this.massActionValues = this.massActions[id].options;
                     }
                 }
+
+                this.setActiveTabs();
             },
 
             findCurrentSort: function () {
@@ -662,7 +699,7 @@
                     }
 
                     if (i == 0) {
-                        newParams = '?' + this.filters[i].column + condition + '=' + this.filters[i].val;
+                        newParams = this.filters[i].column + condition + '=' + this.filters[i].val;
                     } else {
                         newParams = newParams + '&' + this.filters[i].column + condition + '=' + this.filters[i].val;
                     }
@@ -672,7 +709,11 @@
 
                 var clean_uri = uri.substring(0, uri.indexOf("?")).trim();
 
-                window.location.href = clean_uri + newParams;
+                EventBus.$emit('refresh_table_data', {
+                    newParams,
+                    clean_uri
+                });
+                // window.location.href = clean_uri + newParams;
             },
 
             //make the filter array from url after being redirected
@@ -756,16 +797,20 @@
                 }
             },
 
-            removeFilter: function (filter) {
-                for (let i in this.filters) {
-                    if (this.filters[i].column === filter.column
-                        && this.filters[i].cond === filter.cond
-                        && this.filters[i].val === filter.val) {
-                        this.filters.splice(i, 1);
-
-                        this.makeURL();
+            removeFilter: function (filterToRemove) {
+                this.filters = this.filters.filter(filter => {
+                    if (
+                        filter.column === filterToRemove.column
+                        && filter.cond === filterToRemove.cond
+                        && filter.val === filterToRemove.val
+                    ) {
+                        return false;
                     }
-                }
+
+                    return true;
+                });
+
+                this.makeURL();
             },
 
             //triggered when any select box is clicked in the datagrid
@@ -864,7 +909,65 @@
                 this.filters.push({"column": "perPage", "cond": "eq", "val": e.target.value});
 
                 this.makeURL();
+            },
+
+            updateFilter: function ({key, value}) {
+                this.filters = this.filters.filter(filter => {
+                    if (filter.column == key) {
+                        return false;
+                    }
+
+                    return true;
+                });
+
+                this.filters.push({"column": key, "cond": "eq", "val": value});
+
+                this.makeURL();
+            },
+
+            setActiveTabs: function (column) {
+                for (const index in this.tabs) {
+                    for (const tabValueIndex in this.tabs[index]) {
+                        this.tabs[index][tabValueIndex].is_active = false;
+                    }
+                }
+
+                for (const index in this.tabs) {
+                    var applied = false;
+
+                    this.filters.forEach(filter => {
+                        if (filter.column == index) {
+                            for (const tabValueIndex in this.tabs[index]) {
+                                if (this.tabs[index][tabValueIndex].key == filter.val) {
+                                    applied = true;
+                                    this.tabs[index][tabValueIndex].is_active = true;
+                                }
+                            }
+                        }
+                    });
+
+                    if (! applied) { 
+                        this.tabs[index][0].is_active = true;
+                    }
+                }
             }
         }
     };
 </script>
+
+<style lang="scss" scoped>
+    .tabs-right-container {
+        float: right;
+
+        section {
+            margin-top: 20px;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .covered {
+            border: 1px solid;
+            padding: 7px ​10px;
+        }
+    }
+</style>

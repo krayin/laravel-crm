@@ -332,18 +332,28 @@ abstract class DataGrid
         }
 
         if (count($parsedUrl)) {
-            $filteredOrSortedCollection = $this->sortOrFilterCollection($this->collection = $this->queryBuilder,
-                $parsedUrl);
+            $this->collection = $this->queryBuilder;
+
+            $filteredOrSortedCollection = $this->sortOrFilterCollection(
+                $this->collection,
+                $parsedUrl
+            );
 
             if ($this->paginate) {
                 if ($this->itemsPerPage > 0) {
-                    return $filteredOrSortedCollection->orderBy($this->index,
-                        $this->sortOrder)->paginate($this->itemsPerPage)->appends(request()->except('page'));
+                    return $filteredOrSortedCollection
+                            ->orderBy(
+                                $this->index,
+                                $this->sortOrder
+                            )
+                            ->paginate($this->itemsPerPage)
+                            ->appends(request()->except('page'));
                 }
             } else {
                 return $filteredOrSortedCollection->orderBy($this->index, $this->sortOrder)->get();
             }
         }
+
 
         if ($this->paginate) {
             if ($this->itemsPerPage > 0) {
@@ -398,6 +408,8 @@ abstract class DataGrid
                     $columnName[1],
                     array_values($info)[0]
                 );
+            } else if ($key === "duration" || $key === "type") {
+                // @TODO apply duration filter
             } elseif ($key === "search") {
                 $count_keys = count(array_keys($info));
 
@@ -452,7 +464,6 @@ abstract class DataGrid
                     }
                 } else {
                     foreach ($info as $condition => $filter_value) {
-
                         if ($condition === 'undefined') {
                             $condition = '=';
                         }
@@ -564,6 +575,10 @@ abstract class DataGrid
             $necessaryExtraFilters['customer_groups'] = core()->getAllCustomerGroups();
         }
 
+        $paginationData = [
+            'has_pages' => false,
+        ];
+        
         $collection = $this->getCollection();
 
         if ($this->paginate && $collection->hasPages()) {
@@ -578,11 +593,16 @@ abstract class DataGrid
                 $paginationData['previous_page_url'] = urldecode($collection->previousPageUrl());
             }
 
+            $paginationData['elements'] = $collection->links()->elements;
+            $paginationData['current_page'] = $collection->currentPage();
+            $paginationData['total_rows'] = $collection->total();
+            $paginationData['current_rows'] = $collection->count();
+
             if ($collection->hasMorePages()) {
-                $paginationData['has_more_pages'] = false;
-            } else {
                 $paginationData['has_more_pages'] = true;
                 $paginationData['next_page_url'] = urldecode($collection->nextPageUrl());
+            } else {
+                $paginationData['has_more_pages'] = false;
             }
         }
 

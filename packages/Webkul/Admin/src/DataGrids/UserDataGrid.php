@@ -5,7 +5,7 @@ namespace Webkul\Admin\DataGrids;
 use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
 
-class AdminDataGrid extends DataGrid
+class UserDataGrid extends DataGrid
 {
     /**
      * @var string
@@ -30,10 +30,10 @@ class AdminDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('admins')
+        $queryBuilder = DB::table('users')
             ->addSelect(
-                'admins.id',
-                'admins.name'
+                'users.id',
+                'users.name'
             );
 
         $this->setQueryBuilder($queryBuilder);

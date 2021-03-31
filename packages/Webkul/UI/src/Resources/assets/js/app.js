@@ -22,11 +22,17 @@ import FiltersComponent from './components/datagrid/filters';
 import PaginationComponent from './components/datagrid/pagination';
 import TableHeadComponent from './components/datagrid/table-head';
 import TableBodyComponent from './components/datagrid/table-body';
+import TableTabComponent from './components/datagrid/table-tab';
+import axios from 'axios';
+
+window.EventBus = new Vue();
+window.axios = axios;
 
 VTooltip.options.disposeTimeout = 0;
 
 Vue.directive('tooltip', VTooltip.VTooltip)
 
+Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.component('flash-wrapper', FlashWrapper);
@@ -52,6 +58,7 @@ Vue.component('filter-component', FiltersComponent);
 Vue.component('pagination-component', PaginationComponent);
 Vue.component('thead-component', TableHeadComponent);
 Vue.component('tbody-component', TableBodyComponent);
+Vue.component('table-tab', TableTabComponent);
 
 Vue.mixin(require('./components/trans'));
 
