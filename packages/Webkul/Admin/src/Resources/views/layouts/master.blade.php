@@ -72,8 +72,8 @@
             window._translations['ui'] = @json(app('Webkul\Core\Helpers\Helper')->jsonTranslations("UI"));
         </script>
 
-<script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
-<script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
 
         @stack('scripts')
 
