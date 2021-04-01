@@ -2,7 +2,7 @@
     <div class="grid-container">
         <div class="datagrid-filters" id="datagrid-filters">
             <div class="filter-left">
-                <div class="search-filter">
+                <div class="search-filter control-group">
                     <input
                         type="text"
                         class="control"
@@ -36,6 +36,17 @@
                         </select>
                     </div>
                 </div>
+
+                <div class="filter-btn">
+                    <div class="grid-dropdown-header" @click="toggleSidebarFilter">
+                        <span class="name">
+                            {{ __('ui.datagrid.filter') }}
+                        </span>
+                        <i class="fa fa-plus"></i>
+                    </div>
+                </div>
+
+                <sidebar-filter></sidebar-filter>
 
                 <!-- <div class="dropdown-filters">
                     <div class="dropdown-toggle">
@@ -278,6 +289,8 @@
 </template>
 
 <script>
+    import { mapActions } from 'vuex';
+
     export default {
         props: [
             'results',
@@ -329,6 +342,7 @@
                 extraFilters: this.results['extraFilters'],
                 debounce: {},
                 ignoreDisplayFilter: ['duration', 'type'],
+                sidebarFilter: false,
             }
         },
 
@@ -343,10 +357,16 @@
                 }
             }
 
-            EventBus.$on('update_filter', this.updateFilter);
+            EventBus.$on('update_filter', data => {
+                this.updateFilter(data);
+            });
         },
 
         methods: {
+            ...mapActions([
+                'toggleSidebarFilter',
+            ]),
+
             getColumnOrAlias: function (columnOrAlias) {
                 this.columnOrAlias = columnOrAlias;
 
@@ -911,7 +931,7 @@
                 this.makeURL();
             },
 
-            updateFilter: function ({key, value}) {
+            updateFilter: function ({key, value, cond}) {
                 this.filters = this.filters.filter(filter => {
                     if (filter.column == key) {
                         return false;
@@ -920,7 +940,16 @@
                     return true;
                 });
 
-                this.filters.push({"column": key, "cond": "eq", "val": value});
+                let data = {
+                    "column": key,
+                    "val": value
+                }
+
+                if (cond) {
+                    data['cond'] = cond;
+                }
+
+                this.filters.push(data);
 
                 this.makeURL();
             },

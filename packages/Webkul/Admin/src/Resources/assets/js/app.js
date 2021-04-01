@@ -1,5 +1,5 @@
 // import Vue from 'vue';
-import Vue from 'vue/dist/vue.js'
+import Vue from 'vue/dist/vue.js';
 import VeeValidate from 'vee-validate';
 
 import './bootstrap';
@@ -18,6 +18,8 @@ window.eventBus = new Vue();
 $(function() {
     var app = new Vue({
         el: "#app",
+
+		store,
 
         data: {
             modalIds: {},

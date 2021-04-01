@@ -50,7 +50,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view('admin::settings.users.index');
+        return view('admin::settings.users.index', [
+            'tableClass' => '\Webkul\Admin\DataGrids\UserDataGrid'
+        ]);
     }
 
     /**

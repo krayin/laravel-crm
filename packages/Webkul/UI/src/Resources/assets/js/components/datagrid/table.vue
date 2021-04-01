@@ -1,5 +1,5 @@
 <template>
-    <div class="table">
+    <div class="table" v-if="resultLoaded">
         <filter-component
             :tabs="tabs"
             :results="encodedResult"
@@ -18,7 +18,6 @@
 <script>
     export default {
         props: [
-            'result',
             'filterIndex',
             'gridCurrentData',
             'massActions',
@@ -29,7 +28,7 @@
 
         data: function () {
             return {
-                encodedResult: JSON.parse(this.result),
+                resultLoaded: false,
                 tabs: {
                     type: [{
                         'label'     : 'All',
@@ -79,6 +78,15 @@
         },
 
         mounted: function () {
+            let search = window.location.search;
+            const initialIndex = search.indexOf('?');
+
+            if (initialIndex > -1) {
+                search = search.replace('?', '')
+            }
+
+            this.getData({self: this, newParams: search});
+
             EventBus.$on('change_tab_data', data => {
                 this.tabs[data.type].map(value => {
                     value.is_active = false;
@@ -91,25 +99,33 @@
                 });
 
                 EventBus.$emit('update_filter', {
-                    'key': data.type,
-                    'value': data.selectedTab
+                    'key'   : data.type,
+                    'cond'  : 'eq',
+                    'value' : data.selectedTab
                 });
             });
 
             EventBus.$on('refresh_table_data', data => {
                 data['self'] = this;
 
-                this.refreshData(data);
+                this.getData(data);
             });
         },
 
         methods: {
-            refreshData: ({newParams, clean_uri, self}) => {
-                self.$http.get(`${window.location.origin}/admin/api/datagrid?table=${self.tableClass}&${newParams}`)
+            getData: ({newParams, clean_uri, self, url}) => {
+                self.resultLoaded = false;
+
+                url = url ? url : `${window.location.origin}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
+
+                self.$http.get(url)
                     .then(response => {
+                        self.resultLoaded = true;
                         self.encodedResult = response.data;
 
-                        self.updatedURI(newParams);
+                        if (newParams) {
+                            self.updatedURI(newParams);
+                        }
                     })
                     .catch(error => {
                         // @TODO

@@ -14,14 +14,10 @@
     </style>
 @stop
 
-@php
-    $result = app($tableClass)->data();
-@endphp
-
 @section('content-wrapper')
     <h1>
         @yield('table-header', "Table Default Header")
     </h1>
 
-    <table-component result="{{ json_encode($result) }}" table-class="{{ $tableClass }}"><table-component>
+    <table-component table-class="{{ $tableClass }}"><table-component>
 @stop

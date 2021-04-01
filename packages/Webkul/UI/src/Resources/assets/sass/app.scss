@@ -280,9 +280,9 @@ h5 {
 
         thead {
             th {
-                font-weight: $font-weight-medium;
                 padding: 10px;
                 color: $secondary-font-color;
+                font-weight: $font-weight-medium;
                 border-bottom: 1px solid $border-color;
                 border-right: 1px solid $border-color;
             }
@@ -337,24 +337,6 @@ h5 {
         }
     }
 
-    .grid-dropdown-header {
-        display: inline-flex;
-        justify-content: space-between;
-        align-items: center;
-        height: 36px;
-        font-size: 15px;
-        width: 200px;
-        border: 2px solid $control-border-color;
-        border-radius: 3px;
-        color: #8E8E8E;
-        padding: 0px 5px 0px 5px;
-        background-color: $white;
-    
-        .arrow-icon-down {
-            float: right;
-        }
-    }
-
     .dropdown-container {
         width: 100%;
         padding: 0px;
@@ -385,13 +367,6 @@ h5 {
     }
 
     .filter-tag {
-        // display: flex;
-        // flex-direction: row;
-        // justify-content: space-between;
-        // align-items: center;
-        // font-size: 14px;
-        // height: 40px;
-        // border-radius: 2px;
         margin-right: 20px;
         display: inline-block;
 
@@ -415,14 +390,13 @@ h5 {
 
     .search-filter {
         .control {
-            font-size: 15px;
-            border: 2px solid $control-border-color;
-            border-top-left-radius: 3px;
-            border-bottom-left-radius: 3px;
             height: 36px;
             width: 280px;
+            font-size: 15px;
             padding-left: 10px;
             -webkit-appearance: none;
+            color: $secondary-font-color;
+            border: 1px solid $border-color;
         }
 
         .contorl:focus {
@@ -444,9 +418,9 @@ h5 {
     .datagrid-filters {
         display: inline-flex;
         width: 100%;
-        justify-content: space-between;
         align-items: center;
         margin-bottom: 20px;
+        justify-content: space-between;
 
         .filter-left {
             float: left;
@@ -454,6 +428,28 @@ h5 {
 
         .filter-right {
             float: right;
+
+            .filter-btn {
+                @extend .d-inline-block;
+
+                .grid-dropdown-header {
+                    width: 105px;
+                    height: 36px;
+                    font-size: 15px;
+                    border-radius: 3px;
+                    align-items: center;
+                    display: inline-flex;
+                    padding: 0px 5px 0px 5px;
+                    background-color: $white;
+                    color: $secondary-font-color;
+                    justify-content: space-between;
+                    border: 1px solid $border-color;
+                
+                    .arrow-icon-down {
+                        float: right;
+                    }
+                }
+            }
         }
 
         .dropdown-filters {
@@ -477,6 +473,14 @@ h5 {
                 }
             }
         }
+
+        .control-group {
+            @extend .fs-16;
+
+            .control {
+                @extend .fs-16;
+            }
+        }
     }
 }
 
@@ -486,7 +490,7 @@ h5 {
     
     .page-item {
         background: $white;
-        border: 2px solid $border-color;
+        border: 1px solid $border-color;
         @include border-radius(3px);
         padding: 7px 14px;
         margin-right: 5px;
@@ -540,21 +544,21 @@ h5 {
     }
 
     .control {
-        font-size: $font-size-lg;
-        color: $secondary-font-color;
-        background: $white;
-        border: 1px solid $border-color;
-        @include border-radius(3px);
         width: 70%;
-        height: 40px;
-        display: inline-block;
-        vertical-align: middle;
-        transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        padding: 8px 5px;
+        padding: 6px 5px;
         margin-top: 10px;
         margin-bottom: 5px;
+        background: $white;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: $font-size-lg;
+        @include border-radius(3px);
+        color: $secondary-font-color;
+        border: 1px solid $border-color;
+        transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
         &:focus {
+            border-width: 2px;
             border-color: $primary-color;
         }
 
@@ -845,6 +849,24 @@ h5 {
             &.active a {
                 color: $primary-color;
                 box-shadow: inset 0px -2px 0px $primary-color;
+            }
+        }
+    }
+
+    &.border-tabs {
+        li {
+            border: 1px solid $border-color;
+
+            &:not(:last-child) {
+                border-right: 0px;
+            }
+
+            &.active {
+                border-radius: 0 !important;
+            }
+
+            a {
+                padding: 5px 10px;
             }
         }
     }
@@ -1187,5 +1209,22 @@ modal {
             margin-left: 0;
             margin-right: 0;
         }
+    }
+}
+
+.sidebar-filter {
+    top: 0;
+    right: 0;
+    z-index: 10;
+    width: 250px;
+    height: 100vh;
+    display: none;
+    position: fixed;
+    background-color: white;
+    border-left: 1px solid $border-color;
+    transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.show {
+        display: inline-block;
     }
 }
