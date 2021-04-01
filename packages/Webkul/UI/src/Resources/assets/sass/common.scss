@@ -6,8 +6,16 @@
     margin: 0 !important;
 }
 
+.ml-10 {
+    margin-left: 10px;
+}
+
 .mr-20 {
     margin-right: 20px;
+}
+
+.pl-0 {
+    padding-left: 0 !important;
 }
 
 .text-right {
@@ -31,5 +39,9 @@
 }
 
 .fs-16 {
-    font-size: 16px;
+    font-size: 16px !important;
+}
+
+.fs-18 {
+    font-size: 18px !important;
 }
