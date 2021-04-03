@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('ui::app.datagrid.title') }}
+    @yield('table-header', "Table Default Header")
 @stop
 
 @section('css')
@@ -18,6 +18,8 @@
     <h1>
         @yield('table-header', "Table Default Header")
     </h1>
+
+    <sidebar-filter></sidebar-filter>
 
     <table-component table-class="{{ $tableClass }}"><table-component>
 @stop
