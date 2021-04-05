@@ -7,6 +7,6 @@ use Webkul\Core\Providers\CoreModuleServiceProvider;
 class ModuleServiceProvider extends CoreModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Lead\Models\Lead::class
+        \Webkul\Lead\Models\Lead::class,
     ];
 }

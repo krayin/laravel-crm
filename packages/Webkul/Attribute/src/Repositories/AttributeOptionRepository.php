@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\User\Repositories;
+namespace Webkul\Attribute\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
 
-class RoleRepository extends Repository
+class AttributeOptionRepository extends Repository
 {
     /**
      * Specify Model class name
@@ -13,6 +13,6 @@ class RoleRepository extends Repository
      */
     function model()
     {
-        return 'Webkul\User\Contracts\Role';
+        return 'Webkul\Attribute\Contracts\AttributeOption';
     }
 }

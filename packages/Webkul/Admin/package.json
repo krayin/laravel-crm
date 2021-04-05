@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
-        "vee-validate": "^2.2.15"
+        "vee-validate": "^2.2.15",
+        "vuedraggable": "^2.24.3"
     }
 }

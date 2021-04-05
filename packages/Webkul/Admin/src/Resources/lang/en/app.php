@@ -9,6 +9,7 @@
             'settings' => 'Settings',
             'roles' => 'Roles',
             'users' => 'Users',
+            'attributes' => 'Attributes',
             'my-account' => 'My Account',
             'sign-out' => 'Sign Out'
         ],
@@ -50,12 +51,63 @@
 
         'settings' => [
             'roles' => [
-                'title' => 'Roles'
+                'title' => 'Roles',
+                'create-success' => 'Role created successfully.',
+                'update-success' => 'Role updated successfully.',
+                'delete-success' => 'Role deleted successfully.',
+                'delete-failed' => 'Role can not be deleted.',
+                'user-define-error' => 'Can not delete system role.',
+                'being-used' => 'Role can not be deleted, as this is being used in admin user.',
+                'last-delete-error' => 'At least one role is required.'
             ],
 
             'users' => [
-                'title' => 'Users'
-            ]
+                'title' => 'Users',
+                'create-success' => 'User created successfully.',
+                'update-success' => 'User updated successfully.',
+                'delete-success' => 'User deleted successfully.',
+                'delete-failed' => 'User can not be deleted.',
+                'user-define-error' => 'Can not delete system user.'
+            ],
+
+            'attributes' => [
+                'title' => 'Attributes',
+                'add-title' => 'Add Attribute',
+                'edit-title' => 'Edit Attribute',
+                'back' => 'Back',
+                'code' => 'Code',
+                'name' => 'Name',
+                'type' => 'Type',
+                'text' => 'Text',
+                'textarea' => 'Textarea',
+                'price' => 'Price',
+                'boolean' => 'Boolean',
+                'select' => 'Select',
+                'multiselect' => 'Multiselect',
+                'datetime' => 'Datetime',
+                'date' => 'Date',
+                'image' => 'Image',
+                'file' => 'File',
+                'checkbox' => 'Checkbox',
+                'is_required' => 'Is Required',
+                'is_unique' => 'Is Unique',
+                'yes' => 'Yes',
+                'no' => 'No',
+                'input_validation' => 'Input Validation',
+                'number' => 'Number',
+                'decimal' => 'Decimal',
+                'email' => 'Email',
+                'url' => 'Url',
+                'options' => 'Options',
+                'save-btn-title' => 'Save as Attribute',
+                'sort-order' => 'Sort Order',
+                'add-option-btn-title' => 'Add Option',
+                'create-success' => 'Attribute created successfully.',
+                'update-success' => 'Attribute updated successfully.',
+                'delete-success' => 'Attribute deleted successfully.',
+                'delete-failed' => 'Attribute can not be deleted.',
+                'user-define-error' => 'Can not delete system attribute.'
+            ],
         ],
 
         'datagrid' => [

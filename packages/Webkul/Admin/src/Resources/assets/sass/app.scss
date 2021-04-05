@@ -7,6 +7,7 @@ body {
     position: static;
     height: 100%;
     width: 100%;
+    background: $body-background;
 }
 
 ::-webkit-scrollbar {
@@ -219,7 +220,6 @@ body {
     bottom: 0px;
     height: calc(100% - 60px);
     width: 100%;
-    background: $body-background;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     .inner-section {
@@ -280,7 +280,7 @@ body {
             z-index: 3;
 
             .page-title {
-                float: left;
+                // float: left;
 
                 .back-link {
                     float: left;
@@ -296,6 +296,7 @@ body {
                     vertical-align: middle;
                     display: inline-block;
                     line-height: initial;
+                    font-weight: $font-weight-regular;
                 }
             }
 
@@ -429,5 +430,90 @@ body {
                 }
             }
         }
+    }
+}
+
+.adjacent-center {
+    .page-header {
+        width: 1000px !important;
+        display: block !important;
+        margin: auto;
+    }
+
+    .page-content {
+        width: 1000px !important;
+        display: block !important;
+        margin: auto;
+
+        .nav-aside {
+            width: 190px;
+            float: left;
+        }
+
+        .panel {
+            overflow: hidden;
+
+            .panel-header {
+                button.btn {
+                    margin-right: 30px;
+                }
+
+                a {
+                    color: inherit;
+                }
+            }
+        }
+    }
+}
+
+.dragable-container {
+    label {
+        margin-bottom: 10px;
+    }
+
+    ul.dragable-list {
+        li.list-group-item {
+            margin-bottom: 10px;
+            position: relative;
+
+            &.sortable-ghost {
+                .control-group {
+                    .control {
+                        border-style: dashed;
+                    }
+                }
+            }
+
+            .control-group {
+                margin: 0;
+                padding-right: 40px;
+
+                .control {
+                    margin: 0;
+                }
+
+                .icon.align-justify-icon {
+                    width: 24px;
+                    height: 24px;
+                    position: absolute;
+                    right: 45px;
+                    top: 5px;
+                    cursor: pointer;
+                }
+            }
+
+            .icon.trash-icon {
+                width: 24px;
+                height: 24px;
+                cursor: pointer;
+                position: absolute;
+                right: 5px;
+                top: 5px;
+            }
+        }
+    }
+
+    button.btn {
+        margin-top: 10px;
     }
 }

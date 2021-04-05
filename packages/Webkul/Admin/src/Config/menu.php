@@ -45,5 +45,10 @@ return [
         'name'       => 'admin::app.layouts.users',
         'route'      => 'admin.settings.users.index',
         'sort'       => 2,
+    ], [
+        'key'        => 'settings.attributes',
+        'name'       => 'admin::app.layouts.attributes',
+        'route'      => 'admin.settings.attributes.index',
+        'sort'       => 3,
     ]
 ];

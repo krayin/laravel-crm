@@ -1,6 +1,7 @@
 // import Vue from 'vue';
 import Vue from 'vue/dist/vue.js';
 import VeeValidate from 'vee-validate';
+import draggable from 'vuedraggable';
 
 import './bootstrap';
 
@@ -15,11 +16,13 @@ Vue.prototype.$http = axios;
 
 window.eventBus = new Vue();
 
+Vue.component('draggable', draggable);
+
 $(function() {
     var app = new Vue({
         el: "#app",
 
-		store,
+		// store,
 
         data: {
             modalIds: {},

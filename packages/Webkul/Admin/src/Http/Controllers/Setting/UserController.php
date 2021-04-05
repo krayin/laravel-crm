@@ -89,7 +89,7 @@ class UserController extends Controller
 
         Event::dispatch('settings.user.create.after', $admin);
 
-        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'User']));
+        session()->flash('success', trans('admin::app.settings.users.create-success'));
 
         return redirect()->route('admin.settings.users.index');
     }
@@ -134,7 +134,7 @@ class UserController extends Controller
 
         Event::dispatch('settings.user.update.after', $admin);
 
-        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'User']));
+        session()->flash('success', trans('admin::app.settings.users.update-success'));
 
         return redirect()->route('admin.users.index');
     }
@@ -150,20 +150,20 @@ class UserController extends Controller
         $admin = $this->userRepository->findOrFail($id);
 
         if ($this->userRepository->count() == 1) {
-            session()->flash('error', trans('admin::app.response.last-delete-error', ['name' => 'Admin']));
+            session()->flash('error', trans('admin::app.settings.users.last-delete-error'));
         } else {
             Event::dispatch('settings.user.delete.before', $id);
 
             try {
                 $this->userRepository->delete($id);
 
-                session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Admin']));
+                session()->flash('success', trans('admin::app.settings.users.delete-success'));
 
                 Event::dispatch('settings.user.delete.after', $id);
 
                 return response()->json(['message' => true], 200);
             } catch (Exception $e) {
-                session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Admin']));
+                session()->flash('error', trans('admin::app.settings.users.delete-failed'));
             }
         }
 
