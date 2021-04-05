@@ -185,6 +185,10 @@ h5 {
     &.btn-white {
         background: $white;
         color: $primary-color;
+
+        &.text-black {
+            color: $black;
+        }
     }
 
     &.btn-white-outline {
@@ -317,7 +321,8 @@ h5 {
                     border-bottom: 0;
                 }
 
-                &.active {
+                &.active,
+                &:hover {
                     td {
                         background: $table-active-cell-color;
                     }
@@ -1214,15 +1219,76 @@ modal {
     top: 0;
     right: 0;
     z-index: 10;
-    width: 250px;
+    width: 420px;
     height: 100vh;
     display: none;
     position: fixed;
-    background-color: white;
+    padding: 30px 20px;
+    overflow-y: scroll;
+    background-color: $white;
     border-left: 1px solid $border-color;
     transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.show {
         display: inline-block;
+    }
+
+    header {
+        margin-bottom: 20px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid $border-color;
+    }
+
+    .control-group {
+        font-size: 16px;
+        margin-bottom: 20px;
+
+        label {
+            font-weight: 500;
+        }
+
+        .control {
+            width: 90%;
+            margin: 0;
+            font-size: 16px;
+            padding-left: 15px;
+
+            &.half {
+                width: 146px;
+            }
+        }
+
+        .middle-text {
+            margin: 0 8px;
+        }
+    }
+
+    .field-container {
+        padding: 10px 0;
+
+        .date-container {
+            display: inline-block;
+            
+            &::after {
+                left: unset;
+                right: 10px;
+            }
+        }
+    }
+
+    .selected-options {
+        .badge {
+            margin-bottom: 10px;
+            color: $secondary-font-color;
+            background-color: $light-background-color;
+        }
+    }
+
+    .enter-new {
+        margin-bottom: 10px;
+    }
+
+    .fa-times {
+        cursor: pointer;
     }
 }

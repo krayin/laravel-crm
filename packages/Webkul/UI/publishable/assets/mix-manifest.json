@@ -1,6 +1,7 @@
 {
-    "/js/ui.js": "/js/ui.js?id=fb7e2401fa6c8f7bc6ea",
-    "/css/ui.css": "/css/ui.css?id=f1458f59bb767cf183a3",
+    "/js/ui.js": "/js/ui.js?id=c385c2f12ab8e8575104",
+    "/css/ui.css": "/css/ui.css?id=6ec38d984ad5fd9cf628",
+    "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-up-icon.svg": "/images/arrow-up-icon.svg?id=8e55868ef41bd032542e",
     "/images/calendar-icon.svg": "/images/calendar-icon.svg?id=6aef7d52559f9ccbb1c8",
@@ -15,6 +16,5 @@
     "/images/menu-unfold-active-icon.svg": "/images/menu-unfold-active-icon.svg?id=0ffccc5f14b91b5bf542",
     "/images/menu-unfold-icon.svg": "/images/menu-unfold-icon.svg?id=89dd855d15302c906ed1",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
-    "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82"
 }
