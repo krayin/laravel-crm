@@ -46,10 +46,17 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             // Contacts Routes
-            Route::prefix('settings')->group(function () {
-                Route::get('users', 'Webkul\Admin\Http\Controllers\Setting\UserController@index')->name('admin.settings.users.index');
+            Route::group([
+                'prefix'    => 'settings',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
+            ], function () {
+                Route::get('users', 'UserController@index')->name('admin.settings.users.index');
 
-                Route::get('roles', 'Webkul\Admin\Http\Controllers\Setting\RoleController@index')->name('admin.settings.roles.index');
+                Route::get('users/create', 'UserController@create')->name('admin.settings.users.create');
+
+                Route::post('users/create', 'UserController@store')->name('admin.settings.users.store');
+
+                Route::get('roles', 'RoleController@index')->name('admin.settings.roles.index');
             });
         });
 

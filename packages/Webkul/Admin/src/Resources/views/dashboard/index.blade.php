@@ -184,8 +184,6 @@
                 </div>
             </div>
 
-
-
             <div class="panel">
                 <div class="panel-header">
                     Form Controls
@@ -315,11 +313,53 @@
                             Tab 1 Content
                         </tab>
 
+                        <tab name="Tab 2">
+                            Tab 2 Content
+                        </tab>
+
+                        <tab name="Tab 3">
+                            Tab 3 Content
+                        </tab>
+                    </tabs>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    Tabs Pill
+                </div>
+
+                <div class="panel-body">
+                    <tabs class="pill">
+                        <tab name="Tab 1" :selected="true">
+                            Tab 1 Content
+                        </tab>
 
                         <tab name="Tab 2">
                             Tab 2 Content
                         </tab>
 
+                        <tab name="Tab 3">
+                            Tab 3 Content
+                        </tab>
+                    </tabs>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    Tabs Group
+                </div>
+
+                <div class="panel-body">
+                    <tabs class="group">
+                        <tab name="Tab 1" :selected="true">
+                            Tab 1 Content
+                        </tab>
+
+                        <tab name="Tab 2">
+                            Tab 2 Content
+                        </tab>
 
                         <tab name="Tab 3">
                             Tab 3 Content
@@ -450,6 +490,33 @@
                 </div>
             </div>
 
+            <div class="panel">
+                <div class="panel-header">
+                    Form Container
+                </div>
+
+                <div class="panel-body">
+                    <div class="form-container">
+                        <form>
+                            <div class="control-group">
+                                <label>First Name</label>
+
+                                <input class="control" type="text" placeholder="Enter First Name" />
+                            </div>
+
+                            <div class="control-group">
+                                <label>Last Name</label>
+
+                                <input class="control" type="text" placeholder="Enter Last Name" />
+                            </div>
+
+                            <button type="button" class="badge badge-xl badge-primary">
+                                Submit
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @stop

@@ -3,13 +3,14 @@
         <template v-if="tabView">
             <!-- <span>{{ paginationData.current_page *  perPage }}-{{ (paginationData.current_page *  perPage) + perPage }} of {{ paginationData.total_rows }}</span> -->
 
-            <a class="page-item previous m-0" v-if="paginationData.on_first_page">
+            <a class="page-item previous" v-if="paginationData.on_first_page">
                 <i class="fa fa-angle-left"></i>
             </a>
+
             <a
                 v-else
                 id="previous"
-                class="page-item previous cursor-pointer m-0"
+                class="page-item previous"
                 @click="changePage({
                     url: paginationData.previous_page_url,
                     page_number: paginationData.current_page - 1
@@ -20,7 +21,7 @@
             
             <a
                 id="next"
-                class="page-item next cursor-pointer m-0"
+                class="page-item next"
                 v-if="paginationData.has_more_pages"
                 @click="changePage({
                     url: paginationData.next_page_url,
@@ -29,7 +30,8 @@
             >
                 <i class="fa fa-angle-right"></i>
             </a>
-            <a class="page-item next m-0" v-else>
+
+            <a class="page-item next" v-else>
                 <i class="fa fa-angle-right"></i>
             </a>
         </template>
@@ -38,6 +40,7 @@
             <a class="page-item previous" v-if="paginationData.on_first_page">
                 <i class="fa fa-angle-left"></i>
             </a>
+
             <a
                 v-else
                 id="previous"
@@ -80,6 +83,7 @@
             >
                 <i class="fa fa-angle-right"></i>
             </a>
+
             <a class="page-item next" v-else>
                 <i class="fa fa-angle-right"></i>
             </a>
@@ -107,23 +111,3 @@
         }
     };
 </script>
-
-<style lang="scss" scoped>
-    i, a {
-        font-weight: 700;
-        font-size: 16px !important;
-    }
-
-    .tab-view {
-        margin-top: 0;
-
-        .previous {
-            float: left;
-            border-right: 0;
-        }
-    }
-
-    .full-view {
-        margin-top: 120px;
-    }
-</style>

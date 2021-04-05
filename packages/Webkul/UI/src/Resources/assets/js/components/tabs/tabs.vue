@@ -8,7 +8,7 @@
             </ul>
         </div>
 
-        <div class="tabs-content">
+        <div class="tabs-content" v-if="! hideTabsContent">
             <slot></slot>
         </div>
     </div>
@@ -16,21 +16,46 @@
 
 <script>
     export default {
-        data: function() {
+        props: [
+            'tabsCollection',
+            'eventKey',
+            'eventData',
+            'eventValueKey'
+        ],
+        
+        data: function () {
             return {
-                tabs: []
+                tabs: [],
+                hideTabsContent: false,
             }
         },
 
-        created() {
-            this.tabs = this.$children;
+        mounted: function () {
+            if (this.$children.length > 0) {
+                this.tabs = this.$children;
+            } else {
+                this.hideTabsContent = true;
+                this.tabs = this.tabsCollection;
+            }
         },
 
         methods: {
-            selectTab(selectedTab) {
+            selectTab: function (selectedTab) {
                 this.tabs.forEach(tab => {
                     tab.isActive = (tab.name == selectedTab.name);
                 });
+
+                if (this.eventKey) {
+                    var eventData = {};
+
+                    if (this.eventData) {
+                        eventData = this.eventData;
+                    }
+
+                    eventData[this.eventValueKey] = selectedTab.key;
+
+                    EventBus.$emit(this.eventKey, eventData);
+                }
             }
         }
     }

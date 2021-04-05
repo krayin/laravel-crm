@@ -5,7 +5,6 @@
 @import "variables";
 @import "mixins";
 @import "animations";
-@import "common";
 
 * {
     box-sizing: border-box;
@@ -273,6 +272,14 @@ h5 {
     width: 100%;
     overflow-x: auto !important;
 
+    .table-header {
+        margin-bottom: 20px;
+
+        .table-action {
+            display: inline-block;
+        }
+    }
+
     table {
         width: 100%;
         text-align: left;
@@ -327,6 +334,10 @@ h5 {
                         background: $table-active-cell-color;
                     }
                 }
+
+                &.no-records {
+                    text-align: center;
+                }
             }
         }
     }
@@ -371,24 +382,28 @@ h5 {
         }
     }
 
-    .filter-tag {
-        margin-right: 20px;
-        display: inline-block;
+    .filtered-tags {
+        margin-bottom: 20px;
 
-        .wrapper {
-            margin-left: 10px;
-            padding: 5px 10px 5px 10px;
-            align-items: center;
-            background: #E7E7E7;
-            font-size: 14px;
-            height: 40px;
-            color: #000311;
-            letter-spacing: -0.22px;
-            @include border-radius(2px);
+        .filter-tag {
+            margin-right: 20px;
+            display: inline-block;
     
-            .icon.cross-icon {
+            .wrapper {
                 margin-left: 10px;
-                cursor: pointer;
+                padding: 5px 10px 5px 10px;
+                align-items: center;
+                background: #E7E7E7;
+                font-size: 14px;
+                height: 40px;
+                color: #000311;
+                letter-spacing: -0.22px;
+                @include border-radius(2px);
+        
+                .icon.cross-icon {
+                    margin-left: 10px;
+                    cursor: pointer;
+                }
             }
         }
     }
@@ -435,7 +450,7 @@ h5 {
             float: right;
 
             .filter-btn {
-                @extend .d-inline-block;
+                display: inline-block;
 
                 .grid-dropdown-header {
                     width: 105px;
@@ -480,10 +495,10 @@ h5 {
         }
 
         .control-group {
-            @extend .fs-16;
+            font-size: 16px;
 
             .control {
-                @extend .fs-16;
+                font-size: 16px;
             }
         }
     }
@@ -521,11 +536,35 @@ h5 {
             margin-bottom: 3px;
         }
     }
+    
+    &.tab-view {
+        margin-top: 0;
+
+        .previous {
+            float: left;
+            border-right: 0;
+        }
+
+        .previous,
+        .next {
+            margin: 0;
+            cursor: pointer;
+        }
+    }
+
+    &.full-view {
+        margin-top: 120px;
+    }
+
+    i, a {
+        font-weight: 700;
+        font-size: 16px !important;
+    }
 }
 
 .control-group {
     display: block;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     font-size: $font-size-lg;
     color: $secondary-font-color;
     width: 750px;
@@ -534,6 +573,7 @@ h5 {
 
     label {
         display: block;
+        font-size: $font-size-md;
 
         &.required::after {
             content: "*";
@@ -550,13 +590,13 @@ h5 {
 
     .control {
         width: 70%;
-        padding: 6px 5px;
+        padding: 6px 10px;
         margin-top: 10px;
         margin-bottom: 5px;
         background: $white;
         display: inline-block;
         vertical-align: middle;
-        font-size: $font-size-lg;
+        font-size: $font-size-md;
         @include border-radius(3px);
         color: $secondary-font-color;
         border: 1px solid $border-color;
@@ -857,29 +897,80 @@ h5 {
             }
         }
     }
-
-    &.border-tabs {
-        li {
-            border: 1px solid $border-color;
-
-            &:not(:last-child) {
-                border-right: 0px;
-            }
-
-            &.active {
-                border-radius: 0 !important;
-            }
-
-            a {
-                padding: 5px 10px;
-            }
-        }
-    }
 }
 
 .tabs-content {
     border: 1px solid $border-color;
     padding: 30px;
+}
+
+.pill {
+    &.d-inline-block {
+        display: inline-block;
+    }
+
+    .tabs {
+        ul {
+            margin-bottom: 15px;
+
+            li {
+                font-size: $font-size-md;
+
+                &:first-child {
+                    a {
+                        padding-left: 0px;
+                    }
+                }
+
+                a {
+                    padding: 5px 15px;
+                }
+
+                &.active {
+                    a {
+                        color: $white;
+                        padding: 5px 15px;
+                        border-radius: 22px;
+                        background: $primary-color;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.group {
+    &.d-inline-block {
+        display: inline-block;
+    }
+    
+    .tabs {
+        ul {
+            margin-bottom: 15px;
+
+            li {
+                font-size: $font-size-md;
+                border: 1px solid $border-color;
+
+                &:not(:last-child) {
+                    border-right: 0px;
+                }
+    
+                &.active {
+                    background: $primary-color;
+                    border-radius: 0 !important;
+
+                    a {
+                        color: $white;
+                    }
+                }
+    
+                a {
+                    padding: 5px 10px;
+                }
+            }
+        }
+    }
 }
 
 accordian,
@@ -1242,8 +1333,8 @@ modal {
     }
 
     .control-group {
-        font-size: 16px;
         margin-bottom: 20px;
+        font-size: $font-size-md;
 
         label {
             font-weight: 500;
@@ -1252,7 +1343,7 @@ modal {
         .control {
             width: 90%;
             margin: 0;
-            font-size: 16px;
+            font-size: $font-size-md;
             padding-left: 15px;
 
             &.half {
@@ -1293,4 +1384,31 @@ modal {
     .fa-times {
         cursor: pointer;
     }
+}
+
+.breadcrumbs {
+    font-weight: 400;
+    margin: 0 0 10px 0;
+    color: $primary-color;
+    font-size: $font-size-md;
+}
+
+.float-left {
+    float: left;
+}
+
+.float-right {
+    float: right;
+}
+
+.ml-10 {
+    margin-left: 10px;
+}
+
+.pl-0 {
+    padding-left: 0 !important;
+}
+
+.fs-18 {
+    font-size: $font-size-lg !important;
 }
