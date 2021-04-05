@@ -42,6 +42,7 @@
             "Database\\Factories\\": "database/factories/",
             "Database\\Seeders\\": "database/seeders/",
             "Webkul\\Admin\\": "packages/Webkul/Admin/src",
+            "Webkul\\Attribute\\": "packages/Webkul/Attribute/src",
             "Webkul\\Core\\": "packages/Webkul/Core/src",
             "Webkul\\UI\\": "packages/Webkul/UI/src",
             "Webkul\\User\\": "packages/Webkul/User/src"

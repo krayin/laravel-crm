@@ -567,8 +567,7 @@ h5 {
     margin-bottom: 20px;
     font-size: $font-size-lg;
     color: $secondary-font-color;
-    width: 750px;
-    max-width: 100%;
+    width: 100%;
     position: relative;
 
     label {
@@ -589,7 +588,7 @@ h5 {
     }
 
     .control {
-        width: 70%;
+        width: 100%;
         padding: 6px 10px;
         margin-top: 10px;
         margin-bottom: 5px;
@@ -603,7 +602,6 @@ h5 {
         transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
         &:focus {
-            border-width: 2px;
             border-color: $primary-color;
         }
 

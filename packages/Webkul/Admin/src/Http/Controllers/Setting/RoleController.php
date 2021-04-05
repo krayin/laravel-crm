@@ -64,7 +64,7 @@ class RoleController extends Controller
 
         Event::dispatch('settings.role.create.after', $role);
 
-        session()->flash('success', trans('admin::app.response.create-success', ['name' => 'Role']));
+        session()->flash('success', trans('admin::app.settings.roles.create-success'));
 
         return redirect()->route('admin.settings.roles.index');
     }
@@ -101,7 +101,7 @@ class RoleController extends Controller
 
         Event::dispatch('settings.role.update.after', $role);
 
-        session()->flash('success', trans('admin::app.response.update-success', ['name' => 'Role']));
+        session()->flash('success', trans('admin::app.settings.roles.update-success'));
 
         return redirect()->route('admin.settings.roles.index');
     }
@@ -117,9 +117,9 @@ class RoleController extends Controller
         $role = $this->roleRepository->findOrFail($id);
 
         if ($role->admins->count() >= 1) {
-            session()->flash('error', trans('admin::app.response.being-used', ['name' => 'Role', 'source' => 'Admin User']));
+            session()->flash('error', trans('admin::app.settings.roles.being-used'));
         } elseif($this->roleRepository->count() == 1) {
-            session()->flash('error', trans('admin::app.response.last-delete-error', ['name' => 'Role']));
+            session()->flash('error', trans('admin::app.settings.roles.last-delete-error'));
         } else {
             try {
                 Event::dispatch('settings.role.delete.before', $id);
@@ -128,11 +128,11 @@ class RoleController extends Controller
 
                 Event::dispatch('settings.role.delete.after', $id);
 
-                session()->flash('success', trans('admin::app.response.delete-success', ['name' => 'Role']));
+                session()->flash('success', trans('admin::app.settings.roles.delete-success'));
 
                 return response()->json(['message' => true], 200);
             } catch(\Exception $e) {
-                session()->flash('error', trans('admin::app.response.delete-failed', ['name' => 'Role']));
+                session()->flash('error', trans('admin::app.settings.roles.delete-failed'));
             }
         }
 

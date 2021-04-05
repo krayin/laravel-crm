@@ -76,3 +76,13 @@
     @extend %menu-properties;
     background-image: url("../images/time-icon.svg");
 }
+
+.align-justify-icon {
+    @extend %menu-properties;
+    background-image: url("../images/align-justify-icon.svg");
+}
+
+.trash-icon {
+    @extend %menu-properties;
+    background-image: url("../images/trash-icon.svg");
+}

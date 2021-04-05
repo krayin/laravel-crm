@@ -29,10 +29,8 @@ Route::group(['middleware' => ['web']], function () {
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
 
-            Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')
-                ->name('admin.datagrid.api');
+            Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
 
-        // });
             // Leads Routes
             Route::prefix('leads')->group(function () {
                 Route::get('', 'Webkul\Admin\Http\Controllers\Lead\LeadController@index')->name('admin.leads.index');
@@ -40,9 +38,15 @@ Route::group(['middleware' => ['web']], function () {
 
             // Contacts Routes
             Route::prefix('contacts')->group(function () {
-                Route::get('customers', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.contacts.customers.index');
+                // Customers Routes
+                Route::prefix('customers')->group(function () {
+                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.contacts.customers.index');
+                });
 
-                Route::get('companies', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.contacts.companies.index');
+                // Companies Routes
+                Route::prefix('companies')->group(function () {
+                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.contacts.companies.index');
+                });
             });
 
             // Contacts Routes
@@ -50,15 +54,45 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
             ], function () {
-                Route::get('users', 'UserController@index')->name('admin.settings.users.index');
+                // Users Routes
+                Route::prefix('users')->group(function () {
+                    Route::get('', 'UserController@index')->name('admin.settings.users.index');
+    
+                    Route::get('create', 'UserController@create')->name('admin.settings.users.create');
+    
+                    Route::post('create', 'UserController@store')->name('admin.settings.users.store');
 
-                Route::get('users/create', 'UserController@create')->name('admin.settings.users.create');
+                    Route::get('edit/{id}', 'UserController@edit')->name('admin.settings.users.edit');
 
-                Route::post('users/create', 'UserController@store')->name('admin.settings.users.store');
+                    Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
+                });
 
-                Route::get('roles', 'RoleController@index')->name('admin.settings.roles.index');
+                // Roles Routes
+                Route::prefix('users')->group(function () {
+                    Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
+
+                    Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
+
+                    Route::post('create', 'RoleController@store')->name('admin.settings.roles.store');
+
+                    Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
+
+                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
+                });
+
+                // Attributes Routes
+                Route::prefix('attributes')->group(function () {
+                    Route::get('', 'AttributeController@index')->name('admin.settings.attributes.index');
+
+                    Route::get('create', 'AttributeController@create')->name('admin.settings.attributes.create');
+
+                    Route::post('create', 'AttributeController@store')->name('admin.settings.attributes.store');
+
+                    Route::get('edit/{id}', 'AttributeController@edit')->name('admin.settings.attributes.edit');
+
+                    Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
+                });
             });
         });
-
     });
 });
