@@ -68,7 +68,7 @@ Route::group(['middleware' => ['web']], function () {
                 });
 
                 // Roles Routes
-                Route::prefix('users')->group(function () {
+                Route::prefix('roles')->group(function () {
                     Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
 
                     Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
