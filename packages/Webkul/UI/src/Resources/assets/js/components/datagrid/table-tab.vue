@@ -21,34 +21,9 @@
             selectTab(selectedTab) {
                 EventBus.$emit('change_tab_data', {
                     'type': this.tabKey,
-                    selectedTab: selectedTab.key,
+                    'selectedTab': selectedTab.key,
                 })
             }
         }
     }
 </script>
-
-<style lang="scss" scoped>
-    .tabs {
-        margin-top: 20px;
-        display: inline-block;
-        
-        ul li {
-            font-size: 15px;
-
-            &.active {
-                background: #0E90D9;
-                border-radius: 22px;
-
-                a {
-                    color: white;
-                    box-shadow: none;
-                }
-            }
-
-            a {
-                padding: 5px 15px;
-            }
-        }
-    }
-</style>

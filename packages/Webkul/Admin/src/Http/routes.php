@@ -50,31 +50,49 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             // Contacts Routes
-            Route::prefix('settings')->group(function () {
+            Route::group([
+                'prefix'    => 'settings',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
+            ], function () {
                 // Users Routes
                 Route::prefix('users')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Setting\UserController@index')->name('admin.settings.users.index');
+                    Route::get('', 'UserController@index')->name('admin.settings.users.index');
+    
+                    Route::get('create', 'UserController@create')->name('admin.settings.users.create');
+    
+                    Route::post('create', 'UserController@store')->name('admin.settings.users.store');
+
+                    Route::get('edit/{id}', 'UserController@edit')->name('admin.settings.users.edit');
+
+                    Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
                 });
 
                 // Roles Routes
                 Route::prefix('roles')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Setting\RoleController@index')->name('admin.settings.roles.index');
+                    Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
+
+                    Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
+
+                    Route::post('create', 'RoleController@store')->name('admin.settings.roles.store');
+
+                    Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
+
+                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
                 });
 
                 // Attributes Routes
                 Route::prefix('attributes')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Setting\AttributeController@index')->name('admin.settings.attributes.index');
+                    Route::get('', 'AttributeController@index')->name('admin.settings.attributes.index');
 
-                    Route::get('create', 'Webkul\Admin\Http\Controllers\Setting\AttributeController@create')->name('admin.settings.attributes.create');
+                    Route::get('create', 'AttributeController@create')->name('admin.settings.attributes.create');
 
-                    Route::post('create', 'Webkul\Admin\Http\Controllers\Setting\AttributeController@store')->name('admin.settings.attributes.store');
+                    Route::post('create', 'AttributeController@store')->name('admin.settings.attributes.store');
 
-                    Route::get('edit/{id}', 'Webkul\Admin\Http\Controllers\Setting\AttributeController@edit')->name('admin.settings.attributes.edit');
+                    Route::get('edit/{id}', 'AttributeController@edit')->name('admin.settings.attributes.edit');
 
-                    Route::put('edit/{id}', 'Webkul\Admin\Http\Controllers\Setting\AttributeController@update')->name('admin.settings.attributes.update');
+                    Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
                 });
             });
         });
-
     });
 });
