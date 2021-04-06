@@ -142,6 +142,16 @@
                 }
             },
 
+            mounted: function() {
+                $('#type').on('change', function (e) {
+                    if (['select', 'multiselect', 'checkbox'].indexOf($(e.target).val()) === -1) {
+                        $('#options').addClass('hide')
+                    } else {
+                        $('#options').removeClass('hide')
+                    }
+                });
+            },
+
             methods: {
                 addOptionRow: function () {
                     this.optionRows.push({'id': 'option_' + this.optionRowCount++});
