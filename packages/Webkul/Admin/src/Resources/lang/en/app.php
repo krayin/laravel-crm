@@ -90,7 +90,8 @@
                 'delete-success'    => 'User deleted successfully.',
                 'delete-failed'     => 'User can not be deleted.',
                 'user-define-error' => 'Can not delete system user.',
-                'last-delete-error' => 'At least one user is required.'
+                'last-delete-error' => 'At least one user is required.',
+                'user-define-error' => 'Can not delete system user.',
             ],
 
             'attributes' => [

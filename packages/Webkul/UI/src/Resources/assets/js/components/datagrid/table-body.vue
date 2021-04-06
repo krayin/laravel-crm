@@ -46,6 +46,12 @@
                 {{ __('ui.datagrid.no-records') }}
             </td>
         </tr>
+
+        <tr v-if="dataCollection.length == 0" class="no-records">
+            <td colspan="10">
+                {{ __('ui.datagrid.no-records') }}
+            </td>
+        </tr>
     </tbody>
 </template>
 

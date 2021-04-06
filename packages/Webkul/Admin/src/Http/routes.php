@@ -21,7 +21,6 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
 
-
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
             Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
