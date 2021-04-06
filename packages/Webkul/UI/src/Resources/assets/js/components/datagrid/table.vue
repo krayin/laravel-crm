@@ -7,8 +7,15 @@
         ></filter-component>
 
         <table>
-            <thead-component :columns="encodedResult.columns"></thead-component>
-            <tbody-component :data-collection="encodedResult.records.data"></tbody-component>
+            <thead-component
+                :columns="encodedResult.columns"
+                :actions="encodedResult.actions"
+            ></thead-component>
+
+            <tbody-component
+                :actions="encodedResult.actions"
+                :data-collection="encodedResult.records.data"
+            ></tbody-component>
         </table>
 
         <!-- <pagination-component :pagination-data="encodedResult.pagination_data"></pagination-component> -->

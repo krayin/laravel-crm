@@ -5,16 +5,16 @@ namespace Webkul\Admin\DataGrids;
 use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
 
-class UserDataGrid extends DataGrid
+class RoleDataGrid extends DataGrid
 {
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('users')
+        $queryBuilder = DB::table('roles')
             ->addSelect(
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.status'
+                'roles.id',
+                'roles.name',
+                'roles.description',
+                'roles.permission_type'
             );
 
         $this->setQueryBuilder($queryBuilder);
@@ -41,8 +41,8 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'email',
-            'label'      => trans('admin::app.datagrid.email'),
+            'index'      => 'description',
+            'label'      => trans('admin::app.datagrid.description'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
@@ -50,16 +50,12 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'     => 'status',
-            'label'     => trans('admin::app.datagrid.status'),
+            'index'     => 'permission_type',
+            'label'     => trans('admin::app.datagrid.permission_type'),
             'type'      => 'boolean',
-            'closure'   => function ($row) {
-                if ($row->status == 1) {
-                    return '<span class="badge badge-sm badge-pill badge-primary">' . trans('admin::app.datagrid.active') . '</span>';
-                } else {
-                    return '<span class="badge badge-sm badge-pill badge-danger">' . trans('admin::app.datagrid.inactive') . '</span>';
-                }
-            },
+            'searchable' => true,
+            'sortable'   => true,
+            'filterable' => true,
         ]);
     }
 
@@ -68,14 +64,14 @@ class UserDataGrid extends DataGrid
         $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.users.edit',
+            'route'  => 'admin.settings.roles.edit',
             'icon'   => 'icon pencil-icon',
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.settings.users.delete',
+            'route'        => 'admin.settings.roles.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);

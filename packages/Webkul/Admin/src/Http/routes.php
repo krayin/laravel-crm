@@ -64,7 +64,9 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::get('edit/{id}', 'UserController@edit')->name('admin.settings.users.edit');
 
-                    Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
+                    Route::post('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
+
+                    Route::delete('{id}', 'UserController@destroy')->name('admin.settings.users.delete');
                 });
 
                 // Roles Routes
@@ -77,7 +79,9 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
 
-                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
+                    Route::post('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
+
+                    Route::delete('{id}', 'RoleController@destroy')->name('admin.settings.roles.delete');
                 });
 
                 // Attributes Routes
