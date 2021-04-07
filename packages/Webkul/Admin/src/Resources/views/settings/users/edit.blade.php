@@ -33,6 +33,8 @@
                         <div class="panel-body">
                             @csrf()
                             
+                            <input name="_method" type="hidden" value="PUT">
+                            
                             <div :class="`control-group ${errors.has('name') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.name') }}
