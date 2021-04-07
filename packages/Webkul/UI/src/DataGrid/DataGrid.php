@@ -11,14 +11,14 @@ abstract class DataGrid
      *
      * @var int
      */
-    protected $index;
+    protected $index = "id";
 
     /**
      * Default sort order of datagrid
      *
      * @var string
      */
-    protected $sortOrder = 'asc';
+    protected $sortOrder = 'desc';
 
     /**
      * Situation handling property when working with custom columns in datagrid, helps abstaining
@@ -354,11 +354,12 @@ abstract class DataGrid
             }
         }
 
-
         if ($this->paginate) {
             if ($this->itemsPerPage > 0) {
-                $this->collection = $this->queryBuilder->orderBy($this->index,
-                    $this->sortOrder)->paginate($this->itemsPerPage)->appends(request()->except('page'));
+                $this->collection = $this->queryBuilder
+                                    ->orderBy($this->index, $this->sortOrder)
+                                    ->paginate($this->itemsPerPage)
+                                    ->appends(request()->except('page'));
             }
         } else {
             $this->collection = $this->queryBuilder->orderBy($this->index, $this->sortOrder)->get();
@@ -581,6 +582,7 @@ abstract class DataGrid
         
         $collection = $this->getCollection();
 
+        // pagination data
         if ($this->paginate && $collection->hasPages()) {
             $paginationData = [
                 'has_pages' => true,
@@ -606,8 +608,33 @@ abstract class DataGrid
             }
         }
 
+        $arrayCollection = $collection->toArray();
+
+        // actions data
+        foreach ($arrayCollection['data'] as $index => $row) {
+            foreach ($this->actions as $action) {
+                if (! isset($arrayCollection['data'][$index]->action)) {
+                    $arrayCollection['data'][$index]->action = [];
+                }
+
+                $actionCollection = $action;
+                $actionCollection['route'] = route($action['route'], ['id' => $row->id]);
+
+                array_push($arrayCollection['data'][$index]->action, $actionCollection);
+            }
+        }
+
+        // closure data
+        foreach ($this->completeColumnDetails as $column) {
+            if (isset($column['closure']) && $column['closure']) {
+                foreach ($arrayCollection['data'] as $index => $row) {
+                    $arrayCollection['data'][$index]->{$column['index']} = $column['closure']($row);
+                }
+            }
+        }
+
         return [
-            'records'           => $collection->toArray(),
+            'records'           => $arrayCollection,
             'columns'           => $this->completeColumnDetails,
             'actions'           => $this->actions,
             'massactions'       => $this->massActions,
@@ -615,7 +642,6 @@ abstract class DataGrid
             'enableMassActions' => $this->enableMassAction,
             'enableActions'     => $this->enableAction,
             'paginated'         => $this->paginate,
-            'norecords'         => __('ui::app.datagrid.no-records'),
             'extraFilters'      => $necessaryExtraFilters,
             'pagination_data'   => $paginationData,
         ];

@@ -14,7 +14,7 @@
                     {{ __('ui.datagrid.filter.apply_title') }}
                 </button>
 
-                <i class="fa fa-times ml-5" @click="toggleSidebarFilter"></i>
+                <i class="icon close-icon ml-5" @click="toggleSidebarFilter"></i>
             </div>
         </header>
         
@@ -41,9 +41,18 @@
                 </template>
 
                 <template v-else-if="data.type == 'add'">
-                    <span class="control" @click="toggleInput(key)">
-                        + {{ data.placeholder }}
+                    <span class="control" @click="toggleInput(key)" v-if="! addField[key]">
+                        <i class="icon add-icon"></i> {{ data.placeholder }}
                     </span>
+
+                    <div class="enter-new" v-else>
+                        <input
+                            type="text"
+                            class="control mb-10"
+                            :placeholder="data.input_field_placeholder"
+                            @keyup.enter="pushFieldValue(key, $event)"
+                        />
+                    </div>
                 </template>
 
                 <template v-else-if="data.type == 'date_range'">
@@ -79,19 +88,8 @@
                     </select>
                 </template>
 
-                <i class="fa fa-times ml-10 float-right"></i>
+                <i class="icon close-icon ml-10 float-right" @click="removeFilter({type: data.type, key})"></i>
             </div>
-
-            <template v-if="data.type == 'add'">
-                <div class="enter-new" v-show="addField[key]">
-                    <input
-                        type="text"
-                        class="control mb-10"
-                        :placeholder="data.input_field_placeholder"
-                        @keyup.enter="pushFieldValue(key, $event)"
-                    />
-                </div>
-            </template>
 
             <template v-if="data.type == 'add' || data.type == 'dropdown'">
                 <div class="selected-options">
@@ -102,129 +100,11 @@
                     >
                         {{ value }}
 
-                        <i class="fa fa-times ml-10" @click="removeFieldValue(key, index)"></i>
+                        <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
                     </span>
                 </div>
             </template>
         </div>
-
-        <!-- <div class="control-group">
-            <label>Contact Person</label>
-
-            <div class="field-container">
-                <span class="control" @click="toggleInput('contact_person')">+ Add Person</span>
-
-                <i class="fa fa-times ml-10"></i>
-            </div>
-
-            <div class="enter-new" v-show="addField.contact_person">
-                <input
-                    type="text"
-                    class="control mb-10"
-                    placeholder="Enter name"
-                    @keyup.enter="pushFieldValue('contact_person', $event)"
-                />
-            </div>
-
-            <div class="selected-options">
-                <span   
-                    :key="index"
-                    v-for="(person, index) in filterData.contact_person"
-                    class="badge badge-md badge-pill badge-secondary"
-                >
-                    {{ person }}
-
-                    <i class="fa fa-times ml-10" @click="removeFieldValue('contact_person', index)"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="control-group date">
-            <label>Date Range</label>
-
-            <div class="field-container">
-                <date>
-                    <input
-                        type="text"
-                        class="control half"
-                        placeholder="Start Date"
-                        v-model="filterData.date_range[0]"
-                    />
-                </date>
-
-                <span class="middle-text">to</span>
-                
-                <date>
-                    <input
-                        type="text"
-                        class="control half"
-                        placeholder="End Date"
-                        v-model="filterData.date_range[1]"
-                    />
-                </date>
-
-                <i class="fa fa-times ml-10"></i>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label>Status</label>
-
-            <div class="field-container">
-                <select class="control" @change="pushFieldValue('status', $event)">
-                    <option value="" disabled selected>
-                        Select Status
-                    </option>
-                    <option value="Won">Won</option>
-                    <option value="Lost">Lost</option>
-                </select>
-
-                <i class="fa fa-times ml-10"></i>
-            </div>
-            
-            <div class="selected-options">
-                <span
-                    :key="index"
-                    v-for="(status, index) in filterData.status"
-                    class="badge badge-md badge-pill badge-secondary"
-                >
-                    {{ status }}
-
-                    <i class="fa fa-times ml-10" @click="removeFieldValue('status', index)"></i>
-                </span>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label>Phone</label>
-
-            <div class="field-container">
-                <span class="control" @click="toggleInput('phone_number')">+ Add Number</span>
-
-                <i class="fa fa-times ml-10"></i>
-            </div>
-
-            <div class="enter-new" v-show="addField.phone_number">
-                <input
-                    type="text"
-                    class="control mb-10"
-                    placeholder="Enter number"
-                    @keyup.enter="pushFieldValue('phone_number', $event)"
-                />
-            </div>
-
-            <div class="selected-options">
-                <span
-                    :key="index"
-                    v-for="(number, index) in filterData.phone_number"
-                    class="badge badge-md badge-pill badge-secondary"
-                >
-                    {{ number }}
-
-                    <i class="fa fa-times ml-10" @click="removeFieldValue('phone_number', index)"></i>
-                </span>
-            </div>
-        </div> -->
     </div>
 </template>
 
@@ -265,12 +145,15 @@
                 this.addField[key] = false;
 
                 const values = this.filterData[key].values;
-                values.push(target.value);
 
-                this.updateFilterValues({
-                    key,
-                    values
-                });
+                if (values.indexOf(target.value) == -1) {
+                    values.push(target.value);
+    
+                    this.updateFilterValues({
+                        key,
+                        values
+                    });
+                }
 
                 target.value = "";
             },
@@ -291,6 +174,12 @@
                         key,
                         values: []
                     });
+                }
+            },
+
+            removeFilter: function ({type, key}) {
+                if (type == "add" && this.addField[key]) {
+                    this.addField[key] = false;
                 }
             }
         },

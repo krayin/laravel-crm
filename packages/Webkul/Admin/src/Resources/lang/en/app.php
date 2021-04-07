@@ -1,18 +1,19 @@
 <?php
     return [
         'layouts' => [
-            'dashboard'     => 'Dashboard',
-            'leads'         => 'Leads',
-            'contacts'      => 'Contacts',
-            'customers'     => 'Customers',
-            'companies'     => 'Companies',
-            'settings'      => 'Settings',
-            'roles'         => 'Roles',
-            'users'         => 'Users',
-            'attributes'    => 'Attributes',
-            'my-account'    => 'My Account',
-            'sign-out'      => 'Sign Out',
-            'submit'        => 'Submit',
+            'dashboard'         => 'Dashboard',
+            'leads'             => 'Leads',
+            'contacts'          => 'Contacts',
+            'customers'         => 'Customers',
+            'companies'         => 'Companies',
+            'settings'          => 'Settings',
+            'roles'             => 'Roles',
+            'users'             => 'Users',
+            'attributes'        => 'Attributes',
+            'my-account'        => 'My Account',
+            'sign-out'          => 'Sign Out',
+            'back'              => 'Back',
+            'name'              => 'Name',
         ],
 
         'contacts' => [
@@ -52,19 +53,29 @@
 
         'settings' => [
             'roles' => [
-                'title' => 'Roles',
-                'create-success' => 'Role created successfully.',
-                'update-success' => 'Role updated successfully.',
-                'delete-success' => 'Role deleted successfully.',
-                'delete-failed' => 'Role can not be deleted.',
+                'title'             => 'Roles',
+                'role'              => 'Role',
+                'edit_role'         => 'Edit Role',
+                'description'       => 'Description',
+                'create_role'       => 'Create Role',
+                'permission_type'   => 'Permission type',
+                'custom'            => 'Custom',
+                'all'               => 'All',
+                'save-btn-title'    => 'Save as Role',
+                'update-btn-title'  => 'Update Role',
+                'create-success'    => 'Role created successfully.',
+                'update-success'    => 'Role updated successfully.',
+                'delete-success'    => 'Role deleted successfully.',
+                'delete-failed'     => 'Role can not be deleted.',
                 'user-define-error' => 'Can not delete system role.',
-                'being-used' => 'Role can not be deleted, as this is being used in admin user.',
+                'being-used'        => 'Role can not be deleted, as this is being used in admin user.',
                 'last-delete-error' => 'At least one role is required.'
             ],
 
             'users' => [
                 'title'             => 'Users',
                 'create_user'       => 'Create User',
+                'edit_user'         => 'Edit User',
                 'name'              => 'Name',
                 'email'             => 'Email',
                 'back'              => 'Back',
@@ -72,12 +83,15 @@
                 'role'              => 'Role',
                 'status'            => 'Status',
                 'save-btn-title'    => 'Save as User',
+                'update-btn-title'  => 'Update User',
                 'confirm_password'  => 'Confirm password',
                 'create-success'    => 'User created successfully.',
                 'update-success'    => 'User updated successfully.',
                 'delete-success'    => 'User deleted successfully.',
                 'delete-failed'     => 'User can not be deleted.',
-                'user-define-error' => 'Can not delete system user.'
+                'user-define-error' => 'Can not delete system user.',
+                'last-delete-error' => 'At least one user is required.',
+                'user-define-error' => 'Can not delete system user.',
             ],
 
             'attributes' => [
@@ -121,8 +135,14 @@
         ],
 
         'datagrid' => [
-            'id'    => 'Id',
-            'name'  => 'Name',
+            'id'                => 'Id',
+            'name'              => 'Name',
+            'email'             => 'Email',
+            'status'            => 'Status',
+            'active'            => 'Active',
+            'inactive'          => 'Inactive',
+            'description'       => 'Description',
+            'permission_type'   => 'Permission type',
         ],
 
         'response' => [

@@ -5,7 +5,7 @@ namespace Webkul\Admin\DataGrids;
 use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
 
-class UserDataGrid extends DataGrid
+class AttributeDataGrid extends DataGrid
 {
     public function prepareQueryBuilder()
     {

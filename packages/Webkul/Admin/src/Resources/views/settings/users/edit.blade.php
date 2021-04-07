@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.settings.users.create_user') }}
+    {{ __('admin::app.settings.users.edit_user') }}
 @stop
 
 @section('content-wrapper')
@@ -12,17 +12,17 @@
             </h6>
 
             <div class="page-title">
-                <h1>{{ __('admin::app.settings.users.create_user') }}</h1>
+                <h1>{{ __('admin::app.settings.users.edit_user') }}</h1>
             </div>
         </div>
 
-        <form method="POST" action="{{ route('admin.settings.users.store') }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.settings.users.update', ['id' => $admin->id]) }}" @submit.prevent="onSubmit">
             <div class="page-content">
                 <div class="form-container">
                     <div class="panel">
                         <div class="panel-header">
                             <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.settings.users.save-btn-title') }}
+                                {{ __('admin::app.settings.users.update-btn-title') }}
                             </button>
 
                             <a href="{{ route('admin.settings.users.index') }}">
@@ -32,6 +32,8 @@
 
                         <div class="panel-body">
                             @csrf()
+                            
+                            <input name="_method" type="hidden" value="PUT">
                             
                             <div :class="`control-group ${errors.has('name') ? 'has-error' : ''}`">
                                 <label>
@@ -43,6 +45,7 @@
                                     name="name"
                                     class="control"
                                     v-validate="'required'"
+                                    value="{{ $admin->name }}"
                                     data-vv-as="{{ __('admin::app.settings.users.name') }}"
                                     placeholder="{{ __('admin::app.settings.users.name') }}"
                                 />
@@ -61,6 +64,7 @@
                                     type="email"
                                     name="email"
                                     class="control"
+                                    value="{{ $admin->email }}"
                                     v-validate="'required|email'"
                                     data-vv-as="{{ __('admin::app.settings.users.email') }}"
                                     placeholder="{{ __('admin::app.settings.users.email') }}"
@@ -78,10 +82,11 @@
 
                                 <label class="switch">
                                     <input
-                                        type="checkbox"
                                         id="status"
+                                        type="checkbox"
                                         name="status"
                                         class="control"
+                                        {{ $admin->status ? 'checked' : '' }}
                                     />
                                     <span class="slider round"></span>
                                 </label>
@@ -94,7 +99,9 @@
 
                                 <select name="role_id" class="control" data-vv-as="{{ __('admin::app.settings.users.role') }}" v-validate="'required'">
                                     @foreach ($roles as $role)
-                                        <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                        <option value="{{ $role->id }}" {{ $admin->role_id == $role->id ? 'selected' : '' }}>
+                                            {{ $role->name }}
+                                        </option>
                                     @endforeach
                                 </select>
 
@@ -113,7 +120,7 @@
                                     type="password"
                                     name="password"
                                     class="control"
-                                    v-validate="'required|min:6'"
+                                    v-validate="'min:6'"
                                     data-vv-as="{{ __('admin::app.settings.users.password') }}"
                                     placeholder="{{ __('admin::app.settings.users.password') }}"
                                 />
@@ -132,7 +139,7 @@
                                     type="password"
                                     class="control"
                                     name="confirm_password"
-                                    v-validate="'required|confirmed:password'"
+                                    v-validate="'confirmed:password'"
                                     data-vv-as="{{ __('admin::app.settings.users.confirm_password') }}"
                                     placeholder="{{ __('admin::app.settings.users.confirm_password') }}"
                                 />

@@ -3,6 +3,8 @@
         'datagrid' => [
             'title'     => 'DataGrid',
             'actions'   => 'Actions',
+            'edit'      => 'Edit',
+            'delete'    => 'Delete',
             'id'        => 'Index columns have value greater than zero only',
 
             'massaction' => [

@@ -294,8 +294,8 @@ h5 {
                 padding: 10px;
                 color: $secondary-font-color;
                 font-weight: $font-weight-medium;
-                border-bottom: 1px solid $border-color;
                 border-right: 1px solid $border-color;
+                border-bottom: 1px solid $border-color;
             }
         }
 
@@ -303,12 +303,15 @@ h5 {
             tr {
                 td {
                     padding: 10px;
-                    color: $secondary-font-color;
-                    border-bottom: 1px solid $border-color;
-                    border-right: 1px solid $border-color;
                     vertical-align: top;
+                    color: $secondary-font-color;
+                    border-right: 1px solid $border-color;
+                    border-bottom: 1px solid $border-color;
 
                     &.actions {
+                        width: 100px;
+                        white-space: nowrap;
+
                         .action {
                             display: inline-flex;
                         }
@@ -1365,6 +1368,15 @@ modal {
                 right: 10px;
             }
         }
+
+        .enter-new {
+            width: 90%;
+            display: inline-block;
+
+            input {
+                width: 100%;
+            }
+        }
     }
 
     .selected-options {
@@ -1379,8 +1391,11 @@ modal {
         margin-bottom: 10px;
     }
 
-    .fa-times {
-        cursor: pointer;
+    i {
+        &.close-icon,
+        &.add-icon {
+            cursor: pointer;
+        }
     }
 }
 
