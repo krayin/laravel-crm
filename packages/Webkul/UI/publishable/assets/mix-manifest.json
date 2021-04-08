@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=80023bef248bf17fb281",
-    "/css/ui.css": "/css/ui.css?id=da0c2ac6a32a4edcbb04",
+    "/js/ui.js": "/js/ui.js?id=bbbbef48cfd09bbb7c6a",
+    "/css/ui.css": "/css/ui.css?id=8a91458662633b0e8fb6",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-up-icon.svg": "/images/arrow-up-icon.svg?id=8e55868ef41bd032542e",
@@ -18,5 +18,9 @@
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
-    "/images/pencil-icon.svg": "/images/pencil-icon.svg?id=146a6381e3805ce04259"
+    "/images/pencil-icon.svg": "/images/pencil-icon.svg?id=146a6381e3805ce04259",
+    "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
+    "/images/arrow-left-line-icon.svg": "/images/arrow-left-line-icon.svg?id=ab5e4919b7b0c0bac8f5",
+    "/images/arrow-right-icon.svg": "/images/arrow-right-icon.svg?id=01ac0409d916c6513090",
+    "/images/arrow-right-line-icon.svg": "/images/arrow-right-line-icon.svg?id=0fdfb15c1b5a5e16958f"
 }

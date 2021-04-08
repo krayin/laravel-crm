@@ -4,10 +4,35 @@
             :key="collectionIndex"
             v-for="(row, collectionIndex) in dataCollection"
         >
+            <td v-if="massActions.length > 0">
+                <span class="checkbox">
+                    <template v-if="selectedTableRows.filter((item, index) => item == row.id).length">
+                        <input
+                            type="checkbox"
+                            checked="checked"
+                            :key="Math.random()"
+                            :id="`checkbox-${row.id}`"
+                            @change="selectTableRow(row.id)"
+                        />
+                    </template>
+
+                    <template v-else>
+                        <input
+                            type="checkbox"
+                            :key="Math.random()"
+                            :id="`checkbox-${row.id}`"
+                            @change="selectTableRow(row.id)"
+                        />
+                    </template>
+
+                    <label class="checkbox-view" for="checkbox"></label>
+                </span>
+            </td>
+
             <template v-for="(column, rowIndex) in row">
                 <td :key="rowIndex" v-html="column" v-if="rowIndex != 'action'"></td>
                 
-                <td class="actions" :key="rowIndex" v-else>
+                <td :key="rowIndex" v-else>
                     <template v-for="(action, index) in column">
                         <a
                             :key="index"
@@ -56,10 +81,22 @@
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex';
+
     export default {
-        props: ['dataCollection', 'actions'],
+        props: ['dataCollection', 'actions', 'massActions'],
+
+        computed: {
+            ...mapState({
+                selectedTableRows : state => state.selectedTableRows,
+            }),
+        },
 
         methods: {
+            ...mapActions([
+                'selectTableRow',
+            ]),
+
             doAction: function ({event, route, method}) {
                 if (confirm(this.__('ui.datagrid.massaction.delete'))) {
                     this.$http[method.toLowerCase()](route)

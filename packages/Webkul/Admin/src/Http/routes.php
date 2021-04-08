@@ -66,6 +66,10 @@ Route::group(['middleware' => ['web']], function () {
                     Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
 
                     Route::delete('{id}', 'UserController@destroy')->name('admin.settings.users.delete');
+
+                    Route::put('mass-update', 'UserController@massUpdate')->name('admin.settings.users.mass-update');
+
+                    Route::delete('mass-destroy', 'UserController@massDestroy')->name('admin.settings.users.mass-delete');
                 });
 
                 // Roles Routes

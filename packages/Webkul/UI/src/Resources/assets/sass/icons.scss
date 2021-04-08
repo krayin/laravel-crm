@@ -42,6 +42,26 @@
     background-image: url("../images/arrow-up-icon.svg");
 }
 
+.arrow-left-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-left-icon.svg");
+}
+
+.arrow-right-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-right-icon.svg");
+}
+
+.arrow-left-line-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-left-line-icon.svg");
+}
+
+.arrow-right-line-icon {
+    @extend %menu-properties;
+    background-image: url("../images/arrow-right-line-icon.svg");
+}
+
 .add-icon {
     @extend %menu-properties;
     background-image: url("../images/add-icon.svg");

@@ -83,5 +83,22 @@ class UserDataGrid extends DataGrid
 
     public function prepareMassActions()
     {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.settings.users.mass-delete'),
+            'method' => 'DELETE',
+        ]);
+
+        $this->addMassAction([
+            'type'    => 'update',
+            'label'   => trans('ui::app.datagrid.update-status'),
+            'action'  => route('admin.settings.users.mass-update'),
+            'method'  => 'PUT',
+            'options' => [
+                'Active'   => 1,
+                'Inactive' => 0,
+            ],
+        ]);
     }
 }

@@ -5,6 +5,7 @@ docker-compose.override.yml
 .idea
 .php_cs.cache
 .vscode
+todo.txt
 .vagrant
 /data
 /docker-compose-collection

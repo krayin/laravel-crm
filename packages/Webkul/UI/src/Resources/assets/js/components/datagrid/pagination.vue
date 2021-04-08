@@ -4,7 +4,7 @@
             <!-- <span>{{ paginationData.current_page *  perPage }}-{{ (paginationData.current_page *  perPage) + perPage }} of {{ paginationData.total_rows }}</span> -->
 
             <a class="page-item previous" v-if="paginationData.on_first_page">
-                <i class="fa fa-angle-left"></i>
+                <i class="icon arrow-left-line-icon"></i>
             </a>
 
             <a
@@ -16,7 +16,7 @@
                     page_number: paginationData.current_page - 1
                 })"
             >
-                <i class="fa fa-angle-left"></i>
+                <i class="icon arrow-left-line-icon"></i>
             </a>
             
             <a
@@ -28,17 +28,17 @@
                     page_number: paginationData.current_page + 1
                 })"
             >
-                <i class="fa fa-angle-right"></i>
+                <i class="icon arrow-right-line-icon"></i>
             </a>
 
             <a class="page-item next" v-else>
-                <i class="fa fa-angle-right"></i>
+                <i class="icon arrow-right-line-icon"></i>
             </a>
         </template>
 
         <template v-else>
             <a class="page-item previous" v-if="paginationData.on_first_page">
-                <i class="fa fa-angle-left"></i>
+                <i class="icon arrow-left-line-icon"></i>
             </a>
 
             <a
@@ -48,7 +48,7 @@
                 :href="paginationData.previous_page_url"
                 :data-page="paginationData.previous_page_url"
             >
-                <i class="fa fa-angle-left"></i>
+                <i class="icon arrow-left-line-icon"></i>
             </a>
 
             <template v-for="(element, index) in paginationData.elements">
@@ -81,11 +81,11 @@
                 v-if="paginationData.has_more_pages"
                 :href="paginationData.next_page_url"
             >
-                <i class="fa fa-angle-right"></i>
+                <i class="icon arrow-right-line-icon"></i>
             </a>
 
             <a class="page-item next" v-else>
-                <i class="fa fa-angle-right"></i>
+                <i class="icon arrow-right-line-icon"></i>
             </a>
         </template>
     </div>
