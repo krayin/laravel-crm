@@ -9,5 +9,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
     protected $models = [
         \Webkul\Attribute\Models\Attribute::class,
         \Webkul\Attribute\Models\AttributeOption::class,
+        \Webkul\Attribute\Models\AttributeValue::class,
     ];
 }

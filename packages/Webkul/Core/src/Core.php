@@ -121,4 +121,21 @@ class Core
 
         return $merged;
     }
+
+    /**
+     * Create singleton object through single facade.
+     *
+     * @param string $className
+     * @return mixed
+     */
+    public function getSingletonInstance($className)
+    {
+        static $instances = [];
+
+        if (array_key_exists($className, $instances)) {
+            return $instances[$className];
+        }
+
+        return $instances[$className] = app($className);
+    }
 }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateLeadsTables extends Migration
+class CreateLeadsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,8 @@ class CreateLeadsTables extends Migration
      */
     public function up()
     {
-        Schema::create('leads_tables', function (Blueprint $table) {
-            $table->id();
+        Schema::create('leads', function (Blueprint $table) {
+            $table->increments('id');
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ class CreateLeadsTables extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('leads_tables');
+        Schema::dropIfExists('leads');
     }
 }
