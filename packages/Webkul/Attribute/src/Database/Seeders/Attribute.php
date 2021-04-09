@@ -13,8 +13,6 @@ class Attribute extends Seeder
     {
         DB::table('attributes')->delete();
 
-        DB::table('attribute_translations')->delete();
-
         $now = Carbon::now();
 
         DB::table('attributes')->insert([
@@ -36,7 +34,7 @@ class Attribute extends Seeder
                 'id'                  => '2',
                 'code'                => 'description',
                 'name'                => 'Description',
-                'type'                => 'text',
+                'type'                => 'textarea',
                 'entity_type'         => 'leads',
                 'validation'          => NULL,
                 'sort_order'          => '2',
@@ -246,7 +244,7 @@ class Attribute extends Seeder
                 'id'                  => '17',
                 'code'                => 'description',
                 'name'                => 'Description',
-                'type'                => 'text',
+                'type'                => 'textarea',
                 'entity_type'         => 'products',
                 'validation'          => NULL,
                 'sort_order'          => '1',

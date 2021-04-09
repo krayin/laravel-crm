@@ -16,7 +16,13 @@ class Product extends Model implements ProductContract
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'name',
+        'sku',
+        'description',
+        'quantity',
+        'price'
+    ];
 
     /**
      * Get the product attribute values that owns the product.

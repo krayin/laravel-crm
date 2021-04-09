@@ -28,7 +28,12 @@
         ],
 
         'products' => [
-            'title' => 'Products'
+            'title'          => 'Products',
+            'add-title'      => 'Add Product',
+            'create-success' => 'Product created successfully.',
+            'update-success' => 'Product updated successfully.',
+            'delete-success' => 'Product deleted successfully.',
+            'delete-failed'  => 'Product can not be deleted.',
         ],
 
         'sessions' => [

@@ -25,5 +25,18 @@ class AttributeServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerConfig();
+    }
+
+    /**
+     * Register Configuration
+     *
+     * @return void
+     */
+    public function registerConfig(): void
+    {
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/entity_types.php', 'attribute_entity_types'
+        );
     }
 }

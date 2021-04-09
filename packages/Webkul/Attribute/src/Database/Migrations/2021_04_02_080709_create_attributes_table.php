@@ -18,7 +18,9 @@ class CreateAttributesTable extends Migration
             $table->string('code');
             $table->string('name');
             $table->string('type');
+            $table->string('lookup_module')->nullable();
             $table->string('entity_type')->default('leads');
+            $table->integer('sort_order')->nullable();
             $table->string('validation')->nullable();
             $table->boolean('is_required')->default(0);
             $table->boolean('is_unique')->default(0);

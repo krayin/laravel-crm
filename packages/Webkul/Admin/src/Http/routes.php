@@ -52,8 +52,13 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             // Products Routes
-            Route::prefix('products')->group(function () {
-                Route::get('', 'Webkul\Admin\Http\Controllers\Product\ProductController@index')->name('admin.products.index');
+            Route::group([
+                'prefix'    => 'products',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Product'
+            ], function () {
+                Route::get('', 'ProductController@index')->name('admin.products.index');
+    
+                Route::post('create', 'ProductController@store')->name('admin.products.store');
             });
 
             // Contacts Routes

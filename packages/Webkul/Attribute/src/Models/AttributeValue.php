@@ -23,6 +23,27 @@ class AttributeValue extends Model implements AttributeValueContract
     ];
 
     /**
+     * @var array
+     */
+    public static $attributeTypeFields = [
+        'text'        => 'text_value',
+        'textarea'    => 'text_value',
+        'price'       => 'float_value',
+        'boolean'     => 'boolean_value',
+        'select'      => 'integer_value',
+        'multiselect' => 'text_value',
+        'checkbox'    => 'text_value',
+        'email'       => 'json_value',
+        'address'     => 'json_value',
+        'phone'       => 'json_value',
+        'lookup'      => 'integer_value',
+        'datetime'    => 'datetime_value',
+        'date'        => 'date_value',
+        'file'        => 'text_value',
+        'image'       => 'text_value',
+    ];
+
+    /**
      * Get the attribute that owns the attribute value.
      */
     public function attribute()

@@ -12,7 +12,7 @@
             </div>
 
             <div class="page-action">
-            <a href="{{ route('admin.settings.attributes.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.attributes.add-title') }}</a>
+                <a href="{{ route('admin.settings.attributes.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.attributes.add-title') }}</a>
             </div>
         </div>
 
