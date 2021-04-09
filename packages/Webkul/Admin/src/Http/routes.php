@@ -46,9 +46,14 @@ Route::group(['middleware' => ['web']], function () {
                 });
 
                 // Companies Routes
-                Route::prefix('companies')->group(function () {
-                    Route::get('', 'CompanyController@index')->name('admin.contacts.companies.index');
+                Route::prefix('organizations')->group(function () {
+                    Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
                 });
+            });
+
+            // Products Routes
+            Route::prefix('products')->group(function () {
+                Route::get('', 'Webkul\Admin\Http\Controllers\Product\ProductController@index')->name('admin.products.index');
             });
 
             // Contacts Routes

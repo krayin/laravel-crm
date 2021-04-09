@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Contact;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 
-class CompanyController extends Controller
+class OrganizationController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,6 @@ class CompanyController extends Controller
      */
     public function index()
     {
-        return view('admin::contacts.companies.index');
+        return view('admin::contacts.organizations.index');
     }
 }

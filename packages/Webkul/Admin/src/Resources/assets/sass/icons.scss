@@ -1,34 +1,29 @@
-// Left Side Menu Icon
-%menu-properties {
+.icon {
     width: 20px;
     height: 20px;
-    display: inline-block;
-    background-size: cover;
-}
-
-.icon {
     vertical-align: top;
     display: inline-block;
     background-size: cover;
 }
 
 .dashboard-icon {
-    @extend %menu-properties;
     background-image: url("../images/dashboard-icon.svg");
 }
 
 .leads-icon {
-    @extend %menu-properties;
     background-image: url("../images/leads-icon.svg");
 }
 
 .phone-icon {
-    @extend %menu-properties;
     background-image: url("../images/phone-icon.svg");
 }
 
+.products-icon {
+    height: 18px;
+    background-image: url("../images/products-icon.svg");
+}
+
 .settings-icon {
-    @extend %menu-properties;
     background-image: url("../images/settings-icon.svg");
 }
 
@@ -51,6 +46,11 @@
     .phone-icon {
         background-image: url("../images/phone-active-icon.svg");
     }
+
+    .products-icon {
+        background-image: url("../images/products-active-icon.svg");
+    }
+
 
     .settings-icon {
         background-image: url("../images/settings-active-icon.svg");

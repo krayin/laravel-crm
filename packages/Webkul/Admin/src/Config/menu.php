@@ -25,15 +25,21 @@ return [
         'route'      => 'admin.contacts.persons.index',
         'sort'       => 1,
     ], [
-        'key'        => 'contacts.companies',
-        'name'       => 'admin::app.layouts.companies',
-        'route'      => 'admin.contacts.companies.index',
+        'key'        => 'contacts.organizations',
+        'name'       => 'admin::app.layouts.organizations',
+        'route'      => 'admin.contacts.organizations.index',
         'sort'       => 2,
+    ], [
+        'key'        => 'products',
+        'name'       => 'admin::app.layouts.products',
+        'route'      => 'admin.products.index',
+        'sort'       => 3,
+        'icon-class' => 'products-icon',
     ], [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.users.index',
-        'sort'       => 3,
+        'sort'       => 4,
         'icon-class' => 'settings-icon',
     ], [
         'key'        => 'settings.roles',

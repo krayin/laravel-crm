@@ -1,17 +1,11 @@
-%menu-properties {
+.icon {
     width: 20px;
     height: 20px;
     display: inline-block;
     background-size: cover;
 }
 
-.icon {
-    display: inline-block;
-    background-size: cover;
-}
-
 .menu-fold-icon {
-    @extend %menu-properties;
     width: 24px;
     height: 24px;
     background-image: url("../images/menu-fold-icon.svg");
@@ -22,7 +16,6 @@
 }
 
 .menu-unfold-icon {
-    @extend %menu-properties;
     width: 24px;
     height: 24px;
     background-image: url("../images/menu-unfold-icon.svg");
@@ -33,86 +26,69 @@
 }
 
 .arrow-down-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-down-icon.svg");
 }
 
 .arrow-up-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-up-icon.svg");
 }
 
 .arrow-left-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-left-icon.svg");
 }
 
 .arrow-right-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-right-icon.svg");
 }
 
 .arrow-left-line-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-left-line-icon.svg");
 }
 
 .arrow-right-line-icon {
-    @extend %menu-properties;
     background-image: url("../images/arrow-right-line-icon.svg");
 }
 
 .add-icon {
-    @extend %menu-properties;
     background-image: url("../images/add-icon.svg");
 }
 
 .close-icon {
-    @extend %menu-properties;
     background-image: url("../images/close-icon.svg");
 }
 
 .close-white-icon {
-    @extend %menu-properties;
     background-image: url("../images/close-white-icon.svg");
 }
 
 .circle-check-white-icon {
-    @extend %menu-properties;
     background-image: url("../images/circle-check-white-icon.svg");
 }
 
 .circle-close-white-icon {
-    @extend %menu-properties;
     background-image: url("../images/circle-close-white-icon.svg");
 }
 
 .circle-info-white-icon {
-    @extend %menu-properties;
     background-image: url("../images/circle-info-white-icon.svg");
 }
 
 .calendar-icon {
-    @extend %menu-properties;
     background-image: url("../images/calendar-icon.svg");
 }
 
 .time-icon {
-    @extend %menu-properties;
     background-image: url("../images/time-icon.svg");
 }
 
 .align-justify-icon {
-    @extend %menu-properties;
     background-image: url("../images/align-justify-icon.svg");
 }
 
 .trash-icon {
-    @extend %menu-properties;
     background-image: url("../images/trash-icon.svg");
 }
 
 .pencil-icon {
-    @extend %menu-properties;
     background-image: url("../images/pencil-icon.svg");
 }

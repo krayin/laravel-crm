@@ -1,25 +1,34 @@
 <?php
     return [
         'layouts' => [
-            'dashboard'         => 'Dashboard',
-            'leads'             => 'Leads',
-            'contacts'          => 'Contacts',
-            'persons'           => 'Persons',
-            'companies'         => 'Companies',
-            'settings'          => 'Settings',
-            'roles'             => 'Roles',
-            'users'             => 'Users',
-            'attributes'        => 'Attributes',
-            'my-account'        => 'My Account',
-            'sign-out'          => 'Sign Out',
-            'back'              => 'Back',
-            'name'              => 'Name',
+            'dashboard'     => 'Dashboard',
+            'leads'         => 'Leads',
+            'contacts'      => 'Contacts',
+            'persons'       => 'Persons',
+            'organizations' => 'Organizations',
+            'products'      => 'Products',
+            'settings'      => 'Settings',
+            'roles'         => 'Roles',
+            'users'         => 'Users',
+            'attributes'    => 'Attributes',
+            'my-account'    => 'My Account',
+            'sign-out'      => 'Sign Out',
+            'back'          => 'Back',
+            'name'          => 'Name',
         ],
 
         'contacts' => [
             'persons' => [
                 'title' => 'Persons'
+            ],
+
+            'organizations' => [
+                'title' => 'Organizations'
             ]
+        ],
+
+        'products' => [
+            'title' => 'Products'
         ],
 
         'sessions' => [
