@@ -16,13 +16,13 @@ return [
     ], [
         'key'        => 'contacts',
         'name'       => 'admin::app.layouts.contacts',
-        'route'      => 'admin.contacts.customers.index',
+        'route'      => 'admin.contacts.persons.index',
         'sort'       => 3,
         'icon-class' => 'phone-icon',
     ], [
-        'key'        => 'contacts.customers',
-        'name'       => 'admin::app.layouts.customers',
-        'route'      => 'admin.contacts.customers.index',
+        'key'        => 'contacts.persons',
+        'name'       => 'admin::app.layouts.persons',
+        'route'      => 'admin.contacts.persons.index',
         'sort'       => 1,
     ], [
         'key'        => 'contacts.companies',

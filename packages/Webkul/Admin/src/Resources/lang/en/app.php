@@ -4,7 +4,7 @@
             'dashboard'         => 'Dashboard',
             'leads'             => 'Leads',
             'contacts'          => 'Contacts',
-            'customers'         => 'Customers',
+            'persons'           => 'Persons',
             'companies'         => 'Companies',
             'settings'          => 'Settings',
             'roles'             => 'Roles',
@@ -17,8 +17,8 @@
         ],
 
         'contacts' => [
-            'customers' => [
-                'title' => 'Customers'
+            'persons' => [
+                'title' => 'Persons'
             ]
         ],
 

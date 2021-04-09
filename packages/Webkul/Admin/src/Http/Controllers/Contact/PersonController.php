@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Contact;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 
-class CustomerController extends Controller
+class PersonController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,6 +14,6 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        return view('admin::contacts.customers.index');
+        return view('admin::contacts.persons.index');
     }
 }

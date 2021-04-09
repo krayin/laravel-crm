@@ -36,15 +36,18 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             // Contacts Routes
-            Route::prefix('contacts')->group(function () {
+            Route::group([
+                'prefix'    => 'contacts',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Contact'
+            ], function () {
                 // Customers Routes
-                Route::prefix('customers')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.contacts.customers.index');
+                Route::prefix('persons')->group(function () {
+                    Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
                 });
 
                 // Companies Routes
                 Route::prefix('companies')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.contacts.companies.index');
+                    Route::get('', 'CompanyController@index')->name('admin.contacts.companies.index');
                 });
             });
 
