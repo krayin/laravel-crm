@@ -1,0 +1,39 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class CreateLeadsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::create('leads', function (Blueprint $table) {
+            $table->increments('id');
+            $table->boolean('status')->nullable();
+            $table->text('lost_reason')->nullable();
+            $table->datetime('lost_at')->nullable();
+            $table->datetime('won_at')->nullable();
+            $table->datetime('closed_at')->nullable();
+
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->timestamps();
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::dropIfExists('leads');
+    }
+}

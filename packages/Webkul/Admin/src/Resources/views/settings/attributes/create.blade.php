@@ -50,11 +50,14 @@
                                     <option value="boolean">{{ __('admin::app.settings.attributes.boolean') }}</option>
                                     <option value="select">{{ __('admin::app.settings.attributes.select') }}</option>
                                     <option value="multiselect">{{ __('admin::app.settings.attributes.multiselect') }}</option>
+                                    <option value="checkbox">{{ __('admin::app.settings.attributes.checkbox') }}</option>
+                                    <option value="email">{{ __('admin::app.settings.attributes.email') }}</option>
+                                    <option value="address">{{ __('admin::app.settings.attributes.address') }}</option>
+                                    <option value="phone">{{ __('admin::app.settings.attributes.phone') }}</option>
                                     <option value="datetime">{{ __('admin::app.settings.attributes.datetime') }}</option>
                                     <option value="date">{{ __('admin::app.settings.attributes.date') }}</option>
                                     <option value="image">{{ __('admin::app.settings.attributes.image') }}</option>
                                     <option value="file">{{ __('admin::app.settings.attributes.file') }}</option>
-                                    <option value="checkbox">{{ __('admin::app.settings.attributes.checkbox') }}</option>
                                 </select>
                             </div>
 

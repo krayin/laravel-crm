@@ -16,12 +16,15 @@ trait CustomAttribute {
         'boolean'     => 'boolean_value',
         'select'      => 'integer_value',
         'multiselect' => 'text_value',
+        'checkbox'    => 'text_value',
+        'email'       => 'json_value',
+        'address'     => 'json_value',
+        'phone'       => 'json_value',
         'lookup'      => 'integer_value',
         'datetime'    => 'datetime_value',
         'date'        => 'date_value',
         'file'        => 'text_value',
         'image'       => 'text_value',
-        'checkbox'    => 'text_value',
     ];
 
     /**
