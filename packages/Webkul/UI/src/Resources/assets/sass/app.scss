@@ -296,6 +296,21 @@ h5 {
                 font-weight: $font-weight-medium;
                 border-right: 1px solid $border-color;
                 border-bottom: 1px solid $border-color;
+
+                &.actions,
+                &.master-checkbox {
+                    width: 100px;
+                    white-space: nowrap;
+
+                    .action {
+                        display: inline-flex;
+                    }
+
+                    .icon {
+                        cursor: pointer;
+                        vertical-align: middle;
+                    }
+                }
             }
         }
 
@@ -307,20 +322,6 @@ h5 {
                     color: $secondary-font-color;
                     border-right: 1px solid $border-color;
                     border-bottom: 1px solid $border-color;
-
-                    &.actions {
-                        width: 100px;
-                        white-space: nowrap;
-
-                        .action {
-                            display: inline-flex;
-                        }
-
-                        .icon {
-                            cursor: pointer;
-                            vertical-align: middle;
-                        }
-                    }
 
                     &.empty {
                         text-align: center;
@@ -503,6 +504,27 @@ h5 {
             .control {
                 font-size: 16px;
             }
+        }
+    }
+
+    .tabs-right-container {
+        float: right;
+
+        section {
+            margin-top: 20px;
+            margin-right: 5px;
+            display: inline-block;
+        }
+
+        .covered {
+            border: 1px solid;
+            padding: 7px ​10px;
+        }
+    }
+
+    .mass-actions {
+        .control {
+            width: 140px;
         }
     }
 }

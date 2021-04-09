@@ -31,6 +31,7 @@
             'lesse'                 => 'Less than equals to',
             'value'                 => 'Select Value',
             'true'                  => 'True / Active',
+            'update-status'         => 'Update Status',
             'false'                 => 'False / Inactive',
             'between'               => 'Is between',
             'apply'                 => 'Apply',

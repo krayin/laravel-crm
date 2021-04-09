@@ -1,20 +1,22 @@
 <template>
-    <div class="table-body" v-if="resultLoaded">
+    <div class="table-body" v-if="resultLoaded && Object.keys(tableData).length > 0">
         <filter-component
             :tabs="tabs"
-            :results="encodedResult"
-            :pagination-data="encodedResult.pagination_data"
+            :results="tableData"
+            :pagination-data="tableData.pagination_data"
         ></filter-component>
 
         <table>
             <thead-component
-                :columns="encodedResult.columns"
-                :actions="encodedResult.actions"
+                :columns="tableData.columns"
+                :actions="tableData.actions"
+                :mass-actions="tableData.columns"
             ></thead-component>
 
             <tbody-component
-                :actions="encodedResult.actions"
-                :data-collection="encodedResult.records.data"
+                :actions="tableData.actions"
+                :mass-actions="tableData.columns"
+                :data-collection="tableData.records.data"
             ></tbody-component>
         </table>
 
@@ -23,6 +25,8 @@
 </template>
 
 <script>
+    import { mapState, mapActions } from 'vuex';
+
     export default {
         props: [
             'filterIndex',
@@ -35,53 +39,16 @@
 
         data: function () {
             return {
-                resultLoaded: false,
-                tabs: {
-                    type: [{
-                        'name'      : 'All',
-                        'isActive'  : true,
-                        'key'       : 'all',
-                    }, {
-                        'name'      : 'Call',
-                        'isActive'  : false,
-                        'key'       : 'call',
-                    }, {
-                        'name'      : 'Mail',
-                        'isActive'  : false,
-                        'key'       : 'mail',
-                    }, {
-                        'name'      : 'Meeting',
-                        'isActive'  : false,
-                        'key'       : 'meeting',
-                    }],
-
-                    duration: [{
-                        'name'      : 'Yesterday',
-                        'isActive'  : true,
-                        'key'       : 'yesterday',
-                    }, {
-                        'name'      : 'Today',
-                        'isActive'  : false,
-                        'key'       : 'today',
-                    }, {
-                        'name'      : 'Tomorrow',
-                        'isActive'  : false,
-                        'key'       : 'tomorrow',
-                    }, {
-                        'name'      : 'This week',
-                        'isActive'  : false,
-                        'key'       : 'this_week',
-                    }, {
-                        'name'      : 'This month',
-                        'isActive'  : false,
-                        'key'       : 'this_month',
-                    }, {
-                        'name'      : 'Custom',
-                        'isActive'  : false,
-                        'key'       : 'custom',
-                    }],
-                }
+                resultLoaded: true,
+                previousURL: null,
             }
+        },
+        
+        computed: {
+            ...mapState({
+                tabs : state => state.tabs,
+                tableData : state => state.tableData,
+            }),
         },
 
         mounted: function () {
@@ -102,24 +69,37 @@
         },
 
         methods: {
-            getData: ({newParams, clean_uri, self, url}) => {
-                self.resultLoaded = false;
+            ...mapActions([
+                'updateTableData',
+            ]),
 
-                url = url ? url : `${window.location.origin}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
-
-                self.$http.get(url)
-                    .then(response => {
-                        self.resultLoaded = true;
-                        self.encodedResult = response.data;
-
-                        if (newParams) {
-                            self.updatedURI(newParams);
-                        }
-                    })
-                    .catch(error => {
-                        // @TODO
-                        // remove filter from filters array
-                    })
+            getData: ({newParams, clean_uri, self, url, usePrevious}) => {
+                if (self.resultLoaded) {
+                    self.resultLoaded = false;
+    
+                    if (usePrevious) {
+                        url = self.previousURL;
+                    } else {
+                        url = url ? url : `${window.location.origin}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
+                        self.previousURL = url;
+                    }
+    
+                    self.$http.get(url)
+                        .then(response => {
+                            self.resultLoaded = true;
+    
+                            // update store data
+                            self.updateTableData(response.data);
+    
+                            if (newParams) {
+                                self.updatedURI(newParams);
+                            }
+                        })
+                        .catch(error => {
+                            // @TODO
+                            // remove filter from filters array
+                        })
+                }
             },
 
             updatedURI: function (params) {

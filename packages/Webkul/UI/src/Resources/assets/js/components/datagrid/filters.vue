@@ -1,5 +1,6 @@
 <template>
     <div class="grid-container">
+        <!-- searchbox and filters section -->
         <div class="datagrid-filters" id="datagrid-filters">
             <div class="filter-left">
                 <div class="search-filter control-group">
@@ -49,6 +50,7 @@
             </div>
         </div>
 
+        <!-- applied filters section -->
         <div class="filtered-tags">
             <template v-for="(filter, index) in filters">
                 <div
@@ -67,32 +69,54 @@
             </template>
         </div>
 
-        <tabs
-            event-value-key="value"
-            event-key="update_filter"
-            class="pill d-inline-block"
-            :tabs-collection="tabs.type"
-            :event-data="{key: 'type', 'cond' : 'eq'}"
-        ></tabs>
-
-        <div class="tabs-right-container">
-            <section>
-                <pagination-component :pagination-data="paginationData" tab-view="true" :per-page="perPage"></pagination-component>
-            </section>
-
+        <!-- filters section -->
+        <template>
             <tabs
                 event-value-key="value"
                 event-key="update_filter"
-                class="group d-inline-block"
-                :tabs-collection="tabs.duration"
-                :event-data="{key: 'duration', 'cond' : 'eq'}"
+                class="pill d-inline-block"
+                :tabs-collection="tabs.type"
+                :event-data="{key: 'type', 'cond' : 'eq'}"
             ></tabs>
+
+            <div class="tabs-right-container">
+                <section>
+                    <pagination-component :pagination-data="paginationData" tab-view="true" :per-page="perPage"></pagination-component>
+                </section>
+
+                <tabs
+                    event-value-key="value"
+                    event-key="update_filter"
+                    class="group d-inline-block"
+                    :tabs-collection="tabs.duration"
+                    :event-data="{key: 'duration', 'cond' : 'eq'}"
+                ></tabs>
+            </div>
+        </template>
+
+        <!-- mass actions section -->
+        <div class="mass-actions control-group" v-if="selectedTableRows.length > 0">
+            <select name="mass_action" class="control" v-model="massActionValue" v-validate="'required'">
+                <option :value="massAction" :key="index" v-for="(massAction, index) in tableData.massactions">
+                    {{ massAction.label }}
+                </option>
+            </select>
+
+            <select class="control" v-model="massActionOptionValue" name="update-options" v-validate="'required'" v-if="massActionValue.type == 'update'">
+                <option :key="key" v-for="(option, key) in massActionValue.options" :value="option">
+                    {{ key }}
+                </option>
+            </select>
+
+            <button type="button" class="badge badge-md badge-primary" @click="onSubmit">
+                {{ __('ui.datagrid.submit') }}
+            </button>
         </div>
     </div>
 </template>
 
 <script>
-    import { mapActions } from 'vuex';
+    import { mapState, mapActions } from 'vuex';
 
     export default {
         props: [
@@ -103,30 +127,14 @@
 
         data: function () {
             return {
-                filterIndex: this.results['index'],
-                gridCurrentData: this.results['records'],
-                massActions: this.results['massactions'],
-                massActionsToggle: false,
-                massActionTarget: null,
-                massActionType: null,
-                massActionValues: [],
-                massActionTargets: [],
-                massActionUpdateValue: null,
+                massActionValue: {},
+                massActionOptionValue: null,
                 url: new URL(window.location.href),
                 currentSort: null,
-                dataIds: [],
-                allSelected: false,
                 sortDesc: 'desc',
                 sortAsc: 'asc',
-                sortUpIcon: 'sort-up-icon',
-                sortDownIcon: 'sort-down-icon',
-                currentSortIcon: null,
-                isActive: false,
-                isHidden: true,
                 searchValue: '',
-                filterColumn: true,
                 filters: [],
-                columnOrAlias: '',
                 type: null,
                 columns: this.results['columns'],
                 stringCondition: null,
@@ -135,18 +143,19 @@
                 datetimeCondition: null,
                 stringValue: null,
                 booleanValue: null,
-                datetimeValue: '2000-01-01',
-                numberValue: 0,
-                stringConditionSelect: false,
-                booleanConditionSelect: false,
-                numberConditionSelect: false,
-                datetimeConditionSelect: false,
                 perPage: 10,
                 extraFilters: this.results['extraFilters'],
                 debounce: {},
                 ignoreDisplayFilter: ['duration', 'type'],
                 sidebarFilter: false,
             }
+        },
+
+        computed: {
+            ...mapState({
+                tableData : state => state.tableData,
+                selectedTableRows : state => state.selectedTableRows,
+            }),
         },
 
         mounted: function () {
@@ -168,110 +177,14 @@
         methods: {
             ...mapActions([
                 'toggleSidebarFilter',
+                'selectAllRows'
             ]),
-
-            getColumnOrAlias: function (columnOrAlias) {
-                this.columnOrAlias = columnOrAlias;
-
-                this.columns.forEach((column, index) => {
-                    if (column.index === this.columnOrAlias) {
-                        this.type = column.type;
-
-                        switch (this.type) {
-                            case 'string': {
-                                this.stringConditionSelect = true;
-                                this.datetimeConditionSelect = false;
-                                this.booleanConditionSelect = false;
-                                this.numberConditionSelect = false;
-
-                                this.nullify();
-                                break;
-                            }
-                            case 'datetime': {
-                                this.datetimeConditionSelect = true;
-                                this.stringConditionSelect = false;
-                                this.booleanConditionSelect = false;
-                                this.numberConditionSelect = false;
-
-                                this.nullify();
-                                break;
-                            }
-                            case 'boolean': {
-                                this.booleanConditionSelect = true;
-                                this.datetimeConditionSelect = false;
-                                this.stringConditionSelect = false;
-                                this.numberConditionSelect = false;
-
-                                this.nullify();
-                                break;
-                            }
-                            case 'number': {
-                                this.numberConditionSelect = true;
-                                this.booleanConditionSelect = false;
-                                this.datetimeConditionSelect = false;
-                                this.stringConditionSelect = false;
-
-                                this.nullify();
-                                break;
-                            }
-                            case 'price': {
-                                this.numberConditionSelect = true;
-                                this.booleanConditionSelect = false;
-                                this.datetimeConditionSelect = false;
-                                this.stringConditionSelect = false;
-
-                                this.nullify();
-                                break;
-                            }
-
-                        }
-                    }
-                });
-            },
 
             nullify: function () {
                 this.stringCondition = null;
                 this.datetimeCondition = null;
                 this.booleanCondition = null;
                 this.numberCondition = null;
-            },
-
-            filterNumberInput: function(e){
-                this.numberValue = e.target.value.replace(/[^0-9\,\.]+/g, '');                            
-            },
-
-            getResponse: function() {
-                label = '';
-
-                for (let colIndex in this.columns) {
-                    if (this.columns[colIndex].index == this.columnOrAlias) {
-                        label = this.columns[colIndex].label;
-                        break;
-                    }
-                }
-
-                if (this.type === 'string' && this.stringValue !== null) {
-                    this.formURL(this.columnOrAlias, this.stringCondition, encodeURIComponent(this.stringValue), label)
-                } else if (this.type === 'number') {
-                    indexConditions = true;
-
-                    if (this.filterIndex === this.columnOrAlias
-                        && (this.numberValue === 0 || this.numberValue < 0)) {
-                        indexConditions = false;
-
-                        alert(this.__('ui.datagrid.zero-index'));
-                    }
-
-                    if (indexConditions) {
-                        this.formURL(this.columnOrAlias, this.numberCondition, this.numberValue, label);
-                    }
-                } else if (this.type === 'boolean') {
-                    this.formURL(this.columnOrAlias, this.booleanCondition, this.booleanValue, label);
-                } else if (this.type === 'datetime') {
-                    this.formURL(this.columnOrAlias, this.datetimeCondition, this.datetimeValue, label);
-                } else if (this.type === 'price') {
-                    this.formURL(this.columnOrAlias, this.numberCondition, this.numberValue, label);
-                }
             },
 
             sortCollection: function (alias) {
@@ -304,21 +217,6 @@
                     this.arrayFromUrl();
                 }
 
-                for (let id in this.massActions) {
-                    targetObj = {
-                        'type': this.massActions[id].type,
-                        'action': this.massActions[id].action
-                    };
-
-                    this.massActionTargets.push(targetObj);
-
-                    targetObj = {};
-
-                    if (this.massActions[id].type === 'update') {
-                        this.massActionValues = this.massActions[id].options;
-                    }
-                }
-
                 this.setActiveTabs();
             },
 
@@ -328,30 +226,6 @@
                         this.currentSort = this.filters[i].val;
                     }
                 }
-            },
-
-            changeMassActionTarget: function () {
-                if (this.massActionType === 'delete') {
-                    for (let i in this.massActionTargets) {
-                        if (this.massActionTargets[i].type === 'delete') {
-                            this.massActionTarget = this.massActionTargets[i].action;
-
-                            break;
-                        }
-                    }
-                }
-
-                if (this.massActionType === 'update') {
-                    for (let i in this.massActionTargets) {
-                        if (this.massActionTargets[i].type === 'update') {
-                            this.massActionTarget = this.massActionTargets[i].action;
-
-                            break;
-                        }
-                    }
-                }
-
-                document.getElementById('mass-action-form').action = this.massActionTarget;
             },
 
             //make array of filters, sort and search
@@ -536,7 +410,6 @@
                     newParams,
                     clean_uri
                 });
-                // window.location.href = clean_uri + newParams;
             },
 
             //make the filter array from url after being redirected
@@ -620,108 +493,6 @@
                 }
             },
 
-            removeFilter: function (filterToRemove) {
-                this.filters = this.filters.filter(filter => {
-                    if (
-                        filter.column === filterToRemove.column
-                        && filter.cond === filterToRemove.cond
-                        && filter.val === filterToRemove.val
-                    ) {
-                        return false;
-                    }
-
-                    return true;
-                });
-
-                this.makeURL();
-            },
-
-            //triggered when any select box is clicked in the datagrid
-            select: function () {
-                this.allSelected = false;
-
-                if (this.dataIds.length === 0) {
-                    this.massActionsToggle = false;
-                    this.massActionType = null;
-                } else {
-                    this.massActionsToggle = true;
-                }
-            },
-
-            //triggered when master checkbox is clicked
-            selectAll: function () {
-                this.dataIds = [];
-
-                this.massActionsToggle = true;
-
-                if (this.allSelected) {
-                    if (this.gridCurrentData.hasOwnProperty("data")) {
-                        for (let currentData in this.gridCurrentData.data) {
-
-                            let i = 0;
-                            for (let currentId in this.gridCurrentData.data[currentData]) {
-                                if (i == 0) {
-                                    this.dataIds.push(this.gridCurrentData.data[currentData][this.filterIndex]);
-                                }
-
-                                i++;
-                            }
-                        }
-                    } else {
-                        for (currentData in this.gridCurrentData) {
-
-                            let i = 0;
-                            for (let currentId in this.gridCurrentData[currentData]) {
-                                if (i === 0)
-                                    this.dataIds.push(this.gridCurrentData[currentData][currentId]);
-
-                                i++;
-                            }
-                        }
-                    }
-                }
-            },
-
-            doAction: function (e) {
-                var element = e.currentTarget;
-
-                if (confirm(this.__('ui::app.datagrid.massaction.delete'))) {
-                    axios.post(element.getAttribute('data-action'), {
-                        _token: element.getAttribute('data-token'),
-                        _method: element.getAttribute('data-method')
-                    }).then(function (response) {
-                        this.result = response;
-
-                        if (response.data.redirect) {
-                            window.location.href = response.data.redirect;
-                        } else {
-                            location.reload();
-                        }
-                    }).catch(function (error) {
-                        location.reload();
-                    });
-
-                    e.preventDefault();
-                } else {
-                    e.preventDefault();
-                }
-            },
-
-            captureColumn: function (id) {
-                element = document.getElementById(id);
-
-            },
-
-            removeMassActions: function () {
-                this.dataIds = [];
-
-                this.massActionsToggle = false;
-
-                this.allSelected = false;
-
-                this.massActionType = null;
-            },
-
             paginate: function (e) {
                 for (let i = 0; i < this.filters.length; i++) {
                     if (this.filters[i].column == 'perPage') {
@@ -782,24 +553,35 @@
                         this.tabs[index][0].isActive = true;
                     }
                 }
-            }
+            },
+
+            onSubmit: function (event) {
+                this.$root.toggleButtonDisable(true);
+
+                this.$validator.validateAll()
+                    .then(result => {
+                        if (result) {
+                            this.$http[this.massActionValue.method.toLowerCase()](this.massActionValue.action, {
+                                rows: this.selectedTableRows,
+                                value: this.massActionOptionValue
+                            })
+                                .then(response => {
+                                    EventBus.$emit('refresh_table_data', {usePrevious: true});
+
+                                    this.selectAllRows(false);
+
+                                    this.$root.toggleButtonDisable(false);
+                                })
+                                .catch(error => {
+                                    this.$root.toggleButtonDisable(false);
+                                });
+                        } else {
+                            this.$root.toggleButtonDisable(false);
+
+                            EventBus.$emit('onFormError')
+                        }
+                    });
+            },
         }
     };
 </script>
-
-<style lang="scss" scoped>
-    .tabs-right-container {
-        float: right;
-
-        section {
-            margin-top: 20px;
-            margin-right: 5px;
-            display: inline-block;
-        }
-
-        .covered {
-            border: 1px solid;
-            padding: 7px ​10px;
-        }
-    }
-</style>
