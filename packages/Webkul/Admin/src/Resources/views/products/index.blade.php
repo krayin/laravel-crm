@@ -34,7 +34,6 @@
             <div slot="body">
                 @csrf()
                 
-                <input type="hidden" name="entity_type" value="products"/>
                 <input type="hidden" name="quick_add" value="1"/>
 
                 @include('admin::common.custom-attribute-controls', [

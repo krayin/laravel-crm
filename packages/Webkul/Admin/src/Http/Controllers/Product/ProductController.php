@@ -26,6 +26,8 @@ class ProductController extends Controller
     public function __construct(ProductRepository $productRepository)
     {
         $this->productRepository = $productRepository;
+
+        request()->request->add(['entity_type' => 'Webkul\Product\Models\Product']);
     }
 
     /**

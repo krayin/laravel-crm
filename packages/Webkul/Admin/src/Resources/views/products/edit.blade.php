@@ -30,8 +30,6 @@
                             @csrf()
                             <input name="_method" type="hidden" value="PUT">
                 
-                            <input type="hidden" name="entity_type" value="products"/>
-            
                             @include('admin::common.custom-attribute-controls', [
                                 'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
