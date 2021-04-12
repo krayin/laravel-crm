@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
 use Webkul\User\Database\Seeders\DatabaseSeeder as CRMSeeder;
-use Webkul\Attribute\Database\Seeders\Database as AttributeDatabaseSeeder;
+use Webkul\Admin\Database\Seeders\Database as AttributeDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {

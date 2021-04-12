@@ -23,7 +23,16 @@
             ],
 
             'organizations' => [
-                'title' => 'Organizations'
+                'title'          => 'Organizations',
+                'add-title'      => 'Add Organization',
+                'edit-title'     => 'Edit Organization',
+                'save-btn-title' => 'Save as Organization',
+                'back'           => 'Back',
+                'cancel'         => 'Cancel',
+                'create-success' => 'Organization created successfully.',
+                'update-success' => 'Organization updated successfully.',
+                'delete-success' => 'Organization deleted successfully.',
+                'delete-failed'  => 'Organization can not be deleted.',
             ]
         ],
 
@@ -33,6 +42,7 @@
             'edit-title'     => 'Edit Product',
             'save-btn-title' => 'Save as Product',
             'back'           => 'Back',
+            'cancel'         => 'Cancel',
             'create-success' => 'Product created successfully.',
             'update-success' => 'Product updated successfully.',
             'delete-success' => 'Product deleted successfully.',

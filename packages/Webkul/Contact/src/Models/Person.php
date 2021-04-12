@@ -16,13 +16,27 @@ class Person extends Model implements PersonContract
      *
      * @var array
      */
-    protected $fillable = [];
+    protected $fillable = [
+        'first_name',
+        'last_name',
+        'emails',
+        'contact_numbers',
+        'organization_id',
+    ];
 
     /**
-     * Get the product attribute values that owns the product.
+     * Get the organization that owns the person.
+     */
+    public function organization()
+    {
+        return $this->belongsTo(OrganizationProxy::modelClass());
+    }
+
+    /**
+     * Get the attribute values that owns the organization.
      */
     public function attribute_values()
     {
-        return $this->hasMany(AttributeValueProxy::modelClass(), 'entity_id')->where('entity_type', 'persons');
+        return $this->morphMany(AttributeValueProxy::modelClass(), 'entity');
     }
 }

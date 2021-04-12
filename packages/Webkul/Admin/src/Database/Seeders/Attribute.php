@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Attribute\Database\Seeders;
+namespace Webkul\Admin\Database\Seeders;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -119,7 +119,7 @@ class Attribute extends Seeder
                 'code'                => 'first_name',
                 'name'                => 'First Name',
                 'type'                => 'text',
-                'entity_type'         => 'customers',
+                'entity_type'         => 'persons',
                 'validation'          => NULL,
                 'sort_order'          => '1',
                 'is_required'         => '1',
@@ -133,7 +133,7 @@ class Attribute extends Seeder
                 'code'                => 'last_name',
                 'name'                => 'Last Name',
                 'type'                => 'text',
-                'entity_type'         => 'customers',
+                'entity_type'         => 'persons',
                 'validation'          => NULL,
                 'sort_order'          => '2',
                 'is_required'         => '1',
@@ -144,10 +144,10 @@ class Attribute extends Seeder
                 'updated_at'          => $now,
             ], [
                 'id'                  => '10',
-                'code'                => 'email',
-                'name'                => 'Email',
+                'code'                => 'emails',
+                'name'                => 'Emails',
                 'type'                => 'email',
-                'entity_type'         => 'customers',
+                'entity_type'         => 'persons',
                 'validation'          => NULL,
                 'sort_order'          => '3',
                 'is_required'         => '1',
@@ -158,13 +158,13 @@ class Attribute extends Seeder
                 'updated_at'          => $now,
             ], [
                 'id'                  => '11',
-                'code'                => 'contact_no',
-                'name'                => 'Contact No',
+                'code'                => 'contact_numbers',
+                'name'                => 'Contact Numbers',
                 'type'                => 'phone',
-                'entity_type'         => 'customers',
+                'entity_type'         => 'persons',
                 'validation'          => 'numeric',
                 'sort_order'          => '4',
-                'is_required'         => '1',
+                'is_required'         => '0',
                 'is_unique'           => '0',
                 'quick_add'           => '1',
                 'is_user_defined'     => '0',
@@ -172,24 +172,10 @@ class Attribute extends Seeder
                 'updated_at'          => $now,
             ], [
                 'id'                  => '12',
-                'code'                => 'address',
-                'name'                => 'Address',
-                'type'                => 'address',
-                'entity_type'         => 'customers',
-                'validation'          => NULL,
-                'sort_order'          => '05',
-                'is_required'         => '1',
-                'is_unique'           => '0',
-                'quick_add'           => '1',
-                'is_user_defined'     => '0',
-                'created_at'          => $now,
-                'updated_at'          => $now,
-            ], [
-                'id'                  => '13',
                 'code'                => 'organization',
                 'name'                => 'Organization',
                 'type'                => 'lookup',
-                'entity_type'         => 'customers',
+                'entity_type'         => 'persons',
                 'validation'          => NULL,
                 'sort_order'          => '6',
                 'is_required'         => '1',
@@ -199,7 +185,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '14',
+                'id'                  => '13',
                 'code'                => 'name',
                 'name'                => 'Name',
                 'type'                => 'text',
@@ -213,7 +199,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '15',
+                'id'                  => '14',
                 'code'                => 'address',
                 'name'                => 'Address',
                 'type'                => 'address',
@@ -227,7 +213,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '16',
+                'id'                  => '15',
                 'code'                => 'name',
                 'name'                => 'Name',
                 'type'                => 'text',
@@ -241,7 +227,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '17',
+                'id'                  => '16',
                 'code'                => 'description',
                 'name'                => 'Description',
                 'type'                => 'textarea',
@@ -255,7 +241,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '18',
+                'id'                  => '17',
                 'code'                => 'sku',
                 'name'                => 'SKU',
                 'type'                => 'text',
@@ -269,7 +255,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '19',
+                'id'                  => '18',
                 'code'                => 'quantity',
                 'name'                => 'Quantity',
                 'type'                => 'text',
@@ -283,7 +269,7 @@ class Attribute extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '20',
+                'id'                  => '19',
                 'code'                => 'price',
                 'name'                => 'Price',
                 'type'                => 'text',

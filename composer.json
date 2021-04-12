@@ -43,6 +43,7 @@
             "Database\\Seeders\\": "database/seeders/",
             "Webkul\\Admin\\": "packages/Webkul/Admin/src",
             "Webkul\\Attribute\\": "packages/Webkul/Attribute/src",
+            "Webkul\\Contact\\": "packages/Webkul/Contact/src",
             "Webkul\\Core\\": "packages/Webkul/Core/src",
             "Webkul\\Lead\\": "packages/Webkul/Lead/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",

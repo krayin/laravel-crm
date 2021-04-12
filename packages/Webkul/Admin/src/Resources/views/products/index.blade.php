@@ -23,12 +23,12 @@
 
     <form action="{{ route('admin.products.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addProductModal" :is-open="modalIds.addProductModal">
-            <h3 slot="header-title">Add Product</h3>
+            <h3 slot="header-title">{{ __('admin::app.products.add-title') }}</h3>
             
             <div slot="header-actions">
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addProductModal')">Cancel</button>
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addProductModal')">{{ __('admin::app.products.cancel') }}</button>
 
-                <button class="btn btn-sm btn-primary">Save</button>
+                <button class="btn btn-sm btn-primary">{{ __('admin::app.products.save-btn-title') }}</button>
             </div>
 
             <div slot="body">

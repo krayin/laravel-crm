@@ -48,6 +48,12 @@ Route::group(['middleware' => ['web']], function () {
                 // Companies Routes
                 Route::prefix('organizations')->group(function () {
                     Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
+    
+                    Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
+    
+                    Route::get('edit/{id}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
+    
+                    Route::put('edit/{id}', 'OrganizationController@update')->name('admin.contacts.organizations.update');
                 });
             });
 
