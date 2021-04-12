@@ -62,13 +62,10 @@ class AttributeForm extends FormRequest
      */
     public function rules()
     {
-        $conditions = ['entity_type' => request('entity_type')];
-
-        if (request()->has('quick_add')) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->findWhere($conditions);
+        $attributes = $this->attributeRepository->findWhere([
+            'entity_type' => request('entity_type'),
+            'quick_add'   => request()->has('quick_add') ? 1 : 0,
+        ]);
 
         foreach ($attributes as $attribute) {
             if ($attribute->type == 'boolean') {

@@ -50,13 +50,10 @@ class AttributeValueRepository extends Repository
      */
     public function save(array $data, $entityId, $entityType)
     {
-        $conditions = ['entity_type' => request('entity_type')];
-
-        if (request()->has('quick_add')) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->findWhere($conditions);
+        $attributes = $this->attributeRepository->findWhere([
+            'entity_type' => request('entity_type'),
+            'quick_add'   => request()->has('quick_add') ? 1 : 0,
+        ]);
 
         foreach ($attributes as $attribute) {
             $typeColumn = $this->model::$attributeTypeFields[$attribute->type];
@@ -86,7 +83,7 @@ class AttributeValueRepository extends Repository
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
                 $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
-                    ? request()->file($attribute->code)->store($entityType . '/' . $entityId)
+                    ? request()->file($attribute->code)->store('entity/' . $entityId)
                     : null;
             }
 
@@ -118,7 +115,7 @@ class AttributeValueRepository extends Repository
     /**
      * @param  int  $entityId
      * @param  string  $entityType
-     * @param  int  $attribute
+     * @param  \Webkul\Attribute\Contracts\Attribute  $attribute
      * @param  string  $value
      * @return boolean
      */

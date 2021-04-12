@@ -29,6 +29,6 @@ class Product extends Model implements ProductContract
      */
     public function attribute_values()
     {
-        return $this->hasMany(AttributeValueProxy::modelClass(), 'entity_id')->where('entity_type', 'products');
+        return $this->morphMany(AttributeValueProxy::modelClass(), 'entity');
     }
 }

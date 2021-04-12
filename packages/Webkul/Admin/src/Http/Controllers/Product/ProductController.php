@@ -56,4 +56,37 @@ class ProductController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $product = $this->productRepository->findOrFail($id);
+
+        return view('admin::products.edit', compact('product'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(AttributeForm $request, $id)
+    {
+        Event::dispatch('product.update.before');
+
+        $product = $this->productRepository->update(request()->all(), $id);
+
+        Event::dispatch('product.update.after', $product);
+        
+        session()->flash('success', trans('admin::app.products.update-success'));
+
+        return redirect()->route('admin.products.index');
+    }
 }

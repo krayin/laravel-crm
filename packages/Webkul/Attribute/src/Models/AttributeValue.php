@@ -50,4 +50,12 @@ class AttributeValue extends Model implements AttributeValueContract
     {
         return $this->belongsTo(AttributeProxy::modelClass());
     }
+
+    /**
+     * Get the parent entity model (leads, products, persons or organizations).
+     */
+    public function entity()
+    {
+        return $this->morphTo();
+    }
 }

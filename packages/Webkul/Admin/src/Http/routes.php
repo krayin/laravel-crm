@@ -59,6 +59,10 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('', 'ProductController@index')->name('admin.products.index');
     
                 Route::post('create', 'ProductController@store')->name('admin.products.store');
+
+                Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
+
+                Route::put('edit/{id}', 'ProductController@update')->name('admin.products.update');
             });
 
             // Contacts Routes

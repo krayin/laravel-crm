@@ -44,14 +44,13 @@ class ProductRepository extends Repository
 
     /**
      * @param array $data
-     *
      * @return \Webkul\Product\Contracts\Product
      */
     public function create(array $data)
     {
         $product = parent::create($data);
 
-        $this->attributeValueRepository->save($data, $product->id, 'products');
+        $this->attributeValueRepository->save($data, $product->id, get_class($this->model));
 
         return $product;
     }
@@ -60,14 +59,13 @@ class ProductRepository extends Repository
      * @param array  $data
      * @param int    $id
      * @param string $attribute
-     *
      * @return \Webkul\Product\Contracts\Product
      */
     public function update(array $data, $id, $attribute = "id")
     {
         $product = parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id, 'products');
+        $this->attributeValueRepository->save($data, $id, get_class($this->model));
 
         return $product;
     }

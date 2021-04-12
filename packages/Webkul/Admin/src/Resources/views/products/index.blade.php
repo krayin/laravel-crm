@@ -40,7 +40,7 @@
                 @include('admin::common.custom-attribute-controls', [
                     'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                         'entity_type' => 'products',
-                        'quick_add' => 1
+                        'quick_add'   => 1
                     ])
                 ])
             </div>
