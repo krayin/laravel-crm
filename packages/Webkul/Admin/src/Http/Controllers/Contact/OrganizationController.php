@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Contact;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\OrganizationRepository;
 
 class OrganizationController extends Controller
@@ -26,7 +27,7 @@ class OrganizationController extends Controller
     {
         $this->organizationRepository = $organizationRepository;
 
-        request()->request->add(['entity_type' => 'Webkul\Contact\Models\Organization']);
+        request()->request->add(['entity_type' => 'organizations']);
     }
 
     /**
@@ -51,7 +52,7 @@ class OrganizationController extends Controller
 
         $organization = $this->organizationRepository->create(request()->all());
 
-        Event::dispatch('contacts.organization.create.after', $organization);
+        Event::dispatch('contacts.organization.create.after', 1);
         
         session()->flash('success', trans('admin::app.contacts.organizations.create-success'));
 

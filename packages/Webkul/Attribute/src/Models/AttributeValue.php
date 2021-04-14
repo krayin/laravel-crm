@@ -9,6 +9,10 @@ class AttributeValue extends Model implements AttributeValueContract
 {
     public $timestamps = false;
 
+    protected $casts = [
+        'json_value' => 'array',
+    ];
+
     protected $fillable = [
         'attribute_id',
         'text_value',

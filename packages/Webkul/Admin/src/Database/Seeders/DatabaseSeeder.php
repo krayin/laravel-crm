@@ -4,7 +4,7 @@ namespace Webkul\Admin\Database\Seeders;
 
 use Illuminate\Database\Seeder;
 
-class Database extends Seeder
+class DatabaseSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -13,6 +13,6 @@ class Database extends Seeder
      */
     public function run()
     {
-        $this->call(Attribute::class);
+        $this->call(AttributeSeeder::class);
     }
 }

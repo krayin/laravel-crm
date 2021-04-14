@@ -27,7 +27,7 @@ class ProductController extends Controller
     {
         $this->productRepository = $productRepository;
 
-        request()->request->add(['entity_type' => 'Webkul\Product\Models\Product']);
+        request()->request->add(['entity_type' => 'products']);
     }
 
     /**

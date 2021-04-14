@@ -5,7 +5,7 @@ namespace Webkul\User\Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
-class RolesTableSeeder extends Seeder
+class RolesSeeder extends Seeder
 {
     public function run()
     {

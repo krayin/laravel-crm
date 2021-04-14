@@ -11,6 +11,10 @@ class Organization extends Model implements OrganizationContract
 {
     use CustomAttribute;
 
+    protected $casts = [
+        'address' => 'array',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

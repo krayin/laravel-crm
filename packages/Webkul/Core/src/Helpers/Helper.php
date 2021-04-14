@@ -5,6 +5,7 @@ namespace Webkul\Core\Helpers;
 class Helper
 {
     /**
+     * @param  string $packageName
      * @return array
      */
     public function jsonTranslations($packageName)
@@ -24,5 +25,3 @@ class Helper
         }
     }
 }
-
-?>

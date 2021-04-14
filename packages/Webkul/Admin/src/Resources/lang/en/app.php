@@ -179,6 +179,17 @@
 
         'response' => [
             'create-success' => 'Success: :name created successfully.',
+        ],
+
+        'common' => [
+            'address'            => 'Address',
+            'country'            => 'Country',
+            'select-country'     => 'Please select country',
+            'state'              => 'State',
+            'select-state'       => 'Please select state',
+            'city'               => 'City',
+            'postcode'           => 'Postcode',
+            'address-validation' => 'The "Address" field is required'
         ]
     ];
 ?>

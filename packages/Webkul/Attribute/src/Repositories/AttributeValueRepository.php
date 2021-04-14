@@ -44,16 +44,18 @@ class AttributeValueRepository extends Repository
 
     /**
      * @param array  $data
-     * @param int    $entityId
-     * @param string $entityType
+     * @param int  $entityId
      * @return void
      */
-    public function save(array $data, $entityId, $entityType)
+    public function save(array $data, $entityId)
     {
-        $attributes = $this->attributeRepository->findWhere([
-            'entity_type' => request('entity_type'),
-            'quick_add'   => request()->has('quick_add') ? 1 : 0,
-        ]);
+        $conditions = ['entity_type' => request('entity_type')];
+
+        if (request()->has('quick_add')) {
+            $conditions['quick_add'] = 1;
+        }
+        
+        $attributes = $this->attributeRepository->findWhere($conditions);
 
         foreach ($attributes as $attribute) {
             $typeColumn = $this->model::$attributeTypeFields[$attribute->type];
@@ -83,20 +85,20 @@ class AttributeValueRepository extends Repository
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
                 $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
-                    ? request()->file($attribute->code)->store('entity/' . $entityId)
+                    ? request()->file($attribute->code)->store($data['entity_type'] . '/' . $entityId)
                     : null;
             }
 
             $attributeValue = $this->findOneWhere([
                 'entity_id'    => $entityId,
-                'entity_type'  => $entityType,
+                'entity_type'  => $data['entity_type'],
                 'attribute_id' => $attribute->id,
             ]);
 
             if (! $attributeValue) {
                 $this->create([
                     'entity_id'    => $entityId,
-                    'entity_type'  => $entityType,
+                    'entity_type'  => $data['entity_type'],
                     'attribute_id' => $attribute->id,
                     $typeColumn    => $data[$attribute->code],
                 ]);

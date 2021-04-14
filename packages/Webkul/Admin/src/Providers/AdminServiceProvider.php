@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Contracts\Debug\ExceptionHandler;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Menu;
 use Webkul\Admin\Bouncer;
@@ -37,6 +38,13 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(ExceptionHandler::class, Handler::class);
 
         $router->aliasMiddleware('user', BouncerMiddleware::class);
+
+        Relation::morphMap([
+            'leads'         => 'Webkul\Lead\Models\Lead',
+            'products'      => 'Webkul\Product\Models\Product',
+            'organizations' => 'Webkul\Contact\Models\Organization',
+            'persons'       => 'Webkul\Contact\Models\Person',
+        ]);
     }
 
     /**
@@ -81,6 +89,10 @@ class AdminServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/menu.php', 'menu.admin'
+        );
+        
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/entity_types.php', 'attribute_entity_types'
         );
     }
 }

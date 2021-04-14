@@ -62,45 +62,52 @@ class AttributeForm extends FormRequest
      */
     public function rules()
     {
-        $attributes = $this->attributeRepository->findWhere([
-            'entity_type' => request('entity_type'),
-            'quick_add'   => request()->has('quick_add') ? 1 : 0,
-        ]);
+        $conditions = ['entity_type' => request('entity_type')];
+
+        if (request()->has('quick_add')) {
+            $conditions['quick_add'] = 1;
+        }
+        
+        $attributes = $this->attributeRepository->findWhere($conditions);
 
         foreach ($attributes as $attribute) {
             if ($attribute->type == 'boolean') {
                 continue;
-            }
-
-            $validations = [];
-
-            if (! isset($this->rules[$attribute->code])) {
-                array_push($validations, $attribute->is_required ? 'required' : 'nullable');
+            } else if ($attribute->type == 'address') {
+                $this->rules = array_merge($this->rules, [
+                    $attribute->code . '.address'  => 'required',
+                    $attribute->code . '.country'  => 'required',
+                    $attribute->code . '.state'    => 'required',
+                    $attribute->code . '.city'     => 'required',
+                    $attribute->code . '.postcode' => 'required',
+                ]);
+            } else if ($attribute->type == 'email') {
+                
             } else {
-                $validations = $this->rules[$attribute->code];
-            }
+                $validations = [$attribute->is_required ? 'required' : 'nullable'];
 
-            if ($attribute->type == 'text' && $attribute->validation) {
-                array_push($validations,
-                    $attribute->validation == 'decimal'
-                    ? new Decimal
-                    : $attribute->validation
-                );
-            }
+                if ($attribute->type == 'text' && $attribute->validation) {
+                    array_push($validations,
+                        $attribute->validation == 'decimal'
+                        ? new Decimal
+                        : $attribute->validation
+                    );
+                }
 
-            if ($attribute->type == 'price') {
-                array_push($validations, new Decimal);
-            }
+                if ($attribute->type == 'price') {
+                    array_push($validations, new Decimal);
+                }
 
-            if ($attribute->is_unique) {
-                array_push($validations, function ($field, $value, $fail) use ($attribute) {
-                    if (! $this->attributeValueRepository->isValueUnique($this->id, request('entity_type'), $attribute, request($attribute->code))) {
-                        $fail('The :attribute has already been taken.');
-                    }
-                });
-            }
+                if ($attribute->is_unique) {
+                    array_push($validations, function ($field, $value, $fail) use ($attribute) {
+                        if (! $this->attributeValueRepository->isValueUnique($this->id, request('entity_type'), $attribute, request($attribute->code))) {
+                            $fail('The :attribute has already been taken.');
+                        }
+                    });
+                }
 
-            $this->rules[$attribute->code] = $validations;
+                $this->rules[$attribute->code] = $validations;
+            }
         }
 
         return $this->rules;

@@ -50,7 +50,7 @@ class ProductRepository extends Repository
     {
         $product = parent::create($data);
 
-        $this->attributeValueRepository->save($data, $product->id, get_class($this->model));
+        $this->attributeValueRepository->save($data, $product->id);
 
         return $product;
     }
@@ -65,7 +65,7 @@ class ProductRepository extends Repository
     {
         $product = parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id, get_class($this->model));
+        $this->attributeValueRepository->save($data, $id);
 
         return $product;
     }

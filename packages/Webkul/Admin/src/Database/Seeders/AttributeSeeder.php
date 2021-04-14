@@ -6,7 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class Attribute extends Seeder
+class AttributeSeeder extends Seeder
 {
 
     public function run()

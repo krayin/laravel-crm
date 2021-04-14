@@ -2,8 +2,123 @@
 
 namespace Webkul\Core;
 
+use Webkul\Core\Repositories\CountryRepository;
+use Webkul\Core\Repositories\CoreConfigRepository;
+use Webkul\Core\Repositories\CountryStateRepository;
+
 class Core
 {
+    /**
+     * CountryRepository class
+     *
+     * @var \Webkul\Core\Repositories\CountryRepository
+     */
+    protected $countryRepository;
+
+    /**
+     * CountryStateRepository class
+     *
+     * @var \Webkul\Core\Repositories\CountryStateRepository
+     */
+    protected $countryStateRepository;
+
+    /**
+     * CoreConfigRepository class
+     *
+     * @var \Webkul\Core\Repositories\CoreConfigRepository
+     */
+    protected $coreConfigRepository;
+
+    /**
+     * Create a new instance.
+     *
+     * @param \Webkul\Core\Repositories\CountryRepository  $countryRepository
+     * @param \Webkul\Core\Repositories\CountryStateRepository  $countryStateRepository
+     * @return void
+     */
+    public function __construct(
+        CountryRepository $countryRepository,
+        CountryStateRepository $countryStateRepository
+    )
+    {
+        $this->countryRepository = $countryRepository;
+
+        $this->countryStateRepository = $countryStateRepository;
+    }
+
+    /**
+     * Retrieve all countries.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function countries()
+    {
+        return $this->countryRepository->all();
+    }
+
+    /**
+     * Returns country name by code.
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function country_name($code)
+    {
+        $country = $this->countryRepository->findOneByField('code', $code);
+
+        return $country ? $country->name : '';
+    }
+
+    /**
+     * Retrieve all country states.
+     *
+     * @param string $countryCode
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function states($countryCode)
+    {
+        return $this->countryStateRepository->findByField('country_code', $countryCode);
+    }
+
+    /**
+     * Retrieve all grouped states by country code.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function groupedStatesByCountries()
+    {
+        $collection = [];
+
+        foreach ($this->countryStateRepository->all() as $state) {
+            $collection[$state->country_code][] = $state->toArray();
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Retrieve all grouped states by country code.
+     *
+     * @return \Illuminate\Support\Collection
+     */
+    public function findStateByCountryCode($countryCode = null, $stateCode = null)
+    {
+        $collection = [];
+
+        $collection = $this->countryStateRepository->findByField([
+            'country_code' => $countryCode,
+            'code' => $stateCode
+        ]);
+
+        if (count($collection)) {
+            return $collection->first();
+        } else {
+            return false;
+        }
+    }
+
     /**
      * Method to sort through the acl items and put them in order.
      *
