@@ -116,3 +116,8 @@
     @extend %menu-properties;
     background-image: url("../images/pencil-icon.svg");
 }
+
+.folder-icon {
+    @extend %menu-properties;
+    background-image: url("../images/folder-icon.svg");
+}

@@ -43,6 +43,10 @@
                 'remove_all'    => 'Remove All',
                 'title'         => 'Filter',
                 'apply_title'   => 'Apply Filter',
+                'custom_filter' => 'Custom Filter',
+                'done'          => 'Done',
+                'to'            => 'to',
+                'date_range'    => 'Date Range',
             ]
         ]
     ];

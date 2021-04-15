@@ -149,6 +149,15 @@
 
         'response' => [
             'create-success' => 'Success: :name created successfully.',
+        ],
+
+        'acl' => [
+            'settings'  => 'Settings',
+            'users'     => 'Users',
+            'roles'     => 'Roles',
+            'create'    => 'Create',
+            'edit'      => 'Edit',
+            'delete'    => 'Delete',
         ]
     ];
 ?>

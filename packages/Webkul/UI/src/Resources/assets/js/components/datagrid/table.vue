@@ -1,26 +1,12 @@
 <template>
-    <div class="table-body" v-if="resultLoaded && Object.keys(tableData).length > 0">
-        <filter-component
-            :tabs="tabs"
-            :results="tableData"
-            :pagination-data="tableData.pagination_data"
-        ></filter-component>
+    <div class="table-body" v-if="Object.keys(tableData).length > 0">
+        <filter-component></filter-component>
 
         <table>
-            <thead-component
-                :columns="tableData.columns"
-                :actions="tableData.actions"
-                :mass-actions="tableData.columns"
-            ></thead-component>
+            <thead-component></thead-component>
 
-            <tbody-component
-                :actions="tableData.actions"
-                :mass-actions="tableData.columns"
-                :data-collection="tableData.records.data"
-            ></tbody-component>
+            <tbody-component></tbody-component>
         </table>
-
-        <!-- <pagination-component :pagination-data="encodedResult.pagination_data"></pagination-component> -->
     </div>
 </template>
 
@@ -29,11 +15,6 @@
 
     export default {
         props: [
-            'filterIndex',
-            'gridCurrentData',
-            'massActions',
-            'columns',
-            'extraFilters',
             'tableClass',
         ],
 
@@ -46,7 +27,6 @@
         
         computed: {
             ...mapState({
-                tabs : state => state.tabs,
                 tableData : state => state.tableData,
             }),
         },

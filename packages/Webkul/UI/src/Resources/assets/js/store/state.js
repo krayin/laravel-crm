@@ -1,4 +1,5 @@
 var state = {
+    filters: {},
     tableData: {},
     allSelected: false,
     sidebarFilter: false,
@@ -36,51 +37,7 @@ var state = {
             values: ['987654321', '987654321'],
         },
     },
-    tabs: {
-        type: [{
-            'name'      : 'All',
-            'isActive'  : true,
-            'key'       : 'all',
-        }, {
-            'name'      : 'Call',
-            'isActive'  : false,
-            'key'       : 'call',
-        }, {
-            'name'      : 'Mail',
-            'isActive'  : false,
-            'key'       : 'mail',
-        }, {
-            'name'      : 'Meeting',
-            'isActive'  : false,
-            'key'       : 'meeting',
-        }],
-
-        duration: [{
-            'name'      : 'Yesterday',
-            'isActive'  : true,
-            'key'       : 'yesterday',
-        }, {
-            'name'      : 'Today',
-            'isActive'  : false,
-            'key'       : 'today',
-        }, {
-            'name'      : 'Tomorrow',
-            'isActive'  : false,
-            'key'       : 'tomorrow',
-        }, {
-            'name'      : 'This week',
-            'isActive'  : false,
-            'key'       : 'this_week',
-        }, {
-            'name'      : 'This month',
-            'isActive'  : false,
-            'key'       : 'this_month',
-        }, {
-            'name'      : 'Custom',
-            'isActive'  : false,
-            'key'       : 'custom',
-        }],
-    }
+    customTabFilter: false,
 };
 
 export default state;

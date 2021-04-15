@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=bbbbef48cfd09bbb7c6a",
-    "/css/ui.css": "/css/ui.css?id=8a91458662633b0e8fb6",
+    "/js/ui.js": "/js/ui.js?id=31523d78d1c8898c0a57",
+    "/css/ui.css": "/css/ui.css?id=bca4f02b0675ac2c6b93",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-up-icon.svg": "/images/arrow-up-icon.svg?id=8e55868ef41bd032542e",
@@ -22,5 +22,6 @@
     "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
     "/images/arrow-left-line-icon.svg": "/images/arrow-left-line-icon.svg?id=ab5e4919b7b0c0bac8f5",
     "/images/arrow-right-icon.svg": "/images/arrow-right-icon.svg?id=01ac0409d916c6513090",
-    "/images/arrow-right-line-icon.svg": "/images/arrow-right-line-icon.svg?id=0fdfb15c1b5a5e16958f"
+    "/images/arrow-right-line-icon.svg": "/images/arrow-right-line-icon.svg?id=0fdfb15c1b5a5e16958f",
+    "/images/folder-icon.svg": "/images/folder-icon.svg?id=c7d8760e1cc9ebaf31ea"
 }
