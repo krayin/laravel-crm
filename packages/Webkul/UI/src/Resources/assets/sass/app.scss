@@ -722,12 +722,33 @@ h5 {
             color: $danger-color;
         }
 
-        .control {
+        .control:not([aria-invalid='false']) {
             border-color: $danger-color;
         }
 
         .control-error {
             display: block;
+        }
+    }
+
+    .address-left {
+        width: 50%;
+        padding-right: 5px;
+        float: left;
+
+        .control {
+            height: 160px;
+            margin-bottom: 0;
+        }
+    }
+
+    .address-right {
+        width: 50%;
+        padding-left: 5px;
+        display: inline-block;
+
+        .control {
+            margin-bottom: 0;
         }
     }
 }

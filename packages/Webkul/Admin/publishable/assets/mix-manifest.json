@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=e83abb3ac878d664eab5",
-    "/css/admin.css": "/css/admin.css?id=493631c59ed9acf3e5ef",
+    "/css/admin.css": "/css/admin.css?id=9907ab5d01b5ba4b95f7",
     "/images/dashboard-active-icon.svg": "/images/dashboard-active-icon.svg?id=0a8aa85a7bf837ce0ec6",
     "/images/dashboard-icon.svg": "/images/dashboard-icon.svg?id=00efeb765d72f3fd86d4",
     "/images/leads-active-icon.svg": "/images/leads-active-icon.svg?id=9bf213ff0cb682061f2d",
@@ -10,5 +10,7 @@
     "/images/phone-icon.svg": "/images/phone-icon.svg?id=b7ef21011d926dacb715",
     "/images/avatar-icon.svg": "/images/avatar-icon.svg?id=138110db59ab81030a21",
     "/images/settings-active-icon.svg": "/images/settings-active-icon.svg?id=6997c8791cbeea4bf76a",
-    "/images/settings-icon.svg": "/images/settings-icon.svg?id=55afb93247c656e5ecd7"
+    "/images/settings-icon.svg": "/images/settings-icon.svg?id=55afb93247c656e5ecd7",
+    "/images/products-active-icon.svg": "/images/products-active-icon.svg?id=a7a4f47ff4f77e073eda",
+    "/images/products-icon.svg": "/images/products-icon.svg?id=8fde4922886ec4f1fcad"
 }

@@ -202,6 +202,13 @@
             }
         },
 
+        computed: {
+            ...mapState({
+                tableData : state => state.tableData,
+                selectedTableRows : state => state.selectedTableRows,
+            }),
+        },
+
         mounted: function () {
             this.setParamsAndUrl();
 

@@ -192,8 +192,10 @@ return [
         // CRM packages
         Webkul\Admin\Providers\AdminServiceProvider::class,
         Webkul\Attribute\Providers\AttributeServiceProvider::class,
+        Webkul\Contact\Providers\ContactServiceProvider::class,
         Webkul\Core\Providers\CoreServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
+        Webkul\Product\Providers\ProductServiceProvider::class,
         Webkul\UI\Providers\UIServiceProvider::class,
         Webkul\User\Providers\UserServiceProvider::class,
     ],

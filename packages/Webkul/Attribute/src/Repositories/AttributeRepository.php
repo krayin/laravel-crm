@@ -107,4 +107,19 @@ class AttributeRepository extends Repository
 
         return $attribute;
     }
+
+    /**
+     * @param  string  $code
+     * @return \Webkul\Attribute\Contracts\Attribute
+     */
+    public function getAttributeByCode($code)
+    {
+        static $attributes = [];
+
+        if (array_key_exists($code, $attributes)) {
+            return $attributes[$code];
+        }
+
+        return $attributes[$code] = $this->findOneByField('code', $code);
+    }
 }

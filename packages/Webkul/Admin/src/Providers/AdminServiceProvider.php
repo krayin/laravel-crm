@@ -13,6 +13,7 @@ use Webkul\Admin\Bouncer;
 use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Facades\Menu as MenuFacade;
 use Webkul\Admin\Facades\Bouncer as BouncerFacade;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 
 class AdminServiceProvider extends ServiceProvider
@@ -39,6 +40,13 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(ExceptionHandler::class, Handler::class);
 
         $router->aliasMiddleware('user', BouncerMiddleware::class);
+
+        Relation::morphMap([
+            'leads'         => 'Webkul\Lead\Models\Lead',
+            'products'      => 'Webkul\Product\Models\Product',
+            'organizations' => 'Webkul\Contact\Models\Organization',
+            'persons'       => 'Webkul\Contact\Models\Person',
+        ]);
     }
 
     /**
@@ -89,6 +97,10 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/acl.php', 'acl'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/entity_types.php', 'attribute_entity_types'
         );
     }
     

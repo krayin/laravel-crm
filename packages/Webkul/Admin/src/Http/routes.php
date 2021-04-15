@@ -36,16 +36,39 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             // Contacts Routes
-            Route::prefix('contacts')->group(function () {
+            Route::group([
+                'prefix'    => 'contacts',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Contact'
+            ], function () {
                 // Customers Routes
-                Route::prefix('customers')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CustomerController@index')->name('admin.contacts.customers.index');
+                Route::prefix('persons')->group(function () {
+                    Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
                 });
 
                 // Companies Routes
-                Route::prefix('companies')->group(function () {
-                    Route::get('', 'Webkul\Admin\Http\Controllers\Contact\CompanyController@index')->name('admin.contacts.companies.index');
+                Route::prefix('organizations')->group(function () {
+                    Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
+    
+                    Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
+    
+                    Route::get('edit/{id}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
+    
+                    Route::put('edit/{id}', 'OrganizationController@update')->name('admin.contacts.organizations.update');
                 });
+            });
+
+            // Products Routes
+            Route::group([
+                'prefix'    => 'products',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Product'
+            ], function () {
+                Route::get('', 'ProductController@index')->name('admin.products.index');
+    
+                Route::post('create', 'ProductController@store')->name('admin.products.store');
+
+                Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
+
+                Route::put('edit/{id}', 'ProductController@update')->name('admin.products.update');
             });
 
             // Contacts Routes

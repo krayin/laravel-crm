@@ -1,0 +1,1 @@
+<input type="text" v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" />
