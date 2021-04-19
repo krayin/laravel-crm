@@ -190,18 +190,18 @@
                 </div>
 
                 <div class="panel-body">
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="name" class="required">Input</label>
                         <input id="name" class="control">
                     </div>
 
-                    <div class="control-group has-error">
+                    <div class="form-group has-error">
                         <label for="name" class="required">Danger Input</label>
                         <input id="name" class="control">
                         <span class="control-error">This is control error</span>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="name">Select</label>
                         <select id="name" class="control">
                             <option value="1">Option 1</option>
@@ -210,7 +210,7 @@
                         </select>
                     </div>
 
-                    <div class="control-group date">
+                    <div class="form-group date">
                         <label for="name">Date</label>
 
                         <date>
@@ -218,7 +218,7 @@
                         </date>
                     </div>
 
-                    <div class="control-group time">
+                    <div class="form-group time">
                         <label for="name">Time</label>
 
                         <time-component>
@@ -226,7 +226,7 @@
                         </time-component>
                     </div>
 
-                    <div class="control-group datetime">
+                    <div class="form-group datetime">
                         <label for="name">Date Time</label>
 
                         <datetime>
@@ -234,7 +234,7 @@
                         </datetime>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="name">Multiselect</label>
                         <select id="name" class="control" multiple>
                             <option value="1">Option 1</option>
@@ -243,12 +243,12 @@
                         </select>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="name">Textarea</label>
                         <textarea id="name" class="control"></textarea>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="">Radio</label>
     
                         <span class="radio">
@@ -270,7 +270,7 @@
                         </span>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label for="">Checkbox</label>
     
                         <span class="checkbox">
@@ -292,7 +292,7 @@
                         </span>
                     </div>
 
-                    <div class="control-group">
+                    <div class="form-group">
                         <label>Switch</label>
                         <label class="switch">
                             <input type="checkbox" id="new" class="control">
@@ -498,13 +498,13 @@
                 <div class="panel-body">
                     <div class="form-container">
                         <form>
-                            <div class="control-group">
+                            <div class="form-group">
                                 <label>First Name</label>
 
                                 <input class="control" type="text" placeholder="Enter First Name" />
                             </div>
 
-                            <div class="control-group">
+                            <div class="form-group">
                                 <label>Last Name</label>
 
                                 <input class="control" type="text" placeholder="Enter Last Name" />

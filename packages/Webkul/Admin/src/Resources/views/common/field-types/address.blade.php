@@ -3,7 +3,7 @@
 @push('scripts')
 
     <script type="text/x-template" id="address-component-template">
-        <div class="control-group" :class="[errors.has('{{ $attribute->code }}[address]') || errors.has('{{ $attribute->code }}[country]') || errors.has('{{ $attribute->code }}[state]') || errors.has('{{ $attribute->code }}[city]') || errors.has('{{ $attribute->code }}[postcode]') ? 'has-error' : '']">
+        <div class="form-group" :class="[errors.has('{{ $attribute->code }}[address]') || errors.has('{{ $attribute->code }}[country]') || errors.has('{{ $attribute->code }}[state]') || errors.has('{{ $attribute->code }}[city]') || errors.has('{{ $attribute->code }}[postcode]') ? 'has-error' : '']">
             <div class="address-left">
                 <textarea v-validate="'{{$validations}}'" class="control" name="{{ $attribute->code }}[address]" data-vv-as="&quot;{{ __('admin::app.common.address') }}&quot;">{{ old($attribute->code)['address'] ?? ($value['address'] ?? null) }}</textarea>
             </div>

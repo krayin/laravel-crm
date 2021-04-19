@@ -33,7 +33,7 @@
                         <div class="panel-body">
                             @csrf()
                             
-                            <div :class="`control-group ${errors.has('name') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('name') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.layouts.name') }}
                                 </label>
@@ -52,7 +52,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('description') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('description') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.roles.description') }}
                                 </label>
@@ -71,7 +71,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('permission_type') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('permission_type') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.roles.permission_type') }}
                                 </label>

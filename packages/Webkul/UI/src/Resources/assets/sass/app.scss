@@ -346,7 +346,7 @@ h5 {
         }
     }
 
-    .control-group {
+    .form-group {
         width: 100%;
         margin-bottom: 0;
         min-width: 140px;
@@ -373,7 +373,7 @@ h5 {
                 margin-top: 10px;
                 
                 li {
-                    .control-group {
+                    .form-group {
                         margin-bottom: 15px;
                     }
                 }
@@ -482,7 +482,7 @@ h5 {
             &.per-page {
                 margin-right: 10px;
                 
-                .control-group {
+                .form-group {
                     label {
                         width: auto;
                         float: left;
@@ -498,7 +498,7 @@ h5 {
             }
         }
 
-        .control-group {
+        .form-group {
             font-size: 16px;
 
             .control {
@@ -587,7 +587,7 @@ h5 {
     }
 }
 
-.control-group {
+.form-group {
     display: block;
     margin-bottom: 20px;
     font-size: $font-size-lg;
@@ -688,16 +688,13 @@ h5 {
     }
 
     &.has-error {
-        label {
-            color: $danger-color;
-        }
-
         .control:not([aria-invalid='false']) {
             border-color: $danger-color;
         }
 
         .control-error {
             display: block;
+            width: 100%;
         }
     }
 
@@ -720,6 +717,79 @@ h5 {
         .control {
             margin-bottom: 0;
         }
+    }
+
+    &.input-group {
+        margin-bottom: 0;
+    }
+
+    .input-group {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -webkit-box-align: stretch;
+        -ms-flex-align: stretch;
+        align-items: stretch;
+        width: 100%;
+
+        .input-group-append,
+        .input-group-prepend {
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: flex;
+        }
+
+        .control {
+            position: relative;
+            -webkit-box-flex: 1;
+            -ms-flex: 1 1 auto;
+            flex: 1 1 auto;
+            width: 1% !important;
+    
+            &:not(:first-child) {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        
+            &:not(:last-child) {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+
+        .input-group-prepend {
+            margin-right: -1px;
+
+            .control,
+            .btn {
+                border-top-right-radius: 0;
+                border-bottom-right-radius: 0;
+            }
+        }
+    
+        .input-group-append {
+            margin-left: -1px;
+
+            .control,
+            .btn {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
+
+        .trash-icon {
+            margin-top: 15px;
+            margin-left: 7px;
+            cursor: pointer;
+        }
+    }
+
+    .loader-active-icon {
+        position: absolute;
+        right: 4px;
+        top: 14px;
     }
 }
 
@@ -793,7 +863,7 @@ h5 {
     }
 }
 
-.control-group {
+.form-group {
     .switch {
         position: relative;
         display: inline-block;
@@ -1140,12 +1210,6 @@ modal {
 
     .modal-body {
         padding: 30px;
-
-        .control-group {
-            .control {
-                width: 100%;
-            }
-        }
     }
 }
 
@@ -1376,10 +1440,7 @@ modal {
         border-bottom: 1px solid $border-color;
     }
 
-    .control-group {
-        margin-bottom: 20px;
-        font-size: $font-size-md;
-
+    .form-group {
         label {
             font-weight: 500;
         }

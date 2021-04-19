@@ -7,7 +7,7 @@
 <input type="file" v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" style="padding-top: 5px;"/>
 
 @if ($value)
-    <div class="control-group" style="margin-top: 5px;">
+    <div class="form-group" style="margin-top: 5px;">
         <span class="checkbox">
             <input type="checkbox" id="{{ $attribute->code }}[delete]"  name="{{ $attribute->code }}[delete]" value="1">
 

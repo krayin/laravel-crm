@@ -18,7 +18,7 @@
             </div>
         </header>
         
-        <div :class="`control-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-for="(data, key) in filterData">
+        <div :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-for="(data, key) in filterData">
             <label>{{ data.label }}</label>
 
             <div class="field-container">

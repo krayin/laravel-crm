@@ -139,4 +139,17 @@ class AttributeController extends Controller
 
         return response()->json(['message' => false], 400);
     }
+
+    /**
+     * Search attribute lookup results
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function search($id)
+    {
+        $results = $this->attributeRepository->getAttributeLookUpOptions($id, request()->input('query'));
+
+        return response()->json($results);
+    }
 }

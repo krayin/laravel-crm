@@ -3,7 +3,7 @@
         <!-- searchbox and filters section -->
         <div class="datagrid-filters" id="datagrid-filters">
             <div class="filter-left">
-                <div class="search-filter control-group">
+                <div class="search-filter form-group">
                     <input
                         type="text"
                         class="control"
@@ -17,7 +17,7 @@
 
             <div class="filter-right">
                 <div class="dropdown-filters per-page">
-                    <div class="control-group">
+                    <div class="form-group">
                         <label class="per-page-label" for="perPage">
                             {{ __('ui.datagrid.items-per-page') }}
                         </label>
@@ -95,7 +95,7 @@
         </template>
 
         <!-- mass actions section -->
-        <div class="mass-actions control-group" v-if="selectedTableRows.length > 0">
+        <div class="mass-actions form-group" v-if="selectedTableRows.length > 0">
             <select name="mass_action" class="control" v-model="massActionValue" v-validate="'required'">
                 <option :value="massAction" :key="index" v-for="(massAction, index) in tableData.massactions">
                     {{ massAction.label }}

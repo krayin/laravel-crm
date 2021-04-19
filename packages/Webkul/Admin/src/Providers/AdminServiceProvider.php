@@ -92,7 +92,11 @@ class AdminServiceProvider extends ServiceProvider
         );
         
         $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/entity_types.php', 'attribute_entity_types'
+            dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types'
+        );
+        
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups'
         );
     }
 }
