@@ -2,6 +2,7 @@
 
 namespace Webkul\UI\DataGrid;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 
 abstract class DataGrid
@@ -192,10 +193,6 @@ abstract class DataGrid
         $unparsed = url()->full();
 
         $route = request()->route() ? request()->route()->getName() : "";
-
-        if ($route == 'admin.datagrid.export') {
-            $unparsed = url()->previous();
-        }
 
         if (count(explode('?', $unparsed)) > 1) {
             $to_be_parsed = explode('?', $unparsed)[1];
@@ -412,7 +409,6 @@ abstract class DataGrid
                     array_values($info)[0]
                 );
             } else if ($key === "duration" || $key === "type") {
-                // @TODO apply duration filter
                 foreach ($this->tabFilters as $filterIndex => $filter) {
                     if ($filter['key'] == $key) {
                         foreach ($filter['values'] as $filterValueIndex => $filterValue) {
@@ -421,6 +417,38 @@ abstract class DataGrid
                             } else {
                                 $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
                             }
+                        }
+
+                        $value = array_values($info)[0];
+                        $key = ($key === "duration") ? "created_at" : $key;
+
+                        switch ($value) {
+                            case 'yesterday':
+                                $collection->where(
+                                    $key,
+                                    Carbon::yesterday()
+                                );
+                                break;
+
+                            case 'today':
+                                $collection->where(
+                                    $key,
+                                    Carbon::today()
+                                );
+                                break;
+
+                            case 'tomorrow':
+                                $collection->where(
+                                    $key,
+                                    Carbon::tomorrow()
+                                );
+                                break;
+
+                            case 'this_week':
+                                break;
+
+                            case 'this_month':
+                                break;
                         }
                     }
                 }
@@ -434,7 +462,7 @@ abstract class DataGrid
                 if ($count_keys == 1) {
                     $collection->where(function ($collection) use ($info) {
                         foreach ($this->completeColumnDetails as $column) {
-                            if ($column['searchable'] == true) {
+                            if (isset($column['searchable']) && $column['searchable'] == true) {
                                 if ($this->enableFilterMap && isset($this->filterMap[$column['index']])) {
                                     $collection->orWhere($this->filterMap[$column['index']], 'like',
                                         '%' . $info['all'] . '%');
@@ -448,81 +476,41 @@ abstract class DataGrid
                     });
                 }
             } else {
-                foreach ($this->completeColumnDetails as $column) {
+                foreach ($this->completeColumnDetails as $index => $column) {
+                    if ($column['index'] === $columnName) {
+                        $this->completeColumnDetails[$index]['values'] = explode(',', array_values($info)[0]);
+                    }
+
                     if ($column['index'] === $columnName && ! $column['filterable']) {
                         return $collection;
                     }
                 }
 
-                if (array_keys($info)[0] === "like" || array_keys($info)[0] === "nlike") {
-                    foreach ($info as $condition => $filter_value) {
-                        if ($this->enableFilterMap && isset($this->filterMap[$columnName])) {
-                            $collection->where(
-                                $this->filterMap[$columnName],
-                                $this->operators[$condition],
-                                '%' . $filter_value . '%'
-                            );
-                        } elseif ($this->enableFilterMap && ! isset($this->filterMap[$columnName])) {
-                            $collection->where(
-                                $columnName,
-                                $this->operators[$condition],
-                                '%' . $filter_value . '%'
-                            );
-                        } else {
-                            $collection->where(
-                                $columnName,
-                                $this->operators[$condition],
-                                '%' . $filter_value . '%'
-                            );
-                        }
-                    }
-                } else {
-                    foreach ($info as $condition => $filter_value) {
-                        if ($condition === 'undefined') {
-                            $condition = '=';
-                        }
+                foreach ($info as $condition => $filter_value) {
+                    if ($condition == "in") {
+                        $collection->orWhereIn(
+                            $columnName,
+                            explode(',', $filter_value)
+                        );
+                    } else if ($condition == "bw") {
+                        $dates = explode(',', $filter_value);
 
-                        if ($columnType === 'datetime') {
-                            if ($this->enableFilterMap && isset($this->filterMap[$columnName])) {
-                                $collection->whereDate(
-                                    $this->filterMap[$columnName],
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
-                            } elseif ($this->enableFilterMap && ! isset($this->filterMap[$columnName])) {
-                                $collection->whereDate(
-                                    $columnName,
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
-                            } else {
-                                $collection->whereDate(
-                                    $columnName,
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
+                        if (sizeof($dates) == 2) {
+                            if ($dates[1] == "") {
+                                $dates[1] = Carbon::today()->format('Y-m-d');
                             }
-                        } else {
-                            if ($this->enableFilterMap && isset($this->filterMap[$columnName])) {
-                                $collection->where(
-                                    $this->filterMap[$columnName],
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
-                            } elseif ($this->enableFilterMap && ! isset($this->filterMap[$columnName])) {
-                                $collection->where(
-                                    $columnName,
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
-                            } else {
-                                $collection->where(
-                                    $columnName,
-                                    $this->operators[$condition],
-                                    $filter_value
-                                );
-                            }
+
+                            $collection->orWhereBetween(
+                                $columnName,
+                                $dates
+                            );
                         }
+                    } else {
+                        $collection->where(
+                            $columnName,
+                            $this->operators[$condition],
+                            $filter_value
+                        );
                     }
                 }
             }
@@ -559,32 +547,35 @@ abstract class DataGrid
     }
 
     /**
-     * @return void
-     */
-    public function prepareActions()
-    {
-    }
-
-    /**
      * @return \Illuminate\Http\Response
      */
     public function data()
     {
         $this->addColumns();
 
-        $this->prepareActions();
-
         $this->prepareMassActions();
 
         $this->prepareQueryBuilder();
 
+        $data = $this->prepareResponseData();
+
+        return $data;
+    }
+
+    /**
+     * Prepare Response data.
+     *
+     * @return array
+     */
+    public function prepareResponseData()
+    {
+        $collection = $this->getCollection();
+
+        // pagination data
         $paginationData = [
             'has_pages' => false,
         ];
         
-        $collection = $this->getCollection();
-
-        // pagination data
         if ($this->paginate && $collection->hasPages()) {
             $paginationData = [
                 'has_pages' => true,
@@ -610,9 +601,9 @@ abstract class DataGrid
             }
         }
 
+        // actions data
         $arrayCollection = $collection->toArray();
 
-        // actions data
         foreach ($arrayCollection['data'] as $index => $row) {
             foreach ($this->actions as $action) {
                 if (! isset($arrayCollection['data'][$index]->action)) {
@@ -627,10 +618,16 @@ abstract class DataGrid
         }
 
         // closure data
-        foreach ($this->completeColumnDetails as $column) {
+        foreach ($this->completeColumnDetails as $columnIndex => $column) {
             if (isset($column['closure']) && $column['closure']) {
                 foreach ($arrayCollection['data'] as $index => $row) {
                     $arrayCollection['data'][$index]->{$column['index']} = $column['closure']($row);
+                }
+            }
+
+            if (isset($column['filterable_type']) && $column['filterable_type'] == "date_range") {
+                if (! isset($this->completeColumnDetails[$columnIndex]['values'])) {
+                    $this->completeColumnDetails[$columnIndex]['values'] = ["", ""];
                 }
             }
         }
@@ -647,23 +644,5 @@ abstract class DataGrid
             'paginationData'    => $paginationData,
             'tabFilters'        => $this->tabFilters,
         ];
-    }
-
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function export()
-    {
-        $this->paginate = false;
-
-        $this->addColumns();
-
-        $this->prepareActions();
-
-        $this->prepareMassActions();
-
-        $this->prepareQueryBuilder();
-
-        return $this->getCollection();
     }
 }

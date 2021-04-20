@@ -1,6 +1,22 @@
 var state = {
     filters: {},
-    tableData: {},
+    tableData: {
+        records: {
+            data: {}
+        },
+
+        columns: [],
+
+        actions: [],
+
+        tabFilters: [],
+
+        massactions: [],
+
+        paginationData: {
+            has_pages: false
+        }
+    },
     allSelected: false,
     sidebarFilter: false,
     selectedTableRows: [],

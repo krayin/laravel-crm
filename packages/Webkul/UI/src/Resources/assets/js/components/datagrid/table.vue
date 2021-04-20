@@ -71,7 +71,7 @@
                             // update store data
                             self.updateTableData(response.data);
     
-                            if (newParams) {
+                            if (newParams || newParams == "") {
                                 self.updatedURI(newParams);
                             }
                         })
@@ -83,7 +83,7 @@
             },
 
             updatedURI: function (params) {
-                var newURL = window.location.origin + window.location.pathname + `?${params}`;
+                var newURL = window.location.origin + window.location.pathname + `${params != '' ? '?' + params : ''}`;
                 window.history.pushState({path: newURL}, '', newURL);
             }
         }

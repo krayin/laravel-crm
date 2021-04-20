@@ -8,7 +8,7 @@
                             type="checkbox"
                             checked="checked"
                             :key="Math.random()"
-                            @change="selectAllRows"
+                            @change="selectAllRows(false)"
                         />
                     </template>
 
@@ -16,7 +16,7 @@
                         <input
                             type="checkbox"
                             :key="Math.random()"
-                            @change="selectAllRows"
+                            @change="selectAllRows(true)"
                         />
                     </template>
 

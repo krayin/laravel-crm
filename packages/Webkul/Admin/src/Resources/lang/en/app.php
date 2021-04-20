@@ -173,6 +173,7 @@
             'status'            => 'Status',
             'active'            => 'Active',
             'inactive'          => 'Inactive',
+            'created_at'        => 'Created at',
             'description'       => 'Description',
             'permission_type'   => 'Permission type',
         ],

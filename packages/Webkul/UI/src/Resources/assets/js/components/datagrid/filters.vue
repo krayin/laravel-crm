@@ -74,21 +74,22 @@
             <tabs
                 event-value-key="value"
                 event-key="update_filter"
-                v-if="tableData.tabFilters[0]"
                 :tabs-collection="tableData.tabFilters[0].values"
+                v-if="tableData.tabFilters && tableData.tabFilters[0]"
                 :class="`${tableData.tabFilters[0].type} d-inline-block`"
                 :event-data="{key: tableData.tabFilters[0].key, 'cond' : tableData.tabFilters[0].condition}"
             ></tabs>
 
-            <div class="tabs-right-container" v-if="tableData.tabFilters[1]">
+            <div class="tabs-right-container">
                 <section>
-                    <pagination-component :pagination-data="paginationData" tab-view="true" :per-page="perPage"></pagination-component>
+                    <pagination-component tab-view="true" :per-page="perPage"></pagination-component>
                 </section>
 
                 <tabs
                     event-value-key="value"
                     event-key="update_filter"
                     :tabs-collection="tableData.tabFilters[1].values"
+                    v-if="tableData.tabFilters && tableData.tabFilters[1]"
                     :class="`${tableData.tabFilters[1].type} d-inline-block`"
                     :event-data="{key: tableData.tabFilters[1].key, 'cond' : tableData.tabFilters[1].condition}"
                 ></tabs>
@@ -173,6 +174,7 @@
                 ignoreDisplayFilter: ['duration', 'type'],
                 sidebarFilter: false,
                 custom_filter: [null, null],
+                customTabFilter: false,
             }
         },
 
@@ -190,15 +192,17 @@
             extraFilters: function () {
                 return this.tableData.extraFilters;
             },
-
-            paginationData: function () {
-                return this.tableData.paginationData;
-            },
         },
 
         watch: {
             filters: function (newValue, oldValue) {
                 this.$store.state.filters = newValue;
+            },
+
+            '$store.state.filters': function (newValue, oldValue) {
+                this.filters = newValue;
+
+                this.makeURL();
             }
         },
 
@@ -384,19 +388,13 @@
                     }
                 }
 
-                var uri = window.location.href.toString();
-
-                var clean_uri = uri.substring(0, uri.indexOf("?")).trim();
-
                 EventBus.$emit('refresh_table_data', {
                     newParams,
-                    clean_uri
                 });
             },
 
             //make the filter array from url after being redirected
             arrayFromUrl: function () {
-
                 let obj = {};
                 const processedUrl = this.url.search.slice(1, this.url.length);
                 let splitted = [];
@@ -490,16 +488,18 @@
             updateFilter: function ({key, value, cond}) {
                 this.filters = this.filters.filter(filter => filter.column != key);
 
-                let data = {
-                    "column": key,
-                    "val": value
+                if (value != "" && value != ",") {
+                    let data = {
+                        "column": key,
+                        "val"   : value
+                    }
+    
+                    if (cond) {
+                        data['cond'] = cond;
+                    }
+    
+                    this.filters.push(data);
                 }
-
-                if (cond) {
-                    data['cond'] = cond;
-                }
-
-                this.filters.push(data);
 
                 this.makeURL();
             },
@@ -558,6 +558,9 @@
 
                                     this.selectAllRows(false);
 
+                                    this.massActionValue = {};
+                                    this.massActionOptionValue = null;
+
                                     this.$root.toggleButtonDisable(false);
                                 })
                                 .catch(error => {
@@ -573,12 +576,12 @@
 
             applyCustomFilter: function () {
                 if (this.custom_filter[0] && this.custom_filter[1]) {
-                    debugger
                     var data = {
                         cond: 'bw',
                         key: 'duration',
                         value: `${this.custom_filter[0]},${this.custom_filter[1]}`
                     }
+                    
                     this.updateFilter(data);
 
                     this.$store.state.customTabFilter = false;

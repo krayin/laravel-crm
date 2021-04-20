@@ -307,6 +307,10 @@ h5 {
                 }
             }
         }
+
+        .checkbox {
+            margin: 0;
+        }
     }
 
     table {
@@ -354,6 +358,15 @@ h5 {
 
                     &.empty {
                         text-align: center;
+                    }
+
+                    span {
+                        &.badge {
+                            &.badge-sm {
+                                padding: 0px 8px;
+                                border: 0px solid transparent;
+                            }
+                        }
                     }
                 }
 
@@ -1468,6 +1481,7 @@ modal {
         &.close-icon,
         &.add-icon {
             cursor: pointer;
+            vertical-align: text-top;
         }
     }
 }

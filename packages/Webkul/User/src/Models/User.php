@@ -6,7 +6,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Webkul\User\Contracts\User as UserContract;
 
-
 class User extends Authenticatable implements UserContract
 {
     use Notifiable;
