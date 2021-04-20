@@ -11,6 +11,13 @@ class Person extends Model implements PersonContract
 {
     use CustomAttribute;
 
+    protected $table = 'persons';
+
+    protected $casts = [
+        'emails' => 'array',
+        'contact_numbers' => 'array',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

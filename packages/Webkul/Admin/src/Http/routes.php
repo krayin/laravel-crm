@@ -43,6 +43,12 @@ Route::group(['middleware' => ['web']], function () {
                 // Customers Routes
                 Route::prefix('persons')->group(function () {
                     Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
+    
+                    Route::post('create', 'PersonController@store')->name('admin.contacts.persons.store');
+    
+                    Route::get('edit/{id}', 'PersonController@edit')->name('admin.contacts.persons.edit');
+    
+                    Route::put('edit/{id}', 'PersonController@update')->name('admin.contacts.persons.update');
                 });
 
                 // Companies Routes
@@ -121,6 +127,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('edit/{id}', 'AttributeController@edit')->name('admin.settings.attributes.edit');
 
                     Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
+                    
+                    Route::get('lookup/{id}', 'AttributeController@search')->name('admin.settings.attributes.lookup');
                 });
             });
         });

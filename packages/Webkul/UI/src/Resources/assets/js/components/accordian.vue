@@ -53,7 +53,7 @@
                 var self = this;
 
                 setTimeout(function() {
-                    $(self.$el).find('.control-group').each(function(index, element) {
+                    $(self.$el).find('.form-group').each(function(index, element) {
                         if ($(element).hasClass('has-error')) {
                             self.hasError = true;
                         }

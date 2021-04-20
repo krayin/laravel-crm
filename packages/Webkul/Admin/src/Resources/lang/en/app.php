@@ -18,10 +18,6 @@
         ],
 
         'contacts' => [
-            'persons' => [
-                'title' => 'Persons'
-            ],
-
             'organizations' => [
                 'title'          => 'Organizations',
                 'add-title'      => 'Add Organization',
@@ -33,7 +29,20 @@
                 'update-success' => 'Organization updated successfully.',
                 'delete-success' => 'Organization deleted successfully.',
                 'delete-failed'  => 'Organization can not be deleted.',
-            ]
+            ],
+
+            'persons' => [
+                'title'          => 'Persons',
+                'add-title'      => 'Add Person',
+                'edit-title'     => 'Edit Person',
+                'save-btn-title' => 'Save as Person',
+                'back'           => 'Back',
+                'cancel'         => 'Cancel',
+                'create-success' => 'Person created successfully.',
+                'update-success' => 'Person updated successfully.',
+                'delete-success' => 'Person deleted successfully.',
+                'delete-failed'  => 'Person can not be deleted.',
+            ],
         ],
 
         'products' => [
@@ -199,7 +208,11 @@
             'select-state'       => 'Please select state',
             'city'               => 'City',
             'postcode'           => 'Postcode',
-            'address-validation' => 'The "Address" field is required'
-        ],
+            'address-validation' => 'The "Address" field is required',
+            'work'               => 'Work',
+            'home'               => 'Home',
+            'no-result-found'    => ':attribute not found with same name.',
+            'add-as'             => 'Add as new :attribute'
+        ]
     ];
 ?>

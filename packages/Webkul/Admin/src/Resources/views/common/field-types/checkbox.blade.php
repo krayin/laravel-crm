@@ -1,4 +1,4 @@
-<div class="control-group" style="margin-top: 5px;">
+<div class="form-group" style="margin-top: 5px;">
 
     @foreach ($attribute->options as $option)
         <span class="checkbox" style="margin-top: 5px;">

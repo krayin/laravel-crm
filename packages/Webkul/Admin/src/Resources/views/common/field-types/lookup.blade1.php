@@ -4,10 +4,10 @@
 
     <script type="text/x-template" id="lookup-component-template">
         <div class="lookup-control">
-            <div class="form-group" style="margin-bottom: 0">
-                <input type="text" class="control" v-model="search_term" v-on:keyup="search">
+            <div class="form-group">
+                <input type="text" v-validate="'{{$validations}}'" class="control" name="{{ $attribute->code }}" :data-vv-as="&quot;{{ $attribute->name }}&quot;" v-model.lazy="search_term" v-debounce="500" autocomplete="off" v-on:keyup="search">
 
-                <input type="hidden" v-validate="'{{$validations}}'" name="{{ $attribute->code }}" :data-vv-as="&quot;{{ $attribute->name }}&quot;"  v-model="entity_id"/>
+                <input type="hidden" name="{{ $attribute->code }}" v-model="entity_id" v-if="entity_id"/>
 
                 <div class="lookup-results" v-if="state == ''">
                     <ul>
@@ -18,8 +18,18 @@
                         <li v-if='! results.length && search_term.length && ! is_searching'>
                             <span>{{ __('admin::app.common.no-result-found', ['attribute' => $attribute->name]) }}</span>
                         </li>
+
+                        <li class="action" v-if='search_term.length && ! is_searching' @click="createNew()">
+                            <span>
+                                + {{ __('admin::app.common.add-as', ['attribute' => $attribute->name]) }}
+                            </span> 
+                        </li>
                     </ul>
                 </div>
+
+                <span class="control-error" v-if="errors.has('{{ $attribute->code }}')">
+                    @{{ errors.first('{!! $attribute->code !!}') }}
+                </span>
 
                 <i class="icon loader-active-icon" v-if="is_searching"></i>
             </div>

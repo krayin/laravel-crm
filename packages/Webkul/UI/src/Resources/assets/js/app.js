@@ -4,6 +4,7 @@ import VTooltip from 'v-tooltip';
 
 window.axios = axios;
 window.EventBus = new Vue();
+window.debounce = require('./debounce');
 
 VTooltip.options.disposeTimeout = 0;
 

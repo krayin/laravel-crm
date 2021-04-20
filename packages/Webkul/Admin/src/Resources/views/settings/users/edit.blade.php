@@ -35,7 +35,7 @@
                             
                             <input name="_method" type="hidden" value="PUT">
                             
-                            <div :class="`control-group ${errors.has('name') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('name') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.name') }}
                                 </label>
@@ -55,7 +55,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('email') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('email') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.email') }}
                                 </label>
@@ -75,7 +75,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('status') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('status') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.status') }}
                                 </label>
@@ -92,7 +92,7 @@
                                 </label>
                             </div>
 
-                            <div :class="`control-group ${errors.has('role') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('role') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.role') }}
                                 </label>
@@ -110,7 +110,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('password') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('password') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.password') }}
                                 </label>
@@ -130,7 +130,7 @@
                                 </span>
                             </div>
 
-                            <div :class="`control-group ${errors.has('confirm_password') ? 'has-error' : ''}`">
+                            <div :class="`form-group ${errors.has('confirm_password') ? 'has-error' : ''}`">
                                 <label>
                                     {{ __('admin::app.settings.users.confirm_password') }}
                                 </label>

@@ -20,8 +20,7 @@
         </div>
     </div>
 
-    {{-- <form action="{{ route('admin.contacts.organizations.store') }}" method="post" @submit.prevent="onSubmit"> --}}
-        <form action="{{ route('admin.contacts.organizations.store') }}" method="post">
+    <form action="{{ route('admin.contacts.organizations.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addOrganizationModal" :is-open="modalIds.addOrganizationModal">
             <h3 slot="header-title">{{ __('admin::app.contacts.organizations.add-title') }}</h3>
             

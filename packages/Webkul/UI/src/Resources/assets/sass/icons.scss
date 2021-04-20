@@ -96,3 +96,31 @@
 .folder-icon {
     background-image: url("../images/folder-icon.svg");
 }
+
+.plus-primary-icon {
+    background-image: url("../images/plus-primary-icon.svg");
+}
+
+.plus-white-icon {
+    background-image: url("../images/plus-white-icon.svg");
+}
+
+.loader-icon {
+    width: 24px !important;
+    height: 24px !important;
+    background-image: url("../images/loader-icon.svg");
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
+
+.loader-active-icon {
+    width: 24px !important;
+    height: 24px !important;
+    background-image: url("../images/loader-active-icon.svg");
+    animation-name: spin;
+    animation-duration: 1000ms;
+    animation-iteration-count: infinite;
+    animation-timing-function: linear; 
+}
