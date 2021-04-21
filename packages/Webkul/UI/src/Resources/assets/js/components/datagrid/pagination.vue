@@ -92,13 +92,25 @@
 </template>
 
 <script>
+    import { mapState } from 'vuex';
+
     export default {
-        props: ['paginationData', 'tabView', 'perPage'],
+        props: ['tabView', 'perPage'],
 
         data: function () {
             return {
 
             }
+        },
+
+        computed: {
+            ...mapState({                
+                tableData : state => state.tableData,
+            }),
+
+            paginationData: function () {
+                return this.tableData.paginationData;
+            },
         },
 
         methods: {

@@ -71,12 +71,6 @@
                 {{ __('ui.datagrid.no-records') }}
             </td>
         </tr>
-
-        <tr v-if="dataCollection.length == 0" class="no-records">
-            <td colspan="10">
-                {{ __('ui.datagrid.no-records') }}
-            </td>
-        </tr>
     </tbody>
 </template>
 
@@ -84,12 +78,23 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
-        props: ['dataCollection', 'actions', 'massActions'],
-
         computed: {
             ...mapState({
+                tableData : state => state.tableData,
                 selectedTableRows : state => state.selectedTableRows,
             }),
+
+            actions: function () {
+                return this.tableData.actions;
+            },
+
+            massActions: function () {
+                return this.tableData.massactions;
+            },
+
+            dataCollection: function () {
+                return this.tableData.records.data;
+            },
         },
 
         methods: {

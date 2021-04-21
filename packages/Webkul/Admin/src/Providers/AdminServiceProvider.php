@@ -2,16 +2,18 @@
 
 namespace Webkul\Admin\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Webkul\Admin\Exceptions\Handler;
+
+use Webkul\Core\Tree;
 use Webkul\Admin\Menu;
 use Webkul\Admin\Bouncer;
+use Webkul\Admin\Exceptions\Handler;
 use Webkul\Admin\Facades\Menu as MenuFacade;
 use Webkul\Admin\Facades\Bouncer as BouncerFacade;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Webkul\Admin\Http\Middleware\Bouncer as BouncerMiddleware;
 
 class AdminServiceProvider extends ServiceProvider
@@ -57,6 +59,8 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerFacades();
 
         $this->registerConfig();
+
+        $this->registerACL();
     }
 
     /**
@@ -90,7 +94,11 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/menu.php', 'menu.admin'
         );
-        
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/acl.php', 'acl'
+        );
+
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types'
         );
@@ -98,5 +106,41 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups'
         );
+    }
+    
+    /**
+     * Registers acl to entire application
+     *
+     * @return void
+     */
+    public function registerACL()
+    {
+        $this->app->singleton('acl', function () {
+            return $this->createACL();
+        });
+    }
+
+    /**
+     * Create acl tree
+     *
+     * @return mixed
+     */
+    public function createACL()
+    {
+        static $tree;
+
+        if ($tree) {
+            return $tree;
+        }
+
+        $tree = Tree::create();
+
+        foreach (config('acl') as $item) {
+            $tree->add($item, 'acl');
+        }
+
+        $tree->items = core()->sortItems($tree->items);
+
+        return $tree;
     }
 }

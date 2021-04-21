@@ -1,9 +1,18 @@
 const UPDATE_FILTER_VALUES = (state, payload) => {
-    for (const filterKey in state.filterData) {
+    var key;
+
+    for (const filterKey in state.tableData.columns) {
         if (filterKey == payload.key) {
-            state.filterData[filterKey].values = payload.values;
+            key = state.tableData.columns[filterKey].index;
+            state.tableData.columns[filterKey].values = payload.values;
         }
     }
+
+    EventBus.$emit('update_filter', {
+        key,
+        value: payload.values.toString(),
+        cond: payload.condition ? payload.condition : 'in',
+    });
 };
 
 const SELECT_ALL_ROWS = (state, payload) => {

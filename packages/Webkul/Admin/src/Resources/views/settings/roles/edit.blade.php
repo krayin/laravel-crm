@@ -80,6 +80,7 @@
 
                                 <select
                                     class="control"
+                                    id="permission_type"
                                     name="permission_type"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.role') }}"
@@ -97,6 +98,10 @@
                                     @{{ errors.first('permission_type') }}
                                 </span>
                             </div>
+
+                            <div class="control-group tree-wrapper {{ $role->permission_type == 'all' ? 'hide' : '' }}">
+                                <tree-view value-field="key" id-field="key" items='@json($acl->items)' value='@json($role->permissions)'></tree-view>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,3 +109,18 @@
         </form>
     </div>
 @stop
+
+@push('scripts')
+    <script>
+        $(document).ready(function () {
+            $('#permission_type').on('change', function(event) {
+                if ($(event.target).val() == 'custom') {
+                    $('.tree-wrapper').removeClass('hide')
+                } else {
+                    $('.tree-wrapper').addClass('hide')
+                }
+
+            })
+        });
+    </script>
+@endpush

@@ -182,12 +182,22 @@
             'status'            => 'Status',
             'active'            => 'Active',
             'inactive'          => 'Inactive',
+            'created_at'        => 'Created at',
             'description'       => 'Description',
             'permission_type'   => 'Permission type',
         ],
 
         'response' => [
             'create-success' => 'Success: :name created successfully.',
+        ],
+
+        'acl' => [
+            'settings'  => 'Settings',
+            'users'     => 'Users',
+            'roles'     => 'Roles',
+            'create'    => 'Create',
+            'edit'      => 'Edit',
+            'delete'    => 'Delete',
         ],
 
         'common' => [

@@ -2,6 +2,7 @@
 
 namespace Webkul\Core;
 
+use Carbon\Carbon;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
@@ -252,5 +253,15 @@ class Core
         }
 
         return $instances[$className] = app($className);
+    }
+
+    /**
+     * Format date
+     *
+     * @return string
+     */
+    public function formatDate($date)
+    {
+        return Carbon::parse($date)->format('d M Y H:i');
     }
 }

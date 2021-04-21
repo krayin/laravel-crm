@@ -39,6 +39,12 @@
             }
         },
 
+        watch: {
+            tabsCollection: function (newValue, oldValue) {
+                this.tabs = newValue;
+            }
+        },
+
         methods: {
             selectTab: function (selectedTab) {
                 this.tabs.forEach(tab => {

@@ -280,6 +280,39 @@ h5 {
         }
     }
 
+    .table-body {
+        .custom-design-container {
+            right: 30px;
+            width: 350px;
+            padding: 10px;
+            position: absolute;
+            background-color: $white;
+            border: 1px solid $border-color;
+
+            .control-group {
+                margin: 20px 0;
+
+                .middle-text {
+                    margin: 0 5px;
+                }
+    
+                &.date {
+                    .date-container {
+                        display: inline-block;
+    
+                        .half {
+                            width: 140px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .checkbox {
+            margin: 0;
+        }
+    }
+
     table {
         width: 100%;
         text-align: left;
@@ -325,6 +358,15 @@ h5 {
 
                     &.empty {
                         text-align: center;
+                    }
+
+                    span {
+                        &.badge {
+                            &.badge-sm {
+                                padding: 0px 8px;
+                                border: 0px solid transparent;
+                            }
+                        }
                     }
                 }
 
@@ -454,6 +496,7 @@ h5 {
             float: right;
 
             .filter-btn {
+                cursor: pointer;
                 display: inline-block;
 
                 .grid-dropdown-header {
@@ -795,7 +838,7 @@ h5 {
 
 .checkbox {
     position: relative;
-    display: block;
+    display: inline-block;
     margin: 10px 5px 5px 0px;
 
     .checkbox-view {
@@ -1499,6 +1542,51 @@ modal {
         &.close-icon,
         &.add-icon {
             cursor: pointer;
+            vertical-align: text-top;
+        }
+    }
+}
+
+.tree-wrapper {
+    .icon {
+        margin-right: 10px;
+    }
+
+    .checkbox {
+        margin-top: 0px !important;
+        margin-bottom: 15px !important;
+    }
+
+    .tree-item {
+        padding-left: 30px;
+
+        &.active {
+            > .arrow-down-icon {
+                background-image: url("../images/arrow-down-icon.svg");
+            }
+        }
+
+        > .arrow-down-icon {
+            cursor: pointer;
+            background-image: url("../images/arrow-right-icon.svg");
+        }
+    }
+
+    .tree-container {
+        >.tree-item {
+            padding: 0;
+        }
+
+        .tree-item {
+            >.tree-item {
+                display: none;
+            }
+
+            &.active {
+                >.tree-item {
+                    display: block;
+                }
+            }
         }
     }
 }

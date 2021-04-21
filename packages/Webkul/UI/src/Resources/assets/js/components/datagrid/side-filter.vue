@@ -10,101 +10,101 @@
                     {{ __('ui.datagrid.filter.remove_all') }}
                 </button>
 
-                <button type="button" class="btn btn-sm btn-primary">
-                    {{ __('ui.datagrid.filter.apply_title') }}
-                </button>
-
-                <i class="icon close-icon ml-5" @click="toggleSidebarFilter"></i>
+                <i class="icon close-icon" @click="toggleSidebarFilter"></i>
             </div>
         </header>
         
-        <div :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-for="(data, key) in filterData">
-            <label>{{ data.label }}</label>
+        <template v-for="(data, key) in tableData.columns">
+            <div :class="`control-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable">
+                <label>{{ data.label }}</label>
 
-            <div class="field-container">
-                <template v-if="data.type == 'integer_range'">
-                    <input
-                        type="text"
-                        placeholder="Start"
-                        class="control half"
-                        v-model="filterData[key].values[0]"
-                    />
-
-                    <span class="middle-text">to</span>
-                    
-                    <input
-                        type="text"
-                        placeholder="End"
-                        class="control half"
-                        v-model="filterData[key].values[1]"
-                    />
-                </template>
-
-                <template v-else-if="data.type == 'add'">
-                    <span class="control" @click="toggleInput(key)" v-if="! addField[key]">
-                        <i class="icon add-icon"></i> {{ data.placeholder }}
-                    </span>
-
-                    <div class="enter-new" v-else>
+                <div class="field-container">
+                    <template v-if="data.filterable_type == 'integer_range'">
                         <input
                             type="text"
-                            class="control mb-10"
-                            :placeholder="data.input_field_placeholder"
-                            @keyup.enter="pushFieldValue(key, $event)"
-                        />
-                    </div>
-                </template>
-
-                <template v-else-if="data.type == 'date_range'">
-                    <date>
-                        <input
-                            type="text"
+                            placeholder="Start"
                             class="control half"
-                            placeholder="Start Date"
                             v-model="filterData[key].values[0]"
                         />
-                    </date>
 
-                    <span class="middle-text">to</span>
-                    
-                    <date>
+                        <span class="middle-text">to</span>
+                        
                         <input
                             type="text"
+                            placeholder="End"
                             class="control half"
-                            placeholder="End Date"
                             v-model="filterData[key].values[1]"
                         />
-                    </date>
-                </template>
+                    </template>
 
-                <template v-else-if="data.type == 'dropdown'">
-                    <select class="control" @change="pushFieldValue(key, $event)">
-                        <option value="" disabled selected>
-                            {{ data.placeholder }}
-                        </option>
-                        <option :value="value" :key="index" v-for="(value, index) in data.options">
-                            {{ value }}
-                        </option>
-                    </select>
-                </template>
+                    <template v-else-if="data.filterable_type == 'add'">
+                        <span class="control" @click="toggleInput(data.index)" v-if="! addField[data.index]">
+                            <i class="icon add-icon"></i> {{ data.label }}
+                        </span>
 
-                <i class="icon close-icon ml-10 float-right" @click="removeFilter({type: data.type, key})"></i>
-            </div>
+                        <div class="enter-new" v-else>
+                            <input
+                                type="text"
+                                class="control mb-10"
+                                :placeholder="data.label"
+                                @keyup.enter="pushFieldValue(key, $event)"
+                            />
+                        </div>
+                    </template>
 
-            <template v-if="data.type == 'add' || data.type == 'dropdown'">
-                <div class="selected-options">
-                    <span
-                        :key="index"
-                        v-for="(value, index) in data.values"
-                        class="badge badge-md badge-pill badge-secondary"
-                    >
-                        {{ value }}
+                    <template v-else-if="data.filterable_type == 'date_range'">
+                        <date>
+                            <input
+                                type="text"
+                                class="control half"
+                                placeholder="Start Date"
+                                v-model="data.values[0]"
+                                @change="changeDateRange(key, data.values)"
+                            />
+                        </date>
 
-                        <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
-                    </span>
+                        <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
+                        
+                        <date>
+                            <input
+                                type="text"
+                                class="control half"
+                                placeholder="End Date"
+                                v-model="data.values[1]"
+                                @change="changeDateRange(key, data.values)"
+                            />
+                        </date>
+                    </template>
+
+                    <template v-else-if="data.filterable_type == 'dropdown'">
+                        <select class="control" @change="pushFieldValue(key, $event)">
+                            <option value="" disabled selected>
+                                {{ data.label }}
+                            </option>
+                            <option :value="value" :key="index" v-for="(value, index) in data.options">
+                                {{ value }}
+                            </option>
+                        </select>
+                    </template>
+
+                    <i class="icon close-icon ml-10 float-right" @click="removeFilter({type: data.filterable_type, key, index: data.index})"></i>
                 </div>
-            </template>
-        </div>
+
+                <template v-if="data.filterable_type == 'add' || data.filterable_type == 'dropdown'">
+                    <div class="selected-options">
+                        <span
+                            :key="index"
+                            v-for="(value, index) in data.values"
+                            class="badge badge-md badge-pill badge-secondary"
+                        >
+                            {{ value }}
+
+                            <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
+                        </span>
+                    </div>
+                </template>
+            </div>
+        </template>
     </div>
 </template>
 
@@ -112,14 +112,9 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
-        props: [
-        ],
-
         data: function () {
             return {
                 addField: {
-                    contact_person: false,
-                    phone_number: false,
                 },
             }
         },
@@ -127,6 +122,7 @@
         computed: {
             ...mapState({
                 filterData      : state => state.filterData,
+                tableData       : state => state.tableData,
                 sidebarFilter   : state => state.sidebarFilter,
             }),
         },
@@ -139,12 +135,14 @@
 
             toggleInput: function (key) {
                 this.addField[key] = ! this.addField[key];
+
+                this.$forceUpdate();
             },
 
             pushFieldValue: function (key, {target}) {
                 this.addField[key] = false;
 
-                const values = this.filterData[key].values;
+                const values = this.tableData.columns[key].values ? this.tableData.columns[key].values : [];
 
                 if (values.indexOf(target.value) == -1) {
                     values.push(target.value);
@@ -156,31 +154,48 @@
                 }
 
                 target.value = "";
+
+                this.$forceUpdate();
             },
 
             removeFieldValue: function (key, index) {
-                const values = this.filterData[key].values;
+                const values = this.tableData.columns[key].values;
                 values.splice(index, 1);
                 
                 this.updateFilterValues({
                     key,
                     values
                 });
+
+                this.$forceUpdate();
             },
 
             removeAll: function () {
-                for (const key in this.filterData) {
-                    this.updateFilterValues({
-                        key,
-                        values: []
-                    });
-                }
+                this.$store.state.filters = [];
+
+                this.$forceUpdate();
             },
 
-            removeFilter: function ({type, key}) {
-                if (type == "add" && this.addField[key]) {
-                    this.addField[key] = false;
+            removeFilter: function ({type, key, index}) {
+                if (type == "add" && this.addField[index]) {
+                    this.addField[index] = false;
                 }
+
+                var values = this.tableData.columns[key].values;
+                values = "";
+                
+                this.updateFilterValues({
+                    key,
+                    values
+                });
+
+                this.$forceUpdate();
+            },
+
+            changeDateRange: function (key, values) {
+                setTimeout(() => {
+                    this.updateFilterValues({key, values, condition: 'bw'})
+                }, 0);
             }
         },
     };
