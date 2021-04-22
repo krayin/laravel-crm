@@ -34,10 +34,16 @@
 
             data: function () {
                 return {
-                    emails: [{
+                    emails: @json(old($attribute->code) ?: $value),
+                }
+            },
+
+            created: function() {
+                if (! this.emails || ! this.emails.length) {
+                    this.emails = [{
                         'value': '',
                         'label': 'work'
-                    }],
+                    }];
                 }
             },
 

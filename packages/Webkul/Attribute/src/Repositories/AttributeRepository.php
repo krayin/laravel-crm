@@ -124,7 +124,7 @@ class AttributeRepository extends Repository
     }
 
     /**
-     * @param  integer  $code
+     * @param  integer  $id
      * @param  string  $query
      * @return array
      */
@@ -139,5 +139,28 @@ class AttributeRepository extends Repository
         ], [
             $lookup['value_column'] . ' as value' , $lookup['label_column'] . ' as label'
         ]);
+    }
+
+    /**
+     * @param  string  $code
+     * @param  integer  $entityId
+     * @return mixed
+     */
+    public function getLookUpEntity($code, $entityId)
+    {
+        if (! $entityId) {
+            return;
+        }
+
+        $attribute = $this->getAttributeByCode($code);
+
+        $lookUp = config('attribute_lookups.' . $attribute->lookup_type);
+
+        if ($lookUpEntity = app($lookUp['repository'])->find($entityId)) {
+            return [
+                'value' => $lookUpEntity->{$lookUp['value_column']},
+                'label' => $lookUpEntity->{$lookUp['label_column']},
+            ];
+        }
     }
 }

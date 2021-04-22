@@ -5,9 +5,9 @@
     <script type="text/x-template" id="lookup-component-template">
         <div class="lookup-control">
             <div class="form-group" style="margin-bottom: 0">
-                <input type="text" class="control" v-model="search_term" v-on:keyup="search">
+                <input type="text" v-validate="'{{$validations}}'" name="{{ $attribute->code }}" id="{{ $attribute->code }}" class="control" v-model="search_term" v-on:keyup="search" for="{{ $attribute->code }}" :data-vv-as="&quot;{{ $attribute->name }}&quot;">
 
-                <input type="hidden" v-validate="'{{$validations}}'" name="{{ $attribute->code }}" :data-vv-as="&quot;{{ $attribute->name }}&quot;"  v-model="entity_id"/>
+                <input type="hidden" v-validate="'{{$validations}}'" name="{{ $attribute->code }}" :data-vv-as="&quot;{{ $attribute->name }}&quot;" v-model="entity_id"/>
 
                 <div class="lookup-results" v-if="state == ''">
                     <ul>
@@ -27,6 +27,8 @@
     </script>
 
     <script>
+        <?php $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->code, old($attribute->code) ?: $value); ?>
+
         Vue.component('lookup-component', {
 
             template: '#lookup-component-template',
@@ -35,13 +37,13 @@
 
             data: function () {
                 return {
-                    search_term: '',
+                    search_term: "{{ $lookUpEntityData ? $lookUpEntityData['label'] : '' }}",
 
-                    entity_id: null,
+                    entity_id: "{{ $lookUpEntityData ? $lookUpEntityData['value'] : '' }}",
 
                     is_searching: false,
 
-                    state: '',
+                    state: "{{ $lookUpEntityData ? 'old' : '' }}",
 
                     results: [],
                 }

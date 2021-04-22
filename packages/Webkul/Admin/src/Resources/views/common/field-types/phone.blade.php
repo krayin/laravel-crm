@@ -34,10 +34,16 @@
 
             data: function () {
                 return {
-                    contactNumbers: [{
+                    contactNumbers: @json(old($attribute->code) ?: $value),
+                }
+            },
+
+            created: function() {
+                if (! this.contactNumbers || ! this.contactNumbers.length) {
+                    this.contactNumbers = [{
                         'value': '',
                         'label': 'work'
-                    }],
+                    }];
                 }
             },
 
