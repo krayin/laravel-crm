@@ -24,4 +24,6 @@ package-lock.json
 /public/vendor
 /storage/*.key
 /storage/dcc-data/
+/storage/framework/views/*
+/storage/framework/sessions/*
 /vendor

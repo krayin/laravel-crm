@@ -3,9 +3,9 @@
         <!-- searchbox and filters section -->
         <div class="datagrid-filters" id="datagrid-filters">
             <div class="filter-left">
-                <div class="search-filter form-group">
+                <div class="search-filter form-group" v-if="tableData.enableSearch">
                     <input
-                        type="text"
+                        type="search"
                         class="control"
                         id="search-field"
                         v-model="searchValue"
@@ -16,7 +16,7 @@
             </div>
 
             <div class="filter-right">
-                <div class="dropdown-filters per-page">
+                <div class="dropdown-filters per-page" v-if="tableData.enablePerPage">
                     <div class="form-group">
                         <label class="per-page-label" for="perPage">
                             {{ __('ui.datagrid.items-per-page') }}
@@ -38,7 +38,7 @@
                     </div>
                 </div>
 
-                <div class="filter-btn">
+                <div class="filter-btn" v-if="tableData.enableFilters">
                     <div class="grid-dropdown-header" @click="toggleSidebarFilter">
                         <span class="name">
                             {{ __('ui.datagrid.filter.title') }}

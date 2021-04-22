@@ -118,9 +118,9 @@ class UserDataGrid extends DataGrid
             'type'      => 'boolean',
             'closure'   => function ($row) {
                 if ($row->status == 1) {
-                    return '<span class="badge badge-sm badge-pill badge-primary">' . trans('admin::app.datagrid.active') . '</span>';
+                    return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {
-                    return '<span class="badge badge-sm badge-pill badge-danger">' . trans('admin::app.datagrid.inactive') . '</span>';
+                    return '<span class="badge badge-round badge-danger"></span>' . trans('admin::app.datagrid.inactive');
                 }
             },
         ]);
