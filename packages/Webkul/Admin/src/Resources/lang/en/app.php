@@ -45,6 +45,19 @@
             ],
         ],
 
+        'leads' => [
+            'title'          => 'Leads',
+            'add-title'      => 'Add Lead',
+            'edit-title'     => 'Edit Lead',
+            'save-btn-title' => 'Save as Lead',
+            'back'           => 'Back',
+            'cancel'         => 'Cancel',
+            'create-success' => 'Lead created successfully.',
+            'update-success' => 'Lead updated successfully.',
+            'delete-success' => 'Lead deleted successfully.',
+            'delete-failed'  => 'Lead can not be deleted.',
+        ],
+
         'products' => [
             'title'          => 'Products',
             'add-title'      => 'Add Product',
@@ -211,7 +224,7 @@
             'address-validation' => 'The "Address" field is required',
             'work'               => 'Work',
             'home'               => 'Home',
-            'no-result-found'    => ':attribute not found with same name.',
+            'no-result-found'    => 'Records not found with same name.',
             'add-as'             => 'Add as new :attribute'
         ]
     ];

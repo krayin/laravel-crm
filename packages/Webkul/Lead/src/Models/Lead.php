@@ -4,7 +4,6 @@ namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Traits\CustomAttribute;
-use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Lead\Contracts\Lead as LeadContract;
 
 class Lead extends Model implements LeadContract
@@ -20,10 +19,18 @@ class Lead extends Model implements LeadContract
     ];
 
     /**
-     * Get the product attribute values that owns the product.
+     * Get the type that owns the lead.
      */
-    public function attribute_values()
+    public function type()
     {
-        return $this->hasMany(AttributeValueProxy::modelClass(), 'entity_id')->where('entity_type', 'leads');
+        return $this->belongsTo(TypeProxy::modelClass());
+    }
+
+    /**
+     * Get the source that owns the lead.
+     */
+    public function source()
+    {
+        return $this->belongsTo(SourceProxy::modelClass());
     }
 }

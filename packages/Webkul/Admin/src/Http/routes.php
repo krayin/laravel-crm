@@ -31,8 +31,13 @@ Route::group(['middleware' => ['web']], function () {
             Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
 
             // Leads Routes
-            Route::prefix('leads')->group(function () {
-                Route::get('', 'Webkul\Admin\Http\Controllers\Lead\LeadController@index')->name('admin.leads.index');
+            Route::group([
+                'prefix'    => 'leads',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Lead'
+            ], function () {
+                Route::get('', 'LeadController@index')->name('admin.leads.index');
+    
+                Route::post('create', 'LeadController@store')->name('admin.leads.store');
             });
 
             // Contacts Routes
@@ -128,7 +133,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
                     
-                    Route::get('lookup/{id}', 'AttributeController@search')->name('admin.settings.attributes.lookup');
+                    Route::get('lookup/{id?}', 'AttributeController@search')->name('admin.settings.attributes.lookup');
                 });
             });
         });
