@@ -88,21 +88,21 @@
                     </template>
 
                     <i class="icon close-icon ml-10 float-right" @click="removeFilter({type: data.filterable_type, key, index: data.index})"></i>
+
+                    <template v-if="data.filterable_type == 'add' || data.filterable_type == 'dropdown'">
+                        <div class="selected-options">
+                            <span
+                                :key="index"
+                                v-for="(value, index) in data.values"
+                                class="badge badge-md badge-pill badge-secondary"
+                            >
+                                {{ value }}
+
+                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
+                            </span>
+                        </div>
+                    </template>
                 </div>
-
-                <template v-if="data.filterable_type == 'add' || data.filterable_type == 'dropdown'">
-                    <div class="selected-options">
-                        <span
-                            :key="index"
-                            v-for="(value, index) in data.values"
-                            class="badge badge-md badge-pill badge-secondary"
-                        >
-                            {{ value }}
-
-                            <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
-                        </span>
-                    </div>
-                </template>
             </div>
         </template>
     </div>

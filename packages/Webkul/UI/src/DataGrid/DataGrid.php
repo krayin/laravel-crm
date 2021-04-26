@@ -22,19 +22,25 @@ abstract class DataGrid
     protected $sortOrder = 'desc';
 
     /**
-     * Situation handling property when working with custom columns in datagrid, helps abstaining
-     * aliases on custom column.
+     * enable search field
      *
-     * @var bool
+     * @var boolean
      */
-    protected $enableFilterMap = false;
+    protected $enableSearch = true;
 
     /**
-     * This is array where aliases and custom column's name are passed
+     * enable items per page
      *
-     * @var array
+     * @var boolean
      */
-    protected $filterMap = [];
+    protected $enablePerPage = true;
+
+    /**
+     * enable sidebar filters
+     *
+     * @var boolean
+     */
+    protected $enableFilters = true;
 
     /**
      * array to hold all the columns which will be displayed on frontend.
@@ -42,7 +48,6 @@ abstract class DataGrid
      * @var array
      */
     protected $columns = [];
-
 
     /**
      * @var array
@@ -212,21 +217,6 @@ abstract class DataGrid
         unset($parsedUrl['perPage']);
 
         return $parsedUrl;
-    }
-
-    /**
-     * Add the index as alias of the column and use the column to make things happen
-     *
-     * @param string $alias
-     * @param string $column
-     *
-     * @return void
-     */
-    public function addFilter($alias, $column)
-    {
-        $this->filterMap[$alias] = $column;
-
-        $this->enableFilterMap = true;
     }
 
     /**
@@ -409,72 +399,9 @@ abstract class DataGrid
                     array_values($info)[0]
                 );
             } else if ($key === "duration" || $key === "type") {
-                foreach ($this->tabFilters as $filterIndex => $filter) {
-                    if ($filter['key'] == $key) {
-                        foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                            if (array_keys($info)[0] == "bw" && $filterValue['key'] == 'custom') {
-                                $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                            } else {
-                                $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
-                            }
-                        }
-
-                        $value = array_values($info)[0];
-                        $key = ($key === "duration") ? "created_at" : $key;
-
-                        switch ($value) {
-                            case 'yesterday':
-                                $collection->where(
-                                    $key,
-                                    Carbon::yesterday()
-                                );
-                                break;
-
-                            case 'today':
-                                $collection->where(
-                                    $key,
-                                    Carbon::today()
-                                );
-                                break;
-
-                            case 'tomorrow':
-                                $collection->where(
-                                    $key,
-                                    Carbon::tomorrow()
-                                );
-                                break;
-
-                            case 'this_week':
-                                break;
-
-                            case 'this_month':
-                                break;
-                        }
-                    }
-                }
+                $collection = $this->prepareTabFilter($collection);
             } elseif ($key === "search") {
-                $count_keys = count(array_keys($info));
-
-                if ($count_keys > 1) {
-                    throw new \Exception('Multiple Search keys Found, Please Resolve the URL Manually');
-                }
-
-                if ($count_keys == 1) {
-                    $collection->where(function ($collection) use ($info) {
-                        foreach ($this->completeColumnDetails as $column) {
-                            if (isset($column['searchable']) && $column['searchable'] == true) {
-                                if ($this->enableFilterMap && isset($this->filterMap[$column['index']])) {
-                                    $collection->orWhere($this->filterMap[$column['index']], 'like',
-                                        '%' . $info['all'] . '%');
-                                } elseif ($this->enableFilterMap && ! isset($this->filterMap[$column['index']])) {
-                                    $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
-                                } else {
-                                    $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
-                                }
-                            }
-                        }
-                    });
-                }
+                $collection = $this->prepareSearch($collection, $info);
             } else {
                 foreach ($this->completeColumnDetails as $index => $column) {
                     if ($column['index'] === $columnName) {
@@ -642,7 +569,90 @@ abstract class DataGrid
             'enableActions'     => $this->enableAction,
             'paginated'         => $this->paginate,
             'paginationData'    => $paginationData,
+            'enableSearch'      => $this->enableSearch,
             'tabFilters'        => $this->tabFilters,
+            'enablePerPage'     => $this->enablePerPage,
+            'enableFilters'     => $this->enableFilters,
         ];
+    }
+
+    /**
+     * Prepare tab filter.
+     *
+     * @return collection
+     */
+    public function prepareTabFilter($collection)
+    {
+        foreach ($this->tabFilters as $filterIndex => $filter) {
+            if ($filter['key'] == $key) {
+                foreach ($filter['values'] as $filterValueIndex => $filterValue) {
+                    if (array_keys($info)[0] == "bw" && $filterValue['key'] == 'custom') {
+                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
+                    } else {
+                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
+                    }
+                }
+
+                $value = array_values($info)[0];
+                $key = ($key === "duration") ? "created_at" : $key;
+
+                switch ($value) {
+                    case 'yesterday':
+                        $collection->where(
+                            $key,
+                            Carbon::yesterday()
+                        );
+                        break;
+
+                    case 'today':
+                        $collection->where(
+                            $key,
+                            Carbon::today()
+                        );
+                        break;
+
+                    case 'tomorrow':
+                        $collection->where(
+                            $key,
+                            Carbon::tomorrow()
+                        );
+                        break;
+
+                    case 'this_week':
+                        break;
+
+                    case 'this_month':
+                        break;
+                }
+            }
+        }
+
+        return $collection;
+    }
+
+    /**
+     * Prepare search data.
+     *
+     * @return collection
+     */
+    public function prepareSearch($collection, $info)
+    {
+        $count_keys = count(array_keys($info));
+
+        if ($count_keys > 1) {
+            throw new \Exception('Multiple Search keys Found, Please Resolve the URL Manually');
+        }
+
+        if ($count_keys == 1) {
+            $collection->where(function ($collection) use ($info) {
+                foreach ($this->completeColumnDetails as $column) {
+                    if (isset($column['searchable']) && $column['searchable'] == true) {
+                        $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
+                    }
+                }
+            });
+        }
+
+        return $collection;
     }
 }

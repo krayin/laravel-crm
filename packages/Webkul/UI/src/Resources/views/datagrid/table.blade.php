@@ -18,6 +18,14 @@
 
         <sidebar-filter></sidebar-filter>
 
-        <table-component table-class="{{ $tableClass }}"><table-component>
+        @section('table-section')
+            <table-component table-class="{{ $tableClass }}"><table-component>
+        @show
     </div>
 @stop
+
+@push('scripts')
+    <script>
+        window.baseURL = "{{ config('app.url') }}";
+    </script>
+@endpush

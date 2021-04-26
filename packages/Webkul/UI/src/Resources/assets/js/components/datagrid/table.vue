@@ -53,14 +53,14 @@
                 'updateTableData',
             ]),
 
-            getData: ({newParams, clean_uri, self, url, usePrevious}) => {
+            getData: ({newParams, self, url, usePrevious}) => {
                 if (self.resultLoaded) {
                     self.resultLoaded = false;
     
                     if (usePrevious) {
                         url = self.previousURL;
                     } else {
-                        url = url ? url : `${window.location.origin}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
+                        url = url ? url : `${window.baseURL}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
                         self.previousURL = url;
                     }
     
