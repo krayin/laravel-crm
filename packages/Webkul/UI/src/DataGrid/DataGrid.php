@@ -3,10 +3,12 @@
 namespace Webkul\UI\DataGrid;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Event;
+use Webkul\UI\DataGrid\Traits\DatagridCollection;
 
 abstract class DataGrid
 {
+    use DatagridCollection;
+
     /**
      * set index columns, ex: id.
      *
@@ -188,38 +190,6 @@ abstract class DataGrid
     }
 
     /**
-     * Parse the URL and get it ready to be used.
-     *
-     * @return void
-     */
-    private function parseUrl()
-    {
-        $parsedUrl = [];
-        $unparsed = url()->full();
-
-        $route = request()->route() ? request()->route()->getName() : "";
-
-        if (count(explode('?', $unparsed)) > 1) {
-            $to_be_parsed = explode('?', $unparsed)[1];
-
-            parse_str($to_be_parsed, $parsedUrl);
-            unset($parsedUrl['page']);
-        }
-
-        if (isset($parsedUrl['grand_total'])) {
-            foreach ($parsedUrl['grand_total'] as $key => $value) {
-                $parsedUrl['grand_total'][$key] = str_replace(',', '.', $parsedUrl['grand_total'][$key]);
-            }           
-        }
-
-        $this->itemsPerPage = isset($parsedUrl['perPage']) ? $parsedUrl['perPage']['eq'] : $this->itemsPerPage;
-
-        unset($parsedUrl['perPage']);
-
-        return $parsedUrl;
-    }
-
-    /**
      * @param string $column
      *
      * @return void
@@ -304,76 +274,6 @@ abstract class DataGrid
     }
 
     /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function getCollection()
-    {
-        $parsedUrl = $this->parseUrl();
-
-        foreach ($parsedUrl as $key => $value) {
-            if ($key === 'locale') {
-                if (! is_array($value)) {
-                    unset($parsedUrl[$key]);
-                }
-            } elseif (! is_array($value)) {
-                unset($parsedUrl[$key]);
-            }
-        }
-
-        if (count($parsedUrl)) {
-            $this->collection = $this->queryBuilder;
-
-            $filteredOrSortedCollection = $this->sortOrFilterCollection(
-                $this->collection,
-                $parsedUrl
-            );
-
-            if ($this->paginate) {
-                if ($this->itemsPerPage > 0) {
-                    return $filteredOrSortedCollection
-                            ->orderBy(
-                                $this->index,
-                                $this->sortOrder
-                            )
-                            ->paginate($this->itemsPerPage)
-                            ->appends(request()->except('page'));
-                }
-            } else {
-                return $filteredOrSortedCollection->orderBy($this->index, $this->sortOrder)->get();
-            }
-        }
-
-        if ($this->paginate) {
-            if ($this->itemsPerPage > 0) {
-                $this->collection = $this->queryBuilder
-                                    ->orderBy($this->index, $this->sortOrder)
-                                    ->paginate($this->itemsPerPage)
-                                    ->appends(request()->except('page'));
-            }
-        } else {
-            $this->collection = $this->queryBuilder->orderBy($this->index, $this->sortOrder)->get();
-        }
-
-        return $this->collection;
-    }
-
-    /**
-     * To find the alias of the column and by taking the column name.
-     *
-     * @param array $columnAlias
-     *
-     * @return array
-     */
-    public function findColumnType($columnAlias)
-    {
-        foreach ($this->completeColumnDetails as $column) {
-            if ($column['index'] == $columnAlias) {
-                return [$column['type'], $column['index']];
-            }
-        }
-    }
-
-    /**
      * @param \Illuminate\Support\Collection $collection
      * @param array                          $parseInfo
      *
@@ -385,85 +285,29 @@ abstract class DataGrid
             $columnType = $this->findColumnType($key)[0] ?? null;
             $columnName = $this->findColumnType($key)[1] ?? null;
 
-            if ($key === "sort") {
-                $count_keys = count(array_keys($info));
+            switch ($key) {
+                case 'sort':
+                    $collection = $this->filterCollection($collection, $info, $columnName, "sort");
+                    break;
 
-                if ($count_keys > 1) {
-                    throw new \Exception('Fatal Error! Multiple Sort keys Found, Please Resolve the URL Manually');
-                }
+                case 'type':
+                case 'duration':
+                    $collection = $this->prepareTabFilter($collection);
+                    break;
 
-                $columnName = $this->findColumnType(array_keys($info)[0]);
+                case 'search':
+                    $collection = $this->prepareSearch($collection, $info);
+                    break;
 
-                $collection->orderBy(
-                    $columnName[1],
-                    array_values($info)[0]
-                );
-            } else if ($key === "duration" || $key === "type") {
-                $collection = $this->prepareTabFilter($collection);
-            } elseif ($key === "search") {
-                $collection = $this->prepareSearch($collection, $info);
-            } else {
-                foreach ($this->completeColumnDetails as $index => $column) {
-                    if ($column['index'] === $columnName) {
-                        $this->completeColumnDetails[$index]['values'] = explode(',', array_values($info)[0]);
-                    }
+                default:
+                    $this->attachColumnValues($columnName, $info);
 
-                    if ($column['index'] === $columnName && ! $column['filterable']) {
-                        return $collection;
-                    }
-                }
-
-                foreach ($info as $condition => $filter_value) {
-                    if ($condition == "in") {
-                        $collection->orWhereIn(
-                            $columnName,
-                            explode(',', $filter_value)
-                        );
-                    } else if ($condition == "bw") {
-                        $dates = explode(',', $filter_value);
-
-                        if (sizeof($dates) == 2) {
-                            if ($dates[1] == "") {
-                                $dates[1] = Carbon::today()->format('Y-m-d');
-                            }
-
-                            $collection->orWhereBetween(
-                                $columnName,
-                                $dates
-                            );
-                        }
-                    } else {
-                        $collection->where(
-                            $columnName,
-                            $this->operators[$condition],
-                            $filter_value
-                        );
-                    }
-                }
+                    $collection = $this->filterCollection($collection, $info, $columnName);
+                    break;
             }
         }
 
         return $collection;
-    }
-
-    /**
-     * @param string $name
-     *
-     * @return void
-     */
-    protected function fireEvent($name)
-    {
-        if (isset($name)) {
-            $className = get_class($this->invoker);
-
-            $className = last(explode("\\", $className));
-
-            $className = strtolower($className);
-
-            $eventName = $className . '.' . $name;
-
-            Event::dispatch($eventName, $this->invoker);
-        }
     }
 
     /**
@@ -476,7 +320,7 @@ abstract class DataGrid
     /**
      * @return \Illuminate\Http\Response
      */
-    public function data()
+    public function toArray()
     {
         $this->addColumns();
 
@@ -487,172 +331,5 @@ abstract class DataGrid
         $data = $this->prepareResponseData();
 
         return $data;
-    }
-
-    /**
-     * Prepare Response data.
-     *
-     * @return array
-     */
-    public function prepareResponseData()
-    {
-        $collection = $this->getCollection();
-
-        // pagination data
-        $paginationData = [
-            'has_pages' => false,
-        ];
-        
-        if ($this->paginate && $collection->hasPages()) {
-            $paginationData = [
-                'has_pages' => true,
-            ];
-
-            if ($collection->onFirstPage()) {
-                $paginationData['on_first_page'] = true;
-            } else {
-                $paginationData['on_first_page'] = false;
-                $paginationData['previous_page_url'] = urldecode($collection->previousPageUrl());
-            }
-
-            $paginationData['elements'] = $collection->links()->elements;
-            $paginationData['current_page'] = $collection->currentPage();
-            $paginationData['total_rows'] = $collection->total();
-            $paginationData['current_rows'] = $collection->count();
-
-            if ($collection->hasMorePages()) {
-                $paginationData['has_more_pages'] = true;
-                $paginationData['next_page_url'] = urldecode($collection->nextPageUrl());
-            } else {
-                $paginationData['has_more_pages'] = false;
-            }
-        }
-
-        // actions data
-        $arrayCollection = $collection->toArray();
-
-        foreach ($arrayCollection['data'] as $index => $row) {
-            foreach ($this->actions as $action) {
-                if (! isset($arrayCollection['data'][$index]->action)) {
-                    $arrayCollection['data'][$index]->action = [];
-                }
-
-                $actionCollection = $action;
-                $actionCollection['route'] = route($action['route'], ['id' => $row->id]);
-
-                array_push($arrayCollection['data'][$index]->action, $actionCollection);
-            }
-        }
-
-        // closure data
-        foreach ($this->completeColumnDetails as $columnIndex => $column) {
-            if (isset($column['closure']) && $column['closure']) {
-                foreach ($arrayCollection['data'] as $index => $row) {
-                    $arrayCollection['data'][$index]->{$column['index']} = $column['closure']($row);
-                }
-            }
-
-            if (isset($column['filterable_type']) && $column['filterable_type'] == "date_range") {
-                if (! isset($this->completeColumnDetails[$columnIndex]['values'])) {
-                    $this->completeColumnDetails[$columnIndex]['values'] = ["", ""];
-                }
-            }
-        }
-
-        return [
-            'records'           => $arrayCollection,
-            'columns'           => $this->completeColumnDetails,
-            'actions'           => $this->actions,
-            'massactions'       => $this->massActions,
-            'index'             => $this->index,
-            'enableMassActions' => $this->enableMassAction,
-            'enableActions'     => $this->enableAction,
-            'paginated'         => $this->paginate,
-            'paginationData'    => $paginationData,
-            'enableSearch'      => $this->enableSearch,
-            'tabFilters'        => $this->tabFilters,
-            'enablePerPage'     => $this->enablePerPage,
-            'enableFilters'     => $this->enableFilters,
-        ];
-    }
-
-    /**
-     * Prepare tab filter.
-     *
-     * @return collection
-     */
-    public function prepareTabFilter($collection)
-    {
-        foreach ($this->tabFilters as $filterIndex => $filter) {
-            if ($filter['key'] == $key) {
-                foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                    if (array_keys($info)[0] == "bw" && $filterValue['key'] == 'custom') {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                    } else {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
-                    }
-                }
-
-                $value = array_values($info)[0];
-                $key = ($key === "duration") ? "created_at" : $key;
-
-                switch ($value) {
-                    case 'yesterday':
-                        $collection->where(
-                            $key,
-                            Carbon::yesterday()
-                        );
-                        break;
-
-                    case 'today':
-                        $collection->where(
-                            $key,
-                            Carbon::today()
-                        );
-                        break;
-
-                    case 'tomorrow':
-                        $collection->where(
-                            $key,
-                            Carbon::tomorrow()
-                        );
-                        break;
-
-                    case 'this_week':
-                        break;
-
-                    case 'this_month':
-                        break;
-                }
-            }
-        }
-
-        return $collection;
-    }
-
-    /**
-     * Prepare search data.
-     *
-     * @return collection
-     */
-    public function prepareSearch($collection, $info)
-    {
-        $count_keys = count(array_keys($info));
-
-        if ($count_keys > 1) {
-            throw new \Exception('Multiple Search keys Found, Please Resolve the URL Manually');
-        }
-
-        if ($count_keys == 1) {
-            $collection->where(function ($collection) use ($info) {
-                foreach ($this->completeColumnDetails as $column) {
-                    if (isset($column['searchable']) && $column['searchable'] == true) {
-                        $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
-                    }
-                }
-            });
-        }
-
-        return $collection;
     }
 }

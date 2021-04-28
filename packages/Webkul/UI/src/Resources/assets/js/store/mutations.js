@@ -8,7 +8,7 @@ const UPDATE_FILTER_VALUES = (state, payload) => {
         }
     }
 
-    EventBus.$emit('update_filter', {
+    EventBus.$emit('updateFilter', {
         key,
         value: payload.values.toString(),
         cond: payload.condition ? payload.condition : 'in',

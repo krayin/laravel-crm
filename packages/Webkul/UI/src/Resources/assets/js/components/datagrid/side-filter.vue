@@ -1,5 +1,5 @@
 <template>
-    <div :class="`sidebar-filter ${sidebarFilter ? 'show' : ''}`" v-if="sidebarFilter">
+    <div :class="`sidebar-filter ${sidebarFilter ? 'show' : ''}`">
         <header>
             <button type="button" class="btn btn-sm btn-white text-black fs-18 pl-0">
                 {{ __('ui.datagrid.filter.title') }}
@@ -15,7 +15,7 @@
         </header>
         
         <template v-for="(data, key) in tableData.columns">
-            <div :class="`control-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable">
+            <div :class="`control-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
                 <label>{{ data.label }}</label>
 
                 <div class="field-container">
@@ -81,8 +81,8 @@
                             <option value="" disabled selected>
                                 {{ data.label }}
                             </option>
-                            <option :value="value" :key="index" v-for="(value, index) in data.options">
-                                {{ value }}
+                            <option :value="option.value" :key="index" v-for="(option, index) in data.filterable_options">
+                                {{ option.label }}
                             </option>
                         </select>
                     </template>
@@ -96,7 +96,7 @@
                                 v-for="(value, index) in data.values"
                                 class="badge badge-md badge-pill badge-secondary"
                             >
-                                {{ value }}
+                                {{ getFilteredValue(value, data) }}
 
                                 <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
                             </span>
@@ -196,6 +196,18 @@
                 setTimeout(() => {
                     this.updateFilterValues({key, values, condition: 'bw'})
                 }, 0);
+            },
+
+            getFilteredValue: function (value, data) {
+                if (data.filterable_type == 'dropdown' && data.filterable_options) {
+                    var filterable_option = data.filterable_options.filter(option => option.value == value);
+
+                    if (filterable_option.length > 0) {
+                        return filterable_option[0].label;
+                    }
+                }
+
+                return value;
             }
         },
     };

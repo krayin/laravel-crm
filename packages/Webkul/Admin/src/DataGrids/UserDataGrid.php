@@ -74,7 +74,7 @@ class UserDataGrid extends DataGrid
                 'users.name',
                 'users.email',
                 'users.status',
-                'users.created_at',
+                'users.created_at'
             );
 
         $this->setQueryBuilder($queryBuilder);
@@ -88,7 +88,6 @@ class UserDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable'        => true,
             'filterable_type'   => 'add'
         ]);
 
@@ -98,7 +97,6 @@ class UserDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable'        => true,
             'filterable_type'   => 'add'
         ]);
 
@@ -108,15 +106,24 @@ class UserDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable'        => true,
             'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
-            'index'     => 'status',
-            'label'     => trans('admin::app.datagrid.status'),
-            'type'      => 'boolean',
-            'closure'   => function ($row) {
+            'index'              => 'status',
+            'label'              => trans('admin::app.datagrid.status'),
+            'type'               => 'boolean',
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => [
+                [
+                    'label' => trans('admin::app.datagrid.active'),
+                    'value' => 1,
+                ], [
+                    'label' => trans('admin::app.datagrid.inactive'),
+                    'value' => 0,
+                ],
+            ],
+            'closure'            => function ($row) {
                 if ($row->status == 1) {
                     return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {
@@ -129,9 +136,9 @@ class UserDataGrid extends DataGrid
             'index'             => 'created_at',
             'label'             => trans('admin::app.datagrid.created_at'),
             'type'              => 'string',
-            'filterable'        => true,
+            'sortable'           => true,
             'filterable_type'   => 'date_range',
-            'closure'   => function ($row) {
+            'closure'           => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);

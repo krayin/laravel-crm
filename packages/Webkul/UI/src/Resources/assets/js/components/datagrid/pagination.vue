@@ -115,7 +115,7 @@
 
         methods: {
             changePage: function ({url, page_number}) {
-                EventBus.$emit('update_filter', {
+                EventBus.$emit('updateFilter', {
                     key     : 'page',
                     value   : page_number
                 });

@@ -39,6 +39,8 @@
             'value-here'            => 'Value here',
             'numeric-value-here'    => 'Numeric Value here',
             'submit'                => 'Submit',
+            'multiple_sort_keys'    => 'Fatal Error! Multiple Sort keys Found, Please Resolve the URL Manually',
+            'multiple_search_keys'  => 'Multiple Search keys Found, Please Resolve the URL Manually',
             'filter'                => [
                 'remove_all'    => 'Remove All',
                 'title'         => 'Filter',
@@ -47,7 +49,7 @@
                 'done'          => 'Done',
                 'to'            => 'to',
                 'date_range'    => 'Date Range',
-            ]
+            ],
         ]
     ];
 ?>

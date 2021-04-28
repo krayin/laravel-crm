@@ -73,7 +73,7 @@
         <template>
             <tabs
                 event-value-key="value"
-                event-key="update_filter"
+                event-key="updateFilter"
                 :tabs-collection="tableData.tabFilters[0].values"
                 v-if="tableData.tabFilters && tableData.tabFilters[0]"
                 :class="`${tableData.tabFilters[0].type} d-inline-block`"
@@ -87,7 +87,7 @@
 
                 <tabs
                     event-value-key="value"
-                    event-key="update_filter"
+                    event-key="updateFilter"
                     :tabs-collection="tableData.tabFilters[1].values"
                     v-if="tableData.tabFilters && tableData.tabFilters[1]"
                     :class="`${tableData.tabFilters[1].type} d-inline-block`"
@@ -224,8 +224,8 @@
                 }
             }
 
-            EventBus.$on('update_filter', data => {
-                if (data.value == 'custom') {
+            EventBus.$on('updateFilter', data => {
+                if (data.key == "duration" && data.value == 'custom') {
                     this.$store.state.customTabFilter = ! this.$store.state.customTabFilter;
                 } else {
                     this.updateFilter(data);
@@ -277,7 +277,10 @@
                     || condition === null
                     || response === null
                 ) {
-                    alert(this.__('ui.datagrid.filter-fields-missing'));
+                    this.updateFilter({
+                        key: column,
+                        value: ""
+                    });
 
                     return false;
                 } else {
@@ -422,46 +425,10 @@
                         case "search":
                             obj.label = "Search";
                             break;
-                        case "channel":
-                            obj.label = "Channel";
-                            if ('channels' in this.extraFilters) {
-                                obj.prettyValue = this.extraFilters['channels'].find(channel => channel.id == obj.val).name
-                            }
-                            break;
-                        case "locale":
-                            obj.label = "Locale";
-                            if ('locales' in this.extraFilters) {
-                                obj.prettyValue = this.extraFilters['locales'].find(locale => locale.code === obj.val).name
-                            }
-                            break;
-                        case "customer_group":
-                            obj.label = "Customer Group";
-                            if ('customer_groups' in this.extraFilters) {
-                                obj.prettyValue = this.extraFilters['customer_groups'].find(customer_group => customer_group.id === parseInt(obj.val, 10)).name
-                            }
-                            break;
                         case "sort":
-                            for (let colIndex in this.columns) {
-                                if (this.columns[colIndex].index === obj.cond) {
-                                    obj.label = this.columns[colIndex].label;
-                                    break;
-                                }
-                            }
+                            obj.prettyValue = `${obj.cond} - ${obj.val}`;
                             break;
                         default:
-                            for (let colIndex in this.columns) {
-                                if (this.columns[colIndex].index === obj.column) {
-                                    obj.label = this.columns[colIndex].label;
-
-                                    if (this.columns[colIndex].type === 'boolean') {
-                                        if (obj.val === '1') {
-                                            obj.val = this.__('ui::app.datagrid.true');
-                                        } else {
-                                            obj.val = this.__('ui::app.datagrid.false');
-                                        }
-                                    }
-                                }
-                            }
                             break;
                     }
 
@@ -497,7 +464,11 @@
                     if (cond) {
                         data['cond'] = cond;
                     }
-    
+
+                    if (key == "sort") {
+                        data.prettyValue = `${data.cond} - ${data.val}`;
+                    }
+
                     this.filters.push(data);
                 }
 
