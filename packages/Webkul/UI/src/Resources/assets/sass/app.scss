@@ -431,6 +431,8 @@ h5 {
     }
 
     .filtered-tags {
+        margin-top: 20px;
+
         .filter-tag {
             margin-right: 20px;
             display: inline-block;
@@ -1462,20 +1464,20 @@ modal {
 
 .sidebar-filter {
     top: 0;
-    right: 0;
     z-index: 10;
     width: 420px;
     height: 100vh;
-    display: none;
+    right: -420px;
     position: fixed;
     padding: 30px 20px;
     overflow-y: scroll;
+    display: inline-block;
     background-color: $white;
     border-left: 1px solid $border-color;
     transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.show {
-        display: inline-block;
+        right: 0;
     }
 
     header {

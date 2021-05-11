@@ -84,7 +84,7 @@
             sortCollection: function (index) {
                 this.findCurrentSort();
 
-                EventBus.$emit('update_filter', {
+                EventBus.$emit('updateFilter', {
                     key     : 'sort',
                     cond    : this.columns[index].index,
                     value   : this.currentSort == 'desc' ? 'asc' : 'desc',
