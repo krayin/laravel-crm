@@ -93,4 +93,18 @@ class PersonController extends Controller
 
         return redirect()->route('admin.contacts.persons.index');
     }
+
+    /**
+     * Search person results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = $this->personRepository->with('organization')->findWhere([
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+        ]);
+
+        return response()->json($results);
+    }
 }

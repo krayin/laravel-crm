@@ -91,4 +91,18 @@ class ProductController extends Controller
 
         return redirect()->route('admin.products.index');
     }
+
+    /**
+     * Search product results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = $this->productRepository->findWhere([
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+        ]);
+
+        return response()->json($results);
+    }
 }

@@ -26,7 +26,7 @@ body {
 
 .navbar-top {
     height: 60px;
-    background-color: #fff;
+    background-color: $white;
     font-size: 0;
     @include box-shadow(inset 0px -1px 0px #CDCECF);
     position: fixed;
@@ -88,7 +88,7 @@ body {
     height: auto;
     bottom: 0;
     z-index: 2;
-    background-color: #fff;
+    background-color: $white;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     ul.menubar {
@@ -127,7 +127,7 @@ body {
                 position: absolute;
                 top: 0;
                 left: 48px;
-                background-color: #fff;
+                background-color: $white;
                 box-shadow: 2px 1px 3px #CDCECF;
                 border: 1px solid #eee;
                 border-left: 0;
@@ -250,7 +250,7 @@ body {
 
         .active {
             a {
-                background: #fff;
+                background: $white;
                 border-top: 1px solid $border-color;
                 border-bottom: 1px solid $border-color;
             }
@@ -265,7 +265,7 @@ body {
         padding: 25px 25px 25px 15px;
         margin-left: 280px;
         margin-top:1px;
-        background-color: #fff;
+        background-color: $white;
     }
 
     .content {
@@ -339,7 +339,7 @@ body {
     width: 750px;
 
     .control {
-        background: #fff;
+        background: $white;
         border: 2px solid #c7c7c7;
         @include border-radius(3px);
         width: 150px;
@@ -542,9 +542,65 @@ body {
             width: 100%;
 
             &:hover {
-                background-color: #0E90D9;
-                color: #fff;
+                background-color: $primary-color;
+                color: $white;
             }
         }
+    }
+}
+
+.modal-container {
+    .tabs-content {
+        border: 0;
+        border-top: 1px solid $border-color;
+    }
+}
+
+.lead-product-list {
+    .lead-product {
+        padding-bottom: 20px;
+        padding-top: 20px;
+        border-bottom: 1px solid $border-color;
+
+        &:first-of-type {
+            padding-top: 0;
+        }
+
+        .top-control-group {
+            width: 100%;
+            display: inline-block;
+
+            .form-group {
+                margin-bottom: 10px;
+            }
+        }
+
+        .bottom-control-group {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(32%, 1fr));
+            justify-items: center;
+            grid-auto-rows: auto;
+            grid-column-gap: 10px;
+            grid-row-gap: 0;
+            padding-right: 28px;
+            position: relative;
+
+            .form-group {
+                margin-bottom: 0;
+            }
+
+            .icon.trash-icon {
+                position: absolute;
+                right: 0;
+                top: 37px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    a.add-more-link {
+        margin-top: 20px;
+        display: block;
     }
 }

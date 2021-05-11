@@ -128,16 +128,14 @@ class AttributeRepository extends Repository
      * @param  string  $query
      * @return array
      */
-    public function getAttributeLookUpOptions($id, $query)
+    public function getLookUpOptions($id, $query = '')
     {
         $attribute = $this->findOrFail($id);
 
         $lookup = config('attribute_lookups.' . $attribute->lookup_type);
 
         return app($lookup['repository'])->findWhere([
-            [$lookup['label_column'], 'like', '%' . urldecode($query) . '%']
-        ], [
-            $lookup['value_column'] . ' as value' , $lookup['label_column'] . ' as label'
+            ['name', 'like', '%' . urldecode($query) . '%']
         ]);
     }
 
@@ -156,11 +154,6 @@ class AttributeRepository extends Repository
 
         $lookUp = config('attribute_lookups.' . $attribute->lookup_type);
 
-        if ($lookUpEntity = app($lookUp['repository'])->find($entityId)) {
-            return [
-                'value' => $lookUpEntity->{$lookUp['value_column']},
-                'label' => $lookUpEntity->{$lookUp['label_column']},
-            ];
-        }
+        return app($lookUp['repository'])->find($entityId);
     }
 }
