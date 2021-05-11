@@ -54,6 +54,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('edit/{id}', 'PersonController@edit')->name('admin.contacts.persons.edit');
     
                     Route::put('edit/{id}', 'PersonController@update')->name('admin.contacts.persons.update');
+
+                    Route::get('search', 'PersonController@search')->name('admin.contacts.persons.search');
                 });
 
                 // Companies Routes
@@ -80,6 +82,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
 
                 Route::put('edit/{id}', 'ProductController@update')->name('admin.products.update');
+
+                Route::get('search', 'ProductController@search')->name('admin.products.search');
             });
 
             // Contacts Routes

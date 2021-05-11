@@ -1,8 +1,18 @@
 <div class="form-group" style="margin-top: 5px;">
 
-    @foreach ($attribute->options as $option)
+    @php
+        $options = $attribute->lookup_type
+            ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->id)
+            : $attribute->options()->orderBy('sort_order')->get();
+
+        $selectedOption = old($attribute->code) ?: $value;
+    @endphp
+
+    <option value=""></option>
+
+    @foreach ($options as $option)
         <span class="checkbox" style="margin-top: 5px;">
-            <input  type="checkbox" name="{{ $attribute->code }}[]" value="{{ $option->id }}" {{ in_array($option->id, explode(',', $value)) ? 'checked' : ''}}>
+            <input  type="checkbox" name="{{ $attribute->code }}[]" value="{{ $option->id }}" {{ in_array($option->id, explode(',', $selectedOption)) ? 'checked' : ''}}>
             </input>
 
             <label class="checkbox-view"></label>

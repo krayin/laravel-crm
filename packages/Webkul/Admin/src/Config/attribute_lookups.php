@@ -3,22 +3,31 @@
 return [
     'organizations' => [
         'name'         => 'Organization',
-        'value_column' => 'id',
-        'label_column' => 'name',
         'repository'   => 'Webkul\Contact\Repositories\OrganizationRepository',
     ],
 
     'lead_sources' => [
-        'name'         => 'Source',
-        'value_column' => 'id',
-        'label_column' => 'name',
+        'name'         => 'Lead Source',
         'repository'   => 'Webkul\Lead\Repositories\SourceRepository',
     ],
 
     'lead_types' => [
-        'name'         => 'Type',
-        'value_column' => 'id',
-        'label_column' => 'name',
+        'name'         => 'Lead Type',
         'repository'   => 'Webkul\Lead\Repositories\TypeRepository',
     ],
+
+    'lead_pipelines' => [
+        'name'         => 'Lead Pipelines',
+        'repository'   => 'Webkul\Lead\Repositories\PipelineRepository',
+    ],
+
+    'lead_stages' => [
+        'name'         => 'Lead Stage',
+        'repository'   => 'Webkul\Lead\Repositories\StageRepository',
+    ],
+
+    'users' => [
+        'name'         => 'Sales Owner',
+        'repository'   => 'Webkul\User\Repositories\UserRepository',
+    ]
 ];

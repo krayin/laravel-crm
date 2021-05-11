@@ -4,6 +4,18 @@
     {{ __('admin::app.leads.title') }}
 @stop
 
+@section('css')
+    <style>
+        .modal-container .modal-header {
+            border: 0;
+        }
+
+        .modal-container .modal-body {
+            padding: 0;
+        }
+    </style>
+@stop
+
 @section('content-wrapper')
     <div class="content full-page">
         <div class="page-header">
@@ -36,12 +48,26 @@
                 
                 <input type="hidden" name="quick_add" value="1"/>
 
-                @include('admin::common.custom-attribute-controls', [
-                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                        'entity_type' => 'leads',
-                        'quick_add'   => 1
-                    ])
-                ])
+                <tabs>
+                    <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
+                        @include('admin::common.custom-attribute-controls', [
+                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'leads',
+                                'quick_add'   => 1
+                            ])
+                        ])
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.contact-person') }}">
+                        @include('admin::leads.common.contact')
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.products') }}">
+                        @include('admin::leads.common.products')
+
+                        <product-list></product-list>
+                    </tab>
+                </tabs>
             </div>
         </modal>
     </form>

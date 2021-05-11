@@ -22,10 +22,13 @@
             'eventData',
             'eventValueKey'
         ],
+
+        inject: ['$validator'],
         
         data: function () {
             return {
                 tabs: [],
+
                 hideTabsContent: false,
             }
         },
@@ -35,6 +38,7 @@
                 this.tabs = this.$children;
             } else {
                 this.hideTabsContent = true;
+                
                 this.tabs = this.tabsCollection;
             }
         },
