@@ -23,7 +23,7 @@
                                 {{ __('admin::app.settings.attributes.save-btn-title') }}
                             </button>
 
-                            <a href="">{{ __('admin::app.settings.attributes.back') }}</a>
+                            <a href="{{ route('admin.settings.attributes.index') }}">{{ __('admin::app.settings.attributes.back') }}</a>
                         </div>
         
                         <div class="panel-body">

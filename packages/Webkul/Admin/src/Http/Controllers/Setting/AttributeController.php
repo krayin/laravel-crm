@@ -34,7 +34,9 @@ class AttributeController extends Controller
      */
     public function index()
     {
-        return view('admin::settings.attributes.index');
+        return view('admin::settings.attributes.index', [
+            'tableClass' => '\Webkul\Admin\DataGrids\Setting\AttributeDataGrid'
+        ]);
     }
 
     /**
@@ -129,15 +131,22 @@ class AttributeController extends Controller
 
                 Event::dispatch('settings.attribute.delete.after', $id);
 
-                session()->flash('success', trans('admin::app.settings.attributes.delete-success'));
-
-                return response()->json(['message' => true], 200);
+                return response()->json([
+                    'status'    => true,
+                    'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.settings.attributes.attribute')]),
+                ], 200);
             } catch(\Exception $e) {
-                session()->flash('error', trans('admin::app.settings.attributes.delete-failed'));
+                return response()->json([
+                    'status'    => false,
+                    'message'   => trans('admin::app.settings.attributes.delete-failed'),
+                ], 400);
             }
         }
 
-        return response()->json(['message' => false], 400);
+        return response()->json([
+            'status'    => false,
+            'message'   => trans('admin::app.settings.attributes.delete-failed'),
+        ], 400);
     }
 
     /**
@@ -151,5 +160,22 @@ class AttributeController extends Controller
         $results = $this->attributeRepository->getAttributeLookUpOptions($id, request()->input('query'));
 
         return response()->json($results);
+    }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        $this->attributeRepository->destroy($data['rows']);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.settings.attributes.title')]),
+        ]);
     }
 }

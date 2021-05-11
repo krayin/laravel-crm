@@ -34,6 +34,12 @@ $(function() {
             this.addServerErrors();
             
             this.addFlashMessages();
+
+            window.addFlashMessages = flash => {
+                const flashes = this.$refs.flashes;
+
+                flashes.addFlash(flash);
+            }
         },
 
         methods: {

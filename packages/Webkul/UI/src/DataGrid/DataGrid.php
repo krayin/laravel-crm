@@ -311,18 +311,13 @@ abstract class DataGrid
     }
 
     /**
-     * @return void
-     */
-    public function prepareMassActions()
-    {
-    }
-
-    /**
      * @return \Illuminate\Http\Response
      */
     public function toArray()
     {
         $this->addColumns();
+
+        $this->prepareActions();
 
         $this->prepareMassActions();
 

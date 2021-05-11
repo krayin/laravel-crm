@@ -15,7 +15,21 @@ Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.mixin({
-	store
+	store,
+
+	methods: {
+		addFlashMessages: function (flash) {
+			window.addFlashMessages(flash);
+		},
+
+		toggleButtonDisable (value) {
+			var buttons = document.getElementsByTagName("button");
+
+			for (var i = 0; i < buttons.length; i++) {
+				buttons[i].disabled = value;
+			}
+		},
+	}
 });
 
 Vue.component('flash-wrapper', require('./components/flash-wrapper.vue').default);

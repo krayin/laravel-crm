@@ -147,6 +147,7 @@
 
             'attributes' => [
                 'title'                 => 'Attributes',
+                'attribute'             => 'Attribute',
                 'add-title'             => 'Add Attribute',
                 'edit-title'            => 'Edit Attribute',
                 'save-btn-title'        => 'Save as Attribute',
@@ -182,6 +183,7 @@
                 'add-option-btn-title'  => 'Add Option',
                 'create-success'        => 'Attribute created successfully.',
                 'update-success'        => 'Attribute updated successfully.',
+                'update-error'          => 'Unable to update attribute.',
                 'delete-success'        => 'Attribute deleted successfully.',
                 'delete-failed'         => 'Attribute can not be deleted.',
                 'user-define-error'     => 'Can not delete system attribute.'
@@ -191,13 +193,20 @@
         'datagrid' => [
             'id'                => 'Id',
             'name'              => 'Name',
+            'code'              => 'Code',
+            'sku'               => 'SKU',
+            'type'              => 'Type',
+            'price'             => 'Price',
             'email'             => 'Email',
             'status'            => 'Status',
             'active'            => 'Active',
             'inactive'          => 'Inactive',
+            'quantity'          => 'Quantity',
             'created_at'        => 'Created at',
             'description'       => 'Description',
             'permission_type'   => 'Permission type',
+            'update-success'    => ':resource updated successfully.',
+            'destroy-success'   => ':resource deleted successfully.',
         ],
 
         'response' => [

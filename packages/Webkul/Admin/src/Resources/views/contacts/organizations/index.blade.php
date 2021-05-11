@@ -1,24 +1,15 @@
-@extends('admin::layouts.master')
+@extends('ui::datagrid.table')
 
-@section('page_title')
+@section('table-header')
     {{ __('admin::app.contacts.organizations.title') }}
 @stop
 
-@section('content-wrapper')
-    <div class="content full-page dashboard">
-        <div class="page-header">
-            <div class="page-title">
-                <h1>{{ __('admin::app.contacts.organizations.title') }}</h1>
-            </div>
+@php
+    $tableClass = "\Webkul\Admin\DataGrids\Contact\OrganizationDataGrid";
+@endphp
 
-            <div class="page-action">
-                <button class="btn btn-md btn-primary" @click="openModal('addOrganizationModal')">{{ __('admin::app.contacts.organizations.add-title') }}</button>
-            </div>
-        </div>
-
-        <div class="page-content">
-        </div>
-    </div>
+@section('table-action')
+    <button class="btn btn-md btn-primary" @click="openModal('addOrganizationModal')">{{ __('admin::app.contacts.organizations.add-title') }}</button>
 
     <form action="{{ route('admin.contacts.organizations.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addOrganizationModal" :is-open="modalIds.addOrganizationModal">

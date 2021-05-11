@@ -515,7 +515,7 @@
             },
 
             onSubmit: function (event) {
-                this.$root.toggleButtonDisable(true);
+                this.toggleButtonDisable(true);
 
                 this.$validator.validateAll()
                     .then(result => {
@@ -532,13 +532,18 @@
                                     this.massActionValue = {};
                                     this.massActionOptionValue = null;
 
-                                    this.$root.toggleButtonDisable(false);
+                                    this.toggleButtonDisable(false);
+
+                                    this.addFlashMessages({
+                                        type    : "success",
+                                        message : response.data.message,
+                                    });
                                 })
                                 .catch(error => {
-                                    this.$root.toggleButtonDisable(false);
+                                    this.toggleButtonDisable(false);
                                 });
                         } else {
-                            this.$root.toggleButtonDisable(false);
+                            this.toggleButtonDisable(false);
 
                             EventBus.$emit('onFormError')
                         }

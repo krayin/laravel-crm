@@ -52,7 +52,7 @@ class UserController extends Controller
     public function index()
     {
         return view('admin::settings.users.index', [
-            'tableClass' => '\Webkul\Admin\DataGrids\UserDataGrid'
+            'tableClass' => '\Webkul\Admin\DataGrids\Setting\UserDataGrid'
         ]);
     }
 
@@ -86,12 +86,6 @@ class UserController extends Controller
 
         if (isset($data['password']) && $data['password']) {
             $data['password'] = bcrypt($data['password']);
-        }
-
-        if (isset($data['status']) && $data['status'] == 'on') {
-            $data['status'] = 1;
-        } else {
-            $data['status'] = 0;
         }
 
         $data['status'] = isset($data['status']) ? 1 : 0;
@@ -203,7 +197,6 @@ class UserController extends Controller
     /**
      * Mass Update the specified resources.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function massUpdate()
@@ -226,16 +219,13 @@ class UserController extends Controller
     /**
      * Mass Delete the specified resources.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function massDestroy()
     {
         $data = request()->all();
 
-        foreach ($data['rows'] as $userId) {
-            $this->userRepository->delete($userId);
-        }
+        $this->userRepository->destroy($data['rows']);
 
         return response()->json([
             'status'    => true,

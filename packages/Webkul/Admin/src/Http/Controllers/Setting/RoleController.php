@@ -35,7 +35,7 @@ class RoleController extends Controller
     public function index()
     {
         return view('admin::settings.roles.index', [
-            'tableClass' => '\Webkul\Admin\DataGrids\RoleDataGrid'
+            'tableClass' => '\Webkul\Admin\DataGrids\Setting\RoleDataGrid'
         ]);
     }
 
