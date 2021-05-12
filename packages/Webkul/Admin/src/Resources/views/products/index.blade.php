@@ -36,7 +36,7 @@
                 
                 <input type="hidden" name="quick_add" value="1"/>
 
-                @include('admin::common.custom-attribute-controls', [
+                @include('admin::common.custom-attributes.edit', [
                     'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                         'entity_type' => 'products',
                         'quick_add'   => 1

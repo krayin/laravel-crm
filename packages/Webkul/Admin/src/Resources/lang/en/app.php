@@ -237,7 +237,7 @@
             'work'               => 'Work',
             'home'               => 'Home',
             'no-result-found'    => 'Records not found with same name.',
-            'add-as'             => 'Add as new :attribute'
+            'add-as'             => 'Add as new'
         ]
     ];
 ?>

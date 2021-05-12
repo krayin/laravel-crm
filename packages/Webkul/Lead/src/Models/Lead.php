@@ -3,6 +3,8 @@
 namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Contact\Models\PersonProxy;
+use Webkul\User\Models\UserProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Lead\Contracts\Lead as LeadContract;
 
@@ -25,11 +27,28 @@ class Lead extends Model implements LeadContract
         'won_at',
         'closed_at',
         'user_id',
+        'person_id',
         'lead_source_id',
         'lead_type_id',
         'lead_pipeline_id',
         'lead_stage_id',
     ];
+
+    /**
+     * Get the user that owns the lead.
+     */
+    public function user()
+    {
+        return $this->belongsTo(UserProxy::modelClass());
+    }
+
+    /**
+     * Get the person that owns the lead.
+     */
+    public function person()
+    {
+        return $this->belongsTo(PersonProxy::modelClass());
+    }
 
     /**
      * Get the type that owns the lead.
@@ -61,6 +80,14 @@ class Lead extends Model implements LeadContract
     public function stage()
     {
         return $this->belongsTo(StageProxy::modelClass());
+    }
+
+    /**
+     * Get the activities.
+     */
+    public function activities()
+    {
+        return $this->hasMany(ActivityProxy::modelClass());
     }
 
     /**

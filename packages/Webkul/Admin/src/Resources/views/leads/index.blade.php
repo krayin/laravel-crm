@@ -50,7 +50,7 @@
 
                 <tabs>
                     <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
-                        @include('admin::common.custom-attribute-controls', [
+                        @include('admin::common.custom-attributes.edit', [
                             'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'leads',
                                 'quick_add'   => 1

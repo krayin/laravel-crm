@@ -48,8 +48,6 @@ class LeadController extends Controller
      */
     public function store(AttributeForm $request)
     {
-        dd(request()->all());
-
         Event::dispatch('lead.create.before');
 
         $lead = $this->leadRepository->create(request()->all());
@@ -59,5 +57,18 @@ class LeadController extends Controller
         session()->flash('success', trans('admin::app.leads.create-success'));
 
         return redirect()->back();
+    }
+
+    /**
+     * Display a resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function view($id)
+    {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        return view('admin::leads.view', compact('lead'));
     }
 }
