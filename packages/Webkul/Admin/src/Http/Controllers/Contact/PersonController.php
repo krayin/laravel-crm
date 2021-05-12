@@ -37,7 +37,9 @@ class PersonController extends Controller
      */
     public function index()
     {
-        return view('admin::contacts.persons.index');
+        return view('admin::contacts.persons.index', [
+            'tableClass' => '\Webkul\Admin\DataGrids\Contact\PersonDataGrid'
+        ]);
     }
 
     /**

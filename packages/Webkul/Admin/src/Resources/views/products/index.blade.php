@@ -1,25 +1,15 @@
-@extends('admin::layouts.master')
+@extends('ui::datagrid.table')
 
-@section('page_title')
+@section('table-header')
     {{ __('admin::app.products.title') }}
 @stop
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <div class="page-header">
-            <div class="page-title">
-                <h1>{{ __('admin::app.products.title') }}</h1>
-            </div>
+@php
+    $tableClass = "\Webkul\Admin\DataGrids\Product\ProductDataGrid";
+@endphp
 
-            <div class="page-action">
-                <button class="btn btn-md btn-primary" @click="openModal('addProductModal')">{{ __('admin::app.products.add-title') }}</button>
-            </div>
-        </div>
-
-        <div class="page-content">
-            
-        </div>
-    </div>
+@section('table-action')
+    <button class="btn btn-md btn-primary" @click="openModal('addProductModal')">{{ __('admin::app.products.add-title') }}</button>
 
     <form action="{{ route('admin.products.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addProductModal" :is-open="modalIds.addProductModal">

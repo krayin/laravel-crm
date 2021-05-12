@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\DataGrids;
+namespace Webkul\Admin\DataGrids\Setting;
 
 use Webkul\User\Models\User;
 use Webkul\UI\DataGrid\DataGrid;
@@ -168,7 +168,7 @@ class UserDataGrid extends DataGrid
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
             'action' => route('admin.settings.users.mass-delete'),
-            'method' => 'DELETE',
+            'method' => 'PUT',
         ]);
 
         $this->addMassAction([

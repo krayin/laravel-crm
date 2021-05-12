@@ -1,7 +1,7 @@
 <template>
     <thead>
         <tr>
-            <th class="master-checkbox" v-if="massActions.length > 0">
+            <th class="master-checkbox" v-if="massActions.length > 0 && dataCollection.length > 0">
                 <span class="checkbox">
                     <template v-if="allSelected">
                         <input
@@ -65,6 +65,10 @@
 
             massActions: function () {
                 return this.tableData.massactions;
+            },
+
+            dataCollection: function () {
+                return this.tableData.records.data;
             },
         },
 
