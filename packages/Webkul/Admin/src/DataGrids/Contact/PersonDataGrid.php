@@ -9,28 +9,21 @@ class PersonDataGrid extends DataGrid
 {
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('roles')
+        $queryBuilder = DB::table('persons')
             ->addSelect(
-                'roles.id',
-                'roles.name',
-                'roles.description',
-                'roles.permission_type'
-            );
+                'persons.id',
+                'persons.name',
+                'persons.emails',
+                'persons.contact_numbers',
+                'organizations.name as organization_name'
+            )
+            ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
 
     public function addColumns()
     {
-        $this->addColumn([
-            'index'             => 'id',
-            'label'             => trans('admin::app.datagrid.id'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
-        ]);
-
         $this->addColumn([
             'index'             => 'name',
             'label'             => trans('admin::app.datagrid.name'),
@@ -41,29 +34,56 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'description',
-            'label'      => trans('admin::app.datagrid.description'),
+            'index'      => 'emails',
+            'label'      => trans('admin::app.datagrid.emails'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => false,
+            'closure'    => function ($row) {
+                $response = "";
+                $emails = json_decode($row->emails, true);
+
+                foreach ($emails as $index => $email) {
+                    $response .= $email['value'];
+
+                    if (sizeof($emails) != $index + 1) {
+                        $response .= ',';
+                    }
+                }
+                
+                return $response;
+            },
         ]);
 
         $this->addColumn([
-            'index'                 => 'permission_type',
-            'label'                 => trans('admin::app.datagrid.permission_type'),
-            'type'                  => 'boolean',
-            'searchable'            => true,
-            'sortable'              => false,
-            'filterable_type'       => 'dropdown',
-            'filterable_options'    => [
-                [
-                    'label' => trans('admin::app.settings.roles.all'),
-                    'value' => 'all',
-                ], [
-                    'label' => trans('admin::app.settings.roles.custom'),
-                    'value' => 'custom',
-                ],
-            ],
+            'index'      => 'contact_numbers',
+            'label'      => trans('admin::app.datagrid.contact_numbers'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => false,
+            'closure'    => function ($row) {
+                $response = "";
+                $contactNumbers = json_decode($row->contact_numbers, true);
+
+                foreach ($contactNumbers as $index => $contactNumber) {
+                    $response .= $contactNumber['value'];
+
+                    if (sizeof($contactNumbers) != $index + 1) {
+                        $response .= ',';
+                    }
+                }
+                
+                return $response;
+            },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'organization_name',
+            'label'             => trans('admin::app.datagrid.organization_name'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => true,
+            'filterable_type'   => 'add'
         ]);
     }
 
@@ -72,20 +92,26 @@ class PersonDataGrid extends DataGrid
         $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.roles.edit',
+            'route'  => 'admin.contacts.persons.edit',
             'icon'   => 'icon pencil-icon',
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.settings.roles.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
+            'route'        => 'admin.contacts.persons.delete',
+            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
             'icon'         => 'icon trash-icon',
         ]);
     }
 
     public function prepareMassActions()
     {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.contacts.persons.mass-delete'),
+            'method' => 'PUT',
+        ]);
     }
 }

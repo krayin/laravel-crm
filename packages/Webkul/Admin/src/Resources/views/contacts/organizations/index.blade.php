@@ -10,7 +10,9 @@
 
 @section('table-action')
     <button class="btn btn-md btn-primary" @click="openModal('addOrganizationModal')">{{ __('admin::app.contacts.organizations.add-title') }}</button>
+@stop
 
+@section('meta-content')
     <form action="{{ route('admin.contacts.organizations.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addOrganizationModal" :is-open="modalIds.addOrganizationModal">
             <h3 slot="header-title">{{ __('admin::app.contacts.organizations.add-title') }}</h3>

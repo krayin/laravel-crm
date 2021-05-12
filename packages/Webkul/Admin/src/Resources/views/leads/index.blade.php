@@ -1,8 +1,12 @@
-@extends('admin::layouts.master')
+@extends('ui::datagrid.table')
 
-@section('page_title')
+@section('table-header')
     {{ __('admin::app.leads.title') }}
 @stop
+
+@php
+    $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
+@endphp
 
 @section('css')
     <style>
@@ -16,23 +20,10 @@
     </style>
 @stop
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <div class="page-header">
-            <div class="page-title">
-                <h1>{{ __('admin::app.leads.title') }}</h1>
-            </div>
+@section('table-action')
+@stop
 
-            <div class="page-action">
-                <button class="btn btn-md btn-primary" @click="openModal('addProductModal')">{{ __('admin::app.leads.add-title') }}</button>
-            </div>
-        </div>
-
-        <div class="page-content">
-            
-        </div>
-    </div>
-
+@section('meta-content')
     <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addProductModal" :is-open="modalIds.addProductModal">
             <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
