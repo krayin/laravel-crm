@@ -32,7 +32,7 @@
                             
                             <input name="_method" type="hidden" value="PUT">
                 
-                            @include('admin::common.custom-attribute-controls', [
+                            @include('admin::common.custom-attributes.edit', [
                                 'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'organizations',
                                 ]),

@@ -4,12 +4,12 @@
     <script type="text/x-template" id="contact-component-template">
         <div class="contact-controls">
             
-            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                <label for="name" class="required">{{ __('admin::app.leads.name') }}</label>
+            <div class="form-group" :class="[errors.has('person[name]') ? 'has-error' : '']">
+                <label for="person[name]" class="required">{{ __('admin::app.leads.name') }}</label>
 
-                <input type="text" v-validate="'required'" class="control" id="name" name="name" v-model="person.name" v-on:keyup="search" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;" autocomplete="off"/>
+                <input type="text" v-validate="'required'" class="control" id="person[name]" name="person[name]" v-model="person.name" v-on:keyup="search" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;" autocomplete="off"/>
 
-                <input type="hidden" v-validate="'required'" name="name" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;" v-model="person.id"/>
+                <input type="hidden" v-validate="'required'" name="person[id]" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;" v-model="person.id" v-if="person.id"/>
 
                 <div class="lookup-results" v-if="state == ''">
                     <ul>
@@ -20,6 +20,12 @@
                         <li v-if="! persons.length && person['name'].length && ! is_searching">
                             <span>{{ __('admin::app.common.no-result-found') }}</span>
                         </li>
+
+                        <li class="action" v-if="person['name'].length && ! is_searching" @click="addAsNew()">
+                            <span>
+                                + {{ __('admin::app.common.add-as') }}
+                            </span> 
+                        </li>
                     </ul>
                 </div>
 
@@ -27,19 +33,19 @@
             </div>
 
             <div class="form-group email">
-                <label for="emails" class="required">{{ __('admin::app.leads.email') }}</label>
+                <label for="person[emails]" class="required">{{ __('admin::app.leads.email') }}</label>
 
-                @include('admin::common.field-types.email')
+                @include('admin::common.custom-attributes.edit.email')
                     
-                <email-component :attribute="{'code': 'email', 'name': 'Email'}" validations="required|email" :data="person.emails"></email-component>
+                <email-component :attribute="{'code': 'person[email]', 'name': 'Email'}" validations="required|email" :data="person.emails"></email-component>
             </div>
 
             <div class="form-group contact-numbers">
-                <label for="contact_numbers">{{ __('admin::app.leads.contact-numbers') }}</label>
+                <label for="person[contact_numbers]">{{ __('admin::app.leads.contact-numbers') }}</label>
 
-                @include('admin::common.field-types.phone')
+                @include('admin::common.custom-attributes.edit.phone')
                     
-                <phone-component :attribute="{'code': 'contact_numbers', 'name': 'Contact Numbers'}" :data="person.contact_numbers"></phone-component>
+                <phone-component :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}" :data="person.contact_numbers"></phone-component>
             </div>
 
             <div class="form-group organization">
@@ -50,9 +56,11 @@
                         'entity_type' => 'persons',
                         'code'        => 'organization_id'
                     ]);
+
+                    $organizationAttribute->code = 'person[' . $organizationAttribute->code . ']';
                 @endphp
 
-                @include('admin::common.field-types.lookup')
+                @include('admin::common.custom-attributes.edit.lookup')
 
                 <lookup-component :attribute='@json($organizationAttribute)' :data="person.organization"></lookup-component>
             </div>
@@ -115,6 +123,10 @@
                     this.state = 'old';
 
                     this.person = result;
+                },
+
+                addAsNew: function() {
+                    this.state = 'new';
                 }
             }
             });

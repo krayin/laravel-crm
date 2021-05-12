@@ -27,6 +27,9 @@ class CreateLeadsTable extends Migration
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
+            $table->integer('person_id')->unsigned();
+            $table->foreign('person_id')->references('id')->on('persons')->onDelete('cascade');
+
             $table->integer('lead_source_id')->unsigned();
             $table->foreign('lead_source_id')->references('id')->on('lead_sources')->onDelete('cascade');
 

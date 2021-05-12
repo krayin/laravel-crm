@@ -604,3 +604,17 @@ body {
         display: block;
     }
 }
+
+.page-content.lead-view {
+    .lead-content-left {
+        float: left;
+        width: 30%;
+        padding-right: 10px;
+    }
+
+    .lead-content-right {
+        width: 70%;
+        padding-left: 10px;
+        float: left;
+    }
+}

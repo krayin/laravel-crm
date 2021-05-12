@@ -38,6 +38,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('', 'LeadController@index')->name('admin.leads.index');
     
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
+
+                Route::get('view/{id}', 'LeadController@view')->name('admin.leads.view');
             });
 
             // Contacts Routes

@@ -16,7 +16,7 @@
         $validations = implode('|', array_filter($validations));
     @endphp
 
-    @if (view()->exists($typeView = 'admin::common.field-types.' . $attribute->type))
+    @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
 
         <div class="form-group {{ $attribute->type }}"
             @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $attribute->code }}[]') ? 'has-error' : '']"
