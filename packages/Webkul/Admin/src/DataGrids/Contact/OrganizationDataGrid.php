@@ -9,12 +9,12 @@ class OrganizationDataGrid extends DataGrid
 {
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('roles')
+        $queryBuilder = DB::table('organizations')
             ->addSelect(
-                'roles.id',
-                'roles.name',
-                'roles.description',
-                'roles.permission_type'
+                'organizations.id',
+                'organizations.name',
+                'organizations.address',
+                'organizations.created_at'
             );
 
         $this->setQueryBuilder($queryBuilder);
@@ -22,15 +22,6 @@ class OrganizationDataGrid extends DataGrid
 
     public function addColumns()
     {
-        $this->addColumn([
-            'index'             => 'id',
-            'label'             => trans('admin::app.datagrid.id'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
-        ]);
-
         $this->addColumn([
             'index'             => 'name',
             'label'             => trans('admin::app.datagrid.name'),
@@ -41,29 +32,14 @@ class OrganizationDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'description',
-            'label'      => trans('admin::app.datagrid.description'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => false,
-        ]);
-
-        $this->addColumn([
-            'index'                 => 'permission_type',
-            'label'                 => trans('admin::app.datagrid.permission_type'),
-            'type'                  => 'boolean',
-            'searchable'            => true,
-            'sortable'              => false,
-            'filterable_type'       => 'dropdown',
-            'filterable_options'    => [
-                [
-                    'label' => trans('admin::app.settings.roles.all'),
-                    'value' => 'all',
-                ], [
-                    'label' => trans('admin::app.settings.roles.custom'),
-                    'value' => 'custom',
-                ],
-            ],
+            'index'             => 'created_at',
+            'label'             => trans('admin::app.datagrid.created_at'),
+            'type'              => 'string',
+            'sortable'          => true,
+            'filterable_type'   => 'date_range',
+            'closure'           => function ($row) {
+                return core()->formatDate($row->created_at);
+            },
         ]);
     }
 
@@ -72,14 +48,14 @@ class OrganizationDataGrid extends DataGrid
         $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.roles.edit',
+            'route'  => 'admin.contacts.organizations.edit',
             'icon'   => 'icon pencil-icon',
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.settings.roles.delete',
+            'route'        => 'admin.contacts.organizations.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);
@@ -87,5 +63,11 @@ class OrganizationDataGrid extends DataGrid
 
     public function prepareMassActions()
     {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.contacts.organizations.mass-delete'),
+            'method' => 'PUT',
+        ]);
     }
 }

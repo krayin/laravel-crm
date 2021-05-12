@@ -22,12 +22,12 @@ $(function() {
     var app = new Vue({
         el: "#app",
 
-		// store,
-
-        data: {
-            modalIds: {},
-
-            isMenuOpen: true
+        data: function () {
+            return {
+                modalIds: {},
+    
+                isMenuOpen: localStorage.getItem('crm-sidebar') == 'true',
+            }
         },
 
         mounted() {
@@ -120,6 +120,8 @@ $(function() {
 
             toggleMenu() {
                 this.isMenuOpen = ! this.isMenuOpen;
+
+                localStorage.setItem('crm-sidebar', this.isMenuOpen);
             }
         }
     });

@@ -38,14 +38,15 @@ class ProductDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
+            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
-            'index'      => 'price',
-            'label'      => trans('admin::app.datagrid.price'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
+            'index'         => 'price',
+            'label'         => trans('admin::app.datagrid.price'),
+            'type'          => 'string',
+            'searchable'    => true,
+            'sortable'      => true,
         ]);
 
         $this->addColumn([
@@ -62,14 +63,14 @@ class ProductDataGrid extends DataGrid
         $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.roles.edit',
+            'route'  => 'admin.products.edit',
             'icon'   => 'icon pencil-icon',
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.settings.roles.delete',
+            'route'        => 'admin.products.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);

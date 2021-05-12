@@ -91,4 +91,50 @@ class OrganizationController extends Controller
 
         return redirect()->route('admin.contacts.organizations.index');
     }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->organizationRepository->findOrFail($id);
+        
+        try {
+            Event::dispatch('contact.organization.delete.before', $id);
+
+            $this->organizationRepository->delete($id);
+
+            Event::dispatch('contact.organization.delete.after', $id);
+
+            return response()->json([
+                'status'    => true,
+                'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.organizations.organization')]),
+            ], 200);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status'    => false,
+                'message'   => trans('admin::app.datagrid.destroy-failed', ['resource' => trans('admin::app.contacts.organizations.organization')]),
+            ], 400);
+        }
+    }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        $this->organizationRepository->destroy($data['rows']);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.organizations.title')])
+        ]);
+    }
 }

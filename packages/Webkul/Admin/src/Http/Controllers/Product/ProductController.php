@@ -43,10 +43,9 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store()
     {
         Event::dispatch('product.create.before');
 
@@ -104,5 +103,34 @@ class ProductController extends Controller
         ]);
 
         return response()->json($results);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->productRepository->findOrFail($id);
+        
+        try {
+            Event::dispatch('settings.products.delete.before', $id);
+
+            $this->productRepository->delete($id);
+
+            Event::dispatch('settings.products.delete.after', $id);
+
+            return response()->json([
+                'status'    => true,
+                'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.products.product')]),
+            ], 200);
+        } catch(\Exception $e) {
+            return response()->json([
+                'status'    => false,
+                'message'   => trans('admin::app.datagrid.destroy-failed', ['resource' => trans('admin::app.products.product')]),
+            ], 400);
+        }
     }
 }

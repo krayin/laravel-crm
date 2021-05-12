@@ -24,11 +24,12 @@
                                 {{ __('admin::app.contacts.organizations.save-btn-title') }}
                             </button>
 
-                            <a href="">{{ __('admin::app.contacts.organizations.back') }}</a>
+                            <a href="{{ route('admin.contacts.organizations.index') }}">{{ __('admin::app.contacts.organizations.back') }}</a>
                         </div>
         
                         <div class="panel-body">
                             @csrf()
+                            
                             <input name="_method" type="hidden" value="PUT">
                 
                             @include('admin::common.custom-attribute-controls', [

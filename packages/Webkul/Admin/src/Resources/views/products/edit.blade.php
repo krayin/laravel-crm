@@ -23,7 +23,7 @@
                                 {{ __('admin::app.products.save-btn-title') }}
                             </button>
 
-                            <a href="">{{ __('admin::app.products.back') }}</a>
+                            <a href="{{ route('admin.products.index') }}">{{ __('admin::app.products.back') }}</a>
                         </div>
         
                         <div class="panel-body">

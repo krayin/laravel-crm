@@ -36,11 +36,59 @@
 
                 </select>
 
-                <input type="text" v-validate="validations" class="control" :name="attribute['code'] + '[state]'" v-model="state" v-else data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;" placeholder="{{ __('admin::app.common.state') }}"/>
+                <input
+                    v-else
+                    type="text"
+                    v-model="state"
+                    class="control"
+                    v-validate="validations"
+                    :name="attribute['code'] + '[state]'"
+                    placeholder="{{ __('admin::app.common.state') }}"
+                    data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
+                />
 
-                <input type="text" class="control" :name="attribute['code'] + '[city]'" :value="data ? data['city'] : ''" v-validate="validations" data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;" placeholder="{{ __('admin::app.common.city') }}">
                 
-                <input type="text" class="control" :name="attribute['code'] + '[postcode]'" :value="data ? data['postcode'] : ''" v-validate="validations" data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;" placeholder="{{ __('admin::app.common.postcode') }}">
+                <input
+                    type="text"
+                    class="control"
+                    :value="data['city']"
+                    v-validate="validations"
+                    v-if="data && data['city']"
+                    :name="attribute['code'] + '[city]'"
+                    placeholder="{{ __('admin::app.common.city') }}"
+                    data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
+                />
+
+                <input
+                    v-else
+                    type="text"
+                    class="control"
+                    v-validate="validations"
+                    :name="attribute['code'] + '[city]'"
+                    placeholder="{{ __('admin::app.common.city') }}"
+                    data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
+                />
+                
+                <input
+                    type="text"
+                    class="control"
+                    v-validate="validations"
+                    :value="data['postcode']"
+                    v-if="data && data['postcode']"
+                    :name="attribute['code'] + '[postcode]'"
+                    placeholder="{{ __('admin::app.common.postcode') }}"
+                    data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
+                />
+
+                <input
+                    v-else
+                    type="text"
+                    class="control"
+                    v-validate="validations"
+                    :name="attribute['code'] + '[postcode]'"
+                    placeholder="{{ __('admin::app.common.postcode') }}"
+                    data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
+                />
             </div>
 
             <span class="control-error" v-if="errors.has(attribute['code'] + '[address]') || errors.has(attribute['code'] + '[country]') || errors.has(attribute['code'] + '[state]') || errors.has(attribute['code'] + '[city]') || errors.has(attribute['code'] + '[postcode]')">

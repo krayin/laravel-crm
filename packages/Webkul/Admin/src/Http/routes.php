@@ -56,6 +56,10 @@ Route::group(['middleware' => ['web']], function () {
                     Route::put('edit/{id}', 'PersonController@update')->name('admin.contacts.persons.update');
 
                     Route::get('search', 'PersonController@search')->name('admin.contacts.persons.search');
+
+                    Route::delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
+
+                    Route::put('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass-delete');
                 });
 
                 // Companies Routes
@@ -67,6 +71,10 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('edit/{id}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
     
                     Route::put('edit/{id}', 'OrganizationController@update')->name('admin.contacts.organizations.update');
+
+                    Route::delete('{id}', 'OrganizationController@destroy')->name('admin.contacts.organizations.delete');
+
+                    Route::put('mass-destroy', 'OrganizationController@massDestroy')->name('admin.contacts.organizations.mass-delete');
                 });
             });
 
@@ -84,6 +92,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::put('edit/{id}', 'ProductController@update')->name('admin.products.update');
 
                 Route::get('search', 'ProductController@search')->name('admin.products.search');
+
+                Route::delete('{id}', 'ProductController@destroy')->name('admin.products.delete');
             });
 
             // Contacts Routes

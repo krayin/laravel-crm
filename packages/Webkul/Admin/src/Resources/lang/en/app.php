@@ -20,6 +20,7 @@
         'contacts' => [
             'organizations' => [
                 'title'          => 'Organizations',
+                'organization'   => 'Organization',
                 'add-title'      => 'Add Organization',
                 'edit-title'     => 'Edit Organization',
                 'save-btn-title' => 'Save as Organization',
@@ -33,6 +34,7 @@
 
             'persons' => [
                 'title'          => 'Persons',
+                'person'         => 'Person',
                 'add-title'      => 'Add Person',
                 'edit-title'     => 'Edit Person',
                 'save-btn-title' => 'Save as Person',
@@ -72,6 +74,7 @@
 
         'products' => [
             'title'          => 'Products',
+            'product'        => 'Product',
             'add-title'      => 'Add Product',
             'edit-title'     => 'Edit Product',
             'save-btn-title' => 'Save as Product',
@@ -210,15 +213,24 @@
             'type'              => 'Type',
             'price'             => 'Price',
             'email'             => 'Email',
+            'subject'           => 'Subject',
+            'emails'            => 'Emails',
+            'emails'            => 'Emails',
             'status'            => 'Status',
             'active'            => 'Active',
             'inactive'          => 'Inactive',
+            'address'           => 'Address',
             'quantity'          => 'Quantity',
-            'created_at'        => 'Created at',
+            'deal_amount'       => 'Deal Amount',
+            'created_at'        => 'Created Date',
             'description'       => 'Description',
+            'contact_person'    => 'Contact Person',
+            'contact_numbers'   => 'Contact numbers',
             'permission_type'   => 'Permission type',
+            'organization_name' => 'Organization name',
             'update-success'    => ':resource updated successfully.',
             'destroy-success'   => ':resource deleted successfully.',
+            'destroy-failed'    => ':resource can not be deleted.',
         ],
 
         'response' => [

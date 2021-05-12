@@ -23,7 +23,7 @@
                                 {{ __('admin::app.contacts.persons.save-btn-title') }}
                             </button>
 
-                            <a href="">{{ __('admin::app.contacts.persons.back') }}</a>
+                            <a href="{{ route('admin.contacts.persons.index') }}">{{ __('admin::app.contacts.persons.back') }}</a>
                         </div>
         
                         <div class="panel-body">

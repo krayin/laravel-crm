@@ -4,9 +4,15 @@
     {{ __('admin::app.contacts.persons.title') }}
 @stop
 
+@php
+    $tableClass = "\Webkul\Admin\DataGrids\Contact\PersonDataGrid";
+@endphp
+
 @section('table-action')
     <button class="btn btn-md btn-primary" @click="openModal('addPersonModal')">{{ __('admin::app.contacts.persons.add-title') }}</button>
+@stop
 
+@section('meta-content')
     <form action="{{ route('admin.contacts.persons.store') }}" method="post">
         <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
             <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>

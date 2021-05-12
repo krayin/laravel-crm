@@ -22,7 +22,10 @@
             <table-component table-class="{{ $tableClass }}"><table-component>
         @show
     </div>
+
+    @yield('meta-content')
 @stop
+
 
 @push('scripts')
     <script>
