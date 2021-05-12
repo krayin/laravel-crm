@@ -20,7 +20,10 @@
     </style>
 @stop
 
-@section('content-wrapper')
+@section('table-action')
+@stop
+
+@section('meta-content')
     <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addProductModal" :is-open="modalIds.addProductModal">
             <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
