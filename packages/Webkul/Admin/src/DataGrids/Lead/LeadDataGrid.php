@@ -7,6 +7,28 @@ use Illuminate\Support\Facades\DB;
 
 class LeadDataGrid extends DataGrid
 {
+    protected $stagesFilterableOptions;
+    protected $stagesMassActionOptions;
+
+    public function __construct()
+    {
+        $this->stagesFilterableOptions = [];
+        $stageRepository = app('\Webkul\Lead\Repositories\StageRepository');
+
+        $stages = $stageRepository->all()->toArray();
+
+        foreach ($stages as $stage) {
+            array_push($this->stagesFilterableOptions, [
+                'value' => $stage['id'],
+                'label' => $stage['name'],
+            ]);
+
+            $this->stagesMassActionOptions[$stage['name']] = $stage['id'];
+        }
+
+        parent::__construct();
+    }
+    
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('leads')
@@ -16,13 +38,14 @@ class LeadDataGrid extends DataGrid
                 'leads.status',
                 'leads.lead_value',
                 'leads.created_at',
-                'users.name as user_name'
+                'users.name as user_name',
+                'lead_stages.name as stage'
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')
+            ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
             ->leftJoin('lead_sources', 'leads.lead_source_id', '=', 'lead_sources.id')
             ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
-            ->leftJoin('lead_pipeline_stages', 'leads.lead_stage_id', '=', 'lead_pipeline_stages.id')
             ;
 
         $this->setQueryBuilder($queryBuilder);
@@ -66,25 +89,23 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'status',
-            'label'              => trans('admin::app.datagrid.status'),
+            'index'              => 'stage',
+            'label'              => trans('admin::app.datagrid.stage'),
             'type'               => 'boolean',
             'filterable_type'    => 'dropdown',
-            'filterable_options' => [
-                [
-                    'label' => trans('admin::app.datagrid.active'),
-                    'value' => 1,
-                ], [
-                    'label' => trans('admin::app.datagrid.inactive'),
-                    'value' => 0,
-                ],
-            ],
+            'filterable_options' => $this->stagesFilterableOptions,
             'closure'            => function ($row) {
-                if ($row->status == 1) {
-                    return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
-                } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . trans('admin::app.datagrid.inactive');
+                $badge = "";
+
+                if ($row->stage == "New") {
+                    $badge = '<span class="badge badge-round badge-primary"></span>';
+                } else if ($row->stage == "Won") {
+                    $badge = '<span class="badge badge-round badge-success"></span>';
+                } else if ($row->stage == "Lost") {
+                    $badge = '<span class="badge badge-round badge-danger"></span>';
                 }
+
+                return $badge .= $row->stage;
             },
         ]);
     }
@@ -98,22 +119,30 @@ class LeadDataGrid extends DataGrid
         //     'icon'   => 'icon pencil-icon',
         // ]);
 
-        // $this->addAction([
-        //     'title'        => trans('ui::app.datagrid.delete'),
-        //     'method'       => 'DELETE',
-        //     'route'        => 'admin.contacts.persons.delete',
-        //     'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
-        //     'icon'         => 'icon trash-icon',
-        // ]);
+        $this->addAction([
+            'title'        => trans('ui::app.datagrid.delete'),
+            'method'       => 'DELETE',
+            'route'        => 'admin.leads.delete',
+            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
+            'icon'         => 'icon trash-icon',
+        ]);
     }
 
     public function prepareMassActions()
     {
-        // $this->addMassAction([
-        //     'type'   => 'delete',
-        //     'label'  => trans('ui::app.datagrid.delete'),
-        //     'action' => route('admin.contacts.persons.mass-delete'),
-        //     'method' => 'PUT',
-        // ]);
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.leads.mass-delete'),
+            'method' => 'PUT',
+        ]);
+
+        $this->addMassAction([
+            'type'    => 'update',
+            'label'   => trans('admin::app.datagrid.update_stage'),
+            'action'  => route('admin.leads.mass-update'),
+            'method'  => 'PUT',
+            'options' => $this->stagesMassActionOptions,
+        ]);
     }
 }

@@ -28,7 +28,18 @@ Route::group(['middleware' => ['web']], function () {
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
 
+            // Datagrid API route
             Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
+
+            // User Routes
+            Route::group([
+                'prefix'    => 'account',
+                'namespace' => 'Webkul\Admin\Http\Controllers\User'
+            ], function () {
+                Route::get('', 'AccountController@edit')->name('admin.user.account.edit');
+    
+                Route::put('update', 'AccountController@update')->name('admin.user.account.update');
+            });
 
             // Leads Routes
             Route::group([
@@ -40,6 +51,12 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
 
                 Route::get('view/{id}', 'LeadController@view')->name('admin.leads.view');
+
+                Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
+
+                Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
+
+                Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass-delete');
             });
 
             // Contacts Routes

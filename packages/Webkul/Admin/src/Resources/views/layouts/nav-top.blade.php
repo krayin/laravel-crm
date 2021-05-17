@@ -17,7 +17,7 @@
                 <div class="dropdown-container">
                     <ul>
                         <li>
-                            <a href="">{{ __('admin::app.layouts.my-account') }}</a>
+                            <a href="{{ route('admin.user.account.edit') }}">{{ __('admin::app.layouts.my-account') }}</a>
                         </li>
                         <li>
                             <a href="{{ route('admin.session.destroy') }}">{{ __('admin::app.layouts.sign-out') }}</a>

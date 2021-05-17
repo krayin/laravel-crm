@@ -58,8 +58,8 @@ class ResetPasswordController extends Controller
                 ->withErrors([
                     'email' => trans($response),
                 ]);
-        } catch(\Exception $e) {
-            session()->flash('error', trans($e->getMessage()));
+        } catch(\Exception $exception) {
+            session()->flash('error', trans($exception->getMessage()));
 
             return redirect()->back();
         }

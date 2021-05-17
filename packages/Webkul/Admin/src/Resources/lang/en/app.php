@@ -49,6 +49,7 @@
 
         'leads' => [
             'title'           => 'Leads',
+            'lead'            => 'Lead',
             'add-title'       => 'Add Lead',
             'edit-title'      => 'Edit Lead',
             'save-btn-title'  => 'Save as Lead',
@@ -216,6 +217,7 @@
             'subject'           => 'Subject',
             'emails'            => 'Emails',
             'emails'            => 'Emails',
+            'stage'             => 'Stage',
             'status'            => 'Status',
             'active'            => 'Active',
             'inactive'          => 'Inactive',
@@ -224,6 +226,7 @@
             'deal_amount'       => 'Deal Amount',
             'created_at'        => 'Created Date',
             'description'       => 'Description',
+            'update_stage'      => 'Update stage',
             'contact_person'    => 'Contact Person',
             'contact_numbers'   => 'Contact numbers',
             'permission_type'   => 'Permission type',
@@ -235,6 +238,9 @@
 
         'response' => [
             'create-success' => 'Success: :name created successfully.',
+            'update-success' => 'Success: :name updated successfully.',
+            'destroy-success'=> 'Success: :name deleted successfully.',
+            'destroy-failed' => 'Error: :name can not be deleted.',
         ],
 
         'acl' => [
@@ -247,6 +253,7 @@
         ],
 
         'common' => [
+            'back'               => 'Back',
             'address'            => 'Address',
             'country'            => 'Country',
             'select-country'     => 'Please select country',
@@ -259,6 +266,20 @@
             'home'               => 'Home',
             'no-result-found'    => 'Records not found with same name.',
             'add-as'             => 'Add as new'
+        ],
+
+        'user' => [
+            'account' => [
+                'name'              => 'Name',
+                'email'             => 'Email',
+                'password'          => 'Password',
+                'my_account'        => 'My account',
+                'update_details'    => 'Update Details',
+                'current_password'  => 'Current password',
+                'confirm_password'  => 'Confirm password',
+                'password-match'    => 'Current password does not match.',
+                'account-save'      => 'Account changes saved successfully.',
+            ]
         ]
     ];
 ?>

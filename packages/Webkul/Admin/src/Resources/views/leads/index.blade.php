@@ -21,15 +21,16 @@
 @stop
 
 @section('table-action')
+    <button class="btn btn-md btn-primary" @click="openModal('addLeadModal')">{{ __('admin::app.leads.add-title') }}</button>
 @stop
 
 @section('meta-content')
     <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">
-        <modal id="addProductModal" :is-open="modalIds.addProductModal">
+        <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
             <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
             
             <div slot="header-actions">
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addProductModal')">{{ __('admin::app.leads.cancel') }}</button>
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
 
                 <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
             </div>

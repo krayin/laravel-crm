@@ -332,7 +332,7 @@ h5 {
 
                 &.actions,
                 &.master-checkbox {
-                    width: 100px;
+                    width: 50px;
                     white-space: nowrap;
 
                     .action {
@@ -363,11 +363,17 @@ h5 {
                     span {
                         &.badge {
                             &.badge-round {
-                                    padding: 0;
-                                    width: 8px;
-                                    height: 8px;
-                                    margin-right: 5px;
+                                padding: 0;
+                                width: 8px;
+                                height: 8px;
+                                margin-right: 5px;
                             }
+                        }
+                    }
+
+                    &.action-container {
+                        a {
+                            cursor: pointer;
                         }
                     }
                 }
@@ -431,7 +437,9 @@ h5 {
     }
 
     .filtered-tags {
+        width: 80%;
         margin-top: 20px;
+        display: inline-block;
 
         .filter-tag {
             margin-right: 20px;
@@ -554,9 +562,8 @@ h5 {
         float: right;
 
         section {
-            margin-top: 20px;
-            margin-right: 5px;
             display: inline-block;
+            margin: 13px 5px 13px 0;
         }
 
         .covered {
@@ -579,31 +586,42 @@ h5 {
     margin-top: 20px;
     
     .page-item {
-        background: $white;
-        border: 1px solid $border-color;
-        @include border-radius(3px);
+        color: #8e8e8e;
         padding: 7px 14px;
         margin-right: 5px;
-        font-size: $font-size-md;
+        background: $white;
         display: inline-block;
-        color: #8e8e8e;
         vertical-align: middle;
         text-decoration: none;
+        font-size: $font-size-md;
+        border: 1px solid $border-color;
 
         &.previous,
         &.next {
             padding: 6px 9px;
         }
 
+        &.previous {
+            border-radius: 3px 0 0 3px;
+        }
+
+        &.next {
+            border-radius: 0 3px 3px 0;
+        }
+
+        &.disabled {
+            cursor: not-allowed !important;
+        }
+
         &.active {
-            background: #0041ff;
             color: $white;
-            border-color: #0041ff;
+            background: $brand-color;
+            border-color: $brand-color;
         }
 
         .icon {
-            vertical-align: middle;
             margin-bottom: 3px;
+            vertical-align: middle;
         }
     }
     
@@ -1487,6 +1505,8 @@ modal {
     }
 
     .field-container {
+        margin-bottom: 10px;
+
         label {
             font-weight: 500;
         }
@@ -1525,12 +1545,25 @@ modal {
 
             input {
                 width: 100%;
+                height: 35px;
+            }
+        }
+
+        > span {
+            &.control {
+                height: 35px;
+            }
+            
+            ~ i {
+                &.close-icon {
+                    margin-top: 5px;
+                }
             }
         }
     }
 
     .selected-options {
-        margin-top: 20px;
+        margin-top: 10px;
 
         .badge {
             margin-bottom: 10px;
