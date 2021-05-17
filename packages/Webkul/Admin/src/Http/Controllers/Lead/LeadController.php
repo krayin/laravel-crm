@@ -50,7 +50,10 @@ class LeadController extends Controller
     {
         Event::dispatch('lead.create.before');
 
-        $lead = $this->leadRepository->create(request()->all());
+        $data = request()->all();
+        $data['user_id'] = $data['status'] = 1;
+
+        $lead = $this->leadRepository->create($data);
 
         Event::dispatch('lead.create.after', $lead);
         
@@ -70,5 +73,72 @@ class LeadController extends Controller
         $lead = $this->leadRepository->findOrFail($id);
 
         return view('admin::leads.view', compact('lead'));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->leadRepository->findOrFail($id);
+        
+        try {
+            Event::dispatch('lead.delete.before', $id);
+
+            $this->leadRepository->delete($id);
+
+            Event::dispatch('lead.delete.after', $id);
+
+            return response()->json([
+                'status'    => true,
+                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
+            ], 200);
+        } catch(\Exception $exception) {
+            return response()->json([
+                'status'    => false,
+                'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.leads.lead')]),
+            ], 400);
+        }
+    }
+
+    /**
+     * Mass Update the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massUpdate()
+    {
+        $data = request()->all();
+
+        foreach ($data['rows'] as $leadId) {
+            $lead = $this->leadRepository->find($leadId);
+
+            $lead->update(['lead_stage_id' => $data['value']]);
+        }
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')])
+        ]);
+    }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        $this->leadRepository->destroy($data['rows']);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.title')]),
+        ]);
     }
 }

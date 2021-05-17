@@ -2,6 +2,8 @@
 
 namespace Webkul\UI\DataGrid\Traits;
 
+use Carbon\Carbon;
+
 trait DatagridCollection
 {
     use DatagridHelper;

@@ -17,7 +17,7 @@ class AccountController extends Controller
     {
         $user = auth()->guard('user')->user();
 
-        return view('admin::admin.account.edit', compact('user'));
+        return view('admin::user.account.edit', compact('user'));
     }
 
     /**
@@ -28,19 +28,20 @@ class AccountController extends Controller
     public function update()
     {
         $isPasswordChanged = false;
+
         $user = auth()->guard('user')->user();
 
         $this->validate(request(), [
             'name'             => 'required',
-            'email'            => 'email|unique:admins,email,' . $user->id,
+            'email'            => 'email|unique:users,email,' . $user->id,
             'password'         => 'nullable|min:6|confirmed',
-            'current_password' => 'required|min:6',
+            'current_password' => 'nullable|required|min:6',
         ]);
 
         $data = request()->input();
 
         if (! Hash::check($data['current_password'], auth()->guard('user')->user()->password)) {
-            session()->flash('warning', trans('admin::app.users.users.password-match'));
+            session()->flash('warning', trans('admin::app.user.account.password-match'));
 
             return redirect()->back();
         }
@@ -55,11 +56,11 @@ class AccountController extends Controller
         $user->update($data);
 
         if ($isPasswordChanged) {
-            Event::dispatch('user.admin.update-password', $user);
+            Event::dispatch('user.account.update-password', $user);
         }
 
-        session()->flash('success', trans('admin::app.users.users.account-save'));
+        session()->flash('success', trans('admin::app.user.account.account-save'));
 
-        return back();
+        return redirect()->route('admin.dashboard.index');
     }
 }

@@ -111,12 +111,12 @@ class OrganizationController extends Controller
 
             return response()->json([
                 'status'    => true,
-                'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.organizations.organization')]),
+                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 200);
-        } catch(\Exception $e) {
+        } catch(\Exception $exception) {
             return response()->json([
                 'status'    => false,
-                'message'   => trans('admin::app.datagrid.destroy-failed', ['resource' => trans('admin::app.contacts.organizations.organization')]),
+                'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 400);
         }
     }
@@ -134,7 +134,7 @@ class OrganizationController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.organizations.title')])
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.title')])
         ]);
     }
 }
