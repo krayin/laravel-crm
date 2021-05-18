@@ -184,6 +184,8 @@
                 'date'                  => 'Date',
                 'image'                 => 'Image',
                 'file'                  => 'File',
+                'lookup'                => 'Lookup',
+                'entity_type'           => 'Entity type',
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
