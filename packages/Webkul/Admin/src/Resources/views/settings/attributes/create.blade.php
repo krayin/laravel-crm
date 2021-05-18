@@ -34,7 +34,7 @@
                                 <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') }}"  data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;" v-code/>
                                 <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
                             </div>
-
+                            
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.settings.attributes.name') }}</label>
                                 <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
@@ -42,7 +42,12 @@
                             </div>
 
                             <div class="form-group">
+                                <entity-type name="entity_type" required="true"></entity-type>
+                            </div>
+
+                            <div class="form-group">
                                 <label for="type" class="required">{{ __('admin::app.settings.attributes.type') }}</label>
+
                                 <select class="control" id="type" name="type">
                                     <option value="text">{{ __('admin::app.settings.attributes.text') }}</option>
                                     <option value="textarea">{{ __('admin::app.settings.attributes.textarea') }}</option>
@@ -58,12 +63,13 @@
                                     <option value="date">{{ __('admin::app.settings.attributes.date') }}</option>
                                     <option value="image">{{ __('admin::app.settings.attributes.image') }}</option>
                                     <option value="file">{{ __('admin::app.settings.attributes.file') }}</option>
+                                    <option value="lookup">{{ __('admin::app.settings.attributes.lookup') }}</option>
                                 </select>
                             </div>
 
                             <div class="hide" id="options">
 
-                                <option-wrapper></option-wrapper>
+                                <option-wrapper :attribute-type="$refs.attribute_type"></option-wrapper>
 
                             </div>
 
@@ -97,7 +103,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 @stop
@@ -105,52 +110,94 @@
 @push('scripts')
     <script type="text/x-template" id="options-template">
         <div class="form-group dragable-container">
-            <label>{{ __('admin::app.settings.attributes.options') }}</label>
+            <template v-if="typeValue != 'lookup'">
+                <div class="form-group">
+                    <label>{{ __('admin::app.settings.attributes.options') }}</label>
 
-            <draggable tag="ul" :list="optionRows" class="list-group dragable-list">
-                <li
-                    class="list-group-item"
-                    v-for="(row, index) in optionRows"
-                    :key="row.id"
-                >
-                    <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
-                        <input type="text" v-validate="'required'" v-model="row['name']" :name="'options[' + row.id + '][name]'" class="control" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
-                        <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">@{{ errors.first('options[' + row.id + '][name]') }}</span>
+                    <select class="control" name="option_type" v-model="optionType">
+                        <option value="lookup">
+                            {{ __('admin::app.settings.attributes.lookup') }}
+                        </option>
+        
+                        <option value="options">
+                            {{ __('admin::app.settings.attributes.options') }}
+                        </option>
+                    </select>
+                </div>
 
-                        <i class="icon align-justify-icon"></i>
-                    </div>
+                <template v-if="optionType == 'options'">
+                    <draggable tag="ul" :list="optionRows" class="list-group dragable-list">
+                        <li
+                            class="list-group-item"
+                            v-for="(row, index) in optionRows"
+                            :key="row.id"
+                        >
+                            <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
+                                <input type="text" v-validate="'required'" v-model="row['name']" :name="'options[' + row.id + '][name]'" class="control" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
+                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">@{{ errors.first('options[' + row.id + '][name]') }}</span>
 
-                    <i class="icon trash-icon" @click="removeRow(row)"></i>
-                </li>
-            </draggable>
+                                <i class="icon align-justify-icon"></i>
+                            </div>
 
-            <button type="button" class="btn btn-md btn-primary mt-20" id="add-option-btn" @click="addOptionRow()">
-                {{ __('admin::app.settings.attributes.add-option-btn-title') }}
-            </button>
+                            <i class="icon trash-icon" @click="removeRow(row)"></i>
+                        </li>
+                    </draggable>
+
+                    <button type="button" class="btn btn-md btn-primary mt-20" id="add-option-btn" @click="addOptionRow()">
+                        {{ __('admin::app.settings.attributes.add-option-btn-title') }}
+                    </button>
+                </template>
+
+                <entity-type v-else-if="optionType == 'lookup'" name="lookup_type"></entity-type>
+            </template>
+
+            <entity-type v-else name="lookup_type"></entity-type>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="entity-type-template">
+        <div>
+            <label :for="name" :class="required == 'true' ? 'required' : ''">
+                {{ __('admin::app.settings.attributes.entity_type') }}
+            </label>
+
+            <select class="control" :id="name" :name="name">
+                <option
+                    :key="index"
+                    :value="index"
+                    v-text="entityType.name"
+                    v-for="(entityType, index) in lookupEntityTypes"
+                ></option>
+            </select>
         </div>
     </script>
 
     <script>
         Vue.component('option-wrapper', {
-
             template: '#options-template',
+
+            props: ['attributeType'],
 
             inject: ['$validator'],
 
             data: function() {
                 return {
-                    optionRowCount: 1,
-
+                    typeValue: '',
                     optionRows: [],
+                    optionRowCount: 1,
+                    optionType: 'lookup',
+                    typesHasOptions: ['select', 'multiselect', 'checkbox', 'lookup'],
                 }
             },
 
             mounted: function() {
-                $('#type').on('change', function (e) {
-                    if (['select', 'multiselect', 'checkbox'].indexOf($(e.target).val()) === -1) {
-                        $('#options').addClass('hide')
+                $('#type').on('change', event => {
+                    this.typeValue = $(event.target).val();
+
+                    if (this.typesHasOptions.indexOf(this.typeValue) === -1) {
+                        $('#options').addClass('hide');
                     } else {
-                        $('#options').removeClass('hide')
+                        $('#options').removeClass('hide');
                     }
                 });
             },
@@ -166,6 +213,18 @@
                     Vue.delete(this.optionRows, index);
                 },
             },
-        })
+        });
+
+        Vue.component('entity-type', {
+            template: '#entity-type-template',
+
+            props: ['name', 'required'],
+
+            data: function() {
+                return {
+                    lookupEntityTypes: @json(config('attribute_entity_types')),
+                }
+            },
+        });
     </script>
 @endpush
