@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=201e08b83bd0a4e5507c",
-    "/css/ui.css": "/css/ui.css?id=8e15b557b7ba600aabc0",
+    "/js/ui.js": "/js/ui.js?id=96adc71b9cf29694bcd9",
+    "/css/ui.css": "/css/ui.css?id=dc81ad76d1a079f67cf4",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
@@ -27,5 +27,8 @@
     "/images/loader-active-icon.svg": "/images/loader-active-icon.svg?id=95e546ca2a603afe5a2d",
     "/images/loader-icon.svg": "/images/loader-icon.svg?id=bf4432e158adb5eb568f",
     "/images/plus-primary-icon.svg": "/images/plus-primary-icon.svg?id=73c815af620be35c98dc",
-    "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a"
+    "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
+    "/images/download-icon.svg": "/images/download-icon.svg?id=a8ddc459c3a5659d8a8b",
+    "/images/ellipsis-icon.svg": "/images/ellipsis-icon.svg?id=78aa3112be42d9cef6d2",
+    "/images/pencil-underline-icon.svg": "/images/pencil-underline-icon.svg?id=71376676378bd7548a95"
 }

@@ -40,6 +40,16 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
 
                 Route::get('view/{id}', 'LeadController@view')->name('admin.leads.view');
+    
+                Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
+
+                Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
+
+                Route::group([
+                    'prefix'    => 'activities',
+                ], function () {
+                    Route::post('create/{id}', 'ActivityController@store')->name('admin.leads.activities.store');
+                });
             });
 
             // Contacts Routes
@@ -156,6 +166,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass-update');
 
                     Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass-delete');
+
+                    Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
             });
         });

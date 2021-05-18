@@ -12,8 +12,7 @@
             </div>
         </div>
 
-        {{-- <form method="POST" action="{{ route('admin.contacts.organizations.update', $organization->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data"> --}}
-        <form method="POST" action="{{ route('admin.contacts.organizations.update', $organization->id) }}" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.contacts.organizations.update', $organization->id) }}" @submit.prevent="onSubmit">
 
             <div class="page-content">
                 <div class="form-container">

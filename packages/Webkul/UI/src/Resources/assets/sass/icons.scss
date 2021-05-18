@@ -93,6 +93,10 @@
     background-image: url("../images/pencil-icon.svg");
 }
 
+.pencil-underline-icon {
+    background-image: url("../images/pencil-underline-icon.svg");
+}
+
 .folder-icon {
     background-image: url("../images/folder-icon.svg");
 }
@@ -103,6 +107,16 @@
 
 .plus-white-icon {
     background-image: url("../images/plus-white-icon.svg");
+}
+
+.download-icon {
+    background-image: url("../images/download-icon.svg");
+}
+
+.ellipsis-icon {
+    width: 24px !important;
+    height: 24px !important;
+    background-image: url("../images/ellipsis-icon.svg");
 }
 
 .loader-icon {

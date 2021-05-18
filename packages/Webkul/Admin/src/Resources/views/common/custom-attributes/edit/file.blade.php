@@ -1,6 +1,6 @@
 @if ($value)
-    {{-- <a href="{{ route('admin.catalog.products.file.download', [$entity->product_id, $attribute->id] )}}" target="_blank"> --}}
-        <i class="icon sort-down-icon download"></i>
+    <a href="{{ route('admin.settings.attributes.download', ['path' => $value]) }}" target="_blank">
+        <i class="icon download-icon"></i>
     </a>
 @endif
 
@@ -12,7 +12,7 @@
             <input type="checkbox" id="{{ $attribute->code }}[delete]"  name="{{ $attribute->code }}[delete]" value="1">
 
             <label class="checkbox-view" for="delete"></label>
-                {{ __('admin::app.configuration.delete') }}
+                {{ __('admin::app.common.delete') }}
         </span>
     </div>
 @endif

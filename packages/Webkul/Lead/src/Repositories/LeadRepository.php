@@ -33,9 +33,9 @@ class LeadRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Contact\Repositories\PersonRepository $personRepository
-     * @param  \Webkul\Lead\Repositories\ProductRepository $productRepository
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository $attributeValueRepository
+     * @param  \Webkul\Contact\Repositories\PersonRepository  $personRepository
+     * @param  \Webkul\Lead\Repositories\ProductRepository  $productRepository
+     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
      * @param  \Illuminate\Container\Container  $container
      * @return void
      */

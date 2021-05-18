@@ -12,7 +12,7 @@
             </div>
         </div>
 
-        <form method="POST" action="{{ route('admin.settings.attributes.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
+        <form method="POST" action="{{ route('admin.settings.attributes.store') }}" @submit.prevent="onSubmit">
 
             <div class="page-content">
                 <div class="form-container">
