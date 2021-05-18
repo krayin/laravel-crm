@@ -60,8 +60,8 @@ class ForgotPasswordController extends Controller
                 ->withErrors([
                     'email' => trans('admin::app.sessions.forgot-password.email-not-exist'),
                 ]);
-        } catch(\Exception $e) {
-            session()->flash('error', trans($e->getMessage()));
+        } catch(\Exception $exception) {
+            session()->flash('error', trans($exception->getMessage()));
 
             return redirect()->back();
         }

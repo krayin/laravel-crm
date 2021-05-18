@@ -3,7 +3,7 @@
         <template v-if="tabView">
             <!-- <span>{{ paginationData.current_page *  perPage }}-{{ (paginationData.current_page *  perPage) + perPage }} of {{ paginationData.total_rows }}</span> -->
 
-            <a class="page-item previous" v-if="paginationData.on_first_page">
+            <a class="page-item previous disabled" v-if="paginationData.on_first_page">
                 <i class="icon arrow-left-line-icon"></i>
             </a>
 
@@ -31,7 +31,7 @@
                 <i class="icon arrow-right-line-icon"></i>
             </a>
 
-            <a class="page-item next" v-else>
+            <a class="page-item next disabled" v-else>
                 <i class="icon arrow-right-line-icon"></i>
             </a>
         </template>

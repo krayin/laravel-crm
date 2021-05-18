@@ -125,12 +125,12 @@ class PersonController extends Controller
 
             return response()->json([
                 'status'    => true,
-                'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.persons.person')]),
+                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.person')]),
             ], 200);
-        } catch(\Exception $e) {
+        } catch(\Exception $exception) {
             return response()->json([
                 'status'    => false,
-                'message'   => trans('admin::app.datagrid.destroy-failed', ['resource' => trans('admin::app.contacts.persons.person')]),
+                'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.persons.person')]),
             ], 400);
         }
     }
@@ -148,7 +148,7 @@ class PersonController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.contacts.persons.title')])
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')])
         ]);
     }
 }

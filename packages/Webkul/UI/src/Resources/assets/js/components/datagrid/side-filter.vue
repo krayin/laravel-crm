@@ -45,6 +45,7 @@
                         <div class="enter-new" v-else>
                             <input
                                 type="text"
+                                :id="`enter-new-${data.index}`"
                                 class="control mb-10"
                                 :placeholder="data.label"
                                 @keyup.enter="pushFieldValue(key, $event)"
@@ -133,10 +134,14 @@
                 'updateFilterValues'
             ]),
 
-            toggleInput: function (key) {
+            toggleInput: function (key, event) {
                 this.addField[key] = ! this.addField[key];
 
                 this.$forceUpdate();
+
+                setTimeout(() => {
+                    document.getElementById(`enter-new-${key}`).focus();
+                })
             },
 
             pushFieldValue: function (key, {target}) {

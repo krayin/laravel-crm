@@ -134,9 +134,9 @@ class AttributeController extends Controller
 
                 return response()->json([
                     'status'    => true,
-                    'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.settings.attributes.attribute')]),
+                    'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
                 ], 200);
-            } catch(\Exception $e) {
+            } catch(\Exception $exception) {
                 return response()->json([
                     'status'    => false,
                     'message'   => trans('admin::app.settings.attributes.delete-failed'),
@@ -176,7 +176,7 @@ class AttributeController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => trans('admin::app.datagrid.destroy-success', ['resource' => trans('admin::app.settings.attributes.title')]),
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.title')]),
         ]);
     }
 
