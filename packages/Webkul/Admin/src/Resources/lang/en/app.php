@@ -1,5 +1,14 @@
 <?php
     return [
+        'dashboard' => [
+            'title'         => 'Dashboard',
+            'activity'      => 'Activity',
+            'top_deals'     => 'Top Deals',
+            'stages'        => 'Stages',
+            'emails'        => 'Emails',
+            'custom_card'   => 'Custom Card',
+        ],
+
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',

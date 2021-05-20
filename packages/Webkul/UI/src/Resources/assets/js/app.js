@@ -34,6 +34,7 @@ Vue.mixin({
 
 Vue.component('flash-wrapper', require('./components/flash-wrapper.vue').default);
 Vue.component('flash', require('./components/flash.vue').default);
+Vue.component('bar-chart', require('./components/bar-chart.vue').default);
 Vue.component('tabs', require('./components/tabs/tabs').default);
 Vue.component('tab', require('./components/tabs/tab').default);
 Vue.component('modal', require('./components/modal').default);

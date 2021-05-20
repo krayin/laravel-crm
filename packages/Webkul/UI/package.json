@@ -26,6 +26,7 @@
     "dependencies": {
         "@babel/polyfill": "^7.12.1",
         "axios": "^0.21.1",
+        "chart.js": "^2.9.4",
         "debounce": "^1.2.1",
         "vuex": "^3.6.2"
     }

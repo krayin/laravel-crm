@@ -614,3 +614,97 @@ body {
         float: left;
     }
 }
+
+.dashboard {
+    .card {
+        padding: 30px 20px;
+        border-radius: 3px;
+        background-color: $white;
+        border: 1px solid $border-color;
+
+        label {
+            display: block;
+
+            ~ .bar-chart {
+                margin-top: 30px;
+            }
+
+            select {
+                border: none;
+                background-color: $white;
+                color: $secondary-font-color;
+            }
+        }
+
+        .bar-data {
+            display: grid;
+            font-size: 14px;
+            margin-top: 30px;
+            color: $font-color;
+            grid-column-gap: 15px;
+            grid-template-columns: 90px auto 90px;
+
+            &.activity {
+                margin-top: 40px;
+            }
+        }
+
+        .deal {
+            margin-top: 20px;
+            color: $secondary-font-color;
+
+            label {
+                font-weight: 500;
+                font-size: 18px;
+            }
+
+            .details {
+                display: grid;
+                padding: 5px 0;
+                font-size: 16px;
+                grid-template-columns: auto auto auto;
+                border-bottom: 1px solid $border-color;
+            }
+        }
+
+        .email-data {
+            margin-top: 30px;
+            padding-bottom: 5px;
+            display: inline-block;
+            width: calc(50% - 10px);
+            border-bottom: 1px solid $border-color;
+
+            &:nth-last-child(1),
+            &:nth-last-child(2) {
+               border: none;
+            }
+
+            span {
+                display: block;
+                text-align: left;
+                color: $secondary-font-color;
+
+                &:first-child {
+                    font-weight: 500;
+                    font-size: 36px;
+                    margin-bottom: 10px;
+                }
+
+                &:last-child {
+                    font-size: 16px;
+                }
+            }
+        }
+
+        .custom-card {
+            top: 50%;
+            text-align: center;
+            position: relative;
+            color: $secondary-color;
+        }
+
+        &.dashed {
+            border-style: dashed;
+        }
+    }
+}

@@ -28,8 +28,14 @@ Route::group(['middleware' => ['web']], function () {
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
 
-            // Datagrid API route
-            Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
+            Route::get('template', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@template')->name('admin.dashboard.template');
+
+            // API routes
+            Route::group([
+                'prefix'    => 'api',
+            ], function () {
+                Route::get('/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
+            });
 
             // User Routes
             Route::group([
