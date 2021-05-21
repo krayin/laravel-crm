@@ -97,7 +97,7 @@
                 </div>
             </template>
 
-            <div class="deal" v-else-if="cardType == 'top_leads'" v-for="(data, index) in dataCollection.data">
+            <div class="lead" v-else-if="cardType == 'top_leads'" v-for="(data, index) in dataCollection.data">
                 <label>@{{ data.label }}</label>
 
                 <div class="details">
