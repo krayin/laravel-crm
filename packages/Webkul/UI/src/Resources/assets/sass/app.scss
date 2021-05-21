@@ -210,7 +210,8 @@ h5 {
 .dropdown-list {
     width: 215px;
     margin-bottom: 20px;
-    @include box-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border: 1px solid #f0f0f0;
+    box-shadow: 0 2px 5px 0 rgba(39 ,49, 58, .15);
     background-color: $white;
     position: absolute;
     display: none;
@@ -238,7 +239,6 @@ h5 {
     }
 
     .dropdown-container {
-        padding: 12px;
         overflow-y: auto;
 
         ul {
@@ -247,8 +247,9 @@ h5 {
             padding: 0px;
 
             li {
-                padding: 5px 0px;
+                padding: 8px 12px;
                 font-size: $font-size-md;
+                cursor: pointer;
 
                 a {
                     &:link,
@@ -258,9 +259,14 @@ h5 {
                         color: $secondary-font-color;
                         display: block;
                     }
+                }
 
-                    &:hover {
-                        color: $primary-color;
+                &:hover {
+                    background-color: $primary-color;
+                    color: $white;
+
+                    a {
+                        color: $white;
                     }
                 }
             }
@@ -794,7 +800,9 @@ h5 {
             display: flex;
         }
 
-        .control {
+        > .control,
+        > .date-container,
+        > .datetime-container {
             position: relative;
             -webkit-box-flex: 1;
             -ms-flex: 1 1 auto;
@@ -809,6 +817,16 @@ h5 {
             &:not(:last-child) {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
+            }
+        }
+        > .date-container,
+        > .datetime-container {
+            &:not(:first-child) {
+                padding-left: 10px;
+            }
+        
+            &:not(:last-child) {
+                padding-right: 10px;
             }
         }
 
@@ -1069,6 +1087,7 @@ h5 {
 .tabs-content {
     border: 1px solid $border-color;
     padding: 30px;
+    background: $white;
 }
 
 .pill {

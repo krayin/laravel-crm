@@ -17,9 +17,9 @@ class CreateLeadActivitiesTable extends Migration
             $table->increments('id');
             $table->string('type');
             $table->text('comment')->nullable();
-            $table->text('file_path')->nullable();
-            $table->datetime('scheduled_from')->nullable();
-            $table->datetime('scheduled_to')->nullable();
+            $table->json('additional')->nullable();
+            $table->datetime('schedule_from')->nullable();
+            $table->datetime('schedule_to')->nullable();
             $table->boolean('is_done')->default(0);
 
             $table->integer('lead_id')->unsigned();

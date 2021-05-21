@@ -72,6 +72,20 @@ class Core
     }
 
     /**
+     * Returns state name by code.
+     *
+     * @param string $code
+     *
+     * @return string
+     */
+    public function state_name($code)
+    {
+        $state = $this->countryStateRepository->findOneByField('code', $code);
+
+        return $state ? $state->name : $code;
+    }
+
+    /**
      * Retrieve all country states.
      *
      * @param string $countryCode
@@ -263,5 +277,38 @@ class Core
     public function formatDate($date)
     {
         return Carbon::parse($date)->format('d M Y H:i');
+    }
+
+    /**
+     * Return currency symbol from currency code.
+     *
+     * @param float $price
+     *
+     * @return string
+     */
+    public function currencySymbol($code)
+    {
+        $formatter = new \NumberFormatter(app()->getLocale() . '@currency=' . $code, \NumberFormatter::CURRENCY);
+
+        return $formatter->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
+    }
+
+    /**
+     * Format price with base currency symbol. This method also give ability to encode
+     * the base currency symbol and its optional.
+     *
+     * @param  float $price
+     *
+     * @return string
+     */
+    public function formatBasePrice($price)
+    {
+        if (is_null($price)) {
+            $price = 0;
+        }
+
+        $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+
+        return $formater->formatCurrency($price, config('app.currency'));
     }
 }

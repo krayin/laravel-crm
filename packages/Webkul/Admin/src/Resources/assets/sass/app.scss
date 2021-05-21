@@ -574,7 +574,7 @@ body {
         .bottom-control-group {
             width: 100%;
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(32%, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(30%, 1fr));
             justify-items: center;
             grid-auto-rows: auto;
             grid-column-gap: 10px;
@@ -606,12 +606,182 @@ body {
         float: left;
         width: 30%;
         padding-right: 10px;
+
+        .panel {
+            margin-bottom: 20px;
+        }
     }
 
     .lead-content-right {
         width: 70%;
         padding-left: 10px;
         float: left;
+
+        .tabs-content {
+            margin-bottom: 20px;
+        }
+    }
+}
+
+.custom-attribute-view {
+    .attribute-value-row {
+        width: 100%;
+        display: inline-block;
+        margin-bottom: 10px;
+        padding: 10px 0;
+        padding-right: 30px;
+        position: relative;
+
+        .label {
+            color: $secondary-font-color;
+            width: 30%;
+            float: left;
+        }
+
+        .value {
+            width: 70%;
+            float: left;
+
+            span.multi-value {
+                border-radius: 30px;
+                padding: 4px 8px;
+                background: #F7F8F9;
+                margin-bottom: 5px;
+                display: inline-block;
+
+                span {
+                    color: #747678;
+                    font-size: 16px;
+                }
+            }
+
+            .image {
+                width: 100px;
+                height: 100px;
+                border: 1px solid;
+                border-radius: 4px;
+            }
+        }
+
+        .icon.pencil-underline-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 5px;
+            display: none;
+        }
+
+        .dropdown-list {
+            right: 0;
+            width: 100%;
+        }
+
+        &:hover {
+            // background-color: #f7f7f7;
+
+            .icon.pencil-underline-icon {
+                display: inline-block;
+            }
+        }
+    }
+}
+
+.form-group {
+    .image {
+        position: absolute;
+        top: 34px;
+        right: 0;
+        height: 33px;
+        width: 33px;
+        border-radius: 3px;
+        margin-right: 5px;
+    }
+
+    .icon.download-icon {
+        position: absolute;
+        top: 40px;
+        right: 10px;
+    }
+}
+
+.activity-list {
+    .planned-activities {
+        margin-bottom: 50px;
+    }
+
+    .section-tag {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 20px;
+
+        span {
+            color: $secondary-font-color;
+            font-weight: $font-weight-medium;
+            position: absolute;
+            top: -11px;
+            background: #fff;
+            padding-right: 10px;
+        }
+
+        hr {
+            margin: 0;
+            border-top: 1px solid $border-color;
+        }
+    }
+    
+    .activity-item {
+        margin-bottom: 30px;
+        text-align: left;
+        position: relative;
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+
+        .title {
+            color: $secondary-font-color;
+            font-size: $font-size-md;
+            margin-bottom: 5px;
+
+            .icon {
+                cursor: pointer;
+                float: right;
+                text-align: center;
+                border-radius: 4px;
+
+                &:hover {
+                    background-color: rgba(38, 41, 44, 0.05)
+                }
+            }
+
+            .dropdown-list {
+                right: 0;
+            }
+        }
+
+        .comment {
+            font-size: $font-size-md;
+            padding: 15px;
+            margin-bottom: 5px;
+            background-color: #FFF9C4;
+            position: relative;
+            border: solid 1px #FDD835;
+        }
+
+        .info {
+            color: #747678;
+            font-size: $font-size-sm;
+
+            .seperator {
+                margin: 0;
+                padding: 0 8px;
+                width: 8px;
+                display: inline-block;
+                cursor: default;
+                text-align: center;
+                font-weight: 700;
+            }
+        }
     }
 }
 

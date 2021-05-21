@@ -141,7 +141,7 @@ class AttributeRepository extends Repository
 
     /**
      * @param  string  $code
-     * @param  integer  $entityId
+     * @param  integer|array  $entityId
      * @return mixed
      */
     public function getLookUpEntity($code, $entityId)
@@ -154,6 +154,10 @@ class AttributeRepository extends Repository
 
         $lookUp = config('attribute_lookups.' . $attribute->lookup_type);
 
-        return app($lookUp['repository'])->find($entityId);
+        if (is_array($entityId)) {
+            return app($lookUp['repository'])->findWhereIn('id', $entityId);
+        } else {
+            return app($lookUp['repository'])->find($entityId);
+        }
     }
 }

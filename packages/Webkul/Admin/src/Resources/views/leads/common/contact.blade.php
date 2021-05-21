@@ -1,5 +1,3 @@
-<contact-component></contact-component>
-
 @push('scripts')
     <script type="text/x-template" id="contact-component-template">
         <div class="contact-controls">
@@ -71,6 +69,8 @@
         Vue.component('contact-component', {
 
             template: '#contact-component-template',
+    
+            props: ['data'],
 
             inject: ['$validator'],
 
@@ -78,9 +78,9 @@
                 return {
                     is_searching: false,
 
-                    state: '',
+                    state: this.data ? 'old': '',
 
-                    person: {
+                    person: this.data ? this.data : {
                         'name': ''
                     },
 
@@ -129,6 +129,6 @@
                     this.state = 'new';
                 }
             }
-            });
+        });
     </script>
 @endpush
