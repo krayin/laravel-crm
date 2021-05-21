@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=5686aaec605b0ac59949",
-    "/css/ui.css": "/css/ui.css?id=acad6f3e3979d1e92072",
+    "/js/ui.js": "/js/ui.js?id=bb07a7c10a4cb8033f36",
+    "/css/ui.css": "/css/ui.css?id=3b92ef3f9f4d24a6a3a1",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
@@ -27,5 +27,6 @@
     "/images/loader-active-icon.svg": "/images/loader-active-icon.svg?id=95e546ca2a603afe5a2d",
     "/images/loader-icon.svg": "/images/loader-icon.svg?id=bf4432e158adb5eb568f",
     "/images/plus-primary-icon.svg": "/images/plus-primary-icon.svg?id=73c815af620be35c98dc",
-    "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a"
+    "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
+    "/images/plus-black-icon.svg": "/images/plus-black-icon.svg?id=9135b4e0e1c239c36981"
 }

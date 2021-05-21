@@ -13,7 +13,7 @@
         props: ['data', 'id'],
 
         data: function () {
-            let chartData = JSON.parse(this.data);
+            let chartData = this.data;
 
             var maxData = 0;
             var stepSize = 10;
@@ -37,7 +37,6 @@
                     "scales": {
                         "xAxes": [
                             {
-                                "maxBarThickness": 20,
                                 "gridLines": {
                                     "display": false
                                 },
@@ -69,8 +68,8 @@
 
             new Chart(ctx, {
                 type: 'bar',
+                data: this.data,
                 options: this.options,
-                data: JSON.parse(this.data),
             });
         }
     }
