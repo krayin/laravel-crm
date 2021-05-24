@@ -366,17 +366,6 @@ h5 {
                         text-align: center;
                     }
 
-                    span {
-                        &.badge {
-                            &.badge-round {
-                                padding: 0;
-                                width: 8px;
-                                height: 8px;
-                                margin-right: 5px;
-                            }
-                        }
-                    }
-
                     &.action-container {
                         a {
                             cursor: pointer;
@@ -1401,6 +1390,13 @@ modal {
         color: $primary-color;
         border: 2px solid $primary-color;
     }
+
+    &.badge-round {
+        padding: 0;
+        width: 8px;
+        height: 8px;
+        margin-right: 5px;
+    }
 }
 
 .overlay-loader {
@@ -1669,4 +1665,39 @@ modal {
 
 .fs-18 {
     font-size: $font-size-lg !important;
+}
+
+.row-grid-3 {
+    display: grid;
+    grid-row-gap: 15px;
+    grid-auto-rows: auto;
+    grid-column-gap: 15px;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.bar {
+    height: 10px;
+    margin-top: 5px;
+    background-color: $table-active-cell-color;
+
+    > div {
+        height: 10px;
+        transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+        &.primary {
+            background-color: $primary-color;
+        }
+    
+        &.warning {
+            background-color: $warning-color;
+        }
+    
+        &.success {
+            background-color: $success-color;
+        }
+    
+        &.danger {
+            background-color: $danger-color;
+        }
+    }
 }

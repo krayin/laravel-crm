@@ -1,5 +1,22 @@
 <?php
     return [
+        'dashboard' => [
+            'title'             => 'Dashboard',
+            'cards'             => 'Cards',
+            'column'            => 'Column',
+            'done'              => 'Done',
+            'activity'          => 'Activity',
+            'top_leads'         => 'Top Leads',
+            'stages'            => 'Stages',
+            'emails'            => 'Emails',
+            'custom_card'       => 'Custom Card',
+            'customers'         => 'Customers',
+            'top_customers'     => 'Top Customers',
+            'products'          => 'Products',
+            'top_products'      => 'Top Products',
+            'no_record_found'   => 'No record found',
+        ],
+
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',

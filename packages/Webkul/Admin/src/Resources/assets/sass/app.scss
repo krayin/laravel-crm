@@ -784,3 +784,162 @@ body {
         }
     }
 }
+
+.dashboard {
+    > h1 {
+        margin-bottom: 35px;
+        display: inline-block;
+
+        ~ .cards-collection {
+            margin: 0;
+            float: right;
+            width: 200px;
+            cursor: pointer;
+            border-radius: 3px;
+            border: 2px solid $border-color;
+
+            .toggle-btn {
+                margin: 0;
+                padding: 6px 10px;
+                background-color: $white;
+
+                :last-child {
+                    float: right;
+                }
+            }
+
+            .cards-options {
+                position: relative;
+
+                > div {
+                    top: 20px;
+                    z-index: 1;
+                    width: 100%;
+                    position: absolute;
+                    padding: 20px 12px;
+                    background: $white;
+                    box-shadow: 0px 4px 4px rgb(84 110 122 / 25%);
+                    transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+
+                    header {
+                        margin-bottom: 10px;
+                        padding-bottom: 15px;
+                        border-bottom: 1px solid $border-color;
+
+                        .btn-secondary-outline {
+                            border: none;
+                            font-size: 16px;
+                            padding-left: 0;
+                        }
+
+                        .btn-primary {
+                            float: right;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .card {
+        min-height: 200px;
+        padding: 30px 20px;
+        border-radius: 3px;
+        background-color: $white;
+        border: 1px solid $border-color;
+
+        label {
+            display: block;
+
+            select {
+                border: none;
+                margin-left: 10px;
+                background-color: $white;
+                color: $secondary-font-color;
+            }
+        }
+
+        .card-data {
+            height: 100%;
+            
+            .bar-chart {
+                margin-top: 30px;
+            }
+    
+            .bar-data {
+                display: grid;
+                font-size: 14px;
+                margin-top: 30px;
+                color: $font-color;
+                grid-column-gap: 15px;
+                grid-template-columns: 90px auto 90px;
+    
+                &.activity {
+                    margin-top: 40px;
+                }
+            }
+    
+            .lead {
+                margin-top: 20px;
+                color: $secondary-font-color;
+    
+                label {
+                    font-weight: 500;
+                    font-size: 18px;
+                }
+    
+                .details {
+                    display: grid;
+                    padding: 5px 0;
+                    font-size: 16px;
+                    grid-template-columns: auto auto auto;
+                    border-bottom: 1px solid $border-color;
+                }
+            }
+    
+            .email-data {
+                margin-top: 30px;
+                padding-bottom: 5px;
+                display: inline-block;
+                width: calc(50% - 10px);
+                border-bottom: 1px solid $border-color;
+
+                &:nth-child(odd) {
+                    margin-right: 10px;
+                }
+    
+                &:nth-last-child(1),
+                &:nth-last-child(2) {
+                   border: none;
+                }
+    
+                span {
+                    display: block;
+                    text-align: left;
+                    color: $secondary-font-color;
+    
+                    &:first-child {
+                        font-weight: 500;
+                        font-size: 36px;
+                        margin-bottom: 10px;
+                    }
+    
+                    &:last-child {
+                        font-size: 16px;
+                    }
+                }
+            }
+    
+            .custom-card {
+                text-align: center;
+                position: relative;
+                top: calc(50% - 20px);
+                color: $secondary-color;
+            }
+        }
+
+        &.dashed {
+            border-style: dashed;
+        }
+    }
+}
