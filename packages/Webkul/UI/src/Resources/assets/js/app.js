@@ -1,8 +1,6 @@
-import axios from 'axios';
 import store from './store';
 import VTooltip from 'v-tooltip';
 
-window.axios = axios;
 window.EventBus = new Vue();
 window.debounce = require('./debounce');
 
@@ -11,7 +9,6 @@ VTooltip.options.disposeTimeout = 0;
 Vue.directive('tooltip', VTooltip.VTooltip)
 Vue.directive('debounce', require('./directives/debounce').default);
 
-Vue.prototype.$http = axios;
 Vue.config.productionTip = false;
 
 Vue.mixin({
@@ -38,6 +35,8 @@ Vue.component('tabs', require('./components/tabs/tabs').default);
 Vue.component('tab', require('./components/tabs/tab').default);
 Vue.component('modal', require('./components/modal').default);
 Vue.component('accordian', require('./components/accordian').default);
+Vue.component('attachment-wrapper', require('./components/attachment/attachment-wrapper').default);
+Vue.component('attachment-item', require('./components/attachment/attachment-item').default);
 Vue.component('image-upload', require('./components/image/image-upload').default);
 Vue.component('image-wrapper', require('./components/image/image-wrapper').default);
 Vue.component('image-item', require('./components/image/image-item').default);

@@ -66,4 +66,59 @@ class ActivityController extends Controller
 
         return redirect()->back();
     }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update($id)
+    {
+        Event::dispatch('leads.activity.update.before');
+
+        $activity = $this->activityRepository->update(request()->all(), $id);
+
+        Event::dispatch('leads.activity.update.after', $activity);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::app.leads.activities.update-success'),
+            ]);
+        } else {
+            session()->flash('success', trans('admin::app.leads.activities.update-success'));
+
+            return redirect()->route('admin.products.index');
+        }
+    }
+
+    /*
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $this->activityRepository->findOrFail($id);
+        
+        try {
+            Event::dispatch('leads.activity.delete.before', $id);
+
+            $this->activityRepository->delete($id);
+
+            Event::dispatch('leads.activity.delete.after', $id);
+
+            return response()->json([
+                'status'    => true,
+                'message'   => trans('admin::app.leads.activities.destroy-success'),
+            ], 200);
+        } catch(\Exception $exception) {
+            return response()->json([
+                'status'  => false,
+                'message' => trans('admin::app.leads.activities.destroy-failed'),
+            ], 400);
+        }
+    }
 }

@@ -56,6 +56,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
 
+                Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
+
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
                 Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
@@ -66,6 +68,10 @@ Route::group(['middleware' => ['web']], function () {
                     'prefix'    => 'activities',
                 ], function () {
                     Route::post('create/{id}', 'ActivityController@store')->name('admin.leads.activities.store');
+
+                    Route::put('edit/{id?}', 'ActivityController@update')->name('admin.leads.activities.update');
+
+                    Route::delete('{id?}', 'ActivityController@destroy')->name('admin.leads.activities.delete');
                 });
             });
 
@@ -138,7 +144,7 @@ Route::group(['middleware' => ['web']], function () {
     
                     Route::post('create', 'UserController@store')->name('admin.settings.users.store');
 
-                    Route::get('edit/{id}', 'UserController@edit')->name('admin.settings.users.edit');
+                    Route::get('edit/{id?}', 'UserController@edit')->name('admin.settings.users.edit');
 
                     Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
 

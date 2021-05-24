@@ -54,6 +54,7 @@ class FileRepository extends Repository
         $leadActivity = $this->activityRepository->create([
             'is_done' => 1,
             'type'    => 'file',
+            'comment' => $data['comment'],
             'user_id' => auth()->guard('user')->user()->id,
             'lead_id' => $id,
         ]);

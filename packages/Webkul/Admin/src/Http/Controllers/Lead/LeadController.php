@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -114,6 +115,19 @@ class LeadController extends Controller
         }
 
         return redirect()->back();
+    }
+
+    /**
+     * Download file from storage
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function download($id)
+    {
+        $file = $this->fileRepository->findOrFail($id);
+
+        return Storage::download($file->path);
     }
 
     /*

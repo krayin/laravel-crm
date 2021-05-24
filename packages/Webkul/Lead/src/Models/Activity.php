@@ -10,6 +10,8 @@ class Activity extends Model implements ActivityContract
 {
     protected $table = 'lead_activities';
 
+    protected $with = ['file', 'user'];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -40,5 +42,13 @@ class Activity extends Model implements ActivityContract
     public function user()
     {
         return $this->belongsTo(UserProxy::modelClass());
+    }
+
+    /**
+     * Get the file associated with the activity.
+     */
+    public function file()
+    {
+        return $this->hasOne(FileProxy::modelClass(), 'lead_activity_id');
     }
 }

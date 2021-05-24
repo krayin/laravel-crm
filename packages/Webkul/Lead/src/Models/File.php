@@ -40,11 +40,19 @@ class File extends Model implements FileContract
     }
 
     /**
-     * Get the lead that owns the activity.
+     * Get the lead that owns the file.
      */
     public function lead()
     {
         return $this->belongsTo(LeadProxy::modelClass());
+    }
+
+    /**
+     * Get the activity that owns the file.
+     */
+    public function activity()
+    {
+        return $this->belongsTo(ActivityProxy::modelClass());
     }
 
     /**
