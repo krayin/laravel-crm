@@ -3,6 +3,8 @@
 namespace Webkul\Core;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
+
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
@@ -39,12 +41,14 @@ class Core
      */
     public function __construct(
         CountryRepository $countryRepository,
+        CoreConfigRepository $coreConfigRepository,
         CountryStateRepository $countryStateRepository
-    )
-    {
+    ) {
         $this->countryRepository = $countryRepository;
 
         $this->countryStateRepository = $countryStateRepository;
+
+        $this->coreConfigRepository = $coreConfigRepository;
     }
 
     /**
@@ -310,5 +314,55 @@ class Core
         $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
         return $formater->formatCurrency($price, config('app.currency'));
+    }
+
+    /**
+     * @param string $fieldName
+     *
+     * @return array
+     */
+    public function getConfigField($fieldName)
+    {
+        foreach (config('core_config') as $coreData) {
+            if (isset($coreData['fields'])) {
+                foreach ($coreData['fields'] as $field) {
+                    $name = $coreData['key'] . '.' . $field['name'];
+
+                    if ($name == $fieldName) {
+                        return $field;
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Retrieve information for configuration
+     *
+     * @param string          $field
+     * @param int|string|null $channelId
+     * @param string|null     $locale
+     *
+     * @return mixed
+     */
+    public function getConfigData($field)
+    {
+        $fields = $this->getConfigField($field);
+
+        $coreConfigValue = $this->coreConfigRepository->findOneWhere([
+            'code' => $field,
+        ]);
+
+        if (! $coreConfigValue) {
+            $fields = explode(".", $field);
+
+            array_shift($fields);
+
+            $field = implode(".", $fields);
+
+            return Config::get($field);
+        }
+
+        return $coreConfigValue->value;
     }
 }

@@ -1,4 +1,4 @@
-<?php $menu = Menu::prepare(); ?>
+@php($menu = Menu::prepare())
 
 <div class="navbar-left" v-bind:class="{'open': isMenuOpen}">
     <ul class="menubar">

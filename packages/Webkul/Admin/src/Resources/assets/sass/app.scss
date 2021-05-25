@@ -280,7 +280,7 @@ body {
             z-index: 3;
 
             .page-title {
-                // float: left;
+                display: inline-block;
 
                 .back-link {
                     float: left;

@@ -91,21 +91,11 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/menu.php', 'menu.admin'
-        );
-
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/acl.php', 'acl'
-        );
-
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types'
-        );
-        
-        $this->mergeConfigFrom(
-            dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups'
-        );
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/menu.php', 'menu.admin');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/acl.php', 'acl');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/core_config.php', 'core_config');
     }
     
     /**

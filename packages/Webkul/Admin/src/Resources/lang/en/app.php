@@ -32,6 +32,7 @@
             'sign-out'      => 'Sign Out',
             'back'          => 'Back',
             'name'          => 'Name',
+            'configuration' => 'Configuration',
         ],
 
         'contacts' => [
@@ -255,6 +256,19 @@
                 'delete-failed'         => 'Attribute can not be deleted.',
                 'user-define-error'     => 'Can not delete system attribute.'
             ],
+        ],
+
+        'configuration' => [
+            'title'             => 'Configuration',
+            'save-btn-title'    => 'Save',
+            'general'           => 'General',
+            'locale'            => 'Locale',
+            'save-message'      => 'Configuration updated successfully!',
+            "emails"            => [
+                'email'                 => 'Email',
+                'notification_label'    => 'Notifications',
+                'new_lead'              => 'New lead',
+            ]
         ],
 
         'datagrid' => [

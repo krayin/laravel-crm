@@ -27,6 +27,10 @@
     background-image: url("../images/settings-icon.svg");
 }
 
+.tools-icon {
+    background-image: url("../images/tools-icon.svg");
+}
+
 .avatar-icon {
     width: 16px;
     height: 21px;
@@ -51,8 +55,11 @@
         background-image: url("../images/products-active-icon.svg");
     }
 
-
     .settings-icon {
         background-image: url("../images/settings-active-icon.svg");
+    }
+    
+    .tools-icon {
+        background-image: url("../images/tools-active-icon.svg");
     }
 }
