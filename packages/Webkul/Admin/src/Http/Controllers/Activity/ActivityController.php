@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Lead;
+namespace Webkul\Admin\Http\Controllers\Activity;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -34,7 +34,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return view('admin::leads.index');
+        return view('admin::activities.index');
     }
 
     /**
@@ -62,7 +62,7 @@ class ActivityController extends Controller
 
         Event::dispatch('leads.activity.create.after', $activity);
         
-        session()->flash('success', trans('admin::app.leads.activities.create-success'));
+        session()->flash('success', trans('admin::app.activities.create-success'));
 
         return redirect()->back();
     }
@@ -84,13 +84,26 @@ class ActivityController extends Controller
         if (request()->ajax()) {
             return response()->json([
                 'status'  => true,
-                'message' => trans('admin::app.leads.activities.update-success'),
+                'message' => trans('admin::app.activities.update-success'),
             ]);
         } else {
-            session()->flash('success', trans('admin::app.leads.activities.update-success'));
+            session()->flash('success', trans('admin::app.activities.update-success'));
 
             return redirect()->route('admin.products.index');
         }
+    }
+
+    /**
+     * Send email
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function sendEmail($id)
+    {
+        dd(request()->all());
+        $lead = $this->leadRepository->findOrFail($id);
+        
     }
 
     /*
@@ -112,12 +125,12 @@ class ActivityController extends Controller
 
             return response()->json([
                 'status'    => true,
-                'message'   => trans('admin::app.leads.activities.destroy-success'),
+                'message'   => trans('admin::app.activities.destroy-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
                 'status'  => false,
-                'message' => trans('admin::app.leads.activities.destroy-failed'),
+                'message' => trans('admin::app.activities.destroy-failed'),
             ], 400);
         }
     }

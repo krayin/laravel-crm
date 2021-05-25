@@ -25,8 +25,6 @@
                 type: String,
 
                 required: false,
-
-                default: 'attachments'
             },
         },
 

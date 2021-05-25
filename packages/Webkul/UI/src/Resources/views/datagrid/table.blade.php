@@ -5,7 +5,7 @@
 @stop
 
 @section('content-wrapper')
-    <div class="content full-page dashboard table">
+    <div class="content full-page table">
         <div class="table-header">
             <h1>
                 @yield('table-header', "Table Default Header")

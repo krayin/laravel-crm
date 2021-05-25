@@ -18,7 +18,7 @@ class ProductRepository extends Repository
     /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository $attributeValueRepository
+     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
      * @param  \Illuminate\Container\Container  $container
      * @return void
      */

@@ -1,5 +1,22 @@
 <?php
     return [
+        'dashboard' => [
+            'title'             => 'Dashboard',
+            'cards'             => 'Cards',
+            'column'            => 'Column',
+            'done'              => 'Done',
+            'activity'          => 'Activity',
+            'top_leads'         => 'Top Leads',
+            'stages'            => 'Stages',
+            'emails'            => 'Emails',
+            'custom_card'       => 'Custom Card',
+            'customers'         => 'Customers',
+            'top_customers'     => 'Top Customers',
+            'products'          => 'Products',
+            'top_products'      => 'Top Products',
+            'no_record_found'   => 'No record found',
+        ],
+
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',
@@ -111,13 +128,14 @@
             'lunch-scheduled'          => 'Lunch scheduled at :from - :to',
             'email-scheduled'          => 'Email scheduled at :from - :to',
             'file-added'               => 'File added',
+        ],
 
-            'activities' => [
-                'create-success'  => 'Activity created successfully.',
-                'update-success'  => 'Activity updated successfully.',
-                'destroy-success' => 'Activity deleted successfully.',
-                'delete-failed'   => 'Activity can not be deleted.',
-            ]
+        'activities' => [
+            'title'           => 'Activities',
+            'create-success'  => 'Activity created successfully.',
+            'update-success'  => 'Activity updated successfully.',
+            'destroy-success' => 'Activity deleted successfully.',
+            'delete-failed'   => 'Activity can not be deleted.',
         ],
 
         'products' => [
@@ -273,7 +291,12 @@
             'address'           => 'Address',
             'quantity'          => 'Quantity',
             'deal_amount'       => 'Deal Amount',
+            'comment'           => 'Comment',
+            'is_done'           => 'Is Done',
+            'type'              => 'Type',
             'created_at'        => 'Created Date',
+            'schedule_from'     => 'Schedule From',
+            'schedule_to'       => 'Schedule To',
             'description'       => 'Description',
             'update_stage'      => 'Update stage',
             'contact_person'    => 'Contact Person',

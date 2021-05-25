@@ -14,6 +14,12 @@
     background-image: url("../images/leads-icon.svg");
 }
 
+.activities-icon {
+    width: 17px;
+    height: 21px;
+    background-image: url("../images/activities-icon.svg");
+}
+
 .phone-icon {
     background-image: url("../images/phone-icon.svg");
 }
@@ -43,6 +49,10 @@
         background-image: url("../images/leads-active-icon.svg");
     }
 
+    .activities-icon {
+        background-image: url("../images/activities-active-icon.svg");
+    }
+
     .phone-icon {
         background-image: url("../images/phone-active-icon.svg");
     }
@@ -50,7 +60,6 @@
     .products-icon {
         background-image: url("../images/products-active-icon.svg");
     }
-
 
     .settings-icon {
         background-image: url("../images/settings-active-icon.svg");

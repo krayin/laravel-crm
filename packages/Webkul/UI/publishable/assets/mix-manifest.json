@@ -1,7 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=53774f77333c81006198",
-    "/css/ui.css": "/css/ui.css?id=a9cb579ccbcc977b4dcb",
-    "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
+    "/js/ui.js": "/js/ui.js?id=632998789bfb445cead6",
+    "/css/ui.css": "/css/ui.css?id=56fc2ce8d1c7b5ad586c",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
@@ -29,6 +28,8 @@
     "/images/pencil-underline-icon.svg": "/images/pencil-underline-icon.svg?id=71376676378bd7548a95",
     "/images/plus-primary-icon.svg": "/images/plus-primary-icon.svg?id=73c815af620be35c98dc",
     "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
+    "/images/plus-black-icon.svg": "/images/plus-black-icon.svg?id=9135b4e0e1c239c36981",
+    "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82"
 }

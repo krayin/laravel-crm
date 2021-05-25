@@ -21,6 +21,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
 
+        Route::post('emails/inbound-parse', 'EmailController@inboundParse')->name('admin.emails.inbound_parse');
+
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
             Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
@@ -28,8 +30,24 @@ Route::group(['middleware' => ['web']], function () {
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
 
-            // Datagrid API route
-            Route::get('/api/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
+            Route::get('template', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@template')->name('admin.dashboard.template');
+
+            // API routes
+            Route::group([
+                'prefix'    => 'api',
+            ], function () {
+                Route::get('/datagrid', 'Webkul\Core\Http\Controllers\DatagridAPIController@index')->name('admin.datagrid.api');
+
+                Route::group([
+                    'prefix'    => 'dashboard',
+                ], function () {
+                    Route::get('/', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@getCardData')->name('admin.api.dashboard.card.index');
+
+                    Route::get('/cards', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@getCards')->name('admin.api.dashboard.cards.index');
+
+                    Route::post('/cards', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@updateCards')->name('admin.api.dashboard.cards.update');
+                });
+            });
 
             // User Routes
             Route::group([
@@ -44,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
             // Leads Routes
             Route::group([
                 'prefix'    => 'leads',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Lead'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Lead',
             ], function () {
                 Route::get('', 'LeadController@index')->name('admin.leads.index');
     
@@ -63,16 +81,28 @@ Route::group(['middleware' => ['web']], function () {
                 Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
 
                 Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass-delete');
+            });
 
-                Route::group([
-                    'prefix'    => 'activities',
-                ], function () {
-                    Route::post('create/{id}', 'ActivityController@store')->name('admin.leads.activities.store');
+            Route::group([
+                'prefix'    => 'activities',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Activity',
+            ], function () {
+                Route::get('', 'ActivityController@index')->name('admin.activities.index');
 
-                    Route::put('edit/{id?}', 'ActivityController@update')->name('admin.leads.activities.update');
+                Route::post('create/{id}', 'ActivityController@store')->name('admin.activities.store');
 
-                    Route::delete('{id?}', 'ActivityController@destroy')->name('admin.leads.activities.delete');
-                });
+                Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
+            
+                Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
+            });
+
+            Route::group([
+                'prefix'    => 'emails',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Email',
+            ], function () {
+                Route::post('create/{id}', 'EmailController@store')->name('admin.emails.store');
+
+                Route::delete('{id?}', 'EmailController@destroy')->name('admin.emails.delete');
             });
 
             // Contacts Routes

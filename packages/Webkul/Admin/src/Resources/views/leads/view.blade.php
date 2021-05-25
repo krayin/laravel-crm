@@ -175,7 +175,7 @@
     <script type="text/x-template" id="activity-action-component-template">
         <tabs>
             <tab name="{{ __('admin::app.leads.note') }}" :selected="true">
-                <form action="{{ route('admin.leads.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
+                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
 
                     <input type="hidden" name="type" value="note">
                     @csrf()
@@ -194,7 +194,7 @@
             </tab>
 
             <tab name="{{ __('admin::app.leads.activity') }}">
-                <form action="{{ route('admin.leads.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
+                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
 
                     @csrf()
 
@@ -244,16 +244,16 @@
             </tab>
 
             <tab name="{{ __('admin::app.leads.email') }}">
-                <form action="" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
+                <form action="{{ route('admin.emails.store', $lead->id) }}" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
 
                     @csrf()
 
-                    <div class="form-group" :class="[errors.has('email-form.to[]') ? 'has-error' : '']">
+                    <div class="form-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                         <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
 
-                        <email-tags-component control-name="to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'"></email-tags-component>
+                        <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'"></email-tags-component>
 
-                        <span class="control-error" v-if="errors.has('email-form.to[]')">@{{ errors.first('email-form.to[]') }}</span>
+                        <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
                     </div>
 
                     <div class="form-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']">
@@ -337,7 +337,7 @@
 
                 <li class="tag-input">
                     <input type="hidden" v-validate="validations" :name="controlName" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-if="! emails.length"/>
-                    <input type="text" :name="controlName" v-validate="'email'" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-model="email_term" @keyup.enter="addTag" placeholder="{{ __('admin::app.leads.email-placeholder') }}">
+                    <input type="text" :name="controlName" v-validate="'email'" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-model="email_term" @keydown.enter.prevent="addTag" placeholder="{{ __('admin::app.leads.email-placeholder') }}">
                 </li>
             </ul>
         </div>
@@ -430,7 +430,6 @@
     </script>
 
     <script>
-
         Vue.component('activity-action-component', {
 
             template: '#activity-action-component-template',
@@ -564,7 +563,7 @@
                 markAsDone: function(activity) {
                     var self = this;
 
-                    this.$http.put("{{ route('admin.leads.activities.update') }}/" + activity['id'], {'is_done': 1})
+                    this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
                         .then (function(response) {
                             activity.is_done = 1;
 
@@ -583,7 +582,7 @@
                 remove: function(activity) {
                     var self = this;
 
-                    this.$http.delete("{{ route('admin.leads.activities.delete') }}/" + activity['id'])
+                    this.$http.delete("{{ route('admin.activities.delete') }}/" + activity['id'])
                         .then (function(response) {
                             const index = self.activities.indexOf(activity);
 
