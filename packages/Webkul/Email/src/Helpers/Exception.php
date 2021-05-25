@@ -1,5 +1,5 @@
 <?php
-namespace Webkul\TicketBundle\Lib;
+namespace Webkul\Email\Helpers;
 
 class Exception extends \RuntimeException
 {

@@ -1,10 +1,9 @@
 <?php
 
-namespace Webkul\TicketBundle\Lib;
+namespace Webkul\Email\Helpers;
 
-use Symfony\Component\DomCrawler\Crawler;
-
-class Htmlfilter {
+class Htmlfilter
+{
     public function tln_tagprint($tagname, $attary, $tagtype)
     {
         if ($tagtype == 2) {
@@ -12,17 +11,22 @@ class Htmlfilter {
         } else {
             $fulltag = '<' . $tagname;
             if (is_array($attary) && sizeof($attary)) {
-                $atts = array();
+                $atts = [];
+
                 while (list($attname, $attvalue) = each($attary)) {
                     array_push($atts, "$attname=$attvalue");
                 }
+
                 $fulltag .= ' ' . join(' ', $atts);
             }
+
             if ($tagtype == 3) {
                 $fulltag .= ' /';
             }
+
             $fulltag .= '>';
         }
+
         return $fulltag;
     }
 
@@ -30,8 +34,8 @@ class Htmlfilter {
      * A small helper function to use with array_walk. Modifies a by-ref
      * value and makes it lowercase.
      *
-     * @param string $val a value passed by-ref.
-     * @return      void since it modifies a by-ref value.
+     * @param  string  $val a value passed by-ref.
+     * @return void since it modifies a by-ref value.
      */
     public function tln_casenormalize(&$val)
     {
@@ -42,11 +46,10 @@ class Htmlfilter {
      * This function skips any whitespace from the current position within
      * a string and to the next non-whitespace value.
      *
-     * @param string $body the string
-     * @param integer $offset the offset within the string where we should start
+     * @param  string  $body the string
+     * @param  integer  $offset the offset within the string where we should start
      *                 looking for the next non-whitespace character.
-     * @return integer          the location within the $body where the next
-     *                 non-whitespace char is located.
+     * @return integer the location within the $body where the next non-whitespace char is located.
      */
     public function tln_skipspace($body, $offset)
     {
@@ -69,18 +72,19 @@ class Htmlfilter {
      * really just a glorified "strpos", except it catches the failures
      * nicely.
      *
-     * @param string $body   The string to look for needle in.
-     * @param integer $offset Start looking from this position.
-     * @param string $needle The character/string to look for.
-     * @return integer           location of the next occurrence of the needle, or
-     *                 strlen($body) if needle wasn't found.
+     * @param  string  $body   The string to look for needle in.
+     * @param  integer  $offset Start looking from this position.
+     * @param  string  $needle The character/string to look for.
+     * @return integer  location of the next occurrence of the needle, or strlen($body) if needle wasn't found.
      */
     public function tln_findnxstr($body, $offset, $needle)
     {
         $pos = strpos($body, $needle, $offset);
+
         if ($pos === false) {
             $pos = strlen($body);
         }
+
         return $pos;
     }
 
@@ -99,17 +103,22 @@ class Htmlfilter {
      */
     public function tln_findnxreg($body, $offset, $reg)
     {
-        $matches = array();
-        $retarr = array();
+        $matches = $retarr = [];
+
         $preg_rule = '%^(.*?)(' . $reg . ')%s';
+
         preg_match($preg_rule, substr($body, $offset), $matches);
-        if (!isset($matches[0]) || !$matches[0]) {
+
+        if (! isset($matches[0]) || ! $matches[0]) {
             $retarr = false;
         } else {
             $retarr[0] = $offset + strlen($matches[1]);
+
             $retarr[1] = $matches[1];
+
             $retarr[2] = $matches[2];
         }
+
         return $retarr;
     }
 
@@ -132,19 +141,24 @@ class Htmlfilter {
         if ($offset > strlen($body)) {
             return false;
         }
+
         $lt = $this->tln_findnxstr($body, $offset, '<');
+
         if ($lt == strlen($body)) {
             return false;
         }
+
         /**
          * We are here:
          * blah blah <tag attribute="value">
          * \---------^
          */
         $pos = $this->tln_skipspace($body, $lt + 1);
+
         if ($pos >= strlen($body)) {
             return array(false, false, false, $lt, strlen($body));
         }
+
         /**
          * There are 3 kinds of tags:
          * 1. Opening tag, e.g.:
@@ -155,44 +169,52 @@ class Htmlfilter {
          *    <img src="blah"/>
          */
         switch (substr($body, $pos, 1)) {
-        case '/':
-            $tagtype = 2;
-            $pos++;
-            break;
-        case '!':
-            /**
-             * A comment or an SGML declaration.
-             */
+            case '/':
+                $tagtype = 2;
+                $pos++;
+                break;
+
+            case '!':
+                /**
+                 * A comment or an SGML declaration.
+                 */
                 if (substr($body, $pos + 1, 2) == '--') {
-                $gt = strpos($body, '-->', $pos);
-                if ($gt === false) {
-                    $gt = strlen($body);
+                    $gt = strpos($body, '-->', $pos);
+
+                    if ($gt === false) {
+                        $gt = strlen($body);
+                    } else {
+                        $gt += 2;
+                    }
+
+                    return array(false, false, false, $lt, $gt);
                 } else {
-                    $gt += 2;
+                    $gt = $this->tln_findnxstr($body, $pos, '>');
+
+                    return array(false, false, false, $lt, $gt);
                 }
-                return array(false, false, false, $lt, $gt);
-            } else {
-                $gt = $this->tln_findnxstr($body, $pos, '>');
-                return array(false, false, false, $lt, $gt);
-            }
-            break;
-        default:
-            /**
-             * Assume tagtype 1 for now. If it's type 3, we'll switch values
-             * later.
-             */
-            $tagtype = 1;
-            break;
+                break;
+
+            default:
+                /**
+                 * Assume tagtype 1 for now. If it's type 3, we'll switch values
+                 * later.
+                 */
+                $tagtype = 1;
+                break;
         }
 
         /**
          * Look for next [\W-_], which will indicate the end of the tag name.
          */
         $regary = $this->tln_findnxreg($body, $pos, '[^\w\-_]');
+
         if ($regary == false) {
             return array(false, false, false, $lt, strlen($body));
         }
+
         list($pos, $tagname, $match) = $regary;
+
         $tagname = strtolower($tagname);
 
         /**
@@ -204,36 +226,41 @@ class Htmlfilter {
          * Whatever else we find there indicates an invalid tag.
          */
         switch ($match) {
-        case '/':
-            /**
-             * This is an xhtml-style tag with a closing / at the
-             * end, like so: <img src="blah"/>. Check if it's followed
-             * by the closing bracket. If not, then this tag is invalid
-             */
-            if (substr($body, $pos, 2) == '/>') {
-                $pos++;
-                $tagtype = 3;
-            } else {
-                $gt = $this->tln_findnxstr($body, $pos, '>');
-                $retary = array(false, false, false, $lt, $gt);
-                return $retary;
-            }
-                //intentional fall-through
-        case '>':
-            return array($tagname, false, $tagtype, $lt, $pos);
-            break;
-        default:
-            /**
-             * Check if it's whitespace
-             */
-            if (!preg_match('/\s/', $match)) {
+            case '/':
                 /**
-                 * This is an invalid tag! Look for the next closing ">".
+                 * This is an xhtml-style tag with a closing / at the
+                 * end, like so: <img src="blah"/>. Check if it's followed
+                 * by the closing bracket. If not, then this tag is invalid
                  */
-                $gt = $this->tln_findnxstr($body, $lt, '>');
-                return array(false, false, false, $lt, $gt);
-            }
-            break;
+                if (substr($body, $pos, 2) == '/>') {
+                    $pos++;
+
+                    $tagtype = 3;
+                } else {
+                    $gt = $this->tln_findnxstr($body, $pos, '>');
+                    $retary = array(false, false, false, $lt, $gt);
+
+                    return $retary;
+                }
+
+            //intentional fall-through
+            case '>':
+                return array($tagname, false, $tagtype, $lt, $pos);
+                break;
+
+            default:
+                /**
+                 * Check if it's whitespace
+                 */
+                if (!preg_match('/\s/', $match)) {
+                    /**
+                     * This is an invalid tag! Look for the next closing ">".
+                     */
+                    $gt = $this->tln_findnxstr($body, $lt, '>');
+
+                    return array(false, false, false, $lt, $gt);
+                }
+                break;
         }
 
         /**
@@ -243,30 +270,35 @@ class Htmlfilter {
          *
          * At this point we loop in order to find all attributes.
          */
-        $attary = array();
+        $attary = [];
 
         while ($pos <= strlen($body)) {
             $pos = $this->tln_skipspace($body, $pos);
+
             if ($pos == strlen($body)) {
                 /**
                  * Non-closed tag.
                  */
                 return array(false, false, false, $lt, $pos);
             }
+
             /**
              * See if we arrived at a ">" or "/>", which means that we reached
              * the end of the tag.
              */
-            $matches = array();
+            $matches = [];
+
             if (preg_match('%^(\s*)(>|/>)%s', substr($body, $pos), $matches)) {
                 /**
                  * Yep. So we did.
                  */
                 $pos += strlen($matches[1]);
+
                 if ($matches[2] == '/>') {
                     $tagtype = 3;
                     $pos++;
                 }
+
                 return array($tagname, $attary, $tagtype, $lt, $pos);
             }
 
@@ -288,14 +320,18 @@ class Htmlfilter {
              * attrname="yes".
              */
             $regary = $this->tln_findnxreg($body, $pos, '[^\w\-_]');
+
             if ($regary == false) {
                 /**
                  * Looks like body ended before the end of tag.
                  */
                 return array(false, false, false, $lt, strlen($body));
             }
+
             list($pos, $attname, $match) = $regary;
+
             $attname = strtolower($attname);
+            
             /**
              * We arrived at the end of attribute name. Several things possible
              * here:
@@ -305,95 +341,115 @@ class Htmlfilter {
              *      anything else means the attribute is invalid.
              */
             switch ($match) {
-            case '/':
-                /**
-                 * This is an xhtml-style tag with a closing / at the
-                 * end, like so: <img src="blah"/>. Check if it's followed
-                 * by the closing bracket. If not, then this tag is invalid
-                 */
-                if (substr($body, $pos, 2) == '/>') {
-                    $pos++;
-                    $tagtype = 3;
-                } else {
-                    $gt = $this->tln_findnxstr($body, $pos, '>');
-                    $retary = array(false, false, false, $lt, $gt);
-                    return $retary;
-                }
-                    //intentional fall-through
-            case '>':
-                $attary{$attname} = '"yes"';
-                return array($tagname, $attary, $tagtype, $lt, $pos);
-                break;
-            default:
-                /**
-                 * Skip whitespace and see what we arrive at.
-                 */
-                $pos = $this->tln_skipspace($body, $pos);
-                $char = substr($body, $pos, 1);
-                /**
-                 * Two things are valid here:
-                 * '=' means this is attribute type 1 2 or 3.
-                 * \w means this was attribute type 4.
-                 * anything else we ignore and re-loop. End of tag and
-                 * invalid stuff will be caught by our checks at the beginning
-                 * of the loop.
-                 */
-                if ($char == '=') {
-                    $pos++;
-                    $pos = $this->tln_skipspace($body, $pos);
+                case '/':
                     /**
-                     * Here are 3 possibilities:
-                     * "'"  attribute type 1
-                     * '"'  attribute type 2
-                     * everything else is the content of tag type 3
+                     * This is an xhtml-style tag with a closing / at the
+                     * end, like so: <img src="blah"/>. Check if it's followed
+                     * by the closing bracket. If not, then this tag is invalid
                      */
-                    $quot = substr($body, $pos, 1);
-                    if ($quot == '\'') {
+                    if (substr($body, $pos, 2) == '/>') {
+                        $pos++;
+                        $tagtype = 3;
+                    } else {
+                        $gt = $this->tln_findnxstr($body, $pos, '>');
+                        $retary = array(false, false, false, $lt, $gt);
+                        return $retary;
+                    }
+
+                //intentional fall-through
+                case '>':
+                    $attary{$attname} = '"yes"';
+                    
+                    return array($tagname, $attary, $tagtype, $lt, $pos);
+                    break;
+
+                default:
+                    /**
+                     * Skip whitespace and see what we arrive at.
+                     */
+                    $pos = $this->tln_skipspace($body, $pos);
+
+                    $char = substr($body, $pos, 1);
+                    /**
+                     * Two things are valid here:
+                     * '=' means this is attribute type 1 2 or 3.
+                     * \w means this was attribute type 4.
+                     * anything else we ignore and re-loop. End of tag and
+                     * invalid stuff will be caught by our checks at the beginning
+                     * of the loop.
+                     */
+                    if ($char == '=') {
+                        $pos++;
+
+                        $pos = $this->tln_skipspace($body, $pos);
+                        /**
+                         * Here are 3 possibilities:
+                         * "'"  attribute type 1
+                         * '"'  attribute type 2
+                         * everything else is the content of tag type 3
+                         */
+                        $quot = substr($body, $pos, 1);
+                        
+                        if ($quot == '\'') {
                             $regary = $this->tln_findnxreg($body, $pos + 1, '\'');
-                        if ($regary == false) {
-                            return array(false, false, false, $lt, strlen($body));
+
+                            if ($regary == false) {
+                                return array(false, false, false, $lt, strlen($body));
+                            }
+
+                            list($pos, $attval, $match) = $regary;
+
+                            $pos++;
+
+                            $attary{$attname} = '\'' . $attval . '\'';
+                        } elseif ($quot == '"') {
+                            $regary = $this->tln_findnxreg($body, $pos + 1, '\"');
+
+                            if ($regary == false) {
+                                return array(false, false, false, $lt, strlen($body));
+                            }
+
+                            list($pos, $attval, $match) = $regary;
+
+                            $pos++;
+
+                            $attary{$attname} = '"' . $attval . '"';
+                        } else {
+                            /**
+                             * These are hateful. Look for \s, or >.
+                             */
+                            $regary = $this->tln_findnxreg($body, $pos, '[\s>]');
+
+                            if ($regary == false) {
+                                return array(false, false, false, $lt, strlen($body));
+                            }
+
+                            list($pos, $attval, $match) = $regary;
+
+                            /**
+                             * If it's ">" it will be caught at the top.
+                             */
+                            $attval = preg_replace('/\"/s', '&quot;', $attval);
+
+                            $attary{$attname} = '"' . $attval . '"';
                         }
-                        list($pos, $attval, $match) = $regary;
-                        $pos++;
-                        $attary{$attname} = '\'' . $attval . '\'';
-                    } elseif ($quot == '"') {
-                        $regary = $this->tln_findnxreg($body, $pos + 1, '\"');
-                        if ($regary == false) {
-                            return array(false, false, false, $lt, strlen($body));
-                        }
-                        list($pos, $attval, $match) = $regary;
-                        $pos++;
-                                $attary{$attname} = '"' . $attval . '"';
+                    } elseif (preg_match('|[\w/>]|', $char)) {
+                        /**
+                         * That was attribute type 4.
+                         */
+                        $attary{$attname} = '"yes"';
                     } else {
                         /**
-                         * These are hateful. Look for \s, or >.
+                         * An illegal character. Find next '>' and return.
                          */
-                        $regary = $this->tln_findnxreg($body, $pos, '[\s>]');
-                        if ($regary == false) {
-                            return array(false, false, false, $lt, strlen($body));
-                        }
-                        list($pos, $attval, $match) = $regary;
-                        /**
-                         * If it's ">" it will be caught at the top.
-                         */
-                        $attval = preg_replace('/\"/s', '&quot;', $attval);
-                        $attary{$attname} = '"' . $attval . '"';
+                        $gt = $this->tln_findnxstr($body, $pos, '>');
+
+                        return array(false, false, false, $lt, $gt);
                     }
-                } elseif (preg_match('|[\w/>]|', $char)) {
-                    /**
-                     * That was attribute type 4.
-                     */
-                    $attary{$attname} = '"yes"';
-                } else {
-                    /**
-                     * An illegal character. Find next '>' and return.
-                     */
-                    $gt = $this->tln_findnxstr($body, $pos, '>');
-                    return array(false, false, false, $lt, $gt);
-                }
-                break;
+                    break;
             }
         }
+
         /**
          * The fact that we got here indicates that the tag end was never
          * found. Return invalid tag indication so it gets stripped.
@@ -412,16 +468,22 @@ class Htmlfilter {
     public function tln_deent(&$attvalue, $regex, $hex = false)
     {
         preg_match_all($regex, $attvalue, $matches);
+
         if (is_array($matches) && sizeof($matches[0]) > 0) {
-            $repl = array();
+            $repl = [];
+
             for ($i = 0; $i < sizeof($matches[0]); $i++) {
                 $numval = $matches[1][$i];
+
                 if ($hex) {
                     $numval = hexdec($numval);
                 }
+
                 $repl{$matches[0][$i]} = chr($numval);
             }
+            
             $attvalue = strtr($attvalue, $repl);
+
             return true;
         } else {
             return false;
@@ -446,12 +508,14 @@ class Htmlfilter {
         ) {
             return;
         }
+
         do {
             $m = false;
             $m = $m || $this->tln_deent($attvalue, '/\&#0*(\d+);*/s');
             $m = $m || $this->tln_deent($attvalue, '/\&#x0*((\d|[a-f])+);*/si', true);
             $m = $m || $this->tln_deent($attvalue, '/\\\\(\d+)/s', true);
         } while ($m == true);
+
         $attvalue = stripslashes($attvalue);
     }
 
@@ -509,15 +573,19 @@ class Htmlfilter {
                     }
                 }
             }
+
             /**
              * Remove any backslashes, entities, or extraneous whitespace.
              */
             $oldattvalue = $attvalue;
+
             $this->tln_defang($attvalue);
+
             // if ($attname == 'style' && $attvalue !== $oldattvalue) {
             //     $attvalue = "idiocy";
             //     $attary{$attname} = $attvalue;
             // }
+
             $this->tln_unspace($attvalue);
 
             /**
@@ -536,7 +604,9 @@ class Htmlfilter {
                              * Second one is replacements
                              */
                             list($valmatch, $valrepl) = $valary;
+
                             $newvalue = preg_replace($valmatch, $valrepl, $attvalue);
+
                             if ($newvalue != $attvalue) {
                                 $attary{$attname} = $newvalue;
                                 $attvalue = $newvalue;
@@ -545,6 +615,7 @@ class Htmlfilter {
                     }
                 }
             }
+
             // if ($attname == 'style') {
             //     if (preg_match('/[\0-\37\200-\377]+/', $attvalue)) {
             //         $attary{$attname} = '"disallowed character"';
@@ -558,7 +629,8 @@ class Htmlfilter {
             //         }
             //     }
             // }
-         }
+        }
+
         /**
          * See if we need to append any attributes to this tag.
          */
@@ -567,16 +639,20 @@ class Htmlfilter {
                 $attary = array_merge($attary, $addattary);
             }
         }
+
         return $attary;
     }
 
     public function tln_fixurl($attname, &$attvalue, $trans_image_path, $block_external_images)
     {
         $sQuote = '"';
+
         $attvalue = trim($attvalue);
+
         if ($attvalue && ($attvalue[0] =='"'|| $attvalue[0] == "'")) {
             // remove the double quotes
             $sQuote = $attvalue[0];
+
             $attvalue = trim(substr($attvalue,1,-1));
         }
 
@@ -595,12 +671,14 @@ class Htmlfilter {
                     case 'href':
                         $attvalue = $sQuote . 'http://invalid-stuff-detected.example.com' . $sQuote;
                         break;
+
                     default:
                         $attvalue = $sQuote . $trans_image_path . $sQuote;
                         break;
                 }
             } else {
                 $aUrl = parse_url($attvalue);
+
                 if (isset($aUrl['scheme'])) {
                     switch(strtolower($aUrl['scheme'])) {
                         case 'mailto':
@@ -630,7 +708,7 @@ class Htmlfilter {
                             break;
                     }
                 } else {
-                    if (!isset($aUrl['path']) || $aUrl['path'] != $trans_image_path) {
+                    if (! isset($aUrl['path']) || $aUrl['path'] != $trans_image_path) {
                         $$attvalue = $sQuote . $trans_image_path . $sQuote;
                     }
                 }
@@ -641,14 +719,21 @@ class Htmlfilter {
     public function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     {
         $me = 'tln_fixstyle';
+
         // workaround for </style> in between comments
         $iCurrentPos = $pos;
+
         $content = '';
+
         $sToken = '';
+
         $bSucces = false;
+
         $bEndTag = false;
+
         for ($i=$pos,$iCount=strlen($body);$i<$iCount;++$i) {
             $char = $body{$i};
+
             switch ($char) {
                 case '<':
                     $sToken = $char;
@@ -699,6 +784,7 @@ class Htmlfilter {
                     break;
             }
         }
+
         if ($bSucces == FALSE){
             return array(FALSE, strlen($body));
         }
@@ -731,9 +817,12 @@ class Htmlfilter {
         $content = preg_replace("/^\s*(@import.*)$/mi","\n<!-- @import rules forbidden -->\n",$content);
 
         $content = preg_replace("/(\\\\)?u(\\\\)?r(\\\\)?l(\\\\)?/i", 'url', $content);
+
         preg_match_all("/url\s*\((.+)\)/si",$content,$aMatch);
+
         if (count($aMatch)) {
-            $aValue = $aReplace = array();
+            $aValue = $aReplace = [];
+
             foreach($aMatch[1] as $sMatch) {
                 // url value
                 $urlvalue = $sMatch;
@@ -741,6 +830,7 @@ class Htmlfilter {
                 $aValue[] = $sMatch;
                 $aReplace[] = $urlvalue;
             }
+
             $content = str_replace($aValue,$aReplace,$content);
         }
 
@@ -759,25 +849,36 @@ class Htmlfilter {
                         '/javascript/i',
                         '/script/i',
                         '/position/i');
+
         $replace = Array('','idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', 'idiocy', '');
+
         $contentNew = preg_replace($match, $replace, $contentTemp);
+
         if ($contentNew !== $contentTemp) {
             $content = $contentNew;
         }
+
         return array($content, $newpos);
     }
 
     public function tln_body2div($attary, $trans_image_path)
     {
         $me = 'tln_body2div';
+
         $divattary = array('class' => "'bodyclass'");
+
         $text = '#000000';
+
         $has_bgc_stl = $has_txt_stl = false;
+
         $styledef = '';
+
         if (is_array($attary) && sizeof($attary) > 0){
             foreach ($attary as $attname=>$attvalue){
                 $quotchar = substr($attvalue, 0, 1);
+
                 $attvalue = str_replace($quotchar, "", $attvalue);
+
                 switch ($attname){
                     case 'background':
                         $styledef .= "background-image: url('$trans_image_path'); ";
@@ -792,15 +893,18 @@ class Htmlfilter {
                         break;
                 }
             }
+
             // Outlook defines a white bgcolor and no text color. This can lead to
             // white text on a white bg with certain themes.
             if ($has_bgc_stl && !$has_txt_stl) {
                 $styledef .= "color: $text; ";
             }
+
             if (strlen($styledef) > 0){
                 $divattary{"style"} = "\"$styledef\"";
             }
         }
+
         return $divattary;
     }
 
@@ -835,32 +939,40 @@ class Htmlfilter {
          * Normalize rm_tags and rm_tags_with_content.
          */
         $rm_tags = array_shift($tag_list);
+
         @array_walk($tag_list, 'tln_casenormalize');
+
         @array_walk($rm_tags_with_content, 'tln_casenormalize');
+
         @array_walk($self_closing_tags, 'tln_casenormalize');
+
         /**
          * See if tag_list is of tags to remove or tags to allow.
          * false  means remove these tags
          * true   means allow these tags
          */
         $curpos = 0;
-        $open_tags = array();
+        $open_tags = [];
         $trusted = "";
         $skip_content = false;
+
         /**
          * Take care of netscape's stupid javascript entities like
          * &{alert('boo')};
          */
         $body = preg_replace('/&(\{.*?\};)/si', '&amp;\\1', $body);
+
         while (($curtag = $this->tln_getnxtag($body, $curpos)) != false) {
             list($tagname, $attary, $tagtype, $lt, $gt) = $curtag;
             $free_content = substr($body, $curpos, $lt-$curpos);
+
             /**
              * Take care of <style>
              */
             if ($tagname == "style" && $tagtype == 1){
                 list($free_content, $curpos) =
                     $this->tln_fixstyle($body, $gt+1, $trans_image_path, $block_external_images);
+
                 if ($free_content != FALSE){
                     if ( !empty($attary) ) {
                         $attary = $this->tln_fixatts($tagname,
@@ -872,16 +984,21 @@ class Htmlfilter {
                                              $block_external_images
                                              );
                     }
+
                     $trusted .= $this->tln_tagprint($tagname, $attary, $tagtype);
+
                     if(isset($this->$free_content))
                         $trusted .= $this->$free_content;
+
                     $trusted .= $this->tln_tagprint($tagname, false, 2);
                 }
                 continue;
             }
+
             if ($skip_content == false){
                 $trusted .= $free_content;
             }
+
             if ($tagname != false) {
                 if ($tagtype == 2) {
                     if ($skip_content == $tagname) {
@@ -889,12 +1006,14 @@ class Htmlfilter {
                          * Got to the end of tag we needed to remove.
                          */
                         $tagname = false;
+
                         $skip_content = false;
                     } else {
                         if ($skip_content == false) {
                             if ($tagname == "body") {
                                 $tagname = "div";
                             }
+
                             if (isset($open_tags{$tagname}) &&
                                 $open_tags{$tagname} > 0
                             ) {
@@ -918,6 +1037,7 @@ class Htmlfilter {
                         ) {
                             $tagtype = 3;
                         }
+
                         /**
                          * See if we should skip this tag and any content
                          * inside it.
@@ -941,6 +1061,7 @@ class Htmlfilter {
                                     $tagname = "div";
                                     $attary = $this->tln_body2div($attary, $trans_image_path);
                                 }
+
                                 if ($tagtype == 1) {
                                     if (isset($open_tags{$tagname})) {
                                         $open_tags{$tagname}++;
@@ -948,6 +1069,7 @@ class Htmlfilter {
                                         $open_tags{$tagname} = 1;
                                     }
                                 }
+
                                 /**
                                  * This is where we run other checks.
                                  */
@@ -966,34 +1088,37 @@ class Htmlfilter {
                         }
                     }
                 }
+
                 if ($tagname != false && $skip_content == false) {
                     $trusted .= $this->tln_tagprint($tagname, $attary, $tagtype);
                 }
             }
+
             $curpos = $gt + 1;
         }
+
         $trusted .= substr($body, $curpos, strlen($body) - $curpos);
+
         if ($force_tag_closing == true) {
             foreach ($open_tags as $tagname => $opentimes) {
                 while ($opentimes > 0) {
                     $trusted .= '</' . $tagname . '>';
+
                     $opentimes--;
                 }
             }
             $trusted .= "\n";
         }
+
         return $trusted;
     }
 
     //
     // Use the nifty htmlfilter library
     //
-
-
     public function HTMLFilter($body, $trans_image_path, $block_external_images = false)
     {
-
-        $tag_list = array(
+        $tag_list = [
             false,
             "object",
             "meta",
@@ -1005,9 +1130,9 @@ class Htmlfilter {
             "iframe",
             "plaintext",
             "marquee"
-        );
+        ];
 
-        $rm_tags_with_content = array(
+        $rm_tags_with_content = [
             "script",
             "applet",
             "embed",
@@ -1015,29 +1140,28 @@ class Htmlfilter {
             "frameset",
             "xmp",
             "xml",
-        );
+        ];
 
-        $self_closing_tags =  array(
+        $self_closing_tags =  [
             "img",
             "br",
             "hr",
             "input",
             "outbind"
-        );
+        ];
 
         $force_tag_closing = true;
 
-        $rm_attnames = array(
-            "/.*/" =>
-                array(
-                    // "/target/i",
-                    "/^on.*/i",
-                    "/^dynsrc/i",
-                    "/^data.*/i",
-                    "/^lowsrc.*/i",
-                    // "/^style/i",
-                )
-        );
+        $rm_attnames = [
+            "/.*/" => [
+                // "/target/i",
+                "/^on.*/i",
+                "/^dynsrc/i",
+                "/^data.*/i",
+                "/^lowsrc.*/i",
+                // "/^style/i",
+            ]
+        ];
 
         $bad_attvals = array(
             "/.*/" =>
@@ -1105,6 +1229,7 @@ class Htmlfilter {
                 $bad_attvals{'/.*/'}{'/^src|background/i'}[0],
                 '/^([\'\"])\s*https*:.*([\'\"])/si'
             );
+
             array_push(
                 $bad_attvals{'/.*/'}{'/^src|background/i'}[1],
                 "\\1$trans_image_path\\1"
@@ -1140,150 +1265,10 @@ class Htmlfilter {
         return $trusted;
     }
 
-    public function removeEmailReplyQuote($html) {
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($html);
-
-        //for gmail mail
-        
-        $crawler->filter('.gmail_extra')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });    
-
-        //for yahoo mail
-        
-        $crawler->filter('.qtdSeparateBR')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });   
-        
-        $crawler->filter('.yahoo_quoted')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });
-
-        //for zimbre mail
-        
-        $crawler->filter('blockquote')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('type') == 'cite')
-                    $node->removeChild($node);
-            }
-        });
-        
-        //for window live mail
-        
-        $crawler->filter('hr')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('stop') == 'Spelling')
-                    $node->parentNode->parentNode->removeChild($node->parentNode);
-            }
-        });
-
-        //for GMX mail
-        
-        $crawler->filter('div')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('name') == 'quote')
-                    $node->parentNode->parentNode->removeChild($node->parentNode);
-            }
-        });
-
-        return $crawler->html();
-    }
-
-    public function addClassEmailReplyQuote($html) {
-        if(trim($html) == '')
-            return '';
-        $crawler = new Crawler();
-        $crawler->addHtmlContent($html,'UTF-8');
-
-        // $crawler->filter('.gmail_extra')->first()->each(function (Crawler $crawler) {
-        //     foreach ($crawler as $node) {
-        //         $node->setAttribute('class','gmail_extra helpdesk_blockquote');
-        //     }
-        // }); 
-        $delimiterClass = 'uv-delimiter-dXZkZXNr';
-
-        $crawler->filter('.gmail_quote')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->setAttribute('class','gmail_quote helpdesk_blockquote');
-            }
-        }); 
-        $crawler->filter('*[class*="' . $delimiterClass .'"]')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->setAttribute('class','yahoo_quoted helpdesk_blockquote');
-            }
-        }); 
-        $crawler->filter('.zmail_extra')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->setAttribute('class','yahoo_quoted helpdesk_blockquote');
-            }
-        });
-        // $crawler->filter('blockquote.helpdesk_blockquote[type="cite"]')->first()->each(function (Crawler $crawler) {
-        //     foreach ($crawler as $node) {
-        //         $node->setAttribute('class','yahoo_quoted helpdesk_blockquote');
-        //     }
-        // });        
-        //for yahoo mail
-
-        $crawler->filter('.qtdSeparateBR')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->removeChild($node);
-            }
-        });   
-
-        $crawler->filter('.yahoo_quoted')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->setAttribute('class','yahoo_quoted helpdesk_blockquote');
-            }
-        });
-
-        //for zimbra mail
-        
-        $crawler->filter('blockquote')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('type') == 'cite')
-                    $node->setAttribute('class','helpdesk_blockquote');
-                // $node->parentNode->setAttribute('class','helpdesk_blockquote');
-            }
-        });
-        
-        //for window live mail
-        
-        $crawler->filter('hr')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('stop') == 'Spelling')
-                    $node->parentNode->parentNode->setAttribute('class','helpdesk_blockquote');
-                elseif($node->getAttribute('id') == 'stopSpelling')
-                    $node->parentNode->setAttribute('class','helpdesk_blockquote');
-            }
-        });
-
-        $crawler->filter('#divRplyFwdMsg')->first()->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                $node->parentNode->setAttribute('class','helpdesk_blockquote');
-            }
-        });
-
-        //for GMX mail
-        
-        $crawler->filter('div')->each(function (Crawler $crawler) {
-            foreach ($crawler as $node) {
-                if($node->getAttribute('name') == 'quote')
-                    $node->setAttribute('class','helpdesk_blockquote');
-            }
-        });
-
-        return $crawler->html();
-    }
-
-    public function AutoLinkUrls($str,$popup = FALSE) {
+    public function AutoLinkUrls($str,$popup = FALSE)
+    {
         $str = $this->AutoEmailUrls($str);
+
         if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $str, $matches)){
             $pop = ($popup == TRUE) ? " target=\"_blank\" " : "";
             for ($i = 0; $i < count($matches['0']); $i++){
@@ -1303,10 +1288,12 @@ class Htmlfilter {
                 $period, $str);
             }//end for
         }//end if
+
         return $str;
     }
 
-    public function AutoEmailUrls($string) {
+    public function AutoEmailUrls($string)
+    {
         $search  = array('/<p>__<\/p>/', '/([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/');
         $replace = array('<hr />', '<a href="mailto:$1">$1</a>');
         return preg_replace($search, $replace, $string);

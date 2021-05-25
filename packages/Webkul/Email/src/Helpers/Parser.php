@@ -1,10 +1,8 @@
 <?php
 
-namespace Webkul\TicketBundle\Lib;
+namespace Webkul\Email\Helpers;
 
-use Webkul\TicketBundle\Lib\Attachment;
-use Webkul\TicketBundle\Lib\Exception;
-use Webkul\TicketBundle\Lib\Contracts\CharsetManager;
+use Webkul\Email\Helpers\Contracts\CharsetManager;
 
 /**
  * Parser of php-mime-mail-parser
@@ -12,10 +10,8 @@ use Webkul\TicketBundle\Lib\Contracts\CharsetManager;
  * Fully Tested Mailparse Extension Wrapper for PHP 5.4+
  *
  */
-
 class Parser
 {
-
     /**
      * PHP MimeParser Resource ID
      */
@@ -70,6 +66,7 @@ class Parser
         if (is_resource($this->stream)) {
             fclose($this->stream);
         }
+
         // clear the MailParse resource
         if (is_resource($this->resource)) {
             mailparse_msg_free($this->resource);
@@ -87,6 +84,7 @@ class Parser
         $this->resource = mailparse_msg_parse_file($path);
         $this->stream = fopen($path, 'r');
         $this->parse();
+
         return $this;
     }
 
@@ -99,6 +97,7 @@ class Parser
     {
         // streams have to be cached to file first
         $meta = @stream_get_meta_data($stream);
+
         if (!$meta || !$meta['mode'] || $meta['mode'][0] != 'r' || $meta['eof']) {
             throw new \Exception(
                 'setStream() expects parameter stream to be readable stream resource.'
@@ -106,6 +105,7 @@ class Parser
         }
 
         $tmp_fp = tmpfile();
+
         if ($tmp_fp) {
             while (!feof($stream)) {
                 fwrite($tmp_fp, fread($stream, 2028));
@@ -117,6 +117,7 @@ class Parser
                 'Could not create temporary files for attachments. Your tmp directory may be unwritable by PHP.'
             );
         }
+
         fclose($stream);
 
         $this->resource = mailparse_msg_create();
@@ -124,7 +125,9 @@ class Parser
         while (!feof($this->stream)) {
             mailparse_msg_parse($this->resource, fread($this->stream, 2082));
         }
+
         $this->parse();
+
         return $this;
     }
 
@@ -152,15 +155,20 @@ class Parser
     {
         $structure = mailparse_msg_get_structure($this->resource);
         $headerType = (stripos($this->data,'Content-Language:') !== false) ? 'Content-Language:' : 'Content-Type:';
+
         if(count($structure) == 1) {
             $tempParts = explode(PHP_EOL,$this->data);
+
             foreach ($tempParts as $key => $part) {
                 if(stripos($part,$headerType) !== false) {
                     break;
                 }
-                if(trim($part) == '')
+
+                if(trim($part) == '') {
                     unset($tempParts[$key]);
+                }
             }
+
             $data = implode(PHP_EOL,$tempParts);
             $this->resource = \mailparse_msg_create();
             mailparse_msg_parse($this->resource, $data);
@@ -169,8 +177,10 @@ class Parser
         }
 
         $this->parts = array();
+
         foreach ($structure as $part_id) {
             $part = mailparse_msg_get_part($this->resource, $part_id);
+
             $this->parts[$part_id] = mailparse_msg_get_part_data($part);
         }
     }
@@ -184,6 +194,7 @@ class Parser
     {
         if (isset($this->parts[1])) {
             $headers = $this->getPart('headers', $this->parts[1]);
+
             return (isset($headers[$name])) ? $headers[$name] : false;
         } else {
             throw new \Exception(
@@ -200,9 +211,11 @@ class Parser
     public function getHeader($name)
     {
         $rawHeader = $this->getRawHeader($name);
+
         if ($rawHeader === false) {
             return false;
         }
+
         return $this->decodeHeader($rawHeader);
     }
 
@@ -214,6 +227,7 @@ class Parser
     {
         if (isset($this->parts[1])) {
             $headers = $this->getPart('headers', $this->parts[1]);
+
             foreach ($headers as $name => &$value) {
                 if (is_array($value)) {
                     foreach ($value as &$v) {
@@ -223,6 +237,7 @@ class Parser
                     $value = $this->decodeSingleHeader($value);
                 }
             }
+
             return $headers;
         } else {
             throw new \Exception(
@@ -345,12 +360,14 @@ class Parser
         } else {
             throw new \Exception('Invalid type specified for getMessageBody(). "type" can either be text or html.');
         }
+
         return $body;
     }
 
     public function getTextMessageBody()
     {
         $textBody = null;
+
         foreach ($this->parts as $key => $part) {
             if ($this->getPart('content-disposition', $part) != 'attachment') {
                 $headers = $this->getPart('headers', $part);
@@ -389,6 +406,7 @@ class Parser
     private function getEmbeddedData($contentId)
     {
         $embeddedData = 'data:';
+
         foreach ($this->parts as $part) {
             if ($this->getPart('content-id', $part) == $contentId) {
                 $embeddedData .= $this->getPart('content-type', $part);
@@ -396,6 +414,7 @@ class Parser
                 $embeddedData .= ','.$this->getPartBody($part);
             }
         }
+
         return $embeddedData;
     }
 
@@ -450,6 +469,7 @@ class Parser
                 }
             }
         }
+
         return !empty($attachments) ? $attachments : $this->extractMultipartMIMEAttachments();
     }
 
@@ -464,6 +484,7 @@ class Parser
 
         $attachments_paths = array();
         $fileService = $this->container->get('file.service');
+
         foreach ($attachments as $attachment) {
             $fileService->updatePrefix($attach_dir);
             $fileSystem = ($attachment->getContentDisposition() == 'inline' || $attachment->contentId != "") ? "company_fs" : "ticket_fs";
@@ -473,6 +494,7 @@ class Parser
             $path = $fileService->uploadFromEmail($attachment);
             $attachments_paths[] = array('path' => $path,'name' => $attachment->getFileName(),'contentType' => $attachment->contentType,'contentId' => $attachment->contentId,'size' => $fileService->getFileSizeEmail($path),'fileSystem' => $fileSystem);
         }
+
         return $attachments_paths;
     }
 
@@ -616,6 +638,7 @@ class Parser
                 'Could not create temporary files for attachments. Your tmp directory may be unwritable by PHP.'
             );
         }
+        
         return $temp_fp;
     }
 
@@ -723,11 +746,13 @@ class Parser
     private function getPartBody(&$part)
     {
         $body = '';
+
         if ($this->stream) {
             $body = $this->getPartBodyFromFile($part);
         } elseif ($this->data) {
             $body = $this->getPartBodyFromText($part);
         }
+
         return $body;
     }
 
@@ -741,6 +766,7 @@ class Parser
         $start = $part['starting-pos-body'];
         $end = $part['ending-pos-body'];
         fseek($this->stream, $start, SEEK_SET);
+
         return fread($this->stream, $end-$start);
     }
 
@@ -753,6 +779,7 @@ class Parser
     {
         $start = $part['starting-pos-body'];
         $end = $part['ending-pos-body'];
+        
         return substr($this->data, $start, $end-$start);
     }
 }

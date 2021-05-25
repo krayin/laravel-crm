@@ -316,9 +316,9 @@ class Charset implements CharsetManager
     /**
      * Decode the string from Charset
      * 
-     * @param string $encodedString
-     * @param string $charset
-     * @return String
+     * @param  string  $encodedString
+     * @param  string  $charset
+     * @return string
      */
     public function decodeCharset($encodedString, $charset)
     {
