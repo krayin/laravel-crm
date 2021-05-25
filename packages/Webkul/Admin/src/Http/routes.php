@@ -21,6 +21,8 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
 
+        Route::post('emails/inbound-parse', 'EmailController@inboundParse')->name('admin.emails.inbound_parse');
+
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
             Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
@@ -60,7 +62,7 @@ Route::group(['middleware' => ['web']], function () {
             // Leads Routes
             Route::group([
                 'prefix'    => 'leads',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Lead'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Lead',
             ], function () {
                 Route::get('', 'LeadController@index')->name('admin.leads.index');
     
@@ -72,17 +74,35 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
 
+                Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
+
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
                 Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
 
                 Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass-delete');
+            });
 
-                Route::group([
-                    'prefix'    => 'activities',
-                ], function () {
-                    Route::post('create/{id}', 'ActivityController@store')->name('admin.leads.activities.store');
-                });
+            Route::group([
+                'prefix'    => 'activities',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Activity',
+            ], function () {
+                Route::get('', 'ActivityController@index')->name('admin.activities.index');
+
+                Route::post('create/{id}', 'ActivityController@store')->name('admin.activities.store');
+
+                Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
+            
+                Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
+            });
+
+            Route::group([
+                'prefix'    => 'emails',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Email',
+            ], function () {
+                Route::post('create/{id}', 'EmailController@store')->name('admin.emails.store');
+
+                Route::delete('{id?}', 'EmailController@destroy')->name('admin.emails.delete');
             });
 
             // Contacts Routes
@@ -154,7 +174,7 @@ Route::group(['middleware' => ['web']], function () {
     
                     Route::post('create', 'UserController@store')->name('admin.settings.users.store');
 
-                    Route::get('edit/{id}', 'UserController@edit')->name('admin.settings.users.edit');
+                    Route::get('edit/{id?}', 'UserController@edit')->name('admin.settings.users.edit');
 
                     Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
 

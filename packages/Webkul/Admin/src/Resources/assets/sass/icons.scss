@@ -14,6 +14,12 @@
     background-image: url("../images/leads-icon.svg");
 }
 
+.activities-icon {
+    width: 17px;
+    height: 21px;
+    background-image: url("../images/activities-icon.svg");
+}
+
 .phone-icon {
     background-image: url("../images/phone-icon.svg");
 }
@@ -45,6 +51,10 @@
 
     .leads-icon {
         background-image: url("../images/leads-active-icon.svg");
+    }
+
+    .activities-icon {
+        background-image: url("../images/activities-active-icon.svg");
     }
 
     .phone-icon {

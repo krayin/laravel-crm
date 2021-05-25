@@ -62,15 +62,16 @@ class AttributeForm extends FormRequest
      */
     public function rules()
     {
-        // dd(request()->all());
+        $attributes = $this->attributeRepository->scopeQuery(function($query){
+            $query = $query->whereIn('code', array_keys(request()->all()))
+                ->where('entity_type', request('entity_type'));
 
-        $conditions = ['entity_type' => request('entity_type')];
+            if (request()->has('quick_add')) {
+                $query = $query->where('quick_add', 1);
+            }
 
-        if (request()->has('quick_add')) {
-            $conditions['quick_add'] = 1;
-        }
-        
-        $attributes = $this->attributeRepository->findWhere($conditions);
+            return $query;
+        })->get();
 
         foreach ($attributes as $attribute) {
             if ($attribute->type == 'boolean') {

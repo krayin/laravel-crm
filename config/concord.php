@@ -6,6 +6,7 @@ return [
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,
         \Webkul\Contact\Providers\ModuleServiceProvider::class,
         \Webkul\Core\Providers\ModuleServiceProvider::class,
+        \Webkul\Email\Providers\ModuleServiceProvider::class,
         \Webkul\Lead\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,
         \Webkul\UI\Providers\ModuleServiceProvider::class,

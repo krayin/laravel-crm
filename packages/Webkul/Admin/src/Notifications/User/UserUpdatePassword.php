@@ -15,7 +15,7 @@ class UserUpdatePassword extends Mailable
      *
      * @var  \Webkul\User\Contracts\User  $user
      */
-    public $admin;
+    public $user;
 
     /**
      * Create a new admin instance.

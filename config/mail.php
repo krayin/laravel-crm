@@ -17,6 +17,18 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Default Mailer Domain
+    |--------------------------------------------------------------------------
+    |
+    | This option controls the domain for email message_id that is used to send email
+    | messages sent by your application.
+    |
+    */
+
+    'domain' => env('MAIL_DOMAIN', 'example.com'),
+
+    /*
+    |--------------------------------------------------------------------------
     | Mailer Configurations
     |--------------------------------------------------------------------------
     |

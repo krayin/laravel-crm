@@ -170,10 +170,12 @@
 @stop
 
 @push('scripts')
+    <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+
     <script type="text/x-template" id="activity-action-component-template">
         <tabs>
             <tab name="{{ __('admin::app.leads.note') }}" :selected="true">
-                <form action="{{ route('admin.leads.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
+                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
 
                     <input type="hidden" name="type" value="note">
                     @csrf()
@@ -192,7 +194,7 @@
             </tab>
 
             <tab name="{{ __('admin::app.leads.activity') }}">
-                <form action="{{ route('admin.leads.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
+                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
 
                     @csrf()
 
@@ -242,14 +244,32 @@
             </tab>
 
             <tab name="{{ __('admin::app.leads.email') }}">
-                <form action="" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
+                <form action="{{ route('admin.emails.store', $lead->id) }}" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
 
                     @csrf()
 
-                    <div class="form-group" :class="[errors.has('email-form.to') ? 'has-error' : '']">
+                    <div class="form-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                         <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
-                        <input type="text" v-validate="'required'" class="control" id="to" name="to" data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;">
-                        <span class="control-error" v-if="errors.has('email-form.to')">@{{ errors.first('email-form.to') }}</span>
+
+                        <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'"></email-tags-component>
+
+                        <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
+                    </div>
+
+                    <div class="form-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']">
+                        <label for="cc">{{ __('admin::app.leads.cc') }}</label>
+
+                        <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}"></email-tags-component>
+
+                        <span class="control-error" v-if="errors.has('email-form.cc[]')">@{{ errors.first('email-form.cc[]') }}</span>
+                    </div>
+
+                    <div class="form-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']">
+                        <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
+
+                        <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}"></email-tags-component>
+
+                        <span class="control-error" v-if="errors.has('email-form.bcc[]')">@{{ errors.first('email-form.bcc[]') }}</span>
                     </div>
                     
                     <div class="form-group" :class="[errors.has('email-form.subject') ? 'has-error' : '']">
@@ -257,6 +277,20 @@
                         <input type="text" v-validate="'required'" class="control" id="subject" name="subject" data-vv-as="&quot;{{ __('admin::app.leads.subject') }}&quot;">
                         <span class="control-error" v-if="errors.has('email-form.subject')">@{{ errors.first('email-form.subject') }}</span>
                     </div>
+                    
+                    <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
+                        <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
+                        <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;"></textarea>
+                        <span class="control-error" v-if="errors.has('email-form.reply')">@{{ errors.first('email-form.reply') }}</span>
+                    </div>
+
+                    <div class="form-group">
+                        <attachment-wrapper></attachment-wrapper>
+                    </div>
+
+                    <button type="submit" class="btn btn-md btn-primary">
+                        {{ __('admin::app.leads.upload') }}
+                    </button>
 
                 </form>
             </tab>
@@ -270,6 +304,11 @@
                     <div class="form-group">
                         <label for="name">{{ __('admin::app.leads.name') }}</label>
                         <input type="text" class="control" id="name" name="name">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment">{{ __('admin::app.leads.description') }}</label>
+                        <textarea class="control" id="comment" name="comment">{{ old('comment') }}</textarea>
                     </div>
 
                     <div class="form-group" :class="[errors.has('file-form.file') ? 'has-error' : '']">
@@ -287,38 +326,85 @@
         </tabs>
     </script>
 
+    <script type="text/x-template" id="email-tags-component-template">
+        <div class="tags-control control">
+            <ul class="tags">
+                <li class="tag-choice" v-for="email in emails">
+                    <input type="hidden" :name="controlName" :value="email"/>
+                    @{{ email }}
+                    <i class="icon close-icon" @click="removeTag(email)"></i>
+                </li>
+
+                <li class="tag-input">
+                    <input type="hidden" v-validate="validations" :name="controlName" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-if="! emails.length"/>
+                    <input type="text" :name="controlName" v-validate="'email'" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-model="email_term" @keydown.enter.prevent="addTag" placeholder="{{ __('admin::app.leads.email-placeholder') }}">
+                </li>
+            </ul>
+        </div>
+    </script>
+
     <script type="text/x-template" id="activity-list-component-template">
         <tabs class="activity-list">
             <tab v-for="type in types" :name="typeLabels[type]" :key="type" :selected="type == 'all'">
 
-                <div class="planned-activities">
-                    <div class="section-tag">
-                        <span class="">{{ __('admin::app.leads.planned') }}</span>
+                <div v-for="subType in ['planned', 'done']" :class="subType + '-activities ' + type">
+
+                    <div class="section-tag" v-if="type != 'note' && type != 'file'">
+                        <span v-if="subType == 'planned'">{{ __('admin::app.leads.planned') }}</span>
+
+                        <span v-else>{{ __('admin::app.leads.done') }}</span>
+
                         <hr/>
                     </div>
 
-                    <div class="activity-item" v-for="activity in activities[type]">
+                    <div class="activity-item" v-for="activity in getActivities(type, subType)">
                         <div class="title">
-                            Meeting scheduled on 30 March 2021
+                            <span v-if="activity.type == 'note'">
+                                {{ __('admin::app.leads.note-added') }}
+                            </span>
+
+                            <span v-else-if="activity.type == 'call'">
+                                @{{ '{!! __('admin::app.leads.call-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                            </span>
+
+                            <span v-else-if="activity.type == 'meeting'">
+                                @{{ '{!! __('admin::app.leads.meeting-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                            </span>
+
+                            <span v-else-if="activity.type == 'lunch'">
+                                @{{ '{!! __('admin::app.leads.lunch-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                            </span>
+
+                            <span v-else-if="activity.type == 'email'">
+                                @{{ '{!! __('admin::app.leads.email-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                            </span>
+                            
+                            <span v-else-if="activity.type == 'file'">
+                                {{ __('admin::app.leads.file-added') }}
+                            </span>
 
                             <span class="icon ellipsis-icon dropdown-toggle"></span>
 
                             <div class="dropdown-list">
                                 <div class="dropdown-container">
                                     <ul>
-                                        <li>
+                                        <li v-if="! activity.is_done" @click="markAsDone(activity)">
                                             {{ __('admin::app.leads.mark-as-done') }}
                                         </li>
-                                        <li>
-                                            
+                                        {{-- <li @click="edit(activity)">
                                             {{ __('admin::app.leads.edit') }}
-                                        </li>
-                                        <li>
+                                        </li> --}}
+                                        <li @click="remove(activity)">
                                             {{ __('admin::app.leads.remove') }}
                                         </li>
                                     </ul>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="attachment" v-if="activity.file">
+                            <i class="icon attachment-icon"></i>
+                            <a :href="'{{ route('admin.leads.file_download') }}/' + activity.file.id" target="_blank">@{{ activity.file.name }}</a>
                         </div>
 
                         <div class="comment" v-if="activity.comment">
@@ -328,34 +414,16 @@
                         <div class="info">
                             25 March 2021
                             <span class="seperator">·</span>
-                            <a>Jitendra Singh</a> 
+                            <a :href="'{{ route('admin.settings.users.edit') }}/' + activity.user.id" target="_blank">@{{ activity.user.name }}</a> 
                         </div>
                     </div>
-                </div>
 
-                <div class="done-activities">
-                    <div class="section-tag">
-                        <span class="">{{ __('admin::app.leads.done') }}</span>
-                        <hr/>
+                    <div class="empty-activities" v-if="! getActivities(type, subType).length">
+                        <span v-if="subType == 'planned'">{{ __('admin::app.leads.empty-planned-activities') }}</span>
+
+                        <span v-else>{{ __('admin::app.leads.empty-done-activities') }}</span>
                     </div>
-
-                    <div class="activity-item">
-                        <div class="title">
-                            Note added
-
-                            <span class="icon ellipsis-icon"></span>
-                        </div>
-
-                        <div class="comment">
-                            Agent Sushil Kumar updated agent from UnAssigned to Archana Tiwari
-                        </div>
-
-                        <div class="info">
-                            25 March 2021
-                            <span class="seperator">·</span>
-                            <a>Jitendra Singh</a> 
-                        </div>
-                    </div>
+                    
                 </div>
             </tab>
         </tabs>
@@ -370,6 +438,17 @@
 
             inject: ['$validator'],
 
+            mounted: function() {
+                tinymce.init({
+                    selector: 'textarea#reply',
+                    height: 200,
+                    width: "100%",
+                    plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
+                    toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
+                    image_advtab: true
+                });
+            },
+
             methods: {
                 onSubmit: function(e, formScope) {
                     this.$validator.validateAll(formScope).then(function (result) {
@@ -377,6 +456,37 @@
                             e.target.submit();
                         }
                     });
+                }
+            }
+        });
+
+        Vue.component('email-tags-component', {
+
+            template: '#email-tags-component-template',
+
+            props: ['controlName', 'controlLabel', 'validations'],
+
+            inject: ['$validator'],
+
+            data: function () {
+                return {
+                    emails: [],
+
+                    email_term: '',
+                }
+            },
+
+            methods: {
+                addTag: function() {
+                    this.emails.push(this.email_term)
+
+                    this.email_term = '';
+                },
+
+                removeTag: function(email) {
+                    const index = this.emails.indexOf(email);
+
+                    Vue.delete(this.emails, index);
                 }
             }
         });
@@ -389,7 +499,7 @@
 
             data: function () {
                 return {
-                    data: @json($lead->activities),
+                    activities: @json($lead->activities),
 
                     types: ['all', 'note', 'call', 'meeting', 'lunch', 'email', 'file'],
 
@@ -408,19 +518,83 @@
 
                         'file': "{{ __('admin::app.leads.files') }}",
                     },
-
-                    activities: {}
                 }
             },
 
-            created: function() {
-                this.types.forEach(type => {
-                    if (type == 'all') {
-                        this.activities['all'] = this.data;
+            computed: {
+                all: function() {
+                    return this.activities;
+                },
+
+                note: function() {
+                    return this.activities.filter(activity => activity.type == 'note');
+                },
+
+                call: function() {
+                    return this.activities.filter(activity => activity.type == 'call');
+                },
+
+                meeting: function() {
+                    return this.activities.filter(activity => activity.type == 'meeting');
+                },
+
+                lunch: function() {
+                    return this.activities.filter(activity => activity.type == 'lunch');
+                },
+
+                email: function() {
+                    return this.activities.filter(activity => activity.type == 'email');
+                },
+
+                file: function() {
+                    return this.activities.filter(activity => activity.type == 'file');
+                }
+            },
+
+            methods: {
+                getActivities: function(type, subType) {
+                    if (subType == 'planned') {
+                        return this[type].filter(activity => ! activity.is_done);
                     } else {
-                        this.activities[type] = this.data.filter(activity => activity.type == type);
+                        return this[type].filter(activity => activity.is_done);
                     }
-                });
+                },
+
+                markAsDone: function(activity) {
+                    var self = this;
+
+                    this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
+                        .then (function(response) {
+                            activity.is_done = 1;
+
+                            window.flashMessages.push({'type': 'success', 'message': response.data.message});
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (function (error) {
+                        })
+                },
+
+                edit: function(activity) {
+
+                },
+
+                remove: function(activity) {
+                    var self = this;
+
+                    this.$http.delete("{{ route('admin.activities.delete') }}/" + activity['id'])
+                        .then (function(response) {
+                            const index = self.activities.indexOf(activity);
+
+                            Vue.delete(self.activities, index);
+                            
+                            window.flashMessages.push({'type': 'success', 'message': response.data.message});
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (function (error) {
+                        })
+                }
             }
         });
     </script>

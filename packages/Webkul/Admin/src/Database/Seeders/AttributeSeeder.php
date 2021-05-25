@@ -93,21 +93,6 @@ class AttributeSeeder extends Seeder
                 'updated_at'          => $now,
             ], [
                 'id'                  => '6',
-                'code'                => 'tags',
-                'name'                => 'Tags',
-                'type'                => 'lookup',
-                'entity_type'         => 'leads',
-                'lookup_type'         => 'tags',
-                'validation'          => NULL,
-                'sort_order'          => '6',
-                'is_required'         => '0',
-                'is_unique'           => '0',
-                'quick_add'           => '1',
-                'is_user_defined'     => '0',
-                'created_at'          => $now,
-                'updated_at'          => $now,
-            ], [
-                'id'                  => '7',
                 'code'                => 'user_id',
                 'name'                => 'Sales Owner',
                 'type'                => 'select',
@@ -121,23 +106,25 @@ class AttributeSeeder extends Seeder
                 'is_user_defined'     => '0',
                 'created_at'          => $now,
                 'updated_at'          => $now,
-            ], [
+            ]
+            // , [
+            //     'id'                  => '7',
+            //     'code'                => 'lead_pipeline_id',
+            //     'name'                => 'Pipeline',
+            //     'type'                => 'select',
+            //     'entity_type'         => 'leads',
+            //     'lookup_type'         => 'lead_pipelines',
+            //     'validation'          => NULL,
+            //     'sort_order'          => '8',
+            //     'is_required'         => '1',
+            //     'is_unique'           => '0',
+            //     'quick_add'           => '1',
+            //     'is_user_defined'     => '0',
+            //     'created_at'          => $now,
+            //     'updated_at'          => $now,
+            // ]
+            , [
                 'id'                  => '8',
-                'code'                => 'lead_pipeline_id',
-                'name'                => 'Pipeline',
-                'type'                => 'select',
-                'entity_type'         => 'leads',
-                'lookup_type'         => 'lead_pipelines',
-                'validation'          => NULL,
-                'sort_order'          => '8',
-                'is_required'         => '1',
-                'is_unique'           => '0',
-                'quick_add'           => '1',
-                'is_user_defined'     => '0',
-                'created_at'          => $now,
-                'updated_at'          => $now,
-            ], [
-                'id'                  => '9',
                 'code'                => 'lead_stage_id',
                 'name'                => 'Stage',
                 'type'                => 'select',
@@ -152,7 +139,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '10',
+                'id'                  => '9',
                 'code'                => 'name',
                 'name'                => 'Name',
                 'type'                => 'text',
@@ -167,7 +154,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '11',
+                'id'                  => '10',
                 'code'                => 'emails',
                 'name'                => 'Emails',
                 'type'                => 'email',
@@ -182,7 +169,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '12',
+                'id'                  => '11',
                 'code'                => 'contact_numbers',
                 'name'                => 'Contact Numbers',
                 'type'                => 'phone',
@@ -197,7 +184,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '13',
+                'id'                  => '12',
                 'code'                => 'organization_id',
                 'name'                => 'Organization',
                 'type'                => 'lookup',
@@ -212,7 +199,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '14',
+                'id'                  => '13',
                 'code'                => 'name',
                 'name'                => 'Name',
                 'type'                => 'text',
@@ -227,7 +214,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '15',
+                'id'                  => '14',
                 'code'                => 'address',
                 'name'                => 'Address',
                 'type'                => 'address',
@@ -242,7 +229,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '16',
+                'id'                  => '15',
                 'code'                => 'name',
                 'name'                => 'Name',
                 'type'                => 'text',
@@ -257,7 +244,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '17',
+                'id'                  => '16',
                 'code'                => 'description',
                 'name'                => 'Description',
                 'type'                => 'textarea',
@@ -272,7 +259,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '18',
+                'id'                  => '17',
                 'code'                => 'sku',
                 'name'                => 'SKU',
                 'type'                => 'text',
@@ -287,7 +274,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '19',
+                'id'                  => '18',
                 'code'                => 'quantity',
                 'name'                => 'Quantity',
                 'type'                => 'text',
@@ -302,7 +289,7 @@ class AttributeSeeder extends Seeder
                 'created_at'          => $now,
                 'updated_at'          => $now,
             ], [
-                'id'                  => '20',
+                'id'                  => '19',
                 'code'                => 'price',
                 'name'                => 'Price',
                 'type'                => 'text',
