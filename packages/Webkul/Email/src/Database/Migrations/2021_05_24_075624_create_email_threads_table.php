@@ -19,6 +19,8 @@ class CreateEmailThreadsTable extends Migration
             $table->string('type');
             $table->string('user_type');
             $table->string('name')->nullable();
+            $table->json('from')->nullable();
+            $table->json('sender')->nullable();
             $table->json('reply_to')->nullable();
             $table->json('cc')->nullable();
             $table->json('bcc')->nullable();

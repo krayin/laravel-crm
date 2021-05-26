@@ -51,6 +51,10 @@ class Email extends Mailable
             ])));
         });
 
+        foreach ($this->thread->attachments as $attachment) {
+            $this->attachFromStorage($attachment->path);
+        }
+
         return $this;
     }
 }

@@ -19,6 +19,7 @@ class CreateEmailThreadAttachmentsTable extends Migration
             $table->string('path');
             $table->integer('size')->nullable();
             $table->string('content_type')->nullable();
+            $table->string('content_id')->nullable();
 
             $table->integer('email_thread_id')->unsigned();
             $table->foreign('email_thread_id')->references('id')->on('email_threads')->onDelete('cascade');

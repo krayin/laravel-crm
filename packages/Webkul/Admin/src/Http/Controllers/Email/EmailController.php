@@ -62,8 +62,6 @@ class EmailController extends Controller
 
         Event::dispatch('email.create.after', $email);
 
-        dd(111);
-        
         session()->flash('success', trans('admin::app.emails.create-success'));
 
         return redirect()->back();
@@ -76,7 +74,7 @@ class EmailController extends Controller
      */
     public function inboundParse()
     {
-        
+        $this->emailRepository->parseEmailAddress();
 
         return response()->json([], 200);
     }

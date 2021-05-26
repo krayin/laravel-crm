@@ -12,6 +12,8 @@ class Thread extends Model implements ThreadContract
     protected $table = 'email_threads';
 
     protected $casts = [
+        'sender'   => 'array',
+        'from'     => 'array',
         'reply_to' => 'array',
         'cc'       => 'array',
         'bcc'      => 'array',
@@ -27,6 +29,8 @@ class Thread extends Model implements ThreadContract
         'type',
         'user_type',
         'name',
+        'sender',
+        'from',
         'reply_to',
         'cc',
         'bcc',
@@ -59,5 +63,13 @@ class Thread extends Model implements ThreadContract
     public function person()
     {
         return $this->belongsTo(PersonProxy::modelClass());
+    }
+
+    /**
+     * Get the attachments.
+     */
+    public function attachments()
+    {
+        return $this->hasMany(AttachmentProxy::modelClass(), 'email_thread_id');
     }
 }

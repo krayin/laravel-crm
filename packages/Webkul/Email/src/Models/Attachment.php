@@ -19,6 +19,7 @@ class Attachment extends Model implements AttachmentContract
         'path',
         'size',
         'content_type',
+        'content_id',
         'email_thread_id',
     ];
 
