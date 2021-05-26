@@ -278,7 +278,7 @@ class Parser
 
         list($relations, $content_types, $boundaries) = $matches;
 
-        $messageToProcess = substr($source, strpos($source, $content_delimeter) + strlen($content_delimeter));
+        $messageToProcess = substr($source, stripos($source, (string)$content_delimeter) + strlen($content_delimeter));
 
         array_unshift($boundaries, $boundary);
 
@@ -521,7 +521,7 @@ class Parser
             $content_delimeter = end($delimeter);
 
             list($relations, $content_types, $boundaries) = $matches;
-            $messageToProcess = substr($this->data, strpos($this->data, $content_delimeter) + strlen($content_delimeter));
+            $messageToProcess = substr($this->data, stripos($this->data, (string)$content_delimeter) + strlen($content_delimeter));
 
             array_unshift($boundaries, $boundary);
 

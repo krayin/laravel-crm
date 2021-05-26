@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateEmailThreadAttachmentsTable extends Migration
+class CreateEmailAttachmentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateEmailThreadAttachmentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('email_thread_attachments', function (Blueprint $table) {
+        Schema::create('email_attachments', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name')->nullable();
             $table->string('path');
@@ -21,8 +21,8 @@ class CreateEmailThreadAttachmentsTable extends Migration
             $table->string('content_type')->nullable();
             $table->string('content_id')->nullable();
 
-            $table->integer('email_thread_id')->unsigned();
-            $table->foreign('email_thread_id')->references('id')->on('email_threads')->onDelete('cascade');
+            $table->integer('email_id')->unsigned();
+            $table->foreign('email_id')->references('id')->on('emails')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -35,6 +35,6 @@ class CreateEmailThreadAttachmentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('email_thread_attachments');
+        Schema::dropIfExists('email_attachments');
     }
 }

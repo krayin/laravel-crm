@@ -14,16 +14,22 @@ return [
         'sort'       => 2,
         'icon-class' => 'leads-icon',
     ], [
+        'key'        => 'emails',
+        'name'       => 'admin::app.layouts.emails',
+        'route'      => 'admin.emails.index',
+        'sort'       => 3,
+        'icon-class' => 'emails-icon',
+    ], [
         'key'        => 'activities',
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
-        'sort'       => 3,
+        'sort'       => 4,
         'icon-class' => 'activities-icon',
     ], [
         'key'        => 'contacts',
         'name'       => 'admin::app.layouts.contacts',
         'route'      => 'admin.contacts.persons.index',
-        'sort'       => 4,
+        'sort'       => 5,
         'icon-class' => 'phone-icon',
     ], [
         'key'        => 'contacts.persons',
@@ -39,13 +45,13 @@ return [
         'key'        => 'products',
         'name'       => 'admin::app.layouts.products',
         'route'      => 'admin.products.index',
-        'sort'       => 5,
+        'sort'       => 6,
         'icon-class' => 'products-icon',
     ], [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.users.index',
-        'sort'       => 6,
+        'sort'       => 7,
         'icon-class' => 'settings-icon',
     ], [
         'key'        => 'settings.roles',

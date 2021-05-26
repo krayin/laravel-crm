@@ -74,7 +74,9 @@ class EmailController extends Controller
      */
     public function inboundParse()
     {
-        $this->emailRepository->parseEmailAddress();
+        $emailContent = file_get_contents(base_path('email.txt'));
+
+        $this->emailRepository->processInboundParseMail($emailContent);
 
         return response()->json([], 200);
     }

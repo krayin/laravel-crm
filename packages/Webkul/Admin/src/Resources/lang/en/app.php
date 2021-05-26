@@ -130,6 +130,13 @@
             'file-added'               => 'File added',
         ],
 
+        'emails' => [
+            'title'          => 'Emails',
+            'create-success' => 'Email sent successfully.',
+            'delete-success' => 'Email deleted successfully.',
+            'delete-failed'  => 'Email can not be deleted.',
+        ],
+
         'activities' => [
             'title'           => 'Activities',
             'create-success'  => 'Activity created successfully.',
@@ -282,7 +289,6 @@
             'price'             => 'Price',
             'email'             => 'Email',
             'subject'           => 'Subject',
-            'emails'            => 'Emails',
             'emails'            => 'Emails',
             'stage'             => 'Stage',
             'status'            => 'Status',

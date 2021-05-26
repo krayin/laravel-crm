@@ -36,23 +36,23 @@ class AttachmentRepository extends Repository
     }
 
     /**
-     * @param  \Webkul\Email\Contracts\Thread  $thread
+     * @param  \Webkul\Email\Contracts\Email  $email
      * @param  array $data
      * @return void
      */
-    public function uploadAttachments($thread, array $data)
+    public function uploadAttachments($email, array $data)
     {
         if ($data['source'] == 'email') {
             foreach ($this->emailParser->getAttachments() as $attachment) {
-                $fileName = 'emails/' . $thread->email_id . '/' . $thread->id . '/' . $attachment->getFilename();
+                Storage::put($path = 'emails/' . $email->id . '/' . $attachment->getFilename(), $attachment->getContent());
 
                 $this->create([
-                    'path'            => $path = Storage::put($fileName, $attachment->getContent()),
-                    'name'            => $attachment->getFileName(),
-                    'content_type'    => $attachment->contentType,
-                    'content_id'      => $attachment->contentId,
-                    'size'            => Storage::size($path),
-                    'email_thread_id' => $thread->id,
+                    'path'         => $path,
+                    'name'         => $attachment->getFileName(),
+                    'content_type' => $attachment->contentType,
+                    'content_id'   => $attachment->contentId,
+                    'size'         => Storage::size($path),
+                    'email_id'     => $email->id,
                 ]);
             }
         } else {
@@ -62,11 +62,11 @@ class AttachmentRepository extends Repository
 
             foreach ($data['attachments'] as $index => $attachment) {
                 $this->create([
-                    'path'            => $path = request()->file('attachments.' . $index)->store('emails/' . $thread->email_id . '/' . $thread->id),
-                    'name'            => $attachment->getClientOriginalName(),
-                    'content_type'    => $attachment->getClientMimeType(),
-                    'size'            => Storage::size($path),
-                    'email_thread_id' => $thread->id,
+                    'path'         => $path = request()->file('attachments.' . $index)->store('emails/' . $email->id),
+                    'name'         => $attachment->getClientOriginalName(),
+                    'content_type' => $attachment->getClientMimeType(),
+                    'size'         => Storage::size($path),
+                    'email_id'     => $email->id,
                 ]);
             }
         }
