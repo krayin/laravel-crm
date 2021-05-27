@@ -66,7 +66,7 @@ return [
         'key'        => 'configuration',
         'name'       => 'admin::app.layouts.configuration',
         'route'      => 'admin.configuration.index',
-        'sort'       => 4,
+        'sort'       => 7,
         'icon-class' => 'tools-icon',
     ]
 ];

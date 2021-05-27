@@ -41,28 +41,28 @@ class ActivityDataGrid extends DataGrid
             'filterable_type'    => 'dropdown',
             'filterable_options' => [[
                 'value' => 0,
-                'label' => 'No',
+                'label' => __("admin::app.common.no"),
             ], [
                 'value' => 1,
-                'label' => 'Yes',
+                'label' => __("admin::app.common.yes"),
             ]],
             'closure'            => function ($row) {
                 if ($row->is_done) {
-                    return '<span class="badge badge-round badge-success"></span>Yes';
+                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
                 } else {
-                    return '<span class="badge badge-round badge-danger"></span>No';
+                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
                 }
             },
         ]);
 
         $this->addColumn([
-            'index'             => 'schedule_from',
+            'index'             => 'scheduled_from',
             'label'             => trans('admin::app.datagrid.schedule_from'),
             'type'              => 'string',
             'sortable'          => true,
             'filterable_type'   => 'date_range',
             'closure'           => function ($row) {
-                return core()->formatDate($row->schedule_from);
+                return core()->formatDate($row->scheduled_from);
             },
         ]);
 
@@ -98,9 +98,5 @@ class ActivityDataGrid extends DataGrid
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);
-    }
-
-    public function prepareMassActions()
-    {
     }
 }

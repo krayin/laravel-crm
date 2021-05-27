@@ -44,8 +44,7 @@ class LeadRepository extends Repository
         ProductRepository $productRepository,
         AttributeValueRepository $attributeValueRepository,
         Container $container
-    )
-    {
+    ) {
         $this->personRepository = $personRepository;
 
         $this->productRepository = $productRepository;
@@ -108,5 +107,20 @@ class LeadRepository extends Repository
         $this->attributeValueRepository->save($data, $id);
 
         return $lead;
+    }
+
+    /**
+     * Retreives lead count based on lead stage name
+     *
+     * @return number
+     */
+    public function getLeadsCount($leadStage, $startDate, $endDate)
+    {
+        return $this
+                ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                ->where('lead_stages.name', $leadStage)
+                ->whereBetween('leads.created_at', [$startDate, $endDate])
+                ->get()
+                ->count();
     }
 }

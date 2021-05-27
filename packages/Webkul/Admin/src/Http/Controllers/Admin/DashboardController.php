@@ -2,7 +2,9 @@
 
 namespace Webkul\Admin\Http\Controllers\Admin;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
+use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class DashboardController extends Controller
@@ -11,33 +13,14 @@ class DashboardController extends Controller
 
     private $cardData;
 
-    public function __construct()
+    private $leadRepository;
+
+    public function __construct(LeadRepository $leadRepository)
     {
+        $this->leadRepository = $leadRepository;
+
         $this->cardData = [
             [
-                "card_id"       => "leads",
-                "data"          => [
-                    "labels" => [
-                        "Week1",
-                        "Week2",
-                        "Week3",
-                        "Week4",
-                        "Week5"
-                    ],
-                    "datasets" => [
-                        [
-                            "backgroundColor"   => "#4BC0C0",
-                            "data"              => [0, 2, 5, 5, 9],
-                            "label"             => "Won Leads",
-                        ], [
-                            "backgroundColor"   => "#FF4D50",
-                            "data"              => [0, 2, 5, 5, 9],
-                            "label"             => "Lost Leads",
-                        ]
-                    ]
-                ]
-            ], [
-                "total"         => 10,
                 "card_id"       => "activity",
                 "header_data"   => ["10 Activities", "2 New Leads"],
                 "data"          => [
@@ -50,55 +33,6 @@ class DashboardController extends Controller
                     ], [
                         'label' => 'Meeting',
                         'value' => 1,
-                    ],
-                ]
-            ], [
-                "card_id"       => "top_leads",
-                "data"          => [
-                    [
-                        'label'         => 'Plan to attend a Training',
-                        'amount'        => 50000.00,
-                        'created_at'    => '23 Mar 2021 20:08',
-                        'status'        => 1,
-                        'statusLabel'   => 'Aqcuisition',
-                    ], [
-                        'label'         => 'Information about laptop',
-                        'amount'        => 50000.00,
-                        'created_at'    => '23 Mar 2021 20:08',
-                        'status'        => 2,
-                        'statusLabel'   => 'Prospect',
-                    ], [
-                        'label'         => 'Manage my website',
-                        'amount'        => 50000.00,
-                        'created_at'    => '23 Mar 2021 20:08',
-                        'status'        => 1,
-                        'statusLabel'   => 'Aqcuisition',
-                    ],
-                ]
-            ], [
-                "total"         => 10,
-                "card_id"       => "stages_bar",
-                "data"          => [
-                    [
-                        'label'     => 'New',
-                        'value'     => 2,
-                        'bar_type'  => 'primary',
-                    ], [
-                        'label'     => 'Aqcuistion',
-                        'value'     => 7,
-                        'bar_type'  => 'warning',
-                    ], [
-                        'label'     => 'Propects',
-                        'value'     => 1,
-                        'bar_type'  => 'warning',
-                    ], [
-                        'label'     => 'Won',
-                        'value'     => 1,
-                        'bar_type'  => 'success',
-                    ], [
-                        'label'     => 'Lost',
-                        'value'     => 3,
-                        'bar_type'  => 'danger',
                     ],
                 ]
             ], [
@@ -124,30 +58,7 @@ class DashboardController extends Controller
                         'count' => "20.3%"
                     ],
                 ]
-            ], [
-                "card_id"       => "customers",
-                "data"          => [
-                    [
-                        'label' => 'New Contacts',
-                        'count' => 5
-                    ], [
-                        'label' => 'Total Contacts',
-                        'count' => 500
-                    ], [
-                        'label' => 'New Companies',
-                        'count' => 1
-                    ], [
-                        'label' => 'Total Companies',
-                        'count' => 25
-                    ], [
-                        'label' => 'Contact convert to Won',
-                        'count' => "2%"
-                    ], [
-                        'label' => 'Won companies',
-                        'count' => "0.23%"
-                    ],
-                ]
-            ]
+            ],
         ];
 
         $this->cards = [
@@ -167,12 +78,12 @@ class DashboardController extends Controller
                 "selected"      => true,
                 "filter_type"   => "daily",
                 "card_id"       => "top_leads",
-                "card_type"     => "top_leads",
+                "card_type"     => "top_card",
                 "label"         => __('admin::app.dashboard.top_leads'),
             ], [
                 "selected"      => true,
                 "filter_type"   => "daily",
-                "card_id"       => "stages_bar",
+                "card_id"       => "stages",
                 "card_type"     => "stages_bar",
                 "label"         => __('admin::app.dashboard.stages'),
             ], [
@@ -182,22 +93,22 @@ class DashboardController extends Controller
                 "card_type"     => "emails",
                 "label"         => __('admin::app.dashboard.emails'),
             ], [
-                "selected"      => false,
+                "selected"      => true,
                 "filter_type"   => "monthly",
                 "card_id"       => "customers",
-                "card_type"     => "emails",
+                "card_type"     => "line_chart",
                 "label"         => __('admin::app.dashboard.customers'),
             ], [
-                "selected"      => false,
+                "selected"      => true,
                 "filter_type"   => "monthly",
                 "card_id"       => "top_customers",
                 "card_type"     => "emails",
                 "label"         => __('admin::app.dashboard.top_customers'),
             ], [
-                "selected"      => false,
+                "selected"      => true,
                 "filter_type"   => "monthly",
                 "card_id"       => "products",
-                "card_type"     => "emails",
+                "card_type"     => "line_chart",
                 "label"         => __('admin::app.dashboard.products'),
             ], [
                 "selected"      => true,
@@ -240,18 +151,261 @@ class DashboardController extends Controller
      */
     public function getCardData()
     {
-        $response = [];
+        $cardData = false;
+        $totalWeeks = 4;
         $requestData = request()->all();
 
         $cardId = $requestData['card-id'];
+        $day = $requestData['filter'] ?? "today";
+        $month = $requestData['filter'] ?? "this_month";
 
-        foreach ($this->cardData as $card) {
-            if ($card['card_id'] == $cardId) {
-                $response = $card;
+        switch ($cardId) {
+            case 'leads':
+                $labels = $wonLeadsCount = $lostLeadsCount = [];
+
+                for ($index = $totalWeeks; $index >= 1; $index--) {
+                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
+                    
+                    $startDate = Carbon::now()->subDays(7 * $index);
+                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
+
+                    if ($month == "last_month") {
+                        $startDate = $startDate->subMonth();
+                        $endDate = $endDate->subMonth();
+                    }
+                    
+                    $startDate = $startDate->format('Y-m-d');
+                    $endDate = $endDate->format('Y-m-d');
+
+                    // get leads count
+                    array_push($wonLeadsCount, $this->leadRepository->getLeadsCount("Won", $startDate, $endDate));
+
+                    array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
+                }
+
+                $cardData = [
+                    "data" => [
+                        "labels" => $labels,
+                        "datasets" => [
+                            [
+                                "backgroundColor"   => "#4BC0C0",
+                                "data"              => $wonLeadsCount,
+                                "label"             => "Won",
+                            ], [
+                                "backgroundColor"   => "#FF4D50",
+                                "data"              => $lostLeadsCount,
+                                "label"             => "Lost",
+                            ]
+                        ]
+                    ]
+                ];
+
+                break;
+
+            case 'activity':
+                break;
+                
+            case 'top_leads':
+                $topLeads = $this->leadRepository
+                            ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_stages.name as statusLabel')
+                            ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                            ->orderBy('lead_value', 'asc')
+                            ->whereDate('leads.created_at', Carbon::{$day}())
+                            ->limit(3)
+                            ->get()
+                            ->toArray();
+
+                $cardData = [
+                    "data" => $topLeads
+                ];
+                break;
+
+            case 'stages':
+                $leadStages = [];
+                $leadStagesRepository = app('Webkul\Lead\Repositories\StageRepository');
+
+                $stages = $leadStagesRepository
+                            ->select('id', 'name')
+                            ->get()
+                            ->toArray();
+
+                foreach ($stages as $key => $stage) {
+                    $leadsCount = $this->leadRepository
+                            ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                            ->where('lead_stages.id', $stage['id'])
+                            ->whereDate('leads.created_at', Carbon::{$day}())
+                            ->count();
+
+                    switch ($stage['name']) {
+                        case 'Aqcuistion':
+                        case 'Propects':
+                            $barType = "warning";
+                            break;
+
+                        case 'Won':
+                            $barType = "success";
+                            break;
+                            
+                        case 'Lost':
+                            $barType = "danger";
+                            break;
+
+                        default:
+                            $barType = "primary";
+                    }
+                    
+
+                    array_push($leadStages, [
+                        'label' => $stage['name'],
+                        'value' => $leadsCount,
+                        'bar_type' => $barType,
+                    ]);
+                }
+
+                $cardData = [
+                    "data" => $leadStages
+                ];
+
+                break;
+
+            case 'emails':
+                break;
+
+            case 'customers':
+                $labels = $customersCount = [];
+
+                for ($index = $totalWeeks; $index >= 1; $index--) {
+                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
+                    
+                    $startDate = Carbon::now()->subDays(7 * $index);
+                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
+
+                    if ($month == "last_month") {
+                        $startDate = $startDate->subMonth();
+                        $endDate = $endDate->subMonth();
+                    }
+                    
+                    $startDate = $startDate->format('Y-m-d');
+                    $endDate = $endDate->format('Y-m-d');
+
+                    // get customers count
+                    array_push($customersCount, app('Webkul\Contact\Repositories\PersonRepository')->getCustomerCount($startDate, $endDate));
+                }
+
+                $cardData = [
+                    "data" => [
+                        "labels" => $labels,
+                        "datasets" => [
+                            [
+                                "fill"              => false,
+                                "tension"           => 0.1,
+                                "backgroundColor"   => "#4BC0C0",
+                                "label"             => "Customers",
+                                "borderColor"       => 'rgb(75, 192, 192)',
+                                "data"              => $customersCount,
+                            ],
+                        ]
+                    ]
+                ];
+                break;
+
+            case 'top_customers':
+                $filterMonth = Carbon::now()->month;
+
+                if ($month == "last_month") {
+                    $filterMonth = Carbon::now()->subMonth()->month;
+                }
+
+                $topCustomers = $this->leadRepository
+                                ->select('persons.id as personId', 'persons.name as label', \DB::raw("(COUNT(*)) as count"))
+                                ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
+                                ->groupBy('person_id')
+                                ->whereMonth('leads.created_at', '=', $filterMonth)
+                                ->limit(6)
+                                ->orderBy('count', 'desc')
+                                ->get()
+                                ->toArray();
+
+                $cardData = [
+                    "data" => $topCustomers
+                ];
+                break;
+                
+            case 'products':
+                $labels = $productsCount = [];
+
+                for ($index = $totalWeeks; $index >= 1; $index--) {
+                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
+                    
+                    $startDate = Carbon::now()->subDays(7 * $index);
+                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
+
+                    if ($month == "last_month") {
+                        $startDate = $startDate->subMonth();
+                        $endDate = $endDate->subMonth();
+                    }
+                    
+                    $startDate = $startDate->format('Y-m-d');
+                    $endDate = $endDate->format('Y-m-d');
+
+                    // get products count
+                    array_push($productsCount, app('Webkul\Product\Repositories\ProductRepository')->getProductCount($startDate, $endDate));
+                }
+
+                $cardData = [
+                    "data" => [
+                        "labels" => $labels,
+                        "datasets" => [
+                            [
+                                "fill"              => false,
+                                "tension"           => 0.1,
+                                "backgroundColor"   => "#4BC0C0",
+                                "label"             => "Products",
+                                "borderColor"       => 'rgb(75, 192, 192)',
+                                "data"              => $productsCount,
+                            ],
+                        ]
+                    ]
+                ];
+
+                break;
+
+            case 'top_products':
+                $topProducts = app('Webkul\Lead\Repositories\LeadProductsRepository')
+                                ->select('leads.title as label', \DB::raw("(COUNT(*)) as count"))
+                                ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
+                                ->groupBy('product_id')
+                                ->get()
+                                ->toArray();
+
+                // $topProductsCount = $topProducts->count();
+                // $topProductsArray = $topProducts->toArray();
+
+                // foreach ($topProductsArray as $key => $topCustomer) {
+                //     $leadsCount = $this->leadRepository
+                //                 ->where('person_id', $topCustomer['personId'])
+                //                 ->count();
+
+                //     $topProductsArray[$key]['count'] = $leadsCount;
+                // }
+
+                $cardData = [
+                    "data" => $topProducts
+                ];
+                break;
+
+            default:
+        }
+
+        if (! $cardData) {
+            foreach ($this->cardData as $card) {
+                if ($card['card_id'] == $cardId) {
+                    $cardData = $card;
+                }
             }
         }
 
-        return response()->json($response);
+        return response()->json($cardData);
     }
 
     /**

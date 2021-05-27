@@ -6,7 +6,7 @@ use Carbon\Carbon;
 
 trait DatagridCollection
 {
-    use DatagridHelper;
+    use DatagridHelper, DatagridReferences;
 
     /**
      * @return \Illuminate\Support\Collection
@@ -80,7 +80,7 @@ trait DatagridCollection
                             if ($dates[1] == "") {
                                 $dates[1] = Carbon::today()->format('Y-m-d');
                             }
-            
+                            
                             $collection->orWhereBetween(
                                 $columnName,
                                 $dates
