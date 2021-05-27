@@ -100,11 +100,16 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'mail',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Mail',
             ], function () {
-                Route::get('{route?}', 'EmailController@index')->name('admin.mail.index');
-
                 Route::post('create', 'EmailController@store')->name('admin.mail.store');
 
+                Route::put('edit/{id}', 'EmailController@update')->name('admin.mail.update');
+
+                Route::get('{route?}', 'EmailController@index')->name('admin.mail.index');
+
+                Route::get('{route?}/{id?}', 'EmailController@view')->name('admin.mail.view');
+
                 Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
+
             });
 
             // Contacts Routes

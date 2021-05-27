@@ -9,8 +9,6 @@ class EmailDataGrid extends DataGrid
 {
     public function prepareQueryBuilder()
     {
-        // dd(request('route'));
-        
         $queryBuilder = DB::table('emails')
             ->addSelect('*')
             ->where('folders', 'like', '%"' . request('route') . '"%');
@@ -33,16 +31,21 @@ class EmailDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'title'  => request('route') == 'draft'
+                        ? trans('ui::app.datagrid.edit')
+                        : trans('ui::app.datagrid.view'),
             'method' => 'GET',
-            'route'  => 'admin.products.edit',
-            'icon'   => 'icon pencil-icon',
+            'route'  => 'admin.mail.view',
+            'params' => ['route' => request('route')],
+            'icon'   => request('route') == 'draft'
+                        ? 'icon pencil-icon'
+                        : 'icon eye-icon'
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.products.delete',
+            'route'        => 'admin.mail.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);

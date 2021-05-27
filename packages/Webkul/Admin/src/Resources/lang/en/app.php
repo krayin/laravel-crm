@@ -161,6 +161,7 @@
             'back'           => 'Back',
             'save-to-draft'  => 'Save to Draft',
             'create-success' => 'Email sent successfully.',
+            'update-success' => 'Email updated successfully.',
             'saved-to-draft' => 'Email saved to draft.',
             'delete-success' => 'Email deleted successfully.',
             'delete-failed'  => 'Email can not be deleted.',

@@ -4,8 +4,6 @@ namespace Webkul\Email\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Mail;
-use Webkul\Email\Mails\Email;
 use Webkul\Email\Helpers\Parser;
 use Webkul\Email\Helpers\Htmlfilter;
 use Webkul\Core\Eloquent\Repository;
@@ -74,24 +72,29 @@ class EmailRepository extends Repository
      */
     public function create(array $data)
     {
-        $email = parent::create(array_merge($this->sanitizeEmails($data), [
-            'unique_id'  => ! isset($data['parent_id']) ? time() . '@example.com' : null,
-            'message_id' => $data['message_id'] ?? time() . '@example.com',
-        ]));
+        $email = parent::create($this->sanitizeEmails($data));
 
         $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
 
-        if (in_array('outbox', $data['folders'])) {
-            try {
-                Mail::send(new Email($email));
+        return $email;
+    }
 
-                parent::update([
-                    'folders' => ['inbox', 'sent']
-                ], $email->id);
-            } catch (\Exception $e) {}
-        }
+    /**
+     * @param array  $data
+     * @param int    $id
+     * @param string $attribute
+     * @return \Webkul\Email\Contracts\Email
+     */
+    public function update(array $data, $id, $attribute = "id")
+    {
+        $email = $this->findOrFail($id);
+
+        parent::update($this->sanitizeEmails($data), $id);
+
+        $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
 
         return $email;
+
     }
 
     /**
@@ -161,6 +164,7 @@ class EmailRepository extends Repository
             $email = $this->create(array_merge($headers, [
                 'folders'       => ['inbox'],
                 'reply'         => $this->htmlFilter->HTMLFilter($reply, ''),
+                'unique_id'     => time() . '@example.com',
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',
             ]));
@@ -208,11 +212,17 @@ class EmailRepository extends Repository
      */
     public function sanitizeEmails(array $data)
     {
-        $data['reply_to'] = array_values(array_filter($data['reply_to']));
+        if (isset($data['reply_to'])) {
+            $data['reply_to'] = array_values(array_filter($data['reply_to']));
+        }
 
-        $data['cc'] = array_values(array_filter($data['cc']));
+        if (isset($data['cc'])) {
+            $data['cc'] = array_values(array_filter($data['cc']));
+        }
 
-        $data['bcc'] = array_values(array_filter($data['bcc']));
+        if (isset($data['bcc'])) {
+            $data['bcc'] = array_values(array_filter($data['bcc']));
+        }
 
         return $data;
     }
