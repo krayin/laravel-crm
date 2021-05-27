@@ -20,6 +20,17 @@
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',
+            'mail'          => [
+                'title'   => 'Mail',
+                'compose' => 'Compose',
+                'inbox'   => 'Inbox',
+                'draft'   => 'Draft',
+                'outbox'  => 'Outbox',
+                'sent'    => 'Sent',
+                'trash'   => 'Trash',
+                'setting' => 'Setting',
+            ],
+            'activities'    => 'Activities',
             'contacts'      => 'Contacts',
             'persons'       => 'Persons',
             'organizations' => 'Organizations',
@@ -130,8 +141,17 @@
             'file-added'               => 'File added',
         ],
 
-        'emails' => [
-            'title'          => 'Emails',
+        'mail' => [
+            'compose'        => 'Compose',
+            'inbox'          => 'Inbox',
+            'draft'          => 'Draft',
+            'outbox'         => 'Outbox',
+            'sent'           => 'Sent',
+            'trash'          => 'Trash',
+            'setting'        => 'Setting',
+            'send'           => 'Send',
+            'back'           => 'Back',
+            'save-to-draft'  => 'Save to Draft',
             'create-success' => 'Email sent successfully.',
             'delete-success' => 'Email deleted successfully.',
             'delete-failed'  => 'Email can not be deleted.',

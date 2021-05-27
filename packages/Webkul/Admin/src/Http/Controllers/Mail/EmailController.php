@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Email;
+namespace Webkul\Admin\Http\Controllers\Mail;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -34,16 +34,21 @@ class EmailController extends Controller
      */
     public function index()
     {
-        return view('admin::emails.index');
+        switch (request('route')) {
+            case 'compose':
+                return view('admin::mail.compose');
+            
+            default:
+                return view('admin::mail.index');
+        }
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function store()
     {
         $this->validate(request(), [
             'reply_to' => 'required|array|min:1',
@@ -56,13 +61,14 @@ class EmailController extends Controller
         $email = $this->emailRepository->create(array_merge(request()->all(), [
             'source'    => 'web',
             'user_type' => 'admin',
+            'folders'   => request('is_draft') ? ['draft'] : ['outbox'],
             'name'      => auth()->guard('user')->user()->name,
             'user_id'   => auth()->guard('user')->user()->id,
         ]));
 
         Event::dispatch('email.create.after', $email);
 
-        session()->flash('success', trans('admin::app.emails.create-success'));
+        session()->flash('success', trans('admin::app.mail.create-success'));
 
         return redirect()->back();
     }
@@ -100,12 +106,12 @@ class EmailController extends Controller
 
             return response()->json([
                 'status'    => true,
-                'message'   => trans('admin::app.emails.destroy-success'),
+                'message'   => trans('admin::app.mail.destroy-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
                 'status'  => false,
-                'message' => trans('admin::app.emails.destroy-failed'),
+                'message' => trans('admin::app.mail.destroy-failed'),
             ], 400);
         }
     }

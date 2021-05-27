@@ -21,7 +21,7 @@ Route::group(['middleware' => ['web']], function () {
 
         Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
 
-        Route::get('emails/inbound-parse', 'Webkul\Admin\Http\Controllers\Email\EmailController@inboundParse')->name('admin.emails.inbound_parse');
+        Route::get('mail/inbound-parse', 'Webkul\Admin\Http\Controllers\Mail\EmailController@inboundParse')->name('admin.mail.inbound_parse');
 
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
@@ -97,14 +97,14 @@ Route::group(['middleware' => ['web']], function () {
             });
 
             Route::group([
-                'prefix'    => 'emails',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Email',
+                'prefix'    => 'mail',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Mail',
             ], function () {
-                Route::get('', 'EmailController@index')->name('admin.emails.index');
+                Route::get('{route?}', 'EmailController@index')->name('admin.mail.index');
 
-                Route::post('create/{id}', 'EmailController@store')->name('admin.emails.store');
+                Route::post('create', 'EmailController@store')->name('admin.mail.store');
 
-                Route::delete('{id?}', 'EmailController@destroy')->name('admin.emails.delete');
+                Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
             });
 
             // Contacts Routes

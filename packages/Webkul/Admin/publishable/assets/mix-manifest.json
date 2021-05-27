@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=373c7d185b2823978adb",
-    "/css/admin.css": "/css/admin.css?id=bca1e0925b0cf77b5337",
+    "/css/admin.css": "/css/admin.css?id=116ad31b63f95743bfe1",
     "/images/avatar-icon.svg": "/images/avatar-icon.svg?id=138110db59ab81030a21",
     "/images/dashboard-active-icon.svg": "/images/dashboard-active-icon.svg?id=0a8aa85a7bf837ce0ec6",
     "/images/dashboard-icon.svg": "/images/dashboard-icon.svg?id=00efeb765d72f3fd86d4",
@@ -16,5 +16,6 @@
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=323f3f274df979c3ac21",
     "/images/emails-active-icon.svg": "/images/emails-active-icon.svg?id=419a405cc6a99593c02c",
-    "/images/emails-icon.svg": "/images/emails-icon.svg?id=f3c561cf1bbc740dc2ff"
+    "/images/emails-icon.svg": "/images/emails-icon.svg?id=f3c561cf1bbc740dc2ff",
+    "/images/email-send-icon.svg": "/images/email-send-icon.svg?id=4d4380245ae9ac63c97a"
 }

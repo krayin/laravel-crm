@@ -20,7 +20,8 @@ class CreateEmailsTable extends Migration
             $table->string('user_type');
             $table->string('name')->nullable();
             $table->text('reply')->nullable();
-            $table->boolean('is_trashed')->default(0);
+            $table->boolean('is_read')->default(0);
+            $table->json('folders')->nullable();
             $table->json('from')->nullable();
             $table->json('sender')->nullable();
             $table->json('reply_to')->nullable();

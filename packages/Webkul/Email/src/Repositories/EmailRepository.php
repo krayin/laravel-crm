@@ -81,7 +81,15 @@ class EmailRepository extends Repository
 
         $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
 
-        Mail::send(new Email($email));
+        if (in_array('outbox', $data['folders'])) {
+            try {
+                Mail::send(new Email($email));
+
+                parent::update([
+                    'folders' => ['inbox', 'sent']
+                ], $email->id);
+            } catch (\Exception $e) {}
+        }
 
         return $email;
     }
@@ -151,6 +159,7 @@ class EmailRepository extends Repository
 
         if (! isset($email)) {
             $email = $this->create(array_merge($headers, [
+                'folders'       => ['inbox'],
                 'reply'         => $this->htmlFilter->HTMLFilter($reply, ''),
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',

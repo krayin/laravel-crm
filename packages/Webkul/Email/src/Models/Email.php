@@ -12,6 +12,7 @@ class Email extends Model implements EmailContract
     protected $table = 'emails';
 
     protected $casts = [
+        'folders'       => 'array',
         'sender'        => 'array',
         'from'          => 'array',
         'reply_to'      => 'array',
@@ -30,9 +31,10 @@ class Email extends Model implements EmailContract
         'source',
         'name',
         'user_type',
-        'is_trashed',
-        'sender',
+        'is_read',
+        'folders',
         'from',
+        'sender',
         'reply_to',
         'cc',
         'bcc',
