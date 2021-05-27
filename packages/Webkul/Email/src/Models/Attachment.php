@@ -7,7 +7,7 @@ use Webkul\Email\Contracts\Attachment as AttachmentContract;
 
 class Attachment extends Model implements AttachmentContract
 {
-    protected $table = 'email_thread_attachments';
+    protected $table = 'email_attachments';
 
     /**
      * The attributes that are mass assignable.
@@ -19,14 +19,15 @@ class Attachment extends Model implements AttachmentContract
         'path',
         'size',
         'content_type',
-        'email_thread_id',
+        'content_id',
+        'email_id',
     ];
 
     /**
-     * Get the thread.
+     * Get the email.
      */
-    public function thread()
+    public function email()
     {
-        return $this->belongsTo(ThreadProxy::modelClass());
+        return $this->belongsTo(EmailProxy::modelClass());
     }
 }

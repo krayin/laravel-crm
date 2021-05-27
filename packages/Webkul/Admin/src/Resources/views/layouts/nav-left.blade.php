@@ -4,7 +4,7 @@
     <ul class="menubar">
         @foreach ($menu->items as $menuItem)
             <li class="menu-item {{ Menu::getActive($menuItem) }}">
-                <a href="{{ count($menuItem['children']) ? current($menuItem['children'])['url'] : $menuItem['url'] }}">
+                <a href="{{ $menuItem['url'] }}">
                     <span class="icon {{ $menuItem['icon-class'] }}"></span>
                     
                     <span class="menu-label">{{ $menuItem['name'] }}</span>

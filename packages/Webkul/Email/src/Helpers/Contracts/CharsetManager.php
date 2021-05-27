@@ -1,9 +1,8 @@
 <?php 
-namespace Webkul\TicketBundle\Lib\Contracts;
+namespace Webkul\Email\Helpers\Contracts;
 
 interface CharsetManager
 {
-
     /**
      * Decode the string from Charset
      * @return String the decoded string

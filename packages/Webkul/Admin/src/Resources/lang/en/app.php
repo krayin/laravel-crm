@@ -25,6 +25,17 @@
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',
+            'mail'          => [
+                'title'   => 'Mail',
+                'compose' => 'Compose',
+                'inbox'   => 'Inbox',
+                'draft'   => 'Draft',
+                'outbox'  => 'Outbox',
+                'sent'    => 'Sent',
+                'trash'   => 'Trash',
+                'setting' => 'Setting',
+            ],
+            'activities'    => 'Activities',
             'contacts'      => 'Contacts',
             'persons'       => 'Persons',
             'organizations' => 'Organizations',
@@ -135,6 +146,22 @@
             'lunch-scheduled'          => 'Lunch scheduled at :from - :to',
             'email-scheduled'          => 'Email scheduled at :from - :to',
             'file-added'               => 'File added',
+        ],
+
+        'mail' => [
+            'compose'        => 'Compose',
+            'inbox'          => 'Inbox',
+            'draft'          => 'Draft',
+            'outbox'         => 'Outbox',
+            'sent'           => 'Sent',
+            'trash'          => 'Trash',
+            'setting'        => 'Setting',
+            'send'           => 'Send',
+            'back'           => 'Back',
+            'save-to-draft'  => 'Save to Draft',
+            'create-success' => 'Email sent successfully.',
+            'delete-success' => 'Email deleted successfully.',
+            'delete-failed'  => 'Email can not be deleted.',
         ],
 
         'activities' => [
@@ -302,7 +329,6 @@
             'price'             => 'Price',
             'email'             => 'Email',
             'subject'           => 'Subject',
-            'emails'            => 'Emails',
             'emails'            => 'Emails',
             'stage'             => 'Stage',
             'status'            => 'Status',

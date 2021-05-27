@@ -244,9 +244,13 @@
             </tab>
 
             <tab name="{{ __('admin::app.leads.email') }}">
-                <form action="{{ route('admin.emails.store', $lead->id) }}" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
+                <form action="{{ route('admin.mail.store') }}" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
 
                     @csrf()
+
+                    <input type="hidden" name="lead_id" value="{{ $lead->id }}"/>
+
+                    @include ('admin::common.custom-attributes.edit.email-tags')
 
                     <div class="form-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                         <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
@@ -324,23 +328,6 @@
                 </form>
             </tab>
         </tabs>
-    </script>
-
-    <script type="text/x-template" id="email-tags-component-template">
-        <div class="tags-control control">
-            <ul class="tags">
-                <li class="tag-choice" v-for="email in emails">
-                    <input type="hidden" :name="controlName" :value="email"/>
-                    @{{ email }}
-                    <i class="icon close-icon" @click="removeTag(email)"></i>
-                </li>
-
-                <li class="tag-input">
-                    <input type="hidden" v-validate="validations" :name="controlName" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-if="! emails.length"/>
-                    <input type="text" :name="controlName" v-validate="'email'" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-model="email_term" @keydown.enter.prevent="addTag" placeholder="{{ __('admin::app.leads.email-placeholder') }}">
-                </li>
-            </ul>
-        </div>
     </script>
 
     <script type="text/x-template" id="activity-list-component-template">
@@ -456,37 +443,6 @@
                             e.target.submit();
                         }
                     });
-                }
-            }
-        });
-
-        Vue.component('email-tags-component', {
-
-            template: '#email-tags-component-template',
-
-            props: ['controlName', 'controlLabel', 'validations'],
-
-            inject: ['$validator'],
-
-            data: function () {
-                return {
-                    emails: [],
-
-                    email_term: '',
-                }
-            },
-
-            methods: {
-                addTag: function() {
-                    this.emails.push(this.email_term)
-
-                    this.email_term = '';
-                },
-
-                removeTag: function(email) {
-                    const index = this.emails.indexOf(email);
-
-                    Vue.delete(this.emails, index);
                 }
             }
         });
