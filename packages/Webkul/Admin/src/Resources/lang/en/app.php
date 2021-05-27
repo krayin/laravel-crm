@@ -142,6 +142,7 @@
         ],
 
         'mail' => [
+            'title'          => 'Mail - :type',
             'compose'        => 'Compose',
             'inbox'          => 'Inbox',
             'draft'          => 'Draft',
@@ -153,6 +154,7 @@
             'back'           => 'Back',
             'save-to-draft'  => 'Save to Draft',
             'create-success' => 'Email sent successfully.',
+            'saved-to-draft' => 'Email saved to draft.',
             'delete-success' => 'Email deleted successfully.',
             'delete-failed'  => 'Email can not be deleted.',
         ],
