@@ -1,9 +1,14 @@
 {
     "/js/admin.js": "/js/admin.js?id=373c7d185b2823978adb",
-    "/css/admin.css": "/css/admin.css?id=116ad31b63f95743bfe1",
+    "/css/admin.css": "/css/admin.css?id=404ee37df7a9a6f1bb4c",
+    "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
+    "/images/activities-icon.svg": "/images/activities-icon.svg?id=323f3f274df979c3ac21",
     "/images/avatar-icon.svg": "/images/avatar-icon.svg?id=138110db59ab81030a21",
     "/images/dashboard-active-icon.svg": "/images/dashboard-active-icon.svg?id=0a8aa85a7bf837ce0ec6",
     "/images/dashboard-icon.svg": "/images/dashboard-icon.svg?id=00efeb765d72f3fd86d4",
+    "/images/email-send-icon.svg": "/images/email-send-icon.svg?id=4d4380245ae9ac63c97a",
+    "/images/emails-active-icon.svg": "/images/emails-active-icon.svg?id=419a405cc6a99593c02c",
+    "/images/emails-icon.svg": "/images/emails-icon.svg?id=f3c561cf1bbc740dc2ff",
     "/images/leads-active-icon.svg": "/images/leads-active-icon.svg?id=9bf213ff0cb682061f2d",
     "/images/leads-icon.svg": "/images/leads-icon.svg?id=369fff6ccd0dd6865918",
     "/images/logo.svg": "/images/logo.svg?id=a11fbf88907a899db54f",
@@ -13,9 +18,6 @@
     "/images/products-icon.svg": "/images/products-icon.svg?id=8fde4922886ec4f1fcad",
     "/images/settings-active-icon.svg": "/images/settings-active-icon.svg?id=6997c8791cbeea4bf76a",
     "/images/settings-icon.svg": "/images/settings-icon.svg?id=55afb93247c656e5ecd7",
-    "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
-    "/images/activities-icon.svg": "/images/activities-icon.svg?id=323f3f274df979c3ac21",
-    "/images/emails-active-icon.svg": "/images/emails-active-icon.svg?id=419a405cc6a99593c02c",
-    "/images/emails-icon.svg": "/images/emails-icon.svg?id=f3c561cf1bbc740dc2ff",
-    "/images/email-send-icon.svg": "/images/email-send-icon.svg?id=4d4380245ae9ac63c97a"
+    "/images/tools-active-icon.svg": "/images/tools-active-icon.svg?id=af5e0910d6e08c5764ed",
+    "/images/tools-icon.svg": "/images/tools-icon.svg?id=1e98d2c3aa889397e247"
 }

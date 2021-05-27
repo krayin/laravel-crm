@@ -15,6 +15,11 @@
             'products'          => 'Products',
             'top_products'      => 'Top Products',
             'no_record_found'   => 'No record found',
+            'week1'             => 'Week1',
+            'week2'             => 'Week2',
+            'week3'             => 'Week3',
+            'week4'             => 'Week4',
+            'week5'             => 'Week5',
         ],
 
         'layouts' => [
@@ -43,6 +48,8 @@
             'sign-out'      => 'Sign Out',
             'back'          => 'Back',
             'name'          => 'Name',
+            'configuration' => 'Configuration',
+            'activities'    => 'Activities',
         ],
 
         'contacts' => [
@@ -300,6 +307,19 @@
                 'delete-failed'         => 'Attribute can not be deleted.',
                 'user-define-error'     => 'Can not delete system attribute.'
             ],
+        ],
+
+        'configuration' => [
+            'title'             => 'Configuration',
+            'save-btn-title'    => 'Save',
+            'general'           => 'General',
+            'locale'            => 'Locale',
+            'save-message'      => 'Configuration updated successfully!',
+            "emails"            => [
+                'email'                 => 'Email',
+                'notification_label'    => 'Notifications',
+                'new_lead'              => 'New lead',
+            ]
         ],
 
         'datagrid' => [

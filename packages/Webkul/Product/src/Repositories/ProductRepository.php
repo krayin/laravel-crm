@@ -69,4 +69,17 @@ class ProductRepository extends Repository
 
         return $product;
     }
+
+    /**
+     * Retreives customers count based on date
+     *
+     * @return number
+     */
+    public function getProductCount($startDate, $endDate)
+    {
+        return $this
+                ->whereBetween('created_at', [$startDate, $endDate])
+                ->get()
+                ->count();
+    }
 }

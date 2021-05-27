@@ -1,6 +1,7 @@
 {
-    "/js/ui.js": "/js/ui.js?id=2fe55eb59727be5cf344",
-    "/css/ui.css": "/css/ui.css?id=733e72d33a3ad3d371d0",
+    "/js/ui.js": "/js/ui.js?id=255ca2f6420d86180a2b",
+    "/css/ui.css": "/css/ui.css?id=48f9ee5d1ee76a37357b",
+    "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-left-icon.svg": "/images/arrow-left-icon.svg?id=61cff1417c6e047d76f6",
@@ -8,6 +9,7 @@
     "/images/arrow-right-icon.svg": "/images/arrow-right-icon.svg?id=01ac0409d916c6513090",
     "/images/arrow-right-line-icon.svg": "/images/arrow-right-line-icon.svg?id=0fdfb15c1b5a5e16958f",
     "/images/arrow-up-icon.svg": "/images/arrow-up-icon.svg?id=8e55868ef41bd032542e",
+    "/images/attachment-icon.svg": "/images/attachment-icon.svg?id=7f8975406eb4b7e497e7",
     "/images/calendar-icon.svg": "/images/calendar-icon.svg?id=6aef7d52559f9ccbb1c8",
     "/images/circle-check-white-icon.svg": "/images/circle-check-white-icon.svg?id=2a3243f09f873260266d",
     "/images/circle-close-white-icon.svg": "/images/circle-close-white-icon.svg?id=8997edca246b88a9e9a2",
@@ -26,11 +28,9 @@
     "/images/menu-unfold-icon.svg": "/images/menu-unfold-icon.svg?id=89dd855d15302c906ed1",
     "/images/pencil-icon.svg": "/images/pencil-icon.svg?id=146a6381e3805ce04259",
     "/images/pencil-underline-icon.svg": "/images/pencil-underline-icon.svg?id=71376676378bd7548a95",
+    "/images/plus-black-icon.svg": "/images/plus-black-icon.svg?id=9135b4e0e1c239c36981",
     "/images/plus-primary-icon.svg": "/images/plus-primary-icon.svg?id=73c815af620be35c98dc",
     "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
-    "/images/plus-black-icon.svg": "/images/plus-black-icon.svg?id=9135b4e0e1c239c36981",
-    "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
-    "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
-    "/images/attachment-icon.svg": "/images/attachment-icon.svg?id=7f8975406eb4b7e497e7"
+    "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82"
 }

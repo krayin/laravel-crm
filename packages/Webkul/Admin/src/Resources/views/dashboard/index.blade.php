@@ -69,6 +69,7 @@
                     </template>
 
                     <card-component
+                        :index="index"
                         :card-id="card.card_id || ''"
                         :card-type="card.card_type"
                     ></card-component>
@@ -81,6 +82,8 @@
         <div v-if="dataLoaded" class="card-data">
             <bar-chart id="lead-chart" :data="dataCollection.data" v-if="cardType == 'bar_chart'"></bar-chart>
 
+            <line-chart :id="`line-chart-${index}`" :data="dataCollection.data" v-if="cardType == 'line_chart'"></line-chart>
+
             <template v-else-if="['activity', 'stages_bar'].indexOf(cardType) > -1">
                 <h3 v-if="cardType != 'stages_bar'">
                     <template v-for="(header_data, index) in dataCollection.header_data">
@@ -91,18 +94,18 @@
                 <div class="activity bar-data" v-for="(data, index) in dataCollection.data">
                     <span>@{{ data.label }}</span>
                     <div class="bar">
-                        <div class="primary" :style="`width: ${(data.value * 100) / dataCollection.total}%;`"></div>
+                        <div class="primary" :style="`width: ${(data.value * 100) / (dataCollection.total || 10)}%;`"></div>
                     </div>
-                    <span>@{{ `${data.value}/${dataCollection.total}` }}</span>
+                    <span>@{{ `${data.value}/${(dataCollection.total || 10)}` }}</span>
                 </div>
             </template>
 
-            <div class="lead" v-else-if="cardType == 'top_leads'" v-for="(data, index) in dataCollection.data">
-                <label>@{{ data.label }}</label>
+            <div class="lead" v-else-if="cardType == 'top_card'" v-for="(data, index) in dataCollection.data">
+                <label>@{{ data.title }}</label>
 
                 <div class="details">
-                    <span>@{{ data.amount }}</span>
-                    <span>@{{ data.created_at }}</span>
+                    <span>@{{ data.amount | toFixed }}</span>
+                    <span>@{{ data.created_at | formatDate }}</span>
                     <span>
                         <span class="badge badge-round badge-primary" v-if="data.status == 1"></span>
                         <span class="badge badge-round badge-warning" v-else-if="data.status == 2"></span>
@@ -123,7 +126,7 @@
                 <div class="custom-card">{{ __('admin::app.dashboard.custom_card') }}</div>
             </template>
 
-            <template v-if="dataCollection.length == 0">
+            <template v-if="! dataCollection || dataCollection.length == 0 || dataCollection.data.length == 0">
                 <div class="custom-card">
                     {{ __('admin::app.dashboard.no_record_found') }}
                 </div>
@@ -206,7 +209,7 @@
         Vue.component('card-component', {
             template: "#card-template",
 
-            props: ['cardId', 'cardType'],
+            props: ['cardId', 'cardType', 'index'],
 
             data: function () {
                 return {

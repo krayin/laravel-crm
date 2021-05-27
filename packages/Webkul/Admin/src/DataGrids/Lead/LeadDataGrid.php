@@ -112,12 +112,12 @@ class LeadDataGrid extends DataGrid
 
     public function prepareActions()
     {
-        // $this->addAction([
-        //     'title'  => trans('ui::app.datagrid.edit'),
-        //     'method' => 'GET',
-        //     'route'  => 'admin.contacts.persons.edit',
-        //     'icon'   => 'icon pencil-icon',
-        // ]);
+        $this->addAction([
+            'title'  => trans('ui::app.datagrid.edit'),
+            'method' => 'GET',
+            'route'  => 'admin.leads.view',
+            'icon'   => 'icon pencil-icon',
+        ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),

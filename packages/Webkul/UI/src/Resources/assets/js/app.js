@@ -9,6 +9,20 @@ VTooltip.options.disposeTimeout = 0;
 Vue.directive('tooltip', VTooltip.VTooltip)
 Vue.directive('debounce', require('./directives/debounce').default);
 
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        var date = new Date(value);
+        
+        return `${date.getDate()} ${date.toLocaleString('default', {month: 'short'})} ${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+    }
+});
+
+Vue.filter('toFixed', function(value, length) {
+    if (value) {
+        return parseFloat(value).toFixed(length || 2);
+    }
+});
+
 Vue.config.productionTip = false;
 
 Vue.mixin({
@@ -32,6 +46,7 @@ Vue.mixin({
 Vue.component('flash-wrapper', require('./components/flash-wrapper.vue').default);
 Vue.component('flash', require('./components/flash.vue').default);
 Vue.component('bar-chart', require('./components/bar-chart.vue').default);
+Vue.component('line-chart', require('./components/line-chart.vue').default);
 Vue.component('tabs', require('./components/tabs/tabs').default);
 Vue.component('tab', require('./components/tabs/tab').default);
 Vue.component('modal', require('./components/modal').default);

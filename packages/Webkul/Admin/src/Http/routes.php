@@ -225,6 +225,16 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
             });
+
+            // Configuration Routes
+            Route::group([
+                'prefix'    => 'configuration',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Configuration'
+            ], function () {
+                Route::get('{slug?}/{slug2?}', 'ConfigurationController@index')->name('admin.configuration.index');
+
+                Route::post('{slug?}/{slug2?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+            });
         });
     });
 });

@@ -63,6 +63,12 @@
                         url = url ? url : `${window.baseURL}/admin/api/datagrid?table=${self.tableClass}&${newParams}`;
                         self.previousURL = url;
                     }
+
+                    if (Object.keys(window.params).length > 0) {
+                        Object.keys(window.params).forEach(paramKey => {
+                            url += `&${paramKey}=${window.params[paramKey]}`;
+                        });
+                    }
     
                     self.$http.get(url)
                         .then(response => {
