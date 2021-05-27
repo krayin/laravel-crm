@@ -26,7 +26,6 @@
     @yield('meta-content')
 @stop
 
-
 @push('scripts')
     <script>
         window.baseURL = "{{ config('app.url') }}";

@@ -69,6 +69,7 @@
                     </template>
 
                     <card-component
+                        :index="index"
                         :card-id="card.card_id || ''"
                         :card-type="card.card_type"
                     ></card-component>
@@ -81,7 +82,7 @@
         <div v-if="dataLoaded" class="card-data">
             <bar-chart id="lead-chart" :data="dataCollection.data" v-if="cardType == 'bar_chart'"></bar-chart>
 
-            <line-chart id="line-chart" :data="dataCollection.data" v-if="cardType == 'line_chart'"></line-chart>
+            <line-chart :id="`line-chart-${index}`" :data="dataCollection.data" v-if="cardType == 'line_chart'"></line-chart>
 
             <template v-else-if="['activity', 'stages_bar'].indexOf(cardType) > -1">
                 <h3 v-if="cardType != 'stages_bar'">
@@ -208,7 +209,7 @@
         Vue.component('card-component', {
             template: "#card-template",
 
-            props: ['cardId', 'cardType'],
+            props: ['cardId', 'cardType', 'index'],
 
             data: function () {
                 return {

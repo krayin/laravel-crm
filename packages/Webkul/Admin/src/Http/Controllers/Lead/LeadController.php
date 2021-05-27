@@ -66,7 +66,7 @@ class LeadController extends Controller
         Event::dispatch('lead.create.before');
 
         $data = request()->all();
-        $data['user_id'] = $data['status'] = 1;
+        $data['user_id'] = $data['status'] = $data['lead_pipeline_id'] = 1;
 
         $lead = $this->leadRepository->create($data);
 

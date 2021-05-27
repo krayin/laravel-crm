@@ -651,13 +651,14 @@ body {
 
         .label {
             color: $secondary-font-color;
-            width: 30%;
+            width: 35%;
             float: left;
         }
 
         .value {
-            width: 70%;
             float: left;
+            padding-left: 10px;
+            width: calc(65% - 10px);
 
             span.multi-value {
                 border-radius: 30px;
