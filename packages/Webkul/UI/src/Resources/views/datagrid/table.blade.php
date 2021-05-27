@@ -29,5 +29,6 @@
 @push('scripts')
     <script>
         window.baseURL = "{{ config('app.url') }}";
+        window.params = @json(request()->route()->parameters());
     </script>
 @endpush
