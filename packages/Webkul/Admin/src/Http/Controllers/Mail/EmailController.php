@@ -68,6 +68,12 @@ class EmailController extends Controller
 
         Event::dispatch('email.create.after', $email);
 
+        if (request('is_draft')) {
+            session()->flash('success', trans('admin::app.mail.saved-to-draft'));
+
+            return redirect()->route('admin.mail.index', ['route' => 'draft']);
+        }
+
         session()->flash('success', trans('admin::app.mail.create-success'));
 
         return redirect()->back();

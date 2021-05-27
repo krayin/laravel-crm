@@ -358,7 +358,7 @@ class Htmlfilter
 
                 //intentional fall-through
                 case '>':
-                    $attary{$attname} = '"yes"';
+                    $attary[$attname] = '"yes"';
                     
                     return array($tagname, $attary, $tagtype, $lt, $pos);
                     break;
@@ -401,7 +401,7 @@ class Htmlfilter
 
                             $pos++;
 
-                            $attary{$attname} = '\'' . $attval . '\'';
+                            $attary[$attname] = '\'' . $attval . '\'';
                         } elseif ($quot == '"') {
                             $regary = $this->tln_findnxreg($body, $pos + 1, '\"');
 
@@ -413,7 +413,7 @@ class Htmlfilter
 
                             $pos++;
 
-                            $attary{$attname} = '"' . $attval . '"';
+                            $attary[$attname] = '"' . $attval . '"';
                         } else {
                             /**
                              * These are hateful. Look for \s, or >.
@@ -431,13 +431,13 @@ class Htmlfilter
                              */
                             $attval = preg_replace('/\"/s', '&quot;', $attval);
 
-                            $attary{$attname} = '"' . $attval . '"';
+                            $attary[$attname] = '"' . $attval . '"';
                         }
                     } elseif (preg_match('|[\w/>]|', $char)) {
                         /**
                          * That was attribute type 4.
                          */
-                        $attary{$attname} = '"yes"';
+                        $attary[$attname] = '"yes"';
                     } else {
                         /**
                          * An illegal character. Find next '>' and return.
@@ -479,7 +479,7 @@ class Htmlfilter
                     $numval = hexdec($numval);
                 }
 
-                $repl{$matches[0][$i]} = chr($numval);
+                $repl[$matches[0][$i]] = chr($numval);
             }
             
             $attvalue = strtr($attvalue, $repl);
@@ -567,7 +567,7 @@ class Htmlfilter
                 if (preg_match($matchtag, $tagname)) {
                     foreach ($matchattrs as $matchattr) {
                         if (preg_match($matchattr, $attname)) {
-                            unset($attary{$attname});
+                            unset($attary[$attname]);
                             continue;
                         }
                     }
@@ -608,7 +608,7 @@ class Htmlfilter
                             $newvalue = preg_replace($valmatch, $valrepl, $attvalue);
 
                             if ($newvalue != $attvalue) {
-                                $attary{$attname} = $newvalue;
+                                $attary[$attname] = $newvalue;
                                 $attvalue = $newvalue;
                             }
                         }
@@ -732,7 +732,7 @@ class Htmlfilter
         $bEndTag = false;
 
         for ($i=$pos,$iCount=strlen($body);$i<$iCount;++$i) {
-            $char = $body{$i};
+            $char = $body[$i];
 
             switch ($char) {
                 case '<':
@@ -764,7 +764,7 @@ class Htmlfilter
                 case '!':
                     if ($sToken == '<') {
                         // possible comment
-                        if (isset($body{$i+2}) && substr($body,$i,3) == '!--') {
+                        if (isset($body[$i+2]) && substr($body,$i,3) == '!--') {
                             $i = strpos($body,'-->',$i+3);
                             if ($i === false) { // no end comment
                                 $i = strlen($body);
@@ -901,7 +901,7 @@ class Htmlfilter
             }
 
             if (strlen($styledef) > 0){
-                $divattary{"style"} = "\"$styledef\"";
+                $divattary["style"] = "\"$styledef\"";
             }
         }
 
@@ -1014,10 +1014,10 @@ class Htmlfilter
                                 $tagname = "div";
                             }
 
-                            if (isset($open_tags{$tagname}) &&
-                                $open_tags{$tagname} > 0
+                            if (isset($open_tags[$tagname]) &&
+                                $open_tags[$tagname] > 0
                             ) {
-                                $open_tags{$tagname}--;
+                                $open_tags[$tagname]--;
                             } else {
                                 $tagname = false;
                             }
@@ -1063,10 +1063,10 @@ class Htmlfilter
                                 }
 
                                 if ($tagtype == 1) {
-                                    if (isset($open_tags{$tagname})) {
-                                        $open_tags{$tagname}++;
+                                    if (isset($open_tags[$tagname])) {
+                                        $open_tags[$tagname]++;
                                     } else {
-                                        $open_tags{$tagname} = 1;
+                                        $open_tags[$tagname] = 1;
                                     }
                                 }
 
@@ -1226,12 +1226,12 @@ class Htmlfilter
 
         if ($block_external_images) {
             array_push(
-                $bad_attvals{'/.*/'}{'/^src|background/i'}[0],
+                $bad_attvals['/.*/']['/^src|background/i'][0],
                 '/^([\'\"])\s*https*:.*([\'\"])/si'
             );
 
             array_push(
-                $bad_attvals{'/.*/'}{'/^src|background/i'}[1],
+                $bad_attvals['/.*/']['/^src|background/i'][1],
                 "\\1$trans_image_path\\1"
             );
             // array_push(
