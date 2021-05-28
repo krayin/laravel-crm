@@ -21,21 +21,6 @@ class DashboardController extends Controller
 
         $this->cardData = [
             [
-                "card_id"       => "activity",
-                "header_data"   => ["10 Activities", "2 New Leads"],
-                "data"          => [
-                    [
-                        'label' => 'Phone call',
-                        'value' => 2,
-                    ], [
-                        'label' => 'Email',
-                        'value' => 7,
-                    ], [
-                        'label' => 'Meeting',
-                        'value' => 1,
-                    ],
-                ]
-            ], [
                 "card_id"       => "emails",
                 "data"          => [
                     [
@@ -203,6 +188,24 @@ class DashboardController extends Controller
                 break;
 
             case 'activity':
+                $totalCount = 0;
+
+                $activities = app('Webkul\Lead\Repositories\ActivityRepository')
+                                ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
+                                ->groupBy('type')
+                                ->orderBy('count', 'desc')
+                                ->get()
+                                ->toArray();
+
+                foreach ($activities as $activity) {
+                    $totalCount += $activity['count'];
+                }
+
+                $cardData = [
+                    "header_data"   => ["$totalCount " . __("admin::app.dashboard.activities")],
+                    "data" => $activities
+                ];
+
                 break;
                 
             case 'top_leads':
@@ -269,6 +272,14 @@ class DashboardController extends Controller
                 break;
 
             case 'emails':
+                // @TODO
+                $sentEmails = $receivedEmails = $threadEmails = 0;
+                
+                $emailsCollection = app('Webkul\Email\Repositories\EmailRepository')
+                                    ->get()
+                                    ->toArray();
+                
+                dd($emailsCollection);
                 break;
 
             case 'customers':

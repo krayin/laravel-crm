@@ -922,6 +922,12 @@ body {
     
                 &.activity {
                     margin-top: 40px;
+
+                    > span {
+                        &:first-child {
+                            text-transform: capitalize;
+                        }
+                    }
                 }
             }
     

@@ -94,9 +94,9 @@
                 <div class="activity bar-data" v-for="(data, index) in dataCollection.data">
                     <span>@{{ data.label }}</span>
                     <div class="bar">
-                        <div class="primary" :style="`width: ${(data.value * 100) / (dataCollection.total || 10)}%;`"></div>
+                        <div class="primary" :style="`width: ${(data.count * 100) / (dataCollection.total || 10)}%;`"></div>
                     </div>
-                    <span>@{{ `${data.value}/${(dataCollection.total || 10)}` }}</span>
+                    <span>@{{ `${data.count}/${(dataCollection.total || 10)}` }}</span>
                 </div>
             </template>
 
