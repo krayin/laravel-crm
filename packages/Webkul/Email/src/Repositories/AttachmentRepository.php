@@ -42,6 +42,10 @@ class AttachmentRepository extends Repository
      */
     public function uploadAttachments($email, array $data)
     {
+        if (! isset($data['source'])) {
+            return;
+        }
+
         if ($data['source'] == 'email') {
             foreach ($this->emailParser->getAttachments() as $attachment) {
                 Storage::put($path = 'emails/' . $email->id . '/' . $attachment->getFilename(), $attachment->getContent());

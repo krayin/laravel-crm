@@ -18,6 +18,14 @@
 <script>
     export default {
         props: {
+            data: {
+                type: Array|String,
+
+                required: false,
+
+                default: () => ([])
+            },
+
             inputName: {
                 type: String,
 
@@ -33,6 +41,16 @@
                 
                 attachments: []
             }
+        },
+
+        created () {
+            var self = this;
+
+            this.data.forEach(function(attachment) {
+                self.attachments.push(attachment)
+
+                self.attachmentCount++;
+            });
         },
 
         methods: {

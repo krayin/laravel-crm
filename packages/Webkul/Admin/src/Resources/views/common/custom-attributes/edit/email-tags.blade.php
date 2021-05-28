@@ -23,13 +23,13 @@
 
                 template: '#email-tags-component-template',
 
-                props: ['controlName', 'controlLabel', 'validations'],
+                props: ['controlName', 'controlLabel', 'validations', 'data'],
 
                 inject: ['$validator'],
 
                 data: function () {
                     return {
-                        emails: [],
+                        emails: this.data ? this.data : [],
 
                         email_term: '',
                     }

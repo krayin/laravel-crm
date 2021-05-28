@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=255ca2f6420d86180a2b",
-    "/css/ui.css": "/css/ui.css?id=48f9ee5d1ee76a37357b",
+    "/js/ui.js": "/js/ui.js?id=0e7f2b4e87c010a6ad73",
+    "/css/ui.css": "/css/ui.css?id=2c732cb744f7bce73a51",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -32,5 +32,6 @@
     "/images/plus-primary-icon.svg": "/images/plus-primary-icon.svg?id=73c815af620be35c98dc",
     "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
-    "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82"
+    "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
+    "/images/eye-icon.svg": "/images/eye-icon.svg?id=b29def27b6a18899d6f7"
 }
