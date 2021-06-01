@@ -85,7 +85,7 @@
                 :data="dataCollection.data"
                 v-if="
                     cardType == 'bar_chart'
-                    && dataCollection.data.length > 0
+                    && dataCollection
                 "
             ></bar-chart>
 
@@ -94,7 +94,7 @@
                 :data="dataCollection.data"
                 v-if="
                     cardType == 'line_chart'
-                    && dataCollection.data.length > 0
+                    && dataCollection
                 "
             ></line-chart>
 
@@ -145,7 +145,7 @@
                 <div class="custom-card">{{ __('admin::app.dashboard.custom_card') }}</div>
             </template>
 
-            <template v-if="! dataCollection || dataCollection.length == 0 || dataCollection.data.length == 0">
+            <template v-if="! dataCollection || dataCollection.length == 0 || (dataCollection.data && dataCollection.data.length == 0)">
                 <div class="custom-card">
                     {{ __('admin::app.dashboard.no_record_found') }}
                 </div>

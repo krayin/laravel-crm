@@ -104,7 +104,7 @@ class DashboardController extends Controller
             ], [
                 "card_type"     => "custom_card",
                 "card_border"   => "dashed",
-                "selected"      => false,
+                "selected"      => true,
             ]
         ];
     }
@@ -146,10 +146,6 @@ class DashboardController extends Controller
 
         switch ($cardId) {
             case 'leads':
-                $cardData = [
-                    "data" => []
-                ];
-                
                 $labels = $wonLeadsCount = $lostLeadsCount = [];
 
                 for ($index = $totalWeeks; $index >= 1; $index--) {
@@ -193,7 +189,6 @@ class DashboardController extends Controller
                         ]
                     ];
                 }
-
 
                 break;
 
@@ -420,6 +415,9 @@ class DashboardController extends Controller
                 break;
 
             default:
+                $cardData = [
+                    "data" => []
+                ];
         }
 
         if (! $cardData) {
