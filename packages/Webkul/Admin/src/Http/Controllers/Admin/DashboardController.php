@@ -146,6 +146,10 @@ class DashboardController extends Controller
 
         switch ($cardId) {
             case 'leads':
+                $cardData = [
+                    "data" => []
+                ];
+                
                 $labels = $wonLeadsCount = $lostLeadsCount = [];
 
                 for ($index = $totalWeeks; $index >= 1; $index--) {
@@ -168,22 +172,28 @@ class DashboardController extends Controller
                     array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
                 }
 
-                $cardData = [
-                    "data" => [
-                        "labels" => $labels,
-                        "datasets" => [
-                            [
-                                "backgroundColor"   => "#4BC0C0",
-                                "data"              => $wonLeadsCount,
-                                "label"             => "Won",
-                            ], [
-                                "backgroundColor"   => "#FF4D50",
-                                "data"              => $lostLeadsCount,
-                                "label"             => "Lost",
+                $wonLeadsCount = array_filter($wonLeadsCount);
+                $lostLeadsCount = array_filter($lostLeadsCount);
+
+                if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
+                    $cardData = [
+                        "data" => [
+                            "labels"    => $labels,
+                            "datasets"  => [
+                                [
+                                    "backgroundColor"   => "#4BC0C0",
+                                    "data"              => $wonLeadsCount,
+                                    "label"             => "Won",
+                                ], [
+                                    "backgroundColor"   => "#FF4D50",
+                                    "data"              => $lostLeadsCount,
+                                    "label"             => "Lost",
+                                ]
                             ]
                         ]
-                    ]
-                ];
+                    ];
+                }
+
 
                 break;
 
@@ -194,6 +204,7 @@ class DashboardController extends Controller
                                 ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
                                 ->groupBy('type')
                                 ->orderBy('count', 'desc')
+                                ->whereDate('created_at', Carbon::{$day}())
                                 ->get()
                                 ->toArray();
 
@@ -202,9 +213,12 @@ class DashboardController extends Controller
                 }
 
                 $cardData = [
-                    "header_data"   => ["$totalCount " . __("admin::app.dashboard.activities")],
-                    "data" => $activities
+                    "data" => $activities,
                 ];
+
+                if ($totalCount) {
+                    $cardData["header_data"] = ["$totalCount " . __("admin::app.dashboard.activities")];
+                }
 
                 break;
                 
