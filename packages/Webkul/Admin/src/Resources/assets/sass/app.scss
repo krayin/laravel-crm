@@ -996,6 +996,42 @@ body {
     }
 }
 
+.table {
+    tr {
+        td, th {
+            &.subject {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
+
+                .subject-wrapper {
+                    display: flex;
+                    align-items: center;
+                    
+                    .subject-content {
+                        max-width: 100%;
+                        flex: 0 0 auto;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-weight: $font-weight-medium;
+                    }
+
+                    .reply {
+                        flex: 0 1 auto;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                    }
+                }
+            }
+
+            &.name,
+            &.created_at {
+                width: 200px;
+            }
+        }
+    }
+}
+
 .banner {
     &.header-banner {
         width: 100%;

@@ -30,7 +30,7 @@
             </td>
 
             <template v-for="(column, rowIndex) in columns">
-                <td :key="rowIndex" v-html="row[column.index]"></td>
+                <td :key="rowIndex" v-html="row[column.index]" :class="[column.class ? column.class : column.index ]"></td>
             </template>
 
             <td v-if="row['action']">
