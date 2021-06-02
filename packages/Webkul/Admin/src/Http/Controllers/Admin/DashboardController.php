@@ -288,7 +288,7 @@ class DashboardController extends Controller
                                     ->get()
                                     ->toArray();
                 
-                // dd($emailsCollection);
+                dd($emailsCollection);
                 break;
 
             case 'customers':

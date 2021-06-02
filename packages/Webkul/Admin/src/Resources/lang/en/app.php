@@ -147,6 +147,7 @@
             'lunch-scheduled'          => 'Lunch scheduled at :from - :to',
             'email-scheduled'          => 'Email scheduled at :from - :to',
             'file-added'               => 'File added',
+            'lead_stage_updated'       => 'Success: Lead stage updated successfully!',
         ],
 
         'mail' => [

@@ -1,7 +1,7 @@
 // import Vue from 'vue';
 import Vue from 'vue/dist/vue.js';
-import VeeValidate from 'vee-validate';
 import draggable from 'vuedraggable';
+import VeeValidate from 'vee-validate';
 
 import './bootstrap';
 

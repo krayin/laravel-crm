@@ -1,5 +1,8 @@
 import store from './store';
 import VTooltip from 'v-tooltip';
+import vueKanban from 'vue-kanban';
+
+Vue.use(vueKanban);
 
 window.EventBus = new Vue();
 window.debounce = require('./debounce');
@@ -30,6 +33,8 @@ Vue.mixin({
 
 	methods: {
 		addFlashMessages: function (flash) {
+			flash.type = flash.type || "success";
+			
 			window.addFlashMessages(flash);
 		},
 
@@ -74,6 +79,7 @@ Vue.component('tree-view', require('./components/tree-view/tree-view').default);
 Vue.component('tree-item', require('./components/tree-view/tree-item').default);
 Vue.component('tree-checkbox', require('./components/tree-view/tree-checkbox').default);
 Vue.component('tree-radio', require('./components/tree-view/tree-radio').default);
+Vue.component('kanban-component', require('./components/kanban').default);
 
 Vue.mixin(require('./components/trans'));
 

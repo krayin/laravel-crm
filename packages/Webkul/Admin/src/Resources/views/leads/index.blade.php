@@ -20,8 +20,11 @@
     </style>
 @stop
 
-@section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addLeadModal')">{{ __('admin::app.leads.add-title') }}</button>
+@section('table-section')
+    <kanban-component
+        get-url="{{ route('admin.leads.kanban.index') }}"
+        update-url="{{ route('admin.leads.kanban.update') }}"
+    ></kanban-component>
 @stop
 
 @section('meta-content')

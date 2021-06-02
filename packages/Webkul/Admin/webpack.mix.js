@@ -20,7 +20,7 @@ mix.js(__dirname + "/src/Resources/assets/js/app.js", "js/admin.js")
     .sass(__dirname + "/src/Resources/assets/sass/app.scss", "css/admin.css")
     .options({
         processCssUrls: false
-    });
+    }).vue();
 
 mix.webpackConfig({
     resolve: {

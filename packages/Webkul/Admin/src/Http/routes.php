@@ -78,6 +78,10 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
 
+                Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
+
+                Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
+
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
                 Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
