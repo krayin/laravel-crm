@@ -989,3 +989,35 @@ body {
         }
     }
 }
+
+.table {
+    tbody {
+        tr {
+            td {
+                &.subject {
+                    width: 100%;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+
+                    .subject-wrapper {
+                        display: flex;
+                        align-items: center;
+                        
+                        .subject-content {
+                            max-width: 100%;
+                            flex: 0 0 auto;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+
+                        .reply {
+                            flex: 0 1 auto;
+                            overflow: hidden;
+                            text-overflow: ellipsis;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

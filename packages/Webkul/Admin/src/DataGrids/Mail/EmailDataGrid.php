@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Mail;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {
@@ -20,11 +20,35 @@ class EmailDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'             => 'name',
-            'label'             => trans('admin::app.datagrid.name'),
+            'label'             => trans('admin::app.datagrid.from'),
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
+            'filterable_type'   => 'add',
+        ]);
+
+        $this->addColumn([
+            'index'             => 'subject',
+            'label'             => trans('admin::app.datagrid.subject'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => true,
+            'filterable_type'   => 'add',
+            'class'             => 'subject',
+            'closure'           => function ($row) {
+                return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
+            },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'created_at',
+            'label'             => trans('admin::app.datagrid.created_at'),
+            'type'              => 'string',
+            'sortable'          => true,
+            'filterable_type'   => 'date_range',
+            'closure'           => function ($row) {
+                return core()->formatDate($row->created_at);
+            },
         ]);
     }
 

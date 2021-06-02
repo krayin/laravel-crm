@@ -331,6 +331,7 @@
             'type'              => 'Type',
             'price'             => 'Price',
             'email'             => 'Email',
+            'from'              => 'From',
             'subject'           => 'Subject',
             'emails'            => 'Emails',
             'stage'             => 'Stage',
