@@ -6,6 +6,7 @@
             'column'            => 'Column',
             'done'              => 'Done',
             'activity'          => 'Activity',
+            'activities'        => 'Activities',
             'top_leads'         => 'Top Leads',
             'stages'            => 'Stages',
             'emails'            => 'Emails',

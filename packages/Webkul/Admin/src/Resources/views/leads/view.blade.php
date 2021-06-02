@@ -22,10 +22,10 @@
         <div class="page-header">
             <div class="page-title">
                 <h1>{{ $lead->title }}</h1>
+            </div>
 
-                <div class="page-action">
-                    <button class="btn btn-primary btn-md" @click="openModal('updateLeadModal')">Edit</button>
-                </div>
+            <div class="page-action">
+                <button class="btn btn-primary btn-md" @click="openModal('updateLeadModal')">Edit</button>
             </div>
         </div>
 

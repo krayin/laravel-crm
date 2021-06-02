@@ -19,8 +19,10 @@
         {!! view_render_event('admin.anonymous-layout.head') !!}
     </head>
     
-    <body>
+    <body>        
         <div id="app" class="anonymous-layout-container">
+
+            @include("admin::banner.header")
 
             <flash-wrapper ref='flashes'></flash-wrapper>
 
@@ -68,7 +70,7 @@
         <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
         <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
 
-        @stack('javascript')
+        @stack('scripts')
 
         {!! view_render_event('admin.anonymous-layout.body.after') !!}
     </body>

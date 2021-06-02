@@ -80,12 +80,26 @@
 
     <script type="text/x-template" id="card-template">
         <div v-if="dataLoaded" class="card-data">
-            <bar-chart id="lead-chart" :data="dataCollection.data" v-if="cardType == 'bar_chart'"></bar-chart>
+            <bar-chart
+                id="lead-chart"
+                :data="dataCollection.data"
+                v-if="
+                    cardType == 'bar_chart'
+                    && dataCollection
+                "
+            ></bar-chart>
 
-            <line-chart :id="`line-chart-${index}`" :data="dataCollection.data" v-if="cardType == 'line_chart'"></line-chart>
+            <line-chart
+                :id="`line-chart-${index}`"
+                :data="dataCollection.data"
+                v-if="
+                    cardType == 'line_chart'
+                    && dataCollection
+                "
+            ></line-chart>
 
             <template v-else-if="['activity', 'stages_bar'].indexOf(cardType) > -1">
-                <h3 v-if="cardType != 'stages_bar'">
+                <h3 v-if="dataCollection.header_data">
                     <template v-for="(header_data, index) in dataCollection.header_data">
                         @{{ header_data }}
                     </template>
@@ -93,10 +107,15 @@
 
                 <div class="activity bar-data" v-for="(data, index) in dataCollection.data">
                     <span>@{{ data.label }}</span>
+
                     <div class="bar">
-                        <div class="primary" :style="`width: ${(data.value * 100) / (dataCollection.total || 10)}%;`"></div>
+                        <div
+                            class="primary"
+                            :style="`width: ${data.count ? (data.count * 100) / (dataCollection.total || 10) : 0}%;`"
+                        ></div>
                     </div>
-                    <span>@{{ `${data.value}/${(dataCollection.total || 10)}` }}</span>
+
+                    <span>@{{ `${data.count || 0}/${(dataCollection.total || 10)}` }}</span>
                 </div>
             </template>
 
@@ -126,7 +145,7 @@
                 <div class="custom-card">{{ __('admin::app.dashboard.custom_card') }}</div>
             </template>
 
-            <template v-if="! dataCollection || dataCollection.length == 0 || dataCollection.data.length == 0">
+            <template v-if="! dataCollection || dataCollection.length == 0 || (dataCollection.data && dataCollection.data.length == 0)">
                 <div class="custom-card">
                     {{ __('admin::app.dashboard.no_record_found') }}
                 </div>
