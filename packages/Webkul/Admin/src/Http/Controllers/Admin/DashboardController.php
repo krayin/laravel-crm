@@ -21,21 +21,6 @@ class DashboardController extends Controller
 
         $this->cardData = [
             [
-                "card_id"       => "activity",
-                "header_data"   => ["10 Activities", "2 New Leads"],
-                "data"          => [
-                    [
-                        'label' => 'Phone call',
-                        'value' => 2,
-                    ], [
-                        'label' => 'Email',
-                        'value' => 7,
-                    ], [
-                        'label' => 'Meeting',
-                        'value' => 1,
-                    ],
-                ]
-            ], [
                 "card_id"       => "emails",
                 "data"          => [
                     [
@@ -119,7 +104,7 @@ class DashboardController extends Controller
             ], [
                 "card_type"     => "custom_card",
                 "card_border"   => "dashed",
-                "selected"      => false,
+                "selected"      => true,
             ]
         ];
     }
@@ -183,26 +168,53 @@ class DashboardController extends Controller
                     array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
                 }
 
-                $cardData = [
-                    "data" => [
-                        "labels" => $labels,
-                        "datasets" => [
-                            [
-                                "backgroundColor"   => "#4BC0C0",
-                                "data"              => $wonLeadsCount,
-                                "label"             => "Won",
-                            ], [
-                                "backgroundColor"   => "#FF4D50",
-                                "data"              => $lostLeadsCount,
-                                "label"             => "Lost",
+                $wonLeadsCount = array_filter($wonLeadsCount);
+                $lostLeadsCount = array_filter($lostLeadsCount);
+
+                if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
+                    $cardData = [
+                        "data" => [
+                            "labels"    => $labels,
+                            "datasets"  => [
+                                [
+                                    "backgroundColor"   => "#4BC0C0",
+                                    "data"              => $wonLeadsCount,
+                                    "label"             => "Won",
+                                ], [
+                                    "backgroundColor"   => "#FF4D50",
+                                    "data"              => $lostLeadsCount,
+                                    "label"             => "Lost",
+                                ]
                             ]
                         ]
-                    ]
-                ];
+                    ];
+                }
 
                 break;
 
             case 'activity':
+                $totalCount = 0;
+
+                $activities = app('Webkul\Lead\Repositories\ActivityRepository')
+                                ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
+                                ->groupBy('type')
+                                ->orderBy('count', 'desc')
+                                ->whereDate('created_at', Carbon::{$day}())
+                                ->get()
+                                ->toArray();
+
+                foreach ($activities as $activity) {
+                    $totalCount += $activity['count'];
+                }
+
+                $cardData = [
+                    "data" => $activities,
+                ];
+
+                if ($totalCount) {
+                    $cardData["header_data"] = ["$totalCount " . __("admin::app.dashboard.activities")];
+                }
+
                 break;
                 
             case 'top_leads':
@@ -269,6 +281,14 @@ class DashboardController extends Controller
                 break;
 
             case 'emails':
+                // @TODO
+                $sentEmails = $receivedEmails = $threadEmails = 0;
+                
+                $emailsCollection = app('Webkul\Email\Repositories\EmailRepository')
+                                    ->get()
+                                    ->toArray();
+                
+                // dd($emailsCollection);
                 break;
 
             case 'customers':
@@ -395,6 +415,9 @@ class DashboardController extends Controller
                 break;
 
             default:
+                $cardData = [
+                    "data" => []
+                ];
         }
 
         if (! $cardData) {

@@ -922,6 +922,12 @@ body {
     
                 &.activity {
                     margin-top: 40px;
+
+                    > span {
+                        &:first-child {
+                            text-transform: capitalize;
+                        }
+                    }
                 }
             }
     
@@ -991,33 +997,106 @@ body {
 }
 
 .table {
-    tbody {
-        tr {
-            td {
-                &.subject {
-                    width: 100%;
-                    overflow: hidden;
-                    text-overflow: ellipsis;
+    tr {
+        td, th {
+            &.subject {
+                width: 100%;
+                overflow: hidden;
+                text-overflow: ellipsis;
 
-                    .subject-wrapper {
-                        display: flex;
-                        align-items: center;
-                        
-                        .subject-content {
-                            max-width: 100%;
-                            flex: 0 0 auto;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                        }
+                .subject-wrapper {
+                    display: flex;
+                    align-items: center;
+                    
+                    .subject-content {
+                        max-width: 100%;
+                        flex: 0 0 auto;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        font-weight: $font-weight-medium;
+                    }
 
-                        .reply {
-                            flex: 0 1 auto;
-                            overflow: hidden;
-                            text-overflow: ellipsis;
-                        }
+                    .reply {
+                        flex: 0 1 auto;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
                     }
                 }
             }
+
+            &.name,
+            &.created_at {
+                width: 200px;
+            }
+        }
+    }
+}
+
+.banner {
+    &.header-banner {
+        width: 100%;
+        z-index: 10;
+        display: none;
+        color: $white;
+        position: fixed;
+        max-height: 50px;
+        padding: 10px 20px;
+        text-align: center;
+        background-color: $primary-color;
+
+        .thumbnail {
+            width: 20px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .hovered-container {
+            top: -28px;
+            z-index: 10;
+            right: 110px;
+            display: none;
+            position: relative;
+
+            &.show {
+                display: inline-block;
+            }
+
+            img {
+                position: absolute;
+            }
+        }
+
+        span {
+            vertical-align: super;
+        }
+
+        i {
+            &.close-white-icon {
+                float: right;
+                cursor: pointer;
+            }
+        }
+    }
+}
+
+body {
+    &.top-banner {
+        .center-box,
+        .navbar-top,
+        .content-container {
+            top: 50px;
+        }
+        
+        .navbar-left {
+            top: 110px;
+        }
+
+        .center-box {
+            position: relative;
+        }
+
+        .header-banner {
+            display: inline-block;
         }
     }
 }

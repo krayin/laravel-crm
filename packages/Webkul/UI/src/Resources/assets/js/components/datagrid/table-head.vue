@@ -28,7 +28,8 @@
                 :key="index"
                 v-text="column.label"
                 @click="column.sortable ? sortCollection(index) : ''"
-                v-for="(column, index) in columns">
+                v-for="(column, index) in columns"
+                :class="[column.class ? column.class : column.index ]">
             </th>
 
             <th v-if="actions.length > 0" class="actions">
