@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
+    
     Route::prefix(config('app.admin_path'))->group(function () {
 
         Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
