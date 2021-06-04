@@ -297,7 +297,28 @@ h5 {
         margin-bottom: 20px;
 
         .table-action {
-            display: inline-block;
+            display: block;
+
+            .icon-container {
+                padding: 5px;
+                cursor: pointer;
+                display: inline-block;
+                border: 1px solid $border-color;
+
+                &:first-child {
+                    border-radius: 3px 0px 0px 3px;
+                }
+
+                &:last-child {
+                    left: -5px;
+                    position: relative;
+                    border-radius: 0px 3px 3px 0px;
+                }
+
+                &.active {
+                    background-color: $secondary-color;
+                }
+            }
         }
     }
 
@@ -310,7 +331,7 @@ h5 {
             background-color: $white;
             border: 1px solid $border-color;
 
-            .control-group {
+            .form-group {
                 margin: 20px 0;
 
                 .middle-text {
@@ -377,8 +398,10 @@ h5 {
             tr {
                 td {
                     padding: 10px;
+                    overflow: hidden;
                     white-space: nowrap;
                     vertical-align: top;
+                    text-overflow: ellipsis;
                     color: $secondary-font-color;
                     border-right: 1px solid $border-color;
                     border-bottom: 1px solid $border-color;

@@ -120,7 +120,7 @@ abstract class DataGrid
 
                 case 'type':
                 case 'duration':
-                    $collection = $this->prepareTabFilter($collection);
+                    $collection = $this->prepareTabFilter($collection, $key, $info);
                     break;
 
                 case 'search':

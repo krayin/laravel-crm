@@ -4,10 +4,11 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\FileRepository;
+use Webkul\Lead\Repositories\StageRepository;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Http\Requests\AttributeForm;
 
 class LeadController extends Controller
 {
@@ -26,6 +27,13 @@ class LeadController extends Controller
     protected $fileRepository;
 
     /**
+     * StageRepository object
+     *
+     * @var \Webkul\Lead\Repositories\StageRepository
+     */
+    protected $stageRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
@@ -35,12 +43,14 @@ class LeadController extends Controller
      */
     public function __construct(
         LeadRepository $leadRepository,
-        FileRepository $fileRepository
-    )
-    {
+        FileRepository $fileRepository,
+        StageRepository $stageRepository
+    ) {
         $this->leadRepository = $leadRepository;
 
         $this->fileRepository = $fileRepository;
+
+        $this->stageRepository = $stageRepository;
 
         request()->request->add(['entity_type' => 'leads']);
     }
@@ -128,6 +138,71 @@ class LeadController extends Controller
         $file = $this->fileRepository->findOrFail($id);
 
         return Storage::download($file->path);
+    }
+
+    /**
+     * Returns json format data of leads for kanban
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function fetchLeads()
+    {
+        $totalCount = [];
+        $searchedKeyword = request()->search ?? '';
+        $currencySymbol = core()->currencySymbol(config('app.currency'));
+
+        $leads = $this->leadRepository
+                    ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name')
+                    ->where("title", 'like', "%$searchedKeyword%")
+                    ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
+                    ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                    ->get()
+                    ->toArray();
+
+        $stages = $this->stageRepository
+                    ->select('name', 'id')
+                    ->get()
+                    ->toArray();
+
+        foreach ($leads as $key => $lead) {
+            foreach ($stages as $stageKey => $stage) {
+                if ($stage['id'] == $lead['lead_stage_id']) {
+                    $totalCount[$stage['name']] = $currencySymbol . $lead['lead_value'];
+                }
+            }
+        }
+
+        $stages = \Arr::pluck($stages, 'name');
+
+        return response()->json([
+            'blocks'        => $leads,
+            'stages'        => $stages,
+            'total_count'   => $totalCount,
+        ]);
+    }
+
+    /**
+     * Update status of a lead
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function updateLeadStage()
+    {
+        $requestParams = request()->all();
+
+        $stages = $this->stageRepository
+                    ->findOneWhere(['name' => $requestParams['status']]);
+
+        $this->leadRepository
+            ->update([
+                "lead_stage_id" => $stages->id,
+                "entity_type"   => "leads",
+            ], $requestParams['id']);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => __("admin::app.leads.lead_stage_updated"),
+        ]);
     }
 
     /*

@@ -1,6 +1,8 @@
 <?php
 
 Route::group(['middleware' => ['web']], function () {
+    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
+    
     Route::prefix(config('app.admin_path'))->group(function () {
 
         Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
@@ -75,6 +77,10 @@ Route::group(['middleware' => ['web']], function () {
                 Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
 
                 Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
+
+                Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
+
+                Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
 
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 

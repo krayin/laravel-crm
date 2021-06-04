@@ -49,8 +49,28 @@
     background-image: url("../images/avatar-icon.svg");
 }
 
+.avatar-dark-icon {
+    background-image: url("../images/avatar-dark-icon.svg");
+}
+
 .email-send-icon {
     background-image: url("../images/email-send-icon.svg");
+}
+
+.table-line-icon {
+    background-image: url("../images/table-line-icon.svg");
+}
+
+.table-line-active-icon {
+    background-image: url("../images/table-line-active-icon.svg");
+}
+
+.layout-column-line-icon {
+    background-image: url("../images/layout-column-line-icon.svg");
+}
+
+.layout-column-line-active-icon {
+    background-image: url("../images/layout-column-line-active-icon.svg");
 }
 
 .menu-item.active,
@@ -86,4 +106,8 @@
     .tools-icon {
         background-image: url("../images/tools-active-icon.svg");
     }
+}
+
+.dollar-circle-icon {
+    background-image: url("../images/dollar-circle-icon.svg");
 }

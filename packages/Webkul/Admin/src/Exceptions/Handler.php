@@ -30,6 +30,10 @@ class Handler extends AppExceptionHandler
     {
         $path = $this->isAdminUri() ? 'admin' : 'front';
 
+        if ($path == "front") {
+            return redirect()->route('admin.session.create');
+        }
+
         if ($exception instanceof HttpException) {
             $statusCode = in_array($exception->getStatusCode(), [401, 403, 404, 503]) ? $exception->getStatusCode() : 500;
 
