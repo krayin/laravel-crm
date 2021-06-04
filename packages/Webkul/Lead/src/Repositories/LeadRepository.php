@@ -3,6 +3,7 @@
 namespace Webkul\Lead\Repositories;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Str;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
@@ -71,9 +72,13 @@ class LeadRepository extends Repository
     public function create(array $data)
     {
         if (isset($data['person']['id'])) {
-            $person = $this->personRepository->update($data['person'], $data['person']['id']);
+            $person = $this->personRepository->update(array_merge($data['person'], [
+                'entity_type' => 'persons',
+            ]), $data['person']['id']);
         } else {
-            $person = $this->personRepository->create($data['person']);
+            $person = $this->personRepository->create(array_merge($data['person'], [
+                'entity_type' => 'persons',
+            ]));
         }
 
         $lead = parent::create(array_merge([
@@ -102,9 +107,43 @@ class LeadRepository extends Repository
      */
     public function update(array $data, $id, $attribute = "id")
     {
-        $lead = parent::update($data, $id);
+        if (isset($data['person']['id'])) {
+            $person = $this->personRepository->update(array_merge($data['person'], [
+                'entity_type' => 'persons',
+            ]), $data['person']['id']);
+        } else {
+            $person = $this->personRepository->create(array_merge($data['person'], [
+                'entity_type' => 'persons',
+            ]));
+        }
+
+        $lead = parent::update(array_merge([
+            'person_id' => $person->id,
+        ], $data), $id);
 
         $this->attributeValueRepository->save($data, $id);
+
+        $previousProductIds = $lead->products()->pluck('id');
+
+        if (isset($data['products'])) {
+            foreach ($data['products'] as $productId => $productInputs) {
+                if (Str::contains($productId, 'product_')) {
+                    $this->productRepository->create(array_merge([
+                        'lead_id' => $lead->id,
+                    ], $productInputs));
+                } else {
+                    if (is_numeric($index = $previousProductIds->search($productId))) {
+                        $previousProductIds->forget($index);
+                    }
+
+                    $this->productRepository->update($productInputs, $productId);
+                }
+            }
+        }
+
+        foreach ($previousProductIds as $productId) {
+            $this->productRepository->delete($productId);
+        }
 
         return $lead;
     }

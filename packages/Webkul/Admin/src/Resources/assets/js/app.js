@@ -2,6 +2,7 @@
 import Vue from 'vue/dist/vue.js';
 import VeeValidate from 'vee-validate';
 import draggable from 'vuedraggable';
+import VueTimeago from 'vue-timeago';
 
 import './bootstrap';
 
@@ -17,6 +18,8 @@ Vue.prototype.$http = axios;
 window.eventBus = new Vue();
 
 Vue.component('draggable', draggable);
+
+Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
 
 $(function() {
     var app = new Vue({
@@ -43,14 +46,14 @@ $(function() {
         },
 
         methods: {
-            onSubmit: function (e) {
+            onSubmit: function (e, formScope = '') {
                 this.toggleButtonDisable(true);
 
                 if (typeof tinyMCE !== 'undefined') {
                     tinyMCE.triggerSave();
                 }
 
-                this.$validator.validateAll().then(result => {
+                this.$validator.validateAll(formScope).then(result => {
                     if (result) {
                         e.target.submit();
                     } else {

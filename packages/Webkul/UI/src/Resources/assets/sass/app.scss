@@ -728,6 +728,14 @@ h5 {
         }
     }
 
+    .control-faker {
+        padding: 10px;
+        margin-top: 10px;
+        margin-bottom: 5px;
+        @include border-radius(3px);
+        border: 1px solid $border-color;
+    }
+
     &.date,
     &.datetime,
     &.time {
@@ -791,7 +799,7 @@ h5 {
         float: left;
 
         .control {
-            height: 192px;
+            height: 203px;
             margin-bottom: 0;
         }
     }

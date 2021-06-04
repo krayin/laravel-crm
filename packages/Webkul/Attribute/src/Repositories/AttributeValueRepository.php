@@ -49,9 +49,9 @@ class AttributeValueRepository extends Repository
      */
     public function save(array $data, $entityId)
     {
-        $conditions = ['entity_type' => request('entity_type')];
+        $conditions = ['entity_type' => $data['entity_type']];
 
-        if (request()->has('quick_add')) {
+        if (isset($data['quick_add'])) {
             $conditions['quick_add'] = 1;
         }
         

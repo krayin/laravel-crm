@@ -25,7 +25,7 @@
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
 
     <script type="text/x-template" id="email-form-template">
-        <form method="POST" action="{{ isset($email) ? route('admin.mail.update', $email->id) : route('admin.mail.store') }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ isset($email) ? route('admin.mail.update', $email->id) : route('admin.mail.store') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
 
             <div class="form-container">
 

@@ -606,7 +606,7 @@ body {
             .icon.trash-icon {
                 position: absolute;
                 right: 0;
-                top: 37px;
+                top: 44px;
                 cursor: pointer;
             }
         }
@@ -1097,6 +1097,87 @@ body {
 
         .header-banner {
             display: inline-block;
+        }
+    }
+}
+
+.email-list {
+    .email-item {
+        margin-bottom: 40px;
+
+        .email-header {
+            margin-bottom: 20px;
+
+            .row {
+                color: $secondary-font-color;
+
+                .label {
+                    font-weight: $font-weight-regular;
+                }
+
+                .value {
+                    font-weight: $font-weight-medium;
+                }
+
+                .time {
+                    float: right;
+                    position: relative;
+                    width: 215px;
+                    text-align: right;
+
+                    > .icon {
+                        transform: rotate(90deg);
+                        cursor: pointer;
+                    }
+
+                    .dropdown-list {
+                        .icon {
+                            margin-right: 15px;
+                        }
+                    }
+                }
+            }
+        }
+
+        .email-content {
+            color: $secondary-font-color;
+            padding: 30px;
+            background-color: $white;
+            border: 1px solid $border-color;
+
+            .attachment-list {
+                margin-top: 30px;
+
+                .attachment-item {
+                    display: block;
+                    margin-bottom: 10px;
+
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+
+                    a {
+                        color: $secondary-font-color;
+                    }
+                }
+            }
+        }
+    }
+
+    .email-action {
+        span {
+            padding: 8px;
+            color: $secondary-font-color;
+            font-weight: $font-weight-medium;
+            cursor: pointer;
+
+            &.reply-button {
+                margin-right: 20px;
+            }
+
+            .icon {
+                margin-right: 10px;
+            }
         }
     }
 }

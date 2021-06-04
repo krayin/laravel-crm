@@ -66,6 +66,7 @@ class LeadController extends Controller
         Event::dispatch('lead.create.before');
 
         $data = request()->all();
+        
         $data['user_id'] = $data['status'] = $data['lead_pipeline_id'] = 1;
 
         $lead = $this->leadRepository->create($data);
@@ -88,6 +89,26 @@ class LeadController extends Controller
         $lead = $this->leadRepository->findOrFail($id);
 
         return view('admin::leads.view', compact('lead'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(AttributeForm $request, $id)
+    {
+        Event::dispatch('lead.update.before');
+
+        $lead = $this->leadRepository->update(request()->all(), $id);
+
+        Event::dispatch('lead.update.after', $lead);
+        
+        session()->flash('success', trans('admin::app.leads.update-success'));
+
+        return redirect()->route('admin.leads.index');
     }
 
     /**

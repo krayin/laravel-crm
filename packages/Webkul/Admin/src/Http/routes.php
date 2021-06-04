@@ -104,12 +104,13 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::put('edit/{id}', 'EmailController@update')->name('admin.mail.update');
 
+                Route::get('attachment-download/{id?}', 'EmailController@download')->name('admin.mail.attachment_download');
+
                 Route::get('{route?}', 'EmailController@index')->name('admin.mail.index');
 
                 Route::get('{route?}/{id?}', 'EmailController@view')->name('admin.mail.view');
 
                 Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
-
             });
 
             // Contacts Routes
