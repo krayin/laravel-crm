@@ -37,12 +37,20 @@ ul.drag-inner-list {
         display: flex;
         align-items: center;
         justify-content: space-between;
+        
+        > div {
+            width: 100%;
 
-        h2 {
-            margin: 0;
-            font-size: 15px;
-            text-transform: uppercase;
-            color: $secondary-font-color;
+            h2 {
+                margin: 0;
+                font-size: 15px;
+                text-transform: uppercase;
+                color: $secondary-font-color;
+
+                span {
+                    color: $success-color;
+                }
+            }
         }
     }
 }

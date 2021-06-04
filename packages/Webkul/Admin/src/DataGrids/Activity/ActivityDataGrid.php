@@ -2,15 +2,73 @@
 
 namespace Webkul\Admin\DataGrids\Activity;
 
+use Carbon\Carbon;
 use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
 
 class ActivityDataGrid extends DataGrid
 {
+    protected $tabFilters = [
+        [
+            'type'      => 'pill',
+            'key'       => 'type',
+            'condition' => 'eq',
+            'values'    => [
+                [
+                    'name'      => 'All',
+                    'isActive'  => true,
+                    'key'       => 'all',
+                ], [
+                    'name'      => 'Call',
+                    'isActive'  => false,
+                    'key'       => 'call',
+                ], [
+                    'name'      => 'Mail',
+                    'isActive'  => false,
+                    'key'       => 'mail',
+                ], [
+                    'name'      => 'Meeting',
+                    'isActive'  => false,
+                    'key'       => 'meeting',
+                ]
+            ]
+        ], [
+            'type'      => 'group',
+            'key'       => 'duration',
+            'condition' => 'eq',
+            'values'    => [
+                [
+                    'name'      => 'Yesterday',
+                    'isActive'  => false,
+                    'key'       => 'yesterday',
+                ], [
+                    'name'      => 'Today',
+                    'isActive'  => false,
+                    'key'       => 'today',
+                ], [
+                    'name'      => 'Tomorrow',
+                    'isActive'  => false,
+                    'key'       => 'tomorrow',
+                ], [
+                    'name'      => 'This week',
+                    'isActive'  => false,
+                    'key'       => 'this_week',
+                ], [
+                    'name'      => 'This month',
+                    'isActive'  => true,
+                    'key'       => 'this_month',
+                ], [
+                    'name'      => 'Custom',
+                    'isActive'  => false,
+                    'key'       => 'custom',
+                ]
+            ]
+        ]
+    ];
+
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('lead_activities')
-            ->addSelect('lead_activities.*');
+        $queryBuilder = DB::table('lead_activities');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -62,7 +120,7 @@ class ActivityDataGrid extends DataGrid
             'sortable'          => true,
             'filterable_type'   => 'date_range',
             'closure'           => function ($row) {
-                return core()->formatDate($row->scheduled_from);
+                return core()->formatDate($row->schedule_from);
             },
         ]);
 
@@ -98,5 +156,56 @@ class ActivityDataGrid extends DataGrid
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'icon trash-icon',
         ]);
+    }
+
+    private function applyDurationFilter($queryBuilder)
+    {
+        $key = "created_at";
+        $duration = request()->duration['eq'] ?? "this_month";
+
+        $endDate = Carbon::now()->format('Y-m-d');
+
+        switch ($duration) {
+            case 'yesterday':
+                $queryBuilder->where(
+                    $key,
+                    Carbon::yesterday()
+                );
+                break;
+
+            case 'today':
+                $queryBuilder->where(
+                    $key,
+                    Carbon::today()
+                );
+                break;
+
+            case 'tomorrow':
+                $queryBuilder->where(
+                    $key,
+                    Carbon::tomorrow()
+                );
+                break;
+
+            case 'this_week':
+                $startDate = Carbon::now()->subDays(7)->format('Y-m-d');
+
+                $queryBuilder->whereBetween(
+                    $key,
+                    [$startDate, $endDate]
+                );
+                break;
+
+            case 'this_month':
+                $startDate = Carbon::now()->subDays(30)->format('Y-m-d');
+
+                $queryBuilder->whereBetween(
+                    $key,
+                    [$startDate, $endDate]
+                );
+                break;
+        }
+
+        return $queryBuilder;
     }
 }

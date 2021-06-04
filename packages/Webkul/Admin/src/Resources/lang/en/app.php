@@ -159,6 +159,7 @@
             'sent'           => 'Sent',
             'trash'          => 'Trash',
             'setting'        => 'Setting',
+            'total'          => 'Total',
             'send'           => 'Send',
             'back'           => 'Back',
             'save-to-draft'  => 'Save to Draft',

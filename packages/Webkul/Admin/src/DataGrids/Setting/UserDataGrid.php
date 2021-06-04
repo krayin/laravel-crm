@@ -8,64 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class UserDataGrid extends DataGrid
 {
-    // protected $tabFilters = [
-    //     [
-    //         'type'      => 'pill',
-    //         'key'       => 'type',
-    //         'condition' => 'eq',
-    //         'values'    => [
-    //             [
-    //                 'name'      => 'All',
-    //                 'isActive'  => true,
-    //                 'key'       => 'all',
-    //             ], [
-    //                 'name'      => 'Call',
-    //                 'isActive'  => false,
-    //                 'key'       => 'call',
-    //             ], [
-    //                 'name'      => 'Mail',
-    //                 'isActive'  => false,
-    //                 'key'       => 'mail',
-    //             ], [
-    //                 'name'      => 'Meeting',
-    //                 'isActive'  => false,
-    //                 'key'       => 'meeting',
-    //             ]
-    //         ]
-    //     ], [
-    //         'type'      => 'group',
-    //         'key'       => 'duration',
-    //         'condition' => 'eq',
-    //         'values'    => [
-    //             [
-    //                 'name'      => 'Yesterday',
-    //                 'isActive'  => true,
-    //                 'key'       => 'yesterday',
-    //             ], [
-    //                 'name'      => 'Today',
-    //                 'isActive'  => false,
-    //                 'key'       => 'today',
-    //             ], [
-    //                 'name'      => 'Tomorrow',
-    //                 'isActive'  => false,
-    //                 'key'       => 'tomorrow',
-    //             ], [
-    //                 'name'      => 'This week',
-    //                 'isActive'  => false,
-    //                 'key'       => 'this_week',
-    //             ], [
-    //                 'name'      => 'This month',
-    //                 'isActive'  => false,
-    //                 'key'       => 'this_month',
-    //             ], [
-    //                 'name'      => 'Custom',
-    //                 'isActive'  => false,
-    //                 'key'       => 'custom',
-    //             ]
-    //         ]
-    //     ]
-    // ];
-
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('users')

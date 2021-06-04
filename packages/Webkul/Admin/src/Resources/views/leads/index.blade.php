@@ -5,27 +5,63 @@
 @stop
 
 @php
+    $viewType = request()->type ?? "table";
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp
 
 @section('css')
     <style>
-        .modal-container .modal-header {
-            border: 0;
-        }
-
-        .modal-container .modal-body {
-            padding: 0;
+        .table-header h1 {
+            padding-bottom: 15px;
         }
     </style>
 @stop
 
-@section('table-section')
-    <kanban-component
-        get-url="{{ route('admin.leads.kanban.index') }}"
-        update-url="{{ route('admin.leads.kanban.update') }}"
-    ></kanban-component>
+@if ($viewType == "kanban")
+    @section('post-heading')
+        <div class="search-filter float-right">
+            <input
+                type="search"
+                class="control"
+                id="search-field"
+                :placeholder="__('ui.datagrid.search')"
+            />
+        </div>
+    @stop
+@endif
+
+@section('table-action')
+    <button class="btn btn-md btn-primary" @click="openModal('addLeadModal')">
+        {{ __('admin::app.leads.add-title') }}
+    </button>
+
+    <div class="float-right">
+        <a
+            @if ($viewType == 'kanban')
+                href="{{ route('admin.leads.index') }}"
+            @endif
+            class="icon-container {{ $viewType == 'kanban' ? '' : 'active' }}">
+            <i class="icon {{ $viewType == 'kanban' ? 'table-line-icon' : 'table-line-active-icon' }}"></i>
+        </a>
+
+        <a
+            @if ($viewType != 'kanban')
+                href="{{ route('admin.leads.index', ['type' => 'kanban']) }}"
+            @endif
+            class="icon-container {{ $viewType == 'kanban' ? 'active' : '' }}">
+            <i class="icon {{ $viewType == 'kanban' ? 'layout-column-line-active-icon' : 'layout-column-line-icon' }}"></i>
+        </a>
+    </div>
 @stop
+
+@if ($viewType == "kanban")
+    @section('table-section')
+        <kanban-component
+            get-url="{{ route('admin.leads.kanban.index') }}"
+            update-url="{{ route('admin.leads.kanban.update') }}"
+        ></kanban-component>
+    @stop
+@endif
 
 @section('meta-content')
     <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">

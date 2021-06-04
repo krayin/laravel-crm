@@ -147,23 +147,37 @@ class LeadController extends Controller
      */
     public function fetchLeads()
     {
+        $totalCount = [];
+        $searchedKeyword = request()->search ?? '';
+        $currencySymbol = core()->currencySymbol(config('app.currency'));
+
         $leads = $this->leadRepository
                     ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name')
+                    ->where("title", 'like', "%$searchedKeyword%")
                     ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                     ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
                     ->get()
                     ->toArray();
 
         $stages = $this->stageRepository
-                    ->select('name')
+                    ->select('name', 'id')
                     ->get()
                     ->toArray();
+
+        foreach ($leads as $key => $lead) {
+            foreach ($stages as $stageKey => $stage) {
+                if ($stage['id'] == $lead['lead_stage_id']) {
+                    $totalCount[$stage['name']] = $currencySymbol . $lead['lead_value'];
+                }
+            }
+        }
 
         $stages = \Arr::pluck($stages, 'name');
 
         return response()->json([
-            'blocks'    => $leads,
-            'stages'    => $stages,
+            'blocks'        => $leads,
+            'stages'        => $stages,
+            'total_count'   => $totalCount,
         ]);
     }
 

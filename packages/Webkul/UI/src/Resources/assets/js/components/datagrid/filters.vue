@@ -99,7 +99,7 @@
                         {{ __('ui.datagrid.filter.date_range') }}
                     </label>
 
-                    <div class="control-group date">
+                    <div class="form-group date">
                         <date>
                             <input
                                 type="text"
@@ -174,7 +174,6 @@
                 ignoreDisplayFilter: ['duration', 'type'],
                 sidebarFilter: false,
                 custom_filter: [null, null],
-                customTabFilter: false,
             }
         },
 
@@ -204,13 +203,6 @@
 
                 this.makeURL();
             }
-        },
-
-        computed: {
-            ...mapState({
-                tableData : state => state.tableData,
-                selectedTableRows : state => state.selectedTableRows,
-            }),
         },
 
         mounted: function () {
