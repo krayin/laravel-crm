@@ -14,6 +14,14 @@
         .table-header h1 {
             padding-bottom: 15px;
         }
+
+        .modal-container .modal-header {
+            border: 0;
+        }
+
+        .modal-container .modal-body {
+            padding: 0;
+        }
     </style>
 @stop
 
@@ -75,7 +83,7 @@
                 <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
             </div>
 
-            <div slot="body">
+            <div slot="body" style="padding: 0">
                 @csrf()
                 
                 <input type="hidden" name="quick_add" value="1"/>
