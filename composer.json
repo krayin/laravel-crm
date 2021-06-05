@@ -1,7 +1,7 @@
 {
-    "name": "laravel/laravel",
+    "name": "bagisto/bagisto-crm",
     "type": "project",
-    "description": "The Laravel Framework.",
+    "description": "Bagisto CRM",
     "keywords": [
         "framework",
         "laravel"
