@@ -49,7 +49,7 @@
 
                 watch: { 
                     data: function(newVal, oldVal) {
-                        this.emails = newVal ? newVal : [{'value': '', 'label': 'work'}];
+                        this.emails = newVal || [{'value': '', 'label': 'work'}];
                     }
                 },
     

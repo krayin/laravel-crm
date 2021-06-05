@@ -113,11 +113,11 @@ return [
         'name'       => 'admin::app.layouts.attributes',
         'route'      => 'admin.settings.attributes.index',
         'sort'       => 3,
-    ], [
-        'key'        => 'configuration',
-        'name'       => 'admin::app.layouts.configuration',
-        'route'      => 'admin.configuration.index',
-        'sort'       => 7,
-        'icon-class' => 'tools-icon',
+    // ], [
+    //     'key'        => 'configuration',
+    //     'name'       => 'admin::app.layouts.configuration',
+    //     'route'      => 'admin.configuration.index',
+    //     'sort'       => 7,
+    //     'icon-class' => 'tools-icon',
     ]
 ];
