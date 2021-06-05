@@ -887,6 +887,15 @@ body {
         }
     }
 
+    .date {
+        text-align: right;
+
+        label,
+        .date-container {
+            display: inline-block;
+        }
+    }
+
     .card {
         min-height: 200px;
         padding: 30px 20px;
