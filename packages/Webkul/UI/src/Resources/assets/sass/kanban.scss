@@ -43,6 +43,7 @@ ul.drag-inner-list {
 
             h2 {
                 margin: 0;
+                margin-bottom: 10px;
                 font-size: 15px;
                 text-transform: uppercase;
                 color: $secondary-font-color;
@@ -50,6 +51,10 @@ ul.drag-inner-list {
                 span {
                     color: $success-color;
                 }
+            }
+
+            a {
+                cursor: pointer;
             }
         }
     }

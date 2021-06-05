@@ -300,7 +300,7 @@ h5 {
             display: block;
 
             .icon-container {
-                padding: 5px;
+                padding: 7px 10px 10px 10px;
                 cursor: pointer;
                 display: inline-block;
                 border: 1px solid $border-color;
@@ -317,6 +317,13 @@ h5 {
 
                 &.active {
                     background-color: $secondary-color;
+                    border-color: $secondary-color;
+                }
+
+                .icon {
+                    vertical-align: middle;
+                    width: 24px;
+                    height: 22px;
                 }
             }
         }

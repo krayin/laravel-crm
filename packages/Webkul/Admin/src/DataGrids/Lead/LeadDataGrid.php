@@ -116,7 +116,7 @@ class LeadDataGrid extends DataGrid
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.leads.view',
-            'icon'   => 'icon pencil-icon',
+            'icon'   => 'icon eye-icon',
         ]);
 
         $this->addAction([
