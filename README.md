@@ -79,7 +79,7 @@ http(s)://example.com
 ~~~
 
 ~~~
-2. php artisan bagisto:install
+2. php artisan bagisto-crm:install
 ~~~
 
 **To execute Bagisto**:
