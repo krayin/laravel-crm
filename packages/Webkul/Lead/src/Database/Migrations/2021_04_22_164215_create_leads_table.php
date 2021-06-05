@@ -36,7 +36,7 @@ class CreateLeadsTable extends Migration
             $table->integer('lead_type_id')->unsigned();
             $table->foreign('lead_type_id')->references('id')->on('lead_types')->onDelete('cascade');
 
-            $table->integer('lead_pipeline_id')->unsigned();
+            $table->integer('lead_pipeline_id')->unsigned()->nullable();
             $table->foreign('lead_pipeline_id')->references('id')->on('lead_pipelines')->onDelete('cascade');
 
             $table->integer('lead_stage_id')->unsigned();
