@@ -56,13 +56,15 @@ return [
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'trash'],
         'sort'       => 5,
-    ], [
-        'key'        => 'mail.setting',
-        'name'       => 'admin::app.layouts.mail.setting',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'setting'],
-        'sort'       => 5,
-    ], [
+    ]
+    // , [
+    //     'key'        => 'mail.setting',
+    //     'name'       => 'admin::app.layouts.mail.setting',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'setting'],
+    //     'sort'       => 5,
+    // ]
+    , [
         'key'        => 'activities',
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
