@@ -104,7 +104,7 @@ class DashboardController extends Controller
             ], [
                 "card_type"     => "custom_card",
                 "card_border"   => "dashed",
-                "selected"      => true,
+                "selected"      => false,
             ]
         ];
     }
@@ -118,7 +118,10 @@ class DashboardController extends Controller
     {
         $cards = $this->cards;
 
-        return view('admin::dashboard.index', compact('cards'));
+        $endDate = Carbon::now()->format('Y-m-d');
+        $startDate = Carbon::now()->subMonth()->addDays(1)->format('Y-m-d');
+
+        return view('admin::dashboard.index', compact('cards', 'startDate', 'endDate'));
     }
 
     /**
@@ -144,6 +147,12 @@ class DashboardController extends Controller
         $day = $requestData['filter'] ?? "today";
         $month = $requestData['filter'] ?? "this_month";
 
+        $dateRange = $requestData['date-range'] ?? Carbon::now()->subMonth()->addDays(1)->format('Y-m-d') . "," . Carbon::now()->format('Y-m-d');
+        $dateRange = explode(",", $dateRange);
+
+        $startDateFilter = $dateRange[0];
+        $endDateFilter = $dateRange[1];
+
         switch ($cardId) {
             case 'leads':
                 $labels = $wonLeadsCount = $lostLeadsCount = [];
@@ -167,9 +176,6 @@ class DashboardController extends Controller
 
                     array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
                 }
-
-                $wonLeadsCount = array_filter($wonLeadsCount);
-                $lostLeadsCount = array_filter($lostLeadsCount);
 
                 if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
                     $cardData = [
@@ -281,14 +287,55 @@ class DashboardController extends Controller
                 break;
 
             case 'emails':
-                // @TODO
-                $sentEmails = $receivedEmails = $threadEmails = 0;
+                $totalEmails = $receivedEmails = $draftEmails = $outboxEmails = $sentEmails = $trashEmails = 0;
                 
                 $emailsCollection = app('Webkul\Email\Repositories\EmailRepository')
+                                    ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
                                     ->get()
                                     ->toArray();
                 
-                dd($emailsCollection);
+                if ($emailsCollection) {
+                    foreach ($emailsCollection as $key => $email) {
+                        if (strpos($email->folders, 'inbox') !== false) {
+                            $receivedEmails++;
+                        } else if (strpos($email->folders, 'draft') !== false) {
+                            $draftEmails++;
+                        } else if (strpos($email->folders, 'outbox') !== false) {
+                            $outboxEmails++;
+                        } else if (strpos($email->folders, 'sent') !== false) {
+                            $sentEmails++;
+                        } else if (strpos($email->folders, 'trash') !== false) {
+                            $trashEmails++;
+                        }
+
+                        $totalEmails++;
+                    }
+                }
+
+                $cardData = [
+                    "data" => [
+                        [
+                            'label' => __("admin::app.mail.total"),
+                            'count' => $totalEmails
+                        ], [
+                            'label' => __("admin::app.mail.inbox"),
+                            'count' => $receivedEmails
+                        ], [
+                            'label' => __("admin::app.mail.draft"),
+                            'count' => $draftEmails
+                        ], [
+                            'label' => __("admin::app.mail.outbox"),
+                            'count' => $outboxEmails
+                        ], [
+                            'label' => __("admin::app.mail.sent"),
+                            'count' => $sentEmails
+                        ], [
+                            'label' => __("admin::app.mail.trash"),
+                            'count' => $trashEmails
+                        ],
+                    ]
+                ];
+
                 break;
 
             case 'customers':
@@ -397,17 +444,6 @@ class DashboardController extends Controller
                                 ->groupBy('product_id')
                                 ->get()
                                 ->toArray();
-
-                // $topProductsCount = $topProducts->count();
-                // $topProductsArray = $topProducts->toArray();
-
-                // foreach ($topProductsArray as $key => $topCustomer) {
-                //     $leadsCount = $this->leadRepository
-                //                 ->where('person_id', $topCustomer['personId'])
-                //                 ->count();
-
-                //     $topProductsArray[$key]['count'] = $leadsCount;
-                // }
 
                 $cardData = [
                     "data" => $topProducts

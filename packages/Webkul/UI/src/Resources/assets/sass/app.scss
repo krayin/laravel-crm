@@ -306,12 +306,12 @@ h5 {
                 border: 1px solid $border-color;
 
                 &:first-child {
+                    left: 5px;
+                    position: relative;
                     border-radius: 3px 0px 0px 3px;
                 }
 
                 &:last-child {
-                    left: -5px;
-                    position: relative;
                     border-radius: 0px 3px 3px 0px;
                 }
 
@@ -324,7 +324,7 @@ h5 {
 
     .table-body {
         .custom-design-container {
-            right: 30px;
+            right: 25px;
             width: 350px;
             padding: 10px;
             position: absolute;
@@ -348,6 +348,11 @@ h5 {
                     }
                 }
             }
+
+            i.close-icon {
+                float: right;
+                cursor: pointer;
+            }
         }
 
         .checkbox {
@@ -367,6 +372,7 @@ h5 {
 
         thead {
             th {
+                width: 100%;
                 padding: 10px;
                 color: $secondary-font-color;
                 font-weight: $font-weight-medium;

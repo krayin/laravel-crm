@@ -10,6 +10,16 @@
 
         <selected-cards-filter></selected-cards-filter>
 
+        {{-- <div class="form-group date">
+            <date>
+                <input type="text" class="control" id="start-date" value="{{ $startDate }}" />
+            </date>
+
+            <date>
+                <input type="text" class="control" id="end-date" value="{{ $endDate }}" />
+            </date>
+        </div> --}}
+
         <cards-collection></cards-collection>
     </div>
 @stop
@@ -70,8 +80,8 @@
 
                     <card-component
                         :index="index"
-                        :card-id="card.card_id || ''"
                         :card-type="card.card_type"
+                        :card-id="card.card_id || ''"
                     ></card-component>
                 </div>
             </template>
@@ -211,6 +221,20 @@
                 this.getDashboardCards();
             },
 
+            mounted: function () {
+                $('#start-date').change(({target}) => {
+                    EventBus.$emit('updateDateRange', {
+                        datesRange : `${$('#start-date').val()},${$('#end-date').val()}`,
+                    });
+                });
+
+                $('#end-date').change(() => {
+                    EventBus.$emit('updateDateRange', {
+                        datesRange : `${$('#start-date').val()},${$('#end-date').val()}`,
+                    });
+                });
+            },
+
             methods: {
                 getDashboardCards: function () {
                     this.$http.get(`{{ route('admin.api.dashboard.cards.index') }}`)
@@ -249,11 +273,19 @@
                         this.getCardData(updatedData.cardId, updatedData.filterValue);
                     }
                 });
+
+                EventBus.$on('updateDateRange', dates => {
+                    this.getCardData(this.cardId, dates.datesRange, "date-range");
+                });
             },
 
             methods: {
-                getCardData: function (cardId, filter) {
-                    this.$http.get(`{{ route('admin.api.dashboard.card.index') }}?card-id=${cardId}${filter ? '&filter=' + filter : ''}`)
+                getCardData: function (cardId, filter, filterKey) {
+                    this.dataLoaded = false;
+
+                    filterKey = filterKey || "filter";
+
+                    this.$http.get(`{{ route('admin.api.dashboard.card.index') }}?card-id=${cardId}${filter ? `&${filterKey}=${filter}` : ''}`)
                         .then(response => {
                             this.dataCollection = response.data;
 

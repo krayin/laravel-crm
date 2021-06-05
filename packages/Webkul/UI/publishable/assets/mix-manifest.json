@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=dfe0458a93718fba812d",
-    "/css/ui.css": "/css/ui.css?id=9ed52f54f3bc64858030",
+    "/js/ui.js": "/js/ui.js?id=611b966d6bad9c1d08a9",
+    "/css/ui.css": "/css/ui.css?id=4d00880c61daa137efb0",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -33,5 +33,12 @@
     "/images/plus-white-icon.svg": "/images/plus-white-icon.svg?id=0e639e9832768721345a",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
-    "/images/eye-icon.svg": "/images/eye-icon.svg?id=b29def27b6a18899d6f7"
+    "/images/eye-icon.svg": "/images/eye-icon.svg?id=b29def27b6a18899d6f7",
+    "/images/forward-icon.svg": "/images/forward-icon.svg?id=f503afbaa6d0a46b0070",
+    "/images/forward-white-icon.svg": "/images/forward-white-icon.svg?id=00f7ad89d944b140fefb",
+    "/images/reply-all-icon.svg": "/images/reply-all-icon.svg?id=944fcfa16bebbbc7a097",
+    "/images/reply-all-white-icon.svg": "/images/reply-all-white-icon.svg?id=ca0d13a44909cb5fe6b4",
+    "/images/reply-icon.svg": "/images/reply-icon.svg?id=2a63fecdadc2d8f380a7",
+    "/images/reply-white-icon.svg": "/images/reply-white-icon.svg?id=df45b128c21e5b09fb7b",
+    "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e"
 }

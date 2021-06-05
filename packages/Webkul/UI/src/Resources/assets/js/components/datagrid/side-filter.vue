@@ -178,6 +178,8 @@
             removeAll: function () {
                 this.$store.state.filters = [];
 
+                this.toggleSidebarFilter();
+
                 this.$forceUpdate();
             },
 

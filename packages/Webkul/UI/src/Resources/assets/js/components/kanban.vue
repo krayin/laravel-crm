@@ -5,6 +5,8 @@
                 {{ stage }}
                 <span class="float-right">{{ totalCounts[stage] || 0 }}</span>
             </h2>
+
+            <a @click="openAddModal">{{ detailText }}</a>
         </div>
 
         <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">
@@ -17,7 +19,7 @@
             </div>
             
             <div class="lead-cost">
-                <i class="icon dollar-circle-icon"></i> {{ block.lead_value }}
+                <i class="icon dollar-circle-icon"></i> {{ currencySymbol }}{{ block.lead_value }}
             </div>
         </div>
     </kanban-board>
@@ -25,14 +27,15 @@
 
 <script>
     export default {
-        props: ['getUrl', 'updateUrl'],
+        props: ['getUrl', 'updateUrl', 'detailText'],
 
         data: function () {
             return {
                 stages: [],
                 blocks: [],
-                totalCounts: [],
                 debounce: null,
+                totalCounts: [],
+                currencySymbol: '',
             }
         },
 
@@ -57,6 +60,7 @@
                         this.stages = response.data.stages;
                         this.blocks = response.data.blocks;
                         this.totalCounts = response.data.total_count;
+                        this.currencySymbol = response.data.currency_symbol;
                     })
                     .catch(error => {});
             },
@@ -74,6 +78,10 @@
 
             search: function (searchedKeyword) {
                 this.getData(searchedKeyword);
+            },
+
+            openAddModal: function () {
+                $('#add-new').click();
             }
         }
     }

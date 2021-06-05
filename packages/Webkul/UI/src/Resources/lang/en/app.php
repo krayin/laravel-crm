@@ -49,6 +49,8 @@
                 'done'          => 'Done',
                 'to'            => 'to',
                 'date_range'    => 'Date Range',
+                'start_date'    => 'Start Date',
+                'end_date'      => 'End Date',
             ],
         ]
     ];

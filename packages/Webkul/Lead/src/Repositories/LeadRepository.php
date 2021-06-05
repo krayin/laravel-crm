@@ -107,19 +107,23 @@ class LeadRepository extends Repository
      */
     public function update(array $data, $id, $attribute = "id")
     {
-        if (isset($data['person']['id'])) {
-            $person = $this->personRepository->update(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]), $data['person']['id']);
-        } else {
-            $person = $this->personRepository->create(array_merge($data['person'], [
-                'entity_type' => 'persons',
-            ]));
+        if (isset($data['person'])) {
+            if (isset($data['person']['id'])) {
+                $person = $this->personRepository->update(array_merge($data['person'], [
+                    'entity_type' => 'persons',
+                ]), $data['person']['id']);
+            } else {
+                $person = $this->personRepository->create(array_merge($data['person'], [
+                    'entity_type' => 'persons',
+                ]));
+            }
+
+            $data = array_merge([
+                'person_id' => $person->id,
+            ], $data);
         }
 
-        $lead = parent::update(array_merge([
-            'person_id' => $person->id,
-        ], $data), $id);
+        $lead = parent::update($data, $id);
 
         $this->attributeValueRepository->save($data, $id);
 
