@@ -3,10 +3,12 @@
 namespace Webkul\Admin\Http\Controllers\Mail;
 
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Email\Mails\Email;
+use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Email\Repositories\EmailRepository;
+use Webkul\Email\Repositories\AttachmentRepository;
 
 class EmailController extends Controller
 {
@@ -18,15 +20,28 @@ class EmailController extends Controller
     protected $emailRepository;
 
     /**
+     * AttachmentRepository object
+     *
+     * @var \Webkul\Email\Repositories\AttachmentRepository
+     */
+    protected $attachmentRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param \Webkul\Email\Repositories\EmailRepository  $emailRepository
+     * @param \Webkul\Email\Repositories\AttachmentRepository  $attachmentRepository
      *
      * @return void
      */
-    public function __construct(EmailRepository $emailRepository)
+    public function __construct(
+        EmailRepository $emailRepository,
+        AttachmentRepository $attachmentRepository
+    )
     {
         $this->emailRepository = $emailRepository;
+
+        $this->attachmentRepository = $attachmentRepository;
     }
 
     /**
@@ -52,7 +67,7 @@ class EmailController extends Controller
      */
     public function view()
     {
-        $email = $this->emailRepository->findOrFail(request('id'));
+        $email = $this->emailRepository->with('attachments')->findOrFail(request('id'));
 
         if (request('route') == 'draft') {
             return view('admin::mail.compose', compact('email'));
@@ -170,6 +185,19 @@ class EmailController extends Controller
         $this->emailRepository->processInboundParseMail($emailContent);
 
         return response()->json([], 200);
+    }
+
+    /**
+     * Download file from storage
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function download($id)
+    {
+        $attachment = $this->attachmentRepository->findOrFail($id);
+
+        return Storage::download($attachment->path);
     }
 
     /*

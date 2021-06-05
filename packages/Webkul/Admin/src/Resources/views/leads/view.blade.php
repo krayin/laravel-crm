@@ -106,13 +106,50 @@
                     </div>
     
                     <div class="panel-body" style="position: relative">
-                        @include('admin::leads.common.products')
+                        <div class="lead-product-list">
 
-                        <product-list :data='@json($lead->products)'></product-list>
+                            @foreach ($lead->products as $product)
+                                
+                                <div class="lead-product">
+                                    <div class="top-control-group">
+                                        <div class="form-group">
+                                            <label>{{ __('admin::app.leads.item') }}</label>
+                        
+                                            <div class="control-faker">
+                                                {{ $product->name }}
+                                            </div>
+                                        </div>
+                                    </div>
+                        
+                                    <div class="bottom-control-group" style="padding-right: 0;">
+                                        <div class="form-group">
+                                            <label>{{ __('admin::app.leads.price') }}</label>
+                        
+                                            <div class="control-faker">
+                                                {{ $product->price }}
+                                            </div>
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <label>{{ __('admin::app.leads.quantity') }}</label>
+                        
+                                            <div class="control-faker">
+                                                {{ $product->quantity }}
+                                            </div>
+                                        </div>
+                        
+                                        <div class="form-group">
+                                            <label>{{ __('admin::app.leads.amount') }}</label>
+                        
+                                            <div class="control-faker">
+                                                {{ $product->price * $product->quantity }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
 
-                        <button type="submit" class="btn btn-md btn-primary" style="position: absolute;right: 25px;bottom: 11px;">
-                            Save
-                        </button>
+                        </div>
                     </div>
                 </div>
             </div>

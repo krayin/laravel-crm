@@ -1,7 +1,7 @@
 @extends('ui::datagrid.table')
 
 @section('table-header')
-{{ __('admin::app.mail.' . request('route')) }}
+    {{ __('admin::app.mail.' . request('route')) }}
 @stop
 
 @php
