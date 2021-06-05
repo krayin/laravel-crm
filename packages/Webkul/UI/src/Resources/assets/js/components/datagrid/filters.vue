@@ -99,13 +99,15 @@
                         {{ __('ui.datagrid.filter.date_range') }}
                     </label>
 
+                    <i class="icon close-icon" @click="$store.state.customTabFilter = false"></i>
+
                     <div class="form-group date">
                         <date>
                             <input
                                 type="text"
                                 class="control half"
-                                placeholder="Start Date"
                                 v-model="custom_filter[0]"
+                                :placeholder="__('ui.datagrid.filter.start_date')"
                             />
                         </date>
 
@@ -115,8 +117,8 @@
                             <input
                                 type="text"
                                 class="control half"
-                                placeholder="End Date"
                                 v-model="custom_filter[1]"
+                                :placeholder="__('ui.datagrid.filter.end_date')"
                             />
                         </date>
                     </div>
@@ -221,6 +223,8 @@
                     this.$store.state.customTabFilter = ! this.$store.state.customTabFilter;
                 } else {
                     this.updateFilter(data);
+
+                    this.$store.state.customTabFilter = false;
                 }
             });
         },
@@ -545,15 +549,15 @@
             applyCustomFilter: function () {
                 if (this.custom_filter[0] && this.custom_filter[1]) {
                     var data = {
-                        cond: 'bw',
-                        key: 'duration',
-                        value: `${this.custom_filter[0]},${this.custom_filter[1]}`
+                        cond    : 'bw',
+                        key     : 'duration',
+                        value   : `${this.custom_filter[0]},${this.custom_filter[1]}`
                     }
                     
                     this.updateFilter(data);
-
-                    this.$store.state.customTabFilter = false;
                 }
+
+                this.$store.state.customTabFilter = false;
             },
 
             removeFilter: function (filter) {

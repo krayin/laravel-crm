@@ -31,7 +31,7 @@
 @endif
 
 @section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addLeadModal')">
+    <button class="btn btn-md btn-primary" id="add-new" @click="openModal('addLeadModal')">
         {{ __('admin::app.leads.add-title') }}
     </button>
 
@@ -57,6 +57,7 @@
 @if ($viewType == "kanban")
     @section('table-section')
         <kanban-component
+            detail-text="{{ __('admin::app.leads.add-title') }}"
             get-url="{{ route('admin.leads.kanban.index') }}"
             update-url="{{ route('admin.leads.kanban.update') }}"
         ></kanban-component>
@@ -85,7 +86,7 @@
                             'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'leads',
                                 'quick_add'   => 1
-                            ])
+                            ]),
                         ])
                     </tab>
 

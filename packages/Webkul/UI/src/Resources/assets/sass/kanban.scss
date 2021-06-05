@@ -14,7 +14,7 @@ ul.drag-inner-list {
 }
 
 .drag-list {
-    gap: 10px;
+    gap: 20px;
     display: flex;
     color: $secondary-font-color;
     align-items: flex-start;
@@ -56,9 +56,14 @@ ul.drag-inner-list {
 }
 
 .drag-inner-list {
+    height: 50vh;
     min-height: 50px;
-
+    overflow-y: scroll;
     color: $secondary-font-color;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 
     .drag-item {
         padding: 10px;
@@ -74,8 +79,14 @@ ul.drag-inner-list {
             transform: scale(1.5);
             
         }
+
         .lead-title {
             font-size: 16px;
+            font-weight: 500;
+            color: $font-color;
+        }
+
+        .lead-cost {
             color: $font-color;
         }
 
@@ -84,7 +95,7 @@ ul.drag-inner-list {
             font-size: 14px;
 
             .icon {
-                margin-right: 10px;
+                margin-right: 5px;
                 vertical-align: middle;
             }
         }

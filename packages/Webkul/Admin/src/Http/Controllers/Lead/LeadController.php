@@ -188,7 +188,7 @@ class LeadController extends Controller
         foreach ($leads as $key => $lead) {
             foreach ($stages as $stageKey => $stage) {
                 if ($stage['id'] == $lead['lead_stage_id']) {
-                    $totalCount[$stage['name']] = $currencySymbol . $lead['lead_value'];
+                    $totalCount[$stage['name']] = $currencySymbol . number_format($lead['lead_value']);
                 }
             }
         }
@@ -196,9 +196,10 @@ class LeadController extends Controller
         $stages = \Arr::pluck($stages, 'name');
 
         return response()->json([
-            'blocks'        => $leads,
-            'stages'        => $stages,
-            'total_count'   => $totalCount,
+            'blocks'          => $leads,
+            'stages'          => $stages,
+            'total_count'     => $totalCount,
+            'currency_symbol' => $currencySymbol,
         ]);
     }
 
