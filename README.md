@@ -75,7 +75,7 @@ http(s)://example.com
 ##### Execute these commands below, in order
 
 ~~~
-1. composer create-project bagisto/bagisto
+1. composer create-project bagisto/bagisto-crm
 ~~~
 
 ~~~
