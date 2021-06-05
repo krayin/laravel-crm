@@ -4,6 +4,8 @@ namespace Webkul\Core\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Core\Console\Commands\Install;
+use Webkul\Core\Console\Commands\Version;
 use Webkul\Core\Core;
 use Webkul\Core\Facades\Core as CoreFacade;
 
@@ -33,6 +35,8 @@ class CoreServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerCommands();
+
         $this->registerFacades();
     }
 
@@ -50,5 +54,20 @@ class CoreServiceProvider extends ServiceProvider
         $this->app->singleton('core', function () {
             return app()->make(Core::class);
         });
+    }
+
+    /**
+     * Register the console commands of this package
+     *
+     * @return void
+     */
+    protected function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                Version::class,
+                Install::class,
+            ]);
+        }
     }
 }
