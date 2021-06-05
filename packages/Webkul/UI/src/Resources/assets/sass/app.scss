@@ -414,7 +414,6 @@ h5 {
                     overflow: hidden;
                     white-space: nowrap;
                     vertical-align: top;
-                    text-overflow: ellipsis;
                     color: $secondary-font-color;
                     border-right: 1px solid $border-color;
                     border-bottom: 1px solid $border-color;
@@ -431,6 +430,19 @@ h5 {
 
                     .bold {
                         font-weight: $font-weight-medium;
+                    }
+
+                    &.action {
+                        text-align: center;
+                        
+                        a {
+                            cursor: pointer;
+                            margin-right: 5px;
+
+                            &:last-child {
+                                margin-right: 0;
+                            }
+                        }
                     }
                 }
 
@@ -566,15 +578,16 @@ h5 {
                 .grid-dropdown-header {
                     width: 105px;
                     height: 36px;
-                    font-size: 15px;
+                    font-weight: $font-weight-medium;
                     border-radius: 3px;
                     align-items: center;
                     display: inline-flex;
-                    padding: 0px 5px 0px 5px;
+                    padding: 0px 7px 0px 10px;
                     background-color: $white;
                     color: $secondary-font-color;
                     justify-content: space-between;
-                    border: 1px solid $border-color;
+                    border: 2px solid $secondary-font-color;
+                    vertical-align: middle;
                 
                     .arrow-icon-down {
                         float: right;
@@ -600,7 +613,8 @@ h5 {
                     .control {
                         width: auto;
                         margin: 0;
-                        padding: 8px 10px;
+                        padding: 6px 10px;
+                        border: 2px solid;
                     }
                 }
             }
@@ -657,7 +671,7 @@ h5 {
 
         &.previous,
         &.next {
-            padding: 6px 9px;
+            padding: 7px 9px 8px 9px;
         }
 
         &.previous {
@@ -679,7 +693,6 @@ h5 {
         }
 
         .icon {
-            margin-bottom: 3px;
             vertical-align: middle;
         }
     }
