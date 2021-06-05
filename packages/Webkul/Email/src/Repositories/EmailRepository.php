@@ -127,7 +127,7 @@ class EmailRepository extends Repository
                                ? current(explode('@', $fromNameParts[0]['display']))
                                : $fromNameParts[0]['display'],
             'user_type'     => 'person',
-            'message_id'    => $this->emailParser->getHeader('message-id') ?? time() . '@example.com',
+            'message_id'    => $this->emailParser->getHeader('message-id') ?? time() . '@' . config('mail.domain'),
             'reference_ids' => htmlspecialchars_decode($this->emailParser->getHeader('references')),
             'in_reply_to'   => htmlspecialchars_decode($this->emailParser->getHeader('in-reply-to')),
         ];
@@ -164,7 +164,7 @@ class EmailRepository extends Repository
             $email = $this->create(array_merge($headers, [
                 'folders'       => ['inbox'],
                 'reply'         => $this->htmlFilter->HTMLFilter($reply, ''),
-                'unique_id'     => time() . '@example.com',
+                'unique_id'     => time() . '@' . config('mail.domain'),
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',
             ]));

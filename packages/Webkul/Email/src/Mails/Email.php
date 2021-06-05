@@ -39,7 +39,7 @@ class Email extends Mailable
             ->replyTo($this->email->parent_id ? $this->email->parent->unique_id : $this->email->unique_id)
             ->cc($this->email->cc)
             ->bcc($this->email->bcc)
-            ->subject($this->email->subject)
+            ->subject($this->email->parent_id ? $this->email->parent->subject : $this->email->subject)
             ->html($this->email->reply);
         
         $this->withSwiftMessage(function ($message) {

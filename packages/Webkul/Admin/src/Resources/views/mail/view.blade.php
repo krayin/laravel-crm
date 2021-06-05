@@ -44,20 +44,23 @@
                 </email-item-component>
             </div>
 
-            <div class="email-action">
-                <span class="reply-button" @click="emailAction({'actionType': 'reply'})">
+            <div class="email-action" v-if="! action">
+                <span class="reply-button" @click="emailAction({'type': 'reply'})">
                     <i class="icon reply-icon"></i>
                     {{ __('admin::app.mail.reply') }}
                 </span>
 
-                <span class="forward-button" @click="emailAction({'actionType': 'forward'})">
+                <span class="forward-button" @click="emailAction({'type': 'forward'})">
                     <i class="icon forward-icon"></i>
                     {{ __('admin::app.mail.forward') }}
                 </span>
             </div>
 
-            <div class="email-form-container" v-if="showReplyForm">
-                <email-form :email="actionRequiredEmail"></email-form>
+            <div class="email-form-container" id="email-form-container" v-else>
+                <email-form
+                    :action="action"
+                    @onDiscard="discard($event)"
+                ></email-form>
             </div>
         </div>
     </script>
@@ -94,9 +97,13 @@
                                         <i class="icon forward-icon" :class="{'forward-white-icon': hovering == 'forward-white-icon'}"></i>
                                         {{ __('admin::app.mail.forward') }}
                                     </li>
-                                    <li @mouseover="hovering = 'trash-white-icon'" @mouseout="hovering = ''">
-                                        <i class="icon trash-icon" :class="{'trash-white-icon': hovering == 'trash-white-icon'}"></i>
-                                        {{ __('admin::app.mail.delete') }}
+                                    <li @mouseover="hovering = 'trash-white-icon'" @mouseout="hovering = ''" @click="emailAction('delete')">
+                                        <form :action="'{{ route('admin.mail.delete') }}/' + email.id" method="post" :ref="'form-' + email.id">
+                                            @csrf()
+                                            <input type="hidden" name="_method" value="DELETE"/>
+                                            <i class="icon trash-icon" :class="{'trash-white-icon': hovering == 'trash-white-icon'}"></i>
+                                            {{ __('admin::app.mail.delete') }}
+                                        </form>
                                     </li>
                                 </ul>
                             </div>
@@ -124,7 +131,7 @@
                     </span>
                 </div>
                 
-                <div class="row" v-if="email.cc.length">
+                <div class="row" v-if="email.bcc.length">
                     <span class="label">
                         {{ __('admin::app.mail.bcc-') }}
                     </span>
@@ -151,7 +158,7 @@
     </script>
 
     <script type="text/x-template" id="email-form-template">
-        <form method="POST" action="{{ isset($email) ? route('admin.mail.update', $email->id) : route('admin.mail.store') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.mail.store') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
 
             <div class="form-container">
 
@@ -160,14 +167,14 @@
                     <div class="panel-body">
                         @csrf()
 
-                        <input type="hidden" name="id" :value="email.id"/>
+                        <input type="hidden" name="parent_id" :value="action.email.id"/>
 
                         @include ('admin::common.custom-attributes.edit.email-tags')
 
                         <div class="form-group" :class="[errors.has('reply_to[]') ? 'has-error' : '']">
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
-                            <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data='@json(isset($email) ? $email->reply_to : [])'></email-tags-component>
+                            <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
     
                             <span class="control-error" v-if="errors.has('reply_to[]')">@{{ errors.first('reply_to[]') }}</span>
                         </div>
@@ -175,7 +182,7 @@
                         <div class="form-group" :class="[errors.has('cc[]') ? 'has-error' : '']">
                             <label for="cc">{{ __('admin::app.leads.cc') }}</label>
     
-                            <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='@json(isset($email) ? $email->cc : [])'></email-tags-component>
+                            <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='cc'></email-tags-component>
     
                             <span class="control-error" v-if="errors.has('cc[]')">@{{ errors.first('cc[]') }}</span>
                         </div>
@@ -183,36 +190,30 @@
                         <div class="form-group" :class="[errors.has('bcc[]') ? 'has-error' : '']">
                             <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
     
-                            <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='@json(isset($email) ? $email->bcc : [])'></email-tags-component>
+                            <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='bcc'></email-tags-component>
     
                             <span class="control-error" v-if="errors.has('bcc[]')">@{{ errors.first('bcc[]') }}</span>
                         </div>
                         
-                        <div class="form-group" :class="[errors.has('subject') ? 'has-error' : '']">
-                            <label for="subject" class="required">{{ __('admin::app.leads.subject') }}</label>
-                            <input type="text" v-validate="'required'" class="control" id="subject" name="subject" value="{{ isset($email) ? $email->subject : '' }}" data-vv-as="&quot;{{ __('admin::app.leads.subject') }}&quot;">
-                            <span class="control-error" v-if="errors.has('subject')">@{{ errors.first('subject') }}</span>
-                        </div>
-                        
                         <div class="form-group" :class="[errors.has('reply') ? 'has-error' : '']">
                             <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
-                            <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;">{{ isset($email) ? $email->reply : '' }}</textarea>
+                            <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;">@{{ reply }}</textarea>
                             <span class="control-error" v-if="errors.has('reply')">@{{ errors.first('reply') }}</span>
                         </div>
     
                         <div class="form-group">
-                            <attachment-wrapper :data='@json(isset($email) ? $email->attachments : [])'></attachment-wrapper>
+                            <attachment-wrapper></attachment-wrapper>
                         </div>
                     </div>
 
-                    <div class="panel-header">
-                        <button type="submit" class="btn btn-md btn-primary" @click="is_draft = 0">
+                    <div class="panel-bottom">
+                        <button type="submit" class="btn btn-md btn-primary">
                             <i class="icon email-send-icon"></i>
     
                             {{ __('admin::app.mail.send') }}
                         </button>
     
-                        <a href="{{ route('admin.mail.index') }}">{{ __('admin::app.mail.back') }}</a>
+                        <label @click="discard">{{ __('admin::app.mail.discard') }}</label>
                     </div>
                 </div>
 
@@ -234,19 +235,29 @@
                 return {
                     email: @json($email),
 
-                    showReplyForm: false,
-
-                    actionRequiredEmail: null,
+                    action: null,
                 }
             },
 
             methods: {
                 emailAction: function(event) {
-                    this.actionRequiredEmail = event.email;
+                    this.action = event;
 
-                    if (! this.actionRequiredEmail) {
-                        this.actionRequiredEmail = this.lastEmail();
+                    if (! this.action.email) {
+                        this.action.email = this.lastEmail();
                     }
+
+                    var self = this;
+
+                    setTimeout(function() {
+                        self.scrollBottom();
+                    }, 0);
+                },
+
+                scrollBottom: function() {
+                    var scrollBottom = $(window).scrollTop() + $(window).height();
+
+                    $('html, body').scrollTop(scrollBottom);
                 },
 
                 lastEmail: function() {
@@ -255,6 +266,10 @@
                     }
 
                     return this.email.emails[this.email.emails.length - 1];
+                },
+
+                discard: function() {
+                    this.action = null;
                 }
             },
         });
@@ -274,9 +289,13 @@
             },
 
             methods: {
-                emailAction: function(actionType) {
-                    this.$emit('onEmailAction', {'actionType': '', 'email': this.email});
-                }
+                emailAction: function(type) {
+                    if (type != 'delete') {
+                        this.$emit('onEmailAction', {'type': type, 'email': this.email});
+                    } else {
+                        this.$refs['form-' + this.email.id].submit()
+                    }
+                },
             }
         });
 
@@ -284,7 +303,7 @@
 
             template: '#email-form-template',
 
-            props: ['email'],
+            props: ['action'],
 
             inject: ['$validator'],
 
@@ -294,7 +313,43 @@
                 }
             },
 
+            computed: {
+                reply_to: function() {
+                    if (this.action.type == 'forward') {
+                        return [];
+                    }
+
+                    return [this.action.email.from];
+                },
+
+                cc: function() {
+                    if (this.action.type != 'reply-all') {
+                        return [];
+                    }
+
+                    return this.action.email.cc;
+                },
+
+                bcc: function() {
+                    if (this.action.type != 'reply-all') {
+                        return [];
+                    }
+
+                    return this.action.email.bcc;
+                },
+
+                reply: function() {
+                    if (this.action.type == 'forward') {
+                        return this.action.email.reply;
+                    }
+
+                    return '';
+                }
+            },
+
             mounted: function() {
+                tinymce.remove('#reply');
+
                 tinymce.init({
                     selector: 'textarea#reply',
                     height: 200,
@@ -312,6 +367,10 @@
                             e.target.submit();
                         }
                     });
+                },
+
+                discard: function() {
+                    this.$emit('onDiscard');
                 }
             }
         });

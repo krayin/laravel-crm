@@ -1189,4 +1189,23 @@ body {
             }
         }
     }
+
+    .email-form-container {
+        .panel {
+            .panel-bottom {
+                margin-top: 25px;
+                
+                button.btn {
+                    margin-right: 30px;
+                }
+
+                label {
+                    color: $secondary-font-color;
+                    font-size: 18px;
+                    font-weight: 500;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
 }
