@@ -49,7 +49,7 @@
 
                 watch: { 
                     data: function(newVal, oldVal) {
-                        this.contactNumbers = newVal ? newVal : [{'value': '', 'label': 'work'}];
+                        this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
                     }
                 },
 
