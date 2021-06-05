@@ -35,6 +35,12 @@
                     }
                 },
 
+                watch: { 
+                    data: function(newVal, oldVal) {
+                        this.emails = newVal ? newVal : [];
+                    }
+                },
+
                 methods: {
                     addTag: function() {
                         this.emails.push(this.email_term)
