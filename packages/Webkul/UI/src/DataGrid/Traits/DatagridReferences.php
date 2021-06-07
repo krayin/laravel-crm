@@ -172,6 +172,21 @@ trait DatagridReferences
      */
     protected $tabFilters = [];
 
+    /**
+     * Situation handling property when working with custom columns in datagrid, helps abstaining
+     * aliases on custom column.
+     *
+     * @var bool
+     */
+    protected $enableFilterMap = false;
+
+    /**
+     * This is array where aliases and custom column's name are passed
+     *
+     * @var array
+     */
+    protected $filterMap = [];
+
     abstract public function prepareQueryBuilder();
 
     abstract public function addColumns();

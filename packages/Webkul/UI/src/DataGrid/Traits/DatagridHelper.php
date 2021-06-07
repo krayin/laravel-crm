@@ -7,6 +7,22 @@ use Illuminate\Support\Facades\Event;
 
 trait DatagridHelper
 {
+
+    /**
+     * Add the index as alias of the column and use the column to make things happen
+     *
+     * @param string $alias
+     * @param string $column
+     *
+     * @return void
+     */
+    public function addFilter($alias, $column)
+    {
+        $this->filterMap[$alias] = $column;
+
+        $this->enableFilterMap = true;
+    }
+    
     /**
      * @param string $name
      *

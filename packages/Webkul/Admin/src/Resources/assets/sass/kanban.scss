@@ -76,7 +76,7 @@ ul.drag-inner-list {
         line-height: 30px;
         background: $white;
         transition: $ease-out;
-        border: 1px solid $light-background-color;
+        border: 1px solid $body-background;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
     
         &.is-moving {
