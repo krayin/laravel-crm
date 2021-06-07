@@ -10,15 +10,32 @@ class EmailDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('emails')
-            ->addSelect('*')
+            ->select('emails.id', 'emails.name', 'emails.subject', 'emails.reply', 'emails.created_at', DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.id) as attachments'))
+            ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
+            ->groupBy('emails.id')
             ->where('folders', 'like', '%"' . request('route') . '"%')
             ->whereNull('parent_id');
+
+        $this->addFilter('id', 'emails.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
 
     public function addColumns()
     {
+        $this->addColumn([
+            'index'             => 'attachments',
+            'label'             => '<i class="icon attachment-icon"></i>',
+            'type'              => 'string',
+            'searchable'        => false,
+            'sortable'          => true,
+            'closure'           => function ($row) {
+                if ($row->attachments) {
+                    return '<i class="icon attachment-icon"></i>';
+                }
+            },
+        ]);
+
         $this->addColumn([
             'index'             => 'name',
             'label'             => trans('admin::app.datagrid.from'),
@@ -71,12 +88,18 @@ class EmailDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.mail.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
+            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'email']),
             'icon'         => 'icon trash-icon',
         ]);
     }
 
     public function prepareMassActions()
     {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.mail.mass-delete'),
+            'method' => 'PUT',
+        ]);
     }
 }
