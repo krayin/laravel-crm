@@ -15,7 +15,7 @@
         </header>
         
         <template v-for="(data, key) in tableData.columns">
-            <div :class="`control-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
+            <div :class="`form-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
                 <label>{{ data.label }}</label>
 
                 <div class="field-container">
@@ -88,7 +88,7 @@
                         </select>
                     </template>
 
-                    <i class="icon close-icon ml-10 float-right" @click="removeFilter({type: data.filterable_type, key, index: data.index})"></i>
+                    <i class="icon close-icon" @click="removeFilter({type: data.filterable_type, key, index: data.index})"></i>
 
                     <template v-if="data.filterable_type == 'add' || data.filterable_type == 'dropdown'">
                         <div class="selected-options">

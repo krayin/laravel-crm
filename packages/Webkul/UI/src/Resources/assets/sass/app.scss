@@ -473,6 +473,17 @@ h5 {
             width: 100%;
             margin: 0;
         }
+
+        &.post-heading {
+            height: 36px;
+            width: 280px;
+            float: right;
+            
+            .control {
+                height: 100%;
+                font-size: 15px;
+            }
+        }
     }
 
     .dropdown-container {
@@ -548,14 +559,14 @@ h5 {
         }
 
         .icon-wrapper {
-            border: 2px solid $control-border-color;
+            width: 36px;
+            height: 36px;
+            padding: 3px;
+            float: right;
             border-radius: 3px;
             border-top-left-radius: 0px;
             border-bottom-left-radius: 0px;
-            height: 36px;
-            width: 36px;
-            padding: 3px;
-            float: right;
+            border: 2px solid $control-border-color;
         }
     }
 
@@ -663,9 +674,9 @@ h5 {
         padding: 7px 14px;
         margin-right: 5px;
         background: $white;
+        text-decoration: none;
         display: inline-block;
         vertical-align: middle;
-        text-decoration: none;
         font-size: $font-size-md;
         border: 1px solid $border-color;
 
@@ -1606,6 +1617,7 @@ modal {
 
     .field-container {
         margin-bottom: 10px;
+        padding: 10px 0 0 0;
 
         label {
             font-weight: 500;
@@ -1614,6 +1626,7 @@ modal {
         .control {
             width: 90%;
             margin: 0;
+            padding: 5.5px;
             font-size: $font-size-md;
             padding-left: 15px;
 
@@ -1625,10 +1638,6 @@ modal {
         .middle-text {
             margin: 0 8px;
         }
-    }
-
-    .field-container {
-        padding: 10px 0 0 0;
 
         .date-container {
             display: inline-block;
@@ -1649,15 +1658,11 @@ modal {
             }
         }
 
-        > span {
-            &.control {
-                height: 35px;
-            }
-            
-            ~ i {
-                &.close-icon {
-                    margin-top: 5px;
-                }
+        i {
+            &.close-icon {
+                float: right;
+                margin-top: 5px;
+                margin-left: 10px;
             }
         }
     }
@@ -1670,6 +1675,10 @@ modal {
             color: $secondary-font-color;
             background-color: $light-background-color;
         }
+    }
+
+    .form-group {
+        margin-bottom: 20px;
     }
 
     i {
