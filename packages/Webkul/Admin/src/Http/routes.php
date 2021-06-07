@@ -117,6 +117,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('{route?}/{id?}', 'EmailController@view')->name('admin.mail.view');
 
                 Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
+
+                Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass-delete');
             });
 
             // Contacts Routes

@@ -171,6 +171,7 @@
             'reply-all'       => 'Reply All',
             'forward'         => 'Forward',
             'delete'          => 'Delete',
+            'destroy-success' => 'Selected emails deleted successfully.',
             'save-to-draft'   => 'Save to Draft',
             'create-success'  => 'Email sent successfully.',
             'update-success'  => 'Email updated successfully.',

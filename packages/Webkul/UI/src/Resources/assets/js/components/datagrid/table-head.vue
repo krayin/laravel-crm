@@ -26,7 +26,7 @@
 
             <th
                 :key="index"
-                v-text="column.label"
+                v-html="column.label"
                 @click="column.sortable ? sortCollection(index) : ''"
                 v-for="(column, index) in columns"
                 :class="[column.class ? column.class : column.index ]">
