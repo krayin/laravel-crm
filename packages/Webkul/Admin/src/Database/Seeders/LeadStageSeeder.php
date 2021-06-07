@@ -18,18 +18,21 @@ class LeadStageSeeder extends Seeder
         DB::table('lead_stages')->insert([
             [
                 'id'              => 1,
+                'code'            => 'new',
                 'name'            => 'New',
                 'is_user_defined' => 0,
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
                 'id'              => 2,
+                'code'            => 'won',
                 'name'            => 'Won',
                 'is_user_defined' => 0,
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
                 'id'              => 3,
+                'code'            => 'lost',
                 'name'            => 'Lost',
                 'is_user_defined' => 0,
                 'created_at'      => $now,
