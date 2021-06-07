@@ -33,7 +33,7 @@
                 <td :key="rowIndex" v-html="row[column.index]" :class="[column.class ? column.class : column.index ]"></td>
             </template>
 
-            <td v-if="row['action']">
+            <td v-if="row['action']" class="action">
                 <template v-for="(action, index) in row['action']">
                     <a
                         :key="index"

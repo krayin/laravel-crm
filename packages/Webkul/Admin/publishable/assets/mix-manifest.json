@@ -1,5 +1,5 @@
 {
-    "/js/admin.js": "/js/admin.js?id=9535daeb3fe7c36be492",
+    "/js/admin.js": "/js/admin.js?id=490808f638de1f75db77",
     "/css/admin.css": "/css/admin.css?id=ee3e0d83eb8e409d3da6",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=323f3f274df979c3ac21",
@@ -20,5 +20,9 @@
     "/images/settings-icon.svg": "/images/settings-icon.svg?id=55afb93247c656e5ecd7",
     "/images/tools-active-icon.svg": "/images/tools-active-icon.svg?id=3dc420a57a350cfb07a9",
     "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64",
-    "/images/dollar-circle-icon.svg": "/images/dollar-circle-icon.svg?id=781e6a7fb8ebe441f156"
+    "/images/dollar-circle-icon.svg": "/images/dollar-circle-icon.svg?id=781e6a7fb8ebe441f156",
+    "/images/layout-column-line-active-icon.svg": "/images/layout-column-line-active-icon.svg?id=ef43e1a950584a798341",
+    "/images/layout-column-line-icon.svg": "/images/layout-column-line-icon.svg?id=f24df60872ddb934cc71",
+    "/images/table-line-active-icon.svg": "/images/table-line-active-icon.svg?id=2bb1b3e9f60637957c6d",
+    "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945"
 }
