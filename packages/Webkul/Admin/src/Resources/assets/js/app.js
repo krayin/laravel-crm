@@ -3,6 +3,7 @@ import Vue from 'vue/dist/vue.js';
 import draggable from 'vuedraggable';
 import VueTimeago from 'vue-timeago';
 import VeeValidate from 'vee-validate';
+import VueKanban from 'vue-kanban';
 
 import './bootstrap';
 
@@ -17,9 +18,11 @@ Vue.prototype.$http = axios;
 
 window.eventBus = new Vue();
 
-Vue.component('draggable', draggable);
-
+Vue.use(VueKanban);
 Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
+
+Vue.component('draggable', draggable);
+Vue.component('kanban-component', require('./components/kanban').default);
 
 $(function() {
     var app = new Vue({

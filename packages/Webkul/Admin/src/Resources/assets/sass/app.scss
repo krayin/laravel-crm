@@ -1,6 +1,7 @@
 @import "icons";
 @import "variables";
 @import "mixins";
+@import "kanban";
 
 body {
     margin: 0;
@@ -855,7 +856,11 @@ body {
             }
 
             .cards-options {
+                z-index: 1;
+                width: unset;
+                border: none;
                 position: relative;
+                margin-bottom: 0px;
 
                 > div {
                     top: 20px;
@@ -885,6 +890,11 @@ body {
                 }
             }
         }
+
+        ~ .card-filter-container {
+            z-index: 1;
+            float: right;
+        }
     }
 
     .date {
@@ -906,11 +916,15 @@ body {
         label {
             display: block;
 
-            select {
-                border: none;
-                margin-left: 10px;
-                background-color: $white;
-                color: $secondary-font-color;
+            .card-filter-container {
+                cursor: pointer;
+                margin-left: 5px;
+                display: inline-block;
+                color: $secondary-color;
+
+                .dropdown-toggle {
+                    margin-bottom: 5px;
+                }
             }
         }
 

@@ -133,7 +133,15 @@ trait DatagridCollection
             $collection->where(function ($collection) use ($info) {
                 foreach ($this->completeColumnDetails as $column) {
                     if (isset($column['searchable']) && $column['searchable'] == true) {
-                        $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
+                        if ($this->enableFilterMap && isset($this->filterMap[$column['index']])) {
+                            $collection->orWhere(
+                                $this->filterMap[$column['index']],
+                                'like',
+                                '%' . $info['all'] . '%'
+                            );
+                        } else {
+                            $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
+                        }
                     }
                 }
             });

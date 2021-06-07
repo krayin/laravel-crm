@@ -269,7 +269,7 @@ class EmailController extends Controller
             $email = $this->emailRepository->find($emailId);
 
             if ($email) {
-                // $this->emailRepository->delete($email);
+                $this->emailRepository->delete($email);
 
                 Event::dispatch('email.delete.after', $email);
             }

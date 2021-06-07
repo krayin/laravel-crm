@@ -10,12 +10,13 @@ class EmailDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('emails')
-            ->addSelect('*')
-            // ->addSelect(DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.email_id) as attachments'))
-            // ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
+            ->select('emails.id', 'emails.name', 'emails.subject', 'emails.reply', 'emails.created_at', DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.id) as attachments'))
+            ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
+            ->groupBy('emails.id')
             ->where('folders', 'like', '%"' . request('route') . '"%')
             ->whereNull('parent_id');
 
+        $this->addFilter('id', 'emails.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -29,7 +30,9 @@ class EmailDataGrid extends DataGrid
             'searchable'        => false,
             'sortable'          => true,
             'closure'           => function ($row) {
-                return '<i class="icon attachment-icon"></i>';
+                if ($row->attachments) {
+                    return '<i class="icon attachment-icon"></i>';
+                }
             },
         ]);
 

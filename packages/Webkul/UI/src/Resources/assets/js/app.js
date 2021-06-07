@@ -1,8 +1,10 @@
 import store from './store';
 import VTooltip from 'v-tooltip';
-import vueKanban from 'vue-kanban';
+import DateRangePicker from 'vue2-daterange-picker';
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
 
-Vue.use(vueKanban);
+Vue.use(DateRangePicker);
+Vue.use(require('vue-moment'));
 
 window.EventBus = new Vue();
 window.debounce = require('./debounce');
@@ -79,7 +81,7 @@ Vue.component('tree-view', require('./components/tree-view/tree-view').default);
 Vue.component('tree-item', require('./components/tree-view/tree-item').default);
 Vue.component('tree-checkbox', require('./components/tree-view/tree-checkbox').default);
 Vue.component('tree-radio', require('./components/tree-view/tree-radio').default);
-Vue.component('kanban-component', require('./components/kanban').default);
+Vue.component('date-range', require('./components/date-range').default);
 
 Vue.mixin(require('./components/trans'));
 
@@ -92,6 +94,11 @@ Vue.filter('truncate', function (value, limit, trail) {
 
 	return value.length > limit ? value.substring(0, limit) + trail : value;
 });
+
+Vue.filter('date', function (value) {
+	return value ? moment(val).format("YYYY-MM-DD") : "";
+});
+  
 
 require('flatpickr/dist/flatpickr.css');
 
