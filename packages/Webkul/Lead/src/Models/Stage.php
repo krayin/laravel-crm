@@ -15,6 +15,7 @@ class Stage extends Model implements StageContract
      * @var array
      */
     protected $fillable = [
+        'code',
         'name',
         'is_user_defined',
     ];

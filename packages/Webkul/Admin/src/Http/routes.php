@@ -175,6 +175,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('search', 'ProductController@search')->name('admin.products.search');
 
                 Route::delete('{id}', 'ProductController@destroy')->name('admin.products.delete');
+
+                Route::put('mass-destroy', 'ProductController@massDestroy')->name('admin.products.mass-delete');
             });
 
             // Contacts Routes
