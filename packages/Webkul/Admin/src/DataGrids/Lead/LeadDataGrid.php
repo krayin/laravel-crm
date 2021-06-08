@@ -48,6 +48,10 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
             ;
 
+        if (($user = auth()->guard('user')->user())->lead_view_permission == 'individual') {
+            $queryBuilder->where('leads.user_id', $user->id);
+        }
+
         $this->setQueryBuilder($queryBuilder);
     }
 
