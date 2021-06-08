@@ -51,7 +51,13 @@ class Tree {
 		$children = str_replace('.', '.children.', $item['key']);
 
 		if ($type == 'acl') {
-			$this->roles[$item['route']] = $item['key'];
+			if (is_array($item['route'])) {
+				foreach ($item['route'] as $route) {
+					$this->roles[$route] = $item['key'];
+				}
+			} else {
+				$this->roles[$item['route']] = $item['key'];
+			}
 		}
 
 		core()->array_set($this->items, $children, $item);
