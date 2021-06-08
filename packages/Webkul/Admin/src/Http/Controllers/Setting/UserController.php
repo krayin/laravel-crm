@@ -236,7 +236,7 @@ class UserController extends Controller
 
         return response()->json([
             'status'    => true,
-            'message'   => trans('admin::app.settings.users.mass-destroy-success')
+            'message'   => trans('admin::app.settings.users.mass-delete-success')
         ]);
     }
 }
