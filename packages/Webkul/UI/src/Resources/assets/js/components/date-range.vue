@@ -3,7 +3,6 @@
         ref="picker"
         :class="classes"
         :opens="opens"
-        :locale-data="{ firstDay: 1, format: 'yyyy-mm-dd HH:MM:ss' }"
         :minDate="minDate" :maxDate="maxDate"
         :singleDatePicker="singleDatePicker"
         :timePicker="timePicker"
@@ -35,18 +34,21 @@
     export default {
         components: { DateRangePicker },
 
-        props: ['classes'],
+        props: [
+            'classes',
+            'endDate',
+            'startDate',
+            'update'
+        ],
 
         data: function () {
             return {
                 opens: 'left',
-                minDate: '2019-05-02 04:00:00',
-                maxDate: '2020-12-26 14:00:00',
-                // minDate: '',
-                // maxDate: '',
+                minDate: '2021-05-01',
+                maxDate: this.$moment().format('YYYY-MM-DD'),
                 dateRange: {
-                    startDate: '2019-12-10',
-                    endDate: '2019-12-20',
+                    endDate: this.endDate,
+                    startDate: this.startDate,
                 },
                 single_range_picker: false,
                 show_ranges: true,
@@ -56,7 +58,7 @@
                 showDropdowns: true,
                 autoApply: false,
                 showWeekNumbers: true,
-                linkedCalendars: true,
+                linkedCalendars: false,
                 alwaysShowCalendars: true,
                 appendToBody: false,
                 closeOnEsc: true,
@@ -64,26 +66,27 @@
         },
 
           methods: {
-            updateValues (values) {
-                console.log('event: update', {...values})
+            updateValues: function (values) {
                 this.dateRange.startDate = values.startDate;
                 this.dateRange.endDate = values.endDate;
 
-                // this.dateRange.startDate = dateUtil.format(values.startDate, 'yyyy-mm-dd HH:MM:ss');
-                // this.dateRange.endDate = dateUtil.format(values.endDate, 'yyyy-mm-dd HH:MM:ss');
+                let datesRange = [
+                    this.$moment(this.dateRange.startDate).format('YYYY-MM-DD'),
+                    this.$moment(this.dateRange.endDate).format('YYYY-MM-DD'),
+                ];
+
+                datesRange = datesRange.join(",");
+
+                this.update({datesRange});
             },
 
             checkOpen (open) {
-                console.log('event: open', open)
             },
 
             dateFormat (classes, date) {
                 let yesterday = new Date();
                 let d1 = date
                 let d2 = yesterday.setDate(yesterday.getDate() - 1)
-
-                // let d1 = dateUtil.format(date, 'isoDate')
-                // let d2 = dateUtil.format(yesterday.setDate(yesterday.getDate() - 1), 'isoDate')
 
                 if (!classes.disabled) {
                     classes.disabled = d1 === d2

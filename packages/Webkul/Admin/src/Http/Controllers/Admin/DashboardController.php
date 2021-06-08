@@ -140,7 +140,6 @@ class DashboardController extends Controller
     public function getCardData()
     {
         $cardData = false;
-        $totalWeeks = 4;
         $requestData = request()->all();
 
         $cardId = $requestData['card-id'];
@@ -152,29 +151,39 @@ class DashboardController extends Controller
 
         $startDateFilter = $dateRange[0];
         $endDateFilter = $dateRange[1];
+        
+        $startDate = Carbon::parse($startDateFilter);
+        $endDate = Carbon::parse($endDateFilter);
+
+        $totalWeeks = $startDate->diffInWeeks($endDate);
 
         switch ($cardId) {
             case 'leads':
                 $labels = $wonLeadsCount = $lostLeadsCount = [];
 
-                for ($index = $totalWeeks; $index >= 1; $index--) {
-                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
-                    
-                    $startDate = Carbon::now()->subDays(7 * $index);
-                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
-
-                    if ($month == "last_month") {
-                        $startDate = $startDate->subMonth();
-                        $endDate = $endDate->subMonth();
+                if ($totalWeeks) {
+                    for ($index = $totalWeeks; $index >= 1; $index--) {
+                        list(
+                            'startDate' => $startDate,
+                            'endDate'   => $endDate,
+                            'labels'    => $labels,
+                        ) = $this->getFormattedDateRange([
+                            "start_date"    => $startDateFilter,
+                            "end_date"      => $endDateFilter,
+                            "index"         => $index,
+                            "labels"        => $labels,
+                            "total_weeks"   => $totalWeeks,
+                        ]);
+    
+                        // get leads count
+                        array_push($wonLeadsCount, $this->leadRepository->getLeadsCount("Won", $startDate, $endDate));
+                        array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
                     }
+                } else {
+                    $labels = [__("admin::app.dashboard.week1") ];
                     
-                    $startDate = $startDate->format('Y-m-d');
-                    $endDate = $endDate->format('Y-m-d');
-
-                    // get leads count
-                    array_push($wonLeadsCount, $this->leadRepository->getLeadsCount("Won", $startDate, $endDate));
-
-                    array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
+                    $wonLeadsCount = [$this->leadRepository->getLeadsCount("Won", $startDate, $endDate)];
+                    $lostLeadsCount = [$this->leadRepository->getLeadsCount("Lost", $startDate, $endDate)];
                 }
 
                 if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
@@ -198,6 +207,98 @@ class DashboardController extends Controller
 
                 break;
 
+            case 'products':
+                $labels = $productsCount = [];
+                $productRepository = app('Webkul\Product\Repositories\ProductRepository');
+
+                if ($totalWeeks) {
+                    for ($index = $totalWeeks; $index >= 1; $index--) {
+                        list(
+                            'startDate' => $startDate,
+                            'endDate'   => $endDate,
+                            'labels'    => $labels,
+                        ) = $this->getFormattedDateRange([
+                            "start_date"    => $startDateFilter,
+                            "end_date"      => $endDateFilter,
+                            "index"         => $index,
+                            "labels"        => $labels,
+                            "total_weeks"   => $totalWeeks,
+                        ]);
+    
+                        // get products count
+                        array_push($productsCount, $productRepository->getProductCount($startDate, $endDate));
+                    }
+                } else {
+                    $labels = [__("admin::app.dashboard.week1") ];
+                    $productsCount = [$productRepository->getProductCount($startDate, $endDate)];
+                }
+
+                if (! empty(array_filter($productsCount))) {
+                    $cardData = [
+                        "data" => [
+                            "labels" => $labels,
+                            "datasets" => [
+                                [
+                                    "fill"              => false,
+                                    "tension"           => 0.1,
+                                    "backgroundColor"   => "#4BC0C0",
+                                    "label"             => "Products",
+                                    "borderColor"       => 'rgb(75, 192, 192)',
+                                    "data"              => $productsCount,
+                                ],
+                            ]
+                        ]
+                    ];
+                }
+
+                break;
+
+            case 'customers':
+                $labels = $customersCount = [];
+                $personRepository = app('Webkul\Contact\Repositories\PersonRepository');
+
+                if ($totalWeeks) {
+                    for ($index = $totalWeeks; $index >= 1; $index--) {
+                        list(
+                            'startDate' => $startDate,
+                            'endDate'   => $endDate,
+                            'labels'    => $labels,
+                        ) = $this->getFormattedDateRange([
+                            "start_date"    => $startDateFilter,
+                            "end_date"      => $endDateFilter,
+                            "index"         => $index,
+                            "labels"        => $labels,
+                            "total_weeks"   => $totalWeeks,
+                        ]);
+    
+                        // get customers count
+                        array_push($customersCount, $personRepository->getCustomerCount($startDate, $endDate));
+                    }
+                } else {
+                    $labels = [__("admin::app.dashboard.week1") ];
+                    $customersCount = [$personRepository->getCustomerCount($startDate, $endDate)];
+                }
+
+                if (! empty(array_filter($customersCount))) {
+                    $cardData = [
+                        "data" => [
+                            "labels" => $labels,
+                            "datasets" => [
+                                [
+                                    "fill"              => false,
+                                    "tension"           => 0.1,
+                                    "backgroundColor"   => "#4BC0C0",
+                                    "label"             => "Customers",
+                                    "borderColor"       => 'rgb(75, 192, 192)',
+                                    "data"              => $customersCount,
+                                ],
+                            ]
+                        ]
+                    ];
+                }
+
+                break;
+
             case 'activity':
                 $totalCount = 0;
 
@@ -205,7 +306,7 @@ class DashboardController extends Controller
                                 ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
                                 ->groupBy('type')
                                 ->orderBy('count', 'desc')
-                                ->whereDate('created_at', Carbon::{$day}())
+                                ->whereBetween('created_at', [$startDate, $endDate])
                                 ->get()
                                 ->toArray();
 
@@ -228,7 +329,7 @@ class DashboardController extends Controller
                             ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_stages.name as statusLabel')
                             ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
                             ->orderBy('lead_value', 'asc')
-                            ->whereDate('leads.created_at', Carbon::{$day}())
+                            ->whereBetween('leads.created_at', [$startDate, $endDate])
                             ->limit(3)
                             ->get()
                             ->toArray();
@@ -251,7 +352,7 @@ class DashboardController extends Controller
                     $leadsCount = $this->leadRepository
                             ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
                             ->where('lead_stages.id', $stage['id'])
-                            ->whereDate('leads.created_at', Carbon::{$day}())
+                            ->whereBetween('leads.created_at', [$startDate, $endDate])
                             ->count();
 
                     switch ($stage['name']) {
@@ -338,56 +439,12 @@ class DashboardController extends Controller
 
                 break;
 
-            case 'customers':
-                $labels = $customersCount = [];
-
-                for ($index = $totalWeeks; $index >= 1; $index--) {
-                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
-                    
-                    $startDate = Carbon::now()->subDays(7 * $index);
-                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
-
-                    if ($month == "last_month") {
-                        $startDate = $startDate->subMonth();
-                        $endDate = $endDate->subMonth();
-                    }
-                    
-                    $startDate = $startDate->format('Y-m-d');
-                    $endDate = $endDate->format('Y-m-d');
-
-                    // get customers count
-                    array_push($customersCount, app('Webkul\Contact\Repositories\PersonRepository')->getCustomerCount($startDate, $endDate));
-                }
-
-                $cardData = [
-                    "data" => [
-                        "labels" => $labels,
-                        "datasets" => [
-                            [
-                                "fill"              => false,
-                                "tension"           => 0.1,
-                                "backgroundColor"   => "#4BC0C0",
-                                "label"             => "Customers",
-                                "borderColor"       => 'rgb(75, 192, 192)',
-                                "data"              => $customersCount,
-                            ],
-                        ]
-                    ]
-                ];
-                break;
-
             case 'top_customers':
-                $filterMonth = Carbon::now()->month;
-
-                if ($month == "last_month") {
-                    $filterMonth = Carbon::now()->subMonth()->month;
-                }
-
                 $topCustomers = $this->leadRepository
                                 ->select('persons.id as personId', 'persons.name as label', \DB::raw("(COUNT(*)) as count"))
                                 ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                                 ->groupBy('person_id')
-                                ->whereMonth('leads.created_at', '=', $filterMonth)
+                                ->whereBetween('leads.created_at', [$startDate, $endDate])
                                 ->limit(6)
                                 ->orderBy('count', 'desc')
                                 ->get()
@@ -395,44 +452,6 @@ class DashboardController extends Controller
 
                 $cardData = [
                     "data" => $topCustomers
-                ];
-                break;
-                
-            case 'products':
-                $labels = $productsCount = [];
-
-                for ($index = $totalWeeks; $index >= 1; $index--) {
-                    array_push($labels, __("admin::app.dashboard.week" . (($totalWeeks + 1) - $index)));
-                    
-                    $startDate = Carbon::now()->subDays(7 * $index);
-                    $endDate = $index == 1 ? Carbon::now()->addDays(1) : Carbon::now()->subDays(7 * ($index - 1));
-
-                    if ($month == "last_month") {
-                        $startDate = $startDate->subMonth();
-                        $endDate = $endDate->subMonth();
-                    }
-                    
-                    $startDate = $startDate->format('Y-m-d');
-                    $endDate = $endDate->format('Y-m-d');
-
-                    // get products count
-                    array_push($productsCount, app('Webkul\Product\Repositories\ProductRepository')->getProductCount($startDate, $endDate));
-                }
-
-                $cardData = [
-                    "data" => [
-                        "labels" => $labels,
-                        "datasets" => [
-                            [
-                                "fill"              => false,
-                                "tension"           => 0.1,
-                                "backgroundColor"   => "#4BC0C0",
-                                "label"             => "Products",
-                                "borderColor"       => 'rgb(75, 192, 192)',
-                                "data"              => $productsCount,
-                            ],
-                        ]
-                    ]
                 ];
 
                 break;
@@ -442,6 +461,7 @@ class DashboardController extends Controller
                                 ->select('leads.title as label', \DB::raw("(COUNT(*)) as count"))
                                 ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
                                 ->groupBy('product_id')
+                                ->whereBetween('lead_products.created_at', [$startDate, $endDate])
                                 ->get()
                                 ->toArray();
 
@@ -454,14 +474,6 @@ class DashboardController extends Controller
                 $cardData = [
                     "data" => []
                 ];
-        }
-
-        if (! $cardData) {
-            foreach ($this->cardData as $card) {
-                if ($card['card_id'] == $cardId) {
-                    $cardData = $card;
-                }
-            }
         }
 
         return response()->json($cardData);
@@ -493,5 +505,26 @@ class DashboardController extends Controller
         }
 
         return response()->json($this->cards);
+    }
+
+    private function getFormattedDateRange($data)
+    {
+        $labels = $data['labels'];
+
+        $startDate = Carbon::parse($data["start_date"]);
+        $endDate = Carbon::parse($data["end_date"]);
+
+        array_push($labels, __("admin::app.dashboard.week" . (($data['total_weeks'] + 1) - $data['index'])));
+        
+        $startDate = $data['index'] != $data['total_weeks']
+                    ? $startDate->addDays((7 * (4 - $data['index'])) + (4 - $data['index']))
+                    : $startDate->addDays(7 * (4 - $data['index']));
+
+        $endDate = $data['index'] == 1 ? $endDate->addDays(1) : (clone $startDate)->addDays(7);
+        
+        $startDate = $startDate->format('Y-m-d');
+        $endDate = $endDate->format('Y-m-d');
+
+        return compact('startDate', 'endDate', 'labels');
     }
 }

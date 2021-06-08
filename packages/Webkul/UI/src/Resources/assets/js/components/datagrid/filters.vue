@@ -414,7 +414,7 @@
                     }
 
                     obj.column = key.replace(']', '').split('[')[0];
-                    obj.cond = key.replace(']', '').split('[')[1]
+                    obj.cond = key.replace(']', '').split('[')[1];
                     obj.val = value;
 
                     switch (obj.column) {
@@ -422,7 +422,7 @@
                             obj.label = "Search";
                             break;
                         case "sort":
-                            obj.prettyValue = `${obj.cond} - ${obj.val}`;
+                            obj.prettyValue = `${obj.cond.replaceAll("_", " ")} - ${obj.val}`;
                             break;
                         default:
                             break;
@@ -462,7 +462,7 @@
                     }
 
                     if (key == "sort") {
-                        data.prettyValue = `${data.cond} - ${data.val}`;
+                        data.prettyValue = `${data.cond.replaceAll("_", " ")} - ${data.val}`;
                     }
 
                     this.filters.push(data);
