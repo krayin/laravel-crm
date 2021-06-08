@@ -8,7 +8,7 @@
     <div class="content full-page dashboard">
         <h1>{{ __('admin::app.dashboard.title') }}</h1>
 
-        {{-- <selected-cards-filter></selected-cards-filter> --}}
+        <selected-cards-filter></selected-cards-filter>
 
         {{-- <div class="form-group date">
             <date>
@@ -20,15 +20,13 @@
             </date>
         </div> --}}
 
-        {{-- <date-range class="card-filter-container"></date-range> --}}
-
         <cards-collection></cards-collection>
     </div>
 @stop
 
 @push('scripts')
     <script type="text/x-template" id="selected-cards-template">
-        <div class="cards-collection form-group">
+        {{-- <div class="cards-collection form-group">
             <div class="toggle-btn dropdown-toggle">
                 <span>{{ __('admin::app.dashboard.cards') }}</span>
                 <span class="icon plus-black-icon"></span>
@@ -62,13 +60,27 @@
                     </template>
                 </div>
             </div>
-        </div>
+        </div> --}}
+        
+        <date-range
+            :update="updateCardData"
+            end-date="{{ $endDate }}"
+            start-date="{{ $startDate }}"
+            class="card-filter-container"
+        ></date-range>
     </script>
 
     <script type="text/x-template" id="cards-collection-template">
         <div class="row-grid-3">
-            <template v-for="(card, index) in cards">
-                <div :class="`card ${card.card_border || ''}`" :key="index" v-if="card.selected">
+            <template v-for="(card, index) in filteredCards">
+                {{-- <draggable
+                    tag="div"
+                    :key="index"
+                    handle=".drag-icon"
+                    :list="filteredCards"
+                    :class="`card ${card.card_border || ''}`"
+                > --}}
+                <div :class="`card ${card.card_border || ''}`">
                     <template v-if="card.label">
                         <label>
                             @{{ card.label }}
@@ -77,6 +89,8 @@
                                 :card-id="card.card_id || ''"
                                 :filter-type="card.filter_type"
                             ></card-filter> --}}
+
+                            <i class="icon drag-icon"></i>
                         </label>
                     </template>
 
@@ -85,6 +99,7 @@
                         :card-type="card.card_type"
                         :card-id="card.card_id || ''"
                     ></card-component>
+                {{-- </draggable> --}}
                 </div>
             </template>
         </div>
@@ -159,7 +174,17 @@
 
             <template v-if="! dataCollection || dataCollection.length == 0 || (dataCollection.data && dataCollection.data.length == 0)">
                 <div class="custom-card">
-                    {{ __('admin::app.dashboard.no_record_found') }}
+                    <i
+                        class="icon empty-bar-icon"
+                        v-if="cardType == 'bar_chart' || cardType == 'line_chart'"
+                    ></i>
+
+                    <img
+                        v-else
+                        src="{{ asset('vendor/webkul/admin/assets/images/empty-state-icon.svg') }}"
+                    />
+
+                    <span>{{ __('admin::app.dashboard.no_record_found') }}</span>
                 </div>
             </template>
         </div>
@@ -218,17 +243,19 @@
             },
 
             methods: {
-                updateCards: function () {
+                updateCards: function (dateRange) {
                     this.$http.post(`{{ route('admin.api.dashboard.cards.update') }}`, {
                         cards: this.columns
-                    })
-                        .then(response => {
-                            this.cards = response.data;
+                    }).then(response => {
+                        this.cards = response.data;
 
-                            this.showCardOptions = false;
-                        })
-                        .catch(error => {
-                        });
+                        this.showCardOptions = false;
+                    })
+                    .catch(error => {});
+                },
+
+                updateCardData: function (dateRange) {
+                    EventBus.$emit('updateDateRange', dateRange);
                 }
             }
         });
@@ -239,6 +266,7 @@
             data: function () {
                 return {
                     cards: [],
+                    filteredCards: [],
                 }
             },
 
@@ -265,6 +293,7 @@
                     this.$http.get(`{{ route('admin.api.dashboard.cards.index') }}`)
                         .then(response => {
                             this.cards = response.data;
+                            this.filteredCards = this.cards.filter(card => card.selected);
 
                             EventBus.$emit('cardsLoaded', this.cards);
                         })

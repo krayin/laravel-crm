@@ -128,9 +128,9 @@
                 <template v-if="optionType == 'options'">
                     <draggable tag="ul" :list="optionRows" class="list-group dragable-list">
                         <li
+                            :key="row.id"
                             class="list-group-item"
                             v-for="(row, index) in optionRows"
-                            :key="row.id"
                         >
                             <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
                                 <input type="text" v-validate="'required'" v-model="row['name']" :name="'options[' + row.id + '][name]'" class="control" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>

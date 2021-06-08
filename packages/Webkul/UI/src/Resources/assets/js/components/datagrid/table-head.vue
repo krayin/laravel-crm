@@ -27,10 +27,11 @@
             <th
                 :key="index"
                 v-html="column.label"
-                @click="column.sortable ? sortCollection(index) : ''"
                 v-for="(column, index) in columns"
-                :class="[column.class ? column.class : column.index ]">
-            </th>
+                @click="column.sortable ? sortCollection(index) : ''"
+                :class="[column.class ? column.class : column.index ]"
+                :style="`cursor: ${column.sortable ? 'pointer' : 'not-allowed'}`"
+            ></th>
 
             <th v-if="actions.length > 0" class="actions">
                 {{ __('ui.datagrid.actions') }}

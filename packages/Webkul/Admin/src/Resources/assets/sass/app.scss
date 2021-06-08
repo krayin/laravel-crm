@@ -894,6 +894,7 @@ body {
         ~ .card-filter-container {
             z-index: 1;
             float: right;
+            color: $secondary-color;
         }
     }
 
@@ -907,7 +908,7 @@ body {
     }
 
     .card {
-        min-height: 200px;
+        min-height: 300px;
         padding: 30px 20px;
         border-radius: 3px;
         background-color: $white;
@@ -925,6 +926,12 @@ body {
                 .dropdown-toggle {
                     margin-bottom: 5px;
                 }
+            }
+
+            i.drag-icon {
+                float: right;
+                display: none;
+                cursor: pointer;
             }
         }
 
@@ -1008,13 +1015,25 @@ body {
             .custom-card {
                 text-align: center;
                 position: relative;
-                top: calc(50% - 20px);
+                top: calc(50% - 70px);
                 color: $secondary-color;
+
+                span {
+                    display: block;
+                }
             }
         }
 
         &.dashed {
             border-style: dashed;
+        }
+
+        &:hover {
+            label {
+                i.drag-icon {
+                    display: inline;
+                }
+            }
         }
     }
 }

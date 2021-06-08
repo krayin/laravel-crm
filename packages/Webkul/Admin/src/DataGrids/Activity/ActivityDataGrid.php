@@ -114,7 +114,7 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'scheduled_from',
+            'index'             => 'schedule_from',
             'label'             => trans('admin::app.datagrid.schedule_from'),
             'type'              => 'string',
             'sortable'          => true,
