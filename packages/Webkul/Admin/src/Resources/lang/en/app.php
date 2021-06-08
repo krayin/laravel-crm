@@ -263,7 +263,7 @@
                 'role'                 => 'Role',
                 'lead-view'            => 'Lead View',
                 'global'               => 'Global',
-                'indivisual'           => 'Indivisual',
+                'individual'           => 'Individual',
                 'status'               => 'Status',
                 'save-btn-title'       => 'Save as User',
                 'update-btn-title'     => 'Update User',

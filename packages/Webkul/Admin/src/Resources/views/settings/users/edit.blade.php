@@ -117,7 +117,7 @@
 
                                 <select name="lead_view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.lead-view') }}">
                                     <option value="global" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'global' ? 'selected' : '' }}>{{ __('admin::app.settings.users.global') }}</option>
-                                    <option value="indivisual" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'indivisual' ? 'selected' : '' }}>{{ __('admin::app.settings.users.indivisual') }}</option>
+                                    <option value="individual" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'individual' ? 'selected' : '' }}>{{ __('admin::app.settings.users.individual') }}</option>
                                 </select>
 
                                 <span class="control-error" v-if="errors.has('lead_view_permission')">
