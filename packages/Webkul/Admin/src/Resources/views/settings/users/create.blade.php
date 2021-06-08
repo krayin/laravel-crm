@@ -103,6 +103,21 @@
                                 </span>
                             </div>
 
+                            <div class="form-group" :class="[errors.has('lead_view_permission') ? 'has-error' : '']">
+                                <label>
+                                    {{ __('admin::app.settings.users.lead-view') }}
+                                </label>
+
+                                <select name="lead_view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.lead-view') }}">
+                                    <option value="global">{{ __('admin::app.settings.users.global') }}</option>
+                                    <option value="indivisual">{{ __('admin::app.settings.users.indivisual') }}</option>
+                                </select>
+
+                                <span class="control-error" v-if="errors.has('lead_view_permission')">
+                                    @{{ errors.first('lead_view_permission') }}
+                                </span>
+                            </div>
+
                             <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                                 <label>
                                     {{ __('admin::app.settings.users.password') }}
