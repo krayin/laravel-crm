@@ -44,13 +44,13 @@
         data: function () {
             return {
                 opens: 'left',
-                minDate: '2021-05-01',
+                minDate: '2021-03-01',
                 maxDate: this.$moment().format('YYYY-MM-DD'),
                 dateRange: {
                     endDate: this.endDate,
                     startDate: this.startDate,
                 },
-                single_range_picker: false,
+                single_range_picker: true,
                 show_ranges: true,
                 singleDatePicker: false,
                 timePicker: false,
@@ -58,7 +58,7 @@
                 showDropdowns: true,
                 autoApply: false,
                 showWeekNumbers: true,
-                linkedCalendars: false,
+                linkedCalendars: true,
                 alwaysShowCalendars: true,
                 appendToBody: false,
                 closeOnEsc: true,

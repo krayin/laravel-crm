@@ -28,7 +28,7 @@ class EmailDataGrid extends DataGrid
             'label'             => '<i class="icon attachment-icon"></i>',
             'type'              => 'string',
             'searchable'        => false,
-            'sortable'          => true,
+            'sortable'          => false,
             'closure'           => function ($row) {
                 if ($row->attachments) {
                     return '<i class="icon attachment-icon"></i>';

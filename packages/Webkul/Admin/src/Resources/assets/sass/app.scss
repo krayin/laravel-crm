@@ -895,6 +895,18 @@ body {
             z-index: 1;
             float: right;
             color: $secondary-color;
+
+            .daterangepicker {
+                .btn-success {
+                    padding: 10px 14px;
+                    background-color: $primary-color;
+                }
+
+                .btn-secondary {
+                    padding: 10px 14px;
+                    background-color: $secondary-color;
+                }
+            }
         }
     }
 
@@ -1020,6 +1032,11 @@ body {
 
                 span {
                     display: block;
+                }
+
+                i.icon {
+                    width: 96px;
+                    height: 96px;
                 }
             }
         }

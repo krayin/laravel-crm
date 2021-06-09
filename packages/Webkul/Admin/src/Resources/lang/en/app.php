@@ -16,11 +16,7 @@
             'products'          => 'Products',
             'top_products'      => 'Top Products',
             'no_record_found'   => 'No record found',
-            'week1'             => 'Week1',
-            'week2'             => 'Week2',
-            'week3'             => 'Week3',
-            'week4'             => 'Week4',
-            'week5'             => 'Week5',
+            'week'              => 'Week',
         ],
 
         'layouts' => [
