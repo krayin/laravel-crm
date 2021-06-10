@@ -291,6 +291,7 @@ h5 {
 
 .table {
     width: 100%;
+    height: 100%;
     overflow-x: auto !important;
 
     .table-header {
@@ -330,6 +331,8 @@ h5 {
     }
 
     .table-body {
+        height: 100%;
+
         .custom-design-container {
             right: 25px;
             width: 350px;
@@ -364,32 +367,55 @@ h5 {
 
         .checkbox {
             margin: 0;
+            text-overflow: unset;
+        }
+
+        .empty-table {
+            top: 20%;
+            text-align: center;
+            position: relative;
+
+            img {
+                width: 150px;
+            }
+
+            span {
+                display: block;
+                margin-top: 20px;
+            }
         }
     }
 
     table {
-        table-layout: fixed;
         width: 100%;
         text-align: left;
         margin-top: 20px;
         background: $white;
+        table-layout: fixed;
         font-size: $font-size-md;
         border-collapse: collapse;
         border: solid 1px $border-color;
 
+        th, td {
+            width: 100%;
+            padding: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            vertical-align: top;
+            text-overflow: ellipsis;
+            color: $secondary-font-color;
+            border-right: 1px solid $border-color;
+            border-bottom: 1px solid $border-color;
+        }
+
         thead {
             th {
-                width: 100%;
-                padding: 10px;
-                color: $secondary-font-color;
+                cursor: not-allowed;
                 font-weight: $font-weight-medium;
-                white-space: nowrap;
-                border-right: 1px solid $border-color;
-                border-bottom: 1px solid $border-color;
-
 
                 &.master-checkbox {
                     width: 41px;
+                    text-overflow: unset;
                 }
 
                 &.actions {
@@ -409,15 +435,7 @@ h5 {
 
         tbody {
             tr {
-                td {
-                    padding: 10px;
-                    overflow: hidden;
-                    white-space: nowrap;
-                    vertical-align: top;
-                    color: $secondary-font-color;
-                    border-right: 1px solid $border-color;
-                    border-bottom: 1px solid $border-color;
-
+                td {                   
                     &.empty {
                         text-align: center;
                     }
@@ -443,6 +461,10 @@ h5 {
                                 margin-right: 0;
                             }
                         }
+                    }
+
+                    .spinner-container {
+                        margin-top: 5px;
                     }
                 }
 
@@ -535,7 +557,7 @@ h5 {
                 letter-spacing: -0.22px;
                 @include border-radius(2px);
         
-                .icon.cross-icon {
+                .icon.close-icon {
                     margin-left: 10px;
                     cursor: pointer;
                 }
@@ -1860,4 +1882,58 @@ modal {
             background-color: $danger-color;
         }
     }
+}
+
+.spinner-container {
+    width: 100%;
+    text-align: center;
+    position: relative;
+    top: calc(50% - 24px);
+    
+    .meter {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        display: inline-block;
+        box-sizing: border-box;
+        border: solid 6px $primary-color;
+        
+        &:before{
+            top: 5px;
+            width: 6px;
+            height: 20px;
+            content: " ";
+            text-align: center;
+            border-radius: 3px;
+            position: absolute;
+            display: inline-block;
+            box-sizing: border-box;
+            background-color: $primary-color;
+            transform-origin: center bottom;
+            animation: meter-animate-before 1s linear infinite;
+        }
+    }
+
+    &.full-page {
+        top: 0;
+        left: 0;
+        z-index: 11;
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        background-color: rgba(255, 255, 255, 0.7);
+
+        .meter {
+            top: 50%;
+            position: relative;
+
+            &:before {
+                top: 0;
+            }
+        }
+    }
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
 }

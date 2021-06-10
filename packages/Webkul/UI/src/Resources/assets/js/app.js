@@ -82,6 +82,7 @@ Vue.component('tree-item', require('./components/tree-view/tree-item').default);
 Vue.component('tree-checkbox', require('./components/tree-view/tree-checkbox').default);
 Vue.component('tree-radio', require('./components/tree-view/tree-radio').default);
 Vue.component('date-range', require('./components/date-range').default);
+Vue.component('spinner-meter', require('./components/spinner-meter').default);
 
 Vue.mixin(require('./components/trans'));
 
