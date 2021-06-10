@@ -32,9 +32,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-
-        return view('admin::dashboard.template');
-        
         $cards = $this->cards;
 
         if ($dateRange = request('date-range')) {
