@@ -29,8 +29,7 @@
                 v-html="column.label"
                 v-for="(column, index) in columns"
                 @click="column.sortable ? sortCollection(index) : ''"
-                :class="[column.class ? column.class : column.index ]"
-                :style="`cursor: ${column.sortable ? 'pointer' : 'not-allowed'}`"
+                :class="[column.class ? column.class : column.index, `${column.sortable ? 'cursor-pointer' : ''}`]"
             ></th>
 
             <th v-if="actions.length > 0" class="actions">

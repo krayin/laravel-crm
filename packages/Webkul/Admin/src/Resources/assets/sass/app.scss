@@ -81,15 +81,15 @@ body {
 }
 
 .navbar-left {
-    position: fixed;
     left: 0;
-    top: 60px;
-    width: 48px;
-    box-shadow: inset -1px 0px 0px #CDCECF;
-    height: auto;
     bottom: 0;
+    top: 60px;
     z-index: 2;
+    width: 48px;
+    height: auto;
+    position: fixed;
     background-color: $white;
+    box-shadow: inset -1px 0px 0px #CDCECF;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     ul.menubar {
@@ -104,7 +104,7 @@ body {
                 padding: 16px 12px;
                 display: block;
                 color: $secondary-font-color;
-                width: 150px;
+                width: 100%;
 
                 .icon {
                     display: inline-block;
@@ -204,10 +204,12 @@ body {
     }
 
     .menubar-bottom {
-        padding: 12px;
-        position: absolute;
         bottom: 0;
+        padding: 12px;
         cursor: pointer;
+        position: absolute;
+        width: calc(100% - 1px);
+        background-color: $white;
     }
 }
 

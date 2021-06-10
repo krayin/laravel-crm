@@ -184,13 +184,13 @@ class LeadController extends Controller
         $currencySymbol = core()->currencySymbol(config('app.currency'));
 
         $leads = $this->leadRepository
-                    ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name')
-                    ->where("title", 'like', "%$searchedKeyword%")
+                    ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name', 'lead_stages.id as stage_id')
                     ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                     ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                    ->where("title", 'like', "%$searchedKeyword%")
                     ->get()
                     ->toArray();
-
+                    
         $stages = $this->stageRepository
                     ->select('name', 'id')
                     ->get()
@@ -198,11 +198,19 @@ class LeadController extends Controller
 
         foreach ($leads as $key => $lead) {
             foreach ($stages as $stageKey => $stage) {
-                if ($stage['id'] == $lead['lead_stage_id']) {
-                    $totalCount[$stage['name']] = $currencySymbol . number_format($lead['lead_value']);
+                if ($stage['id'] == $lead['stage_id']) {
+                    if (isset($totalCount[$stage['name']])) {
+                        $totalCount[$stage['name']] = (float) $totalCount[$stage['name']] + (float) $lead['lead_value'];
+                    } else {
+                        $totalCount[$stage['name']] = $lead['lead_value'];
+                    }
                 }
             }
         }
+
+        $totalCount = array_map(function ($count) use ($currencySymbol) {
+            return $currencySymbol . number_format($count);
+        }, $totalCount);
 
         $stages = \Arr::pluck($stages, 'name');
 
