@@ -10,16 +10,6 @@
 
         <selected-cards-filter></selected-cards-filter>
 
-        {{-- <div class="form-group date">
-            <date>
-                <input type="text" class="control" id="start-date" value="{{ $startDate }}" />
-            </date>
-
-            <date>
-                <input type="text" class="control" id="end-date" value="{{ $endDate }}" />
-            </date>
-        </div> --}}
-
         <cards-collection></cards-collection>
     </div>
 @stop
@@ -175,7 +165,7 @@
             <template v-if="! dataCollection || dataCollection.length == 0 || (dataCollection.data && dataCollection.data.length == 0)">
                 <div class="custom-card">
                     <i
-                        class="icon empty-bar-icon"
+                        :class="`icon empty-bar-${cardType == 'line_chart' ? 'vertical-': ''}icon`"
                         v-if="cardType == 'bar_chart' || cardType == 'line_chart'"
                     ></i>
 
@@ -213,16 +203,6 @@
                 </div>
             </div>
         </div>
-
-        {{-- <select v-if="filterType == 'monthly'" @change="changeCardFilter">
-            <option value="this_month">This month</option>
-            <option value="last_month">Last month</option>
-        </select>
-
-        <select v-else-if="filterType == 'daily'" @change="changeCardFilter">
-            <option value="today">Today</option>
-            <option value="yesterday">Yesterday</option>
-        </select> --}}
     </script>
 
     <script>
@@ -275,16 +255,8 @@
             },
 
             mounted: function () {
-                $('#start-date').change(({target}) => {
-                    EventBus.$emit('updateDateRange', {
-                        datesRange : `${$('#start-date').val()},${$('#end-date').val()}`,
-                    });
-                });
-
-                $('#end-date').change(() => {
-                    EventBus.$emit('updateDateRange', {
-                        datesRange : `${$('#start-date').val()},${$('#end-date').val()}`,
-                    });
+                EventBus.$on('updateDateRange', dates => {
+                    this.updateURI(dates.datesRange, "date-range");
                 });
             },
 
@@ -297,9 +269,14 @@
 
                             EventBus.$emit('cardsLoaded', this.cards);
                         })
-                        .catch(error => {
-                        });
+                        .catch(error => {});
                 },
+
+                updateURI: function (value, key) {
+                    var newURL = `${window.location.origin}${window.location.pathname}?${key}=${value}`;
+
+                    window.history.pushState({path: newURL}, '', newURL);
+                }
             }
         });
 
@@ -317,7 +294,7 @@
 
             created: function () {
                 if (this.cardType != "custom_card") {
-                    this.getCardData(this.cardId);
+                    this.getCardData(this.cardId, "{{ $startDate }},{{ $endDate }}", "date-range");
                 } else {
                     this.dataLoaded = true;
                 }
