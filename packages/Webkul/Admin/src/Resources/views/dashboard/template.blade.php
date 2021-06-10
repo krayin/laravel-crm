@@ -18,6 +18,16 @@
         <div class="page-content">
             <div class="panel">
                 <div class="panel-header">
+                    Stages
+                </div>
+
+                <div class="panel-body">
+                    
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
                     Buttons
                 </div>
 

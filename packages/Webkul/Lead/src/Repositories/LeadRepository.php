@@ -4,6 +4,7 @@ namespace Webkul\Lead\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Carbon\Carbon;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
@@ -82,7 +83,9 @@ class LeadRepository extends Repository
         }
 
         $lead = parent::create(array_merge([
-            'person_id' => $person->id,
+            'person_id'        => $person->id,
+            'lead_pipeline_id' => 1,
+            'lead_stage_id'    => $data['lead_stage_id'] ?? 1,
         ], $data));
 
         $this->attributeValueRepository->save($data, $lead->id);
@@ -121,6 +124,10 @@ class LeadRepository extends Repository
             $data = array_merge([
                 'person_id' => $person->id,
             ], $data);
+        }
+
+        if (isset($data['closed_at']) && ! $data['closed_at']) {
+            $data['closed_at'] = Carbon::now();
         }
 
         $lead = parent::update($data, $id);

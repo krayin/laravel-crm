@@ -1263,3 +1263,102 @@ body {
         }
     }
 }
+
+.pipeline-stage-container {
+    position: relative;
+    margin-top: 10px;
+
+    .pipeline-stages {
+        display: flex;
+        align-items: center;
+        flex-flow: row nowrap;
+        overflow: hidden;
+        width: 100%;
+        border-radius: 4px;
+
+        .stage {
+            background: $gray-color;
+            color: $font-color;
+            font-size: 12px;
+            font-weight: $font-weight-medium;
+            width: 100%;
+            text-align: center;
+            min-width: 100px;
+
+            span {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                display: block;
+                padding: 7px 5px 7px 22px;
+                cursor: pointer;
+
+                .icon {
+                    float: right;
+                }
+            }
+
+            &:not(:last-child) {
+                position: relative;
+
+                &::before {
+                    background: $gray-color;
+                    box-shadow: 1px -1px 0 1px #fff, 1px -1px 0 1px #fff;
+                    content: '';
+                    position: absolute;
+                    top: 50%;
+                    right: -12px;
+                    width: 28px;
+                    height: 28px;
+                    z-index: 1;
+                    border-radius: 0 0 0 25px;
+                    transform: translateY(-50%) rotate(45deg);
+                }
+            }
+
+            &.active {
+                background-color: $primary-color;
+                color: $white;
+
+                &::before {
+                    background: $primary-color;
+                }
+            }
+
+            .dropdown-list {
+                right: 0px;
+                font-weight: $font-weight-regular;
+
+                ul li {
+                    color: $secondary-font-color;
+
+                    &:hover {
+                        color: $white;
+                    }
+                }
+            }
+        }
+
+        &.won {
+            .stage {
+                background-color: $success-color;
+                color: $white;
+
+                &::before {
+                    background: $success-color;
+                }
+            }
+        }
+
+        &.lost {
+            .stage {
+                background-color: $danger-color;
+                color: $white;
+
+                &::before {
+                    background: $danger-color;
+                }
+            }
+        }
+    }
+}

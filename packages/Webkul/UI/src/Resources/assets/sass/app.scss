@@ -816,9 +816,9 @@ h5 {
                 margin-left: -34px;
                 pointer-events: none;
                 position: absolute;
-                right: 6px;
+                right: 10px;
                 top: 50%;
-                margin-top: -10px;
+                margin-top: -9px;
             }
         }
 
@@ -947,7 +947,7 @@ h5 {
         }
 
         .trash-icon {
-            margin-top: 15px;
+            margin-top: 21px;
             margin-left: 7px;
             cursor: pointer;
         }
@@ -1626,9 +1626,6 @@ modal {
         .control {
             width: 90%;
             margin: 0;
-            padding: 5.5px;
-            font-size: $font-size-md;
-            padding-left: 15px;
 
             &.half {
                 width: 146px;
@@ -1641,11 +1638,6 @@ modal {
 
         .date-container {
             display: inline-block;
-            
-            &::after {
-                left: unset;
-                right: 10px;
-            }
         }
 
         .enter-new {
@@ -1658,11 +1650,10 @@ modal {
             }
         }
 
-        i {
+        > i {
             &.close-icon {
                 float: right;
-                margin-top: 5px;
-                margin-left: 10px;
+                margin-top: 9px;
             }
         }
     }
@@ -1685,7 +1676,6 @@ modal {
         &.close-icon,
         &.add-icon {
             cursor: pointer;
-            vertical-align: text-top;
         }
     }
 }

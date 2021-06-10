@@ -1,6 +1,6 @@
 {
-    "/js/admin.js": "/js/admin.js?id=bff7a1f9204ffe342fe1",
-    "/css/admin.css": "/css/admin.css?id=2ff946ec4028a33ad43f",
+    "/js/admin.js": "/js/admin.js?id=55712ccf954dff2e641b",
+    "/css/admin.css": "/css/admin.css?id=e2f6cb46003dc83c72a9",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=323f3f274df979c3ac21",
     "/images/avatar-icon.svg": "/images/avatar-icon.svg?id=138110db59ab81030a21",
@@ -24,5 +24,9 @@
     "/images/layout-column-line-active-icon.svg": "/images/layout-column-line-active-icon.svg?id=ef43e1a950584a798341",
     "/images/layout-column-line-icon.svg": "/images/layout-column-line-icon.svg?id=f24df60872ddb934cc71",
     "/images/table-line-active-icon.svg": "/images/table-line-active-icon.svg?id=2bb1b3e9f60637957c6d",
-    "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945"
+    "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945",
+    "/images/drag-icon.svg": "/images/drag-icon.svg?id=8b3ebab107e5ecb9a4f8",
+    "/images/empty-bar-icon.svg": "/images/empty-bar-icon.svg?id=2bc8187fd8217e9986d9",
+    "/images/empty-bar-vertical-icon.svg": "/images/empty-bar-vertical-icon.svg?id=a8dc1250c0f16093a3bc",
+    "/images/empty-state-icon.svg": "/images/empty-state-icon.svg?id=ca32c95eab8e562355b7"
 }
