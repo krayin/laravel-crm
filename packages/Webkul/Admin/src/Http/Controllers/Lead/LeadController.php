@@ -115,10 +115,21 @@ class LeadController extends Controller
         $lead = $this->leadRepository->update(request()->all(), $id);
 
         Event::dispatch('lead.update.after', $lead);
-        
-        session()->flash('success', trans('admin::app.leads.update-success'));
 
-        return redirect()->route('admin.leads.index');
+        if (request()->ajax()) {
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::app.leads.update-success'),
+            ]);
+        } else {
+            session()->flash('success', trans('admin::app.leads.update-success'));
+
+            if (request()->has('closed_at')) {
+                return redirect()->back();
+            } else {
+                return redirect()->route('admin.leads.index');
+            }
+        }
     }
 
     /**

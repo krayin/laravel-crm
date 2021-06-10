@@ -20,8 +20,6 @@ class CreateLeadsTable extends Migration
             $table->decimal('lead_value', 12, 4)->nullable();
             $table->boolean('status')->nullable();
             $table->text('lost_reason')->nullable();
-            $table->datetime('lost_at')->nullable();
-            $table->datetime('won_at')->nullable();
             $table->datetime('closed_at')->nullable();
 
             $table->integer('user_id')->unsigned();

@@ -15,7 +15,7 @@ class CreateLeadStagesTable extends Migration
     {
         Schema::create('lead_stages', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('code')->unique();
+            $table->string('code');
             $table->string('name');
             $table->boolean('is_user_defined')->default(1);
             $table->timestamps();
