@@ -24,6 +24,7 @@
         {!! view_render_event('admin.layout.body.before') !!}
 
         <div id="app">
+            <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
             @include("admin::banner.header")
 

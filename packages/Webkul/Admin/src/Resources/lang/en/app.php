@@ -13,6 +13,7 @@
             'custom_card'       => 'Custom Card',
             'customers'         => 'Customers',
             'top_customers'     => 'Top Customers',
+            'leads_started'     => 'Leads started',
             'products'          => 'Products',
             'top_products'      => 'Top Products',
             'no_record_found'   => 'No record found',
