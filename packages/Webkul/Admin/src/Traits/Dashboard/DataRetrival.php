@@ -1,160 +1,11 @@
 <?php
 
-namespace Webkul\Admin\Traits;
+namespace Webkul\Admin\Traits\Dashboard;
 
 use Carbon\Carbon;
 
-trait DashboardHelper
+trait DataRetrival
 {
-    /**
-     * this will set all available cards data to be displayed on dashboard.
-     */
-    private function setCardsData()
-    {
-        $this->cards = [
-            [
-                "selected"      => true,
-                "card_id"       => "leads",
-                "card_type"     => "bar_chart",
-                "label"         => __('admin::app.leads.title'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "leads_started",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.leads_started'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "activities",
-                "card_type"     => "activities",
-                "label"         => __('admin::app.dashboard.activities'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_leads",
-                "card_type"     => "top_card",
-                "label"         => __('admin::app.dashboard.top_leads'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "stages",
-                "card_type"     => "stages_bar",
-                "label"         => __('admin::app.dashboard.stages'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "emails",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.emails'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "customers",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.customers'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_customers",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.top_customers'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "products",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.products'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_products",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.top_products'),
-            ], [
-                "card_type"     => "custom_card",
-                "card_border"   => "dashed",
-                "selected"      => false,
-            ]
-        ];
-    }
-
-    /**
-     * This will return date range to be applied on dashboard data.
-     */
-    private function getDateRangeDetails($data)
-    {
-        $cardId = $data['card-id'];
-
-        $dateRange = $data['date-range'] ?? Carbon::now()->subMonth()->addDays(1)->format('Y-m-d') . "," . Carbon::now()->format('Y-m-d');
-        $dateRange = explode(",", $dateRange);
-
-        $startDateFilter = $dateRange[0];
-        $endDateFilter = $dateRange[1];
-        
-        $startDate = Carbon::parse($startDateFilter);
-        $endDate = Carbon::parse($endDateFilter);
-
-        $totalWeeks = $startDate->diffInWeeks($endDate);
-
-        return compact(
-            'cardId',
-            'startDate',
-            'endDate',
-            'totalWeeks',
-            'startDateFilter',
-            'endDateFilter'
-        );
-    }
-
-    /**
-     * format dates of filter.
-     */
-    private function getFormattedDateRange($data)
-    {
-        $labels = $data['labels'];
-
-        $startDate = Carbon::parse($data["start_date"]);
-        $endDate = Carbon::parse($data["end_date"]);
-
-        array_push($labels, __("admin::app.dashboard.week") . (($data['total_weeks'] + 1) - $data['index']));
-        
-        $startDate = $data['index'] != $data['total_weeks']
-                    ? $startDate->addDays((7 * (4 - $data['index'])) + (4 - $data['index']))
-                    : $startDate->addDays(7 * (4 - $data['index']));
-
-        $endDate = $data['index'] == 1 ? $endDate->addDays(1) : (clone $startDate)->addDays(7);
-        
-        $startDate = $startDate->format('Y-m-d');
-        $endDate = $endDate->format('Y-m-d');
-
-        return compact('startDate', 'endDate', 'labels');
-    }
-
-    /**
-     * Collect card data based on cardId.
-     */
-    private function getFormattedCardData($requestData)
-    {
-        $relevantFunction = false;
-
-        list(
-            'cardId'            => $cardId,
-            'endDate'           => $endDate,
-            'startDate'         => $startDate,
-            'totalWeeks'        => $totalWeeks,
-            'endDateFilter'     => $endDateFilter,
-            'startDateFilter'   => $startDateFilter,
-        ) = $this->getDateRangeDetails($requestData);
-
-        $relevantFunction = "get" . str_replace(" ", "", ucwords(str_replace("_", " ", $cardId)));
-
-        if (! function_exists($relevantFunction)) {
-            $relevantFunction = false;
-        }
-
-        $cardData = $relevantFunction
-                    ? $this->{$relevantFunction}(
-                        $startDateFilter,
-                        $endDateFilter,
-                        $totalWeeks
-                    )
-                    : $cardData ?? false;
-
-        return $cardData;
-    }
-
     /**
      * Collect leads card data.
      */
@@ -193,14 +44,65 @@ trait DashboardHelper
                     "labels"    => $labels,
                     "datasets"  => [
                         [
-                            "backgroundColor"   => "#4BC0C0",
                             "data"              => $wonLeadsCount,
                             "label"             => "Won",
+                            "backgroundColor"   => "#4BC0C0",
                         ], [
                             "backgroundColor"   => "#FF4D50",
                             "data"              => $lostLeadsCount,
                             "label"             => "Lost",
                         ]
+                    ]
+                ]
+            ];
+        }
+
+        return $cardData ?? false;
+    }
+    
+    /**
+     * Collect leads card data.
+     */
+    private function getLeadsStarted($startDateFilter, $endDateFilter, $totalWeeks)
+    {
+        $labels = $leadsStarted = [];
+
+        if ($totalWeeks) {
+            for ($index = $totalWeeks; $index >= 1; $index--) {
+                list(
+                    'startDate' => $startDate,
+                    'endDate'   => $endDate,
+                    'labels'    => $labels,
+                ) = $this->getFormattedDateRange([
+                    "start_date"    => $startDateFilter,
+                    "end_date"      => $endDateFilter,
+                    "index"         => $index,
+                    "labels"        => $labels,
+                    "total_weeks"   => $totalWeeks,
+                ]);
+
+                // get leads count
+                array_push($leadsStarted, $this->leadRepository->getLeadsCount("all", $startDate, $endDate));
+            }
+        } else {
+            $labels = [__("admin::app.dashboard.week") . "1"];
+            
+            $leadsStarted = [$this->leadRepository->getLeadsCount("Won", $startDateFilter, $endDateFilter)];
+        }
+
+        if (! empty(array_filter($leadsStarted))) {
+            $cardData = [
+                "data" => [
+                    "labels" => $labels,
+                    "datasets" => [
+                        [
+                            "fill"              => true,
+                            "tension"           => 0.6,
+                            "backgroundColor"   => "#4BC0C0",
+                            "borderColor"       => '#2f7373',
+                            "data"              => $leadsStarted,
+                            "label"             => __("admin::app.dashboard.leads_started"),
+                        ],
                     ]
                 ]
             ];
@@ -245,12 +147,12 @@ trait DashboardHelper
                     "labels" => $labels,
                     "datasets" => [
                         [
-                            "fill"              => false,
-                            "tension"           => 0.1,
+                            "fill"              => true,
+                            "tension"           => 0.6,
                             "backgroundColor"   => "#4BC0C0",
-                            "label"             => "Products",
-                            "borderColor"       => 'rgb(75, 192, 192)',
+                            "borderColor"       => '#2f7373',
                             "data"              => $productsCount,
+                            "label"             => __("admin::app.dashboard.products"),
                         ],
                     ]
                 ]
@@ -296,12 +198,12 @@ trait DashboardHelper
                     "labels" => $labels,
                     "datasets" => [
                         [
-                            "fill"              => false,
-                            "tension"           => 0.1,
+                            "fill"              => true,
+                            "tension"           => 0.6,
                             "backgroundColor"   => "#4BC0C0",
-                            "label"             => "Customers",
-                            "borderColor"       => 'rgb(75, 192, 192)',
+                            "borderColor"       => '#2f7373',
                             "data"              => $customersCount,
+                            "label"             => __("admin::app.dashboard.customers"),
                         ],
                     ]
                 ]
@@ -349,7 +251,7 @@ trait DashboardHelper
         $topLeads = $this->leadRepository
                     ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_stages.name as statusLabel')
                     ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                    ->orderBy('lead_value', 'asc')
+                    ->orderBy('lead_value', 'desc')
                     ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                     ->limit(3)
                     ->get()
@@ -480,9 +382,10 @@ trait DashboardHelper
         $topCustomers = $this->leadRepository
                         ->select('persons.id as personId', 'persons.name as label', \DB::raw("(COUNT(*)) as count"))
                         ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
-                        ->groupBy('person_id')
                         ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
-                        ->limit(6)
+                        ->groupBy('person_id')
+                        ->orderBy('lead_value', 'desc')
+                        ->limit(2)
                         ->orderBy('count', 'desc')
                         ->get()
                         ->toArray();

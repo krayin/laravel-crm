@@ -4,9 +4,9 @@ namespace Webkul\Admin\Http\Controllers\Admin;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Traits\DashboardHelper;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Traits\Dashboard\Helper as DashboardHelper;
 
 class DashboardController extends Controller
 {
