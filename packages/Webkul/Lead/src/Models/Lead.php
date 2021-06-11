@@ -23,8 +23,6 @@ class Lead extends Model implements LeadContract
         'lead_value',
         'status',
         'lost_reason',
-        'lost_at',
-        'won_at',
         'closed_at',
         'user_id',
         'person_id',
@@ -79,7 +77,7 @@ class Lead extends Model implements LeadContract
      */
     public function stage()
     {
-        return $this->belongsTo(StageProxy::modelClass());
+        return $this->belongsTo(StageProxy::modelClass(), 'lead_stage_id');
     }
 
     /**

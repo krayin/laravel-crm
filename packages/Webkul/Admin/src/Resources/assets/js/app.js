@@ -62,7 +62,7 @@ $(function() {
                     tinyMCE.triggerSave();
                 }
 
-                this.$validator.validateAll(formScope).then(result => {
+                this.$validator.validateAll(formScope ? formScope : null).then(result => {
                     if (result) {
                         e.target.submit();
                     } else {

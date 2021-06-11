@@ -35,7 +35,7 @@
 
                 @include('admin::common.custom-attributes.edit.email')
                     
-                <email-component :attribute="{'code': 'person[email]', 'name': 'Email'}" validations="required|email" :data="person.emails"></email-component>
+                <email-component :attribute="{'code': 'person[emails]', 'name': 'Email'}" validations="required|email" :data="person.emails"></email-component>
             </div>
 
             <div class="form-group contact-numbers">
