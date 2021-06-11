@@ -159,10 +159,15 @@ class LeadRepository extends Repository
      */
     public function getLeadsCount($leadStage, $startDate, $endDate)
     {
-        return $this
+        $query = $this->whereBetween('leads.created_at', [$startDate, $endDate]);
+
+        if ($leadStage != "all") {
+            $query
                 ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                ->where('lead_stages.name', $leadStage)
-                ->whereBetween('leads.created_at', [$startDate, $endDate])
+                ->where('lead_stages.name', $leadStage);
+        }
+
+        return $query
                 ->get()
                 ->count();
     }

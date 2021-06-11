@@ -16,6 +16,8 @@
             'leads_started'     => 'Leads started',
             'products'          => 'Products',
             'top_products'      => 'Top Products',
+            'leads_started'     => 'Leads started',
+            'leads_over_time'   => 'Leads over time',
             'no_record_found'   => 'No record found',
             'week'              => 'Week',
         ],
