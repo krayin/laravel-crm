@@ -493,7 +493,6 @@ h5 {
 
         .control {
             width: 100%;
-            margin: 0;
         }
 
         &.post-heading {
@@ -1661,16 +1660,24 @@ modal {
         padding-bottom: 20px;
         border-bottom: 1px solid $border-color;
 
-        i {
-            &.close-icon {
-                vertical-align: middle;
+        h1 {
+            .float-right {
+                label {
+                    font-size: $font-size-lg;
+                    color: $primary-color;
+                    cursor: pointer;
+                    margin-right: 20px;
+                }
+                
+                i.close-icon {
+                    vertical-align: middle;
+                }
             }
         }
     }
 
     .field-container {
         margin-bottom: 10px;
-        padding: 10px 0 0 0;
 
         label {
             font-weight: 500;
@@ -1678,8 +1685,6 @@ modal {
 
         .control {
             width: 90%;
-            margin: 0;
-            font-size: 16px;
 
             &.half {
                 width: 146px;
@@ -1692,11 +1697,6 @@ modal {
 
         .date-container {
             display: inline-block;
-
-            &::after {
-                top: 8px;
-                margin-top: 0;
-            }
         }
 
         .enter-new {
@@ -1705,14 +1705,13 @@ modal {
 
             input {
                 width: 100%;
-                height: 35px;
             }
         }
 
         > i {
             &.close-icon {
                 float: right;
-                margin-top: 9px;
+                margin-top: 19px;
             }
         }
     }
