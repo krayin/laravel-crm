@@ -493,7 +493,6 @@ h5 {
 
         .control {
             width: 100%;
-            margin: 0;
         }
 
         &.post-heading {
@@ -1635,11 +1634,21 @@ modal {
         margin-bottom: 20px;
         padding-bottom: 20px;
         border-bottom: 1px solid $border-color;
+
+        h1 {
+            .float-right {
+                label {
+                    font-size: $font-size-lg;
+                    color: $primary-color;
+                    cursor: pointer;
+                    margin-right: 20px;
+                }
+            }
+        }
     }
 
     .field-container {
         margin-bottom: 10px;
-        padding: 10px 0 0 0;
 
         label {
             font-weight: 500;
@@ -1647,7 +1656,6 @@ modal {
 
         .control {
             width: 90%;
-            margin: 0;
 
             &.half {
                 width: 146px;
@@ -1668,14 +1676,13 @@ modal {
 
             input {
                 width: 100%;
-                height: 35px;
             }
         }
 
         > i {
             &.close-icon {
                 float: right;
-                margin-top: 9px;
+                margin-top: 19px;
             }
         }
     }
