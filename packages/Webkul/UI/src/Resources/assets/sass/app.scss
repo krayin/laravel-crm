@@ -497,12 +497,37 @@ h5 {
 
         &.post-heading {
             height: 36px;
-            width: 280px;
             float: right;
+            width: max-content;
             
-            .control {
+            input[type=search].control {
+                width: 280px;
                 height: 100%;
                 font-size: 15px;
+            }
+
+            .filter-btn {
+                cursor: pointer;
+                display: inline-block;
+
+                .grid-dropdown-header {
+                    width: 105px;
+                    height: 36px;
+                    border-radius: 3px;
+                    align-items: center;
+                    display: inline-flex;
+                    padding: 0px 7px 0px 10px;
+                    background-color: $white;
+                    color: $secondary-font-color;
+                    justify-content: space-between;
+                    font-weight: $font-weight-medium;
+                    border: 2px solid $secondary-font-color;
+                    vertical-align: middle;
+                
+                    .arrow-icon-down {
+                        float: right;
+                    }
+                }
             }
         }
     }
@@ -610,7 +635,6 @@ h5 {
                 .grid-dropdown-header {
                     width: 105px;
                     height: 36px;
-                    font-weight: $font-weight-medium;
                     border-radius: 3px;
                     align-items: center;
                     display: inline-flex;
@@ -618,6 +642,7 @@ h5 {
                     background-color: $white;
                     color: $secondary-font-color;
                     justify-content: space-between;
+                    font-weight: $font-weight-medium;
                     border: 2px solid $secondary-font-color;
                     vertical-align: middle;
                 
@@ -1642,6 +1667,10 @@ modal {
                     color: $primary-color;
                     cursor: pointer;
                     margin-right: 20px;
+                }
+                
+                i.close-icon {
+                    vertical-align: middle;
                 }
             }
         }

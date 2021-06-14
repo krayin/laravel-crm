@@ -13,63 +13,13 @@ trait Helper
      */
     private function setCardsData()
     {
-        $this->cards = [
-            [
-                "selected"      => true,
-                "card_id"       => "leads",
-                "card_type"     => "bar_chart",
-                "label"         => __('admin::app.dashboard.leads_over_time'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "leads_started",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.leads_started'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "activities",
-                "card_type"     => "activities",
-                "label"         => __('admin::app.dashboard.activities'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_leads",
-                "card_type"     => "top_card",
-                "label"         => __('admin::app.dashboard.top_leads'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "stages",
-                "card_type"     => "stages_bar",
-                "label"         => __('admin::app.dashboard.stages'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "emails",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.emails'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "customers",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.customers'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_customers",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.top_customers'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "products",
-                "card_type"     => "line_chart",
-                "label"         => __('admin::app.dashboard.products'),
-            ], [
-                "selected"      => true,
-                "card_id"       => "top_products",
-                "card_type"     => "emails",
-                "label"         => __('admin::app.dashboard.top_products'),
-            ], [
-                "card_type"     => "custom_card",
-                "card_border"   => "dashed",
-                "selected"      => false,
-            ]
-        ];
+        $this->cards = array_map(function ($card) {
+            if (isset($card['label'])) {
+                $card['label'] = trans($card['label']);
+            }
+            
+            return $card;
+        }, config('dashboard_cards'));
     }
 
     /**
@@ -88,7 +38,7 @@ trait Helper
         $startDate = Carbon::parse($startDateFilter);
         $endDate = Carbon::parse($endDateFilter);
 
-        $totalWeeks = $startDate->diffInWeeks($endDate);
+        $totalWeeks = ceil($startDate->floatDiffInWeeks($endDate));
 
         return compact(
             'cardId',
@@ -142,14 +92,30 @@ trait Helper
             'startDateFilter'   => $startDateFilter,
         ) = $this->getDateRangeDetails($requestData);
 
-        $relevantFunction = "get" . str_replace(" ", "", ucwords(str_replace("_", " ", $cardId)));
+        foreach ($this->cards as $card) {
+            if (isset($card['card_id']) && $card['card_id'] == $cardId) {
+                if (isset($card['class_name'])) {
+                    $class = app($card['class_name']);
+                }
 
-        if (! method_exists($this, $relevantFunction)) {
+                if (isset($card['method_name'])) {
+                    $relevantFunction = $card['method_name'];
+                }
+            }
+        }
+
+        $class = $class ?? $this;
+
+        if (! $relevantFunction) {
+            $relevantFunction = "get" . str_replace(" ", "", ucwords(str_replace("_", " ", $cardId)));
+        }
+
+        if (! method_exists($class ?? $this, $relevantFunction)) {
             $relevantFunction = false;
         }
 
         $cardData = $relevantFunction
-                    ? $this->{$relevantFunction}(
+                    ? $class->{$relevantFunction}(
                         $startDateFilter,
                         $endDateFilter,
                         $totalWeeks
