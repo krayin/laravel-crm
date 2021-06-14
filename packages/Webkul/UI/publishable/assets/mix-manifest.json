@@ -1,6 +1,6 @@
 {
     "/js/ui.js": "/js/ui.js?id=51f4f844f26a25c21852",
-    "/css/ui.css": "/css/ui.css?id=a0e57ae6d24d44bc8303",
+    "/css/ui.css": "/css/ui.css?id=934b48cc9b5fa6fb54c0",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -41,5 +41,9 @@
     "/images/reply-white-icon.svg": "/images/reply-white-icon.svg?id=df45b128c21e5b09fb7b",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
-    "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e"
+    "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e",
+    "/images/checkbox-checked-icon.svg": "/images/checkbox-checked-icon.svg?id=407a8f82c017c8f3835a",
+    "/images/checkbox-icon.svg": "/images/checkbox-icon.svg?id=7b02d45508d782836e92",
+    "/images/radio-checked-icon.svg": "/images/radio-checked-icon.svg?id=813fc1505c10aa3c06ae",
+    "/images/radio-icon.svg": "/images/radio-icon.svg?id=1a2426b9af083ec6c09d"
 }
