@@ -138,9 +138,7 @@
 
                 <div class="filter-btn">
                     <div class="grid-dropdown-header" @click="toggleSidebarFilter">
-                        <span class="name">
-                            {{ __('ui::app.datagrid.filter.title') }}
-                        </span>
+                        <span class="name">{{ __('ui::app.datagrid.filter.title') }}</span>
 
                         <i class="icon add-icon"></i>
                     </div>

@@ -89,7 +89,7 @@
             },
 
             updateFilter: function (data) {
-                let href = `?${data.key}[${data.cond}]=${data.value}`;
+                let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
 
                 this.getData(false, href);
             },
