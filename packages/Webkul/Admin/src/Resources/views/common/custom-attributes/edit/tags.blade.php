@@ -11,7 +11,7 @@
 
         <script type="text/x-template" id="tags-component-template">
             <div class="tags-control">
-                <div class="form-group input-group" v-for="(contactNumber, index) in contactNumbers" :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
+                <div class="form-group input-group" v-for="(tag, index) in tags" :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
                     <input type="text" class="control" v-model="search_term" v-on:keyup="search" :for="attribute['code']" :data-vv-as="attribute['name']" autocomplete="off">
 
                     <input type="hidden" v-validate="validations" :name="attribute['code']" :data-vv-as="attribute['name']" v-model="tag_ids"/>
