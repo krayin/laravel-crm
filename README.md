@@ -28,7 +28,7 @@ a progressive Javascript framework.
 
 **We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Bagisto CRM Forums](https://forums.bagisto.com/)**
 
-# Visit our live [Demo](https://demo.bagisto.com)
+# Visit our live [Demo](https://crm.webkul.com)
 
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
