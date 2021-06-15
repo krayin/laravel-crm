@@ -2,8 +2,10 @@
 
 namespace Webkul\Admin\Http\Controllers\Lead;
 
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\FileRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -180,14 +182,23 @@ class LeadController extends Controller
     public function fetchLeads()
     {
         $totalCount = [];
-        $searchedKeyword = request()->search ?? '';
+        $searchedKeyword = request('search') ?? '';
+        $createdAt = request('created_at') ?? null;
         $currencySymbol = core()->currencySymbol(config('app.currency'));
+
+        if ($createdAt) {
+            $createdAt = explode(",", $createdAt["bw"]);
+            $createdAt[1] = $createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d');
+        }
 
         $leads = $this->leadRepository
                     ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name', 'lead_stages.id as stage_id')
                     ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                     ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
                     ->where("title", 'like', "%$searchedKeyword%")
+                    ->when($createdAt, function($query) use ($createdAt) {
+                        return $query->whereBetween('leads.created_at', $createdAt);
+                    })
                     ->get()
                     ->toArray();
                     

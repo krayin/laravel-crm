@@ -27,15 +27,23 @@
 
 @if ($viewType == "kanban")
     @section('post-heading')
-        <div class="form-group post-heading">
-            <input
-                type="search"
-                class="control"
-                id="search-field"
-                :placeholder="__('ui.datagrid.search')"
-            />
-        </div>
+        <kanban-filters></kanban-filters>
     @stop
+
+    @php
+        $showDefaultTable = false;
+        $stagesFilterableOptions = [];
+        $stageRepository = app('\Webkul\Lead\Repositories\StageRepository');
+
+        $stages = $stageRepository->all()->toArray();
+
+        foreach ($stages as $stage) {
+            array_push($stagesFilterableOptions, [
+                'value' => $stage['id'],
+                'label' => $stage['name'],
+            ]);
+        }
+    @endphp
 @endif
 
 @section('table-action')
@@ -114,3 +122,59 @@
         </modal>
     </form>
 @stop
+
+@if ($viewType == "kanban")
+    @push('scripts')
+        <script type="text/x-template" id="kanban-filters-tempalte">
+            <div class="form-group post-heading">
+                <input
+                    type="search"
+                    class="control"
+                    id="search-field"
+                    :placeholder="__('ui.datagrid.search')"
+                />
+
+                <sidebar-filter :columns="columns"></sidebar-filter>
+
+                <div class="filter-btn">
+                    <div class="grid-dropdown-header" @click="toggleSidebarFilter">
+                        <span class="name">{{ __('ui::app.datagrid.filter.title') }}</span>
+
+                        <i class="icon add-icon"></i>
+                    </div>
+                </div>
+            </div>
+        </script>
+
+        <script>
+            Vue.component('kanban-filters', {
+                template: '#kanban-filters-tempalte',
+
+                data: function () {
+                    return {
+                        debounce: [],
+                        columns: {
+                            'created_at': {
+                                'filterable_type'   : 'date_range',
+                                'label'             : "{{ trans('admin::app.datagrid.created_at') }}",
+                                'values'            : [null, null]
+                            },
+                        }
+                    }
+                },
+
+                mounted: function () {
+                    EventBus.$on('updateFilter', data => {
+                        EventBus.$emit('updateKanbanFilter', data);
+                    });
+                },
+
+                methods: {
+                    toggleSidebarFilter: function () {
+                        $('.sidebar-filter').toggleClass('show');
+                    },
+                }
+            });
+        </script>
+    @endpush
+@endif

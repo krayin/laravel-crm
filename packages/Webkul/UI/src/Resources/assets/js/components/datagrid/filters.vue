@@ -57,7 +57,6 @@
                 <div
                     :key="index"
                     class="filter-tag"
-                    style="text-transform: capitalize;"
                     v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
                 >
                     <span v-text="filter.column"></span>
@@ -77,7 +76,7 @@
                 event-key="updateFilter"
                 :tabs-collection="tableData.tabFilters[0].values"
                 v-if="tableData.tabFilters && tableData.tabFilters[0]"
-                :class="`${tableData.tabFilters[0].type} d-inline-block`"
+                :class="`${tableData.tabFilters[0].type} tabs-left-container`"
                 :event-data="{key: tableData.tabFilters[0].key, 'cond' : tableData.tabFilters[0].condition}"
             ></tabs>
 
@@ -89,13 +88,13 @@
                 <tabs
                     event-value-key="value"
                     event-key="updateFilter"
+                    :class="`${tableData.tabFilters[1].type}`"
                     :tabs-collection="tableData.tabFilters[1].values"
                     v-if="tableData.tabFilters && tableData.tabFilters[1]"
-                    :class="`${tableData.tabFilters[1].type} d-inline-block`"
                     :event-data="{key: tableData.tabFilters[1].key, 'cond' : tableData.tabFilters[1].condition}"
                 ></tabs>
 
-                <div class="custom-design-container" v-if="customTabFilter">
+                <div class="custom-design-container dropdown-list">
                     <label>
                         {{ __('ui.datagrid.filter.date_range') }}
                     </label>
@@ -166,17 +165,17 @@
                 searchValue: '',
                 filters: [],
                 type: null,
+                perPage: 10,
+                debounce: {},
                 stringCondition: null,
                 booleanCondition: null,
                 numberCondition: null,
                 datetimeCondition: null,
                 stringValue: null,
                 booleanValue: null,
-                perPage: 10,
-                debounce: {},
-                ignoreDisplayFilter: ['duration', 'type'],
                 sidebarFilter: false,
                 custom_filter: [null, null],
+                ignoreDisplayFilter: ['duration', 'type'],
             }
         },
 
@@ -221,7 +220,9 @@
 
             EventBus.$on('updateFilter', data => {
                 if (data.key == "duration" && data.value == 'custom') {
-                    this.$store.state.customTabFilter = ! this.$store.state.customTabFilter;
+                    setTimeout(() => {
+                        $('.custom-design-container').toggle();
+                    });
                 } else {
                     this.updateFilter(data);
 
