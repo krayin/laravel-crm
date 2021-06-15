@@ -458,7 +458,7 @@
                             <span v-if="activity.type == 'note'">
                                 {{ __('admin::app.leads.note-added') }}
                             </span>
-
+                            
                             <span v-else-if="activity.type == 'call'">
                                 @{{ '{!! __('admin::app.leads.call-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
                             </span>
@@ -508,7 +508,7 @@
                         </div>
 
                         <div class="info">
-                            25 March 2021
+                            @{{ activity.created_at | moment("Do MMMM YYYY, h:mm A") }}
                             <span class="seperator">·</span>
                             <a :href="'{{ route('admin.settings.users.edit') }}/' + activity.user.id" target="_blank">@{{ activity.user.name }}</a> 
                         </div>
@@ -680,7 +680,7 @@
                         .then (function(response) {
                             activity.is_done = 1;
 
-                            window.flashMessages.push({'type': 'success', 'message': response.data.message});
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 
                             self.$root.addFlashMessages();
                         })
@@ -701,7 +701,7 @@
 
                             Vue.delete(self.activities, index);
                             
-                            window.flashMessages.push({'type': 'success', 'message': response.data.message});
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 
                             self.$root.addFlashMessages();
                         })

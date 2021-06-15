@@ -1,17 +1,17 @@
 <template>
     <div :class="`sidebar-filter ${sidebarFilter ? 'show' : ''}`">
         <header>
-            <button type="button" class="btn btn-sm btn-white text-black fs-18 pl-0">
+            <h1>
                 {{ __('ui.datagrid.filter.title') }}
-            </button>
 
-            <div class="float-right">
-                <button type="button" class="btn btn-sm btn-white" @click="removeAll">
-                    {{ __('ui.datagrid.filter.remove_all') }}
-                </button>
+                <div class="float-right">
+                    <label @click="removeAll">
+                        {{ __('ui.datagrid.filter.remove_all') }}
+                    </label>
 
-                <i class="icon close-icon" @click="toggleSidebarFilter"></i>
-            </div>
+                    <i class="icon close-icon" @click="toggleSidebarFilter"></i>
+                </div>
+            </h1>
         </header>
         
         <template v-for="(data, key) in tableData.columns">
