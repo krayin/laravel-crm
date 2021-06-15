@@ -63,6 +63,10 @@ trait DatagridCollection
      */
     private function filterCollection($collection, $info, $columnName, $type = "filter")
     {
+        if ($this->enableFilterMap && isset($this->filterMap[$columnName])) {
+            $columnName = $this->filterMap[$columnName];
+        }
+
         if ($type == "filter") {
             foreach ($info as $condition => $filter_value) {
                 switch ($condition) {

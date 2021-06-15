@@ -372,16 +372,20 @@ h5 {
 
         .empty-table {
             top: 20%;
-            text-align: center;
             position: relative;
 
-            img {
-                width: 150px;
-            }
+            div {
+                position: absolute;
+                left: calc(50% - 75px);
 
-            span {
-                display: block;
-                margin-top: 20px;
+                img {
+                    width: 150px;
+                }
+    
+                span {
+                    display: block;
+                    margin-top: 20px;
+                }
             }
         }
     }
@@ -563,12 +567,11 @@ h5 {
 
     .filtered-tags {
         width: 80%;
-        margin: 20px 0;
-        display: inline-block;
 
         .filter-tag {
-            margin-right: 20px;
             display: inline-block;
+            margin: 15px 20px 15px 0;
+            text-transform: capitalize;
     
             .wrapper {
                 margin-left: 10px;
@@ -684,6 +687,10 @@ h5 {
                 font-size: 16px;
             }
         }
+    }
+
+    .tabs-left-container {
+        float: left;
     }
 
     .tabs-right-container {
@@ -1231,12 +1238,11 @@ h5 {
 }
 
 .pill {
-    &.d-inline-block {
-        display: inline-block;
-    }
+    display: inline-block;
 
     .tabs {
         ul {
+            margin-top: 15px;
             margin-bottom: 15px;
 
             li {
@@ -1266,10 +1272,8 @@ h5 {
 }
 
 .group {
-    &.d-inline-block {
-        display: inline-block;
-    }
-    
+    display: inline-block;
+
     .tabs {
         ul {
             margin-bottom: 15px;
@@ -1659,12 +1663,15 @@ modal {
         border-bottom: 1px solid $border-color;
 
         h1 {
+            padding: 0;
+
             .float-right {
                 label {
-                    font-size: $font-size-lg;
-                    color: $primary-color;
                     cursor: pointer;
                     margin-right: 20px;
+                    color: $primary-color;
+                    display: inline-block;
+                    font-size: $font-size-lg;
                 }
                 
                 i.close-icon {
@@ -1683,6 +1690,7 @@ modal {
 
         .control {
             width: 90%;
+            font-size: 16px;
 
             &.half {
                 width: 146px;

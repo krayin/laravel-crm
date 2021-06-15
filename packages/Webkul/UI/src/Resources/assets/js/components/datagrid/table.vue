@@ -9,10 +9,12 @@
         </table>
 
         <div class="empty-table" v-else>
-            <img :src="`${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`" />
+            <div>
+                <img :src="`${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`" />
 
-            <span>{{ __('ui.datagrid.no-records') }}</span>
-        </div>        
+                <span>{{ __('ui.datagrid.no-records') }}</span>
+            </div>
+        </div>
     </div>
 </template>
 

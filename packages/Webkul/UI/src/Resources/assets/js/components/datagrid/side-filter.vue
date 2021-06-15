@@ -1,20 +1,18 @@
 <template>
-    <div :class="`sidebar-filter ${sidebarFilter ? 'show' : ''}`">
+    <div :class="`sidebar-filter`">
         <header>
             <h1>
-                {{ __('ui.datagrid.filter.title') }}
+                <span>{{ __('ui.datagrid.filter.title') }}</span>
 
                 <div class="float-right">
-                    <label @click="removeAll">
-                        {{ __('ui.datagrid.filter.remove_all') }}
-                    </label>
+                    <label @click="removeAll">{{ __('ui.datagrid.filter.remove_all') }}</label>
 
                     <i class="icon close-icon" @click="toggleSidebarFilter"></i>
                 </div>
             </h1>
         </header>
         
-        <template v-for="(data, key) in tableData.columns">
+        <template v-for="(data, key) in (columns || tableData.columns)">
             <div :class="`form-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
                 <label>{{ data.label }}</label>
 
@@ -45,9 +43,9 @@
                         <div class="enter-new" v-else>
                             <input
                                 type="text"
-                                :id="`enter-new-${data.index}`"
                                 class="control mb-10"
                                 :placeholder="data.label"
+                                :id="`enter-new-${data.index}`"
                                 @keyup.enter="pushFieldValue(key, $event)"
                             />
                         </div>
@@ -113,10 +111,11 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
+        props: ['columns'],
+
         data: function () {
             return {
-                addField: {
-                },
+                addField: {},
             }
         },
 
@@ -147,7 +146,7 @@
             pushFieldValue: function (key, {target}) {
                 this.addField[key] = false;
 
-                const values = this.tableData.columns[key].values ? this.tableData.columns[key].values : [];
+                const values = (this.columns || this.tableData.columns)[key].values || [];
 
                 if (values.indexOf(target.value) == -1) {
                     values.push(target.value);
@@ -164,7 +163,7 @@
             },
 
             removeFieldValue: function (key, index) {
-                const values = this.tableData.columns[key].values;
+                const values = (this.columns || this.tableData.columns)[key].values;
                 values.splice(index, 1);
                 
                 this.updateFilterValues({
@@ -179,6 +178,7 @@
                 this.$store.state.filters = [];
 
                 this.toggleSidebarFilter();
+                this.updateFilterValues();
 
                 this.$forceUpdate();
             },
@@ -188,7 +188,7 @@
                     this.addField[index] = false;
                 }
 
-                var values = this.tableData.columns[key].values;
+                var values = (this.columns || this.tableData.columns)[key].values;
                 values = "";
                 
                 this.updateFilterValues({

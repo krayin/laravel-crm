@@ -51,9 +51,15 @@
             });
         },
 
+        mounted: function () {
+            EventBus.$on('updateKanbanFilter', this.updateFilter);
+        },
+
         methods: {
-            getData: function (searchedKeyword) {
-                this.$http.get(`${this.getUrl}${searchedKeyword ? `?search=${searchedKeyword}` : ''}`)
+            getData: function (searchedKeyword, filterValues) {
+                this.updateURI(searchedKeyword, filterValues);
+
+                this.$http.get(`${this.getUrl}${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
                     .then(response => {
                         this.stages = response.data.stages;
                         this.blocks = response.data.blocks;
@@ -80,6 +86,20 @@
 
             openAddModal: function () {
                 $('#add-new').click();
+            },
+
+            updateFilter: function (data) {
+                let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
+
+                this.getData(false, href);
+            },
+
+            updateURI: function (searchedKeyword, filterValues) {
+                // const urlParams = new URLSearchParams(window.location.search);
+
+                // urlParams.set('order', 'date');
+
+                // window.history.pushState({path: urlParams});
             }
         }
     }
