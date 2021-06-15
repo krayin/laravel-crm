@@ -1,5 +1,5 @@
 const UPDATE_FILTER_VALUES = (state, payload) => {
-    var key;
+    var key = payload.key;
 
     for (const filterKey in state.tableData.columns) {
         if (filterKey == payload.key) {
@@ -11,7 +11,7 @@ const UPDATE_FILTER_VALUES = (state, payload) => {
     EventBus.$emit('updateFilter', {
         key,
         value: payload.values.toString(),
-        cond: payload.condition ? payload.condition : 'in',
+        cond: payload.condition || 'in',
     });
 };
 

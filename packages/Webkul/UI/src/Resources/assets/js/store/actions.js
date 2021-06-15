@@ -1,5 +1,7 @@
 const toggleSidebarFilter = ({state}) => {
     state.sidebarFilter = ! state.sidebarFilter;
+
+    $('.sidebar-filter').toggleClass('show');
 };
 
 const updateFilterValues = ({commit}, payload) => {

@@ -1,5 +1,5 @@
 <template>
-    <div :class="`sidebar-filter ${sidebarFilter ? 'show' : ''}`">
+    <div :class="`sidebar-filter`">
         <header>
             <button type="button" class="btn btn-sm btn-white text-black fs-18 pl-0">
                 {{ __('ui.datagrid.filter.title') }}
@@ -14,7 +14,7 @@
             </div>
         </header>
         
-        <template v-for="(data, key) in tableData.columns">
+        <template v-for="(data, key) in columns || tableData.columns">
             <div :class="`form-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
                 <label>{{ data.label }}</label>
 
@@ -45,9 +45,9 @@
                         <div class="enter-new" v-else>
                             <input
                                 type="text"
-                                :id="`enter-new-${data.index}`"
                                 class="control mb-10"
                                 :placeholder="data.label"
+                                :id="`enter-new-${data.index}`"
                                 @keyup.enter="pushFieldValue(key, $event)"
                             />
                         </div>
@@ -113,10 +113,11 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
+        props: ['columns'],
+
         data: function () {
             return {
-                addField: {
-                },
+                addField: {},
             }
         },
 
@@ -147,7 +148,7 @@
             pushFieldValue: function (key, {target}) {
                 this.addField[key] = false;
 
-                const values = this.tableData.columns[key].values ? this.tableData.columns[key].values : [];
+                const values = (this.columns || this.tableData.columns)[key].values || [];
 
                 if (values.indexOf(target.value) == -1) {
                     values.push(target.value);
@@ -164,7 +165,7 @@
             },
 
             removeFieldValue: function (key, index) {
-                const values = this.tableData.columns[key].values;
+                const values = (this.columns || this.tableData.columns)[key].values;
                 values.splice(index, 1);
                 
                 this.updateFilterValues({
@@ -188,7 +189,7 @@
                     this.addField[index] = false;
                 }
 
-                var values = this.tableData.columns[key].values;
+                var values = (this.columns || this.tableData.columns)[key].values;
                 values = "";
                 
                 this.updateFilterValues({
