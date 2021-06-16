@@ -59,7 +59,7 @@
                     class="filter-tag"
                     v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
                 >
-                    <span v-text="filter.column"></span>
+                    <span v-text="filter.prettyColumn || filter.column"></span>
 
                     <span class="wrapper">
                         {{ filter.prettyValue ? filter.prettyValue : decodeURIComponent(filter.val) }}
@@ -157,24 +157,24 @@
     export default {
         data: function () {
             return {
-                massActionValue: {},
-                massActionOptionValue: null,
-                url: new URL(window.location.href),
-                sortDesc: 'desc',
-                sortAsc: 'asc',
-                searchValue: '',
-                filters: [],
                 type: null,
+                filters: [],
                 perPage: 10,
                 debounce: {},
-                stringCondition: null,
-                booleanCondition: null,
-                numberCondition: null,
-                datetimeCondition: null,
+                sortAsc: 'asc',
+                searchValue: '',
+                sortDesc: 'desc',
                 stringValue: null,
                 booleanValue: null,
+                massActionValue: {},
                 sidebarFilter: false,
+                stringCondition: null,
+                numberCondition: null,
+                booleanCondition: null,
+                datetimeCondition: null,
                 custom_filter: [null, null],
+                massActionOptionValue: null,
+                url: new URL(window.location.href),
                 ignoreDisplayFilter: ['duration', 'type'],
             }
         },
@@ -418,6 +418,7 @@
                     obj.column = key.replace(']', '').split('[')[0];
                     obj.cond = key.replace(']', '').split('[')[1];
                     obj.val = value;
+                    obj.prettyColumn = `${obj.column.replaceAll("_", " ")}`;
 
                     switch (obj.column) {
                         case "search":
@@ -458,6 +459,8 @@
                         "column": key,
                         "val"   : value
                     }
+
+                    data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
     
                     if (cond) {
                         data['cond'] = cond;

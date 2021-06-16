@@ -950,6 +950,12 @@ body {
 
         .card-data {
             height: 100%;
+            max-height: 260px;
+            overflow-y: scroll;
+
+            &::-webkit-scrollbar {
+                display: none;
+            }
             
             .bar-chart {
                 margin-top: 30px;
