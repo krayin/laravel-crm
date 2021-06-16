@@ -326,25 +326,22 @@ trait DataRetrival
                 
         $emailsCollection = app('Webkul\Email\Repositories\EmailRepository')
                             ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
-                            ->get()
-                            ->toArray();
+                            ->get();
         
-        if ($emailsCollection) {
-            foreach ($emailsCollection as $key => $email) {
-                if (strpos($email->folders, 'inbox') !== false) {
-                    $receivedEmails++;
-                } else if (strpos($email->folders, 'draft') !== false) {
-                    $draftEmails++;
-                } else if (strpos($email->folders, 'outbox') !== false) {
-                    $outboxEmails++;
-                } else if (strpos($email->folders, 'sent') !== false) {
-                    $sentEmails++;
-                } else if (strpos($email->folders, 'trash') !== false) {
-                    $trashEmails++;
-                }
-
-                $totalEmails++;
+        foreach ($emailsCollection as $key => $email) {
+            if (in_array('inbox', $email->folders) !== false) {
+                $receivedEmails++;
+            } else if (in_array('draft', $email->folders) !== false) {
+                $draftEmails++;
+            } else if (in_array('outbox', $email->folders) !== false) {
+                $outboxEmails++;
+            } else if (in_array('sent', $email->folders) !== false) {
+                $sentEmails++;
+            } else if (in_array('trash', $email->folders) !== false) {
+                $trashEmails++;
             }
+
+            $totalEmails++;
         }
 
         $cardData = [

@@ -32,10 +32,13 @@ class CreateEmailsTable extends Migration
             $table->json('reference_ids')->nullable();
 
             $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
             $table->integer('person_id')->unsigned()->nullable();
-            $table->foreign('person_id')->references('id')->on('persons')->onDelete('cascade');
+            $table->foreign('person_id')->references('id')->on('persons')->onDelete('set null');
+
+            $table->integer('lead_id')->unsigned()->nullable();
+            $table->foreign('lead_id')->references('id')->on('leads')->onDelete('set null');
 
             $table->timestamps();
         });

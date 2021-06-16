@@ -1271,6 +1271,16 @@ body {
     }
 }
 
+.tags-container {
+    margin-left: 10px;
+    display: inline-block;
+
+    .icon.tags-icon {
+        vertical-align: middle;
+        cursor: pointer;
+    }
+}
+
 .pipeline-stage-container {
     position: relative;
     margin-top: 10px;
