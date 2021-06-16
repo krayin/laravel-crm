@@ -208,6 +208,7 @@ return [
         Webkul\Email\Providers\EmailServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,
+        Webkul\Tag\Providers\TagServiceProvider::class,
         Webkul\UI\Providers\UIServiceProvider::class,
         Webkul\User\Providers\UserServiceProvider::class,
     ],

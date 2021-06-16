@@ -21,7 +21,11 @@
     <div class="content full-page">
         <div class="page-header">
             <div class="page-title">
-                <h1>{{ $lead->title }}</h1>
+                <h1>
+                    {{ $lead->title }}
+
+                    <tags-component></tags-component>
+                </h1>
             </div>
 
             <div class="page-action">
@@ -210,6 +214,32 @@
 
 @push('scripts')
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+
+    <script type="text/x-template" id="tags-component-template">
+        <div class="tags-container">
+            <i class="icon tags-icon dropdown-toggle"></i>
+
+            <div class="dropdown-list">
+                <div class="dropdown-container">
+                    <ul>
+                        <li v-for='(tag, index) in tags' @click="addTag(person)">
+                            <span>@{{ tag.name }}</span>
+                        </li>
+
+                        <li v-if="! tags.length && term.length && ! is_searching">
+                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                        </li>
+
+                        <li class="action" @click="addNew()">
+                            <span>
+                                + {{ __('admin::app.leads.add-tag') }}
+                            </span> 
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </script>
 
     <script type="text/x-template" id="stage-component-template">
         <div class="form-group">
@@ -526,6 +556,51 @@
     </script>
 
     <script>
+        Vue.component('tags-component', {
+
+            template: '#tags-component-template',
+    
+            inject: ['$validator'],
+
+            data: function() {
+                return {
+                    term: false,
+
+                    is_searching: false,
+
+                    tags: [],
+
+                    search_results: [],
+                }
+            },
+
+            methods: {
+                search: debounce(function () {
+                    this.is_searching = true;
+
+                    if (this.term.length < 2) {
+                        this.search_results = [];
+
+                        this.is_searching = false;
+
+                        return;
+                    }
+
+                    var self = this;
+                    
+                    this.$http.get("{{ route('admin.contacts.persons.search') }}", {params: {query: this.term}})
+                        .then (function(response) {
+                            self.search_results = response.data;
+
+                            self.is_searching = false;
+                        })
+                        .catch (function (error) {
+                            self.is_searching = false;
+                        })
+                }, 500),
+            }
+        });
+
         Vue.component('stage-component', {
 
             template: '#stage-component-template',

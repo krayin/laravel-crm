@@ -14,12 +14,11 @@ class CreateLeadTagsTable extends Migration
     public function up()
     {
         Schema::create('lead_tags', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
+            $table->integer('tag_id')->unsigned();
+            $table->foreign('tag_id')->references('id')->on('tags')->onDelete('cascade');
 
             $table->integer('lead_id')->unsigned();
             $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 
