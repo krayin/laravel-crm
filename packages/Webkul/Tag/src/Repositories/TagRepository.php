@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Lead\Repositories;
+namespace Webkul\Tag\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
 
@@ -13,6 +13,6 @@ class TagRepository extends Repository
      */
     function model()
     {
-        return 'Webkul\Lead\Contracts\Tag';
+        return 'Webkul\Tag\Contracts\Tag';
     }
 }

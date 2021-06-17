@@ -101,6 +101,7 @@
             'lost-reason'              => 'Lost Reason',
             'closed-date'              => 'Closed Date',
             'contact-person'           => 'Contact Person',
+            'add-tag'                  => 'Add Tag',
             'name'                     => 'Name',
             'email'                    => 'Email',
             'contact-numbers'          => 'Contact Numbers',

@@ -5,6 +5,7 @@ namespace Webkul\Lead\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\User\Models\UserProxy;
+use Webkul\Email\Models\EmailProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Lead\Contracts\Lead as LeadContract;
 
@@ -97,10 +98,10 @@ class Lead extends Model implements LeadContract
     }
 
     /**
-     * Get the tags.
+     * Get the emails.
      */
-    public function tags()
+    public function emails()
     {
-        return $this->hasMany(TagProxy::modelClass());
+        return $this->hasMany(EmailProxy::modelClass());
     }
 }

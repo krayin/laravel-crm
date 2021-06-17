@@ -5,6 +5,7 @@ namespace Webkul\Email\Models;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\User\Models\UserProxy;
 use Webkul\Contact\Models\PersonProxy;
+use Webkul\Lead\Models\LeadProxy;
 use Webkul\Email\Contracts\Email as EmailContract;
 
 class Email extends Model implements EmailContract
@@ -45,6 +46,7 @@ class Email extends Model implements EmailContract
         'user_id',
         'person_id',
         'parent_id',
+        'lead_id',
     ];
 
     /**
@@ -53,6 +55,14 @@ class Email extends Model implements EmailContract
     public function parent()
     {
         return $this->belongsTo(EmailProxy::modelClass(), 'parent_id');
+    }
+
+    /**
+     * Get the lead.
+     */
+    public function lead()
+    {
+        return $this->belongsTo(LeadProxy::modelClass());
     }
 
     /**
