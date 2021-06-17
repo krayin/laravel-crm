@@ -1,5 +1,5 @@
 <p align="center">
-<a href="http://crm.webkul.com"><img src="https://bagisto.com/wp-content/themes/bagisto/images/logo.png" alt="Total Downloads"></a>
+<a href="http://crm.bagisto.com"><img src="https://bagisto.com/wp-content/themes/bagisto/images/logo.png" alt="Total Downloads"></a>
 </p>
 
 <p align="center">
@@ -18,7 +18,7 @@
 
 ### Introduction
 
-[Bagisto CRM](https://crm.webkul.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
+[Bagisto CRM](https://crm.bagisto.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
 such as [Laravel](https://laravel.com) (a [PHP](https://secure.php.net/) framework) and [Vue.js](https://vuejs.org)
 a progressive Javascript framework.
 
@@ -28,7 +28,7 @@ a progressive Javascript framework.
 
 **We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Bagisto CRM Forums](https://forums.bagisto.com/)**
 
-# Visit our live [Demo](https://crm.webkul.com)
+# Visit our live [Demo](https://crm.bagisto.com)
 
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
