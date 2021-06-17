@@ -61,16 +61,21 @@
     </script>
 
     <script type="text/x-template" id="cards-collection-template">
+        {{-- <div class="container">
+            <draggable v-model="filteredCards">
+                <div class="row-grid-3" v-for="(filteredCardRow, index) in filteredCards" :key="index">
+                    <draggable :key="index" :list="filteredCardRow">
+                        <template v-for="(filteredCard, cardRowIndex) in filteredCardRow">
+                            Hello @{{ index }}@{{cardRowIndex}}
+                        </template>
+                    </draggable>
+                </div>
+            </draggable>
+        </div> --}}
+
         <div class="row-grid-3">
-            <template v-for="(card, index) in filteredCards">
-                {{-- <draggable
-                    tag="div"
-                    :key="index"
-                    handle=".drag-icon"
-                    :list="filteredCards"
-                    :class="`card ${card.card_border || ''}`"
-                > --}}
-                <div :class="`card ${card.card_border || ''}`">
+            <template v-for="(filteredCardRow, index) in filteredCards">
+                <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
                     <template v-if="card.label">
                         <label>
                             @{{ card.label }}
@@ -88,7 +93,6 @@
                         :card-type="card.card_type"
                         :card-id="card.card_id || ''"
                     ></card-component>
-                {{-- </draggable> --}}
                 </div>
             </template>
         </div>
@@ -116,7 +120,7 @@
                 "
             ></line-chart>
 
-            <template v-else-if="['activity', 'stages_bar'].indexOf(cardType) > -1">
+            <template v-else-if="['activities', 'stages_bar'].indexOf(cardType) > -1">
                 <h3 v-if="dataCollection.header_data">
                     <template v-for="(header_data, index) in dataCollection.header_data">
                         @{{ header_data }}
@@ -214,6 +218,26 @@
                 return {
                     columns: [],
                     showCardOptions: false,
+                    enabled: true,
+                    rows: [
+                        {
+                            index: 1,
+                            items: [
+                                {
+                                    title: "item 1"
+                                }
+                            ]
+                        }, {
+                            index: 2,
+                            items: [
+                                {
+                                    title: "item 2"
+                                }, {
+                                    title: "item 3"
+                                }
+                            ]
+                        }
+                    ]
                 }
             },
 
@@ -266,7 +290,17 @@
                     this.$http.get(`{{ route('admin.api.dashboard.cards.index') }}`)
                         .then(response => {
                             this.cards = response.data;
+
                             this.filteredCards = this.cards.filter(card => card.selected);
+                            this.filteredCards = this.filteredCards.sort((secondCard, firstCard) => secondCard.sort - firstCard.sort);
+                            
+                            let filteredCardsChunks = [];
+
+                            for (let index = 0; index < Math.ceil(this.filteredCards.length / 3); index++) {
+                                filteredCardsChunks.push(this.filteredCards.slice(index * 3, (index + 1) * 3));
+                            }
+
+                            this.filteredCards = filteredCardsChunks;
 
                             EventBus.$emit('cardsLoaded', this.cards);
                         })

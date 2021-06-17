@@ -32,8 +32,8 @@ trait Helper
         $dateRange = $data['date-range'] ?? Carbon::now()->subMonth()->addDays(1)->format('Y-m-d') . "," . Carbon::now()->format('Y-m-d');
         $dateRange = explode(",", $dateRange);
 
-        $startDateFilter = $dateRange[0];
-        $endDateFilter = $dateRange[1];
+        $startDateFilter = $dateRange[0] . ' ' . Carbon::parse('00:01')->format('H:i');
+        $endDateFilter = $dateRange[1] . ' ' . Carbon::parse('23:59')->format('H:i');
         
         $startDate = Carbon::parse($startDateFilter);
         $endDate = Carbon::parse($endDateFilter);
