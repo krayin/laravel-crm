@@ -387,6 +387,7 @@ body {
             text-align: left;
 
             .brand-logo {
+                text-align: center;
                 margin-bottom: 40px;
 
                 img {
@@ -920,142 +921,146 @@ body {
         }
     }
 
-    .card {
-        min-height: 300px;
-        padding: 30px 20px;
-        border-radius: 3px;
-        background-color: $white;
-        border: 1px solid $border-color;
-
-        label {
-            display: block;
-
-            .card-filter-container {
-                cursor: pointer;
-                margin-left: 5px;
-                display: inline-block;
-                color: $secondary-color;
-
-                .dropdown-toggle {
-                    margin-bottom: 5px;
+    .row-grid-3 {
+        padding: 10px;
+        
+        .card {
+            min-height: 300px;
+            padding: 30px 20px;
+            border-radius: 3px;
+            background-color: $white;
+            border: 1px solid $border-color;
+    
+            label {
+                display: block;
+    
+                .card-filter-container {
+                    cursor: pointer;
+                    margin-left: 5px;
+                    display: inline-block;
+                    color: $secondary-color;
+    
+                    .dropdown-toggle {
+                        margin-bottom: 5px;
+                    }
+                }
+    
+                i.drag-icon {
+                    float: right;
+                    display: none;
+                    cursor: pointer;
                 }
             }
-
-            i.drag-icon {
-                float: right;
-                display: none;
-                cursor: pointer;
-            }
-        }
-
-        .card-data {
-            height: 100%;
-            max-height: 260px;
-            overflow-y: scroll;
-
-            &::-webkit-scrollbar {
-                display: none;
-            }
-            
-            .bar-chart {
-                margin-top: 30px;
-            }
     
-            .bar-data {
-                display: grid;
-                font-size: 14px;
-                margin-top: 30px;
-                color: $font-color;
-                grid-column-gap: 15px;
-                grid-template-columns: 90px auto 90px;
+            .card-data {
+                height: 100%;
+                max-height: 260px;
+                overflow-y: scroll;
     
-                &.activity {
-                    margin-top: 40px;
-
-                    > span {
-                        &:first-child {
-                            text-transform: capitalize;
+                &::-webkit-scrollbar {
+                    display: none;
+                }
+                
+                .bar-chart {
+                    margin-top: 30px;
+                }
+        
+                .bar-data {
+                    display: grid;
+                    font-size: 14px;
+                    margin-top: 30px;
+                    color: $font-color;
+                    grid-column-gap: 15px;
+                    grid-template-columns: 90px auto 90px;
+        
+                    &.activity {
+                        margin-top: 40px;
+    
+                        > span {
+                            &:first-child {
+                                text-transform: capitalize;
+                            }
                         }
                     }
                 }
-            }
-    
-            .lead {
-                margin-top: 20px;
-                color: $secondary-font-color;
-    
-                label {
-                    font-weight: 500;
-                    font-size: 18px;
-                }
-    
-                .details {
-                    display: grid;
-                    padding: 5px 0;
-                    font-size: 16px;
-                    grid-template-columns: auto auto auto;
-                    border-bottom: 1px solid $border-color;
-                }
-            }
-    
-            .email-data {
-                margin-top: 30px;
-                padding-bottom: 5px;
-                display: inline-block;
-                width: calc(50% - 10px);
-                border-bottom: 1px solid $border-color;
-
-                &:nth-child(odd) {
-                    margin-right: 10px;
-                }
-    
-                &:nth-last-child(1),
-                &:nth-last-child(2) {
-                   border: none;
-                }
-    
-                span {
-                    display: block;
-                    text-align: left;
+        
+                .lead {
+                    margin-top: 20px;
                     color: $secondary-font-color;
-    
-                    &:first-child {
+        
+                    label {
                         font-weight: 500;
-                        font-size: 36px;
-                        margin-bottom: 10px;
+                        font-size: 18px;
                     }
-    
-                    &:last-child {
+        
+                    .details {
+                        display: grid;
+                        padding: 5px 0;
                         font-size: 16px;
+                        grid-template-columns: auto auto auto;
+                        border-bottom: 1px solid $border-color;
+                    }
+                }
+        
+                .email-data {
+                    margin-top: 30px;
+                    padding-bottom: 5px;
+                    display: inline-block;
+                    width: calc(50% - 10px);
+                    border-bottom: 1px solid $border-color;
+    
+                    &:nth-child(odd) {
+                        margin-right: 10px;
+                    }
+        
+                    &:nth-last-child(1),
+                    &:nth-last-child(2) {
+                       border: none;
+                    }
+        
+                    span {
+                        display: block;
+                        text-align: left;
+                        color: $secondary-font-color;
+        
+                        &:first-child {
+                            font-weight: 500;
+                            font-size: 36px;
+                            margin-bottom: 10px;
+                        }
+        
+                        &:last-child {
+                            font-size: 16px;
+                        }
+                    }
+                }
+        
+                .custom-card {
+                    text-align: center;
+                    position: relative;
+                    top: calc(50% - 70px);
+                    color: $secondary-color;
+    
+                    span {
+                        display: block;
+                    }
+    
+                    i.icon {
+                        width: 96px;
+                        height: 96px;
                     }
                 }
             }
     
-            .custom-card {
-                text-align: center;
-                position: relative;
-                top: calc(50% - 70px);
-                color: $secondary-color;
-
-                span {
-                    display: block;
-                }
-
-                i.icon {
-                    width: 96px;
-                    height: 96px;
-                }
+            &.dashed {
+                border-style: dashed;
             }
-        }
-
-        &.dashed {
-            border-style: dashed;
-        }
-
-        &:hover {
-            label {
-                i.drag-icon {
-                    display: inline;
+    
+            &:hover {
+                label {
+                    i.drag-icon {
+                        display: inline;
+                    }
                 }
             }
         }

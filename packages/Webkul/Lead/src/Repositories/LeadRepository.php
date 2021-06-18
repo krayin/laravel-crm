@@ -70,6 +70,23 @@ class LeadRepository extends Repository
      * @param array $data
      * @return \Webkul\Lead\Contracts\Lead
      */
+    public function getLeads($searchedKeyword, $createdAtRange)
+    {
+        return $this
+                ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name', 'lead_stages.id as stage_id')
+                ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
+                ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+                ->where("title", 'like', "%$searchedKeyword%")
+                ->when($createdAtRange, function($query) use ($createdAtRange) {
+                    return $query->whereBetween('leads.created_at', $createdAtRange);
+                })
+                ->get();
+    }
+
+    /**
+     * @param array $data
+     * @return \Webkul\Lead\Contracts\Lead
+     */
     public function create(array $data)
     {
         if (isset($data['person']['id'])) {
