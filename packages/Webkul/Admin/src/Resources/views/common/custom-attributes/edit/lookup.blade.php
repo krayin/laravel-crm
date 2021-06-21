@@ -55,7 +55,7 @@
 
                         results: [],
 
-                        search_route: this.searchRoute ? this.searchRoute : "{{ route('admin.settings.attributes.lookup') }}" + "/" + this.attribute['id'],
+                        search_route: this.searchRoute ?? `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.id}`,
                     }
                 },
 
@@ -85,16 +85,14 @@
                             return;
                         }
 
-                        var self = this;
-                        
                         this.$http.get(this.search_route, {params: {query: this.search_term}})
-                            .then (function(response) {
-                                self.results = response.data;
+                            .then (response => {
+                                this.results = response.data;
 
-                                self.is_searching = false;
+                                this.is_searching = false;
                             })
-                            .catch (function (error) {
-                                self.is_searching = false;
+                            .catch (error => {
+                                this.is_searching = false;
                             })
                     }, 500),
 

@@ -78,17 +78,30 @@ ul.drag-inner-list {
         transition: $ease-out;
         border: 1px solid $body-background;
         box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+
+        &:hover {
+            .icons {
+                display: inline-block;
+            }
+        }
     
         &.is-moving {
             background: $white;
             transform: scale(1.5);
-            
         }
 
         .lead-title {
             font-size: 16px;
             font-weight: 500;
             color: $font-color;
+            display: inline-block;
+            width: calc(100% - 45px);
+        }
+
+        .icons {
+            float: right;
+            display: none;
+            cursor: pointer;
         }
 
         .lead-cost {

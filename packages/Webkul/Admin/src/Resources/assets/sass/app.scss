@@ -961,7 +961,8 @@ body {
                     display: none;
                 }
                 
-                .bar-chart {
+                .bar-chart,
+                .line-chart {
                     margin-top: 30px;
                 }
         
@@ -1291,29 +1292,33 @@ body {
     margin-top: 10px;
 
     .pipeline-stages {
+        width: 100%;
         display: flex;
+        overflow: hidden;
+        border-radius: 4px;
         align-items: center;
         flex-flow: row nowrap;
-        overflow: hidden;
-        width: 100%;
-        border-radius: 4px;
+
+        &::-webkit-scrollbar {
+            display: none;
+        }
 
         .stage {
-            background: $gray-color;
-            color: $font-color;
-            font-size: 12px;
-            font-weight: $font-weight-medium;
             width: 100%;
-            text-align: center;
+            font-size: 12px;
             min-width: 100px;
+            color: $font-color;
+            text-align: center;
+            background: $gray-color;
+            font-weight: $font-weight-medium;
 
             span {
-                overflow: hidden;
-                text-overflow: ellipsis;
-                white-space: nowrap;
                 display: block;
-                padding: 7px 5px 7px 22px;
                 cursor: pointer;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                padding: 7px 5px 7px 22px;
 
                 .icon {
                     float: right;

@@ -1,5 +1,5 @@
 <template>
-    <div class="bar-chart" v-if="data.length">
+    <div class="bar-chart" v-if="dataLength">
         <canvas :id="id"></canvas>
     </div>
 </template>
@@ -29,6 +29,7 @@
             
             return {
                 chartData,
+                dataLength: Object.keys(this.data).length,
                 options: {
                     "responsive": true,
                     "legend": {
@@ -64,7 +65,7 @@
         },
 
         mounted: function () {
-            if (this.data.length) {
+            if (this.dataLength) {
                 var ctx = document.getElementById(this.id).getContext('2d');
     
                 new Chart(ctx, {
