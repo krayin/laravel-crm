@@ -55,7 +55,7 @@
 
                         results: [],
 
-                        search_route: this.searchRoute ? this.searchRoute : "{{ route('admin.settings.attributes.lookup') }}" + this.attribute['id'],
+                        search_route: this.searchRoute ? this.searchRoute : "{{ route('admin.settings.attributes.lookup') }}" + "/" + this.attribute['id'],
                     }
                 },
 
