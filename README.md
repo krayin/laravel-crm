@@ -1,5 +1,5 @@
 <p align="center">
-<a href="http://crm.bagisto.com"><img src="https://bagisto.com/wp-content/uploads/2021/06/bagisto-crm.png" alt="Total Downloads"></a>
+<a href="http://krayincrm.com"><img src="https://bagisto.com/wp-content/uploads/2021/06/bagisto-crm.png" alt="Total Downloads"></a>
 </p>
 
 <p align="center">
@@ -18,17 +18,17 @@
 
 ### Introduction
 
-[Bagisto CRM](https://crm.bagisto.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
+[Krayin CRM](https://krayincrm.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
 such as [Laravel](https://laravel.com) (a [PHP](https://secure.php.net/) framework) and [Vue.js](https://vuejs.org)
 a progressive Javascript framework.
 
 **Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.**
 
-**Read our documentation: [Bagisto CRM Docs](https://devdocs-crm.bagisto.com/)**
+**Read our documentation: [Krayin CRM Docs](https://devdocs.krayincrm.com/)**
 
-**We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Bagisto CRM Forums](https://forums.bagisto.com/)**
+**We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Krayin CRM Forums](https://forums.krayincrm.com/)**
 
-# Visit our live [Demo](https://crm.bagisto.com)
+# Visit our live [Demo](https://krayincrm.com)
 
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
@@ -37,14 +37,14 @@ It packs in lots of features that will allow your E-Commerce business to scale i
 * Custom Attributes.
 * Built on Modular Approach.
 * Email parsing via Sendgrid.
-* Check out [these features and more](https://bagisto.com/features/).
+* Check out [these features and more](https://krayincrm.com/features/).
 
 **For Developers**:
-Take advantage of two of the hottest frameworks used in this project -- Laravel and Vue.js -- both of which have been used in Bagisto CRM.
+Take advantage of two of the hottest frameworks used in this project -- Laravel and Vue.js -- both of which have been used in Krayin CRM.
 
 ### Documentation
 
-#### Bagisto Documentation [https://devdocs-crm.bagisto.com](https://devdocs-crm.bagisto.com)
+#### Krayin Documentation [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com)
 
 ### Requirements
 
@@ -58,7 +58,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Installation and Configuration
 
-**1. You can install Bagisto CRM by using the GUI installer.**
+**1. You can install Krayin CRM by using the GUI installer.**
 
 ##### a. Download zip from the link below:
 
@@ -70,7 +70,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 http(s)://example.com
 ~~~
 
-**2. Or you can install Bagisto CRM from your console.**
+**2. Or you can install Krayin CRM from your console.**
 
 ##### Execute these commands below, in order
 
@@ -79,10 +79,10 @@ http(s)://example.com
 ~~~
 
 ~~~
-2. php artisan bagisto-crm:install
+2. php artisan krayin-crm:install
 ~~~
 
-**To execute Bagisto**:
+**To execute Krayin**:
 
 ##### On server:
 
@@ -113,7 +113,7 @@ password:admin123
 
 
 ### License
-Bagisto CRM is a truly opensource CRM framework which will always be free under the [MIT License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
+Krayin CRM is a truly opensource CRM framework which will always be free under the [MIT License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
 
 ### Security Vulnerabilities
-Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Bagisto CRM then please email us: mailto:support@bagisto.com.
+Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Krayin CRM then please email us: mailto:support@krayincrm.com.

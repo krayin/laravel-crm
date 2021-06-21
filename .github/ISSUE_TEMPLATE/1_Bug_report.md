@@ -6,7 +6,7 @@ about: 'Report a general library issue.'
 # Bug report
 
 ### Title
-**Just a quick sentence to brief your trouble with Bagisto CRM or something associated with it.**
+**Just a quick sentence to brief your trouble with Krayin CRM or something associated with it.**
 **Please be calm, short and emphasize on points.**
 
 ### Issue Description
