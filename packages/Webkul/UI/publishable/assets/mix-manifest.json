@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=5fa8a10efd6551acd540",
-    "/css/ui.css": "/css/ui.css?id=4a147778e4c9f44c8c20",
+    "/js/ui.js": "/js/ui.js?id=7391acf48a1085d49228",
+    "/css/ui.css": "/css/ui.css?id=7d65879e2056c5ee2f8b",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -15,8 +15,8 @@
     "/images/circle-check-white-icon.svg": "/images/circle-check-white-icon.svg?id=2a3243f09f873260266d",
     "/images/circle-close-white-icon.svg": "/images/circle-close-white-icon.svg?id=8997edca246b88a9e9a2",
     "/images/circle-info-white-icon.svg": "/images/circle-info-white-icon.svg?id=93dfcd96886d1f9a5824",
-    "/images/close-icon.svg": "/images/close-icon.svg?id=b0f396a03a17925cc0b6",
-    "/images/close-white-icon.svg": "/images/close-white-icon.svg?id=e2efb6c865a96516c31d",
+    "/images/close-icon.svg": "/images/close-icon.svg?id=47c0256c0b67804d5c8a",
+    "/images/close-white-icon.svg": "/images/close-white-icon.svg?id=eca0bd1d80ac3d7c9f9a",
     "/images/controls.svg": "/images/controls.svg?id=64ce374f9c70735c7020",
     "/images/download-icon.svg": "/images/download-icon.svg?id=a8ddc459c3a5659d8a8b",
     "/images/ellipsis-icon.svg": "/images/ellipsis-icon.svg?id=78aa3112be42d9cef6d2",
@@ -45,5 +45,7 @@
     "/images/checkbox-checked-icon.svg": "/images/checkbox-checked-icon.svg?id=407a8f82c017c8f3835a",
     "/images/checkbox-icon.svg": "/images/checkbox-icon.svg?id=7b02d45508d782836e92",
     "/images/radio-checked-icon.svg": "/images/radio-checked-icon.svg?id=813fc1505c10aa3c06ae",
-    "/images/radio-icon.svg": "/images/radio-icon.svg?id=1a2426b9af083ec6c09d"
+    "/images/radio-icon.svg": "/images/radio-icon.svg?id=1a2426b9af083ec6c09d",
+    "/images/tags-active-icon.svg": "/images/tags-active-icon.svg?id=618090d34732e269634b",
+    "/images/tags-icon.svg": "/images/tags-icon.svg?id=981aeaf2906c4581ecd2"
 }

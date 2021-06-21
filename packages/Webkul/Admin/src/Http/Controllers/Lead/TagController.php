@@ -54,14 +54,15 @@ class TagController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer  $id
+     * @param  integer  $leadId
+     * @param  integer  $tagId
      * @return \Illuminate\Http\Response
      */
-    public function detete($id)
+    public function detete($leadId)
     {
         Event::dispatch('leads.tag.delete.before');
 
-        $lead = $this->leadRepository->find($id);
+        $lead = $this->leadRepository->find($leadId);
 
         $lead->tags()->detach(request('tag_id'));
 

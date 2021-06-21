@@ -61,37 +61,27 @@
     </script>
 
     <script type="text/x-template" id="cards-collection-template">
-        <div class="row-grid-3">
-            <template v-for="(card, index) in filteredCards">
-                {{-- <draggable
-                    tag="div"
-                    :key="index"
-                    handle=".drag-icon"
-                    :list="filteredCards"
-                    :class="`card ${card.card_border || ''}`"
-                > --}}
-                <div :class="`card ${card.card_border || ''}`">
-                    <template v-if="card.label">
-                        <label>
-                            @{{ card.label }}
-
-                            {{-- <card-filter
-                                :card-id="card.card_id || ''"
-                            ></card-filter> --}}
-
-                            <i class="icon drag-icon"></i>
-                        </label>
-                    </template>
-
-                    <card-component
-                        :index="index"
-                        :card-type="card.card_type"
-                        :card-id="card.card_id || ''"
-                    ></card-component>
-                {{-- </draggable> --}}
-                </div>
-            </template>
-        </div>
+        <draggable v-model="filteredCards" @change="onRowDrop">
+            <div v-for="(filteredCardRow, index) in filteredCards" :key="index">
+                <draggable :key="`inner-${index}`" :list="filteredCardRow" class="row-grid-3" handle=".drag-icon" @change="onColumnDrop">
+                    <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
+                        <template v-if="card.label">
+                            <label>
+                                @{{ card.label }}
+            
+                                <i class="icon drag-icon"></i>
+                            </label>
+                        </template>
+            
+                        <card-component
+                            :index="index"
+                            :card-type="card.card_type"
+                            :card-id="card.card_id || ''"
+                        ></card-component>
+                    </div>
+                </draggable>
+            </div>
+        </draggable>
     </script>
 
     <script type="text/x-template" id="card-template">
@@ -99,7 +89,7 @@
 
         <div v-else class="card-data">
             <bar-chart
-                id="lead-chart"
+                :id="`bar-chart-${cardId}`"
                 :data="dataCollection.data"
                 v-if="
                     cardType == 'bar_chart'
@@ -108,7 +98,7 @@
             ></bar-chart>
 
             <line-chart
-                :id="`line-chart-${index}`"
+                :id="`line-chart-${cardId}`"
                 :data="dataCollection.data"
                 v-if="
                     cardType == 'line_chart'
@@ -116,7 +106,7 @@
                 "
             ></line-chart>
 
-            <template v-else-if="['activity', 'stages_bar'].indexOf(cardType) > -1">
+            <template v-else-if="['activities', 'stages_bar'].indexOf(cardType) > -1">
                 <h3 v-if="dataCollection.header_data">
                     <template v-for="(header_data, index) in dataCollection.header_data">
                         @{{ header_data }}
@@ -266,7 +256,8 @@
                     this.$http.get(`{{ route('admin.api.dashboard.cards.index') }}`)
                         .then(response => {
                             this.cards = response.data;
-                            this.filteredCards = this.cards.filter(card => card.selected);
+
+                            this.filteredCards = this.filterCards();
 
                             EventBus.$emit('cardsLoaded', this.cards);
                         })
@@ -277,6 +268,76 @@
                     var newURL = `${window.location.origin}${window.location.pathname}?${key}=${value}`;
 
                     window.history.pushState({path: newURL}, '', newURL);
+                },
+
+                filterCards: function () {
+                    let filteredCardsChunks = [];
+                    let filteredCards = this.cards.filter(card => card.selected);
+
+                    let dashboardWidget = this.getStoredWidgets();
+
+                    dashboardWidget.forEach(widget => {
+                        let card = filteredCards.find(card => card.card_id == widget.card_id);
+                        let previousSort = card.sort;
+
+                        card.sort = widget.sort;
+
+                        let replaceCard = filteredCards.find(card => card.card_id == widget.targetCardId);
+                        replaceCard.sort = previousSort;
+                    });
+
+                    filteredCards = filteredCards.sort((secondCard, firstCard) => secondCard.sort - firstCard.sort);
+
+                    for (let index = 0; index < Math.ceil(filteredCards.length / 3); index++) {
+                        filteredCardsChunks.push(filteredCards.slice(index * 3, (index + 1) * 3));
+                    }
+
+                    return filteredCardsChunks;
+                },
+
+                onRowDrop: function (item) {
+                },
+
+                onColumnDrop: function (item) {
+                    let sort = item.moved.element.sort + (item.moved.newIndex - item.moved.oldIndex);
+
+                    let widget = {
+                        sort,
+                        card_id         : item.moved.element.card_id,
+                        targetCardId  : this.cards.find(card => card.sort == sort).card_id,
+                    }
+
+                    var existingWidgets = this.getStoredWidgets();
+
+                    if (existingWidgets.find(existingWidget => existingWidget.card_id == widget.targetCardId)) {
+                        existingWidgets = existingWidgets.map(existingWidget => {
+                            if (existingWidget.card_id == widget.targetCardId) {
+                                existingWidget.sort = item.moved.oldIndex + 1;
+                            }
+
+                            return existingWidget;
+                        });
+                    }
+
+                    if (existingWidgets.find(existingWidget => existingWidget.card_id == widget.card_id)) {
+                        existingWidgets = existingWidgets.map(existingWidget => existingWidget.card_id == widget.card_id ? widget : existingWidget);
+                    } else {
+                        existingWidgets.unshift(widget);
+                    }
+
+                    localStorage.setItem('dashboard_widget', JSON.stringify(existingWidgets));
+
+                    this.filterCards();
+
+                    EventBus.$emit('applyCardFilter', { cardId : widget.card_id });
+
+                    EventBus.$emit('applyCardFilter', { cardId : widget.targetCardId });
+                },
+
+                getStoredWidgets: function () {
+                    let existingWidgets = localStorage.getItem('dashboard_widget') || "[]";
+
+                    return JSON.parse(existingWidgets);
                 }
             }
         });

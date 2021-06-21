@@ -1,5 +1,5 @@
 <p align="center">
-<a href="http://www.bagisto.com"><img src="https://bagisto.com/wp-content/themes/bagisto/images/logo.png" alt="Total Downloads"></a>
+<a href="http://crm.bagisto.com"><img src="https://bagisto.com/wp-content/uploads/2021/06/bagisto-crm.png" alt="Total Downloads"></a>
 </p>
 
 <p align="center">
@@ -18,17 +18,17 @@
 
 ### Introduction
 
-[Bagisto CRM](https://www.bagisto.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
+[Bagisto CRM](https://crm.bagisto.com) is a hand tailored CRM framework built on some of the hottest opensource technologies
 such as [Laravel](https://laravel.com) (a [PHP](https://secure.php.net/) framework) and [Vue.js](https://vuejs.org)
 a progressive Javascript framework.
 
 **Free & Opensource Laravel CRM solution for SMEs and Enterprises for complete customer lifecycle management.**
 
-**Read our documentation: [Bagisto CRM Docs](https://devdocs.bagisto.com/)**
+**Read our documentation: [Bagisto CRM Docs](https://devdocs-crm.bagisto.com/)**
 
 **We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Bagisto CRM Forums](https://forums.bagisto.com/)**
 
-# Visit our live [Demo](https://crm.webkul.com)
+# Visit our live [Demo](https://crm.bagisto.com)
 
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
@@ -44,7 +44,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Documentation
 
-#### Bagisto Documentation [https://devdocs.bagisto.com](https://devdocs.bagisto.com)
+#### Bagisto Documentation [https://devdocs-crm.bagisto.com](https://devdocs-crm.bagisto.com)
 
 ### Requirements
 

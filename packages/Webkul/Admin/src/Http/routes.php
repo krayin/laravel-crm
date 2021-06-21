@@ -90,7 +90,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('tags/{id}', 'TagController@store')->name('admin.leads.tags.store');
 
-                Route::delete('{lead_id}/{tag_id?}', 'TagController@delete')->name('admin.leads.tags.delete');
+                Route::delete('{lead_id}/{tag_id?}', 'TagController@detete')->name('admin.leads.tags.delete');
             });
 
             Route::group([

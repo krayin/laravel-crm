@@ -225,7 +225,7 @@
 
             <ul class="tag-list">
                 <li v-for='(tag, index) in tags' :style="'background-color: ' + tag.color">
-                    @{{ tag.name }}
+                    @{{ tag.name }} <i class="icon close-white-icon" @click="removeTag(tag)"></i>
                 </li>
             </ul>
 

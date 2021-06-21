@@ -189,34 +189,26 @@ class LeadController extends Controller
 
         if ($createdAt) {
             $createdAt = explode(",", $createdAt["bw"]);
-            $createdAt[1] = $createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d');
+
+            $createdAt[0] = $createdAt[0] . ' ' . Carbon::parse('00:01')->format('H:i');
+            $createdAt[1] = ($createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d')) . ' ' . Carbon::parse('23:59')->format('H:i');
         }
 
-        $leads = $this->leadRepository
-                    ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name', 'lead_stages.id as stage_id')
-                    ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
-                    ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                    ->where("title", 'like', "%$searchedKeyword%")
-                    ->when($createdAt, function($query) use ($createdAt) {
-                        return $query->whereBetween('leads.created_at', $createdAt);
-                    })
-                    ->get()
-                    ->toArray();
+        $leads = $this->leadRepository->getLeads($searchedKeyword, $createdAt)->toArray();
                     
-        $stages = $this->stageRepository
-                    ->select('name', 'id')
-                    ->get()
-                    ->toArray();
+        $stages = $this->stageRepository->get();
 
         foreach ($leads as $key => $lead) {
             $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
+
+            $leads[$key]['view_url'] = route('admin.leads.view', ["id" => $lead['id']]);
         }
 
         $totalCount = array_map(function ($count) use ($currencySymbol) {
             return $currencySymbol . number_format($count);
         }, $totalCount);
 
-        $stages = array_column($stages, "name");
+        $stages = \Arr::pluck($stages, "name");
 
         return response()->json([
             'blocks'          => $leads,
@@ -235,13 +227,12 @@ class LeadController extends Controller
     {
         $requestParams = request()->all();
 
-        $stages = $this->stageRepository
-                    ->findOneWhere(['name' => $requestParams['status']]);
+        $stages = $this->stageRepository->findOneWhere(['name' => $requestParams['status']]);
 
         $this->leadRepository
             ->update([
                 "lead_stage_id" => $stages->id,
-                "entity_type"   => "leads",
+                "entity_type"   => $requestParams["entity_type"],
             ], $requestParams['id']);
 
         return response()->json([
