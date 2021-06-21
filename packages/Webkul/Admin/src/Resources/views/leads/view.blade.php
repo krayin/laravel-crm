@@ -13,6 +13,10 @@
         .modal-container .modal-body {
             padding: 0;
         }
+
+        .content-container .content .page-header {
+            margin-bottom: 30px;
+        }
     </style>
 @stop
 
@@ -37,11 +41,9 @@
             
             <div class="lead-content-left">
                 <div class="panel">
-                    <div class="panel-header">
+                    <div class="panel-header" style="padding-top: 0">
                         {{ __('admin::app.leads.details') }}
                     </div>
-    
-                    <stage-component></stage-component>
 
                     <div class="panel-body">
                         
@@ -161,6 +163,8 @@
             </div>
 
             <div class="lead-content-right">
+    
+                <stage-component></stage-component>
 
                 <activity-action-component></activity-action-component>
 
@@ -217,34 +221,75 @@
 
     <script type="text/x-template" id="tags-component-template">
         <div class="tags-container">
-            <i class="icon tags-icon dropdown-toggle"></i>
+            <i class="icon tags-icon" @click="is_dropdown_open = ! is_dropdown_open"></i>
 
-            <div class="dropdown-list">
-                <div class="dropdown-container">
+            <ul class="tag-list">
+                <li v-for='(tag, index) in tags' :style="'background-color: ' + tag.color">
+                    @{{ tag.name }}
+                </li>
+            </ul>
+
+            <div class="tag-dropdown" v-if="is_dropdown_open">
+                <div class="lookup-results" v-if="! show_form">
                     <ul>
-                        <li v-for='(tag, index) in tags' @click="addTag(person)">
+                        <li class="control-list-item">
+                            <div class="form-group">
+                                <input type="text" class="control" v-model="term" v-on:keyup="search" placeholder="{{ __('admin::app.leads.search-tag') }}" autocomplete="off">
+
+                                <i class="icon loader-active-icon" v-if="is_searching"></i>
+                            </div>
+                        </li>
+
+                        <li v-for='(tag, index) in search_results' @click="addTag(tag)">
                             <span>@{{ tag.name }}</span>
                         </li>
 
-                        <li v-if="! tags.length && term.length && ! is_searching">
+                        <li v-if="! search_results.length && term.length && ! is_searching">
                             <span>{{ __('admin::app.common.no-result-found') }}</span>
                         </li>
 
-                        <li class="action" @click="addNew()">
+                        <li class="action" @click="show_form = true">
                             <span>
                                 + {{ __('admin::app.leads.add-tag') }}
                             </span> 
                         </li>
                     </ul>
                 </div>
+
+                <div class="form-container" v-else>
+                    <form data-vv-scope="tag-form">
+                        <div class="form-group" :class="[errors.has('tag-form.name') ? 'has-error' : '']">
+                            <label class="required">{{ __('admin::app.leads.name') }}</label>
+                            <input type="text" v-validate="'required'" name="name" v-model="tag.name" class="control" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;">
+                            <span class="control-error" v-if="errors.has('tag-form.name')">@{{ errors.first('tag-form.name') }}</span>
+                        </div>
+
+                        <div class="form-group">
+                            <label>{{ __('admin::app.leads.color') }}</label>
+                            
+                            <div class="color-list">
+                                <span
+                                    v-for='color in colors'
+                                    :style="'background:' + color"
+                                    :class="{active: tag.color == color}"
+                                    @click="tag.color = color"
+                                >
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group button-group">
+                            <button type="button" class="btn btn-sm btn-secondary-outline" @click="show_form = false">{{ __('admin::app.leads.cancel') }}</button>
+                            <button type="button" class="btn btn-sm btn-primary" @click="createTag">{{ __('admin::app.leads.save') }}</button>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </script>
 
     <script type="text/x-template" id="stage-component-template">
-        <div class="form-group">
-            <label>{{ __('admin::app.leads.stage') }}</label>
-
+        <div>
             <div class="pipeline-stage-container">
                 <ul class="pipeline-stages" :class="currentStage.code">
                     <li
@@ -564,13 +609,34 @@
 
             data: function() {
                 return {
-                    term: false,
+                    is_dropdown_open: false,
+
+                    term: '',
 
                     is_searching: false,
 
-                    tags: [],
+                    tags: @json($lead->tags),
 
                     search_results: [],
+
+                    tag: {
+                        name: '',
+
+                        color: '',
+
+                        lead_id: "{{ $lead->id }}",
+                    },
+
+                    colors: [
+                        '#337CFF',
+                        '#FEBF00',
+                        '#E5549F',
+                        '#27B6BB',
+                        '#FB8A3F',
+                        '#43AF52',
+                    ],
+
+                    show_form: false,
                 }
             },
 
@@ -588,7 +654,7 @@
 
                     var self = this;
                     
-                    this.$http.get("{{ route('admin.contacts.persons.search') }}", {params: {query: this.term}})
+                    this.$http.get("{{ route('admin.settings.tags.search') }}", {params: {query: this.term}})
                         .then (function(response) {
                             self.search_results = response.data;
 
@@ -598,6 +664,57 @@
                             self.is_searching = false;
                         })
                 }, 500),
+
+                createTag: function() {
+                    var self = this;
+
+                    this.$validator.validateAll('tag-form').then(function (result) {
+                        if (result) {
+                            self.$http.post(`{{ route('admin.settings.tags.store') }}`, self.tag)
+                                .then(response => {
+                                    self.addTag(response.data.tag);
+                                })
+                                .catch(error => {});
+                        }
+                    });
+                },
+
+                addTag: function(tag) {
+                    var self = this;
+
+                    self.$http.post(`{{ route('admin.leads.tags.store', $lead->id) }}`, tag)
+                        .then(response => {
+                            self.is_dropdown_open = self.show_form = false;
+
+                            self.search_results = [];
+
+                            self.term = '';
+
+                            self.tags.push(tag);
+
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch(error => {});
+                },
+
+                removeTag: function(tag) {
+                    var self = this;
+
+                    this.$http.delete("{{ route('admin.leads.tags.delete', $lead->id) }}/" + tag['id'])
+                        .then (function(response) {
+                            const index = self.tags.indexOf(tag);
+
+                            Vue.delete(self.tags, index);
+                            
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (function (error) {
+                        })
+                }
             }
         });
 

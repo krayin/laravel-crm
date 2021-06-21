@@ -40,6 +40,7 @@ class LeadController extends Controller
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
      * @param \Webkul\Lead\Repositories\FileRepository  $fileRepository
+     * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
      *
      * @return void
      */
