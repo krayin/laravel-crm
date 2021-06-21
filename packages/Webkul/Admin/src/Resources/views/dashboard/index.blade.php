@@ -61,41 +61,27 @@
     </script>
 
     <script type="text/x-template" id="cards-collection-template">
-        {{-- <div class="container">
-            <draggable v-model="filteredCards">
-                <div class="row-grid-3" v-for="(filteredCardRow, index) in filteredCards" :key="index">
-                    <draggable :key="index" :list="filteredCardRow">
-                        <template v-for="(filteredCard, cardRowIndex) in filteredCardRow">
-                            Hello @{{ index }}@{{cardRowIndex}}
+        <draggable v-model="filteredCards" @change="onRowDrop">
+            <div v-for="(filteredCardRow, index) in filteredCards" :key="index">
+                <draggable :key="`inner-${index}`" :list="filteredCardRow" class="row-grid-3" handle=".drag-icon" @change="onColumnDrop">
+                    <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
+                        <template v-if="card.label">
+                            <label>
+                                @{{ card.label }}
+            
+                                <i class="icon drag-icon"></i>
+                            </label>
                         </template>
-                    </draggable>
-                </div>
-            </draggable>
-        </div> --}}
-
-        <div class="row-grid-3">
-            <template v-for="(filteredCardRow, index) in filteredCards">
-                <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
-                    <template v-if="card.label">
-                        <label>
-                            @{{ card.label }}
-
-                            {{-- <card-filter
-                                :card-id="card.card_id || ''"
-                            ></card-filter> --}}
-
-                            <i class="icon drag-icon"></i>
-                        </label>
-                    </template>
-
-                    <card-component
-                        :index="index"
-                        :card-type="card.card_type"
-                        :card-id="card.card_id || ''"
-                    ></card-component>
-                </div>
-            </template>
-        </div>
+            
+                        <card-component
+                            :index="index"
+                            :card-type="card.card_type"
+                            :card-id="card.card_id || ''"
+                        ></card-component>
+                    </div>
+                </draggable>
+            </div>
+        </draggable>
     </script>
 
     <script type="text/x-template" id="card-template">
@@ -218,26 +204,6 @@
                 return {
                     columns: [],
                     showCardOptions: false,
-                    enabled: true,
-                    rows: [
-                        {
-                            index: 1,
-                            items: [
-                                {
-                                    title: "item 1"
-                                }
-                            ]
-                        }, {
-                            index: 2,
-                            items: [
-                                {
-                                    title: "item 2"
-                                }, {
-                                    title: "item 3"
-                                }
-                            ]
-                        }
-                    ]
                 }
             },
 
@@ -311,6 +277,12 @@
                     var newURL = `${window.location.origin}${window.location.pathname}?${key}=${value}`;
 
                     window.history.pushState({path: newURL}, '', newURL);
+                },
+
+                onRowDrop: function (a, b) {
+                },
+
+                onColumnDrop: function (a, b) {
                 }
             }
         });

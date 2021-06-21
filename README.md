@@ -1,5 +1,5 @@
 <p align="center">
-<a href="http://crm.bagisto.com"><img src="https://bagisto.com/wp-content/themes/bagisto/images/logo.png" alt="Total Downloads"></a>
+<a href="http://crm.bagisto.com"><img src="https://bagisto.com/wp-content/uploads/2021/06/bagisto-crm.png" alt="Total Downloads"></a>
 </p>
 
 <p align="center">

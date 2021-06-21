@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=c9fe494e3c85c2bc7840",
-    "/css/ui.css": "/css/ui.css?id=4a147778e4c9f44c8c20",
+    "/js/ui.js": "/js/ui.js?id=4101a7868c90182d89cf",
+    "/css/ui.css": "/css/ui.css?id=7d65879e2056c5ee2f8b",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -45,5 +45,7 @@
     "/images/checkbox-checked-icon.svg": "/images/checkbox-checked-icon.svg?id=407a8f82c017c8f3835a",
     "/images/checkbox-icon.svg": "/images/checkbox-icon.svg?id=7b02d45508d782836e92",
     "/images/radio-checked-icon.svg": "/images/radio-checked-icon.svg?id=813fc1505c10aa3c06ae",
-    "/images/radio-icon.svg": "/images/radio-icon.svg?id=1a2426b9af083ec6c09d"
+    "/images/radio-icon.svg": "/images/radio-icon.svg?id=1a2426b9af083ec6c09d",
+    "/images/tags-active-icon.svg": "/images/tags-active-icon.svg?id=618090d34732e269634b",
+    "/images/tags-icon.svg": "/images/tags-icon.svg?id=981aeaf2906c4581ecd2"
 }
