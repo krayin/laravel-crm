@@ -3,9 +3,9 @@
 </p>
 
 <p align="center">
-<a href="https://packagist.org/packages/bagisto/bagisto-crm"><img src="https://poser.pugx.org/bagisto/bagisto-crm/d/total.svg" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/bagisto/bagisto-crm"><img src="https://poser.pugx.org/bagisto/bagisto-crm/v/stable.svg" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/bagisto/bagisto-crm"><img src="https://poser.pugx.org/bagisto/bagisto-crm/license.svg" alt="License"></a>
+<a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/d/total.svg" alt="Total Downloads"></a>
+<a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/v/stable.svg" alt="Latest Stable Version"></a>
+<a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/license.svg" alt="License"></a>
 </p>
 
 ## Topics
@@ -62,7 +62,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ##### a. Download zip from the link below:
 
-[Download the latest release](https://github.com/bagisto/bagisto-crm/releases/latest)
+[Download the latest release](https://github.com/krayin/laravel-crm/releases/latest)
 
 ##### b. Extract the contents of zip and execute the project in your browser:
 
@@ -75,7 +75,7 @@ http(s)://example.com
 ##### Execute these commands below, in order
 
 ~~~
-1. composer create-project bagisto/bagisto-crm
+1. composer create-project krayin/laravel-crm
 ~~~
 
 ~~~
@@ -113,7 +113,7 @@ password:admin123
 
 
 ### License
-Bagisto CRM is a truly opensource CRM framework which will always be free under the [MIT License](https://github.com/bagisto/bagisto-crm/blob/master/LICENSE).
+Bagisto CRM is a truly opensource CRM framework which will always be free under the [MIT License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
 
 ### Security Vulnerabilities
 Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Bagisto CRM then please email us: mailto:support@bagisto.com.
