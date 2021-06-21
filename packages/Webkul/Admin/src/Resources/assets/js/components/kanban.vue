@@ -12,6 +12,11 @@
         <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">
             <div class="lead-title">{{ block.title }}</div>
 
+            <div class="icons">
+                <a :href="block.view_url" class="icon eye-icon"></a>
+                <i class="icon drag-icon"></i>
+            </div>
+
             <div class="lead-person">
                 <i class="icon avatar-dark-icon"></i>{{ block.person_name }}
             </div>

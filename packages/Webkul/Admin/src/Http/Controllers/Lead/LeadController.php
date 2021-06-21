@@ -188,15 +188,19 @@ class LeadController extends Controller
 
         if ($createdAt) {
             $createdAt = explode(",", $createdAt["bw"]);
-            $createdAt[1] = $createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d');
+
+            $createdAt[0] = $createdAt[0] . ' ' . Carbon::parse('00:01')->format('H:i');
+            $createdAt[1] = ($createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d')) . ' ' . Carbon::parse('23:59')->format('H:i');
         }
 
-        $leads = $this->leadRepository->getLeads($searchedKeyword, $createdAt);
+        $leads = $this->leadRepository->getLeads($searchedKeyword, $createdAt)->toArray();
                     
         $stages = $this->stageRepository->get();
 
         foreach ($leads as $key => $lead) {
             $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
+
+            $leads[$key]['view_url'] = route('admin.leads.view', ["id" => $lead['id']]);
         }
 
         $totalCount = array_map(function ($count) use ($currencySymbol) {

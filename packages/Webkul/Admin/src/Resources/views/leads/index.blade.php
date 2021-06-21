@@ -73,8 +73,8 @@
 @if ($viewType == "kanban")
     @section('table-section')
         <kanban-component
-            detail-text="{{ __('admin::app.leads.add-title') }}"
             get-url="{{ route('admin.leads.kanban.index') }}"
+            detail-text="{{ __('admin::app.leads.add-title') }}"
             update-url="{{ route('admin.leads.kanban.update') }}"
         ></kanban-component>
     @stop
