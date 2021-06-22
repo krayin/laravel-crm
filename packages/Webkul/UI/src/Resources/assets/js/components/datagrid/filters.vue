@@ -418,7 +418,10 @@
                     obj.column = key.replace(']', '').split('[')[0];
                     obj.cond = key.replace(']', '').split('[')[1];
                     obj.val = value;
-                    obj.prettyColumn = `${obj.column.replaceAll("_", " ")}`;
+
+                    if (obj?.column?.replaceAll) {
+                        obj.prettyColumn = `${obj.column.replaceAll("_", " ")}`;
+                    }
 
                     switch (obj.column) {
                         case "search":
