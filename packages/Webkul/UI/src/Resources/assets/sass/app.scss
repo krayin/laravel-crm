@@ -508,10 +508,12 @@ h5 {
                 width: 280px;
                 height: 100%;
                 font-size: 15px;
+                margin-top: 0px;
             }
 
             .filter-btn {
                 cursor: pointer;
+                vertical-align: top;
                 display: inline-block;
 
                 .grid-dropdown-header {

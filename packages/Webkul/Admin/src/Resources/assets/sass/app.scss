@@ -960,6 +960,10 @@ body {
                 &::-webkit-scrollbar {
                     display: none;
                 }
+
+                &.full-height {
+                    max-height: 100%;
+                }
                 
                 .bar-chart,
                 .line-chart {

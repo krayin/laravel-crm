@@ -64,7 +64,7 @@ class AttributeDataGrid extends DataGrid
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.settings.attributes.edit',
-            'icon'   => 'icon pencil-icon',
+            'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
@@ -72,7 +72,7 @@ class AttributeDataGrid extends DataGrid
             'method'       => 'DELETE',
             'route'        => 'admin.settings.attributes.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'attributes']),
-            'icon'         => 'icon trash-icon',
+            'icon'         => 'trash-icon',
         ]);
     }
 
