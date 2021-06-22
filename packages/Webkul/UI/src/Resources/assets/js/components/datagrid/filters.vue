@@ -454,7 +454,7 @@
             updateFilter: function ({key, value, cond}) {
                 this.filters = this.filters.filter(filter => filter.column != key);
 
-                if (value != "" && value != ",") {
+                if (value && value != "" && value != ",") {
                     let data = {
                         "column": key,
                         "val"   : value

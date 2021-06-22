@@ -1113,48 +1113,47 @@ body {
 }
 
 .banner {
-    &.header-banner {
-        width: 100%;
+    width: 100%;
+    z-index: 10;
+    display: none;
+    color: $white;
+    height: 50px;
+    position: fixed;
+    max-height: 50px;
+    padding: 13px 20px;
+    text-align: center;
+    background-color: $primary-color;
+
+    .thumbnail {
+        width: 20px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+
+    .hovered-container {
+        top: -28px;
         z-index: 10;
+        right: 110px;
         display: none;
-        color: $white;
-        position: fixed;
-        max-height: 50px;
-        padding: 10px 20px;
-        text-align: center;
-        background-color: $primary-color;
+        position: relative;
 
-        .thumbnail {
-            width: 20px;
+        &.show {
+            display: inline-block;
+        }
+
+        img {
+            position: absolute;
+        }
+    }
+
+    span {
+        vertical-align: super;
+    }
+
+    i {
+        &.close-white-icon {
+            float: right;
             cursor: pointer;
-            margin-right: 10px;
-        }
-
-        .hovered-container {
-            top: -28px;
-            z-index: 10;
-            right: 110px;
-            display: none;
-            position: relative;
-
-            &.show {
-                display: inline-block;
-            }
-
-            img {
-                position: absolute;
-            }
-        }
-
-        span {
-            vertical-align: super;
-        }
-
-        i {
-            &.close-white-icon {
-                float: right;
-                cursor: pointer;
-            }
         }
     }
 }
@@ -1175,7 +1174,7 @@ body {
             position: relative;
         }
 
-        .header-banner {
+        .banner {
             display: inline-block;
         }
     }
