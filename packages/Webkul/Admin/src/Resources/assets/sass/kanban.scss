@@ -14,8 +14,6 @@ ul.drag-inner-list {
 }
 
 .drag-list {
-    gap: 20px;
-    display: flex;
     color: $secondary-font-color;
     align-items: flex-start;
 
@@ -25,9 +23,10 @@ ul.drag-inner-list {
 }
 
 .drag-column {
-    flex: 1;
+    width: 380px;
     overflow: hidden;
-    position: relative;
+    margin-right: 20px;
+    display: inline-block;
 
     @media (max-width: 690px) {
         margin-bottom: 30px;
@@ -43,8 +42,8 @@ ul.drag-inner-list {
 
             h2 {
                 margin: 0;
-                margin-bottom: 10px;
                 font-size: 15px;
+                margin-bottom: 10px;
                 text-transform: uppercase;
                 color: $secondary-font-color;
 
@@ -83,11 +82,6 @@ ul.drag-inner-list {
             .icons {
                 display: inline-block;
             }
-        }
-    
-        &.is-moving {
-            background: $white;
-            transform: scale(1.5);
         }
 
         .lead-title {

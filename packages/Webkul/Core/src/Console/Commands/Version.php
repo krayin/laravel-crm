@@ -11,14 +11,14 @@ class Version extends Command
      *
      * @var string
      */
-    protected $signature = 'bagisto-crm:version';
+    protected $signature = 'krayin-crm:version';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Displays current version of Bagisto CRM installed';
+    protected $description = 'Displays current version of Krayin installed';
 
     /**
      * Create a new command instance.

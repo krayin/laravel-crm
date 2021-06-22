@@ -76,9 +76,9 @@ class LeadController extends Controller
     public function store(AttributeForm $request)
     {
         Event::dispatch('lead.create.before');
-
-        $data = request()->all();
         
+        $data = request()->all();
+
         $data['user_id'] = $data['status'] = $data['lead_pipeline_id'] = 1;
 
         $lead = $this->leadRepository->create($data);
@@ -207,7 +207,7 @@ class LeadController extends Controller
             return $currencySymbol . number_format($count);
         }, $totalCount);
 
-        $stages = \Arr::pluck($stages, "name");
+        $stages = \Arr::pluck($stages, "name", "id");
 
         return response()->json([
             'blocks'          => $leads,

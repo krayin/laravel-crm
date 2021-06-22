@@ -101,19 +101,15 @@ class LeadDataGrid extends DataGrid
             'filterable_type'    => 'dropdown',
             'filterable_options' => $this->stagesFilterableOptions,
             'closure'            => function ($row) {
-                if ($row->stage == "New") {
-                    $badge = 'primary';
-                } else if ($row->stage == "Won") {
+                if ($row->stage == "Won") {
                     $badge = 'success';
                 } else if ($row->stage == "Lost") {
                     $badge = 'danger';
                 } else {
-                    $badge = 'warning';
+                    $badge = 'primary';
                 }
 
-                $badge = "<span class='badge badge-round badge-$badge'></span>" . $row->stage;
-
-                return $badge;
+                return "<span class='badge badge-round badge-$badge'></span>" . $row->stage;
             },
         ]);
     }

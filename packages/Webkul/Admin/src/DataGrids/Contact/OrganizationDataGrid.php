@@ -49,7 +49,7 @@ class OrganizationDataGrid extends DataGrid
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.contacts.organizations.edit',
-            'icon'   => 'icon pencil-icon',
+            'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
@@ -57,7 +57,7 @@ class OrganizationDataGrid extends DataGrid
             'method'       => 'DELETE',
             'route'        => 'admin.contacts.organizations.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
-            'icon'         => 'icon trash-icon',
+            'icon'         => 'trash-icon',
         ]);
     }
 

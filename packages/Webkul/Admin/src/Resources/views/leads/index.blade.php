@@ -29,21 +29,6 @@
     @section('post-heading')
         <kanban-filters></kanban-filters>
     @stop
-
-    @php
-        $showDefaultTable = false;
-        $stagesFilterableOptions = [];
-        $stageRepository = app('\Webkul\Lead\Repositories\StageRepository');
-
-        $stages = $stageRepository->all()->toArray();
-
-        foreach ($stages as $stage) {
-            array_push($stagesFilterableOptions, [
-                'value' => $stage['id'],
-                'label' => $stage['name'],
-            ]);
-        }
-    @endphp
 @endif
 
 @section('table-action')
@@ -94,7 +79,9 @@
             <div slot="body" style="padding: 0">
                 @csrf()
                 
-                <input type="hidden" name="quick_add" value="1"/>
+                <input type="hidden" name="quick_add" value="1" />
+
+                <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="1" />
 
                 <tabs>
                     <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
