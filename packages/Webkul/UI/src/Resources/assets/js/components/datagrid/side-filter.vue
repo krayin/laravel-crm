@@ -178,7 +178,6 @@
                 this.$store.state.filters = [];
 
                 this.toggleSidebarFilter();
-                this.updateFilterValues();
 
                 this.$forceUpdate();
             },

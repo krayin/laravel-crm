@@ -52,6 +52,7 @@ class LeadDataGrid extends DataGrid
             $queryBuilder->where('leads.user_id', $user->id);
         }
 
+        $this->addFilter('stage', 'leads.lead_stage_id');
         $this->addFilter('created_at', 'leads.created_at');
 
         $this->setQueryBuilder($queryBuilder);
