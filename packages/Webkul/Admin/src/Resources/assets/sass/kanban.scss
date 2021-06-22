@@ -14,8 +14,8 @@ ul.drag-inner-list {
 }
 
 .drag-list {
+    width: max-content;
     color: $secondary-font-color;
-    align-items: flex-start;
 
     @media (max-width: 690px) {
         display: block;
@@ -62,7 +62,6 @@ ul.drag-inner-list {
 .drag-inner-list {
     height: 50vh;
     min-height: 50px;
-    overflow-y: scroll;
     color: $secondary-font-color;
 
     &::-webkit-scrollbar {

@@ -339,7 +339,6 @@
                     if (changeInIndex >= 2) {
                         for(let index = 1; index < changeInIndex; index++) {
                             let sort = widget.sort + index;
-
                             let cardId = existingWidgets.find(card => card.sort == sort)?.card_id || this.cards.find(card => card.sort == sort)?.card_id
                             
                             EventBus.$emit('applyCardFilter', { cardId });
