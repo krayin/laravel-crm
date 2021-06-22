@@ -477,7 +477,7 @@
                     </div>
 
                     <button type="submit" class="btn btn-md btn-primary">
-                        {{ __('admin::app.leads.upload') }}
+                        {{ __('admin::app.leads.send') }}
                     </button>
 
                 </form>
