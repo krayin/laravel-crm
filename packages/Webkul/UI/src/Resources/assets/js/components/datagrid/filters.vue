@@ -460,7 +460,9 @@
                         "val"   : value
                     }
 
-                    data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
+                    if (data?.column?.replaceAll) {
+                        data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
+                    }
     
                     if (cond) {
                         data['cond'] = cond;
