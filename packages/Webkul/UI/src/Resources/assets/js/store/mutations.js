@@ -1,10 +1,12 @@
 const UPDATE_FILTER_VALUES = (state, payload) => {
     var key = payload?.key || null;
 
-    for (const filterKey in state.tableData.columns) {
-        if (filterKey == payload?.key) {
-            key = state.tableData.columns[filterKey].index;
-            state.tableData.columns[filterKey].values = payload.values;
+    if (key) {
+        for (const filterKey in state.tableData.columns) {
+            if (filterKey == key) {
+                key = state.tableData.columns[filterKey].index;
+                state.tableData.columns[filterKey].values = payload.values;
+            }
         }
     }
 

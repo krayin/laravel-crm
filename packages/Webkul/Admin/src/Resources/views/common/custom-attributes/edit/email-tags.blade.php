@@ -11,7 +11,7 @@
                     </li>
 
                     <li class="tag-input">
-                        <input type="hidden" v-validate="validations" :name="controlName" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-if="! emails.length"/>
+                        <input type="hidden" v-validate="validations" :name="controlName" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-if="! emails.length && email_term == ''"/>
                         <input type="text" :name="controlName" v-validate="'email'" :data-vv-as="'&quot;' + controlLabel + '&quot;'" v-model="email_term" @keydown.enter.prevent="addTag" placeholder="{{ __('admin::app.leads.email-placeholder') }}">
                     </li>
                 </ul>

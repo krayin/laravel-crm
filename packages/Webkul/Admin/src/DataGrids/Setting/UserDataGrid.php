@@ -92,7 +92,7 @@ class UserDataGrid extends DataGrid
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.settings.users.edit',
-            'icon'   => 'icon pencil-icon',
+            'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
@@ -100,7 +100,7 @@ class UserDataGrid extends DataGrid
             'method'       => 'DELETE',
             'route'        => 'admin.settings.users.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
-            'icon'         => 'icon trash-icon',
+            'icon'         => 'trash-icon',
         ]);
     }
 

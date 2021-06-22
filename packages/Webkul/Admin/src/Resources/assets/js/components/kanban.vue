@@ -6,7 +6,7 @@
                 <span class="float-right">{{ totalCounts[stage] || 0 }}</span>
             </h2>
 
-            <a @click="openAddModal">{{ detailText }}</a>
+            <a @click="openAddModal(stage, stagesId)">{{ detailText }}</a>
         </div>
 
         <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">
@@ -36,6 +36,7 @@
             return {
                 stages: [],
                 blocks: [],
+                stagesId: {},
                 debounce: null,
                 totalCounts: [],
                 currencySymbol: '',
@@ -66,9 +67,10 @@
 
                 this.$http.get(`${this.getUrl}${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
                     .then(response => {
-                        this.stages = response.data.stages;
                         this.blocks = response.data.blocks;
+                        this.stagesId = response.data.stages;
                         this.totalCounts = response.data.total_count;
+                        this.stages = Object.values(response.data.stages);
                         this.currencySymbol = response.data.currency_symbol;
                     })
                     .catch(error => {});
@@ -89,8 +91,18 @@
                 this.getData(searchedKeyword);
             },
 
-            openAddModal: function () {
+            openAddModal: function (stage, stagesId) {
                 $('#add-new').click();
+
+                setTimeout(() => {
+                    for (let stageId in stagesId) {
+                        if (stagesId[stageId] == stage) {
+                            $('#lead_stage_id').val(stageId);
+
+                            break;
+                        }
+                    }
+                });
             },
 
             updateFilter: function (data) {

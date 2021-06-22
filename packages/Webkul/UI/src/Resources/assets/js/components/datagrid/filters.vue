@@ -418,7 +418,10 @@
                     obj.column = key.replace(']', '').split('[')[0];
                     obj.cond = key.replace(']', '').split('[')[1];
                     obj.val = value;
-                    obj.prettyColumn = `${obj.column.replaceAll("_", " ")}`;
+
+                    if (obj?.column?.replaceAll) {
+                        obj.prettyColumn = `${obj.column.replaceAll("_", " ")}`;
+                    }
 
                     switch (obj.column) {
                         case "search":
@@ -454,13 +457,15 @@
             updateFilter: function ({key, value, cond}) {
                 this.filters = this.filters.filter(filter => filter.column != key);
 
-                if (value != "" && value != ",") {
+                if (value && value != "" && value != ",") {
                     let data = {
                         "column": key,
                         "val"   : value
                     }
 
-                    data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
+                    if (data?.column?.replaceAll) {
+                        data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
+                    }
     
                     if (cond) {
                         data['cond'] = cond;

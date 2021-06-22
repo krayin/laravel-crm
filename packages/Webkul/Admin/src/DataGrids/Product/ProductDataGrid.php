@@ -67,7 +67,7 @@ class ProductDataGrid extends DataGrid
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.products.edit',
-            'icon'   => 'icon pencil-icon',
+            'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
@@ -75,7 +75,7 @@ class ProductDataGrid extends DataGrid
             'method'       => 'DELETE',
             'route'        => 'admin.products.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
-            'icon'         => 'icon trash-icon',
+            'icon'         => 'trash-icon',
         ]);
     }
 

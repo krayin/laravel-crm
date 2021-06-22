@@ -87,7 +87,7 @@
     <script type="text/x-template" id="card-template">
         <spinner-meter v-if="! dataLoaded"></spinner-meter>
 
-        <div v-else class="card-data">
+        <div v-else :class="`card-data ${['bar_chart', 'line_chart'].indexOf(cardType) > -1 ? 'full-height' : ''}`">
             <bar-chart
                 :id="`bar-chart-${cardId}`"
                 :data="dataCollection.data"
@@ -299,15 +299,17 @@
                 },
 
                 onColumnDrop: function (item) {
-                    let sort = item.moved.element.sort + (item.moved.newIndex - item.moved.oldIndex);
+                    var existingWidgets = this.getStoredWidgets();
+                    let changeInIndex = item.moved.newIndex - item.moved.oldIndex;
+                    let existingWidget = existingWidgets.find(existingWidget => existingWidget.card_id == item.moved.element.card_id)
+
+                    let sort = (existingWidget?.sort ?? item.moved.element.sort) + changeInIndex;
 
                     let widget = {
                         sort,
-                        card_id         : item.moved.element.card_id,
-                        targetCardId  : this.cards.find(card => card.sort == sort).card_id,
+                        card_id       : item.moved.element.card_id,
+                        targetCardId  : existingWidgets.find(card => card.sort == sort)?.card_id || this.cards.find(card => card.sort == sort)?.card_id,
                     }
-
-                    var existingWidgets = this.getStoredWidgets();
 
                     if (existingWidgets.find(existingWidget => existingWidget.card_id == widget.targetCardId)) {
                         existingWidgets = existingWidgets.map(existingWidget => {
@@ -319,15 +321,29 @@
                         });
                     }
 
-                    if (existingWidgets.find(existingWidget => existingWidget.card_id == widget.card_id)) {
+                    if (existingWidget) {
                         existingWidgets = existingWidgets.map(existingWidget => existingWidget.card_id == widget.card_id ? widget : existingWidget);
                     } else {
-                        existingWidgets.unshift(widget);
+                        existingWidgets.push(widget);
                     }
 
                     localStorage.setItem('dashboard_widget', JSON.stringify(existingWidgets));
 
                     this.filterCards();
+
+                    // update all cards between 2 cards
+                    if (changeInIndex < 0) {
+                        changeInIndex = changeInIndex * -1
+                    }
+
+                    if (changeInIndex >= 2) {
+                        for(let index = 1; index < changeInIndex; index++) {
+                            let sort = widget.sort + index;
+                            let cardId = existingWidgets.find(card => card.sort == sort)?.card_id || this.cards.find(card => card.sort == sort)?.card_id
+                            
+                            EventBus.$emit('applyCardFilter', { cardId });
+                        }
+                    }
 
                     EventBus.$emit('applyCardFilter', { cardId : widget.card_id });
 
