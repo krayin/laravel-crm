@@ -49,7 +49,7 @@ class Install extends Command
         $this->info($migrate);
 
         // running `php artisan db:seed`
-        $this->warn('Step: Seeding basic data for Krayin kickstart...');
+        $this->warn('Step: Seeding basic data for Krayin CRM kickstart...');
         $result = $this->call('db:seed');
         $this->info($result);
 
@@ -76,7 +76,7 @@ class Install extends Command
         // final information
         $this->info('-----------------------------');
         $this->info('Congratulations!');
-        $this->info('The installation has been finished and you can now use Krayin.');
+        $this->info('The installation has been finished and you can now use Krayin CRM.');
         $this->info('Go to '. url(config('app.admin_url')) .' and authenticate with:');
         $this->info('Email: admin@example.com');
         $this->info('Password: admin123');
@@ -139,7 +139,7 @@ class Install extends Command
      */
     protected function addDatabaseDetails()
     {
-        $dbName = $this->ask('What is the database name to be used by Krayin ?');
+        $dbName = $this->ask('What is the database name to be used by Krayin CRM ?');
         $this->envUpdate('DB_DATABASE=', $dbName);
 
         $dbUser = $this->anticipate('What is your database username?', ['root']);

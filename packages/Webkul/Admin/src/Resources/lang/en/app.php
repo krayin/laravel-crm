@@ -103,7 +103,9 @@
             'closed-date'              => 'Closed Date',
             'contact-person'           => 'Contact Person',
             'add-tag'                  => 'Add Tag',
+            'search-tag'               => 'Search Tag',
             'name'                     => 'Name',
+            'color'                    => 'Color',
             'email'                    => 'Email',
             'contact-numbers'          => 'Contact Numbers',
             'organization'             => 'Organization',
@@ -157,6 +159,8 @@
             'email-scheduled'          => 'Email scheduled at :from - :to',
             'file-added'               => 'File added',
             'lead_stage_updated'       => 'Lead stage updated successfully!',
+            'tag-create-success'       => 'Tag added successfully.',
+            'tag-destroy-success'      => 'Tag removed successfully.',
         ],
 
         'mail' => [
@@ -333,6 +337,13 @@
                 'delete-failed'         => 'Attribute can not be deleted.',
                 'user-define-error'     => 'Can not delete system attribute.'
             ],
+
+            'tags' => [
+                'create-success'        => 'Tag created successfully.',
+                'update-success'        => 'Tag updated successfully.',
+                'delete-success'        => 'Tag deleted successfully.',
+                'delete-failed'         => 'Tag can not be deleted.',
+            ]
         ],
 
         'configuration' => [

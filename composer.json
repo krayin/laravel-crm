@@ -1,7 +1,7 @@
 {
-    "name": "bagisto/bagisto-crm",
+    "name": "krayin/laravel-crm",
     "type": "project",
-    "description": "Bagisto CRM",
+    "description": "Krayin CRM",
     "keywords": [
         "framework",
         "laravel"

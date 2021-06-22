@@ -18,7 +18,7 @@ class Version extends Command
      *
      * @var string
      */
-    protected $description = 'Displays current version of Krayin installed';
+    protected $description = 'Displays current version of Krayin CRM installed';
 
     /**
      * Create a new command instance.
