@@ -214,15 +214,14 @@ body {
 }
 
 .content-container {
-    padding-left: 48px;
-    position: absolute;
-    margin-top: 60px;
-    top: 0px;
-    right: 0;
     left: 0;
+    right: 0;
+    top: 60px;
     bottom: 0px;
-    height: calc(100% - 60px);
     width: 100%;
+    position: absolute;
+    padding-left: 48px;
+    height: calc(100% - 60px);
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     .inner-section {
@@ -955,6 +954,7 @@ body {
             .card-data {
                 height: 100%;
                 max-height: 260px;
+                position: relative;
                 overflow-y: scroll;
     
                 &::-webkit-scrollbar {
@@ -1042,8 +1042,9 @@ body {
         
                 .custom-card {
                     text-align: center;
-                    position: relative;
-                    top: calc(50% - 70px);
+                    position: absolute;
+                    top: calc(50% - 62px);
+                    left: calc(50% - 62px);
                     color: $secondary-color;
     
                     span {
