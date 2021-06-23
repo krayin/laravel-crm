@@ -46,7 +46,7 @@
                                 class="control mb-10"
                                 :placeholder="data.label"
                                 :id="`enter-new-${data.index}`"
-                                @keyup.enter="pushFieldValue(key, $event)"
+                                @keyup.enter="pushFieldValue(key, $event, data.index)"
                             />
                         </div>
                     </template>
@@ -76,7 +76,7 @@
                     </template>
 
                     <template v-else-if="data.filterable_type == 'dropdown'">
-                        <select class="control" @change="pushFieldValue(key, $event)">
+                        <select class="control" @change="pushFieldValue(key, $event, data.index)">
                             <option value="" disabled selected>
                                 {{ data.label }}
                             </option>
@@ -97,7 +97,7 @@
                             >
                                 {{ getFilteredValue(value, data) }}
 
-                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index)"></i>
+                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
                             </span>
                         </div>
                     </template>
@@ -143,8 +143,8 @@
                 })
             },
 
-            pushFieldValue: function (key, {target}) {
-                this.addField[key] = false;
+            pushFieldValue: function (key, {target}, indexKey) {
+                this.addField[indexKey] = false;
 
                 const values = (this.columns || this.tableData.columns)[key].values || [];
 
@@ -152,7 +152,7 @@
                     values.push(target.value);
     
                     this.updateFilterValues({
-                        key,
+                        key: indexKey,
                         values
                     });
                 }
@@ -162,12 +162,12 @@
                 this.$forceUpdate();
             },
 
-            removeFieldValue: function (key, index) {
+            removeFieldValue: function (key, index, indexKey) {
                 const values = (this.columns || this.tableData.columns)[key].values;
                 values.splice(index, 1);
                 
                 this.updateFilterValues({
-                    key,
+                    key: indexKey,
                     values
                 });
 
