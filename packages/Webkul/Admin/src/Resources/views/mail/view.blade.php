@@ -10,6 +10,10 @@
             <div class="page-title">
                 <h1>{{ $email->subject }}</h1>
             </div>
+
+            <div class="page-action">
+                {{-- <button class="btn btn-md btn-secondary-outline">Manage Mail</button> --}}
+            </div>
         </div>
 
         <div class="page-content" style="margin-top: 30px;">

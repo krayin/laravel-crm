@@ -138,6 +138,7 @@
             'file'                     => 'File',
             'subject'                  => 'Subject',
             'reply'                    => 'Reply',
+            'send'                     => 'Send',
             'all'                      => 'All',
             'notes'                    => 'Notes',
             'calls'                    => 'Calls',
