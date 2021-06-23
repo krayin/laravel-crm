@@ -1,1 +1,1 @@
-<input type="text" v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" />
+<input type="text" @if ($attribute->code == 'sku') v-validate="{{$validations}}" @else v-validate="'{{$validations}}'" @endif class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" />
