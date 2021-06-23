@@ -12,7 +12,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -88,7 +89,7 @@ body {
     width: 48px;
     height: auto;
     position: fixed;
-    background-color: $white;
+    background-color: $dark-color;
     box-shadow: inset -1px 0px 0px #CDCECF;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -164,6 +165,10 @@ body {
                 ul.sub-menubar {
                     display: block;
                 }
+
+                .menu-label {
+                    color: $white !important;
+                }
             }
         }
     }
@@ -175,6 +180,9 @@ body {
             li.menu-item {
                 a {
                     .menu-label {
+                        color:#B0BEC5;
+                        font-size: 16px;
+                        font-weight: 200;
                         display: inline-block;
                     }
                 }
@@ -209,7 +217,7 @@ body {
         cursor: pointer;
         position: absolute;
         width: calc(100% - 1px);
-        background-color: $white;
+        background-color: $dark-color;
     }
 }
 
@@ -342,7 +350,7 @@ body {
 
     .control {
         background: $white;
-        border: 2px solid #c7c7c7;
+        border: 1px solid $gray-color;
         @include border-radius(3px);
         width: 150px;
         height: 36px;
@@ -391,7 +399,8 @@ body {
 
                 img {
                     width: 280px;
-                    height: auto;
+                    height: 50px;
+                    transform: translateY(-8px)
                 }
 
                 p {
@@ -628,7 +637,7 @@ body {
         padding-right: 10px;
 
         .panel {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
     }
 
@@ -646,11 +655,20 @@ body {
 .custom-attribute-view {
     .attribute-value-row {
         width: 100%;
-        display: inline-block;
-        margin-bottom: 10px;
-        padding: 10px 0;
-        padding-right: 30px;
+        padding: 6px;
+        font-size: 16px;  
         position: relative;
+        padding-right: 30px;
+        display: inline-block;
+
+        &:nth-child(even) {
+            padding: 10px 6px;
+            background-color: rgba(255,255,255,1);
+        }
+
+        &:last-child {
+            border: none;
+        }
 
         .label {
             color: $secondary-font-color;
@@ -834,6 +852,8 @@ body {
 }
 
 .dashboard {
+    background-color: $body-background;
+
     > h1 {
         margin-bottom: 35px;
         display: inline-block;
@@ -928,10 +948,12 @@ body {
             padding: 30px 20px;
             border-radius: 3px;
             background-color: $white;
-            border: 1px solid $border-color;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     
             label {
                 display: block;
+                font-weight: 500;
+                color: $font-color;
     
                 .card-filter-container {
                     cursor: pointer;

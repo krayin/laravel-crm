@@ -22,6 +22,12 @@
         .modal-container .modal-body {
             padding: 0;
         }
+
+        @if ($viewType == "kanban")
+            .content-container{
+                overflow-x: hidden;
+            }
+        @endif
     </style>
 @stop
 
