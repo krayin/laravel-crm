@@ -671,15 +671,15 @@ body {
         }
 
         .label {
-            color: $secondary-font-color;
-            width: 35%;
+            width: 120px;
             float: left;
+            color: $secondary-font-color;
         }
 
         .value {
             float: left;
             padding-left: 10px;
-            width: calc(65% - 10px);
+            width: calc(100% - 120px);
 
             span.multi-value {
                 border-radius: 30px;
