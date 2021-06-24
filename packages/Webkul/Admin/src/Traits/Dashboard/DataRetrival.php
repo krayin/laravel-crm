@@ -236,9 +236,9 @@ trait DataRetrival
             "data" => $activities,
         ];
 
-        if ($totalCount) {
-            $cardData["header_data"] = ["$totalCount " . __("admin::app.dashboard.activities")];
-        }
+        // if ($totalCount) {
+        //     $cardData["header_data"] = ["$totalCount " . __("admin::app.dashboard.activities")];
+        // }
 
         return $cardData;
     }

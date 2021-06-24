@@ -87,6 +87,8 @@ ul.drag-inner-list {
 .drag-inner-list {
     height: 100%;
     min-height: 50px;
+    overflow-y: scroll;
+    height: calc(100% - 110px);
     color: $secondary-font-color;
 
     &::-webkit-scrollbar {
@@ -147,7 +149,7 @@ ul.drag-inner-list {
 
         .icon-text-container {
             position: absolute;
-            top: calc(50% - 60px);
+            top: calc(50% - 75px);
             left: calc(50% - 49px);
             
             .empty-kanban-icon {
@@ -223,4 +225,8 @@ ul.drag-inner-list {
 
 .gu-transit {
     opacity: 0.2;
+}
+
+.disable-drag {
+    pointer-events: none;
 }
