@@ -12,7 +12,8 @@ body {
 }
 
 ::-webkit-scrollbar {
-    width: 12px;
+    width: 8px;
+    height: 8px;
 }
 
 ::-webkit-scrollbar-track {
@@ -88,7 +89,7 @@ body {
     width: 48px;
     height: auto;
     position: fixed;
-    background-color: $white;
+    background-color: $dark-color;
     box-shadow: inset -1px 0px 0px #CDCECF;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -161,8 +162,16 @@ body {
             &:hover {
                 overflow: visible;
 
+                .menu-label {
+                    color: $white !important;
+                }
+
                 ul.sub-menubar {
                     display: block;
+
+                    .menu-label {
+                        color: $secondary-color !important;
+                    }
                 }
             }
         }
@@ -175,6 +184,9 @@ body {
             li.menu-item {
                 a {
                     .menu-label {
+                        color:#B0BEC5;
+                        font-size: 16px;
+                        font-weight: 200;
                         display: inline-block;
                     }
                 }
@@ -209,20 +221,19 @@ body {
         cursor: pointer;
         position: absolute;
         width: calc(100% - 1px);
-        background-color: $white;
+        background-color: $dark-color;
     }
 }
 
 .content-container {
-    padding-left: 48px;
-    position: absolute;
-    margin-top: 60px;
-    top: 0px;
-    right: 0;
     left: 0;
+    right: 0;
+    top: 60px;
     bottom: 0px;
-    height: calc(100% - 60px);
     width: 100%;
+    position: absolute;
+    padding-left: 48px;
+    height: calc(100% - 60px);
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     .inner-section {
@@ -274,6 +285,7 @@ body {
     .content {
         &.full-page {
             padding: 25px;
+            height: 100%;
         }
 
         .page-header {
@@ -306,16 +318,12 @@ body {
             .page-action {
                 float: right;
 
-                * {
-                    display: inline-block;
-                }
-
                 a {
                     margin-left: 25px;
                 }
             }
 
-            .form-group {
+            > .form-group {
                 width: 180px;
                 display: inline-block;
                 margin-bottom: 0;
@@ -343,7 +351,7 @@ body {
 
     .control {
         background: $white;
-        border: 2px solid #c7c7c7;
+        border: 1px solid $gray-color;
         @include border-radius(3px);
         width: 150px;
         height: 36px;
@@ -392,7 +400,8 @@ body {
 
                 img {
                     width: 280px;
-                    height: auto;
+                    height: 50px;
+                    transform: translateY(-8px)
                 }
 
                 p {
@@ -629,7 +638,7 @@ body {
         padding-right: 10px;
 
         .panel {
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
     }
 
@@ -647,22 +656,31 @@ body {
 .custom-attribute-view {
     .attribute-value-row {
         width: 100%;
-        display: inline-block;
-        margin-bottom: 10px;
-        padding: 10px 0;
-        padding-right: 30px;
+        padding: 6px;
+        font-size: 16px;  
         position: relative;
+        padding-right: 30px;
+        display: inline-block;
+
+        &:nth-child(even) {
+            padding: 10px 6px;
+            background-color: rgba(255,255,255,1);
+        }
+
+        &:last-child {
+            border: none;
+        }
 
         .label {
-            color: $secondary-font-color;
-            width: 35%;
+            width: 120px;
             float: left;
+            color: $secondary-font-color;
         }
 
         .value {
             float: left;
             padding-left: 10px;
-            width: calc(65% - 10px);
+            width: calc(100% - 120px);
 
             span.multi-value {
                 border-radius: 30px;
@@ -835,6 +853,8 @@ body {
 }
 
 .dashboard {
+    background-color: $body-background;
+
     > h1 {
         margin-bottom: 35px;
         display: inline-block;
@@ -929,10 +949,12 @@ body {
             padding: 30px 20px;
             border-radius: 3px;
             background-color: $white;
-            border: 1px solid $border-color;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     
             label {
                 display: block;
+                font-weight: 500;
+                color: $font-color;
     
                 .card-filter-container {
                     cursor: pointer;
@@ -955,6 +977,7 @@ body {
             .card-data {
                 height: 100%;
                 max-height: 260px;
+                position: relative;
                 overflow-y: scroll;
     
                 &::-webkit-scrollbar {
@@ -1042,8 +1065,9 @@ body {
         
                 .custom-card {
                     text-align: center;
-                    position: relative;
-                    top: calc(50% - 70px);
+                    position: absolute;
+                    top: calc(50% - 62px);
+                    left: calc(50% - 62px);
                     color: $secondary-color;
     
                     span {
@@ -1176,6 +1200,73 @@ body {
 
         .banner {
             display: inline-block;
+        }
+    }
+}
+
+.email-action-container {
+    .btn-secondary-outline {
+        font-size: $font-size-md;
+
+        span {
+            padding: 1px 0;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    }
+
+    .sidebar-filter {
+        padding: 0;
+
+        header {
+            padding: 30px 20px 20px 20px;
+            margin-bottom: 0;
+        }
+
+        .panel {
+            padding: 20px;
+            border-bottom: 1px solid $border-color;
+
+            h3 {
+                margin: 0px 0px 15px 0px;
+            }
+
+            .btn-group {
+                button {
+                    width: 100%;
+                    font-size: $font-size-lg;
+                    margin-bottom: 10px;
+                     
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .form-group {
+                    margin-bottom: 10px;
+
+                    .control {
+                        border: 2px solid;
+                        padding: 6px 10px 7px 10px;
+                    }
+
+                    .icon {
+                        position: absolute;
+                        right: 13px;
+                        top: 7px;
+                    }
+                }
+            }
+
+            &.link-person {
+
+            }
+
+            &.link-lead {
+
+            }
         }
     }
 }

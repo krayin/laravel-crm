@@ -99,7 +99,7 @@
                         {{ __('ui.datagrid.filter.date_range') }}
                     </label>
 
-                    <i class="icon close-icon" @click="$store.state.customTabFilter = false"></i>
+                    <i class="icon close-icon" data-close-container="true" @click="$store.state.customTabFilter = false"></i>
 
                     <div class="form-group date">
                         <date>
@@ -123,7 +123,7 @@
                         </date>
                     </div>
 
-                    <button type="button" class="btn btn-sm btn-primary" @click="applyCustomFilter">
+                    <button type="button" data-close-container="true" class="btn btn-sm btn-primary" @click="applyCustomFilter">
                         {{ __('ui.datagrid.filter.done') }}
                     </button>
                 </div>
@@ -172,8 +172,8 @@
                 numberCondition: null,
                 booleanCondition: null,
                 datetimeCondition: null,
-                custom_filter: [null, null],
                 massActionOptionValue: null,
+                custom_filter: [null, null],
                 url: new URL(window.location.href),
                 ignoreDisplayFilter: ['duration', 'type'],
             }
@@ -198,6 +198,14 @@
         watch: {
             filters: function (newValue, oldValue) {
                 this.$store.state.filters = newValue;
+
+                let duration = newValue.find(filter => filter.column == "duration");
+
+                if (duration) {
+                    duration = duration.val.split(",");
+
+                    this.custom_filter = duration;
+                }
             },
 
             '$store.state.filters': function (newValue, oldValue) {
@@ -217,6 +225,22 @@
                     }
                 }
             }
+
+            $("body").click(event => {
+                if (
+                    (
+                        (
+                            typeof event.target.className == 'string'
+                            && event.target.className?.includes("custom-design-container")
+                        )
+                        || $(event.target).parents(".flatpickr-calendar").length
+                        || $(event.target).parents(".custom-design-container").length
+                    )
+                    && ! $(event.target).attr('data-close-container')
+                ) {
+                    event.stopPropagation();
+                }
+            });
 
             EventBus.$on('updateFilter', data => {
                 if (data.key == "duration" && data.value == 'custom') {

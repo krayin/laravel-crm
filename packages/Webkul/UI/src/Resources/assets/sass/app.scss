@@ -34,6 +34,7 @@ a {
     &:visited,
     &:focus,
     &:active {
+        padding: 6px 0px;
         text-decoration: none;
         color: $primary-color;
     }
@@ -105,7 +106,7 @@ h5 {
 }
 
 .btn {
-    @include border-radius(2px);
+    @include border-radius(4px);
     border: none;
     color: $white;
     cursor: pointer;
@@ -291,7 +292,6 @@ h5 {
 
 .table {
     width: 100%;
-    height: 100%;
     overflow-x: auto !important;
 
     .table-header {
@@ -331,8 +331,6 @@ h5 {
     }
 
     .table-body {
-        height: 100%;
-
         .custom-design-container {
             right: 25px;
             width: 350px;
@@ -376,6 +374,7 @@ h5 {
 
             div {
                 position: absolute;
+                top: calc(50% + 50px);
                 left: calc(50% - 75px);
 
                 img {
@@ -391,14 +390,18 @@ h5 {
     }
 
     table {
+        @include border-radius(4px);
+
         width: 100%;
+        border: none;
         text-align: left;
         margin-top: 20px;
         background: $white;
         table-layout: fixed;
         font-size: $font-size-md;
         border-collapse: collapse;
-        border: solid 1px $border-color;
+        
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
         th, td {
             width: 100%;
@@ -414,8 +417,11 @@ h5 {
 
         thead {
             th {
+                border-right: 0px;
+                color: $dark-color;
                 cursor: not-allowed;
                 font-weight: $font-weight-medium;
+                border-bottom: 1px solid rgba(193,194,195,.5);
 
                 &.master-checkbox {
                     width: 41px;
@@ -439,7 +445,12 @@ h5 {
 
         tbody {
             tr {
-                td {                   
+                td {
+                    border-right: 0px;
+                    color: $dark-color;
+                    background-color: rgba(255,255,255,.5);
+                    border-bottom: 1px solid rgba(193,194,195,.5);
+
                     &.empty {
                         text-align: center;
                     }
@@ -479,7 +490,7 @@ h5 {
                 &.active,
                 &:hover {
                     td {
-                        background: $table-active-cell-color;
+                        background-color: rgba(193,194,195,.1);
                     }
                 }
 
@@ -623,6 +634,7 @@ h5 {
 
     .datagrid-filters {
         width: 100%;
+        align-items: center;
         display: inline-flex;
         justify-content: space-between;
 
@@ -1234,9 +1246,10 @@ h5 {
 }
 
 .tabs-content {
-    border: 1px solid $border-color;
+    border: none;
     padding: 30px;
     background: $white;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .pill {
@@ -1360,16 +1373,19 @@ accordian,
 
 .panel {
     .panel-header {
+        padding: 8px 0;
+        font-size: 18px;
+        color: $dark-color;
         color: $secondary-font-color;
         font-weight: $font-weight-medium;
-        padding: 15px 0;
     }
 
     .panel-body {
-        background: $white;
-        padding: 25px;
-        border: 1px solid $border-color;
+        border: none;
+        padding: 16px;
         border-radius: 3px;
+        background-color: rgba(255,255,255,.5);
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
 }
 
@@ -1405,8 +1421,11 @@ modal {
     @include border-radius(8px);
 
     .modal-header {
-        width: 100%;
+        z-index: 10;
+        width: inherit;
         display: table;
+        position: fixed;
+        background: white;
         padding: 20px;
         border-bottom: 1px solid $border-color;
 
@@ -1427,7 +1446,9 @@ modal {
     }
 
     .modal-body {
+        top: 75px;
         padding: 30px;
+        position: relative;
     }
 }
 
@@ -1652,7 +1673,7 @@ modal {
     overflow-y: scroll;
     display: inline-block;
     background-color: $white;
-    border-left: 1px solid $border-color;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.18);
     transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.show {
@@ -1660,12 +1681,14 @@ modal {
     }
 
     header {
-        margin-bottom: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
         border-bottom: 1px solid $border-color;
 
         h1 {
             padding: 0;
+            margin: 0;
+            font-weight: 400;
 
             .float-right {
                 label {
@@ -1685,18 +1708,19 @@ modal {
 
     .field-container {
         margin-bottom: 10px;
+        padding-right: 25px;
+        position: relative;
 
         label {
             font-weight: 500;
         }
 
         .control {
-            width: 90%;
             font-size: 16px;
             max-height: 40px;
 
             &.half {
-                width: 146px;
+                width: 151px;
             }
         }
 
@@ -1719,8 +1743,9 @@ modal {
 
         > i {
             &.close-icon {
-                float: right;
-                margin-top: 19px;
+                position: absolute;
+                top: 17px;
+                right: 0;
             }
         }
     }
