@@ -95,52 +95,6 @@ ul.drag-inner-list {
         display: none;
     }
 
-    .drag-item {
-        margin: 0px;
-        padding: 10px;
-        box-shadow: none;
-        line-height: 30px;
-        background: $white;
-        transition: $ease-out;
-        border: 1px solid $body-background;
-        box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
-        border-bottom: 1px solid rgba(193,194,195,.5);
-
-        &:hover {
-            .icons {
-                display: inline-block;
-            }
-        }
-
-        .lead-title {
-            font-size: 16px;
-            font-weight: 500;
-            color: $font-color;
-            display: inline-block;
-            width: calc(100% - 45px);
-        }
-
-        .icons {
-            float: right;
-            display: none;
-            cursor: pointer;
-        }
-
-        .lead-cost {
-            color: $font-color;
-        }
-
-        .lead-person,
-        .lead-cost {
-            font-size: 14px;
-
-            .icon {
-                margin-right: 5px;
-                vertical-align: middle;
-            }
-        }
-    }
-
     .empty-icon-container {
         height: 100%;
         display: block;
@@ -165,19 +119,65 @@ ul.drag-inner-list {
     }
 }
 
+.drag-item {
+    margin: 0px;
+    padding: 10px;
+    box-shadow: none;
+    line-height: 30px;
+    background: $white;
+    transition: $ease-out;
+    border: 1px solid $body-background;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(193,194,195,.5);
+
+    &:hover {
+        .icons {
+            display: inline-block;
+        }
+    }
+
+    .lead-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: $font-color;
+        display: inline-block;
+        width: calc(100% - 45px);
+    }
+
+    .icons {
+        float: right;
+        display: none;
+        cursor: pointer;
+    }
+
+    .lead-cost {
+        color: $font-color;
+    }
+
+    .lead-person,
+    .lead-cost {
+        font-size: 14px;
+
+        .icon {
+            margin-right: 5px;
+            vertical-align: middle;
+        }
+    }
+}
+
 .drag-header-more {
     cursor: pointer;
 }
 
 .drag-options {
-    position: absolute;
-    top: 44px;
     left: 0;
+    opacity: 0;
+    top: 44px;
     width: 100%;
     height: 100%;
     padding: 10px;
+    position: absolute;
     transform: translateX(100%);
-    opacity: 0;
     transition: $ease-out;
 
     &.active {
