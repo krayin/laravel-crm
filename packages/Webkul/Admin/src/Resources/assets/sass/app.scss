@@ -94,8 +94,6 @@ body {
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     ul.menubar {
-        // padding-bottom: 60px;
-
         li.menu-item {
             font-size: $font-size-sm;
             position: relative;
@@ -153,24 +151,24 @@ body {
 
             &.active, &:hover {
                 box-shadow: inset 4px 0px 0px $primary-color;
-
-                a {
-                    color: $primary-color;
-                }
             }
 
             &:hover {
                 overflow: visible;
 
-                .menu-label {
-                    color: $white !important;
-                }
-
                 ul.sub-menubar {
                     display: block;
 
-                    .menu-label {
-                        color: $secondary-color !important;
+                    .sub-menu-item {
+                        .menu-label {
+                            color: $secondary-color;
+                        }
+
+                        &:hover, &.active {
+                            .menu-label {
+                                color: $primary-color;
+                            }
+                        }
                     }
                 }
             }
@@ -184,10 +182,10 @@ body {
             li.menu-item {
                 a {
                     .menu-label {
-                        color:#B0BEC5;
                         font-size: 16px;
                         font-weight: 200;
                         display: inline-block;
+                        color: $secondary-color;
                     }
                 }
 
@@ -207,8 +205,33 @@ body {
                 }
 
                 &.active {
+                    background: $white;
+                    width: calc(100% - 1px);
+
+                    .menu-label {
+                        color: $primary-color;
+                    }
+
                     ul.sub-menubar {
                         display: block;
+
+                        .sub-menu-item {
+                            .menu-label {
+                                color: $secondary-color;
+                            }
+
+                            &.active, &:hover {
+                                .menu-label {
+                                    color: $primary-color !important;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                &:hover {
+                    .menu-label {
+                        color: $primary-color;
                     }
                 }
             }

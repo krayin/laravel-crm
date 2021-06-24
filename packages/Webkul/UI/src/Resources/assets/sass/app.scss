@@ -370,12 +370,9 @@ h5 {
         }
 
         .empty-table {
-            top: 20%;
-            position: relative;
-
             div {
                 position: absolute;
-                top: calc(50% + 50px);
+                top: calc(50% - 50px);
                 left: calc(50% - 75px);
 
                 img {
@@ -1734,7 +1731,7 @@ modal {
         }
 
         .enter-new {
-            width: 90%;
+            width: 100%;
             display: inline-block;
 
             input {
