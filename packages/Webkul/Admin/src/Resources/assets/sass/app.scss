@@ -946,7 +946,6 @@ body {
         
         .card {
             min-height: 300px;
-            padding: 20px;
             border-radius: 3px;
             background-color: $white;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -955,6 +954,8 @@ body {
                 display: block;
                 font-weight: 500;
                 color: $font-color;
+                padding: 20px;
+                border-bottom: 1px solid rgba(193,194,195,.5);
     
                 .card-filter-container {
                     cursor: pointer;
@@ -976,6 +977,7 @@ body {
     
             .card-data {
                 height: 100%;
+                padding: 20px;
                 max-height: 260px;
                 position: relative;
                 overflow-y: scroll;
@@ -988,18 +990,16 @@ body {
                     max-height: 100%;
                 }
                 
-                .bar-chart,
-                .line-chart {
-                    margin-top: 30px;
-                }
-        
                 .bar-data {
                     display: grid;
                     font-size: 14px;
-                    margin-top: 20px;
                     color: $font-color;
                     grid-column-gap: 15px;
                     grid-template-columns: 90px auto 40px;
+
+                    &:not(:first-child) {
+                        margin-top: 10px;
+                    }
         
                     &.activity {
                         > span {
@@ -1013,8 +1013,14 @@ body {
                 .lead {
                     margin-top: 20px;
                     color: $secondary-font-color;
+
+                    &:nth-child(1) {
+                        margin: 0px;
+                    }
         
                     label {
+                        padding: 0;
+                        border: 0px;
                         font-weight: 500;
                         font-size: 18px;
                     }
@@ -1024,19 +1030,24 @@ body {
                         padding: 5px 0;
                         font-size: 16px;
                         grid-template-columns: auto auto auto;
-                        border-bottom: 1px solid $border-color;
+                        border-bottom: 1px solid rgba(193,194,195,.5);
                     }
                 }
         
                 .email-data {
-                    margin-top: 30px;
+                    margin-top: 10px;
                     padding-bottom: 5px;
                     display: inline-block;
                     width: calc(50% - 10px);
                     border-bottom: 1px solid $border-color;
-    
+
                     &:nth-child(odd) {
                         margin-right: 10px;
+                    }
+
+                    &:nth-child(1),
+                    &:nth-child(2) {
+                       margin: 0;
                     }
         
                     &:nth-last-child(1),

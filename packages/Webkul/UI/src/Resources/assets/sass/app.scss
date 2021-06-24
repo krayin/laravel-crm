@@ -1425,7 +1425,7 @@ modal {
         z-index: 10;
         width: inherit;
         display: table;
-        position: fixed;
+        position: relative;
         background: white;
         padding: 20px;
         border-bottom: 1px solid $border-color;
@@ -1447,7 +1447,7 @@ modal {
     }
 
     .modal-body {
-        top: 75px;
+        // top: 75px;
         padding: 30px;
         position: relative;
     }
