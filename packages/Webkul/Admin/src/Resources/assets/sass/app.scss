@@ -685,7 +685,7 @@ body {
             span.multi-value {
                 border-radius: 30px;
                 padding: 4px 8px;
-                background: #F7F8F9;
+                background: #EFF0F5;
                 margin-bottom: 5px;
                 display: inline-block;
 
@@ -1500,7 +1500,7 @@ body {
             color: $font-color;
             font-weight: $font-weight-medium;
             width: 100%;
-            font-size: 12px;
+            font-size: $font-size-md;
             min-width: 100px;
             color: $font-color;
             text-align: center;
