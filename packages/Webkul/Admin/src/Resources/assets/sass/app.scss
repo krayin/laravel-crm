@@ -185,7 +185,7 @@ body {
                         font-size: 16px;
                         font-weight: 200;
                         display: inline-block;
-                        color: $secondary-color;
+                        color: #B0BEC5;
                     }
                 }
 
@@ -205,7 +205,7 @@ body {
                 }
 
                 &.active {
-                    background: $white;
+                    background: #12171a;
                     width: calc(100% - 1px);
 
                     .menu-label {
@@ -217,7 +217,7 @@ body {
 
                         .sub-menu-item {
                             .menu-label {
-                                color: $secondary-color;
+                                color: #B0BEC5;
                             }
 
                             &.active, &:hover {
