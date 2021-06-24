@@ -22,10 +22,8 @@
         <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('vendor/webkul/admin/assets/images/favicon/favicon-16x16.png') }}">
         <link rel="manifest" href="{{ asset('vendor/webkul/admin/assets/images/favicon/manifest.json') }}">
 
-        @php($timestamp = \Carbon\Carbon::now()->timestamp)
-
-        <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css?v=' . $timestamp) }}">
-        <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/admin.css?v=' . $timestamp) }}">
+        <link rel="stylesheet" href="{{ asset('vendor/webkul/ui/assets/css/ui.css') }}">
+        <link rel="stylesheet" href="{{ asset('vendor/webkul/admin/assets/css/admin.css') }}">
 
         @yield('head')
 
@@ -90,8 +88,8 @@
             window._translations['ui'] = @json(app('Webkul\Core\Helpers\Helper')->jsonTranslations("UI"));
         </script>
 
-        <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js?v=' . $timestamp) }}"></script>
-        <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js?v=' . $timestamp) }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>
+        <script type="text/javascript" src="{{ asset('vendor/webkul/ui/assets/js/ui.js') }}"></script>
 
         @stack('scripts')
 

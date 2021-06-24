@@ -317,8 +317,9 @@ h5 {
                 }
 
                 &.active {
-                    background-color: $secondary-color;
+                    cursor: not-allowed;
                     border-color: $secondary-color;
+                    background-color: $secondary-color;
                 }
 
                 .icon {
