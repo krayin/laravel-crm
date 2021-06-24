@@ -20,7 +20,7 @@
 
             <div class="page-action">
 
-                <email-action-component></email-action-component>
+                {{-- <email-action-component></email-action-component> --}}
 
             </div>
         </div>
