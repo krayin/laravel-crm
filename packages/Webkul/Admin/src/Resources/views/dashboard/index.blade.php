@@ -85,9 +85,11 @@
     </script>
 
     <script type="text/x-template" id="card-template">
-        <spinner-meter v-if="! dataLoaded"></spinner-meter>
+        <div class="db-wg-spinner" v-if="! dataLoaded">
+            <spinner-meter></spinner-meter>
+        </div>
 
-        <div v-else :class="`card-data ${['bar_chart', 'line_chart'].indexOf(cardType) > -1 ? 'full-height' : ''}`">
+        <div v-else :class="`card-data`">
             <bar-chart
                 :id="`bar-chart-${cardId}`"
                 :data="dataCollection.data"
@@ -302,6 +304,20 @@
                 },
 
                 onRowDrop: function (item) {
+                    var existingWidgets = this.getStoredWidgets();
+                    let sortIncreasedBy = (item.moved.newIndex - item.moved.oldIndex) - 2;
+
+                    item.moved.element.forEach(movedItem => {
+                        let existingWidget = existingWidgets.find(existingWidget => existingWidget.card_id == movedItem.card_id);
+
+                        this.onColumnDrop({
+                            moved: {
+                                element: movedItem,
+                                newIndex: movedItem.sort + sortIncreasedBy,
+                                oldIndex: existingWidget?.sort || movedItem.sort,
+                            }
+                        })
+                    });
                 },
 
                 onColumnDrop: function (item) {
