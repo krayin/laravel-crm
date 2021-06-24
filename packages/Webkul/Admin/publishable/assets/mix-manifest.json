@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=814a26af77a25833e066",
-    "/css/admin.css": "/css/admin.css?id=9e03689cb2ae39ad5691",
+    "/css/admin.css": "/css/admin.css?id=770202113c1fad4ef34b",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f",
     "/images/avatar-dark-icon.svg": "/images/avatar-dark-icon.svg?id=abefe06bd1ce2bfe7029",
@@ -14,6 +14,7 @@
     "/images/emails-icon.svg": "/images/emails-icon.svg?id=5a4fa65d0f1c8a45c0e0",
     "/images/empty-bar-icon.svg": "/images/empty-bar-icon.svg?id=2bc8187fd8217e9986d9",
     "/images/empty-bar-vertical-icon.svg": "/images/empty-bar-vertical-icon.svg?id=a8dc1250c0f16093a3bc",
+    "/images/empty-kanban-icon.svg": "/images/empty-kanban-icon.svg?id=4914166dedf8d1f8c426",
     "/images/empty-state-icon.svg": "/images/empty-state-icon.svg?id=ca32c95eab8e562355b7",
     "/images/empty-table-icon.svg": "/images/empty-table-icon.svg?id=f4d9563d1eb28d54db53",
     "/images/layout-column-line-active-icon.svg": "/images/layout-column-line-active-icon.svg?id=ef43e1a950584a798341",
@@ -30,6 +31,5 @@
     "/images/table-line-active-icon.svg": "/images/table-line-active-icon.svg?id=2bb1b3e9f60637957c6d",
     "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945",
     "/images/tools-active-icon.svg": "/images/tools-active-icon.svg?id=3dc420a57a350cfb07a9",
-    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64",
-    "/images/empty-kanban-icon.svg": "/images/empty-kanban-icon.svg?id=4914166dedf8d1f8c426"
+    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64"
 }

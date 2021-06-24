@@ -5,6 +5,13 @@
 @stop
 
 @section('content-wrapper')
+
+    @php
+        if (! $email->lead) {
+            $email->lead = app('\Webkul\Lead\Repositories\LeadRepository')->getModel()->fill(['title' => $email->subject]);
+        }
+    @endphp
+
     <div class="content full-page">
         <div class="page-header">
             <div class="page-title">
@@ -12,7 +19,9 @@
             </div>
 
             <div class="page-action">
-                {{-- <button class="btn btn-md btn-secondary-outline">Manage Mail</button> --}}
+
+                {{-- <email-action-component></email-action-component> --}}
+
             </div>
         </div>
 
@@ -27,6 +36,58 @@
 @push('scripts')
 
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+
+    <script type="text/x-template" id="email-action-component-template">
+        <div class="email-action-container">
+            <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
+                <i class="icon attachment-icon"></i>
+                <span>Link Mail</span>
+            </button>
+
+            <div class="sidebar-filter" :class="{show: show_filter}">
+                <header>
+                    <h1>
+                        <span>Link Mail</span>
+
+                        <div class="float-right">
+                            <i class="icon close-icon" @click="show_filter = ! show_filter"></i>
+                        </div>
+                    </h1>
+                </header>
+
+                <div class="email-action-content">
+                    <div class="panel link-person">
+                        <h3>Link Contact</h3>
+
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.contact" @click="enabled_search.contact = true">Add To Existing Contact</button>
+
+                            <div class="form-group" v-else>
+                                <input class="control" placeholder="Search a contact"/>
+                                <i class="icon close-icon" @click="enabled_search.contact = false"></i>
+                            </div>
+                            <button class="btn btn-sm btn-primary">Add New Contact</button>
+                        </div>
+                    </div>
+
+                    <div class="panel link-lead">
+                        <h3>Link Lead</h3>
+
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">Link To Existing</button>
+
+                            <div class="form-group" v-else>
+                                <input class="control" placeholder="Search for lead"/>
+                                <i class="icon close-icon" @click="enabled_search.lead = false"></i>
+                            </div>
+
+                            <button class="btn btn-sm btn-primary">Add New Lead</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </script>
 
     <script type="text/x-template" id="email-list-component-template">
         <div class="email-list">
@@ -227,6 +288,29 @@
     </script>
 
     <script>
+        Vue.component('email-action-component', {
+
+            template: '#email-action-component-template',
+
+            inject: ['$validator'],
+
+            data: function () {
+                return {
+                    show_filter: true,
+
+                    enabled_search: {
+                        contact: false,
+
+                        lead: false,
+                    }
+                }
+            },
+
+            methods: {
+
+            }
+        });
+
         Vue.component('email-list-component', {
 
             template: '#email-list-component-template',

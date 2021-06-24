@@ -13,7 +13,7 @@
 @stop
 
 @section('meta-content')
-    <form action="{{ route('admin.contacts.persons.store') }}" method="post">
+    <form action="{{ route('admin.contacts.persons.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
             <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>
             

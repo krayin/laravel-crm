@@ -39,7 +39,7 @@
 
                         <input type="submit" value="{{ __('admin::app.mail.save-to-draft') }}" @click="is_draft = 1"/>
 
-                        <a href="{{ route('admin.mail.index') }}">{{ __('admin::app.mail.back') }}</a>
+                        <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">{{ __('admin::app.mail.back') }}</a>
                     </div>
     
                     <div class="panel-body">

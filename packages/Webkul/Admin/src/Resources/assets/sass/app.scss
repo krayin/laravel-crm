@@ -318,16 +318,12 @@ body {
             .page-action {
                 float: right;
 
-                * {
-                    display: inline-block;
-                }
-
                 a {
                     margin-left: 25px;
                 }
             }
 
-            .form-group {
+            > .form-group {
                 width: 180px;
                 display: inline-block;
                 margin-bottom: 0;
@@ -1204,6 +1200,73 @@ body {
 
         .banner {
             display: inline-block;
+        }
+    }
+}
+
+.email-action-container {
+    .btn-secondary-outline {
+        font-size: $font-size-md;
+
+        span {
+            padding: 1px 0;
+        }
+
+        .icon {
+            margin-right: 5px;
+        }
+    }
+
+    .sidebar-filter {
+        padding: 0;
+
+        header {
+            padding: 30px 20px 20px 20px;
+            margin-bottom: 0;
+        }
+
+        .panel {
+            padding: 20px;
+            border-bottom: 1px solid $border-color;
+
+            h3 {
+                margin: 0px 0px 15px 0px;
+            }
+
+            .btn-group {
+                button {
+                    width: 100%;
+                    font-size: $font-size-lg;
+                    margin-bottom: 10px;
+                     
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+
+                .form-group {
+                    margin-bottom: 10px;
+
+                    .control {
+                        border: 2px solid;
+                        padding: 6px 10px 7px 10px;
+                    }
+
+                    .icon {
+                        position: absolute;
+                        right: 13px;
+                        top: 7px;
+                    }
+                }
+            }
+
+            &.link-person {
+
+            }
+
+            &.link-lead {
+
+            }
         }
     }
 }
