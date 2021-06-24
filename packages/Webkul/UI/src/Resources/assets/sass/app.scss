@@ -105,7 +105,7 @@ h5 {
 }
 
 .btn {
-    @include border-radius(2px);
+    @include border-radius(3px);
     border: none;
     color: $white;
     cursor: pointer;
@@ -1652,7 +1652,7 @@ modal {
     overflow-y: scroll;
     display: inline-block;
     background-color: $white;
-    border-left: 1px solid $border-color;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.18);
     transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     &.show {
@@ -1660,12 +1660,14 @@ modal {
     }
 
     header {
-        margin-bottom: 20px;
-        padding-bottom: 20px;
+        padding-bottom: 25px;
+        margin-bottom: 25px;
         border-bottom: 1px solid $border-color;
 
         h1 {
             padding: 0;
+            margin: 0;
+            font-weight: 400;
 
             .float-right {
                 label {
@@ -1685,18 +1687,19 @@ modal {
 
     .field-container {
         margin-bottom: 10px;
+        padding-right: 25px;
+        position: relative;
 
         label {
             font-weight: 500;
         }
 
         .control {
-            width: 90%;
             font-size: 16px;
             max-height: 40px;
 
             &.half {
-                width: 146px;
+                width: 151px;
             }
         }
 
@@ -1719,8 +1722,9 @@ modal {
 
         > i {
             &.close-icon {
-                float: right;
-                margin-top: 19px;
+                position: absolute;
+                top: 17px;
+                right: 0;
             }
         }
     }
