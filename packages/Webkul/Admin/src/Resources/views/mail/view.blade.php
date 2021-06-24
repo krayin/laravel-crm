@@ -20,7 +20,7 @@
 
             <div class="page-action">
 
-                {{-- <email-action-component></email-action-component> --}}
+                <email-action-component></email-action-component>
 
             </div>
         </div>
@@ -40,14 +40,14 @@
     <script type="text/x-template" id="email-action-component-template">
         <div class="email-action-container">
             <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
-                <i class="icon attachment-icon"></i>
-                <span>Link Mail</span>
+                <i class="icon link-icon"></i>
+                <span>{{ __('admin::app.mail.link-mail') }}</span>
             </button>
 
             <div class="sidebar-filter" :class="{show: show_filter}">
                 <header>
                     <h1>
-                        <span>Link Mail</span>
+                        <span>{{ __('admin::app.mail.link-mail') }}</span>
 
                         <div class="float-right">
                             <i class="icon close-icon" @click="show_filter = ! show_filter"></i>
@@ -57,16 +57,31 @@
 
                 <div class="email-action-content">
                     <div class="panel link-person">
-                        <h3>Link Contact</h3>
+                        <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.contact" @click="enabled_search.contact = true">Add To Existing Contact</button>
+                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.contact" @click="enabled_search.contact = true">{{ __('admin::app.mail.add-to-existing-contact') }}</button>
 
                             <div class="form-group" v-else>
-                                <input class="control" placeholder="Search a contact"/>
-                                <i class="icon close-icon" @click="enabled_search.contact = false"></i>
+                                <input class="control" v-model="search_term.contact" v-on:keyup="search('contact')" placeholder="{{ __('admin::app.mail.search-contact') }}"/>
+
+                                <div class="lookup-results" v-if="search_term.contact.length">
+                                    <ul>
+                                        <li v-for='(result, index) in search_results.contact'>
+                                            <span>@{{ result.name }}</span>
+                                        </li>
+            
+                                        <li v-if='! search_results.contact.length && search_term.contact.length && ! is_searching.contact'>
+                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <i class="icon close-icon"  v-if="! is_searching.contact" @click="enabled_search.contact = false; reset('lead')"></i>
+
+                                <i class="icon loader-active-icon" v-if="is_searching.contact"></i>
                             </div>
-                            <button class="btn btn-sm btn-primary">Add New Contact</button>
+                            <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.create-new-contact') }}</button>
                         </div>
                     </div>
 
@@ -74,14 +89,29 @@
                         <h3>Link Lead</h3>
 
                         <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">Link To Existing</button>
+                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">{{ __('admin::app.mail.link-to-existing-lead') }}</button>
 
                             <div class="form-group" v-else>
-                                <input class="control" placeholder="Search for lead"/>
-                                <i class="icon close-icon" @click="enabled_search.lead = false"></i>
+                                <input class="control" v-model="search_term.lead" v-on:keyup="search('lead')" placeholder="{{ __('admin::app.mail.search-lead') }}"/>
+
+                                <div class="lookup-results" v-if="search_term.lead.length">
+                                    <ul>
+                                        <li v-for='(result, index) in search_results.lead'>
+                                            <span>@{{ result.title }}</span>
+                                        </li>
+            
+                                        <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
+                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <i class="icon close-icon"  v-if="! is_searching.lead" @click="enabled_search.lead = false; reset('lead')"></i>
+
+                                <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                             </div>
 
-                            <button class="btn btn-sm btn-primary">Add New Lead</button>
+                            <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.add-new-lead') }}</button>
                         </div>
                     </div>
                 </div>
@@ -298,6 +328,30 @@
                 return {
                     show_filter: true,
 
+                    is_searching: {
+                        contact: false,
+
+                        lead: false
+                    },
+
+                    search_term: {
+                        contact: '',
+
+                        lead: '',
+                    },
+
+                    search_route: {
+                        contact: "{{ route('admin.contacts.persons.search') }}",
+
+                        lead: "{{ route('admin.leads.search') }}",
+                    },
+
+                    search_results: {
+                        contact: [],
+
+                        lead: [],
+                    },
+
                     enabled_search: {
                         contact: false,
 
@@ -307,7 +361,35 @@
             },
 
             methods: {
+                search: debounce(function (type) {
+                    this.is_searching[type] = true;
 
+                    if (this.search_term[type].length < 2) {
+                        this.search_results[type] = [];
+
+                        this.is_searching[type] = false;
+
+                        return;
+                    }
+
+                    this.$http.get(this.search_route[type], {params: {query: this.search_term[type]}})
+                        .then (response => {
+                            this.search_results[type] = response.data;
+
+                            this.is_searching[type] = false;
+                        })
+                        .catch (error => {
+                            this.is_searching[type] = false;
+                        })
+                }, 500),
+
+                reset: function(type) {
+                    this.search_term[type] = '';
+
+                    this.search_results[type] = [];
+
+                    this.is_searching[type] = false;
+                }
             }
         });
 

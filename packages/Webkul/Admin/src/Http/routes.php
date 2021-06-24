@@ -82,6 +82,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
 
+                Route::get('search', 'LeadController@search')->name('admin.leads.search');
+
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
                 Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
