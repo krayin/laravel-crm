@@ -236,10 +236,6 @@ trait DataRetrival
             "data" => $activities,
         ];
 
-        if ($totalCount) {
-            $cardData["header_data"] = ["$totalCount " . __("admin::app.dashboard.activities")];
-        }
-
         return $cardData;
     }
 
@@ -304,9 +300,9 @@ trait DataRetrival
             
 
             array_push($leadStages, [
-                'label' => $stage['name'],
-                'value' => $leadsCount,
-                'bar_type' => $barType,
+                'label'     => $stage['name'],
+                'count'     => $leadsCount,
+                'bar_type'  => $barType,
             ]);
         }
 
