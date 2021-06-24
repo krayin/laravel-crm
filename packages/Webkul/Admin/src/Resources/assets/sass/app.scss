@@ -946,7 +946,7 @@ body {
         
         .card {
             min-height: 300px;
-            padding: 30px 20px;
+            padding: 20px;
             border-radius: 3px;
             background-color: $white;
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -996,14 +996,12 @@ body {
                 .bar-data {
                     display: grid;
                     font-size: 14px;
-                    margin-top: 30px;
+                    margin-top: 20px;
                     color: $font-color;
                     grid-column-gap: 15px;
-                    grid-template-columns: 90px auto 90px;
+                    grid-template-columns: 90px auto 40px;
         
                     &.activity {
-                        margin-top: 40px;
-    
                         > span {
                             &:first-child {
                                 text-transform: capitalize;
