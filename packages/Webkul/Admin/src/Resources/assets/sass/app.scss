@@ -162,12 +162,16 @@ body {
             &:hover {
                 overflow: visible;
 
-                ul.sub-menubar {
-                    display: block;
-                }
-
                 .menu-label {
                     color: $white !important;
+                }
+
+                ul.sub-menubar {
+                    display: block;
+
+                    .menu-label {
+                        color: $secondary-color !important;
+                    }
                 }
             }
         }
@@ -281,6 +285,7 @@ body {
     .content {
         &.full-page {
             padding: 25px;
+            height: 100%;
         }
 
         .page-header {

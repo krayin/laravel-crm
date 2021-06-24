@@ -1421,8 +1421,11 @@ modal {
     @include border-radius(8px);
 
     .modal-header {
-        width: 100%;
+        z-index: 10;
+        width: inherit;
         display: table;
+        position: fixed;
+        background: white;
         padding: 20px;
         border-bottom: 1px solid $border-color;
 
@@ -1443,7 +1446,9 @@ modal {
     }
 
     .modal-body {
+        top: 75px;
         padding: 30px;
+        position: relative;
     }
 }
 

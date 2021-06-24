@@ -12,7 +12,6 @@ ul.drag-inner-list {
 .drag-container {
     margin: 0px;
     overflow: scroll;
-    margin: 20px auto;
     height: calc(100% - 120px);
 
     span div a {
@@ -86,7 +85,7 @@ ul.drag-inner-list {
 }
 
 .drag-inner-list {
-    height: 50vh;
+    height: 100%;
     min-height: 50px;
     color: $secondary-font-color;
 
@@ -136,6 +135,29 @@ ul.drag-inner-list {
             .icon {
                 margin-right: 5px;
                 vertical-align: middle;
+            }
+        }
+    }
+
+    .empty-icon-container {
+        height: 100%;
+        display: block;
+        text-align: center;
+        position: relative;
+
+        .icon-text-container {
+            position: absolute;
+            top: calc(50% - 60px);
+            left: calc(50% - 49px);
+            
+            .empty-kanban-icon {
+                width: 98px;
+                height: 98px;
+            }
+
+            span {
+                display: block;
+                padding-top: 10px;
             }
         }
     }
