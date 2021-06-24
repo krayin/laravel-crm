@@ -32,15 +32,12 @@
     </button>
 
     <div class="float-right">
-        <a
-            href="{{ route('admin.leads.index') }}"
-            class="icon-container {{ $viewType == 'kanban' ? '' : 'active' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'table-line-icon' : 'table-line-active-icon' }}"></i>
+        <a class="icon-container active">
+            <i class="icon layout-column-line-active-icon"></i>
         </a>
 
-        <a
-            class="icon-container {{ $viewType == 'kanban' ? 'active' : '' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'layout-column-line-active-icon' : 'layout-column-line-icon' }}"></i>
+        <a href="{{ route('admin.leads.index', ['type' => 'table']) }}" class="icon-container">
+            <i class="icon table-line-icon"></i>
         </a>
     </div>
 @stop
