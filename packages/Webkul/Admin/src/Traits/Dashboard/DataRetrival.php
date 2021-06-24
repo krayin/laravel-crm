@@ -378,7 +378,7 @@ trait DataRetrival
                         ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                         ->groupBy('person_id')
                         ->orderBy('lead_value', 'desc')
-                        ->limit(2)
+                        ->limit(6)
                         ->orderBy('count', 'desc')
                         ->get()
                         ->toArray();
