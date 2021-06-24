@@ -9,60 +9,10 @@
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp
 
-@section('css')
-    <style>
-        .table-header h1 {
-            padding-bottom: 15px;
-        }
-
-        .modal-container .modal-header {
-            border: 0;
-        }
-
-        .modal-container .modal-body {
-            padding: 0;
-        }
-    </style>
-@stop
-
 @if ($viewType == "kanban")
-    @section('post-heading')
-        <kanban-filters></kanban-filters>
-    @stop
-@endif
-
-@section('table-action')
-    <button class="btn btn-md btn-primary" id="add-new" @click="openModal('addLeadModal')">
-        {{ __('admin::app.leads.add-title') }}
-    </button>
-
-    <div class="float-right">
-        <a
-            @if ($viewType == 'kanban')
-                href="{{ route('admin.leads.index') }}"
-            @endif
-            class="icon-container {{ $viewType == 'kanban' ? '' : 'active' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'table-line-icon' : 'table-line-active-icon' }}"></i>
-        </a>
-
-        <a
-            @if ($viewType != 'kanban')
-                href="{{ route('admin.leads.index', ['type' => 'kanban']) }}"
-            @endif
-            class="icon-container {{ $viewType == 'kanban' ? 'active' : '' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'layout-column-line-active-icon' : 'layout-column-line-icon' }}"></i>
-        </a>
-    </div>
-@stop
-
-@if ($viewType == "kanban")
-    @section('table-section')
-        <kanban-component
-            get-url="{{ route('admin.leads.kanban.index') }}"
-            detail-text="{{ __('admin::app.leads.add-title') }}"
-            update-url="{{ route('admin.leads.kanban.update') }}"
-        ></kanban-component>
-    @stop
+    @include('admin::leads.list.kanban')
+@else
+    @include('admin::leads.list.table')
 @endif
 
 @section('meta-content')
@@ -109,59 +59,3 @@
         </modal>
     </form>
 @stop
-
-@if ($viewType == "kanban")
-    @push('scripts')
-        <script type="text/x-template" id="kanban-filters-tempalte">
-            <div class="form-group post-heading">
-                <input
-                    type="search"
-                    class="control"
-                    id="search-field"
-                    :placeholder="__('ui.datagrid.search')"
-                />
-
-                <sidebar-filter :columns="columns"></sidebar-filter>
-
-                <div class="filter-btn">
-                    <div class="grid-dropdown-header" @click="toggleSidebarFilter">
-                        <span class="name">{{ __('ui::app.datagrid.filter.title') }}</span>
-
-                        <i class="icon add-icon"></i>
-                    </div>
-                </div>
-            </div>
-        </script>
-
-        <script>
-            Vue.component('kanban-filters', {
-                template: '#kanban-filters-tempalte',
-
-                data: function () {
-                    return {
-                        debounce: [],
-                        columns: {
-                            'created_at': {
-                                'filterable_type'   : 'date_range',
-                                'label'             : "{{ trans('admin::app.datagrid.created_at') }}",
-                                'values'            : [null, null]
-                            },
-                        }
-                    }
-                },
-
-                mounted: function () {
-                    EventBus.$on('updateFilter', data => {
-                        EventBus.$emit('updateKanbanFilter', data);
-                    });
-                },
-
-                methods: {
-                    toggleSidebarFilter: function () {
-                        $('.sidebar-filter').toggleClass('show');
-                    },
-                }
-            });
-        </script>
-    @endpush
-@endif

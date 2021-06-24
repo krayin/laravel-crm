@@ -172,8 +172,8 @@
                 numberCondition: null,
                 booleanCondition: null,
                 datetimeCondition: null,
-                custom_filter: [null, null],
                 massActionOptionValue: null,
+                custom_filter: [null, null],
                 url: new URL(window.location.href),
                 ignoreDisplayFilter: ['duration', 'type'],
             }
@@ -198,6 +198,14 @@
         watch: {
             filters: function (newValue, oldValue) {
                 this.$store.state.filters = newValue;
+
+                let duration = newValue.find(filter => filter.column == "duration");
+
+                if (duration) {
+                    duration = duration.val.split(",");
+
+                    this.custom_filter = duration;
+                }
             },
 
             '$store.state.filters': function (newValue, oldValue) {

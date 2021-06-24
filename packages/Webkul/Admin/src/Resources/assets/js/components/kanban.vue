@@ -30,7 +30,7 @@
 
 <script>
     export default {
-        props: ['getUrl', 'updateUrl', 'detailText'],
+        props: ['getUrl', 'updateUrl', 'detailText', 'noDataText'],
 
         data: function () {
             return {
@@ -72,6 +72,10 @@
                         this.totalCounts = response.data.total_count;
                         this.stages = Object.values(response.data.stages);
                         this.currencySymbol = response.data.currency_symbol;
+
+                        setTimeout(() => {
+                            this.addEmptyStateIcon();
+                        })
                     })
                     .catch(error => {});
             },
@@ -117,6 +121,21 @@
                 // urlParams.set('order', 'date');
 
                 // window.history.pushState({path: urlParams});
+            },
+
+            addEmptyStateIcon: function () {
+                // $('ul.drag-inner-list').each((index, item) => {
+                //     if (! $(item).children().length) {
+                //         $(item).append(`
+                //             <div class='empty-icon-container'>
+                //                 <div class="icon-text-container">
+                //                     <i class='icon empty-kanban-icon'></i>
+                //                     <span>${this.noDataText}</span>
+                //                 </div>
+                //             </div>
+                //         `)
+                //     }
+                // });
             }
         }
     }
