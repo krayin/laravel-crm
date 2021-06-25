@@ -974,10 +974,11 @@ body {
             box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     
             label {
+                height: 100%;
+                padding: 20px;
                 display: block;
                 font-weight: 500;
                 color: $font-color;
-                padding: 20px;
                 border-bottom: 1px solid rgba(193,194,195,.5);
     
                 .card-filter-container {
@@ -997,9 +998,16 @@ body {
                     cursor: pointer;
                 }
             }
+
+            .card-header {
+                height: 65px;
+            }
+            
+            .db-wg-spinner, .card-data {
+                height: calc(100% - 65px);
+            }
     
             .card-data {
-                height: 100%;
                 padding: 20px;
                 max-height: 260px;
                 position: relative;
@@ -1009,10 +1017,11 @@ body {
                     display: none;
                 }
 
-                &.full-height {
-                    max-height: 100%;
+                .line-chart,
+                .bar-chart {
+                    height: 100%;
                 }
-                
+
                 .bar-data {
                     display: grid;
                     font-size: 14px;
@@ -1070,7 +1079,7 @@ body {
 
                     &:nth-child(1),
                     &:nth-child(2) {
-                       margin: 0;
+                       margin-top: 0;
                     }
         
                     &:nth-last-child(1),

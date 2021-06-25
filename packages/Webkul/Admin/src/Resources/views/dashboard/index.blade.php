@@ -16,42 +16,6 @@
 
 @push('scripts')
     <script type="text/x-template" id="selected-cards-template">
-        {{-- <div class="cards-collection form-group">
-            <div class="toggle-btn dropdown-toggle">
-                <span>{{ __('admin::app.dashboard.cards') }}</span>
-                <span class="icon plus-black-icon"></span>
-            </div>
-
-            <div class="cards-options dropdown-list">
-                <div>
-                    <header>
-                        <span class="btn btn-sm btn-secondary-outline">
-                            {{ __('admin::app.dashboard.column') }}
-                        </span>
-
-                        <span class="btn btn-sm btn-primary" @click="updateCards">
-                            {{ __('admin::app.dashboard.done') }}
-                        </span>
-                    </header>
-
-                    <template v-for="(column, index) in columns">
-                        <div class="cards-column" :key="index" v-if="column.card_type != 'custom_card'">
-                            <span class="checkbox">
-                                <input
-                                    type="checkbox"
-                                    :id="column.card_id"
-                                    :name="column.card_id"
-                                    v-model="columns[index].selected"
-                                />
-                                <label for="checkbox2" class="checkbox-view"></label>
-                                @{{ column.label }}
-                            </span>
-                        </div>
-                    </template>
-                </div>
-            </div>
-        </div> --}}
-        
         <date-range
             :update="updateCardData"
             end-date="{{ $endDate }}"
@@ -66,7 +30,7 @@
                 <draggable :key="`inner-${index}`" :list="filteredCardRow" class="row-grid-3" handle=".drag-icon" @change="onColumnDrop">
                     <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
                         <template v-if="card.label">
-                            <label>
+                            <label class="card-header">
                                 @{{ card.label }}
             
                                 <i class="icon drag-icon"></i>
@@ -85,9 +49,11 @@
     </script>
 
     <script type="text/x-template" id="card-template">
-        <spinner-meter v-if="! dataLoaded"></spinner-meter>
+        <div class="db-wg-spinner" v-if="! dataLoaded">
+            <spinner-meter></spinner-meter>
+        </div>
 
-        <div v-else :class="`card-data ${['bar_chart', 'line_chart'].indexOf(cardType) > -1 ? 'full-height' : ''}`">
+        <div v-else :class="`card-data`">
             <bar-chart
                 :id="`bar-chart-${cardId}`"
                 :data="dataCollection.data"
@@ -302,6 +268,20 @@
                 },
 
                 onRowDrop: function (item) {
+                    var existingWidgets = this.getStoredWidgets();
+                    let sortIncreasedBy = (item.moved.newIndex - item.moved.oldIndex) - 2;
+
+                    item.moved.element.forEach(movedItem => {
+                        let existingWidget = existingWidgets.find(existingWidget => existingWidget.card_id == movedItem.card_id);
+
+                        this.onColumnDrop({
+                            moved: {
+                                element: movedItem,
+                                newIndex: movedItem.sort + sortIncreasedBy,
+                                oldIndex: existingWidget?.sort || movedItem.sort,
+                            }
+                        })
+                    });
                 },
 
                 onColumnDrop: function (item) {

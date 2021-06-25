@@ -1,5 +1,7 @@
 <template>
     <div class="table-body" v-if="Object.keys(tableData).length > 0">
+        <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
+
         <filter-component></filter-component>
 
         <table v-if="tableData.records.total">
@@ -28,8 +30,9 @@
 
         data: function () {
             return {
-                resultLoaded: true,
+                pageLoaded: false,
                 previousURL: null,
+                resultLoaded: true,
                 baseURL: window.baseURL,
             }
         },
@@ -60,6 +63,7 @@
         methods: {
             ...mapActions([
                 'updateTableData',
+                'toggleSidebarFilter',
             ]),
 
             getData: ({newParams, self, url, usePrevious}) => {
@@ -81,7 +85,7 @@
     
                     self.$http.get(url)
                         .then(response => {
-                            self.resultLoaded = true;
+                            self.pageLoaded = self.resultLoaded = true;
     
                             // update store data
                             self.updateTableData(response.data);
@@ -91,8 +95,15 @@
                             }
                         })
                         .catch(error => {
-                            // @TODO
-                            // remove filter from filters array
+                            self.$store.state.filters = [];
+                            self.toggleSidebarFilter();
+
+                            self.addFlashMessages({
+                                type    : "error",
+                                message : error?.response?.data?.message,
+                            });
+
+                            self.pageLoaded = self.resultLoaded = true;
                         })
                 }
             },
