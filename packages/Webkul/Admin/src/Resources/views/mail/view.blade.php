@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="page-content" style="margin-top: 30px;">
+        <div class="page-content" style="margin-top: 30px; padding-bottom: 30px;">
 
             <email-list-component></email-list-component>
 
@@ -315,15 +315,20 @@
 
                         @include ('admin::common.custom-attributes.edit.email-tags')
 
-                        <div class="form-group" :class="[errors.has('reply_to[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('reply_to[]') ? 'has-error' : '']">
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
                             <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
     
                             <span class="control-error" v-if="errors.has('reply_to[]')">@{{ errors.first('reply_to[]') }}</span>
+
+                            <div class="email-address-options">
+                                <label @click="show_cc = ! show_cc">{{ __('admin::app.leads.cc') }}</label>
+                                <label @click="show_bcc = ! show_bcc">{{ __('admin::app.leads.bcc') }}</label>
+                            </div>
                         </div>
     
-                        <div class="form-group" :class="[errors.has('cc[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('cc[]') ? 'has-error' : '']" v-if="show_cc">
                             <label for="cc">{{ __('admin::app.leads.cc') }}</label>
     
                             <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='cc'></email-tags-component>
@@ -331,7 +336,7 @@
                             <span class="control-error" v-if="errors.has('cc[]')">@{{ errors.first('cc[]') }}</span>
                         </div>
     
-                        <div class="form-group" :class="[errors.has('bcc[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('bcc[]') ? 'has-error' : '']" v-if="show_bcc">
                             <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
     
                             <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='bcc'></email-tags-component>
@@ -589,7 +594,9 @@
 
             data: function () {
                 return {
+                    show_cc: false,
 
+                    show_bcc: false,
                 }
             },
 
