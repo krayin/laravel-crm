@@ -5,14 +5,16 @@
 @stop
 
 @php
-    $viewType = request()->type ?? "table";
+    $viewType = request()->type ?? "kanban";
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp
 
-@if ($viewType == "kanban")
-    @include('admin::leads.list.kanban')
-@else
+@if ($viewType == "table")
     @include('admin::leads.list.table')
+@else
+    @php($showDefaultTable = false)
+
+    @include('admin::leads.list.kanban')
 @endif
 
 @section('meta-content')

@@ -10,6 +10,10 @@
         if (! $email->lead) {
             $email->lead = app('\Webkul\Lead\Repositories\LeadRepository')->getModel()->fill(['title' => $email->subject]);
         }
+
+        if (! $email->person) {
+            $email->person = app('\Webkul\Contact\Repositories\PersonRepository')->getModel()->fill(['emails' => $email->from, 'name' => $email->name]);
+        }
     @endphp
 
     <div class="content full-page">
@@ -56,62 +60,107 @@
                 </header>
 
                 <div class="email-action-content">
-                    <div class="panel link-person">
-                        <h3>{{ __('admin::app.mail.link-mail') }}</h3>
+                    <div class="panel">
+                        <div class="link-lead" v-if="! email.person_id">
+                            <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.contact" @click="enabled_search.contact = true">{{ __('admin::app.mail.add-to-existing-contact') }}</button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.person" @click="enabled_search.person = true">{{ __('admin::app.mail.add-to-existing-contact') }}</button>
 
-                            <div class="form-group" v-else>
-                                <input class="control" v-model="search_term.contact" v-on:keyup="search('contact')" placeholder="{{ __('admin::app.mail.search-contact') }}"/>
+                                <div class="form-group" v-else>
+                                    <input class="control" v-model="search_term.person" v-on:keyup="search('person')" placeholder="{{ __('admin::app.mail.search-contact') }}"/>
 
-                                <div class="lookup-results" v-if="search_term.contact.length">
-                                    <ul>
-                                        <li v-for='(result, index) in search_results.contact'>
-                                            <span>@{{ result.name }}</span>
-                                        </li>
-            
-                                        <li v-if='! search_results.contact.length && search_term.contact.length && ! is_searching.contact'>
-                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                        </li>
-                                    </ul>
+                                    <div class="lookup-results" v-if="search_term.person.length">
+                                        <ul>
+                                            <li v-for='(result, index) in search_results.person' @click="link('person', result)">
+                                                <span>@{{ result.name }}</span>
+                                            </li>
+                
+                                            <li v-if='! search_results.person.length && search_term.person.length && ! is_searching.person'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <i class="icon close-icon"  v-if="! is_searching.person" @click="enabled_search.person = false; reset('person')"></i>
+
+                                    <i class="icon loader-active-icon" v-if="is_searching.person"></i>
                                 </div>
-
-                                <i class="icon close-icon"  v-if="! is_searching.contact" @click="enabled_search.contact = false; reset('lead')"></i>
-
-                                <i class="icon loader-active-icon" v-if="is_searching.contact"></i>
+                                <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.create-new-contact') }}</button>
                             </div>
-                            <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.create-new-contact') }}</button>
+                        </div>
+
+                        <div v-else>
+                            <div class="panel-header">
+                                {{ __('admin::app.mail.linked-contact') }}
+
+                                <span class="links">
+                                    <a :href="'{{ route('admin.contacts.persons.edit') }}/' + email.person_id" target="_blank">
+                                        <i class="icon external-link-icon"></i>
+                                    </a>
+
+                                    <i class="icon close-icon" @click="unlink('person')"></i>
+                                </span>
+                            </div>
+
+                            <div class="contact-details">
+                                <div class="name">@{{ email.person.name }}</div>
+                                <div class="email">
+                                    <i class="icon emails-icon"></i>
+                                    @{{ email.person.name }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="panel link-lead">
-                        <h3>Link Lead</h3>
+                    <div class="panel">
+                        <div class="link-lead" v-if="! email.lead_id">
+                            <h3>{{ __('admin::app.mail.link-lead') }}</h3>
 
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">{{ __('admin::app.mail.link-to-existing-lead') }}</button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">{{ __('admin::app.mail.link-to-existing-lead') }}</button>
 
-                            <div class="form-group" v-else>
-                                <input class="control" v-model="search_term.lead" v-on:keyup="search('lead')" placeholder="{{ __('admin::app.mail.search-lead') }}"/>
+                                <div class="form-group" v-else>
+                                    <input class="control" v-model="search_term.lead" v-on:keyup="search('lead')" placeholder="{{ __('admin::app.mail.search-lead') }}"/>
 
-                                <div class="lookup-results" v-if="search_term.lead.length">
-                                    <ul>
-                                        <li v-for='(result, index) in search_results.lead'>
-                                            <span>@{{ result.title }}</span>
-                                        </li>
-            
-                                        <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
-                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                        </li>
-                                    </ul>
+                                    <div class="lookup-results" v-if="search_term.lead.length">
+                                        <ul>
+                                            <li v-for='(result, index) in search_results.lead' @click="link('lead', result)">
+                                                <span>@{{ result.title }}</span>
+                                            </li>
+                
+                                            <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <i class="icon close-icon"  v-if="! is_searching.lead" @click="enabled_search.lead = false; reset('lead')"></i>
+
+                                    <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                                 </div>
 
-                                <i class="icon close-icon"  v-if="! is_searching.lead" @click="enabled_search.lead = false; reset('lead')"></i>
+                                <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.add-new-lead') }}</button>
+                            </div>
+                        </div>
 
-                                <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
+                        <div v-else>
+                            <div class="panel-header">
+                                {{ __('admin::app.mail.linked-lead') }}
+
+                                <span class="links">
+                                    <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
+                                        <i class="icon external-link-icon"></i>
+                                    </a>
+
+                                    <i class="icon close-icon" @click="unlink('lead')"></i>
+                                </span>
                             </div>
 
-                            <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.add-new-lead') }}</button>
+                            <div class="panel-body">
+                                <div class="custom-attribute-view" v-html="html">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -318,6 +367,17 @@
     </script>
 
     <script>
+        @php
+            $html = $email->lead_id
+                ? view('admin::common.custom-attributes.view', [
+                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'entity_type' => 'leads',
+                        ]),
+                        'entity'       => $email->lead,
+                    ])->render() 
+                : '';
+        @endphp
+
         Vue.component('email-action-component', {
 
             template: '#email-action-component-template',
@@ -326,38 +386,48 @@
 
             data: function () {
                 return {
-                    show_filter: true,
+                    email: @json($email->getAttributes()),
+
+                    show_filter: false,
+
+                    html: `{!! $html !!}`,
 
                     is_searching: {
-                        contact: false,
+                        person: false,
 
                         lead: false
                     },
 
                     search_term: {
-                        contact: '',
+                        person: '',
 
                         lead: '',
                     },
 
-                    search_route: {
-                        contact: "{{ route('admin.contacts.persons.search') }}",
+                    search_routes: {
+                        person: "{{ route('admin.contacts.persons.search') }}",
 
                         lead: "{{ route('admin.leads.search') }}",
                     },
 
                     search_results: {
-                        contact: [],
+                        person: [],
 
                         lead: [],
                     },
 
                     enabled_search: {
-                        contact: false,
+                        person: false,
 
                         lead: false,
                     }
                 }
+            },
+
+            created: function() {
+                @if ($email->person)
+                    this.email.person = @json($email->person);
+                @endif
             },
 
             methods: {
@@ -372,7 +442,7 @@
                         return;
                     }
 
-                    this.$http.get(this.search_route[type], {params: {query: this.search_term[type]}})
+                    this.$http.get(this.search_routes[type], {params: {query: this.search_term[type]}})
                         .then (response => {
                             this.search_results[type] = response.data;
 
@@ -382,6 +452,46 @@
                             this.is_searching[type] = false;
                         })
                 }, 500),
+
+                link: function(type, entity) {
+                    var self = this;
+
+                    var data = (type == 'person') ? {'person_id': entity.id} : {'lead_id': entity.id};
+
+                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
+                        .then (response => {
+                            self.email[type] = entity;
+
+                            if (type == 'lead') {
+                                self.html = response.data.html;
+                            }
+
+                            self.email[type + '_id'] = entity.id;
+
+                            self.reset(type);
+
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (error => {})
+                },
+
+                unlink: function(type) {
+                    var self = this;
+
+                    var data = (type == 'person') ? {'person_id': null} : {'lead_id': null};
+
+                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
+                        .then (response => {
+                            self.email[type] = self.email[type + '_id'] = null;
+
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (error => {})
+                },
 
                 reset: function(type) {
                     this.search_term[type] = '';

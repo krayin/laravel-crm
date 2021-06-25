@@ -20,15 +20,12 @@
     </button>
 
     <div class="float-right">
-        <a
-            class="icon-container {{ $viewType == 'kanban' ? '' : 'active' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'table-line-icon' : 'table-line-active-icon' }}"></i>
+        <a class="icon-container" href="{{ route('admin.leads.index') }}">
+            <i class="icon layout-column-line-icon"></i>
         </a>
 
-        <a
-            href="{{ route('admin.leads.index', ['type' => 'kanban']) }}"
-            class="icon-container {{ $viewType == 'kanban' ? 'active' : '' }}">
-            <i class="icon {{ $viewType == 'kanban' ? 'layout-column-line-active-icon' : 'layout-column-line-icon' }}"></i>
+        <a class="icon-container active">
+            <i class="icon table-line-active-icon"></i>
         </a>
     </div>
 @stop

@@ -317,8 +317,9 @@ h5 {
                 }
 
                 &.active {
-                    background-color: $secondary-color;
+                    cursor: not-allowed;
                     border-color: $secondary-color;
+                    background-color: $secondary-color;
                 }
 
                 .icon {
@@ -369,12 +370,9 @@ h5 {
         }
 
         .empty-table {
-            top: 20%;
-            position: relative;
-
             div {
                 position: absolute;
-                top: calc(50% + 50px);
+                top: calc(50% - 50px);
                 left: calc(50% - 75px);
 
                 img {
@@ -688,7 +686,7 @@ h5 {
                         width: auto;
                         margin: 0;
                         padding: 6px 10px;
-                        border: 2px solid;
+                        border: 1px solid;
                     }
                 }
             }
@@ -1373,7 +1371,7 @@ accordian,
 
 .panel {
     .panel-header {
-        padding: 8px 0;
+        padding: 16px 0;
         font-size: 18px;
         color: $dark-color;
         color: $secondary-font-color;
@@ -1424,7 +1422,7 @@ modal {
         z-index: 10;
         width: inherit;
         display: table;
-        position: fixed;
+        position: relative;
         background: white;
         padding: 20px;
         border-bottom: 1px solid $border-color;
@@ -1446,7 +1444,7 @@ modal {
     }
 
     .modal-body {
-        top: 75px;
+        // top: 75px;
         padding: 30px;
         position: relative;
     }
@@ -1733,7 +1731,7 @@ modal {
         }
 
         .enter-new {
-            width: 90%;
+            width: 100%;
             display: inline-block;
 
             input {

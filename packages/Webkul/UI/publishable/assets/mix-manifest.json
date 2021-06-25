@@ -1,6 +1,6 @@
 {
     "/js/ui.js": "/js/ui.js?id=523f5e0bb13ceed3bc02",
-    "/css/ui.css": "/css/ui.css?id=1f231172985c0470878a",
+    "/css/ui.css": "/css/ui.css?id=8946ff9a5755b6c97f9f",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -46,5 +46,7 @@
     "/images/tags-icon.svg": "/images/tags-icon.svg?id=981aeaf2906c4581ecd2",
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82",
-    "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e"
+    "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e",
+    "/images/external-link-icon.svg": "/images/external-link-icon.svg?id=b2beda2403e83f5aacfd",
+    "/images/link-icon.svg": "/images/link-icon.svg?id=817566b0220eebc0da11"
 }
