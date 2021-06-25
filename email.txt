@@ -1,0 +1,105 @@
+Delivered-To: jitendrasingh5911@gmail.com
+Received: by 2002:aa6:c3a5:0:b029:fd:9064:d4af with SMTP id a5csp6132413lkq;
+        Wed, 23 Jun 2021 07:18:13 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxKUHbatbvmgB2VHVs6m5pWB3zzYqFKyvnnX4Nc/xdvzZtzCO1rhQPWUHIz0mXviIpn6lfW
+X-Received: by 2002:a63:e04c:: with SMTP id n12mr4116675pgj.239.1624457892949;
+        Wed, 23 Jun 2021 07:18:12 -0700 (PDT)
+ARC-Seal: i=1; a=rsa-sha256; t=1624457892; cv=none;
+        d=google.com; s=arc-20160816;
+        b=iGA+CND3EwuLd/c+00QzJj/gecp/A5MVvoIa0+sioEBi6igIoIFEo9L8EeiwxOJpwU
+         My3SpEZxZjv3OWzk0aTPudBCY5ZFjAo4w99JUy0kfWSUO9F6V701OBfS2iSj+w9Psm2B
+         keTufjNOnlTek1XeJbQK64Y1aPcEOXBI6j4SxzE0s+WxCRL0sw9zUpbN9lRQpDIaP4cb
+         +SwqPUz9ynRy+rtp/4B/jG1q74GciBE8Ir0ucbRZ2YniRkRS5NrvrBZBiBSUTpIYwdcQ
+         7N8Pqlcv3c6a2j+YVik4BFTjDfxfU043RE8QrNRQ5qC9WWqAbNKCMTPTZsb+NfPQXZCw
+         58Bg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=google.com; s=arc-20160816;
+        h=feedback-id:mime-version:list-unsubscribe:message-id:subject
+         :reply-to:from:to:date:dkim-signature:dkim-signature;
+        bh=xQZVPGl8Mxq8ERbitZ8Df20AOBkOAqbn68EdlLhHDxY=;
+        b=dbK0BE5HPcCQ2/r+8sSHEg4LYgNFtK1var4dF3OHQTnJx31Su3MzYBUkKlJcbZ+30W
+         3Mr10jo6T5FlVKzvD6z/c5SRj5YmdypPZ+XnV6fEaIbwV21TkkhuV9Dmd74JCcqyhPFQ
+         7mqYihnE8y56ef2zLidkcwcUpMYoJIPJXjDowbsp/V+Z94s5mlWZU7+SMEwViQMJAXrn
+         NYIAIyNmYxg8KoKlhJZ2Vyu9FQLJMGIYquR5cTlbunsuS6IgAML0kleLRjb9vMkJHhyr
+         cHrYw345AEld2b8FMDXtypZczAKhDPPKW/IefegzzWZedtPxZnLgi0fHd11hJdM4ou+V
+         lDbw==
+ARC-Authentication-Results: i=1; mx.google.com;
+       dkim=pass header.i=@majorbrands.in header.s=k6cvbvpq5oiheb56ddbqrnwfijdc3ysp header.b=ebsuns5r;
+       dkim=pass header.i=@amazonses.com header.s=7v7vs6w47njt4pimodk5mmttbegzsi6n header.b=GPD6rZp0;
+       spf=pass (google.com: domain of 0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com designates 54.240.27.58 as permitted sender) smtp.mailfrom=0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=majorbrands.in
+Return-Path: <0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com>
+Received: from a27-58.smtp-out.us-west-2.amazonses.com (a27-58.smtp-out.us-west-2.amazonses.com. [54.240.27.58])
+        by mx.google.com with ESMTPS id l10si5017318pgh.5.2021.06.23.07.18.12
+        for <jitendrasingh5911@gmail.com>
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-SHA bits=128/128);
+        Wed, 23 Jun 2021 07:18:12 -0700 (PDT)
+Received-SPF: pass (google.com: domain of 0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com designates 54.240.27.58 as permitted sender) client-ip=54.240.27.58;
+Authentication-Results: mx.google.com;
+       dkim=pass header.i=@majorbrands.in header.s=k6cvbvpq5oiheb56ddbqrnwfijdc3ysp header.b=ebsuns5r;
+       dkim=pass header.i=@amazonses.com header.s=7v7vs6w47njt4pimodk5mmttbegzsi6n header.b=GPD6rZp0;
+       spf=pass (google.com: domain of 0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com designates 54.240.27.58 as permitted sender) smtp.mailfrom=0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com;
+       dmarc=pass (p=NONE sp=NONE dis=NONE) header.from=majorbrands.in
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=k6cvbvpq5oiheb56ddbqrnwfijdc3ysp; d=majorbrands.in; t=1624457892; h=Date:To:From:Reply-To:Subject:Message-ID:List-Unsubscribe:MIME-Version:Content-Type; bh=mtOBwHbkBVUh9ieIKvK1nO/+B33joVikc8DjKRjIVKM=; b=ebsuns5rM+1VOE64CNXfXcBPqGr+qg/hcoh03ymxNzMmNB26HpjU9ZRxyc3/exRt bR8DnZCi2AJ/B6jNCNusqz3H87/YAyz1H4FfZy1rSEnxv3pqVSBTEXqATJx+BVwM8ga 2N9pWEIUzMcJSvDAxdxF6QrUXa6Z3EM88CAyH2YY=
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/simple; s=7v7vs6w47njt4pimodk5mmttbegzsi6n; d=amazonses.com; t=1624457892; h=Date:To:From:Reply-To:Subject:Message-ID:List-Unsubscribe:MIME-Version:Content-Type:Feedback-ID; bh=mtOBwHbkBVUh9ieIKvK1nO/+B33joVikc8DjKRjIVKM=; b=GPD6rZp0/GvJOdvgG8DNSdHQCqEIIuVcVJoLMwdgdG/puRf9mlAanvzNDy3k6EAH Q9rpxuzXD9CHozq5SlQREWyoM7Fbj8JIZitnyAkdM8Kl9POFdxYQQzMtsObA0NUvBKn /WUXng8JPoW6pkBo1JLBA8vm8BYJe9wd6VhZOvwM=
+Date: Wed, 23 Jun 2021 14:18:12 +0000
+To: jitendrasingh5911@gmail.com
+From: "Bath&Bodyworks" <bbw-orderinquiry@majorbrands.in>
+Reply-To: "Bath&Bodyworks" <bbw-orderinquiry@majorbrands.in>
+Subject: 🐥❤️ a Semi-Annual Sale secret for you...!
+Message-ID: <0101017a393c5260-3a2a695e-d3df-4822-bb04-30259ad25880-000000@us-west-2.amazonses.com>
+X-Mailer: Sendy (https://sendy.co)
+List-Unsubscribe: <https://promo.ansd.in/unsubscribe/FjjIp5nIGA5zUs892CnHi868NzzjtVnbPzxl9WNgFvN9g/yZPayDwE5jXtfnINSx763NKA/vqHU6vX3NyMuU2lPUp5reQ>
+MIME-Version: 1.0
+Content-Type: text/html; charset=UTF-8
+Feedback-ID: 1.us-west-2.NrLa8a/r+3lq8UgBJepxXFu3SkyeEyztjfZ9oG8EbR8=:AmazonSES
+X-SES-Outgoing: 2021.06.23-54.240.27.58
+
+<html>
+<head>
+	<title>bbw</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+</head>
+<body bgcolor="#FFFFFF" data-gr-ext-installed="" data-new-gr-c-s-check-loaded="14.1017.0" leftmargin="0" marginheight="0" marginwidth="0" topmargin="0">
+<div style="margin: 0 auto; padding: 0; display: table;">
+<div align="center" style="margin: 0 auto;">
+<table bgcolor="#FFFFFF" border="0" cellpadding="0" cellspacing="0" height="auto" id="Table_01" width="600">
+	<tbody>
+		<tr>
+			<td colspan="9"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/vQ5rZW0DrLZq892X4CETtX6A/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="96" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_01.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="600" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="9"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/vQ5rZW0DrLZq892X4CETtX6A/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="auto" src="https://ansimages.s3.us-west-2.amazonaws.com/GD_2021/bbw/june/2306/SAS_Emailer1_02.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="600" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="2"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/00ecoMuxdwmSjBNtv6UlQg/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="84" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_11.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="151" /></a></td>
+			<td colspan="3"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/HI90F8923zil2WQ89264HLDnbg/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="84" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_12.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="155" /></a></td>
+			<td colspan="2"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/u03AhTDDd8vMYV859w3afQ/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="84" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_13.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="141" /></a></td>
+			<td colspan="2"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/hGr2r1IkopIh5ZBcDHMWiw/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="84" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_14.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="153" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="4"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/dkhh2lLcuPfhtfBdHikJSg/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="51" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_15.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="300" /></a></td>
+			<td colspan="5"><a href="https://promo.ansd.in/unsubscribe/FjjIp5nIGA5zUs892CnHi868NzzjtVnbPzxl9WNgFvN9g/yZPayDwE5jXtfnINSx763NKA/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="51" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/Emailer-_16.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="300" /></a></td>
+		</tr>
+		<tr>
+			<td colspan="9"><a href="https://promo.ansd.in/l/a0b1s892kbHwFPVaLqQFXyTg/vQ5rZW0DrLZq892X4CETtX6A/vqHU6vX3NyMuU2lPUp5reQ" style="margin: 0; padding: 0; border: 0; display: block;" target="Blank"><img alt="" border="0" height="auto" src="https://ansimages.s3.us-west-2.amazonaws.com/GD_2021/bbw/june/10-06/1Emailer-(002)-(1)_05.jpg" style="margin: 0; padding: 0; border: 0; display: block;" width="600" /></a></td>
+		</tr>
+		<tr>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="115" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="36" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="60" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="89" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="6" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="93" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="48" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="49" /></td>
+			<td><img alt="" height="1" src="https://ansimages.s3-us-west-2.amazonaws.com/GD_2021/bbw/march/1903/New+Folder/spacer.gif" style="margin: 0; padding: 0; border: 0; display: block;" width="104" /></td>
+		</tr>
+	</tbody>
+</table>
+
+<div style="text-align: center;"><span style="font-size:9px;">Moveout Here <a href="https://promo.ansd.in/unsubscribe/FjjIp5nIGA5zUs892CnHi868NzzjtVnbPzxl9WNgFvN9g/yZPayDwE5jXtfnINSx763NKA/vqHU6vX3NyMuU2lPUp5reQ">Update</a></span></div>
+</div>
+</div>
+</body>
+</html>
+<img src="https://promo.ansd.in/t/vqHU6vX3NyMuU2lPUp5reQ/a0b1s892kbHwFPVaLqQFXyTg" alt="" style="width:1px;height:1px;"/>

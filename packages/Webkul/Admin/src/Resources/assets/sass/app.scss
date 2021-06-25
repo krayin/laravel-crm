@@ -1270,8 +1270,26 @@ body {
             padding: 20px;
             border-bottom: 1px solid $border-color;
 
-            h3 {
-                margin: 0px 0px 15px 0px;
+            .panel-header {
+                .links {
+                    float: right;
+
+                    .icon {
+                        width: 24px;
+                        height: 24px;
+                        cursor: pointer;
+
+                        &.close-icon {
+                            margin-top: -2px;
+                            margin-left: 5px;
+                        }
+                    }
+                }
+            }
+
+            .panel-body {
+                border: 1px solid $border-color;
+                box-shadow: none;
             }
 
             .btn-group {
@@ -1279,7 +1297,7 @@ body {
                     width: 100%;
                     font-size: $font-size-lg;
                     margin-bottom: 10px;
-                     
+                    
                     &:last-child {
                         margin-bottom: 0;
                     }
@@ -1301,12 +1319,22 @@ body {
                 }
             }
 
-            &.link-person {
+            .contact-details {
+                .name {
+                    color: $secondary-font-color;
+                    margin-bottom: 10px;
+                }
 
-            }
+                .email {
+                    margin-bottom: 10px;
+                    color: $secondary-font-color;
+                    font-weight: $font-weight-medium;
 
-            &.link-lead {
-
+                    .icon {
+                        margin-right: 10px;
+                        margin-top: 1px;
+                    }
+                }
             }
         }
     }
@@ -1354,7 +1382,7 @@ body {
             color: $secondary-font-color;
             padding: 30px;
             background-color: $white;
-            border: 1px solid $border-color;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
             .attachment-list {
                 margin-top: 30px;
@@ -1623,5 +1651,19 @@ body {
                 }
             }
         }
+    }
+}
+
+.empty-record {
+    text-align: center;
+
+    img {
+        width: 100px;
+        height: 100px;
+        margin-bottom: 15px;
+    }
+
+    span {
+        display: block;
     }
 }
