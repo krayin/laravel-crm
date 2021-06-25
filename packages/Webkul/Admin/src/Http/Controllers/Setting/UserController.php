@@ -145,6 +145,9 @@ class UserController extends Controller
 
         $data['status'] = isset($data['status']) ? 1 : 0;
 
+        // make status true if the current user is being edited
+        $data['status'] = ($id == auth()->guard('user')->user()->id) ? 1 : $data['status'];
+
         Event::dispatch('settings.user.update.before', $id);
 
         $admin = $this->userRepository->update($data, $id);
@@ -212,9 +215,10 @@ class UserController extends Controller
         $data = request()->all();
 
         foreach ($data['rows'] as $userId) {
-            $user = $this->userRepository->find($userId);
-
-            $user->update(['status' => $data['value']]);
+            if (($userId != auth()->guard('user')->user()->id) || ($data['value'] == 1)) {
+                $user = $this->userRepository->find($userId);
+                $user->update(['status' => $data['value']]);
+            }
         }
 
         return response()->json([
