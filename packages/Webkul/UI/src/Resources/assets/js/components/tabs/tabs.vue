@@ -2,7 +2,7 @@
     <div>
         <div class="tabs">
             <ul>
-                <li :key="index" v-for="(tab, index) in tabs" :class="{ 'active': tab.isActive }" @click="selectTab(tab)">
+                <li :key="index" v-for="(tab, index) in tabs" :class="{ 'active': tab.isActive,  'has-error': tab.hasError}" @click="selectTab(tab)">
                     <a>{{ tab.name }}</a>
                 </li>
             </ul>
