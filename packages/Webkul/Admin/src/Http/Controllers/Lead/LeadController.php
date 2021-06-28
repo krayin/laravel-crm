@@ -136,6 +136,20 @@ class LeadController extends Controller
     }
 
     /**
+     * Search person results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = $this->leadRepository->findWhere([
+            ['title', 'like', '%' . urldecode(request()->input('query')) . '%']
+        ]);
+
+        return response()->json($results);
+    }
+
+    /**
      * Upload files to storage
      *
      * @param  int  $id
