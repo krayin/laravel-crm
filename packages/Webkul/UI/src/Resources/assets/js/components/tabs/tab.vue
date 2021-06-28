@@ -20,12 +20,32 @@
         
         data() {
             return {
-                isActive: false
+                isActive: false,
+
+                hasError: false
             };
         },
         
         mounted() {
+            this.addHasErrorClass()
+
+            eventBus.$on('onFormError', this.addHasErrorClass);
+            
             this.isActive = this.selected;
+        },
+
+        methods: {
+            addHasErrorClass: function() {
+                var self = this;
+
+                setTimeout(function() {
+                    $(self.$el).find('.form-group').each(function(index, element) {
+                        if ($(element).hasClass('has-error')) {
+                            self.hasError = true;
+                        }
+                    });
+                }, 0);
+            }
         }
     }
 </script>
