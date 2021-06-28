@@ -1,6 +1,4 @@
 {
-    "/js/admin.js": "/js/admin.js?id=6a80d3a342ceb158db26",
-    "/css/admin.css": "/css/admin.css?id=deb0138c3bb7eee85076",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f",
     "/images/avatar-dark-icon.svg": "/images/avatar-dark-icon.svg?id=abefe06bd1ce2bfe7029",
@@ -31,5 +29,7 @@
     "/images/table-line-active-icon.svg": "/images/table-line-active-icon.svg?id=2bb1b3e9f60637957c6d",
     "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945",
     "/images/tools-active-icon.svg": "/images/tools-active-icon.svg?id=3dc420a57a350cfb07a9",
-    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64"
+    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64",
+    "/js/admin.js": "/js/admin.js?id=2cfea68d5d37ddd01c18",
+    "/css/admin.css": "/css/admin.css?id=c8dfe7c18e107d7c111c"
 }

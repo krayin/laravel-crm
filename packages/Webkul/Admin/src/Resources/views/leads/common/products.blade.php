@@ -9,7 +9,7 @@
                 @onRemoveProduct="removeProduct($event)">
             </product-item>
 
-            <a class="add-more-link" href @click.prevent="addProduct">+ add more</a>
+            <a class="add-more-link" href @click.prevent="addProduct">+ {{ __('admin::app.common.add_more') }}</a>
         </div>
     </script>
 
