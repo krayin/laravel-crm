@@ -28,7 +28,7 @@
                     </span>
                 </div>
 
-                <a href @click.prevent="addEmail">+ add more</a>
+                <a class="add-more-link" href @click.prevent="addEmail">+ {{ __('admin::app.common.add_more') }}</a>
             </div>
         </script>
 

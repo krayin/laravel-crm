@@ -435,6 +435,7 @@
             'back'               => 'Back',
             'address'            => 'Address',
             'country'            => 'Country',
+            'add_more'           => 'Add More',
             'select-country'     => 'Please select country',
             'state'              => 'State',
             'select-state'       => 'Please select state',

@@ -2,7 +2,7 @@
     <div class="table-body" v-if="Object.keys(tableData).length > 0">
         <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
-        <filter-component></filter-component>
+        <filter-component :switch-page-url="switchPageUrl"></filter-component>
 
         <table v-if="tableData.records.total">
             <thead-component></thead-component>
@@ -26,6 +26,7 @@
     export default {
         props: [
             'tableClass',
+            'switchPageUrl'
         ],
 
         data: function () {
@@ -95,13 +96,15 @@
                             }
                         })
                         .catch(error => {
-                            self.$store.state.filters = [];
-                            self.toggleSidebarFilter();
-
-                            self.addFlashMessages({
-                                type    : "error",
-                                message : error?.response?.data?.message,
-                            });
+                            if (error.response.status == 500) {
+                                self.$store.state.filters = [];
+                                self.toggleSidebarFilter();
+    
+                                self.addFlashMessages({
+                                    type    : "error",
+                                    message : error?.response?.data?.message,
+                                });
+                            }
 
                             self.pageLoaded = self.resultLoaded = true;
                         })
