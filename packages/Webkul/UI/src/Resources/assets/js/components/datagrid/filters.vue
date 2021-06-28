@@ -222,12 +222,20 @@
                 if (duration) {
                     duration = duration.val.split(",");
 
-                    this.custom_filter = duration;
+                    var timestamp = Date.parse(duration[0]);
+
+                    if (isNaN(timestamp) == false) {
+                        this.custom_filter = duration;
+                    }
                 }
             },
 
             '$store.state.filters': function (newValue, oldValue) {
                 this.filters = newValue;
+
+                if (this.filters.length == 0) {
+                    this.custom_filter = [null, null];
+                }
 
                 this.makeURL();
             }

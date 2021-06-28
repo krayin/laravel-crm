@@ -123,9 +123,7 @@
             updateURI: function (searchedKeyword, filterValues) {
                 // const urlParams = new URLSearchParams(window.location.search);
 
-                // urlParams.set('order', 'date');
-
-                // window.history.pushState({path: urlParams});
+                // window.history.pushState({path: urlParams}, '');
             },
 
             toggleEmptyStateIcon: function () {

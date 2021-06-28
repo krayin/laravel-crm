@@ -124,7 +124,7 @@ h5 {
     }
 
     &.btn-sm {
-        max-height: 40px;
+        height: 40px;
         padding: 7px 12px;
         font-size: $font-size-sm;
     }
@@ -330,17 +330,18 @@ h5 {
 
             .form-group {
                 margin: 20px 0;
+                display: grid;
+                grid-gap: 5px;
+                text-align: center;
+                align-items: center;
+                grid-template-columns: 140px auto 140px;
 
-                .middle-text {
-                    margin: 0 5px;
-                }
-    
                 &.date {
                     .date-container {
                         display: inline-block;
-    
-                        .half {
-                            width: 140px;
+
+                        .control {
+                            margin: 0;
                         }
                     }
                 }
