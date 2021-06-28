@@ -6,7 +6,6 @@ use Illuminate\Routing\Router;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Contracts\Debug\ExceptionHandler;
-
 use Webkul\Core\Tree;
 use Webkul\Admin\Menu;
 use Webkul\Admin\Bouncer;
@@ -49,6 +48,8 @@ class AdminServiceProvider extends ServiceProvider
             'persons'       => 'Webkul\Contact\Models\Person',
             'organizations' => 'Webkul\Contact\Models\Organization',
         ]);
+        
+        $this->app->register(EventServiceProvider::class);
     }
 
     /**

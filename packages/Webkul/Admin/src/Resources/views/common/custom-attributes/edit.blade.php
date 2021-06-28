@@ -1,3 +1,7 @@
+@php
+    $formScope = $formScope ?? '';
+@endphp
+
 @foreach ($customAttributes as $attribute)
 
     @php
@@ -29,8 +33,8 @@
     @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
 
         <div class="form-group {{ $attribute->type }}"
-            @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $attribute->code }}[]') ? 'has-error' : '']"
-            @else :class="[errors.has('{{ $attribute->code }}') ? 'has-error' : '']" @endif>
+            @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
+            @else :class="[errors.has('{{ $formScope . $attribute->code }}') ? 'has-error' : '']" @endif>
 
             <label for="{{ $attribute->code }}" {{ $attribute->is_required ? 'class=required' : '' }}>
                 {{ $attribute->name }}
@@ -44,13 +48,13 @@
             @include ($typeView, ['value' => isset($entity) ? $entity[$attribute->code] : null])
 
             <span class="control-error"
-                @if ($attribute->type == 'multiselect') v-if="errors.has('{{ $attribute->code }}[]')"
-                @else  v-if="errors.has('{{ $attribute->code }}')"  @endif>
+                @if ($attribute->type == 'multiselect') v-if="errors.has('{{ $formScope . $attribute->code }}[]')"
+                @else  v-if="errors.has('{{ $formScope . $attribute->code }}')"  @endif>
                 
                 @if ($attribute->type == 'multiselect')
-                    @{{ errors.first('{!! $attribute->code !!}[]') }}
+                    @{{ errors.first('{!! $formScope . $attribute->code !!}[]') }}
                 @else
-                    @{{ errors.first('{!! $attribute->code !!}') }}
+                    @{{ errors.first('{!! $formScope . $attribute->code !!}') }}
                 @endif
             </span>
         </div>
