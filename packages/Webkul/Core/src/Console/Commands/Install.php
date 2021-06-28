@@ -114,9 +114,9 @@ class Install extends Command
             $input_app_url = $this->ask('Please Enter the APP URL : ');
             $this->envUpdate('APP_URL=', $input_app_url ? $input_app_url : $default_app_url );
 
-            $default_admin_url =  'admin';
-            $input_admin_url = $this->ask('Please Enter the Admin URL : ');
-            $this->envUpdate('APP_ADMIN_URL=', $input_admin_url ?: $default_admin_url);
+            $default_admin_path =  'admin';
+            $input_admin_path = $this->ask('Please Enter the Admin URL : ');
+            $this->envUpdate('APP_ADMIN_PATH=', $input_admin_path ?: $default_admin_path);
 
             $locale = $this->choice('Please select the default locale or press enter to continue', ['ar', 'en', 'fa', 'nl', 'pt_BR'], 1);
             $this->envUpdate('APP_LOCALE=', $locale);
