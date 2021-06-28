@@ -9,6 +9,31 @@
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp
 
+@push('css')
+    <style>
+        .modal-container {
+            overflow-y: hidden;
+        }
+
+        .modal-container .tabs-content {
+            overflow-y: scroll;
+            max-height: calc(100vh - 300px);
+        }
+
+        .modal-container .tabs-content .form-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .modal-container .modal-header {
+            border: 0;
+        }
+
+        .modal-container .modal-body {
+            padding: 0;
+        }
+    </style>
+@endpush
+
 @if ($viewType == "table")
     @include('admin::leads.list.table')
 @else

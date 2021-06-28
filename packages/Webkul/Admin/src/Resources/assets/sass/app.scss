@@ -599,6 +599,8 @@ body {
 }
 
 .modal-container {
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    
     .tabs-content {
         border: 0;
         border-top: 1px solid $border-color;
@@ -1622,6 +1624,43 @@ body {
                     background: $danger-color;
                 }
             }
+        }
+    }
+}
+
+.switch-icons-container {
+    margin-left: -5px;
+    margin-right: 6px;
+    vertical-align: top;
+    display: inline-block;
+
+    .icon-container {
+        height: 40px;
+        cursor: pointer;
+        display: inline-block;
+        padding: 6px 10px 10px 8px;
+        border: 1px solid $border-color;
+    
+        &:first-child {
+            left: 5px;
+            position: relative;
+            border-radius: 3px 0px 0px 3px;
+        }
+    
+        &:last-child {
+            border-radius: 0px 3px 3px 0px;
+        }
+    
+        &.active {
+            cursor: not-allowed;
+            border-color: $secondary-color;
+            background-color: $secondary-color;
+        }
+    
+        .icon {
+            vertical-align: middle;
+            width: 24px;
+            height: 22px;
         }
     }
 }
