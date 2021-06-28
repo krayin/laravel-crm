@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
+    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin')->name('krayin.home');
     
     Route::prefix(config('app.admin_path'))->group(function () {
 
