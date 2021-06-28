@@ -31,6 +31,11 @@
         .modal-container .modal-body {
             padding: 0;
         }
+
+        .modal-container .modal-body .add-more-link {
+            display: block;
+            padding: 5px 0 0 0;
+        }
     </style>
 @endpush
 
@@ -45,7 +50,7 @@
 @section('meta-content')
     <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">
         <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
-            <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
+            <h2 slot="header-title">{{ __('admin::app.leads.add-title') }}</h2>
             
             <div slot="header-actions">
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>

@@ -649,11 +649,6 @@ body {
             }
         }
     }
-
-    a.add-more-link {
-        margin-top: 20px;
-        display: block;
-    }
 }
 
 .page-content.lead-view {
@@ -1035,6 +1030,7 @@ body {
 
             .card-header {
                 height: 65px;
+                text-transform: capitalize;
             }
             
             .db-wg-spinner, .card-data {

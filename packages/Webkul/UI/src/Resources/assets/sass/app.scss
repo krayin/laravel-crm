@@ -124,7 +124,8 @@ h5 {
     }
 
     &.btn-sm {
-        padding: 6px 12px;
+        max-height: 40px;
+        padding: 7px 12px;
         font-size: $font-size-sm;
     }
 
@@ -322,6 +323,7 @@ h5 {
             right: 25px;
             width: 350px;
             padding: 10px;
+            margin-top: 8px;
             position: absolute;
             background-color: $white;
             border: 1px solid $border-color;
@@ -673,21 +675,27 @@ h5 {
         }
     }
 
-    .tabs-left-container {
-        float: left;
-    }
+    .tabs-container {
+        display: grid;
+        margin: 20px 0;
+        align-items: center;
+        grid-template-columns: auto auto;
 
-    .tabs-right-container {
-        float: right;
+        .tabs-right-container {
+            text-align: right;
+    
+            section {
+                display: inline-block;
+            }
+    
+            .covered {
+                border: 1px solid;
+                padding: 7px ​10px;
+            }
 
-        section {
-            display: inline-block;
-            margin: 13px 5px 13px 0;
-        }
-
-        .covered {
-            border: 1px solid;
-            padding: 7px ​10px;
+            .group {
+                vertical-align: top;
+            }
         }
     }
 
@@ -726,7 +734,7 @@ h5 {
 
         &.previous,
         &.next {
-            padding: 7px 9px 8px 9px;
+            padding: 5px 9px 5px 9px;
         }
 
         &.previous {
@@ -753,6 +761,7 @@ h5 {
     }
     
     &.tab-view {
+        height: 34px;
         margin-top: 0;
 
         .previous {
@@ -792,8 +801,9 @@ h5 {
 
         &.required::after {
             content: "*";
-            color: $danger-color;
             font-weight: 700;
+            padding-left: 4px;
+            color: $danger-color;
             display: inline-block;
         }
     }
@@ -1235,13 +1245,11 @@ h5 {
 }
 
 .pill {
+    height: 34px;
     display: inline-block;
 
     .tabs {
         ul {
-            margin-top: 15px;
-            margin-bottom: 15px;
-
             li {
                 font-size: $font-size-md;
 
@@ -1252,7 +1260,7 @@ h5 {
                 }
 
                 a {
-                    padding: 5px 15px;
+                    padding: 6px 15px;
                 }
 
                 &.active {
@@ -1269,12 +1277,11 @@ h5 {
 }
 
 .group {
+    height: 34px;
     display: inline-block;
 
     .tabs {
         ul {
-            margin-bottom: 15px;
-
             li {
                 font-size: $font-size-md;
                 border: 1px solid $border-color;
@@ -1404,22 +1411,29 @@ modal {
 
     .modal-header {
         z-index: 10;
+        display: grid;
         width: inherit;
-        display: table;
         position: relative;
-        background: white;
-        padding: 20px;
+        background: $white;
+        align-items: center;
+        padding: 20px 20px 10px 20px;
+        grid-template-columns: auto auto;
         border-bottom: 1px solid $border-color;
 
         h3 {
+            margin: 0;
             display: table-cell;
             vertical-align: middle;
-            margin: 0;
             font-weight: $font-weight-medium;
         }
 
+        h2 {
+            margin: 0;
+            display: inline-block;
+        }
+
         .header-actions {
-            float: right;
+            text-align: right;
 
             .icon {
                 cursor: pointer;

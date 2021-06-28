@@ -104,8 +104,8 @@
             </template>
         </div>
 
-        <!-- filters section -->
-        <template>
+        <!-- tabs section -->
+        <div class="tabs-container">
             <tabs
                 event-value-key="value"
                 event-key="updateFilter"
@@ -163,7 +163,7 @@
                     </button>
                 </div>
             </div>
-        </template>
+        </div>
     </div>
 </template>
 
