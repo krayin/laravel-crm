@@ -63,6 +63,10 @@ class EmailController extends Controller
      */
     public function index()
     {
+        if (! request('route')) {
+            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
+        }
+
         switch (request('route')) {
             case 'compose':
                 return view('admin::mail.compose');
