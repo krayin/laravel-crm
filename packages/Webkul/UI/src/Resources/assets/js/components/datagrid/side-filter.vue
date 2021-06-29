@@ -175,9 +175,7 @@
             },
 
             removeAll: function () {
-                const filters = [ ...this.$store.state.filters.filter(filter => filter.column == 'type' && filter.val == 'table') ];
-
-                this.$store.state.filters = filters;
+                this.$store.state.filters = this.$store.state.filters.filter(filter => filter.column == 'type' && filter.val == 'table');
 
                 (this.columns || this.tableData.columns).forEach((column, index) => {
                     if (column.filterable_type && column.filterable_type == 'date_range') {
