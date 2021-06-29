@@ -10,6 +10,8 @@
                             :key="Math.random()"
                             @change="selectAllRows(false)"
                         />
+                        
+                        <label class="checkbox-view" for="checkbox"></label>
                     </template>
 
                     <template v-else>
@@ -18,9 +20,9 @@
                             :key="Math.random()"
                             @change="selectAllRows(true)"
                         />
-                    </template>
 
-                    <label class="checkbox-view" for="checkbox"></label>
+                        <label :class="`checkbox-${selectedTableRows.length > 0 ? 'dash' : 'view'}`" for="checkbox"></label>
+                    </template>
                 </span>
             </th>
 
@@ -54,6 +56,7 @@
                 tableData : state => state.tableData,
                 filters : state => state.filters,
                 allSelected : state => state.allSelected,
+                selectedTableRows : state => state.selectedTableRows,
             }),
 
             columns: function () {

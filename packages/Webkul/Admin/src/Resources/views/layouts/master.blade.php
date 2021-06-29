@@ -28,6 +28,7 @@
         @yield('head')
 
         @yield('css')
+        @stack('css')
 
         {!! view_render_event('admin.layout.head') !!}
 

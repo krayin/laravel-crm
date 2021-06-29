@@ -31,9 +31,6 @@ class CreateEmailsTable extends Migration
             $table->string('message_id')->unique();
             $table->json('reference_ids')->nullable();
 
-            $table->integer('user_id')->unsigned()->nullable();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
-
             $table->integer('person_id')->unsigned()->nullable();
             $table->foreign('person_id')->references('id')->on('persons')->onDelete('set null');
 

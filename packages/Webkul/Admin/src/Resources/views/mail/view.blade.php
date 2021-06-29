@@ -4,11 +4,27 @@
     {{ $email->subject }}
 @stop
 
+@section('css')
+    <style>
+        .lead-form .modal-container .modal-header {
+            border: 0;
+        }
+
+        .lead-form .modal-container .modal-body {
+            padding: 0;
+        }
+    </style>
+@stop
+
 @section('content-wrapper')
 
     @php
         if (! $email->lead) {
             $email->lead = app('\Webkul\Lead\Repositories\LeadRepository')->getModel()->fill(['title' => $email->subject]);
+        }
+
+        if (! $email->person) {
+            $email->person = app('\Webkul\Contact\Repositories\PersonRepository')->getModel()->fill(['emails' => [['value' => $email->from, 'label' => 'work']], 'name' => $email->name]);
         }
     @endphp
 
@@ -20,17 +36,93 @@
 
             <div class="page-action">
 
-                {{-- <email-action-component></email-action-component> --}}
+                <email-action-component></email-action-component>
 
             </div>
         </div>
 
-        <div class="page-content" style="margin-top: 30px;">
+        <div class="page-content" style="margin-top: 30px; padding-bottom: 30px;">
 
             <email-list-component></email-list-component>
 
         </div>
     </div>
+
+    <form action="{{ route('admin.contacts.persons.store') }}" data-vv-scope="person-form" method="post" @submit.prevent="onSubmit($event, 'person-form')">
+        <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
+            <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>
+            
+            <div slot="header-actions">
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">{{ __('admin::app.contacts.persons.cancel') }}</button>
+
+                <button class="btn btn-sm btn-primary">{{ __('admin::app.contacts.persons.save-btn-title') }}</button>
+            </div>
+
+            <div slot="body">
+                @csrf()
+                
+                <input type="hidden" name="email_id" value="{{ $email->id }}" />
+                
+                <input type="hidden" name="quick_add" value="1"/>
+
+                @include('admin::common.custom-attributes.edit', [
+                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        'entity_type' => 'persons',
+                        'quick_add'   => 1
+                    ]),
+                    'entity'           => $email->person,
+                    'formScope'        => 'person-form.',
+                ])
+            </div>
+        </modal>
+    </form>
+
+    <form action="{{ route('admin.leads.store') }}" data-vv-scope="lead-form" method="post" @submit.prevent="onSubmit($event, 'lead-form')" class="lead-form">
+        <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
+            <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
+            
+            <div slot="header-actions">
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
+
+                <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+            </div>
+
+            <div slot="body" style="padding: 0">
+                @csrf()
+                
+                <input type="hidden" name="email_id" value="{{ $email->id }}" />
+
+                <input type="hidden" name="quick_add" value="1" />
+
+                <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="1" />
+
+                <tabs>
+                    <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
+                        @include('admin::common.custom-attributes.edit', [
+                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'leads',
+                                'quick_add'   => 1
+                            ]),
+                            'formScope'        => 'lead-form.',
+                            'entity'           => $email->lead,
+                        ])
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.contact-person') }}">
+                        @include('admin::leads.common.contact', ['formScope' => 'lead-form.'])
+
+                        <contact-component></contact-component>
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.products') }}">
+                        @include('admin::leads.common.products', ['formScope' => 'lead-form.'])
+
+                        <product-list></product-list>
+                    </tab>
+                </tabs>
+            </div>
+        </modal>
+    </form>
 @stop
 
 @push('scripts')
@@ -40,14 +132,14 @@
     <script type="text/x-template" id="email-action-component-template">
         <div class="email-action-container">
             <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
-                <i class="icon attachment-icon"></i>
-                <span>Link Mail</span>
+                <i class="icon link-icon"></i>
+                <span>{{ __('admin::app.mail.link-mail') }}</span>
             </button>
 
             <div class="sidebar-filter" :class="{show: show_filter}">
                 <header>
                     <h1>
-                        <span>Link Mail</span>
+                        <span>{{ __('admin::app.mail.link-mail') }}</span>
 
                         <div class="float-right">
                             <i class="icon close-icon" @click="show_filter = ! show_filter"></i>
@@ -56,32 +148,107 @@
                 </header>
 
                 <div class="email-action-content">
-                    <div class="panel link-person">
-                        <h3>Link Contact</h3>
+                    <div class="panel">
+                        <div class="link-lead" v-if="! email.person_id">
+                            <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.contact" @click="enabled_search.contact = true">Add To Existing Contact</button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.person" @click="enabled_search.person = true">{{ __('admin::app.mail.add-to-existing-contact') }}</button>
 
-                            <div class="form-group" v-else>
-                                <input class="control" placeholder="Search a contact"/>
-                                <i class="icon close-icon" @click="enabled_search.contact = false"></i>
+                                <div class="form-group" v-else>
+                                    <input class="control" v-model="search_term.person" v-on:keyup="search('person')" placeholder="{{ __('admin::app.mail.search-contact') }}"/>
+
+                                    <div class="lookup-results" v-if="search_term.person.length">
+                                        <ul>
+                                            <li v-for='(result, index) in search_results.person' @click="link('person', result)">
+                                                <span>@{{ result.name }}</span>
+                                            </li>
+                
+                                            <li v-if='! search_results.person.length && search_term.person.length && ! is_searching.person'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <i class="icon close-icon"  v-if="! is_searching.person" @click="enabled_search.person = false; reset('person')"></i>
+
+                                    <i class="icon loader-active-icon" v-if="is_searching.person"></i>
+                                </div>
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">{{ __('admin::app.mail.create-new-contact') }}</button>
                             </div>
-                            <button class="btn btn-sm btn-primary">Add New Contact</button>
+                        </div>
+
+                        <div v-else>
+                            <div class="panel-header">
+                                {{ __('admin::app.mail.linked-contact') }}
+
+                                <span class="links">
+                                    <a :href="'{{ route('admin.contacts.persons.edit') }}/' + email.person_id" target="_blank">
+                                        <i class="icon external-link-icon"></i>
+                                    </a>
+
+                                    <i class="icon close-icon" @click="unlink('person')"></i>
+                                </span>
+                            </div>
+
+                            <div class="contact-details">
+                                <div class="name">@{{ email.person.name }}</div>
+                                <div class="email">
+                                    <i class="icon emails-icon"></i>
+                                    @{{ email.person.name }}
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="panel link-lead">
-                        <h3>Link Lead</h3>
+                    <div class="panel">
+                        <div class="link-lead" v-if="! email.lead_id">
+                            <h3>{{ __('admin::app.mail.link-lead') }}</h3>
 
-                        <div class="btn-group">
-                            <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">Link To Existing</button>
+                            <div class="btn-group">
+                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">{{ __('admin::app.mail.link-to-existing-lead') }}</button>
 
-                            <div class="form-group" v-else>
-                                <input class="control" placeholder="Search for lead"/>
-                                <i class="icon close-icon" @click="enabled_search.lead = false"></i>
+                                <div class="form-group" v-else>
+                                    <input class="control" v-model="search_term.lead" v-on:keyup="search('lead')" placeholder="{{ __('admin::app.mail.search-lead') }}"/>
+
+                                    <div class="lookup-results" v-if="search_term.lead.length">
+                                        <ul>
+                                            <li v-for='(result, index) in search_results.lead' @click="link('lead', result)">
+                                                <span>@{{ result.title }}</span>
+                                            </li>
+                
+                                            <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <i class="icon close-icon"  v-if="! is_searching.lead" @click="enabled_search.lead = false; reset('lead')"></i>
+
+                                    <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
+                                </div>
+
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">{{ __('admin::app.mail.add-new-lead') }}</button>
+                            </div>
+                        </div>
+
+                        <div v-else>
+                            <div class="panel-header">
+                                {{ __('admin::app.mail.linked-lead') }}
+
+                                <span class="links">
+                                    <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
+                                        <i class="icon external-link-icon"></i>
+                                    </a>
+
+                                    <i class="icon close-icon" @click="unlink('lead')"></i>
+                                </span>
                             </div>
 
-                            <button class="btn btn-sm btn-primary">Add New Lead</button>
+                            <div class="panel-body">
+                                <div class="custom-attribute-view" v-html="html">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -223,7 +390,7 @@
     </script>
 
     <script type="text/x-template" id="email-form-template">
-        <form method="POST" action="{{ route('admin.mail.store') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.mail.store') }}" data-vv-scope="email-form" enctype="multipart/form-data" @submit.prevent="$root.onSubmit($event, 'email-form')">
 
             <div class="form-container">
 
@@ -236,34 +403,39 @@
 
                         @include ('admin::common.custom-attributes.edit.email-tags')
 
-                        <div class="form-group" :class="[errors.has('reply_to[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
-                            <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
+                            <email-tags-component control-name="email-form.reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('reply_to[]')">@{{ errors.first('reply_to[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
+
+                            <div class="email-address-options">
+                                <label @click="show_cc = ! show_cc">{{ __('admin::app.leads.cc') }}</label>
+                                <label @click="show_bcc = ! show_bcc">{{ __('admin::app.leads.bcc') }}</label>
+                            </div>
                         </div>
     
-                        <div class="form-group" :class="[errors.has('cc[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']" v-if="show_cc">
                             <label for="cc">{{ __('admin::app.leads.cc') }}</label>
     
                             <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='cc'></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('cc[]')">@{{ errors.first('cc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.cc[]')">@{{ errors.first('email-form.cc[]') }}</span>
                         </div>
     
-                        <div class="form-group" :class="[errors.has('bcc[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']" v-if="show_bcc">
                             <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
     
                             <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='bcc'></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('bcc[]')">@{{ errors.first('bcc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.bcc[]')">@{{ errors.first('email-form.bcc[]') }}</span>
                         </div>
                         
-                        <div class="form-group" :class="[errors.has('reply') ? 'has-error' : '']">
+                        <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
                             <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
                             <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;">@{{ reply }}</textarea>
-                            <span class="control-error" v-if="errors.has('reply')">@{{ errors.first('reply') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.reply')">@{{ errors.first('email-form.reply') }}</span>
                         </div>
     
                         <div class="form-group">
@@ -288,6 +460,17 @@
     </script>
 
     <script>
+        @php
+            $html = $email->lead_id
+                ? view('admin::common.custom-attributes.view', [
+                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'entity_type' => 'leads',
+                        ]),
+                        'entity'       => $email->lead,
+                    ])->render() 
+                : '';
+        @endphp
+
         Vue.component('email-action-component', {
 
             template: '#email-action-component-template',
@@ -296,18 +479,120 @@
 
             data: function () {
                 return {
-                    show_filter: true,
+                    email: @json($email->getAttributes()),
+
+                    show_filter: false,
+
+                    html: `{!! $html !!}`,
+
+                    is_searching: {
+                        person: false,
+
+                        lead: false
+                    },
+
+                    search_term: {
+                        person: '',
+
+                        lead: '',
+                    },
+
+                    search_routes: {
+                        person: "{{ route('admin.contacts.persons.search') }}",
+
+                        lead: "{{ route('admin.leads.search') }}",
+                    },
+
+                    search_results: {
+                        person: [],
+
+                        lead: [],
+                    },
 
                     enabled_search: {
-                        contact: false,
+                        person: false,
 
                         lead: false,
                     }
                 }
             },
 
-            methods: {
+            created: function() {
+                @if ($email->person)
+                    this.email.person = @json($email->person);
+                @endif
+            },
 
+            methods: {
+                search: debounce(function (type) {
+                    this.is_searching[type] = true;
+
+                    if (this.search_term[type].length < 2) {
+                        this.search_results[type] = [];
+
+                        this.is_searching[type] = false;
+
+                        return;
+                    }
+
+                    this.$http.get(this.search_routes[type], {params: {query: this.search_term[type]}})
+                        .then (response => {
+                            this.search_results[type] = response.data;
+
+                            this.is_searching[type] = false;
+                        })
+                        .catch (error => {
+                            this.is_searching[type] = false;
+                        })
+                }, 500),
+
+                link: function(type, entity) {
+                    var self = this;
+
+                    var data = (type == 'person') ? {'person_id': entity.id} : {'lead_id': entity.id};
+
+                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
+                        .then (response => {
+                            self.email[type] = entity;
+
+                            if (type == 'lead') {
+                                self.html = response.data.html;
+                            }
+
+                            self.email[type + '_id'] = entity.id;
+
+                            self.reset(type);
+
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (error => {})
+                },
+
+                unlink: function(type) {
+                    var self = this;
+
+                    var data = (type == 'person') ? {'person_id': null} : {'lead_id': null};
+
+                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
+                        .then (response => {
+                            self.email[type] = self.email[type + '_id'] = null;
+
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (error => {})
+                },
+
+                reset: function(type) {
+                    this.search_term[type] = '';
+
+                    this.search_results[type] = [];
+
+                    this.is_searching[type] = false;
+                }
             }
         });
 
@@ -397,7 +682,9 @@
 
             data: function () {
                 return {
+                    show_cc: false,
 
+                    show_bcc: false,
                 }
             },
 
@@ -449,14 +736,6 @@
             },
 
             methods: {
-                onSubmit: function(e) {
-                    this.$validator.validateAll().then(function (result) {
-                        if (result) {
-                            e.target.submit();
-                        }
-                    });
-                },
-
                 discard: function() {
                     this.$emit('onDiscard');
                 }

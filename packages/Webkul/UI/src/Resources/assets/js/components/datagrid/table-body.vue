@@ -4,6 +4,7 @@
             <tr
                 :key="collectionIndex"
                 v-for="(row, collectionIndex) in dataCollection"
+                :class="`${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`"
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
@@ -31,7 +32,7 @@
                 </td>
 
                 <template v-for="(column, rowIndex) in columns">
-                    <td :key="rowIndex" v-html="row[column.index]" :class="[column.class ? column.class : column.index ]"></td>
+                    <td :key="rowIndex" v-html="row[column.index] || '--'" :class="[column.class ? column.class : column.index ]"></td>
                 </template>
 
                 <td v-if="row['action']" class="action">

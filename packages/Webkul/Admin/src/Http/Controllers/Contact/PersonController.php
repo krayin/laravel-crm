@@ -52,7 +52,7 @@ class PersonController extends Controller
 
         $person = $this->personRepository->create(request()->all());
 
-        Event::dispatch('contacts.person.create.after', 1);
+        Event::dispatch('contacts.person.create.after', $person);
         
         session()->flash('success', trans('admin::app.contacts.persons.create-success'));
 

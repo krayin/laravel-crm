@@ -3,8 +3,10 @@
 
         <!-- searchbox and filters section -->
         <div class="datagrid-filters" id="datagrid-filters">
-            <div class="filter-left">
+            <div>
                 <div class="search-filter form-group" v-if="tableData.enableSearch">
+                    <i class="icon search-icon input-search-icon"></i>
+
                     <input
                         type="search"
                         class="control"
@@ -13,6 +15,29 @@
                         :placeholder="__('ui.datagrid.search')"
                         @keyup="searchCollection(searchValue)"
                     />
+                </div>
+
+                <!-- mass actions section -->
+                <div class="mass-actions form-group" v-if="selectedTableRows.length > 0">
+                    <select name="mass_action" class="control" v-model="massActionValue" v-validate="'required'">
+                        <option value="NA" disbaled="disbaled">{{ __('ui.datagrid.massaction.select_action') }}</option>
+
+                        <option :value="massAction" :key="index" v-for="(massAction, index) in tableData.massactions">
+                            {{ massAction.label }}
+                        </option>
+                    </select>
+
+                    <select class="control" v-model="massActionOptionValue" name="update-options" v-validate="'required'" v-if="massActionValue.type == 'update'">
+                        <option value="NA" disbaled="disbaled">{{ __('ui.datagrid.massaction.select_action') }}</option>
+
+                        <option :key="key" v-for="(option, key) in massActionValue.options" :value="option">
+                            {{ key }}
+                        </option>
+                    </select>
+
+                    <button type="button" class="btn btn-sm btn-primary" @click="onSubmit">
+                        {{ __('ui.datagrid.submit') }}
+                    </button>
                 </div>
             </div>
 
@@ -39,7 +64,17 @@
                     </div>
                 </div>
 
-                <div class="filter-btn" v-if="tableData.enableFilters">
+                <div class="switch-icons-container" v-if="switchPageUrl">
+                    <a class="icon-container" :href="switchPageUrl">
+                        <i class="icon layout-column-line-icon"></i>
+                    </a>
+
+                    <a class="icon-container active">
+                        <i class="icon table-line-active-icon"></i>
+                    </a>
+                </div>
+
+                <div class="filter-btn" v-if="tableData.enableFilters" style="display: inline-block">
                     <div class="grid-dropdown-header" @click="toggleSidebarFilter">
                         <span class="name">
                             {{ __('ui.datagrid.filter.title') }}
@@ -62,15 +97,15 @@
                     <span v-text="filter.prettyColumn || filter.column"></span>
 
                     <span class="wrapper">
-                        {{ filter.prettyValue ? filter.prettyValue : decodeURIComponent(filter.val) }}
+                        {{ filter.prettyValue || decodeURIComponent(filter.val) }}
                         <i class="icon close-icon" @click="removeFilter(filter)"></i>
                     </span>
                 </div>
             </template>
         </div>
 
-        <!-- filters section -->
-        <template>
+        <!-- tabs section -->
+        <div class="tabs-container" v-if="tabs">
             <tabs
                 event-value-key="value"
                 event-key="updateFilter"
@@ -79,6 +114,8 @@
                 :class="`${tableData.tabFilters[0].type} tabs-left-container`"
                 :event-data="{key: tableData.tabFilters[0].key, 'cond' : tableData.tabFilters[0].condition}"
             ></tabs>
+            
+            <div v-else></div>
 
             <div class="tabs-right-container">
                 <section>
@@ -128,25 +165,6 @@
                     </button>
                 </div>
             </div>
-        </template>
-
-        <!-- mass actions section -->
-        <div class="mass-actions form-group" v-if="selectedTableRows.length > 0">
-            <select name="mass_action" class="control" v-model="massActionValue" v-validate="'required'">
-                <option :value="massAction" :key="index" v-for="(massAction, index) in tableData.massactions">
-                    {{ massAction.label }}
-                </option>
-            </select>
-
-            <select class="control" v-model="massActionOptionValue" name="update-options" v-validate="'required'" v-if="massActionValue.type == 'update'">
-                <option :key="key" v-for="(option, key) in massActionValue.options" :value="option">
-                    {{ key }}
-                </option>
-            </select>
-
-            <button type="button" class="btn btn-sm btn-primary" @click="onSubmit">
-                {{ __('ui.datagrid.submit') }}
-            </button>
         </div>
     </div>
 </template>
@@ -155,6 +173,8 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
+        props: ['switchPageUrl', 'tabs'],
+
         data: function () {
             return {
                 type: null,
@@ -166,13 +186,13 @@
                 sortDesc: 'desc',
                 stringValue: null,
                 booleanValue: null,
-                massActionValue: {},
+                massActionValue: 'NA',
                 sidebarFilter: false,
                 stringCondition: null,
                 numberCondition: null,
                 booleanCondition: null,
                 datetimeCondition: null,
-                massActionOptionValue: null,
+                massActionOptionValue: 'NA',
                 custom_filter: [null, null],
                 url: new URL(window.location.href),
                 ignoreDisplayFilter: ['duration', 'type'],
@@ -204,12 +224,20 @@
                 if (duration) {
                     duration = duration.val.split(",");
 
-                    this.custom_filter = duration;
+                    var timestamp = Date.parse(duration[0]);
+
+                    if (isNaN(timestamp) == false) {
+                        this.custom_filter = duration;
+                    }
                 }
             },
 
             '$store.state.filters': function (newValue, oldValue) {
                 this.filters = newValue;
+
+                if (this.filters.length == 0) {
+                    this.custom_filter = [null, null];
+                }
 
                 this.makeURL();
             }
@@ -300,8 +328,8 @@
                     || response === null
                 ) {
                     this.updateFilter({
-                        key: column,
-                        value: ""
+                        key     : column,
+                        value   : ""
                     });
 
                     return false;
@@ -451,11 +479,21 @@
                         case "search":
                             obj.label = "Search";
                             break;
+                            
                         case "sort":
                             obj.prettyValue = `${obj.cond.replaceAll("_", " ")} - ${obj.val}`;
                             break;
+
                         default:
                             break;
+                    }
+
+                    if (obj.cond == 'bw') {
+                        var timestamp = Date.parse(obj.val.split(",")[0]);
+
+                        if (isNaN(timestamp) == false) {
+                            obj.prettyValue = `${obj.val.replaceAll(",", " - ")}`;
+                        }
                     }
 
                     if (obj.column !== undefined && obj.val !== undefined) {
@@ -497,6 +535,14 @@
 
                     if (key == "sort") {
                         data.prettyValue = `${data.cond.replaceAll("_", " ")} - ${data.val}`;
+                    } else {
+                        if (data.cond == 'bw') {
+                            var timestamp = Date.parse(data.val.split(",")[0]);
+
+                            if (isNaN(timestamp) == false) {
+                                data.prettyValue = `${data.val.replaceAll(",", " - ")}`;
+                            }
+                        }
                     }
 
                     this.filters.push(data);
@@ -559,8 +605,8 @@
 
                                     this.selectAllRows(false);
 
-                                    this.massActionValue = {};
-                                    this.massActionOptionValue = null;
+                                    this.massActionValue = 'NA';
+                                    this.massActionOptionValue = 'NA';
 
                                     this.toggleButtonDisable(false);
 

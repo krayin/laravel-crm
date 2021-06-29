@@ -114,50 +114,58 @@
                     </div>
     
                     <div class="panel-body" style="position: relative">
-                        <div class="lead-product-list">
+                        @if ($lead->products->count())
+                            <div class="lead-product-list">
 
-                            @foreach ($lead->products as $product)
+                                @foreach ($lead->products as $product)
+                                    
+                                    <div class="lead-product">
+                                        <div class="top-control-group">
+                                            <div class="form-group">
+                                                <label>{{ __('admin::app.leads.item') }}</label>
+                            
+                                                <div class="control-faker">
+                                                    {{ $product->name }}
+                                                </div>
+                                            </div>
+                                        </div>
+                            
+                                        <div class="bottom-control-group" style="padding-right: 0;">
+                                            <div class="form-group">
+                                                <label>{{ __('admin::app.leads.price') }}</label>
+                            
+                                                <div class="control-faker">
+                                                    {{ $product->price }}
+                                                </div>
+                                            </div>
+                            
+                                            <div class="form-group">
+                                                <label>{{ __('admin::app.leads.quantity') }}</label>
+                            
+                                                <div class="control-faker">
+                                                    {{ $product->quantity }}
+                                                </div>
+                                            </div>
+                            
+                                            <div class="form-group">
+                                                <label>{{ __('admin::app.leads.amount') }}</label>
+                            
+                                                <div class="control-faker">
+                                                    {{ $product->price * $product->quantity }}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
+                            </div>
+                        @else
+                            <div class="empty-record">
+                                <img src="http://localhost/laravel/bagisto-crm/public/vendor/webkul/admin/assets/images/empty-table-icon.svg">
                                 
-                                <div class="lead-product">
-                                    <div class="top-control-group">
-                                        <div class="form-group">
-                                            <label>{{ __('admin::app.leads.item') }}</label>
-                        
-                                            <div class="control-faker">
-                                                {{ $product->name }}
-                                            </div>
-                                        </div>
-                                    </div>
-                        
-                                    <div class="bottom-control-group" style="padding-right: 0;">
-                                        <div class="form-group">
-                                            <label>{{ __('admin::app.leads.price') }}</label>
-                        
-                                            <div class="control-faker">
-                                                {{ $product->price }}
-                                            </div>
-                                        </div>
-                        
-                                        <div class="form-group">
-                                            <label>{{ __('admin::app.leads.quantity') }}</label>
-                        
-                                            <div class="control-faker">
-                                                {{ $product->quantity }}
-                                            </div>
-                                        </div>
-                        
-                                        <div class="form-group">
-                                            <label>{{ __('admin::app.leads.amount') }}</label>
-                        
-                                            <div class="control-faker">
-                                                {{ $product->price * $product->quantity }}
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                        </div>
+                                <span>{{ __('admin::app.common.no-records-found') }}</span>
+                            </div>
+                        @endif
                     </div>
                 </div>
             </div>
@@ -436,15 +444,20 @@
 
                     @include ('admin::common.custom-attributes.edit.email-tags')
 
-                    <div class="form-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
+                    <div class="form-group email-control-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                         <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
 
                         <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'"></email-tags-component>
 
                         <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
+
+                        <div class="email-address-options">
+                            <label @click="show_cc = ! show_cc">{{ __('admin::app.leads.cc') }}</label>
+                            <label @click="show_bcc = ! show_bcc">{{ __('admin::app.leads.bcc') }}</label>
+                        </div>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']">
+                    <div class="form-group email-control-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']" v-if="show_cc">
                         <label for="cc">{{ __('admin::app.leads.cc') }}</label>
 
                         <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}"></email-tags-component>
@@ -452,7 +465,7 @@
                         <span class="control-error" v-if="errors.has('email-form.cc[]')">@{{ errors.first('email-form.cc[]') }}</span>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']">
+                    <div class="form-group email-control-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']" v-if="show_bcc">
                         <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
 
                         <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}"></email-tags-component>
@@ -773,6 +786,14 @@
             props: ['data'],
 
             inject: ['$validator'],
+
+            data: function () {
+                return {
+                    show_cc: false,
+
+                    show_bcc: false,
+                }
+            },
 
             mounted: function() {
                 tinymce.init({

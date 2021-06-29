@@ -11,7 +11,7 @@
 
         <script type="text/x-template" id="email-component-template">
             <div class="emails-control">
-                <div class="form-group input-group" v-for="(email, index) in emails" :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
+                <div class="form-group input-group" v-for="(email, index) in emails" :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
                     <input type="text" v-validate="validations" class="control" :name="attribute['code'] + '[' + index + '][value]'" v-model="email['value']" :data-vv-as="attribute['name']">
 
                     <div class="input-group-append">
@@ -23,12 +23,12 @@
 
                     <i class="icon trash-icon" @click="removeEmail(email)"></i>
 
-                    <span class="control-error" v-if="errors.has(attribute['code'] + '[' + index + '][value]')">
-                        @{{ errors.first(attribute['code'] + '[' + index + '][value]') }}
+                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
+                        @{{ errors.first('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') }}
                     </span>
                 </div>
 
-                <a href @click.prevent="addEmail">+ add more</a>
+                <a class="add-more-link" href @click.prevent="addEmail">+ {{ __('admin::app.common.add_more') }}</a>
             </div>
         </script>
 

@@ -1,7 +1,7 @@
 <?php
 
 Route::group(['middleware' => ['web']], function () {
-    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
+    Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin')->name('krayin.home');
     
     Route::prefix(config('app.admin_path'))->group(function () {
 
@@ -70,7 +70,7 @@ Route::group(['middleware' => ['web']], function () {
     
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
 
-                Route::get('view/{id}', 'LeadController@view')->name('admin.leads.view');
+                Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');
     
                 Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
 
@@ -81,6 +81,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
 
                 Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
+
+                Route::get('search', 'LeadController@search')->name('admin.leads.search');
 
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
@@ -136,7 +138,7 @@ Route::group(['middleware' => ['web']], function () {
     
                     Route::post('create', 'PersonController@store')->name('admin.contacts.persons.store');
     
-                    Route::get('edit/{id}', 'PersonController@edit')->name('admin.contacts.persons.edit');
+                    Route::get('edit/{id?}', 'PersonController@edit')->name('admin.contacts.persons.edit');
     
                     Route::put('edit/{id}', 'PersonController@update')->name('admin.contacts.persons.update');
 

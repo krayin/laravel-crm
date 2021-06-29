@@ -124,7 +124,8 @@ h5 {
     }
 
     &.btn-sm {
-        padding: 6px 12px;
+        height: 40px;
+        padding: 7px 12px;
         font-size: $font-size-sm;
     }
 
@@ -296,37 +297,21 @@ h5 {
 
     .table-header {
         margin-bottom: 20px;
+        @include display-grid(repeat(2, auto));
+
+        h1 {
+            margin-bottom: 0;
+            display: inline-block;
+        }
 
         .table-action {
-            display: block;
+            // display: block;
+            text-align: right;
 
-            .icon-container {
-                padding: 7px 10px 10px 10px;
-                cursor: pointer;
-                display: inline-block;
-                border: 1px solid $border-color;
-
-                &:first-child {
-                    left: 5px;
-                    position: relative;
-                    border-radius: 3px 0px 0px 3px;
-                }
-
-                &:last-child {
-                    border-radius: 0px 3px 3px 0px;
-                }
-
-                &.active {
-                    cursor: not-allowed;
-                    border-color: $secondary-color;
-                    background-color: $secondary-color;
-                }
-
-                .icon {
-                    vertical-align: middle;
-                    width: 24px;
-                    height: 22px;
-                }
+            button {
+                max-height: 40px;
+                padding: 8px 14px;
+                max-height: 40px;
             }
         }
     }
@@ -336,23 +321,23 @@ h5 {
             right: 25px;
             width: 350px;
             padding: 10px;
+            margin-top: 8px;
             position: absolute;
             background-color: $white;
             border: 1px solid $border-color;
 
             .form-group {
                 margin: 20px 0;
+                grid-gap: 5px;
+                text-align: center;
+                @include display-grid(140px auto 140px);
 
-                .middle-text {
-                    margin: 0 5px;
-                }
-    
                 &.date {
                     .date-container {
                         display: inline-block;
-    
-                        .half {
-                            width: 140px;
+
+                        .control {
+                            margin: 0;
                         }
                     }
                 }
@@ -443,11 +428,18 @@ h5 {
 
         tbody {
             tr {
+                border-bottom: 1px solid rgba(193, 194, 195, 0.5);
+
+                &.active {
+                    border-bottom: none;
+                    background-color: $table-active-cell-color;
+                }
+
                 td {
                     border-right: 0px;
                     color: $dark-color;
+                    border-bottom: none;
                     background-color: rgba(255,255,255,.5);
-                    border-bottom: 1px solid rgba(193,194,195,.5);
 
                     &.empty {
                         text-align: center;
@@ -506,41 +498,14 @@ h5 {
             width: 100%;
         }
 
-        &.post-heading {
-            height: 36px;
-            float: right;
-            width: max-content;
+        &.datagrid-filters {
+            margin-bottom: 20px;
             
             input[type=search].control {
+                margin: 0px;
                 width: 280px;
-                height: 100%;
+                height: 40px;
                 font-size: 15px;
-                margin-top: 0px;
-            }
-
-            .filter-btn {
-                cursor: pointer;
-                vertical-align: top;
-                display: inline-block;
-
-                .grid-dropdown-header {
-                    width: 105px;
-                    height: 36px;
-                    border-radius: 3px;
-                    align-items: center;
-                    display: inline-flex;
-                    padding: 0px 7px 0px 10px;
-                    background-color: $white;
-                    color: $secondary-font-color;
-                    justify-content: space-between;
-                    font-weight: $font-weight-medium;
-                    border: 2px solid $secondary-font-color;
-                    vertical-align: middle;
-                
-                    .arrow-icon-down {
-                        float: right;
-                    }
-                }
             }
         }
     }
@@ -575,36 +540,57 @@ h5 {
     }
 
     .filtered-tags {
-        width: 80%;
+        margin: 20px 0 0 0;
 
         .filter-tag {
-            display: inline-block;
-            margin: 15px 20px 15px 0;
+            grid-gap: 5px;
+            margin-right: 20px;
+            width: max-content;
             text-transform: capitalize;
+            @include display-grid(repeat(2, auto));
+            display: inline-grid;
     
             .wrapper {
-                margin-left: 10px;
-                padding: 5px 10px 5px 10px;
-                align-items: center;
-                background: #E7E7E7;
                 font-size: 14px;
-                height: 40px;
+                grid-gap: 10px;
                 color: #000311;
-                letter-spacing: -0.22px;
+                line-height: 40px;
+                padding: 0px 10px;
+                background: #E7E7E7;
                 @include border-radius(2px);
-        
+                @include display-grid(auto 20px);
+                display: inline-grid;
+                
                 .icon.close-icon {
-                    margin-left: 10px;
+                    top: -2px;
                     cursor: pointer;
+                    position: relative;
                 }
             }
         }
     }
 
     .search-filter {
+        margin-right: 6px;
+        position: relative;
+        width: max-content;
+        display: inline-block;
+
+        .input-search-icon {
+            left: 7px;
+            top: 10px;
+            z-index: 10;
+            position: absolute;
+    
+            ~ input[type=search] {
+                padding-left: 30px;
+            }
+        }
+
         .control {
-            height: 36px;
+            margin: 0;
             width: 280px;
+            height: 40px;
             font-size: 15px;
             padding-left: 10px;
             -webkit-appearance: none;
@@ -630,16 +616,10 @@ h5 {
 
     .datagrid-filters {
         width: 100%;
-        align-items: center;
-        display: inline-flex;
-        justify-content: space-between;
-
-        .filter-left {
-            float: left;
-        }
+        @include display-grid(repeat(2, auto));
 
         .filter-right {
-            float: right;
+            text-align: right;
 
             .filter-btn {
                 cursor: pointer;
@@ -647,17 +627,17 @@ h5 {
 
                 .grid-dropdown-header {
                     width: 105px;
-                    height: 36px;
+                    height: 40px;
                     border-radius: 3px;
                     align-items: center;
                     display: inline-flex;
+                    vertical-align: middle;
                     padding: 0px 7px 0px 10px;
                     background-color: $white;
                     color: $secondary-font-color;
                     justify-content: space-between;
                     font-weight: $font-weight-medium;
-                    border: 2px solid $secondary-font-color;
-                    vertical-align: middle;
+                    border: 1px solid $secondary-font-color;
                 
                     .arrow-icon-down {
                         float: right;
@@ -667,24 +647,18 @@ h5 {
         }
 
         .dropdown-filters {
+            margin-right: 6px;
             display: inline-block;
             
             &.per-page {
-                margin-right: 10px;
-                
                 .form-group {
-                    label {
-                        width: auto;
-                        float: left;
-                        margin-top: 5px;
-                        margin-right: 10px;
-                    }
+                    grid-gap: 10px;
+                    @include display-grid(repeat(2, auto));
 
                     .control {
-                        width: auto;
                         margin: 0;
-                        padding: 6px 10px;
-                        border: 1px solid;
+                        height: 40px;
+                        border: 1px solid $gray-color;
                     }
                 }
             }
@@ -699,31 +673,43 @@ h5 {
         }
     }
 
-    .tabs-left-container {
-        float: left;
-    }
+    .tabs-container {
+        margin: 20px 0;
+        @include display-grid(repeat(2, auto));
 
-    .tabs-right-container {
-        float: right;
+        .tabs-right-container {
+            text-align: right;
+    
+            section {
+                display: inline-block;
+            }
+    
+            .covered {
+                border: 1px solid;
+                padding: 7px ​10px;
+            }
 
-        section {
-            display: inline-block;
-            margin: 13px 5px 13px 0;
-        }
-
-        .covered {
-            border: 1px solid;
-            padding: 7px ​10px;
+            .group {
+                vertical-align: top;
+            }
         }
     }
 
     .mass-actions {
-        margin-top: 20px;
-        
+        width: max-content;
+        display: inline-block;
+
         .control {
+            margin: 0;
+            height: 40px;
             width: 140px;
             font-size: 16px;
             padding: 9px 10px;
+        }
+
+        button {
+            height: 40px;
+            vertical-align: middle;
         }
     }
 }
@@ -745,7 +731,7 @@ h5 {
 
         &.previous,
         &.next {
-            padding: 7px 9px 8px 9px;
+            padding: 5px 9px 5px 9px;
         }
 
         &.previous {
@@ -772,6 +758,7 @@ h5 {
     }
     
     &.tab-view {
+        height: 34px;
         margin-top: 0;
 
         .previous {
@@ -811,8 +798,9 @@ h5 {
 
         &.required::after {
             content: "*";
-            color: $danger-color;
             font-weight: 700;
+            padding-left: 4px;
+            color: $danger-color;
             display: inline-block;
         }
     }
@@ -1028,20 +1016,23 @@ h5 {
     display: inline-block;
     margin: 10px 5px 5px 0px;
 
-    .checkbox-view {
-        background-image: url("../images/checkbox-icon.svg");
-        height: 24px;
-        width: 24px;
+    .checkbox-view,
+    .checkbox-dash {
         margin: 0;
-        display: inline-block !important;
-        vertical-align: middle;
+        width: 24px;
+        height: 24px;
         margin-right: 5px;
+        vertical-align: middle;
+        display: inline-block !important;
+        background-image: url("../images/checkbox-icon.svg");
+    }
+
+    .checkbox-dash {
+        background-image: url("../images/checkbox-dash-icon.svg");
     }
 
     input {
         position: absolute;
-        top: 0;
-        left: 0;
         width: 24px;
         height: 24px;
         opacity: 0;
@@ -1233,6 +1224,12 @@ h5 {
                 @include user-select(none);
             }
 
+            &.has-error {
+                a {
+                    color: $danger-color;
+                }
+            }
+
             &.active a {
                 color: $primary-color;
                 box-shadow: inset 0px -2px 0px $primary-color;
@@ -1249,13 +1246,11 @@ h5 {
 }
 
 .pill {
+    height: 34px;
     display: inline-block;
 
     .tabs {
         ul {
-            margin-top: 15px;
-            margin-bottom: 15px;
-
             li {
                 font-size: $font-size-md;
 
@@ -1266,7 +1261,7 @@ h5 {
                 }
 
                 a {
-                    padding: 5px 15px;
+                    padding: 6px 15px;
                 }
 
                 &.active {
@@ -1283,12 +1278,11 @@ h5 {
 }
 
 .group {
+    height: 34px;
     display: inline-block;
 
     .tabs {
         ul {
-            margin-bottom: 15px;
-
             li {
                 font-size: $font-size-md;
                 border: 1px solid $border-color;
@@ -1369,7 +1363,7 @@ accordian,
 
 .panel {
     .panel-header {
-        padding: 8px 0;
+        padding: 16px 0;
         font-size: 18px;
         color: $dark-color;
         color: $secondary-font-color;
@@ -1413,27 +1407,33 @@ modal {
     max-height: 80%;
     z-index: 11;
     overflow-y: auto;
+    overflow-x: hidden;
     animation: jelly 0.5s ease-in-out;
     @include border-radius(8px);
 
     .modal-header {
         z-index: 10;
         width: inherit;
-        display: table;
         position: relative;
-        background: white;
-        padding: 20px;
+        background: $white;
+        padding: 20px 20px 10px 20px;
+        @include display-grid(repeat(2, auto));
         border-bottom: 1px solid $border-color;
 
         h3 {
+            margin: 0;
             display: table-cell;
             vertical-align: middle;
-            margin: 0;
             font-weight: $font-weight-medium;
         }
 
+        h2 {
+            margin: 0;
+            display: inline-block;
+        }
+
         .header-actions {
-            float: right;
+            text-align: right;
 
             .icon {
                 cursor: pointer;
@@ -1445,6 +1445,10 @@ modal {
         // top: 75px;
         padding: 30px;
         position: relative;
+
+        .tabs-content {
+            box-shadow: none;
+        }
     }
 }
 
@@ -1665,10 +1669,10 @@ modal {
     height: 100vh;
     right: -420px;
     position: fixed;
-    padding: 30px 20px;
     overflow-y: scroll;
     display: inline-block;
     background-color: $white;
+    padding: 30px 15px 30px 20px;
     box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.18);
     transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -1685,8 +1689,11 @@ modal {
             padding: 0;
             margin: 0;
             font-weight: 400;
+            @include display-grid(repeat(2, auto));
 
-            .float-right {
+            .right {
+                text-align: right;
+
                 label {
                     cursor: pointer;
                     margin-right: 20px;
@@ -1906,16 +1913,14 @@ modal {
 }
 
 .row-grid-3 {
-    display: grid;
     grid-row-gap: 15px;
     grid-auto-rows: auto;
     grid-column-gap: 15px;
-    grid-template-columns: repeat(3, 1fr);
+    @include display-grid(repeat(3, 1fr));
 }
 
 .bar {
     height: 10px;
-    margin-top: 5px;
     background-color: $table-active-cell-color;
 
     > div {
@@ -1992,4 +1997,13 @@ modal {
 
 .cursor-pointer {
     cursor: pointer !important;
+}
+
+.display-grid {
+    display: grid;
+}
+
+.column-grid-2 {
+    grid-gap: 10px;
+    @include display-grid(repeat(2, auto));
 }

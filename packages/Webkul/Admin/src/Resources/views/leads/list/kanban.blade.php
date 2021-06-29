@@ -1,18 +1,6 @@
-@section('css')
+@push('css')
     <style>
-        .table-header h1 {
-            padding-bottom: 15px;
-        }
-
-        .modal-container .modal-header {
-            border: 0;
-        }
-
-        .modal-container .modal-body {
-            padding: 0;
-        }
-
-        .content-container{
+        .content-container {
             overflow: hidden;
         }
 
@@ -20,29 +8,17 @@
             height: 100%;
         }
     </style>
-@stop
-
-@section('post-heading')
-    <kanban-filters></kanban-filters>
-@stop
+@endpush
 
 @section('table-action')
     <button class="btn btn-md btn-primary" id="add-new" @click="openModal('addLeadModal')">
         {{ __('admin::app.leads.add-title') }}
     </button>
-
-    <div class="float-right">
-        <a class="icon-container active">
-            <i class="icon layout-column-line-active-icon"></i>
-        </a>
-
-        <a href="{{ route('admin.leads.index', ['type' => 'table']) }}" class="icon-container">
-            <i class="icon table-line-icon"></i>
-        </a>
-    </div>
 @stop
 
 @section('table-section')
+    <kanban-filters></kanban-filters>
+
     <kanban-component
         no-data-text="{{ __('admin::app.leads.no-lead') }}"
         get-url="{{ route('admin.leads.kanban.index') }}"
@@ -53,21 +29,37 @@
 
 @push('scripts')
     <script type="text/x-template" id="kanban-filters-tempalte">
-        <div class="form-group post-heading">
-            <input
-                type="search"
-                class="control"
-                id="search-field"
-                :placeholder="__('ui.datagrid.search')"
-            />
+        <div class="form-group datagrid-filters">
+            <div class="search-filter">
+                <i class="icon search-icon input-search-icon"></i>
+
+                <input
+                    type="search"
+                    class="control"
+                    id="search-field"
+                    :placeholder="__('ui.datagrid.search')"
+                />
+            </div>
 
             <sidebar-filter :columns="columns"></sidebar-filter>
 
-            <div class="filter-btn">
-                <div class="grid-dropdown-header" @click="toggleSidebarFilter">
-                    <span class="name">{{ __('ui::app.datagrid.filter.title') }}</span>
+            <div class="filter-right">
+                <div class="switch-icons-container">
+                    <a class="icon-container active">
+                        <i class="icon layout-column-line-active-icon"></i>
+                    </a>
+            
+                    <a href="{{ route('admin.leads.index', ['type' => 'table']) }}" class="icon-container">
+                        <i class="icon table-line-icon"></i>
+                    </a>
+                </div>
 
-                    <i class="icon add-icon"></i>
+                <div class="filter-btn">
+                    <div class="grid-dropdown-header" @click="toggleSidebarFilter">
+                        <span class="name">{{ __('ui::app.datagrid.filter.title') }}</span>
+
+                        <i class="icon add-icon"></i>
+                    </div>
                 </div>
             </div>
         </div>
