@@ -20,6 +20,7 @@ return [
         "card_id"       => "activities",
         "sort"          => 4,
         "card_type"     => "activities",
+        "data_class"    => "display-grid",
         "label"         => 'admin::app.dashboard.activities',
     ], [
         "selected"      => true,
@@ -33,6 +34,7 @@ return [
         "card_id"       => "stages",
         "sort"          => 5,
         "card_type"     => "stages_bar",
+        "data_class"    => "display-grid",
         "label"         => 'admin::app.dashboard.stages',
     ], [
         "selected"      => true,

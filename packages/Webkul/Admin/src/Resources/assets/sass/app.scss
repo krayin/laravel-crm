@@ -1056,6 +1056,7 @@ body {
                 .bar-data {
                     display: grid;
                     font-size: 14px;
+                    align-items: center;
                     color: $font-color;
                     grid-column-gap: 15px;
                     grid-template-columns: 90px auto 40px;
@@ -1098,7 +1099,7 @@ body {
                     }
                 }
         
-                .column-grid-2-container {
+                .column-container {
                     width: 100%;
                     margin-top: 10px;
                     padding-bottom: 5px;
@@ -1151,6 +1152,10 @@ body {
                         width: 96px;
                         height: 96px;
                     }
+                }
+
+                &.column-grid-2 {
+                    align-items: start;
                 }
             }
     

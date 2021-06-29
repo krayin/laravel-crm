@@ -110,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="column-grid-2-container" v-else-if="cardType == 'column-grid-2'" v-for="(data, index) in dataCollection.data">
+            <div class="column-container" v-else-if="cardType == 'column-grid-2'" v-for="(data, index) in dataCollection.data">
                 <span>@{{ data.count }}</span>
                 <span>@{{ data.label }}</span>
             </div>
