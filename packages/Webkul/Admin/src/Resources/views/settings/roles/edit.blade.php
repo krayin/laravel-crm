@@ -1,18 +1,17 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.settings.roles.edit_role') }}
+    {{ __('admin::app.settings.roles.edit-title') }}
 @stop
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
         <div class="page-header">
-            <h6 class="breadcrumbs">
-                Home/Leads/ 
-            </h6>
+            
+            {{ Breadcrumbs::render('settings.roles.edit', $role) }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.settings.roles.edit_role') }}</h1>
+                <h1>{{ __('admin::app.settings.roles.edit-title') }}</h1>
             </div>
         </div>
 

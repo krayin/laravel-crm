@@ -1,6 +1,12 @@
 @extends('ui::datagrid.table')
 
+@section('page_title')
+    {{ __('admin::app.products.title') }}
+@stop
+
 @section('table-header')
+    {{ Breadcrumbs::render('products') }}
+
     {{ __('admin::app.products.title') }}
 @stop
 

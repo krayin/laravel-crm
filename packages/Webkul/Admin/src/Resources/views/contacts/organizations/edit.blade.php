@@ -6,7 +6,11 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
+
         <div class="page-header">
+
+            {{ Breadcrumbs::render('contacts.organizations.edit', $organization) }}
+            
             <div class="page-title">
                 <h1>{{ __('admin::app.contacts.organizations.edit-title') }}</h1>
             </div>
