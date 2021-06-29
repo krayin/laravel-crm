@@ -400,6 +400,7 @@ trait DataRetrival
                         ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
                         ->groupBy('product_id')
                         ->whereBetween('lead_products.created_at', [$startDateFilter, $endDateFilter])
+                        ->limit(6)
                         ->get()
                         ->toArray();
 

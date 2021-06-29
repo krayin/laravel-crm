@@ -40,6 +40,7 @@
                         <card-component
                             :index="index"
                             :card-type="card.card_type"
+                            :class-name="card.data_class"
                             :card-id="card.card_id || ''"
                         ></card-component>
                     </div>
@@ -53,7 +54,7 @@
             <spinner-meter></spinner-meter>
         </div>
 
-        <div v-else :class="`card-data`">
+        <div v-else :class="`card-data ${className || ''}`">
             <bar-chart
                 :id="`bar-chart-${cardId}`"
                 :data="dataCollection.data"
@@ -109,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="email-data" v-else-if="cardType == 'emails'" v-for="(data, index) in dataCollection.data">
+            <div class="column-container" v-else-if="cardType == 'column-grid-2'" v-for="(data, index) in dataCollection.data">
                 <span>@{{ data.count }}</span>
                 <span>@{{ data.label }}</span>
             </div>
@@ -347,7 +348,7 @@
         Vue.component('card-component', {
             template: "#card-template",
 
-            props: ['cardId', 'cardType', 'index'],
+            props: ['cardId', 'cardType', 'index', 'className'],
 
             data: function () {
                 return {

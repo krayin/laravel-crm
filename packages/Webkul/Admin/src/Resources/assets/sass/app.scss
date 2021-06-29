@@ -995,8 +995,10 @@ body {
 
     .row-grid-3 {
         padding: 10px;
+        align-items: start;
         
         .card {
+            height: 100%;
             min-height: 300px;
             border-radius: 3px;
             background-color: $white;
@@ -1039,7 +1041,6 @@ body {
     
             .card-data {
                 padding: 20px;
-                max-height: 260px;
                 position: relative;
                 overflow-y: scroll;
     
@@ -1050,22 +1051,22 @@ body {
                 .line-chart,
                 .bar-chart {
                     height: 100%;
+                    display: grid;
+                    align-items: center;
                 }
 
                 .bar-data {
                     display: grid;
                     font-size: 14px;
+                    align-items: center;
                     color: $font-color;
                     grid-column-gap: 15px;
-                    grid-template-columns: 90px auto 40px;
+                    grid-template-columns: 70px auto 40px;
 
-                    &:not(:first-child) {
-                        margin-top: 10px;
-                    }
-        
                     &.activity {
                         > span {
                             &:first-child {
+                                line-break: anywhere;
                                 text-transform: capitalize;
                             }
                         }
@@ -1085,6 +1086,7 @@ body {
                         border: 0px;
                         font-weight: 500;
                         font-size: 18px;
+                        height: max-content;
                     }
         
                     .details {
@@ -1096,11 +1098,11 @@ body {
                     }
                 }
         
-                .email-data {
+                .column-container {
+                    width: 100%;
                     margin-top: 10px;
                     padding-bottom: 5px;
                     display: inline-block;
-                    width: calc(50% - 10px);
                     border-bottom: 1px solid $border-color;
 
                     &:nth-child(odd) {
@@ -1149,6 +1151,10 @@ body {
                         width: 96px;
                         height: 96px;
                     }
+                }
+
+                &.column-grid-2 {
+                    align-items: start;
                 }
             }
     

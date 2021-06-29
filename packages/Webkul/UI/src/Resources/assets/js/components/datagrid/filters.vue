@@ -97,7 +97,7 @@
                     <span v-text="filter.prettyColumn || filter.column"></span>
 
                     <span class="wrapper">
-                        {{ filter.prettyValue ? filter.prettyValue : decodeURIComponent(filter.val) }}
+                        {{ filter.prettyValue || decodeURIComponent(filter.val) }}
                         <i class="icon close-icon" @click="removeFilter(filter)"></i>
                     </span>
                 </div>
@@ -105,7 +105,7 @@
         </div>
 
         <!-- tabs section -->
-        <div class="tabs-container">
+        <div class="tabs-container" v-if="tabs">
             <tabs
                 event-value-key="value"
                 event-key="updateFilter"
@@ -114,6 +114,8 @@
                 :class="`${tableData.tabFilters[0].type} tabs-left-container`"
                 :event-data="{key: tableData.tabFilters[0].key, 'cond' : tableData.tabFilters[0].condition}"
             ></tabs>
+            
+            <div v-else></div>
 
             <div class="tabs-right-container">
                 <section>
@@ -171,7 +173,7 @@
     import { mapState, mapActions } from 'vuex';
 
     export default {
-        props: ['switchPageUrl'],
+        props: ['switchPageUrl', 'tabs'],
 
         data: function () {
             return {
@@ -326,8 +328,8 @@
                     || response === null
                 ) {
                     this.updateFilter({
-                        key: column,
-                        value: ""
+                        key     : column,
+                        value   : ""
                     });
 
                     return false;
@@ -477,11 +479,21 @@
                         case "search":
                             obj.label = "Search";
                             break;
+                            
                         case "sort":
                             obj.prettyValue = `${obj.cond.replaceAll("_", " ")} - ${obj.val}`;
                             break;
+
                         default:
                             break;
+                    }
+
+                    if (obj.cond == 'bw') {
+                        var timestamp = Date.parse(obj.val.split(",")[0]);
+
+                        if (isNaN(timestamp) == false) {
+                            obj.prettyValue = `${obj.val.replaceAll(",", " - ")}`;
+                        }
                     }
 
                     if (obj.column !== undefined && obj.val !== undefined) {
@@ -523,6 +535,14 @@
 
                     if (key == "sort") {
                         data.prettyValue = `${data.cond.replaceAll("_", " ")} - ${data.val}`;
+                    } else {
+                        if (data.cond == 'bw') {
+                            var timestamp = Date.parse(data.val.split(",")[0]);
+
+                            if (isNaN(timestamp) == false) {
+                                data.prettyValue = `${data.val.replaceAll(",", " - ")}`;
+                            }
+                        }
                     }
 
                     this.filters.push(data);

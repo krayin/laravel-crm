@@ -26,6 +26,10 @@ class CoreServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'core');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'core');
+
+        $this->publishes([
+            dirname(__DIR__) . '/Config/concord.php' => config_path('concord.php'),
+        ]);
     }
 
     /**
