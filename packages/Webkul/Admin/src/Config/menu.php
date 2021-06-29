@@ -113,6 +113,16 @@ return [
         'name'       => 'admin::app.layouts.attributes',
         'route'      => 'admin.settings.attributes.index',
         'sort'       => 3,
+    ], [
+        'key'        => 'settings.sources',
+        'name'       => 'admin::app.layouts.sources',
+        'route'      => 'admin.settings.sources.index',
+        'sort'       => 4,
+    ], [
+        'key'        => 'settings.types',
+        'name'       => 'admin::app.layouts.types',
+        'route'      => 'admin.settings.types.index',
+        'sort'       => 5,
     // ], [
     //     'key'        => 'configuration',
     //     'name'       => 'admin::app.layouts.configuration',
