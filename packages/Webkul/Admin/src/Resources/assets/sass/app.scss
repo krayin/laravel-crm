@@ -1051,6 +1051,8 @@ body {
                 .line-chart,
                 .bar-chart {
                     height: 100%;
+                    display: grid;
+                    align-items: center;
                 }
 
                 .bar-data {
@@ -1059,15 +1061,12 @@ body {
                     align-items: center;
                     color: $font-color;
                     grid-column-gap: 15px;
-                    grid-template-columns: 90px auto 40px;
+                    grid-template-columns: 70px auto 40px;
 
-                    &:not(:first-child) {
-                        margin-top: 10px;
-                    }
-        
                     &.activity {
                         > span {
                             &:first-child {
+                                line-break: anywhere;
                                 text-transform: capitalize;
                             }
                         }

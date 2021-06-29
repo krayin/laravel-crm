@@ -428,11 +428,18 @@ h5 {
 
         tbody {
             tr {
+                border-bottom: 1px solid rgba(193, 194, 195, 0.5);
+
+                &.active {
+                    border-bottom: none;
+                    background-color: $table-active-cell-color;
+                }
+
                 td {
                     border-right: 0px;
                     color: $dark-color;
+                    border-bottom: none;
                     background-color: rgba(255,255,255,.5);
-                    border-bottom: 1px solid rgba(193,194,195,.5);
 
                     &.empty {
                         text-align: center;
@@ -624,13 +631,13 @@ h5 {
                     border-radius: 3px;
                     align-items: center;
                     display: inline-flex;
+                    vertical-align: middle;
                     padding: 0px 7px 0px 10px;
                     background-color: $white;
                     color: $secondary-font-color;
                     justify-content: space-between;
                     font-weight: $font-weight-medium;
-                    border: 2px solid $secondary-font-color;
-                    vertical-align: middle;
+                    border: 1px solid $secondary-font-color;
                 
                     .arrow-icon-down {
                         float: right;
@@ -1914,7 +1921,6 @@ modal {
 
 .bar {
     height: 10px;
-    margin-top: 5px;
     background-color: $table-active-cell-color;
 
     > div {
