@@ -261,9 +261,9 @@
             'roles' => [
                 'title'             => 'Roles',
                 'role'              => 'Role',
-                'edit_role'         => 'Edit Role',
+                'edit-title'        => 'Edit Role',
                 'description'       => 'Description',
-                'create_role'       => 'Create Role',
+                'add-title'         => 'Create Role',
                 'permission_type'   => 'Permission type',
                 'custom'            => 'Custom',
                 'all'               => 'All',
@@ -280,8 +280,8 @@
 
             'users' => [
                 'title'               => 'Users',
-                'create_user'         => 'Create User',
-                'edit_user'           => 'Edit User',
+                'add-title'           => 'Create User',
+                'edit-title'          => 'Edit User',
                 'name'                => 'Name',
                 'email'               => 'Email',
                 'back'                => 'Back',

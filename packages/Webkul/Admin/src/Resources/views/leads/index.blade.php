@@ -1,11 +1,18 @@
 @extends('ui::datagrid.table')
 
+@section('page_title')
+    {{ __('admin::app.leads.title') }}
+@stop
+
 @section('table-header')
+    {{ Breadcrumbs::render('leads') }}
+
     {{ __('admin::app.leads.title') }}
 @stop
 
 @php
     $viewType = request()->type ?? "kanban";
+    
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp
 

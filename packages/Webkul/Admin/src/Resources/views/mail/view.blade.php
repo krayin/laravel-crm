@@ -30,6 +30,9 @@
 
     <div class="content full-page">
         <div class="page-header">
+            
+            {{ Breadcrumbs::render('mail.route.view', request('route'), $email) }}
+
             <div class="page-title">
                 <h1>{{ $email->subject }}</h1>
             </div>

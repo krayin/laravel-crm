@@ -7,6 +7,9 @@
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
         <div class="page-header">
+            
+            {{ Breadcrumbs::render('mail.route', request('route')) }}
+
             <div class="page-title">
                 <h1>{{ __('admin::app.mail.compose') }}</h1>
             </div>

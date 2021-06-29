@@ -1819,11 +1819,24 @@ modal {
     }
 }
 
-.breadcrumbs {
-    font-weight: 400;
-    margin: 0 0 10px 0;
-    color: $primary-color;
-    font-size: $font-size-md;
+ol.breadcrumb {
+    list-style: none;
+    padding: 0;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-regular;
+    margin-top: 0;
+    margin-bottom: 5px;
+
+    li.breadcrumb-item {
+        display: inline-block;
+
+        &+.breadcrumb-item::before {
+            display: inline-block;
+            padding-right: 5px;
+            padding-left: 5px;
+            content: "/";
+        }
+    }
 }
 
 .float-left {

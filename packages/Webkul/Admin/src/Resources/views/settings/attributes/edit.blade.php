@@ -7,6 +7,9 @@
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
         <div class="page-header">
+            
+            {{ Breadcrumbs::render('settings.attributes.edit', $attribute) }}
+
             <div class="page-title">
                 <h1>{{ __('admin::app.settings.attributes.edit-title') }}</h1>
             </div>
