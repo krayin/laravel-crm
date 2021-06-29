@@ -175,15 +175,13 @@
             },
 
             removeAll: function () {
-                this.$store.state.filters = this.$store.state.filters.filter(filter => filter.column == 'type' && filter.val == 'table');
+                const filters = [ ...this.$store.state.filters.filter(filter => filter.column == 'type' && filter.val == 'table') ];
+
+                this.$store.state.filters = filters;
 
                 (this.columns || this.tableData.columns).forEach((column, index) => {
                     if (column.filterable_type && column.filterable_type == 'date_range') {
-                        this.removeFilter({
-                            key     : index,
-                            index   : column.index,
-                            type    : column.filterable_type,
-                        })
+                        $('.flatpickr-input').val();
                     }
                 });
 
