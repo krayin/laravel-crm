@@ -155,7 +155,7 @@ Route::group(['middleware' => ['web']], function () {
     
                     Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
     
-                    Route::get('edit/{id}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
+                    Route::get('edit/{id?}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
     
                     Route::put('edit/{id}', 'OrganizationController@update')->name('admin.contacts.organizations.update');
 
@@ -190,6 +190,21 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
             ], function () {
+                // Roles Routes
+                Route::prefix('roles')->group(function () {
+                    Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
+
+                    Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
+
+                    Route::post('create', 'RoleController@store')->name('admin.settings.roles.store');
+
+                    Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
+
+                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
+
+                    Route::delete('{id}', 'RoleController@destroy')->name('admin.settings.roles.delete');
+                });
+
                 // Users Routes
                 Route::prefix('users')->group(function () {
                     Route::get('', 'UserController@index')->name('admin.settings.users.index');
@@ -207,21 +222,6 @@ Route::group(['middleware' => ['web']], function () {
                     Route::put('mass-update', 'UserController@massUpdate')->name('admin.settings.users.mass-update');
 
                     Route::put('mass-destroy', 'UserController@massDestroy')->name('admin.settings.users.mass-delete');
-                });
-
-                // Roles Routes
-                Route::prefix('roles')->group(function () {
-                    Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
-
-                    Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
-
-                    Route::post('create', 'RoleController@store')->name('admin.settings.roles.store');
-
-                    Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
-
-                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
-
-                    Route::delete('{id}', 'RoleController@destroy')->name('admin.settings.roles.delete');
                 });
 
                 // Attributes Routes
