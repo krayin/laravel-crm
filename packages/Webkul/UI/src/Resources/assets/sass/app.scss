@@ -330,7 +330,7 @@ h5 {
                 margin: 20px 0;
                 grid-gap: 5px;
                 text-align: center;
-                @include display-grid(140px auto 140px);
+                @include display-grid(150px auto 150px);
 
                 &.date {
                     .date-container {
@@ -338,6 +338,11 @@ h5 {
 
                         .control {
                             margin: 0;
+                            height: 40px;
+                        }
+
+                        &::after {
+                            top: calc(50% - 2px);
                         }
                     }
                 }
