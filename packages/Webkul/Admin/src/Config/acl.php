@@ -181,7 +181,67 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.roles.delete',
         'sort'  => 3,
-    ],
+    ], [
+        'key'   => 'settings.attributes',
+        'name'  => 'admin::app.acl.attributes',
+        'route' => 'admin.settings.attributes.index',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.attributes.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.attributes.create', 'admin.settings.attributes.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.attributes.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.attributes.edit', 'admin.settings.attributes.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.attributes.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.attributes.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.sources',
+        'name'  => 'admin::app.acl.sources',
+        'route' => 'admin.settings.sources.index',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.sources.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.sources.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.sources.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.sources.edit', 'admin.settings.sources.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.sources.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.sources.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.types',
+        'name'  => 'admin::app.acl.types',
+        'route' => 'admin.settings.types.index',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.types.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.types.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.types.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.types.edit', 'admin.settings.types.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.types.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.types.delete',
+        'sort'  => 3,
+    ]
 ];
 
 ?>
