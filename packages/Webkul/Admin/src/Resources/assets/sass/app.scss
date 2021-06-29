@@ -995,8 +995,10 @@ body {
 
     .row-grid-3 {
         padding: 10px;
+        align-items: start;
         
         .card {
+            height: 100%;
             min-height: 300px;
             border-radius: 3px;
             background-color: $white;
@@ -1039,7 +1041,6 @@ body {
     
             .card-data {
                 padding: 20px;
-                max-height: 260px;
                 position: relative;
                 overflow-y: scroll;
     
@@ -1085,6 +1086,7 @@ body {
                         border: 0px;
                         font-weight: 500;
                         font-size: 18px;
+                        height: max-content;
                     }
         
                     .details {
@@ -1096,11 +1098,11 @@ body {
                     }
                 }
         
-                .email-data {
+                .column-grid-2-container {
+                    width: 100%;
                     margin-top: 10px;
                     padding-bottom: 5px;
                     display: inline-block;
-                    width: calc(50% - 10px);
                     border-bottom: 1px solid $border-color;
 
                     &:nth-child(odd) {

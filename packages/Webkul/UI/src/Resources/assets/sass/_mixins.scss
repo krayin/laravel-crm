@@ -18,3 +18,9 @@
     -ms-user-select: $value;      /* IE 10+ */
     user-select: $value;          /* Likely future */ 
 }
+
+@mixin display-grid($colums) {
+    display: grid;
+    align-items: center;
+    grid-template-columns: $colums;
+}

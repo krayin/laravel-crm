@@ -26,6 +26,7 @@ return [
         "card_id"       => "top_leads",
         "sort"          => 3,
         "card_type"     => "top_card",
+        "data_class"    => "display-grid",
         "label"         => 'admin::app.dashboard.top_leads',
     ], [
         "selected"      => true,
@@ -37,7 +38,8 @@ return [
         "selected"      => true,
         "card_id"       => "emails",
         "sort"          => 6,
-        "card_type"     => "emails",
+        "card_type"     => "column-grid-2",
+        "data_class"    => "column-grid-2",
         "label"         => 'admin::app.dashboard.emails',
     ], [
         "selected"      => true,
@@ -49,7 +51,8 @@ return [
         "selected"      => true,
         "card_id"       => "top_customers",
         "sort"          => 8,
-        "card_type"     => "emails",
+        "card_type"     => "column-grid-2",
+        "data_class"    => "column-grid-2",
         "label"         => 'admin::app.dashboard.top_customers',
     ], [
         "selected"      => true,
@@ -61,7 +64,8 @@ return [
         "selected"      => true,
         "card_id"       => "top_products",
         "sort"          => 10,
-        "card_type"     => "emails",
+        "card_type"     => "column-grid-2",
+        "data_class"    => "column-grid-2",
         "label"         => 'admin::app.dashboard.top_products',
     ], [
         "sort"          => 1,
