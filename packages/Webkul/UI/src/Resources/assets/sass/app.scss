@@ -1217,6 +1217,12 @@ h5 {
                 @include user-select(none);
             }
 
+            &.has-error {
+                a {
+                    color: $danger-color;
+                }
+            }
+
             &.active a {
                 color: $primary-color;
                 box-shadow: inset 0px -2px 0px $primary-color;
@@ -1394,6 +1400,7 @@ modal {
     max-height: 80%;
     z-index: 11;
     overflow-y: auto;
+    overflow-x: hidden;
     animation: jelly 0.5s ease-in-out;
     @include border-radius(8px);
 
@@ -1431,6 +1438,10 @@ modal {
         // top: 75px;
         padding: 30px;
         position: relative;
+
+        .tabs-content {
+            box-shadow: none;
+        }
     }
 }
 

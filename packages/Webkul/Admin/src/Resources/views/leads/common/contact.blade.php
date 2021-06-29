@@ -2,7 +2,7 @@
     <script type="text/x-template" id="contact-component-template">
         <div class="contact-controls">
             
-            <div class="form-group" :class="[errors.has('person[name]') ? 'has-error' : '']">
+            <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}person[name]') ? 'has-error' : '']">
                 <label for="person[name]" class="required">{{ __('admin::app.leads.name') }}</label>
 
                 <input type="text" v-validate="'required'" class="control" id="person[name]" name="person[name]" v-model="person.name" v-on:keyup="search" data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;" autocomplete="off"/>
@@ -27,13 +27,13 @@
                     </ul>
                 </div>
 
-                <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
+                <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}person[name]')">@{{ errors.first('{!! $formScope ?? '' !!}person[name]') }}</span>
             </div>
 
             <div class="form-group email">
                 <label for="person[emails]" class="required">{{ __('admin::app.leads.email') }}</label>
 
-                @include('admin::common.custom-attributes.edit.email')
+                @include('admin::common.custom-attributes.edit.email', ['formScope' => $formScope ?? ''])
                     
                 <email-component :attribute="{'code': 'person[emails]', 'name': 'Email'}" validations="required|email" :data="person.emails"></email-component>
             </div>
@@ -41,7 +41,7 @@
             <div class="form-group contact-numbers">
                 <label for="person[contact_numbers]">{{ __('admin::app.leads.contact-numbers') }}</label>
 
-                @include('admin::common.custom-attributes.edit.phone')
+                @include('admin::common.custom-attributes.edit.phone', ['formScope' => $formScope ?? ''])
                     
                 <phone-component :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}" :data="person.contact_numbers"></phone-component>
             </div>

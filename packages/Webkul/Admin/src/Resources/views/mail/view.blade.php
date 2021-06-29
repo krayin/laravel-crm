@@ -4,6 +4,18 @@
     {{ $email->subject }}
 @stop
 
+@section('css')
+    <style>
+        .lead-form .modal-container .modal-header {
+            border: 0;
+        }
+
+        .lead-form .modal-container .modal-body {
+            padding: 0;
+        }
+    </style>
+@stop
+
 @section('content-wrapper')
 
     @php
@@ -12,7 +24,7 @@
         }
 
         if (! $email->person) {
-            $email->person = app('\Webkul\Contact\Repositories\PersonRepository')->getModel()->fill(['emails' => $email->from, 'name' => $email->name]);
+            $email->person = app('\Webkul\Contact\Repositories\PersonRepository')->getModel()->fill(['emails' => [['value' => $email->from, 'label' => 'work']], 'name' => $email->name]);
         }
     @endphp
 
@@ -35,6 +47,82 @@
 
         </div>
     </div>
+
+    <form action="{{ route('admin.contacts.persons.store') }}" data-vv-scope="person-form" method="post" @submit.prevent="onSubmit($event, 'person-form')">
+        <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
+            <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>
+            
+            <div slot="header-actions">
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">{{ __('admin::app.contacts.persons.cancel') }}</button>
+
+                <button class="btn btn-sm btn-primary">{{ __('admin::app.contacts.persons.save-btn-title') }}</button>
+            </div>
+
+            <div slot="body">
+                @csrf()
+                
+                <input type="hidden" name="email_id" value="{{ $email->id }}" />
+                
+                <input type="hidden" name="quick_add" value="1"/>
+
+                @include('admin::common.custom-attributes.edit', [
+                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        'entity_type' => 'persons',
+                        'quick_add'   => 1
+                    ]),
+                    'entity'           => $email->person,
+                    'formScope'        => 'person-form.',
+                ])
+            </div>
+        </modal>
+    </form>
+
+    <form action="{{ route('admin.leads.store') }}" data-vv-scope="lead-form" method="post" @submit.prevent="onSubmit($event, 'lead-form')" class="lead-form">
+        <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
+            <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
+            
+            <div slot="header-actions">
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
+
+                <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+            </div>
+
+            <div slot="body" style="padding: 0">
+                @csrf()
+                
+                <input type="hidden" name="email_id" value="{{ $email->id }}" />
+
+                <input type="hidden" name="quick_add" value="1" />
+
+                <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="1" />
+
+                <tabs>
+                    <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
+                        @include('admin::common.custom-attributes.edit', [
+                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'leads',
+                                'quick_add'   => 1
+                            ]),
+                            'formScope'        => 'lead-form.',
+                            'entity'           => $email->lead,
+                        ])
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.contact-person') }}">
+                        @include('admin::leads.common.contact', ['formScope' => 'lead-form.'])
+
+                        <contact-component></contact-component>
+                    </tab>
+
+                    <tab name="{{ __('admin::app.leads.products') }}">
+                        @include('admin::leads.common.products', ['formScope' => 'lead-form.'])
+
+                        <product-list></product-list>
+                    </tab>
+                </tabs>
+            </div>
+        </modal>
+    </form>
 @stop
 
 @push('scripts')
@@ -86,7 +174,7 @@
 
                                     <i class="icon loader-active-icon" v-if="is_searching.person"></i>
                                 </div>
-                                <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.create-new-contact') }}</button>
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">{{ __('admin::app.mail.create-new-contact') }}</button>
                             </div>
                         </div>
 
@@ -140,7 +228,7 @@
                                     <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                                 </div>
 
-                                <button class="btn btn-sm btn-primary">{{ __('admin::app.mail.add-new-lead') }}</button>
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">{{ __('admin::app.mail.add-new-lead') }}</button>
                             </div>
                         </div>
 
@@ -302,7 +390,7 @@
     </script>
 
     <script type="text/x-template" id="email-form-template">
-        <form method="POST" action="{{ route('admin.mail.store') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.mail.store') }}" data-vv-scope="email-form" enctype="multipart/form-data" @submit.prevent="$root.onSubmit($event, 'email-form')">
 
             <div class="form-container">
 
@@ -315,12 +403,12 @@
 
                         @include ('admin::common.custom-attributes.edit.email-tags')
 
-                        <div class="form-group email-control-group" :class="[errors.has('reply_to[]') ? 'has-error' : '']">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
-                            <email-tags-component control-name="reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
+                            <email-tags-component control-name="email-form.reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('reply_to[]')">@{{ errors.first('reply_to[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
 
                             <div class="email-address-options">
                                 <label @click="show_cc = ! show_cc">{{ __('admin::app.leads.cc') }}</label>
@@ -328,26 +416,26 @@
                             </div>
                         </div>
     
-                        <div class="form-group email-control-group" :class="[errors.has('cc[]') ? 'has-error' : '']" v-if="show_cc">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']" v-if="show_cc">
                             <label for="cc">{{ __('admin::app.leads.cc') }}</label>
     
                             <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='cc'></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('cc[]')">@{{ errors.first('cc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.cc[]')">@{{ errors.first('email-form.cc[]') }}</span>
                         </div>
     
-                        <div class="form-group email-control-group" :class="[errors.has('bcc[]') ? 'has-error' : '']" v-if="show_bcc">
+                        <div class="form-group email-control-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']" v-if="show_bcc">
                             <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
     
                             <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='bcc'></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('bcc[]')">@{{ errors.first('bcc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.bcc[]')">@{{ errors.first('email-form.bcc[]') }}</span>
                         </div>
                         
-                        <div class="form-group" :class="[errors.has('reply') ? 'has-error' : '']">
+                        <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
                             <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
                             <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;">@{{ reply }}</textarea>
-                            <span class="control-error" v-if="errors.has('reply')">@{{ errors.first('reply') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.reply')">@{{ errors.first('email-form.reply') }}</span>
                         </div>
     
                         <div class="form-group">
@@ -648,14 +736,6 @@
             },
 
             methods: {
-                onSubmit: function(e) {
-                    this.$validator.validateAll().then(function (result) {
-                        if (result) {
-                            e.target.submit();
-                        }
-                    });
-                },
-
                 discard: function() {
                     this.$emit('onDiscard');
                 }
