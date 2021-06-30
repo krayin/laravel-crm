@@ -33,7 +33,12 @@
                             <label class="card-header">
                                 @{{ card.label }}
             
-                                <i class="icon drag-icon"></i>
+                                <div class="icon-container">
+                                    <a v-if="card.view_url" :href="card.view_url">
+                                        <i class="icon eye-icon"></i>
+                                    </a>
+                                    <i class="icon drag-icon"></i>
+                                </div>
                             </label>
                         </template>
             

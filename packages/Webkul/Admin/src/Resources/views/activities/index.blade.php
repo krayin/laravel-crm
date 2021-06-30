@@ -13,7 +13,3 @@
 @php
     $tableClass = "\Webkul\Admin\DataGrids\Activity\ActivityDataGrid";
 @endphp
-
-@section('table-section')
-    <table-component table-class="{{ $tableClass }}" tabs="true"><table-component>
-@show

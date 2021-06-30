@@ -62,15 +62,16 @@ $(function() {
                     tinyMCE.triggerSave();
                 }
 
-                this.$validator.validateAll(formScope ? formScope : null).then(result => {
-                    if (result) {
-                        e.target.submit();
-                    } else {
-                        this.toggleButtonDisable(false);
+                this.$validator.validateAll(formScope || null)
+                    .then(result => {
+                        if (result) {
+                            e.target.submit();
+                        } else {
+                            this.toggleButtonDisable(false);
 
-                        eventBus.$emit('onFormError')
-                    }
-                });
+                            eventBus.$emit('onFormError')
+                        }
+                    });
             },
 
             toggleButtonDisable (value) {

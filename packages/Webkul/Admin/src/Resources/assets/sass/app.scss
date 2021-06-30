@@ -1023,10 +1023,13 @@ body {
                     }
                 }
     
-                i.drag-icon {
+                .icon-container {
                     float: right;
                     display: none;
-                    cursor: pointer;
+                    
+                    .icon {
+                        cursor: pointer;
+                    }
                 }
             }
 
@@ -1164,7 +1167,7 @@ body {
     
             &:hover {
                 label {
-                    i.drag-icon {
+                    .icon-container {
                         display: inline;
                     }
                 }

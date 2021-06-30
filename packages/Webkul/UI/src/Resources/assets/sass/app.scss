@@ -1,6 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap");
-
-// Icon scss
+@import "fonts";
 @import "icons";
 @import "variables";
 @import "mixins";
@@ -626,6 +624,19 @@ h5 {
         .filter-right {
             text-align: right;
 
+            .pagination {
+                height: 40px;
+                margin-right: 6px;
+                display: inline-block;
+
+                .page-item {
+                    .icon {
+                        top: 10px;
+                        vertical-align: top;
+                    }
+                }
+            }
+
             .filter-btn {
                 cursor: pointer;
                 display: inline-block;
@@ -719,25 +730,19 @@ h5 {
     }
 }
 
-// This can be modify
 .pagination {
     margin-top: 20px;
     
     .page-item {
-        color: #8e8e8e;
-        padding: 7px 14px;
+        height: 100%;
         margin-right: 5px;
         background: $white;
         text-decoration: none;
         display: inline-block;
         vertical-align: middle;
+        padding: 0 9px 0 9px;
         font-size: $font-size-md;
         border: 1px solid $border-color;
-
-        &.previous,
-        &.next {
-            padding: 5px 9px 5px 9px;
-        }
 
         &.previous {
             border-radius: 3px 0 0 3px;
@@ -758,6 +763,8 @@ h5 {
         }
 
         .icon {
+            top: 4px;
+            position: relative;
             vertical-align: middle;
         }
     }
@@ -904,10 +911,21 @@ h5 {
         }
 
         .control-error {
-            display: block;
             width: 100%;
+            display: block;
+        }
+
+        &.hide-error {
+            input {
+                border: 1px solid $gray-color !important;
+            }
+
+            .control-error {
+                display: none !important;
+            }
         }
     }
+
 
     .address-left {
         width: 50%;
@@ -1865,8 +1883,8 @@ ol.breadcrumb {
 }
 
 .tags-control {
-    padding: 4px !important;
     height: 40px;
+    padding: 4px !important;
 
     ul.tags {
         display: flex;

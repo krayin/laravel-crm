@@ -64,6 +64,8 @@
                     </div>
                 </div>
 
+                <pagination-component tab-view="true" :per-page="perPage" v-if="! tableData.tabFilters.length > 0"></pagination-component>
+
                 <div class="switch-icons-container" v-if="switchPageUrl">
                     <a class="icon-container" :href="switchPageUrl">
                         <i class="icon layout-column-line-icon"></i>
@@ -105,7 +107,7 @@
         </div>
 
         <!-- tabs section -->
-        <div class="tabs-container" v-if="tabs">
+        <div class="tabs-container" v-if="tableData.tabFilters.length > 0">
             <tabs
                 event-value-key="value"
                 event-key="updateFilter"
@@ -603,7 +605,7 @@
                                 .then(response => {
                                     EventBus.$emit('refresh_table_data', {usePrevious: true});
 
-                                    this.selectAllRows(false);
+                                    this.selectAllRows(true);
 
                                     this.massActionValue = 'NA';
                                     this.massActionOptionValue = 'NA';
@@ -641,11 +643,17 @@
             },
 
             removeFilter: function (filter) {
-                for (let i in this.filters) {
-                    if (this.filters[i].column === filter.column
-                        && this.filters[i].cond === filter.cond
-                        && this.filters[i].val === filter.val) {
-                        this.filters.splice(i, 1);
+                for (let index in this.filters) {
+                    if (
+                        this.filters[index].column === filter.column
+                        && this.filters[index].cond === filter.cond
+                        && this.filters[index].val === filter.val
+                    ) {
+                        if (this.filters[index].column == "perPage") {
+                            this.perPage = "10";
+                        }
+
+                        this.filters.splice(index, 1);
 
                         this.makeURL();
                     }
