@@ -37,8 +37,7 @@ class UserController extends Controller
     public function __construct(
         UserRepository $userRepository,
         RoleRepository $roleRepository
-    )
-    {
+    ) {
         $this->userRepository = $userRepository;
 
         $this->roleRepository = $roleRepository;
@@ -145,8 +144,11 @@ class UserController extends Controller
 
         $data['status'] = isset($data['status']) ? 1 : 0;
 
+        $currentUser = auth()->guard('user')->user();
+
         // make status true if the current user is being edited
-        $data['status'] = ($id == auth()->guard('user')->user()->id) ? 1 : $data['status'];
+        $data['status'] = ($id == $currentUser->id) ? 1 : $data['status'];
+        $data['email'] = ($id == $currentUser->id) ? $currentUser->email : $data['email'];
 
         Event::dispatch('settings.user.update.before', $id);
 

@@ -67,6 +67,9 @@
                                     v-validate="'required|email'"
                                     data-vv-as="{{ __('admin::app.settings.users.email') }}"
                                     placeholder="{{ __('admin::app.settings.users.email') }}"
+                                    @if (auth()->guard('user')->user()->email == $admin->email)
+                                        disabled="disabled"
+                                    @endif
                                 />
 
                                 <span class="control-error" v-if="errors.has('email')">
