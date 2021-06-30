@@ -143,7 +143,7 @@ class ProductController extends Controller
     {
         $data = request()->all();
 
-        // $this->productRepository->destroy($data['rows']);
+        $this->productRepository->destroy($data['rows']);
 
         return response()->json([
             'status'  => true,
