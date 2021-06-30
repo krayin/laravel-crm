@@ -154,3 +154,29 @@ Breadcrumbs::for('settings.attributes.edit', function (BreadcrumbTrail $trail, $
     $trail->parent('settings.attributes');
     $trail->push(trans('admin::app.settings.attributes.edit-title'), route('admin.settings.attributes.edit', $attribute->id));
 });
+
+
+// Settings > Sources
+Breadcrumbs::for('settings.sources', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.sources'), route('admin.settings.sources.index'));
+});
+
+// Dashboard > Sources > Edit Attribute
+Breadcrumbs::for('settings.sources.edit', function (BreadcrumbTrail $trail, $source) {
+    $trail->parent('settings.sources');
+    $trail->push(trans('admin::app.settings.sources.edit-title'), route('admin.settings.sources.edit', $source->id));
+});
+
+
+// Settings > Sources
+Breadcrumbs::for('settings.types', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.types'), route('admin.settings.types.index'));
+});
+
+// Dashboard > Sources > Edit Attribute
+Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type) {
+    $trail->parent('settings.types');
+    $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));
+});

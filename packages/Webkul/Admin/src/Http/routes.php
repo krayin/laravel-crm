@@ -247,6 +247,32 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
 
+                // Lead Types Routes
+                Route::prefix('types')->group(function () {
+                    Route::get('', 'TypeController@index')->name('admin.settings.types.index');
+    
+                    Route::post('create', 'TypeController@store')->name('admin.settings.types.store');
+
+                    Route::get('edit/{id?}', 'TypeController@edit')->name('admin.settings.types.edit');
+
+                    Route::put('edit/{id}', 'TypeController@update')->name('admin.settings.types.update');
+
+                    Route::delete('{id}', 'TypeController@destroy')->name('admin.settings.types.delete');
+                });
+
+                // Lead Sources Routes
+                Route::prefix('sources')->group(function () {
+                    Route::get('', 'SourceController@index')->name('admin.settings.sources.index');
+    
+                    Route::post('create', 'SourceController@store')->name('admin.settings.sources.store');
+
+                    Route::get('edit/{id?}', 'SourceController@edit')->name('admin.settings.sources.edit');
+
+                    Route::put('edit/{id}', 'SourceController@update')->name('admin.settings.sources.update');
+
+                    Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
+                });
+
                 // Tags Routes
                 Route::prefix('tags')->group(function () {
                     Route::post('create', 'TagController@store')->name('admin.settings.tags.store');
