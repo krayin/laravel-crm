@@ -7,7 +7,45 @@ use Illuminate\Support\Facades\DB;
 
 class AttributeDataGrid extends DataGrid
 {
-    protected $enableFilters = false;
+    protected $tabFilters = [];
+
+    public function __construct()
+    {
+        $this->tabFilters = [
+            [
+                'type'      => 'pill',
+                'key'       => 'type',
+                'condition' => 'eq',
+                'values'    => [
+                    [
+                        'name'      => trans('admin::app.leads.all'),
+                        'isActive'  => true,
+                        'key'       => 'all',
+                    ], [
+                        'name'      => trans('admin::app.leads.title'),
+                        'isActive'  => false,
+                        'key'       => 'leads',
+                    ], [
+                        'name'      => trans('admin::app.contacts.persons.title'),
+                        'isActive'  => false,
+                        'key'       => 'persons',
+                    ], [
+                        'name'      => trans('admin::app.contacts.organizations.title'),
+                        'isActive'  => false,
+                        'key'       => 'organizations',
+                    ], [
+                        'name'      => trans('admin::app.products.title'),
+                        'isActive'  => false,
+                        'key'       => 'products',
+                    ]
+                ]
+            ]
+        ];
+
+        $this->addFilter('type', 'entity_type');
+
+        parent::__construct();
+    }
 
     public function prepareQueryBuilder()
     {
@@ -39,6 +77,15 @@ class AttributeDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'entity_type',
+            'label'      => trans('admin::app.datagrid.entity_type'),
+            'type'       => 'string',
+            'closure'       => function ($row) {
+                return ucfirst($row->entity_type);
+            },
         ]);
 
         $this->addColumn([

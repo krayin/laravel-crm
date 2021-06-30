@@ -65,6 +65,8 @@ class AttributeController extends Controller
 
         Event::dispatch('settings.attribute.create.before');
 
+        request()->request->add(['quick_add' => 1]);
+
         $attribute = $this->attributeRepository->create(request()->all());
 
         Event::dispatch('settings.attribute.create.after', $attribute);

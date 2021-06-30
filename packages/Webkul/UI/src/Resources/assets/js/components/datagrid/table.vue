@@ -2,7 +2,7 @@
     <div class="table-body" v-if="Object.keys(tableData).length > 0">
         <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
-        <filter-component :switch-page-url="switchPageUrl" :tabs="tabs"></filter-component>
+        <filter-component :switch-page-url="switchPageUrl"></filter-component>
 
         <table v-if="tableData.records.total">
             <thead-component></thead-component>
@@ -25,7 +25,6 @@
 
     export default {
         props: [
-            'tabs',
             'tableClass',
             'switchPageUrl',
         ],

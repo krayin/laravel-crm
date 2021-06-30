@@ -224,7 +224,7 @@ trait DatagridCollection
                                     explode(",", $value)
                                 );
                             } else {
-                                $collection->where($column, $value);
+                                $collection->where($this->filterMap[$column] ?? $column, $value);
                             }
                         }
                 }

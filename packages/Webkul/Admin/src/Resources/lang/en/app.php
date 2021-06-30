@@ -424,6 +424,7 @@
             'comment'           => 'Comment',
             'is_done'           => 'Is Done',
             'type'              => 'Type',
+            'entity_type'       => 'Entity type',
             'created_at'        => 'Created Date',
             'schedule_from'     => 'Schedule From',
             'schedule_to'       => 'Schedule To',

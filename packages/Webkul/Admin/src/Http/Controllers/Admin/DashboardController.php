@@ -74,6 +74,14 @@ class DashboardController extends Controller
     {
         $response = $this->cards;
 
+        $response = array_map(function ($card) {
+            if ($card['view_url'] ?? false) {
+                $card['view_url'] = route($card['view_url'], $card['url_params'] ?? []);
+            }
+
+            return $card;
+        }, $response);
+
         return response()->json($response);
     }
 

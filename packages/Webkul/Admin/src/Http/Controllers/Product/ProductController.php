@@ -133,4 +133,21 @@ class ProductController extends Controller
             ], 400);
         }
     }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        // $this->productRepository->destroy($data['rows']);
+
+        return response()->json([
+            'status'  => true,
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.products.title')]),
+        ]);
+    }
 }

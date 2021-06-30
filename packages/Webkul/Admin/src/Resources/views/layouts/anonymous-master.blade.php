@@ -28,12 +28,14 @@
         @yield('head')
 
         @yield('css')
+        @stack('css')
 
         {!! view_render_event('admin.anonymous-layout.head') !!}
     </head>
     
     <body>        
         <div id="app" class="anonymous-layout-container">
+            <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
             @include("admin::banner.header")
 
