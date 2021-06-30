@@ -1,0 +1,33 @@
+{
+    "name": "krayin/laravel-lead",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jitendra Singh",
+            "email": "jitendra@webkul.com"
+        }
+    ],
+    "require": {
+        "krayin/laravel-attribute": "^1.0",
+        "krayin/laravel-contact": "^1.0",
+        "krayin/laravel-core": "^1.0",
+        "krayin/laravel-email": "^1.0",
+        "krayin/laravel-product": "^1.0",
+        "krayin/laravel-tag": "^1.0",
+        "krayin/laravel-user": "^1.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Lead\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Lead\\Providers\\LeadServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}
