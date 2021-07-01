@@ -37,7 +37,7 @@ Breadcrumbs::for('mail.route', function (BreadcrumbTrail $trail, $route) {
 // Mail > [Inbox | Outbox | Draft | Sent | Trash] > Title
 Breadcrumbs::for('mail.route.view', function (BreadcrumbTrail $trail, $route, $email) {
     $trail->parent('mail.route', $route);
-    $trail->push($email->subject, route('admin.mail.view', ['route' => $route, 'id' => $email->id]));
+    $trail->push($email->subject ?? '', route('admin.mail.view', ['route' => $route, 'id' => $email->id]));
 });
 
 
