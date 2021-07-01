@@ -434,8 +434,8 @@ h5 {
                 border-bottom: 1px solid rgba(193, 194, 195, 0.5);
 
                 &.active {
-                    border-bottom: none;
                     background-color: $table-active-cell-color;
+                    border-bottom: 1px solid rgba(14, 144, 217,.35);
                 }
 
                 td {
