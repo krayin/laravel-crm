@@ -249,6 +249,11 @@ trait DataRetrival
                     ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
                     ->orderBy('lead_value', 'desc')
                     ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
+                    ->where(function ($query) {
+                        if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
+                            $query->where('leads.user_id', $currentUser->id);
+                        }
+                    })
                     ->limit(3)
                     ->get()
                     ->toArray();

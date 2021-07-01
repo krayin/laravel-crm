@@ -239,7 +239,8 @@
                 'password'          => 'Password',
                 'login'             => 'Login',
                 'forgot-password'   => 'Forgot Password?',
-                'login-error'       => 'Please check your credentials and try again.'
+                'login-error'       => 'Please check your credentials and try again.',
+                'activate-warning'  => 'Your account is yet to be activated, please contact administrator.',
             ],
 
             'forgot-password' => [
