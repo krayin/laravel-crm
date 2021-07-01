@@ -4,6 +4,15 @@
     {{ __('admin::app.settings.attributes.add-title') }}
 @stop
 
+@push('css')
+    <style>
+        #options > div {
+            padding: 10px;
+            box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
+        }
+    </style>
+@endpush
+
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
         <div class="page-header">

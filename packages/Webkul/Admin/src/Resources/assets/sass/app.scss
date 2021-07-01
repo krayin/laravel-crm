@@ -994,7 +994,7 @@ body {
     }
 
     .row-grid-3 {
-        padding: 10px;
+        padding: 10px 0;
         align-items: start;
         
         .card {
@@ -1115,11 +1115,6 @@ body {
                     &:nth-child(1),
                     &:nth-child(2) {
                        margin-top: 0;
-                    }
-        
-                    &:nth-last-child(1),
-                    &:nth-last-child(2) {
-                       border: none;
                     }
         
                     span {

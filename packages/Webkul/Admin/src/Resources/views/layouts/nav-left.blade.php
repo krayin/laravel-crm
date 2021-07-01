@@ -5,7 +5,7 @@
         @foreach ($menu->items as $menuItem)
             <li class="menu-item {{ Menu::getActive($menuItem) }}" title="{{ $menuItem['name'] }}">
                 <a href="{{ $menuItem['url'] }}">
-                    <span class="icon {{ $menuItem['icon-class'] }}"></span>
+                    <i class="icon sprite {{ $menuItem['icon-class'] }}"></i>
                     
                     <span class="menu-label">{{ $menuItem['name'] }}</span>
                 </a>

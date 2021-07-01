@@ -207,6 +207,15 @@
             'saved-to-draft'          => 'Email saved to draft.',
             'delete-success'          => 'Email deleted successfully.',
             'delete-failed'           => 'Email can not be deleted.',
+
+            'forget-password' => [
+                'subject'           => 'Customer Reset Password',
+                'dear'              => 'Dear :name',
+                'reset-password'    => 'Reset Password',
+                'info'              => 'You are receiving this email because we received a password reset request for your account',
+                'final-summary'     => 'If you did not request a password reset, no further action is required',
+                'thanks'            => 'Thanks!'
+            ],
         ],
 
         'activities' => [
@@ -239,7 +248,8 @@
                 'password'          => 'Password',
                 'login'             => 'Login',
                 'forgot-password'   => 'Forgot Password?',
-                'login-error'       => 'Please check your credentials and try again.'
+                'login-error'       => 'Please check your credentials and try again.',
+                'activate-warning'  => 'Your account is yet to be activated, please contact administrator.',
             ],
 
             'forgot-password' => [

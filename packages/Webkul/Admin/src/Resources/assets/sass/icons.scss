@@ -4,39 +4,51 @@
     vertical-align: top;
     display: inline-block;
     background-size: cover;
+
+    &.sprite {
+        background-size: auto;
+        background-repeat: no-repeat;
+    }
 }
 
 .dashboard-icon {
-    background-image: url("../images/dashboard-icon.svg");
+    background-position: -371px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .leads-icon {
-    background-image: url("../images/leads-icon.svg");
+    background-position: -130px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .emails-icon {
     width: 20px;
     height: 18px;
-    background-image: url("../images/emails-icon.svg");
+    background-position: -419px -3px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .activities-icon {
     width: 17px;
     height: 21px;
-    background-image: url("../images/activities-icon.svg");
+    background-position: -324px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .phone-icon {
-    background-image: url("../images/phone-icon.svg");
+    background-position: -178px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .products-icon {
     height: 18px;
-    background-image: url("../images/products-icon.svg");
+    background-position: -227px -3px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .settings-icon {
-    background-image: url("../images/settings-icon.svg");
+    background-position: -275px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .tools-icon {
@@ -80,31 +92,31 @@
 .menu-item.active,
 .menu-item:hover {
     .dashboard-icon {
-        background-image: url("../images/dashboard-active-icon.svg");
+        background-position: -347px -2px;
     }
 
     .leads-icon {
-        background-image: url("../images/leads-active-icon.svg");
+        background-position: -106px -2px;
     }
 
     .emails-icon {
-        background-image: url("../images/emails-active-icon.svg");
+        background-position: -395px -3px;
     }
 
     .activities-icon {
-        background-image: url("../images/activities-active-icon.svg");
+        background-position: -300px -2px;
     }
 
     .phone-icon {
-        background-image: url("../images/phone-active-icon.svg");
+        background-position: -154px -2px;
     }
 
     .products-icon {
-        background-image: url("../images/products-active-icon.svg");
+        background-position: -203px -3px;
     }
 
     .settings-icon {
-        background-image: url("../images/settings-active-icon.svg");
+        background-position: -251px -2px;
     }
     
     .tools-icon {

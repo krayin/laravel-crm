@@ -47,6 +47,14 @@ class SessionController extends Controller
             return redirect()->back();
         }
 
+        if (auth()->guard('user')->user()->status == 0) {
+            session()->flash('warning', trans('admin::app.sessions.login.activate-warning'));
+
+            auth()->guard('user')->logout();
+
+            return redirect()->route('admin.session.create');
+        }
+
         return redirect()->intended(route('admin.dashboard.index'));
     }
 
