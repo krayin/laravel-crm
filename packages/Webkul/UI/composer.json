@@ -1,5 +1,5 @@
 {
-    "name": "krayin/laravel-user",
+    "name": "krayin/laravel-ui",
     "license": "MIT",
     "authors": [
         {
@@ -12,13 +12,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\\User\\": "src/"
+            "Webkul\\UI\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\User\\Providers\\UserServiceProvider"
+                "Webkul\\UI\\Providers\\UIServiceProvider"
             ],
             "aliases": {}
         }

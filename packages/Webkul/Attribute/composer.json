@@ -1,5 +1,5 @@
 {
-    "name": "krayin/laravel-user",
+    "name": "krayin/laravel-attribute",
     "license": "MIT",
     "authors": [
         {
@@ -12,13 +12,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\\User\\": "src/"
+            "Webkul\\Attribute\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\User\\Providers\\UserServiceProvider"
+                "Webkul\\Attribute\\Providers\\AttributeServiceProvider"
             ],
             "aliases": {}
         }

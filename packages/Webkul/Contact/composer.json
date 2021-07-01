@@ -1,5 +1,5 @@
 {
-    "name": "krayin/laravel-user",
+    "name": "krayin/laravel-contact",
     "license": "MIT",
     "authors": [
         {
@@ -8,17 +8,18 @@
         }
     ],
     "require": {
+        "krayin/laravel-attribute": "^1.0",
         "krayin/laravel-core": "^1.0"
     },
     "autoload": {
         "psr-4": {
-            "Webkul\\User\\": "src/"
+            "Webkul\\Contact\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\User\\Providers\\UserServiceProvider"
+                "Webkul\\Contact\\Providers\\ContactServiceProvider"
             ],
             "aliases": {}
         }
