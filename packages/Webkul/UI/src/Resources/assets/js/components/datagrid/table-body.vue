@@ -32,7 +32,14 @@
                 </td>
 
                 <template v-for="(column, rowIndex) in columns">
-                    <td :key="rowIndex" v-html="row[column.index] || '--'" :class="[column.class ? column.class : column.index ]"></td>
+                    <td
+                        :key="rowIndex"
+                        v-if="column.type != 'hidden'"
+                        v-html="row[column.index] || '--'"
+                        @click="redirectRow(row.redirect_url)"
+                        :title="column.title ? row[column.index] : ''"
+                        :class="[row.redirect_url ? 'cursor-pointer' : '', column.class || column.index ]"
+                    ></td>
                 </template>
 
                 <td v-if="row['action']" class="action">
@@ -141,6 +148,12 @@
                         });
                 }
             },
+
+            redirectRow: function (redirectURL) {
+                if (redirectURL) {
+                    window.location = redirectURL;
+                }
+            }
         }
     };
 </script>

@@ -434,6 +434,8 @@
             'comment'           => 'Comment',
             'is_done'           => 'Is Done',
             'type'              => 'Type',
+            'user'              => 'User',
+            'assigned_to'       => 'Assigned to',
             'entity_type'       => 'Entity type',
             'created_at'        => 'Created Date',
             'schedule_from'     => 'Schedule From',

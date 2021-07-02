@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class OrganizationDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.contacts.organizations.edit",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('organizations')

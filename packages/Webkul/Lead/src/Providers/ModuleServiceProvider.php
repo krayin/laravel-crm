@@ -10,7 +10,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
         \Webkul\Lead\Models\Activity::class,
         \Webkul\Lead\Models\File::class,
         \Webkul\Lead\Models\Lead::class,
-        \Webkul\Lead\Models\LeadProducts::class,
         \Webkul\Lead\Models\Pipeline::class,
         \Webkul\Lead\Models\PipelineStage::class,
         \Webkul\Lead\Models\Product::class,

@@ -197,7 +197,7 @@
                 massActionOptionValue: 'NA',
                 custom_filter: [null, null],
                 url: new URL(window.location.href),
-                ignoreDisplayFilter: ['duration', 'type'],
+                ignoreDisplayFilter: ['duration', 'view_type'],
             }
         },
 

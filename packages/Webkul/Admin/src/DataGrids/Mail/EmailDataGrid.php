@@ -7,6 +7,11 @@ use Webkul\UI\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.mail.view",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('emails')

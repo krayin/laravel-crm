@@ -40,6 +40,13 @@ trait DatagridReferences
     protected $enableFilters = true;
 
     /**
+     * redirect on row click
+     *
+     * @var boolean
+     */
+    protected $redirectRow = false;
+
+    /**
      * array to hold all the columns which will be displayed on frontend.
      *
      * @var array

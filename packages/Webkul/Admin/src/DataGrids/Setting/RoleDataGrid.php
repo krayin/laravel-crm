@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class RoleDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.settings.roles.edit",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('roles')

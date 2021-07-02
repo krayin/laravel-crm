@@ -80,6 +80,11 @@ class LeadRepository extends Repository
                 ->when($createdAtRange, function($query) use ($createdAtRange) {
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
+                ->where(function ($query) {
+                    if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
+                        $query->where('leads.user_id', $currentUser->id);
+                    }
+                })
                 ->get();
     }
 

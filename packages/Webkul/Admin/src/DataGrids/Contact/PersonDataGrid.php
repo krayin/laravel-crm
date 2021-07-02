@@ -8,6 +8,11 @@ use Webkul\UI\DataGrid\DataGrid;
 
 class PersonDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.contacts.persons.edit",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('persons')
@@ -20,6 +25,7 @@ class PersonDataGrid extends DataGrid
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
+        $this->addFilter('id', 'persons.id');
         $this->addFilter('name', 'persons.name');
         $this->addFilter('organization_name', 'organizations.name');
 
@@ -28,6 +34,12 @@ class PersonDataGrid extends DataGrid
 
     public function addColumns()
     {
+        $this->addColumn([
+            'index'             => 'id',
+            'type'              => 'hidden',
+            'searchable'        => true,
+        ]);
+
         $this->addColumn([
             'index'             => 'name',
             'label'             => trans('admin::app.datagrid.name'),

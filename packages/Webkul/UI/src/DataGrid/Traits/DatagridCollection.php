@@ -284,15 +284,15 @@ trait DatagridCollection
 
                 $actionCollection = $action;
 
-                // dd($action['route'], array_merge($action['params'] ?? [], [
-                //     'id' => $row->id
-                // ]));
-                
                 $actionCollection['route'] = route($action['route'], array_merge($action['params'] ?? [], [
                     'id' => $row->id
                 ]));
 
                 array_push($arrayCollection['data'][$index]->action, $actionCollection);
+
+                if ($this->redirectRow) {
+                    $arrayCollection['data'][$index]->redirect_url = route($this->redirectRow['route'], $arrayCollection['data'][$index]->{$this->redirectRow['id']});
+                }
             }
         }
 
@@ -315,6 +315,7 @@ trait DatagridCollection
             'records'           => $arrayCollection,
             'columns'           => $this->completeColumnDetails,
             'actions'           => $this->actions,
+            'redirectRow'       => $this->redirectRow,
             'massactions'       => $this->massActions,
             'index'             => $this->index,
             'enableMassActions' => $this->enableMassAction,

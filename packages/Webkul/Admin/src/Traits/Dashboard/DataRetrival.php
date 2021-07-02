@@ -400,7 +400,7 @@ trait DataRetrival
      */
     private function getTopProducts($startDateFilter, $endDateFilter, $totalWeeks)
     {
-        $topProducts = app('Webkul\Lead\Repositories\LeadProductsRepository')
+        $topProducts = app('Webkul\Lead\Repositories\ProductRepository')
                         ->select('leads.title as label', \DB::raw("(COUNT(*)) as count"))
                         ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
                         ->groupBy('product_id')

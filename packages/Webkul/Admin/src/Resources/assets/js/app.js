@@ -41,6 +41,8 @@ $(function() {
         mounted() {
             setTimeout(() => {
                 this.pageLoaded = true;
+
+                $('.datetime-container input').attr('autocomplete', 'off');
             });
 
             this.addServerErrors();

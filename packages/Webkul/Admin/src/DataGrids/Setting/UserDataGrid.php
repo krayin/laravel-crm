@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 
 class UserDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.settings.users.edit",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('users')

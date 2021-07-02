@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class ActivityDataGrid extends DataGrid
 {
+    protected $users = [];
     protected $tabFilters = [];
+
+    protected $redirectRow = [
+        "id"    => "lead_id",
+        "route" => "admin.leads.view",
+    ];
 
     public function __construct()
     {
@@ -74,18 +80,70 @@ class ActivityDataGrid extends DataGrid
             ],
         ];
 
+        $userRepository = app('\Webkul\User\Repositories\UserRepository');
+
+        $users = $userRepository->all();
+
+        foreach ($users as $user) {
+            array_push($this->users, [
+                'value' => $user['id'],
+                'label' => $user['name'],
+            ]);
+        }
+
         parent::__construct();
     }
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('lead_activities');
+        $queryBuilder = DB::table('lead_activities')
+                        ->select(
+                            'lead_activities.*',
+                            'leads.id as lead_id',
+                            'users.id as assignee_id',
+                            'users.name as assigned_to',
+                            'leads.title as lead_title',
+                            'persons.name as contact_person',
+                            'persons.id as contact_person_id'
+                        )
+                        ->where(function ($query) {
+                            if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
+                                $query->where('lead_activities.user_id', $currentUser->id);
+                            }
+                        })
+                        ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
+                        ->leftJoin('users', 'lead_activities.user_id', '=', 'users.id')
+                        ->leftJoin('persons', 'leads.person_id', '=', 'persons.id');
+
+        $this->addFilter('id', 'lead_activities.id');
+        $this->addFilter('assigned_to', 'users.name');
+        $this->addFilter('user', 'lead_activities.user_id');
 
         $this->setQueryBuilder($queryBuilder);
     }
 
     public function addColumns()
     {
+        $this->addColumn([
+            'index'             => 'user',
+            'label'             => trans('admin::app.datagrid.user'),
+            'type'              => 'hidden',
+            'sortable'          => true,
+            'filterable_type'   => 'dropdown',
+            'filterable_options' => $this->users,
+        ]);
+
+        $this->addColumn([
+            'index'             => 'subject',
+            'label'             => trans('admin::app.datagrid.subject'),
+            'type'              => 'string',
+            'closure'           => function ($row) {
+                $route = urldecode(route('admin.leads.index', ['type' => 'table', 'id[eq]' => $row->lead_id]));
+
+                return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
+            },
+        ]);
+
         $this->addColumn([
             'index'       => 'comment',
             'label'       => trans('admin::app.datagrid.comment'),
@@ -117,12 +175,37 @@ class ActivityDataGrid extends DataGrid
                 } else {
                     return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
                 }
+
+                // return "<span class='checkbox'><input type='checkbox'" . ($row->is_done ? "checked=checked" : "") . "disabled='disabled'><label for='checkbox' class='checkbox-view'></label></span>";
+            },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'contact_person',
+            'label'             => trans('admin::app.datagrid.contact_person'),
+            'type'              => 'string',
+            'closure'           => function ($row) {
+                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->contact_person_id]));
+
+                return "<a href='" . $route . "'>" . $row->contact_person . "</a>";
+            },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'assigned_to',
+            'label'             => trans('admin::app.datagrid.assigned_to'),
+            'type'              => 'string',
+            'closure'           => function ($row) {
+                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->assignee_id]));
+
+                return "<a href='" . $route . "'>" . $row->assigned_to . "</a>";
             },
         ]);
 
         $this->addColumn([
             'index'             => 'schedule_from',
             'label'             => trans('admin::app.datagrid.schedule_from'),
+            'title'             => true,
             'type'              => 'string',
             'sortable'          => true,
             'filterable_type'   => 'date_range',
@@ -134,6 +217,7 @@ class ActivityDataGrid extends DataGrid
         $this->addColumn([
             'index'             => 'schedule_to',
             'label'             => trans('admin::app.datagrid.schedule_to'),
+            'title'             => true,
             'type'              => 'string',
             'sortable'          => true,
             'filterable_type'   => 'date_range',
@@ -145,6 +229,7 @@ class ActivityDataGrid extends DataGrid
         $this->addColumn([
             'index'             => 'created_at',
             'label'             => trans('admin::app.datagrid.created_at'),
+            'title'             => true,
             'type'              => 'string',
             'sortable'          => true,
             'filterable_type'   => 'date_range',

@@ -96,8 +96,10 @@
                             }
                         })
                         .catch(error => {
-                            if (error.response.status == 500) {
-                                self.$store.state.filters = [];
+                            const actualFilters = self.$store.state.filters.filter(filter => ! (filter.column == 'view_type' && filter.val == 'table'));
+
+                            if (error.response.status == 500 && actualFilters.length > 0) {
+                                self.$store.state.filters = self.$store.state.filters.filter(filter => filter.column == 'view_type' && filter.val == 'table');
                                 self.toggleSidebarFilter();
     
                                 self.addFlashMessages({
@@ -107,7 +109,7 @@
                             }
 
                             self.pageLoaded = self.resultLoaded = true;
-                        })
+                        });
                 }
             },
 
