@@ -378,7 +378,7 @@
 
                     <div class="form-group" :class="[errors.has('note-form.comment') ? 'has-error' : '']">
                         <label for="comment" class="required">{{ __('admin::app.leads.note') }}</label>
-                        <textarea v-validate="'required'" class="control" id="comment" name="comment" data-vv-as="&quot;{{ __('admin::app.leads.note') }}&quot;">{{ old('comment') }}</textarea>
+                        <textarea v-validate="'required'" class="control" id="note-comment" name="comment" data-vv-as="&quot;{{ __('admin::app.leads.note') }}&quot;">{{ old('comment') }}</textarea>
                         <span class="control-error" v-if="errors.has('note-form.comment')">@{{ errors.first('note-form.comment') }}</span>
                     </div>
 
@@ -410,7 +410,7 @@
 
                     <div class="form-group">
                         <label for="comment">{{ __('admin::app.leads.description') }}</label>
-                        <textarea class="control" id="comment" name="comment">{{ old('comment') }}</textarea>
+                        <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
                     </div>
 
                     <div class="form-group" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
@@ -513,7 +513,7 @@
 
                     <div class="form-group">
                         <label for="comment">{{ __('admin::app.leads.description') }}</label>
-                        <textarea class="control" id="comment" name="comment">{{ old('comment') }}</textarea>
+                        <textarea class="control" id="files-comment" name="comment">{{ old('comment') }}</textarea>
                     </div>
 
                     <div class="form-group" :class="[errors.has('file-form.file') ? 'has-error' : '']">

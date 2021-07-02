@@ -11,7 +11,7 @@
 @stop
 
 @php
-    $viewType = request()->type ?? "kanban";
+    $viewType = request()->view_type ?? "kanban";
     
     $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
 @endphp

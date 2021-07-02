@@ -7,23 +7,55 @@ use Illuminate\Support\Facades\DB;
 
 class LeadDataGrid extends DataGrid
 {
-    protected $stagesFilterableOptions;
+    protected $users = [];
+    protected $tabFilters = [];
     protected $stagesMassActionOptions;
+
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.leads.view",
+    ];
 
     public function __construct()
     {
-        $this->stagesFilterableOptions = [];
-        $stageRepository = app('\Webkul\Lead\Repositories\StageRepository');
+        // get all stages
+        $stagesValues = [
+            [
+                'name'      => trans('admin::app.leads.all'),
+                'isActive'  => true,
+                'key'       => 'all',
+            ]
+        ];
 
-        $stages = $stageRepository->all()->toArray();
-
+        $stages = app('\Webkul\Lead\Repositories\StageRepository')
+                    ->select('name', 'code as key')
+                    ->get()
+                    ->toArray();
+                    
         foreach ($stages as $stage) {
-            array_push($this->stagesFilterableOptions, [
-                'value' => $stage['id'],
-                'label' => $stage['name'],
-            ]);
+            $stage['isActive'] = false;
+            array_push($stagesValues, $stage);
+        }
 
-            $this->stagesMassActionOptions[$stage['name']] = $stage['id'];
+        $this->tabFilters = [
+            [
+                'type'      => 'pill',
+                'key'       => 'type',
+                'condition' => 'eq',
+                'values'    => $stagesValues,
+            ],
+        ];
+
+        // get all users
+        $userRepository = app('\Webkul\User\Repositories\UserRepository');
+
+        $users = $userRepository->all();
+
+        foreach ($users as $user) {
+            array_push($this->users, [
+                'value' => $user['id'],
+                'label' => $user['name'],
+            ]);
         }
 
         parent::__construct();
@@ -52,6 +84,9 @@ class LeadDataGrid extends DataGrid
             $queryBuilder->where('leads.user_id', $user->id);
         }
 
+        $this->addFilter('id', 'leads.id');
+        $this->addFilter('user', 'leads.user_id');
+        $this->addFilter('type', 'lead_stages.code');
         $this->addFilter('stage', 'leads.lead_stage_id');
         $this->addFilter('created_at', 'leads.created_at');
 
@@ -60,6 +95,21 @@ class LeadDataGrid extends DataGrid
 
     public function addColumns()
     {
+        $this->addColumn([
+            'index'             => 'id',
+            'type'              => 'hidden',
+            'searchable'        => true,
+        ]);
+
+        $this->addColumn([
+            'index'             => 'user',
+            'label'             => trans('admin::app.datagrid.user'),
+            'type'              => 'hidden',
+            'sortable'          => true,
+            'filterable_type'   => 'dropdown',
+            'filterable_options' => $this->users,
+        ]);
+
         $this->addColumn([
             'index'       => 'title',
             'label'       => trans('admin::app.datagrid.subject'),
@@ -99,8 +149,6 @@ class LeadDataGrid extends DataGrid
             'index'              => 'stage',
             'label'              => trans('admin::app.datagrid.stage'),
             'type'               => 'boolean',
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->stagesFilterableOptions,
             'closure'            => function ($row) {
                 if ($row->stage == "Won") {
                     $badge = 'success';

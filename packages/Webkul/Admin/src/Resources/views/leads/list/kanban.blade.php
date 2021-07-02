@@ -49,7 +49,7 @@
                         <i class="icon layout-column-line-active-icon"></i>
                     </a>
             
-                    <a href="{{ route('admin.leads.index', ['type' => 'table']) }}" class="icon-container">
+                    <a href="{{ route('admin.leads.index', ['view_type' => 'table']) }}" class="icon-container">
                         <i class="icon table-line-icon"></i>
                     </a>
                 </div>

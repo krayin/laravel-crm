@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 class AttributeDataGrid extends DataGrid
 {
     protected $tabFilters = [];
+    
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.settings.attributes.edit",
+    ];
 
     public function __construct()
     {

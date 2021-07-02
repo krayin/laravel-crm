@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class TypeDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.settings.types.edit",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('lead_types')

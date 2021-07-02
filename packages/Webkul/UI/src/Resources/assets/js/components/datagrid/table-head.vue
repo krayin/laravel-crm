@@ -26,13 +26,15 @@
                 </span>
             </th>
 
-            <th
-                :key="index"
-                v-html="column.label"
-                v-for="(column, index) in columns"
-                @click="column.sortable ? sortCollection(index) : ''"
-                :class="[column.class ? column.class : column.index, `${column.sortable ? 'cursor-pointer' : ''}`]"
-            ></th>
+            <template v-for="(column, index) in columns">
+                <th
+                    :key="index"
+                    v-html="column.label"
+                    v-if="column.type != 'hidden'"
+                    @click="column.sortable ? sortCollection(index) : ''"
+                    :class="[column.class ? column.class : column.index, `${column.sortable ? 'cursor-pointer' : ''}`]"
+                ></th>
+            </template>
 
             <th v-if="actions.length > 0" class="actions">
                 {{ __('ui.datagrid.actions') }}

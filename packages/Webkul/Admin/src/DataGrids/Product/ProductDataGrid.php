@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductDataGrid extends DataGrid
 {
+    protected $redirectRow = [
+        "id"    => "id",
+        "route" => "admin.products.view",
+    ];
+
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('products')
