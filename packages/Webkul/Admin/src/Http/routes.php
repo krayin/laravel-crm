@@ -95,6 +95,22 @@ Route::group(['middleware' => ['web']], function () {
                 Route::delete('{lead_id}/{tag_id?}', 'TagController@detete')->name('admin.leads.tags.delete');
             });
 
+            // Leads Routes
+            Route::group([
+                'prefix'    => 'quotes',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Quote',
+            ], function () {
+                Route::get('', 'QuoteController@index')->name('admin.quotes.index');
+
+                Route::get('create/{id?}', 'QuoteController@create')->name('admin.quotes.create');
+
+                Route::post('create', 'QuoteController@store')->name('admin.quotes.store');
+
+                Route::get('edit/{id}', 'QuoteController@edit')->name('admin.quotes.edit');
+
+                Route::put('edit/{id}', 'QuoteController@update')->name('admin.quotes.update');
+            });
+
             Route::group([
                 'prefix'    => 'activities',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Activity',

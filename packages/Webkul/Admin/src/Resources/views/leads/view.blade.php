@@ -614,6 +614,30 @@
                     
                 </div>
             </tab>
+
+            <tab name="Quotes">
+                <div class="table" style="padding: 5px">
+                    <a href="{{ route('admin.quotes.create', $lead->id) }}" class="btn btn-primary">Create Quote</a>
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="name">Name</th>
+                                <th class="created_at">Created Date</th>
+                                <th class="actions">Actions</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr>
+                                <td title="" class="name">Webkul</td>
+                                <td title="" class="created_at">28 Jun 2021 22:40</td>
+                                <td title="" class="actions"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </tab>
         </tabs>
     </script>
 

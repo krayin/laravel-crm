@@ -20,4 +20,9 @@ return [
         'name'       => 'Product',
         'repository' => 'Webkul\Product\Repositories\ProductRepository',
     ],
+
+    'quotes'      => [
+        'name'       => 'Quote',
+        'repository' => 'Webkul\Quote\Repositories\QuoteRepository',
+    ],
 ];

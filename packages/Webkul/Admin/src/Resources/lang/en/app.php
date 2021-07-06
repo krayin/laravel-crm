@@ -25,6 +25,7 @@
         'layouts' => [
             'dashboard'     => 'Dashboard',
             'leads'         => 'Leads',
+            'quotes'        => 'Quotes',
             'mail'          => [
                 'title'   => 'Mail',
                 'compose' => 'Compose',
@@ -164,6 +165,8 @@
             'email-scheduled'          => 'Email scheduled at :from - :to',
             'file-added'               => 'File added',
             'lead_stage_updated'       => 'Lead stage updated successfully!',
+            'quote-create-success'     => 'Quote added successfully.',
+            'quote-destroy-success'    => 'Quote removed successfully.',
             'tag-create-success'       => 'Tag added successfully.',
             'tag-destroy-success'      => 'Tag removed successfully.',
         ],
@@ -238,6 +241,20 @@
             'update-success' => 'Product updated successfully.',
             'delete-success' => 'Product deleted successfully.',
             'delete-failed'  => 'Product can not be deleted.',
+        ],
+
+        'quotes' => [
+            'title'          => 'Quotes',
+            'quote'          => 'Quote',
+            'add-title'      => 'Add Quote',
+            'edit-title'     => 'Edit Quote',
+            'save-btn-title' => 'Save as Quote',
+            'back'           => 'Back',
+            'cancel'         => 'Cancel',
+            'create-success' => 'Quote created successfully.',
+            'update-success' => 'Quote updated successfully.',
+            'delete-success' => 'Quote deleted successfully.',
+            'delete-failed'  => 'Quote can not be deleted.',
         ],
 
         'sessions' => [
