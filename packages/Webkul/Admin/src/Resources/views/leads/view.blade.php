@@ -355,11 +355,17 @@
                             <textarea class="control" name="lost_reason"></textarea>
                         </div>
 
+                        <div class="form-group" v-if="this[nextStageCode] && this[nextStageCode].code == 'won'">
+                            <label>{{ __('admin::app.leads.won-value') }}</label>
+
+                            <input type="text" name="lead_value" class="control" value="{{ $lead->lead_value }}" />
+                        </div>
+
                         <div class="form-group">
                             <label>{{ __('admin::app.leads.closed-date') }}</label>
 
                             <date>
-                                <input type="text" name="closed_at" class="control"/>
+                                <input type="text" name="closed_at" class="control" />
                             </date>
                         </div>
                     </div>

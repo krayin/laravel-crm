@@ -71,7 +71,7 @@ trait DatagridCollection
             foreach ($info as $condition => $filter_value) {
                 switch ($condition) {
                     case 'in':
-                        $collection->orWhereIn(
+                        $collection->whereIn(
                             $columnName,
                             explode(',', $filter_value)
                         );
@@ -85,7 +85,7 @@ trait DatagridCollection
                                 $dates[1] = Carbon::today()->format('Y-m-d');
                             }
                             
-                            $collection->orWhereBetween(
+                            $collection->whereBetween(
                                 $columnName,
                                 $dates
                             );
@@ -138,13 +138,13 @@ trait DatagridCollection
                 foreach ($this->completeColumnDetails as $column) {
                     if (isset($column['searchable']) && $column['searchable'] == true) {
                         if ($this->enableFilterMap && isset($this->filterMap[$column['index']])) {
-                            $collection->orWhere(
+                            $collection->where(
                                 $this->filterMap[$column['index']],
                                 'like',
                                 '%' . $info['all'] . '%'
                             );
                         } else {
-                            $collection->orWhere($column['index'], 'like', '%' . $info['all'] . '%');
+                            $collection->where($column['index'], 'like', '%' . $info['all'] . '%');
                         }
                     }
                 }
@@ -172,7 +172,7 @@ trait DatagridCollection
                 }
 
                 $value = array_values($info)[0];
-                $column = ($key === "duration") ? "created_at" : $key;
+                $column = ($key === "duration") ? $this->filterMap["created_at"] ?? "created_at" : $key;
 
                 $endDate = Carbon::now()->format('Y-m-d');
 
