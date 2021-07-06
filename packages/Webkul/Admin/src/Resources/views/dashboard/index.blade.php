@@ -22,10 +22,12 @@
             start-date="{{ $startDate }}"
             class="card-filter-container"
         ></date-range>
+
+        {{-- <button type="button" @click="exportDashboard">Export</button> --}}
     </script>
 
     <script type="text/x-template" id="cards-collection-template">
-        <draggable v-model="filteredCards" @change="onRowDrop">
+        <draggable v-model="filteredCards" @change="onRowDrop" class="dashboard-content">
             <div v-for="(filteredCardRow, index) in filteredCards" :key="index">
                 <draggable :key="`inner-${index}`" :list="filteredCardRow" class="row-grid-3" handle=".drag-icon" @change="onColumnDrop">
                     <div :class="`card ${card.card_border || ''}`" v-for="(card, cardRowIndex) in filteredCardRow" :key="`row-${index}-${cardRowIndex}`">
@@ -199,6 +201,16 @@
 
                 updateCardData: function (dateRange) {
                     EventBus.$emit('updateDateRange', dateRange);
+                },
+
+                exportDashboard: function () {
+                    $('.dashboard-content').addClass('print');
+
+                    setTimeout(() => {
+                        window.print();
+
+                        $('.dashboard-content').removeClass('print');
+                    });
                 }
             }
         });

@@ -905,7 +905,19 @@ body {
 }
 
 .dashboard {
+    height: unset !important;
     background-color: $body-background;
+
+    .dashboard-content {
+        &.print {
+            left: 0;
+            top: -60px;
+            width: 100%;
+            z-index: 10000;
+            position: absolute;
+            background-color: $white;
+        }
+    }
 
     > h1 {
         margin-bottom: 35px;

@@ -31,6 +31,7 @@ class UserDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'             => 'id',
+            'head_style'        => 'width: 50px',
             'label'             => trans('admin::app.datagrid.id'),
             'type'              => 'string',
             'searchable'        => true,

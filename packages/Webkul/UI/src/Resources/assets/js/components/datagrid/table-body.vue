@@ -35,9 +35,9 @@
                     <td
                         :key="rowIndex"
                         v-if="column.type != 'hidden'"
-                        v-html="row[column.index] || '--'"
                         @click="redirectRow(row.redirect_url)"
                         :title="column.title ? row[column.index] : ''"
+                        v-html="getRowContent(row[column.index])"
                         :class="[row.redirect_url ? 'cursor-pointer' : '', column.class || column.index ]"
                     ></td>
                 </template>
@@ -153,6 +153,13 @@
                 if (redirectURL) {
                     window.location = redirectURL;
                 }
+            },
+
+            getRowContent: function (content) {
+                if (content) {
+                    // content = content.replace("<script>", "<\/script>");
+                }
+                return content || (content === 0 ? content : '--')
             }
         }
     };

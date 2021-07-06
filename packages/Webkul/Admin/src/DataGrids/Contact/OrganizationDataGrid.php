@@ -4,13 +4,23 @@ namespace Webkul\Admin\DataGrids\Contact;
 
 use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\Contact\Repositories\PersonRepository;
 
 class OrganizationDataGrid extends DataGrid
 {
+    protected $personRepository;
+
     protected $redirectRow = [
         "id"    => "id",
         "route" => "admin.contacts.organizations.edit",
     ];
+
+    public function __construct(PersonRepository $personRepository)
+    {
+        $this->personRepository = $personRepository;
+
+        parent::__construct();
+    }
 
     public function prepareQueryBuilder()
     {
@@ -28,12 +38,39 @@ class OrganizationDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
+            'index'             => 'id',
+            'head_style'        => 'width: 50px',
+            'label'             => trans('admin::app.datagrid.id'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => true,
+            'filterable_type'   => 'add'
+        ]);
+
+        $this->addColumn([
             'index'             => 'name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
             'filterable_type'   => 'add'
+        ]);
+
+        $this->addColumn([
+            'index'             => 'persons_count',
+            'head_style'        => 'width: 100px',
+            'label'             => trans('admin::app.datagrid.persons_count'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'closure'           => function ($row) {
+                $personsCount = $this->personRepository
+                                ->findWhere(['organization_id' => $row->id])
+                                ->count();
+
+                $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
+
+                return "<a href='" . $route . "'>" . $personsCount . "</a>";
+            },
         ]);
 
         $this->addColumn([

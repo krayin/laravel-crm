@@ -88,24 +88,6 @@
             </div>
         </div>
 
-        <!-- applied filters section -->
-        <div class="filtered-tags" v-if="filters.length > 0">
-            <template v-for="(filter, index) in filters">
-                <div
-                    :key="index"
-                    class="filter-tag"
-                    v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
-                >
-                    <span v-text="filter.prettyColumn || filter.column"></span>
-
-                    <span class="wrapper">
-                        {{ filter.prettyValue || decodeURIComponent(filter.val) }}
-                        <i class="icon close-icon" @click="removeFilter(filter)"></i>
-                    </span>
-                </div>
-            </template>
-        </div>
-
         <!-- tabs section -->
         <div class="tabs-container" v-if="tableData.tabFilters.length > 0">
             <tabs
@@ -167,6 +149,24 @@
                     </button>
                 </div>
             </div>
+        </div>
+
+        <!-- applied filters section -->
+        <div class="filtered-tags" v-if="filters.length > 0">
+            <template v-for="(filter, index) in filters">
+                <div
+                    :key="index"
+                    class="filter-tag"
+                    v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
+                >
+                    <span v-text="filter.prettyColumn || filter.column"></span>
+
+                    <span class="wrapper">
+                        {{ filter.prettyValue || decodeURIComponent(filter.val) }}
+                        <i class="icon close-icon" @click="removeFilter(filter)"></i>
+                    </span>
+                </div>
+            </template>
         </div>
     </div>
 </template>

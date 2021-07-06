@@ -42,7 +42,7 @@ $(function() {
             setTimeout(() => {
                 this.pageLoaded = true;
 
-                $('.datetime-container input').attr('autocomplete', 'off');
+                this.disableAutoComplete();
             });
 
             this.addServerErrors();
@@ -127,6 +127,8 @@ $(function() {
 
             openModal(id) {
                 this.$set(this.modalIds, id, true);
+
+                this.disableAutoComplete();
             },
 
             closeModal(id) {
@@ -137,6 +139,13 @@ $(function() {
                 this.isMenuOpen = ! this.isMenuOpen;
 
                 localStorage.setItem('crm-sidebar', this.isMenuOpen);
+            },
+
+            disableAutoComplete: function () {
+                queueMicrotask(() => {
+                    $('.date-container input').attr('autocomplete', 'off');
+                    $('.datetime-container input').attr('autocomplete', 'off');
+                });
             }
         }
     });

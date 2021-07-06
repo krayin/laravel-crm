@@ -2043,3 +2043,12 @@ ol.breadcrumb {
     grid-gap: 10px;
     @include display-grid(repeat(2, auto));
 }
+
+.bar-chart,
+.line-chart {
+    canvas {
+        ~ img {
+            display: none;
+        }
+    }
+}
