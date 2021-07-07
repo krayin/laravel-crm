@@ -9,7 +9,7 @@ class ProductDataGrid extends DataGrid
 {
     protected $redirectRow = [
         "id"    => "id",
-        "route" => "admin.products.view",
+        "route" => "admin.products.edit",
     ];
 
     public function prepareQueryBuilder()
