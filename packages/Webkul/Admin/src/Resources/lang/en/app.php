@@ -217,6 +217,21 @@
                 'final-summary'     => 'If you did not request a password reset, no further action is required',
                 'thanks'            => 'Thanks!'
             ],
+
+            'person' => [
+                'create-subject'    => 'You are added as a customer.',
+                'create-body'       => 'Congratulations! You are added as a person.',
+            ],
+
+            'user' => [
+                'create-subject'    => 'You are added as a member.',
+                'create-body'       => 'Congratulations! You are now a member of our team.',
+            ],
+
+            'lead' => [
+                'create-subject'    => 'New lead generated',
+                'create-body'       => 'A new <a href=":leadLink">lead</a> has been generated successfully!',
+            ]
         ],
 
         'activities' => [

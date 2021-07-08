@@ -5,10 +5,12 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
 
 use Webkul\Admin\Http\Requests\UserForm;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Admin\Notifications\User\Create;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class UserController extends Controller
@@ -96,6 +98,12 @@ class UserController extends Controller
         $admin->lead_view_permission = $data['lead_view_permission'];
 
         $admin->save();
+
+        try {
+            Mail::queue(new Create($admin));
+        } catch (\Exception $e) {
+            report($e);
+        }
 
         Event::dispatch('settings.user.create.after', $admin);
 

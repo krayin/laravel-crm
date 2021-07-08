@@ -93,19 +93,6 @@ class ActivityController extends Controller
         }
     }
 
-    /**
-     * Send email
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function sendEmail($id)
-    {
-        dd(request()->all());
-        $lead = $this->leadRepository->findOrFail($id);
-        
-    }
-
     /*
      * Remove the specified resource from storage.
      *
