@@ -32,7 +32,7 @@ a {
     &:visited,
     &:focus,
     &:active {
-        padding: 6px 0px;
+        // padding: 6px 0px;
         text-decoration: none;
         color: $primary-color;
     }
@@ -265,6 +265,7 @@ h5 {
                 padding: 8px 12px;
                 font-size: $font-size-md;
                 cursor: pointer;
+                color: $secondary-font-color;
 
                 a {
                     &:link,

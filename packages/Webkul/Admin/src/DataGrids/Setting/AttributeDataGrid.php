@@ -42,6 +42,10 @@ class AttributeDataGrid extends DataGrid
                         'name'      => trans('admin::app.products.title'),
                         'isActive'  => false,
                         'key'       => 'products',
+                    ], [
+                        'name'      => trans('admin::app.quotes.title'),
+                        'isActive'  => false,
+                        'key'       => 'quotes',
                     ]
                 ]
             ]
@@ -86,20 +90,20 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
+            'index'      => 'name',
+            'label'      => trans('admin::app.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+        ]);
+
+        $this->addColumn([
             'index'      => 'entity_type',
             'label'      => trans('admin::app.datagrid.entity_type'),
             'type'       => 'string',
             'closure'       => function ($row) {
                 return ucfirst($row->entity_type);
             },
-        ]);
-
-        $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
         ]);
 
         $this->addColumn([

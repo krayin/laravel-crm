@@ -134,7 +134,6 @@ abstract class Repository extends BaseRepository implements CacheableInterface {
      */
     public function getModel($data = [])
     {
-        
         return $this->model;
     }
 }

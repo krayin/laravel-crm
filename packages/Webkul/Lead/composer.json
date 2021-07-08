@@ -13,6 +13,7 @@
         "krayin/laravel-core": "^1.0",
         "krayin/laravel-email": "^1.0",
         "krayin/laravel-product": "^1.0",
+        "krayin/laravel-quote": "^1.0",
         "krayin/laravel-tag": "^1.0",
         "krayin/laravel-user": "^1.0"
     },

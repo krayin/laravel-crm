@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Email\Models\EmailProxy;
+use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Lead\Contracts\Lead as LeadContract;
@@ -104,6 +105,14 @@ class Lead extends Model implements LeadContract
     public function emails()
     {
         return $this->hasMany(EmailProxy::modelClass());
+    }
+
+    /**
+     * The quotes that belong to the lead.
+     */
+    public function quotes()
+    {
+        return $this->belongsToMany(QuoteProxy::modelClass(), 'lead_quotes');
     }
 
     /**
