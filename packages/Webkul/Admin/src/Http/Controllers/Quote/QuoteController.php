@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Quote;
 
 use Illuminate\Support\Facades\Event;
+use Barryvdh\DomPDF\Facade as PDF;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Quote\Repositories\QuoteRepository;
@@ -53,9 +54,10 @@ class QuoteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(AttributeForm $request)
     {
         Event::dispatch('quote.create.before');
 
@@ -65,7 +67,7 @@ class QuoteController extends Controller
         
         session()->flash('success', trans('admin::app.quotes.create-success'));
 
-        return redirect()->back();
+        return redirect()->route('admin.quotes.index');
     }
 
     /**
@@ -159,5 +161,22 @@ class QuoteController extends Controller
             'status'  => true,
             'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.title')]),
         ]);
+    }
+
+    /**
+     * Print and download the for the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function print($id)
+    {
+        $quote = $this->quoteRepository->findOrFail($id);
+
+        return view('admin::quotes.pdf', compact('quote'));
+
+        return PDF::loadHTML(view('admin::quotes.pdf', compact('quote'))->render())
+            ->setPaper('a4')
+            ->download('Quote_' . $quote->subject . '.pdf');
     }
 }

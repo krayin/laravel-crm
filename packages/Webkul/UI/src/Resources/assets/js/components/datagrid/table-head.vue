@@ -31,6 +31,7 @@
                     :key="index"
                     v-html="column.label"
                     v-if="column.type != 'hidden'"
+                    :style="column.head_style || ''"
                     @click="column.sortable ? sortCollection(index) : ''"
                     :class="[column.class ? column.class : column.index, `${column.sortable ? 'cursor-pointer' : ''}`]"
                 ></th>

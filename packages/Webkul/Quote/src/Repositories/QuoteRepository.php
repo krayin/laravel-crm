@@ -3,6 +3,7 @@
 namespace Webkul\Quote\Repositories;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Str;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 
@@ -16,18 +17,29 @@ class QuoteRepository extends Repository
     protected $attributeValueRepository;
 
     /**
+     * QuoteItemRepository object
+     *
+     * @var \Webkul\Quote\Repositories\QuoteItemRepository
+     */
+    protected $quoteItemRepository;
+
+    /**
      * Create a new repository instance.
      *
      * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
+     * @param  \Webkul\Quote\Repositories\QuoteItemRepository  $quoteItemRepository
      * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
         AttributeValueRepository $attributeValueRepository,
+        QuoteItemRepository $quoteItemRepository,
         Container $container
     )
     {
         $this->attributeValueRepository = $attributeValueRepository;
+
+        $this->quoteItemRepository = $quoteItemRepository;
 
         parent::__construct($container);
     }
@@ -52,6 +64,12 @@ class QuoteRepository extends Repository
 
         $this->attributeValueRepository->save($data, $quote->id);
 
+        foreach ($data['items'] as $itemData) {
+            $this->quoteItemRepository->create(array_merge($itemData, [
+                'quote_id' => $quote->id,
+            ]));
+        }
+
         return $quote;
     }
 
@@ -63,9 +81,31 @@ class QuoteRepository extends Repository
      */
     public function update(array $data, $id, $attribute = "id")
     {
-        $quote = parent::update($data, $id);
+        $quote = $this->find($id);
+
+        parent::update($data, $id, $attribute);
 
         $this->attributeValueRepository->save($data, $id);
+
+        $previousItemIds = $quote->items->pluck('id');
+
+        foreach ($data['items'] as $itemId => $itemData) {
+            if (Str::contains($itemId, 'item_')) {
+                $this->quoteItemRepository->create(array_merge($itemData, [
+                    'quote_id' => $id,
+                ]));
+            } else {
+                if (is_numeric($index = $previousItemIds->search($itemId))) {
+                    $previousItemIds->forget($index);
+                }
+
+                $this->quoteItemRepository->update($itemData, $itemId);
+            }
+        }
+
+        foreach ($previousItemIds as $itemId) {
+            $this->quoteItemRepository->delete($itemId);
+        }
 
         return $quote;
     }

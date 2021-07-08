@@ -14,6 +14,12 @@ class Quote extends Model implements QuoteContract
 
     protected $table = 'quotes';
 
+    protected $casts = [
+        'billing_address'  => 'array',
+        'shipping_address' => 'array',
+        'expired_at'       => 'datetime',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

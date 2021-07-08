@@ -5,13 +5,30 @@ namespace Webkul\Admin\DataGrids\Contact;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Arr;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\Contact\Repositories\OrganizationRepository;
 
 class PersonDataGrid extends DataGrid
 {
+    protected $organizations = [];
+
     protected $redirectRow = [
         "id"    => "id",
         "route" => "admin.contacts.persons.edit",
     ];
+
+    public function __construct(OrganizationRepository $organizationRepository)
+    {
+        $organizations = $organizationRepository->all();
+
+        foreach ($organizations as $organization) {
+            array_push($this->organizations, [
+                'value' => $organization['id'],
+                'label' => $organization['name'],
+            ]);
+        }
+
+        parent::__construct();
+    }
 
     public function prepareQueryBuilder()
     {
@@ -21,13 +38,13 @@ class PersonDataGrid extends DataGrid
                 'persons.name',
                 'persons.emails',
                 'persons.contact_numbers',
-                'organizations.name as organization_name'
+                'organizations.name as organization'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
         $this->addFilter('id', 'persons.id');
         $this->addFilter('name', 'persons.name');
-        $this->addFilter('organization_name', 'organizations.name');
+        $this->addFilter('organization', 'organizations.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -84,12 +101,13 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'organization_name',
-            'label'             => trans('admin::app.datagrid.organization_name'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'              => 'organization',
+            'label'              => trans('admin::app.datagrid.organization_name'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->organizations,
         ]);
     }
 

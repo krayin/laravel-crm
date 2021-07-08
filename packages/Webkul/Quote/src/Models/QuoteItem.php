@@ -25,6 +25,7 @@ class QuoteItem extends Model implements QuoteItemContract
         'tax_percent',
         'tax_amount',
         'total',
+        'product_id',
         'quote_id',
     ];
 

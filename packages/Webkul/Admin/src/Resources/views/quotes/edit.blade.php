@@ -1,21 +1,21 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.quotes.add-title') }}
+    {{ __('admin::app.quotes.edit-title') }}
 @stop
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
         <div class="page-header">
 
-            {{ Breadcrumbs::render('quotes.create') }}
+            {{ Breadcrumbs::render('quotes.edit', $quote) }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.quotes.add-title') }}</h1>
+                <h1>{{ __('admin::app.quotes.edit-title') }}</h1>
             </div>
         </div>
 
-        <form method="POST" action="{{ route('admin.quotes.store') }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.quotes.update', $quote->id) }}" @submit.prevent="onSubmit">
 
             <div class="page-content">
                 <div class="form-container">
@@ -32,6 +32,8 @@
                         <div class="panel-body">
                             @csrf()
 
+                            <input name="_method" type="hidden" value="PUT">
+
                             <input type="hidden" name="lead_id" value="{{ request('id') }}"/>
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
@@ -39,17 +41,18 @@
 
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query){
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'user_id',
-                                                    'subject',
-                                                    'description',
-                                                    'expired_at',
-                                                    'person_id',
-                                                ]);
-                                        })->get()
+                                            ->scopeQuery(function($query){
+                                                return $query
+                                                    ->where('entity_type', 'quotes')
+                                                    ->whereIn('code', [
+                                                        'user_id',
+                                                        'subject',
+                                                        'description',
+                                                        'expired_at',
+                                                        'person_id',
+                                                    ]);
+                                            })->get(),
+                                        'entity'           => $quote,
                                     ])
 
                                 </div>
@@ -67,7 +70,8 @@
                                                     'billing_address',
                                                     'shipping_address',
                                                 ]);
-                                        })->get()
+                                        })->get(),
+                                        'entity'           => $quote,
                                     ])
 
                                 </div>
@@ -76,7 +80,7 @@
                             <accordian :title="'{{ __('admin::app.quotes.quote-items') }}'" :active="true">
                                 <div slot="body">
 
-                                    <quote-item-list></quote-item-list>
+                                    <quote-item-list :data='@json($quote->items)'></quote-item-list>
 
                                 </div>
                             </accordian>
@@ -299,7 +303,7 @@
                 return {
                     adjustmentAmount: 0,
 
-                    products: [{
+                    products: this.data ? this.data : [{
                         'id': null,
                         'product_id': null,
                         'name': '',

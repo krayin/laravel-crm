@@ -47,9 +47,7 @@ class LeadDataGrid extends DataGrid
         ];
 
         // get all users
-        $userRepository = app('\Webkul\User\Repositories\UserRepository');
-
-        $users = $userRepository->all();
+        $users = app('\Webkul\User\Repositories\UserRepository')->all();
 
         foreach ($users as $user) {
             array_push($this->users, [
@@ -70,6 +68,7 @@ class LeadDataGrid extends DataGrid
                 'leads.status',
                 'leads.lead_value',
                 'leads.created_at',
+                'users.id as user_id',
                 'users.name as user_name',
                 'lead_stages.name as stage'
             )
@@ -119,7 +118,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'         => 'lead_value',
-            'label'         => trans('admin::app.datagrid.deal_amount'),
+            'label'         => trans('admin::app.datagrid.lead_value'),
             'type'          => 'string',
             'searchable'    => true,
             'sortable'      => true,
@@ -129,20 +128,14 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
-        ]);
-
-        $this->addColumn([
             'index'     => 'user_name',
             'label'     => trans('admin::app.datagrid.contact_person'),
-            'type'      => 'string'
+            'type'      => 'string',
+            'closure'   => function ($row) {
+                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->user_id]));
+
+                return "<a href='" . $route . "'>" . $row->user_name . "</a>";
+            },
         ]);
 
         $this->addColumn([
@@ -159,6 +152,17 @@ class LeadDataGrid extends DataGrid
                 }
 
                 return "<span class='badge badge-round badge-$badge'></span>" . $row->stage;
+            },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'created_at',
+            'label'             => trans('admin::app.datagrid.created_at'),
+            'type'              => 'string',
+            'sortable'          => true,
+            'filterable_type'   => 'date_range',
+            'closure'           => function ($row) {
+                return core()->formatDate($row->created_at);
             },
         ]);
     }

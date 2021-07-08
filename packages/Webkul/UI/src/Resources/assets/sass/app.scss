@@ -265,6 +265,7 @@ h5 {
                 padding: 8px 12px;
                 font-size: $font-size-md;
                 cursor: pointer;
+                color: $secondary-font-color;
 
                 a {
                     &:link,
@@ -2042,4 +2043,13 @@ ol.breadcrumb {
 .column-grid-2 {
     grid-gap: 10px;
     @include display-grid(repeat(2, auto));
+}
+
+.bar-chart,
+.line-chart {
+    canvas {
+        ~ img {
+            display: none;
+        }
+    }
 }

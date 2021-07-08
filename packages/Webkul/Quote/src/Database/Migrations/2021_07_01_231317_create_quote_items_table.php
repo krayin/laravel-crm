@@ -29,6 +29,7 @@ class CreateQuoteItemsTable extends Migration
 
             $table->decimal('total', 12, 4)->default(0);
 
+            $table->integer('product_id')->unsigned();
             $table->integer('quote_id')->unsigned();
             $table->foreign('quote_id')->references('id')->on('quotes')->onDelete('cascade');
 

@@ -100,6 +100,7 @@ class LeadController extends Controller
     public function view($id)
     {
         $lead = $this->leadRepository->findOrFail($id);
+
         if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
             if ($lead->user_id != $currentUser->id) {
                 return redirect()->route('admin.leads.index');
