@@ -1750,3 +1750,85 @@ body {
         display: block;
     }
 }
+
+.quote-item-list {
+    .table {
+        padding: 5px;
+
+        table {
+            margin-bottom: 20px;
+
+            tr {
+                th {
+                    &.actions {
+                        width: 50px;
+                    }
+                }
+
+                td {
+                    vertical-align: middle;
+
+                    &.actions {
+                        width: 50px;
+
+                        .icon {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .form-group {
+                        min-width: 100% !important;
+
+                        .control {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .quote-summary {
+        padding: 5px;
+
+        table {
+            float: right;
+            margin-top: 40px;
+
+            tr {
+                td {
+                    font-weight: $font-weight-medium;
+                    padding: 5px 8px;
+                    vertical-align: text-bottom;
+
+                    .form-group {
+                        width: 100px !important;
+                        margin: 0;
+
+                        .control {
+                            margin: 0;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.lead-quote-list {
+    table {
+        tr {
+            td {
+                &.actions {
+                    .icon {
+                        cursor: pointer;
+                    }
+
+                    .dropdown-list {
+                        right: 60px;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -9,6 +9,7 @@ return [
         \Webkul\Email\Providers\ModuleServiceProvider::class,
         \Webkul\Lead\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,
+        \Webkul\Quote\Providers\ModuleServiceProvider::class,
         \Webkul\Tag\Providers\ModuleServiceProvider::class,
         \Webkul\UI\Providers\ModuleServiceProvider::class,
         \Webkul\User\Providers\ModuleServiceProvider::class,

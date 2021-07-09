@@ -534,6 +534,12 @@
 
                 </form>
             </tab>
+
+            <tab name="{{ __('admin::app.leads.quote') }}">
+
+                <a href="{{ route('admin.quotes.create', $lead->id) }}" class="btn btn-primary">{{ __('admin::app.leads.create-quote') }}</a>
+
+            </tab>
         </tabs>
     </script>
 
@@ -618,6 +624,82 @@
                         <span v-else>{{ __('admin::app.leads.empty-done-activities') }}</span>
                     </div>
                     
+                </div>
+            </tab>
+
+            <tab name="Quotes">
+                <div class="table lead-quote-list" style="padding: 5px">
+
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="sales-owner">{{ __('admin::app.leads.sales-owner') }}</th>
+                                <th class="person">{{ __('admin::app.leads.person') }}</th>
+                                <th class="quote-subject">{{ __('admin::app.leads.subject') }}</th>
+                                <th class="expired-at">{{ __('admin::app.leads.expired-at') }}</th>
+                                <th class="sub-total">
+                                    {{ __('admin::app.leads.sub-total') }}
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </th>
+                                <th class="discount">
+                                    {{ __('admin::app.leads.discount') }}
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </th>
+                                <th class="tax">
+                                    {{ __('admin::app.leads.tax') }}
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </th>
+                                <th class="adjustment">
+                                    {{ __('admin::app.leads.adjustment') }}
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </th>
+                                <th class="grand-total">
+                                    {{ __('admin::app.leads.grand-total') }}
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </th>
+                                <th class="actions">{{ __('admin::app.leads.actions') }}</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody>
+                            <tr v-for="quote in quotes">
+                                <td class="sales-owner">@{{ quote.user.name }}</td>
+                                <td class="person">@{{ quote.person.name }}</td>
+                                <td class="quote-subject">@{{ quote.subject }}</td>
+                                <td class="expired-at">@{{ quote.expired_at }}</td>
+                                <td class="sub-total">@{{ quote.sub_total }}</td>
+                                <td class="discount">@{{ quote.discount_amount }}</td>
+                                <td class="tax">@{{ quote.tax_amount }}</td>
+                                <td class="adjustment">@{{ quote.adjustment_amount }}</td>
+                                <td class="grand-total">@{{ quote.grand_total }}</td>
+                                <td class="actions">
+                                    <span class="icon ellipsis-icon dropdown-toggle"></span>
+
+                                    <div class="dropdown-list">
+                                        <div class="dropdown-container">
+                                            <ul>
+                                                <li>
+                                                    <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">{{ __('admin::app.leads.edit') }}</a>
+                                                </li>
+                                                <li>
+                                                    <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">{{ __('admin::app.leads.export-to-pdf') }}</a>
+                                                </li>
+                                                <li @click="removeQuote(quote)">
+                                                    {{ __('admin::app.leads.remove') }}
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+
+                            <tr v-if="! quotes.length">
+                                <td colspan="10">
+                                    <p style="text-align: center;">{{ __('admin::app.common.no-records-found') }}</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </tab>
         </tabs>
@@ -850,6 +932,8 @@
 
                         'file': "{{ __('admin::app.leads.files') }}",
                     },
+
+                    quotes: @json($lead->quotes()->with(['person', 'user'])->get())
                 }
             },
 
@@ -919,6 +1003,23 @@
                             const index = self.activities.indexOf(activity);
 
                             Vue.delete(self.activities, index);
+                            
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+                        })
+                        .catch (function (error) {
+                        })
+                },
+
+                removeQuote: function(quote) {
+                    var self = this;
+
+                    this.$http.delete("{{ route('admin.leads.quotes.delete', $lead->id) }}/" + quote['id'])
+                        .then (function(response) {
+                            const index = self.quotes.indexOf(quote);
+
+                            Vue.delete(self.quotes, index);
                             
                             window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 

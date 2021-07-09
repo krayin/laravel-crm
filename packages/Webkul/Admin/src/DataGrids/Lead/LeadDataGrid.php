@@ -47,9 +47,7 @@ class LeadDataGrid extends DataGrid
         ];
 
         // get all users
-        $userRepository = app('\Webkul\User\Repositories\UserRepository');
-
-        $users = $userRepository->all();
+        $users = app('\Webkul\User\Repositories\UserRepository')->all();
 
         foreach ($users as $user) {
             array_push($this->users, [

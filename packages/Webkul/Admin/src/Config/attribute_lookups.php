@@ -29,5 +29,10 @@ return [
     'users' => [
         'name'         => 'Sales Owner',
         'repository'   => 'Webkul\User\Repositories\UserRepository',
+    ],
+
+    'persons' => [
+        'name'         => 'Persons',
+        'repository'   => 'Webkul\Contact\Repositories\PersonRepository',
     ]
 ];
