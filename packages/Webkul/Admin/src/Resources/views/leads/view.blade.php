@@ -24,6 +24,8 @@
 
     <div class="content full-page">
 
+        {!! view_render_event('admin.leads.view.header.before', ['lead' => $lead]) !!}
+
         <div class="page-header">
             
             {{ Breadcrumbs::render('leads.view', $lead) }}
@@ -41,9 +43,16 @@
             </div>
         </div>
 
+        {!! view_render_event('admin.leads.view.header.after', ['lead' => $lead]) !!}
+
+
+        {!! view_render_event('admin.leads.view.informations.before', ['lead' => $lead]) !!}
+
         <div class="page-content lead-view">
             
             <div class="lead-content-left">
+                {!! view_render_event('admin.leads.view.informations.details.before', ['lead' => $lead]) !!}
+
                 <div class="panel">
                     <div class="panel-header" style="padding-top: 0">
                         {{ __('admin::app.leads.details') }}
@@ -62,6 +71,11 @@
 
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.view.informations.details.after', ['lead' => $lead]) !!}
+
+
+                {!! view_render_event('admin.leads.view.informations.contact_person.before', ['lead' => $lead]) !!}
 
                 <div class="panel">
                     <div class="panel-header">
@@ -111,6 +125,11 @@
                         </div>
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.view.informations.contact_person.after', ['lead' => $lead]) !!}
+
+
+                {!! view_render_event('admin.leads.view.informations.products.before', ['lead' => $lead]) !!}
 
                 <div class="panel">
                     <div class="panel-header">
@@ -172,18 +191,36 @@
                         @endif
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.view.informations.products.after', ['lead' => $lead]) !!}
             </div>
 
             <div class="lead-content-right">
-    
+                
+                {!! view_render_event('admin.leads.view.informations.stages.before', ['lead' => $lead]) !!}
+
                 <stage-component></stage-component>
+
+                {!! view_render_event('admin.leads.view.informations.stages.after', ['lead' => $lead]) !!}
+
+
+                {!! view_render_event('admin.leads.view.informations.activity_actions.before', ['lead' => $lead]) !!}
 
                 <activity-action-component></activity-action-component>
 
+                {!! view_render_event('admin.leads.view.informations.activity_actions.after', ['lead' => $lead]) !!}
+
+
+                {!! view_render_event('admin.leads.view.informations.activity_list.before', ['lead' => $lead]) !!}
+
                 <activity-list-component></activity-list-component>
+
+                {!! view_render_event('admin.leads.view.informations.activity_list.after', ['lead' => $lead]) !!}
             </div>
 
         </div>
+
+        {!! view_render_event('admin.leads.view.informations.after', ['lead' => $lead]) !!}
     </div>
 
     <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit">
@@ -191,17 +228,25 @@
             <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
             
             <div slot="header-actions">
+                {!! view_render_event('admin.leads.view.edit.form_buttons.before', ['lead' => $lead]) !!}
+
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('updateLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
 
                 <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+
+                {!! view_render_event('admin.leads.view.edit.form_buttons.after', ['lead' => $lead]) !!}
             </div>
 
             <div slot="body">
+                {!! view_render_event('admin.leads.view.edit.form_controls.before', ['lead' => $lead]) !!}
+
                 @csrf()
                 
                 <input name="_method" type="hidden" value="PUT">
 
                 <tabs>
+                    {!! view_render_event('admin.leads.view.edit.form_controls.details.before', ['lead' => $lead]) !!}
+
                     <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
                         @include('admin::common.custom-attributes.edit', [
                             'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -211,18 +256,32 @@
                         ])
                     </tab>
 
+                    {!! view_render_event('admin.leads.view.edit.form_controls.details.after', ['lead' => $lead]) !!}
+
+
+                    {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.before', ['lead' => $lead]) !!}
+
                     <tab name="{{ __('admin::app.leads.contact-person') }}">
                         @include('admin::leads.common.contact')
 
                         <contact-component :data='@json($lead->person)'></contact-component>
                     </tab>
 
+                    {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.after', ['lead' => $lead]) !!}
+
+
+                    {!! view_render_event('admin.leads.view.edit.form_controls.products.before', ['lead' => $lead]) !!}
+
                     <tab name="{{ __('admin::app.leads.products') }}">
                         @include('admin::leads.common.products')
 
                         <product-list :data='@json($lead->products)'></product-list>
                     </tab>
+
+                    {!! view_render_event('admin.leads.view.edit.form_controls.products.after', ['lead' => $lead]) !!}
                 </tabs>
+
+                {!! view_render_event('admin.leads.view.edit.form_controls.after', ['lead' => $lead]) !!}
             </div>
         </modal>
     </form>
@@ -376,6 +435,8 @@
 
     <script type="text/x-template" id="activity-action-component-template">
         <tabs>
+            {!! view_render_event('admin.leads.view.informations.activity_actions.note.before', ['lead' => $lead]) !!}
+
             <tab name="{{ __('admin::app.leads.note') }}" :selected="true">
                 <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
 
@@ -394,6 +455,11 @@
 
                 </form>
             </tab>
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.note.after', ['lead' => $lead]) !!}
+
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.activity.before', ['lead' => $lead]) !!}
 
             <tab name="{{ __('admin::app.leads.activity') }}">
                 <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
@@ -444,6 +510,11 @@
 
                 </form>
             </tab>
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.activity.after', ['lead' => $lead]) !!}
+
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.email.before', ['lead' => $lead]) !!}
 
             <tab name="{{ __('admin::app.leads.email') }}">
                 <form action="{{ route('admin.mail.store') }}" method="post" data-vv-scope="email-form" @submit.prevent="onSubmit($event, 'email-form')" enctype="multipart/form-data">
@@ -506,6 +577,11 @@
                 </form>
             </tab>
 
+            {!! view_render_event('admin.leads.view.informations.activity_actions.email.after', ['lead' => $lead]) !!}
+
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.files.before', ['lead' => $lead]) !!}
+
             <tab name="{{ __('admin::app.leads.files') }}">
                 <form action="{{ route('admin.leads.file_upload', $lead->id) }}" method="post" data-vv-scope="file-form" @submit.prevent="onSubmit($event, 'file-form')" enctype="multipart/form-data">
 
@@ -535,16 +611,25 @@
                 </form>
             </tab>
 
+            {!! view_render_event('admin.leads.view.informations.activity_actions.files.after', ['lead' => $lead]) !!}
+
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.quote.before', ['lead' => $lead]) !!}
+
             <tab name="{{ __('admin::app.leads.quote') }}">
 
                 <a href="{{ route('admin.quotes.create', $lead->id) }}" class="btn btn-primary">{{ __('admin::app.leads.create-quote') }}</a>
 
             </tab>
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.quote.after', ['lead' => $lead]) !!}
         </tabs>
     </script>
 
     <script type="text/x-template" id="activity-list-component-template">
         <tabs class="activity-list">
+            {!! view_render_event('admin.leads.view.informations.activity_list.general.before', ['lead' => $lead]) !!}
+
             <tab v-for="type in types" :name="typeLabels[type]" :key="type" :selected="type == 'all'">
 
                 <div v-for="subType in ['planned', 'done']" :class="subType + '-activities ' + type">
@@ -627,6 +712,11 @@
                 </div>
             </tab>
 
+            {!! view_render_event('admin.leads.view.informations.activity_list.general.after', ['lead' => $lead]) !!}
+
+
+            {!! view_render_event('admin.leads.view.informations.activity_list.quotes.before', ['lead' => $lead]) !!}
+
             <tab name="Quotes">
                 <div class="table lead-quote-list" style="padding: 5px">
 
@@ -702,6 +792,8 @@
                     </table>
                 </div>
             </tab>
+
+            {!! view_render_event('admin.leads.view.informations.activity_list.quotes.after', ['lead' => $lead]) !!}
         </tabs>
     </script>
 

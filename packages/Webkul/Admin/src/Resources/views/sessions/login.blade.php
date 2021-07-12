@@ -12,6 +12,8 @@
                 <h1>{{ __('admin::app.sessions.login.welcome') }}</h1>
 
                 <form method="POST" action="{{ route('admin.session.store') }}" @submit.prevent="$root.onSubmit">
+                    {!! view_render_event('admin.sessions.login.form_controls.before') !!}
+
                     @csrf
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
@@ -26,10 +28,16 @@
                         <span class="control-error" v-if="errors.has('password')">@{{ errors.first('password') }}</span>
                     </div>
 
+                    {!! view_render_event('admin.sessions.login.form_controls.after') !!}
+
                     <a href="{{ route('admin.forgot_password.create') }}">{{ __('admin::app.sessions.login.forgot-password') }}</a>
 
                     <div class="button-group">
+                        {!! view_render_event('admin.sessions.login.form_buttons.before') !!}
+
                         <button type="submit" class="btn btn-xl btn-primary">{{ __('admin::app.sessions.login.login') }}</button>
+
+                        {!! view_render_event('admin.sessions.login.form_buttons.after') !!}
                     </div>
                 </form>
             </div>

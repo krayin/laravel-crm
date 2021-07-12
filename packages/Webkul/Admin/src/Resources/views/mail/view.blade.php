@@ -29,6 +29,9 @@
     @endphp
 
     <div class="content full-page">
+
+        {!! view_render_event('admin.mail.view.header.before', ['email' => $email]) !!}
+
         <div class="page-header">
             
             {{ Breadcrumbs::render('mail.route.view', request('route'), $email) }}
@@ -39,14 +42,24 @@
 
             <div class="page-action">
 
+                {!! view_render_event('admin.mail.view.actions.before', ['email' => $email]) !!}
+
                 <email-action-component></email-action-component>
 
+                {!! view_render_event('admin.mail.view.actions.after', ['email' => $email]) !!}
             </div>
         </div>
 
+        {!! view_render_event('admin.mail.view.header.after', ['email' => $email]) !!}
+
+
         <div class="page-content" style="margin-top: 30px; padding-bottom: 30px;">
 
+            {!! view_render_event('admin.mail.view.list.before', ['email' => $email]) !!}
+
             <email-list-component></email-list-component>
+
+            {!! view_render_event('admin.mail.view.list.after', ['email' => $email]) !!}
 
         </div>
     </div>
@@ -56,12 +69,18 @@
             <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>
             
             <div slot="header-actions">
+                {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.before', ['email' => $email]) !!}
+
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">{{ __('admin::app.contacts.persons.cancel') }}</button>
 
                 <button class="btn btn-sm btn-primary">{{ __('admin::app.contacts.persons.save-btn-title') }}</button>
+
+                {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.after', ['email' => $email]) !!}
             </div>
 
             <div slot="body">
+                {!! view_render_event('admin.mail.view.actions.persons.create.form_controls.before', ['email' => $email]) !!}
+
                 @csrf()
                 
                 <input type="hidden" name="email_id" value="{{ $email->id }}" />
@@ -76,6 +95,8 @@
                     'entity'           => $email->person,
                     'formScope'        => 'person-form.',
                 ])
+
+                {!! view_render_event('admin.mail.view.actions.persons.create.form_controls.after', ['email' => $email]) !!}
             </div>
         </modal>
     </form>
@@ -85,12 +106,18 @@
             <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
             
             <div slot="header-actions">
+                {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.before', ['email' => $email]) !!}
+
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
 
                 <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+
+                {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.after', ['email' => $email]) !!}
             </div>
 
             <div slot="body" style="padding: 0">
+                {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.before', ['email' => $email]) !!}
+
                 @csrf()
                 
                 <input type="hidden" name="email_id" value="{{ $email->id }}" />
@@ -100,6 +127,8 @@
                 <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="1" />
 
                 <tabs>
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.details.before', ['email' => $email]) !!}
+
                     <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
                         @include('admin::common.custom-attributes.edit', [
                             'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -111,18 +140,32 @@
                         ])
                     </tab>
 
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.details.after', ['email' => $email]) !!}
+
+
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.contact_person.before', ['email' => $email]) !!}
+
                     <tab name="{{ __('admin::app.leads.contact-person') }}">
                         @include('admin::leads.common.contact', ['formScope' => 'lead-form.'])
 
                         <contact-component></contact-component>
                     </tab>
 
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.contact_person.after', ['email' => $email]) !!}
+
+
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.products.before', ['email' => $email]) !!}
+
                     <tab name="{{ __('admin::app.leads.products') }}">
                         @include('admin::leads.common.products', ['formScope' => 'lead-form.'])
 
                         <product-list></product-list>
                     </tab>
+
+                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.products.after', ['email' => $email]) !!}
                 </tabs>
+
+                {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.after', ['email' => $email]) !!}
             </div>
         </modal>
     </form>
@@ -151,6 +194,8 @@
                 </header>
 
                 <div class="email-action-content">
+                    {!! view_render_event('admin.mail.view.actions.link_person.before', ['email' => $email]) !!}
+
                     <div class="panel">
                         <div class="link-lead" v-if="! email.person_id">
                             <h3>{{ __('admin::app.mail.link-mail') }}</h3>
@@ -204,6 +249,11 @@
                         </div>
                     </div>
 
+                    {!! view_render_event('admin.mail.view.actions.link_person.after', ['email' => $email]) !!}
+
+
+                    {!! view_render_event('admin.mail.view.actions.link_lead.before', ['email' => $email]) !!}
+
                     <div class="panel">
                         <div class="link-lead" v-if="! email.lead_id">
                             <h3>{{ __('admin::app.mail.link-lead') }}</h3>
@@ -254,6 +304,8 @@
                             </div>
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.mail.view.actions.link_lead.after', ['email' => $email]) !!}
                 </div>
             </div>
         </div>
@@ -400,6 +452,8 @@
                 <div class="panel">
     
                     <div class="panel-body">
+                        {!! view_render_event('admin.mail.view.email.create.form_controls.before', ['email' => $email]) !!}
+
                         @csrf()
 
                         <input type="hidden" name="parent_id" :value="action.email.id"/>
@@ -444,9 +498,13 @@
                         <div class="form-group">
                             <attachment-wrapper></attachment-wrapper>
                         </div>
+
+                        {!! view_render_event('admin.mail.view.email.create.form_controls.after', ['email' => $email]) !!}
                     </div>
 
                     <div class="panel-bottom">
+                        {!! view_render_event('admin.mail.view.email.create.form_buttons.before', ['email' => $email]) !!}
+
                         <button type="submit" class="btn btn-md btn-primary">
                             <i class="icon email-send-icon"></i>
     
@@ -454,6 +512,8 @@
                         </button>
     
                         <label @click="discard">{{ __('admin::app.mail.discard') }}</label>
+
+                        {!! view_render_event('admin.mail.view.email.create.form_buttons.after', ['email' => $email]) !!}
                     </div>
                 </div>
 

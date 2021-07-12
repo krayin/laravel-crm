@@ -29,12 +29,12 @@ class EmailDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'attachments',
-            'label'             => '<i class="icon attachment-icon"></i>',
-            'type'              => 'string',
-            'searchable'        => false,
-            'sortable'          => false,
-            'closure'           => function ($row) {
+            'index'      => 'attachments',
+            'label'      => '<i class="icon attachment-icon"></i>',
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => false,
+            'closure'    => function ($row) {
                 if ($row->attachments) {
                     return '<i class="icon attachment-icon"></i>';
                 }
@@ -42,34 +42,34 @@ class EmailDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'name',
-            'label'             => trans('admin::app.datagrid.from'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add',
+            'index'           => 'name',
+            'label'           => trans('admin::app.datagrid.from'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
-            'index'             => 'subject',
-            'label'             => trans('admin::app.datagrid.subject'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add',
-            'class'             => 'subject',
-            'closure'           => function ($row) {
+            'index'           => 'subject',
+            'label'           => trans('admin::app.datagrid.subject'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add',
+            'class'           => 'subject',
+            'closure'         => function ($row) {
                 return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
             },
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.datagrid.created_at'),
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -103,7 +103,7 @@ class EmailDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.mail.mass-delete'),
+            'action' => route('admin.mail.mass_delete'),
             'method' => 'PUT',
         ]);
     }

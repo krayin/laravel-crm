@@ -46,16 +46,6 @@ class LeadDataGrid extends DataGrid
             ],
         ];
 
-        // get all users
-        $users = app('\Webkul\User\Repositories\UserRepository')->all();
-
-        foreach ($users as $user) {
-            array_push($this->users, [
-                'value' => $user['id'],
-                'label' => $user['name'],
-            ]);
-        }
-
         parent::__construct();
     }
     
@@ -95,43 +85,43 @@ class LeadDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'id',
-            'type'              => 'hidden',
-            'searchable'        => true,
+            'index'      => 'id',
+            'type'       => 'hidden',
+            'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'             => 'user',
-            'label'             => trans('admin::app.datagrid.user'),
-            'type'              => 'hidden',
-            'sortable'          => true,
-            'filterable_type'   => 'dropdown',
-            'filterable_options' => $this->users,
+            'index'              => 'user',
+            'label'              => trans('admin::app.datagrid.user'),
+            'type'               => 'hidden',
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
         ]);
 
         $this->addColumn([
-            'index'       => 'title',
-            'label'       => trans('admin::app.datagrid.subject'),
-            'type'        => 'string',
-            'searchable'  => true,
+            'index'      => 'title',
+            'label'      => trans('admin::app.datagrid.subject'),
+            'type'       => 'string',
+            'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'         => 'lead_value',
-            'label'         => trans('admin::app.datagrid.lead_value'),
-            'type'          => 'string',
-            'searchable'    => true,
-            'sortable'      => true,
-            'closure'       => function ($row) {
+            'index'      => 'lead_value',
+            'label'      => trans('admin::app.datagrid.lead_value'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return round($row->lead_value, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'     => 'user_name',
-            'label'     => trans('admin::app.datagrid.contact_person'),
-            'type'      => 'string',
-            'closure'   => function ($row) {
+            'index'   => 'user_name',
+            'label'   => trans('admin::app.datagrid.contact_person'),
+            'type'    => 'string',
+            'closure' => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->user_id]));
 
                 return "<a href='" . $route . "'>" . $row->user_name . "</a>";
@@ -139,10 +129,10 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'stage',
-            'label'              => trans('admin::app.datagrid.stage'),
-            'type'               => 'boolean',
-            'closure'            => function ($row) {
+            'index'   => 'stage',
+            'label'   => trans('admin::app.datagrid.stage'),
+            'type'    => 'boolean',
+            'closure' => function ($row) {
                 if ($row->stage == "Won") {
                     $badge = 'success';
                 } else if ($row->stage == "Lost") {
@@ -156,12 +146,12 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.datagrid.created_at'),
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -190,14 +180,14 @@ class LeadDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.leads.mass-delete'),
+            'action' => route('admin.leads.mass_delete'),
             'method' => 'PUT',
         ]);
 
         $this->addMassAction([
             'type'    => 'update',
             'label'   => trans('admin::app.datagrid.update_stage'),
-            'action'  => route('admin.leads.mass-update'),
+            'action'  => route('admin.leads.mass_update'),
             'method'  => 'PUT',
             'options' => $this->stagesMassActionOptions,
         ]);

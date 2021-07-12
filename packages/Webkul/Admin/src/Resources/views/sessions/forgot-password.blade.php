@@ -13,6 +13,8 @@
                 <h1>{{ __('admin::app.sessions.forgot-password.title') }}</h1>
 
                 <form method="POST" action="{{ route('admin.forgot_password.store') }}" @submit.prevent="onSubmit">
+                    {!! view_render_event('admin.sessions.forgot_password.form_controls.before') !!}
+
                     @csrf
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
@@ -22,9 +24,15 @@
                     </div>
 
                     <a href="{{ route('admin.session.create') }}">{{ __('admin::app.sessions.forgot-password.back-to-login') }}</a>
+
+                    {!! view_render_event('admin.sessions.forgot_password.form_controls.after') !!}
                     
                     <div class="button-group">
+                        {!! view_render_event('admin.sessions.forgot_password.form_buttons.before') !!}
+
                         <button class="btn btn-xl btn-primary">{{ __('admin::app.sessions.forgot-password.send-reset-password-email') }}</button>
+
+                        {!! view_render_event('admin.sessions.forgot_password.form_buttons.after') !!}
                     </div>
                 </form>
             </div>

@@ -5,9 +5,13 @@
 @stop
 
 @section('table-header')
+    {!! view_render_event('admin.products.index.header.before') !!}
+
     {{ Breadcrumbs::render('products') }}
 
     {{ __('admin::app.products.title') }}
+
+    {!! view_render_event('admin.products.index.header.after') !!}
 @stop
 
 @php
@@ -24,12 +28,18 @@
             <h3 slot="header-title">{{ __('admin::app.products.add-title') }}</h3>
             
             <div slot="header-actions">
+                {!! view_render_event('admin.products.create.form_buttons.before') !!}
+
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addProductModal')">{{ __('admin::app.products.cancel') }}</button>
 
                 <button type="submit" class="btn btn-sm btn-primary">{{ __('admin::app.products.save-btn-title') }}</button>
+
+                {!! view_render_event('admin.products.create.form_buttons.after') !!}
             </div>
 
             <div slot="body">
+                {!! view_render_event('admin.products.create.form_controls.before') !!}
+
                 @csrf()
                 
                 <input type="hidden" name="quick_add" value="1"/>
@@ -40,6 +50,8 @@
                         'quick_add'   => 1
                     ])
                 ])
+
+                {!! view_render_event('admin.products.create.form_controls.after') !!}
             </div>
         </modal>
     </form>

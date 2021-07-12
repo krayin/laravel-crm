@@ -13,6 +13,8 @@
                 <h1>{{ __('admin::app.sessions.reset-password.title') }}</h1>
 
                 <form method="POST" action="{{ route('admin.reset_password.store') }}" @submit.prevent="onSubmit">
+                    {!! view_render_event('admin.sessions.reset_password.form_controls.before') !!}
+
                     @csrf
 
                     <input type="hidden" name="token" value="{{ $token }}">
@@ -34,9 +36,15 @@
                         <input type="password" v-validate="'required|min:6|confirmed:password'" class="control" id="password_confirmation" name="password_confirmation" data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.confirm-password') }}&quot;" data-vv-as="password"/>
                         <span class="control-error" v-if="errors.has('password_confirmation')">@{{ errors.first('password_confirmation') }}</span>
                     </div>
+
+                    {!! view_render_event('admin.sessions.reset_password.form_controls.after') !!}
                     
                     <div class="button-group">
+                        {!! view_render_event('admin.sessions.reset_password.form_buttons.before') !!}
+
                         <button type="submit" class="btn btn-xl btn-primary">{{ __('admin::app.sessions.reset-password.reset-password') }}</button>
+
+                        {!! view_render_event('admin.sessions.reset_password.form_buttons.after') !!}
                     </div>
                 </form>
             </div>

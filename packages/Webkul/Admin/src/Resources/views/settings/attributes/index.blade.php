@@ -5,9 +5,13 @@
 @stop
 
 @section('table-header')
+    {!! view_render_event('admin.settings.attributes.index.header.before') !!}
+
     {{ Breadcrumbs::render('settings.attributes') }}
 
     {{ __('admin::app.settings.attributes.title') }}
+
+    {!! view_render_event('admin.settings.attributes.index.header.after') !!}
 @stop
 
 @section('table-action')

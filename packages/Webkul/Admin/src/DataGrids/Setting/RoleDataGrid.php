@@ -28,22 +28,22 @@ class RoleDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'id',
-            'head_style'        => 'width: 50px',
-            'label'             => trans('admin::app.datagrid.id'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'           => 'id',
+            'head_style'      => 'width: 50px',
+            'label'           => trans('admin::app.datagrid.id'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
-            'index'             => 'name',
-            'label'             => trans('admin::app.datagrid.name'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'           => 'name',
+            'label'           => trans('admin::app.datagrid.name'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -55,13 +55,13 @@ class RoleDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'                 => 'permission_type',
-            'label'                 => trans('admin::app.datagrid.permission_type'),
-            'type'                  => 'boolean',
-            'searchable'            => true,
-            'sortable'              => false,
-            'filterable_type'       => 'dropdown',
-            'filterable_options'    => [
+            'index'              => 'permission_type',
+            'label'              => trans('admin::app.datagrid.permission_type'),
+            'type'               => 'boolean',
+            'searchable'         => true,
+            'sortable'           => false,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => [
                 [
                     'label' => trans('admin::app.settings.roles.all'),
                     'value' => 'all',

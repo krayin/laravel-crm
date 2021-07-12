@@ -23,14 +23,20 @@
 
                     <div class="panel">
                         <div class="panel-header">
+                            {!! view_render_event('admin.user_profile.edit.form_buttons.before', ['user' => $user]) !!}
+
                             <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('admin::app.user.account.update_details') }}
                             </button>
 
                             <a href="{{ route('admin.dashboard.index') }}">{{ __('admin::app.common.back') }}</a>
+
+                            {!! view_render_event('admin.user_profile.edit.form_buttons.after', ['user' => $user]) !!}
                         </div>
         
                         <div class="panel-body">
+                            {!! view_render_event('admin.user_profile.edit.form_controls.before', ['user' => $user]) !!}
+
                             @csrf()
 
                             <input name="_method" type="hidden" value="PUT">
@@ -131,6 +137,8 @@
                                     @{{ errors.first('confirm_password') }}
                                 </span>
                             </div>
+
+                            {!! view_render_event('admin.user_profile.edit.form_controls.after', ['user' => $user]) !!}
                         </div>
                     </div>
                 </div>
