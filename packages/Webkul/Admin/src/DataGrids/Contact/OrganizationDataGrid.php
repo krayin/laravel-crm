@@ -61,7 +61,7 @@ class OrganizationDataGrid extends DataGrid
             'head_style'        => 'width: 100px',
             'label'             => trans('admin::app.datagrid.persons_count'),
             'type'              => 'string',
-            'searchable'        => true,
+            'searchable'        => false,
             'closure'           => function ($row) {
                 $personsCount = $this->personRepository
                                 ->findWhere(['organization_id' => $row->id])

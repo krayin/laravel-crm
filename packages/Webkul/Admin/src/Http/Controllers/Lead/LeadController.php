@@ -5,7 +5,9 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Mail;
 
+use Webkul\Admin\Notifications\Lead\Create;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\FileRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -83,6 +85,14 @@ class LeadController extends Controller
         $data['user_id'] = $data['status'] = $data['lead_pipeline_id'] = 1;
 
         $lead = $this->leadRepository->create($data);
+
+        $user = $this->leadRepository->getUserByLeadId($lead->id);
+
+        try {
+            Mail::queue(new Create($user, $lead->id));
+        } catch (\Exception $e) {
+            report($e);
+        }
 
         Event::dispatch('lead.create.after', $lead);
         
