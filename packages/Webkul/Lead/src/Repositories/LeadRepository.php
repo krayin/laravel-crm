@@ -206,4 +206,17 @@ class LeadRepository extends Repository
                 ->get()
                 ->count();
     }
+
+    /**
+     * Retreives user details by lead id
+     *
+     * @return \Webkul\Lead\Contracts\Lead
+     */
+    public function getUserByLeadId($leadId)
+    {
+        return $this->select('users.id', 'users.email', 'users.name')
+                ->where('leads.id', $leadId)
+                ->leftJoin('users', 'leads.user_id', 'users.id')
+                ->first();
+    }
 }
