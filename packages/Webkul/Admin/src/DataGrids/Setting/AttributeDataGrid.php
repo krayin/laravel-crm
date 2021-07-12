@@ -98,10 +98,10 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'entity_type',
-            'label'      => trans('admin::app.datagrid.entity_type'),
-            'type'       => 'string',
-            'closure'       => function ($row) {
+            'index'   => 'entity_type',
+            'label'   => trans('admin::app.datagrid.entity_type'),
+            'type'    => 'string',
+            'closure' => function ($row) {
                 return ucfirst($row->entity_type);
             },
         ]);
@@ -138,7 +138,7 @@ class AttributeDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.settings.attributes.mass-delete'),
+            'action' => route('admin.settings.attributes.mass_delete'),
             'method' => 'PUT',
         ]);
     }

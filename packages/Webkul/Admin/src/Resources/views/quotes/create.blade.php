@@ -6,6 +6,8 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
+        {!! view_render_event('admin.quotes.create.header.before') !!}
+
         <div class="page-header">
 
             {{ Breadcrumbs::render('quotes.create') }}
@@ -15,6 +17,8 @@
             </div>
         </div>
 
+        {!! view_render_event('admin.quotes.create.header.after') !!}
+
         <form method="POST" action="{{ route('admin.quotes.store') }}" @submit.prevent="onSubmit">
 
             <div class="page-content">
@@ -22,17 +26,25 @@
 
                     <div class="panel">
                         <div class="panel-header">
+                            {!! view_render_event('admin.quotes.create.form_buttons.before') !!}
+
                             <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('admin::app.quotes.save-btn-title') }}
                             </button>
 
                             <a href="{{ route('admin.quotes.index') }}">{{ __('admin::app.quotes.back') }}</a>
+
+                            {!! view_render_event('admin.quotes.create.form_buttons.after') !!}
                         </div>
         
                         <div class="panel-body">
+                            {!! view_render_event('admin.quotes.create.form_controls.before') !!}
+
                             @csrf()
 
                             <input type="hidden" name="lead_id" value="{{ request('id') }}"/>
+
+                            {!! view_render_event('admin.quotes.create.form_controls.information.before') !!}
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
                                 <div slot="body">
@@ -55,6 +67,11 @@
                                 </div>
                             </accordian>
 
+                            {!! view_render_event('admin.quotes.create.form_controls.information.after') !!}
+
+
+                            {!! view_render_event('admin.quotes.create.form_controls.address.before') !!}
+
                             <accordian :title="'{{ __('admin::app.quotes.address-information') }}'" :active="true">
                                 <div slot="body">
 
@@ -73,6 +90,11 @@
                                 </div>
                             </accordian>
 
+                            {!! view_render_event('admin.quotes.create.form_controls.address.after') !!}
+
+
+                            {!! view_render_event('admin.quotes.create.form_controls.items.before') !!}
+
                             <accordian :title="'{{ __('admin::app.quotes.quote-items') }}'" :active="true">
                                 <div slot="body">
 
@@ -80,6 +102,10 @@
 
                                 </div>
                             </accordian>
+
+                            {!! view_render_event('admin.quotes.create.form_controls.items.after') !!}
+
+                            {!! view_render_event('admin.quotes.create.form_controls.after') !!}
                         </div>
                     </div>
 

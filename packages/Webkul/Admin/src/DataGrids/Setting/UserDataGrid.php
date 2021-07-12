@@ -30,31 +30,31 @@ class UserDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'id',
-            'head_style'        => 'width: 50px',
-            'label'             => trans('admin::app.datagrid.id'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'           => 'id',
+            'head_style'      => 'width: 50px',
+            'label'           => trans('admin::app.datagrid.id'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
-            'index'             => 'name',
-            'label'             => trans('admin::app.datagrid.name'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'           => 'name',
+            'label'           => trans('admin::app.datagrid.name'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
-            'index'             => 'email',
-            'label'             => trans('admin::app.datagrid.email'),
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-            'filterable_type'   => 'add'
+            'index'           => 'email',
+            'label'           => trans('admin::app.datagrid.email'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -81,12 +81,12 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.datagrid.created_at'),
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -115,14 +115,14 @@ class UserDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.settings.users.mass-delete'),
+            'action' => route('admin.settings.users.mass_delete'),
             'method' => 'PUT',
         ]);
 
         $this->addMassAction([
             'type'    => 'update',
             'label'   => trans('ui::app.datagrid.update-status'),
-            'action'  => route('admin.settings.users.mass-update'),
+            'action'  => route('admin.settings.users.mass_update'),
             'method'  => 'PUT',
             'options' => [
                 trans('admin::app.datagrid.active')   => 1,

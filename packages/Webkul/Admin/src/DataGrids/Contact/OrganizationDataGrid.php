@@ -108,7 +108,7 @@ class OrganizationDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.contacts.organizations.mass-delete'),
+            'action' => route('admin.contacts.organizations.mass_delete'),
             'method' => 'PUT',
         ]);
     }

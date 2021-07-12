@@ -86,9 +86,9 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
 
-                Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass-update');
+                Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass_update');
 
-                Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass-delete');
+                Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass_delete');
 
                 Route::post('tags/{id}', 'TagController@store')->name('admin.leads.tags.store');
 
@@ -120,7 +120,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id}', 'QuoteController@destroy')->name('admin.quotes.delete');
 
-                Route::put('mass-destroy', 'QuoteController@massDestroy')->name('admin.quotes.mass-delete');
+                Route::put('mass-destroy', 'QuoteController@massDestroy')->name('admin.quotes.mass_delete');
             });
 
             Route::group([
@@ -152,7 +152,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
 
-                Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass-delete');
+                Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass_delete');
             });
 
             // Contacts Routes
@@ -174,7 +174,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
 
-                    Route::put('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass-delete');
+                    Route::put('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass_delete');
                 });
 
                 // Companies Routes
@@ -189,7 +189,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::delete('{id}', 'OrganizationController@destroy')->name('admin.contacts.organizations.delete');
 
-                    Route::put('mass-destroy', 'OrganizationController@massDestroy')->name('admin.contacts.organizations.mass-delete');
+                    Route::put('mass-destroy', 'OrganizationController@massDestroy')->name('admin.contacts.organizations.mass_delete');
                 });
             });
 
@@ -210,7 +210,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id}', 'ProductController@destroy')->name('admin.products.delete');
 
-                Route::put('mass-destroy', 'ProductController@massDestroy')->name('admin.products.mass-delete');
+                Route::put('mass-destroy', 'ProductController@massDestroy')->name('admin.products.mass_delete');
             });
 
             // Contacts Routes
@@ -247,9 +247,9 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::delete('{id}', 'UserController@destroy')->name('admin.settings.users.delete');
 
-                    Route::put('mass-update', 'UserController@massUpdate')->name('admin.settings.users.mass-update');
+                    Route::put('mass-update', 'UserController@massUpdate')->name('admin.settings.users.mass_update');
 
-                    Route::put('mass-destroy', 'UserController@massDestroy')->name('admin.settings.users.mass-delete');
+                    Route::put('mass-destroy', 'UserController@massDestroy')->name('admin.settings.users.mass_delete');
                 });
 
                 // Attributes Routes
@@ -268,9 +268,9 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
 
-                    Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass-update');
+                    Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass_update');
 
-                    Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass-delete');
+                    Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass_delete');
 
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });

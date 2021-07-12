@@ -34,6 +34,7 @@ class QuoteDataGrid extends DataGrid
 
         $this->addFilter('id', 'quotes.id');
         $this->addFilter('user', 'quotes.user_id');
+        $this->addFilter('person_name', 'persons.name');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -50,10 +51,13 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'     => 'user_name',
-            'label'     => trans('admin::app.datagrid.sales-person'),
-            'type'      => 'string',
-            'closure'   => function ($row) {
+            'index'              => 'user_name',
+            'label'              => trans('admin::app.datagrid.sales-person'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
                 return "<a href='" . $route . "'>" . $row->user_name . "</a>";
@@ -61,10 +65,12 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'person_name',
-            'label'             => trans('admin::app.datagrid.person'),
-            'type'              => 'string',
-            'closure'   => function ($row) {
+            'index'           => 'person_name',
+            'label'           => trans('admin::app.datagrid.person'),
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'add',
+            'closure'         => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
                 return "<a href='" . $route . "'>" . $row->person_name . "</a>";
@@ -150,7 +156,7 @@ class QuoteDataGrid extends DataGrid
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.quotes.mass-delete'),
+            'action' => route('admin.quotes.mass_delete'),
             'method' => 'PUT',
         ]);
     }

@@ -49,7 +49,7 @@ return [
     ], [
         'key'   => 'mail.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.mail.delete', 'admin.mail.mass-delete'],
+        'route' => ['admin.mail.delete', 'admin.mail.mass_delete'],
         'sort'  => 4,
     ], [
         'key'   => 'activities',
@@ -69,7 +69,7 @@ return [
     ], [
         'key'   => 'activities.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.activities.delete', 'admin.activities.mass-delete'],
+        'route' => ['admin.activities.delete', 'admin.activities.mass_delete'],
         'sort'  => 3,
     ], [
         'key'   => 'contacts',
@@ -94,7 +94,7 @@ return [
     ], [
         'key'   => 'contacts.persons.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.contacts.persons.delete', 'admin.contacts.persons.mass-delete'],
+        'route' => ['admin.contacts.persons.delete', 'admin.contacts.persons.mass_delete'],
         'sort'  => 4,
     ],  [
         'key'   => 'contacts.organizations',
@@ -114,7 +114,7 @@ return [
     ], [
         'key'   => 'contacts.organizations.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.contacts.organizations.delete', 'admin.contacts.organizations.mass-delete'],
+        'route' => ['admin.contacts.organizations.delete', 'admin.contacts.organizations.mass_delete'],
         'sort'  => 3,
     ],  [
         'key'   => 'products',
@@ -134,7 +134,7 @@ return [
     ], [
         'key'   => 'products.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.products.delete', 'admin.products.mass-delete'],
+        'route' => ['admin.products.delete', 'admin.products.mass_delete'],
         'sort'  => 3,
     ], [
         'key'   => 'settings',
@@ -159,7 +159,7 @@ return [
     ], [
         'key'   => 'settings.users.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.settings.users.delete', 'admin.settings.users.mass-delete'],
+        'route' => ['admin.settings.users.delete', 'admin.settings.users.mass_delete'],
         'sort'  => 3,
     ], [
         'key'   => 'settings.roles',

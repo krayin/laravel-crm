@@ -6,6 +6,9 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
+
+        {!! view_render_event('admin.mail.compose.header.before', ['email' => $email ?? null]) !!}
+
         <div class="page-header">
             
             {{ Breadcrumbs::render('mail.route', request('route')) }}
@@ -14,6 +17,8 @@
                 <h1>{{ __('admin::app.mail.compose') }}</h1>
             </div>
         </div>
+
+        {!! view_render_event('admin.mail.compose.header.after', ['email' => $email ?? null]) !!}
 
         <div class="page-content">
 
@@ -34,6 +39,8 @@
 
                 <div class="panel">
                     <div class="panel-header">
+                        {!! view_render_event('admin.mail.compose.form_buttons.before', ['email' => $email ?? null]) !!}
+
                         <button type="submit" class="btn btn-md btn-primary" @click="is_draft = 0">
                             <i class="icon email-send-icon"></i>
 
@@ -43,9 +50,13 @@
                         <input type="submit" value="{{ __('admin::app.mail.save-to-draft') }}" @click="is_draft = 1"/>
 
                         <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">{{ __('admin::app.mail.back') }}</a>
+
+                        {!! view_render_event('admin.mail.compose.form_buttons.after', ['email' => $email ?? null]) !!}
                     </div>
     
                     <div class="panel-body">
+                        {!! view_render_event('admin.mail.compose.form_controls.before', ['email' => $email ?? null]) !!}
+
                         @csrf()
 
                         @if (isset($email))
@@ -102,6 +113,8 @@
                         <div class="form-group">
                             <attachment-wrapper :data='@json(isset($email) ? $email->attachments : [])'></attachment-wrapper>
                         </div>
+
+                        {!! view_render_event('admin.mail.compose.form_controls.after', ['email' => $email ?? null]) !!}
                     </div>
                 </div>
 
