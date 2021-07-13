@@ -5,9 +5,13 @@
 @stop
 
 @section('table-header')
+    {!! view_render_event('admin.settings.sources.index.header.before') !!}
+
     {{ Breadcrumbs::render('settings.sources') }}
 
     {{ __('admin::app.settings.sources.title') }}
+
+    {!! view_render_event('admin.settings.sources.index.header.after') !!}
 @stop
 
 @section('table-action')
@@ -20,12 +24,18 @@
             <h3 slot="header-title">{{ __('admin::app.settings.sources.add-title') }}</h3>
             
             <div slot="header-actions">
+                {!! view_render_event('admin.settings.sources.create.form_buttons.before') !!}
+                
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addSourceModal')">{{ __('admin::app.settings.sources.cancel') }}</button>
 
                 <button type="submit" class="btn btn-sm btn-primary">{{ __('admin::app.settings.sources.save-btn-title') }}</button>
+
+                {!! view_render_event('admin.settings.sources.create.form_buttons.after') !!}
             </div>
 
             <div slot="body">
+                {!! view_render_event('admin.settings.sources.create.form_controls.before') !!}
+
                 @csrf()
 
                 <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
@@ -39,6 +49,8 @@
                         @{{ errors.first('name') }}
                     </span>
                 </div>
+
+                {!! view_render_event('admin.settings.sources.create.form_controls.after') !!}
             </div>
         </modal>
     </form>

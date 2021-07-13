@@ -6,6 +6,8 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
+        {!! view_render_event('admin.settings.users.edit.header.before', ['user' => $user]) !!}
+
         <div class="page-header">
             
             {{ Breadcrumbs::render('settings.users.edit', $admin) }}
@@ -15,11 +17,15 @@
             </div>
         </div>
 
+        {!! view_render_event('admin.settings.users.edit.header.after', ['user' => $user]) !!}
+
         <form method="POST" action="{{ route('admin.settings.users.update', ['id' => $admin->id]) }}" @submit.prevent="onSubmit">
             <div class="page-content">
                 <div class="form-container">
                     <div class="panel">
                         <div class="panel-header">
+                            {!! view_render_event('admin.settings.users.edit.form_buttons.before', ['user' => $user]) !!}
+
                             <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('admin::app.settings.users.update-btn-title') }}
                             </button>
@@ -27,9 +33,13 @@
                             <a href="{{ route('admin.settings.users.index') }}">
                                 {{ __('admin::app.settings.users.back') }}
                             </a>
+
+                            {!! view_render_event('admin.settings.users.edit.form_buttons.after', ['user' => $user]) !!}
                         </div>
 
                         <div class="panel-body">
+                            {!! view_render_event('admin.settings.users.edit.form_controls.before', ['user' => $user]) !!}
+
                             @csrf()
                             
                             <input name="_method" type="hidden" value="PUT">
@@ -165,6 +175,8 @@
                                     @{{ errors.first('confirm_password') }}
                                 </span>
                             </div>
+
+                            {!! view_render_event('admin.settings.users.edit.form_controls.after', ['user' => $user]) !!}
                         </div>
                     </div>
                 </div>

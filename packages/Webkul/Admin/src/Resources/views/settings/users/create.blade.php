@@ -6,6 +6,8 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
+        {!! view_render_event('admin.settings.users.create.header.before') !!}
+
         <div class="page-header">
             
             {{ Breadcrumbs::render('settings.users.create') }}
@@ -15,11 +17,15 @@
             </div>
         </div>
 
+        {!! view_render_event('admin.settings.users.create.header.after') !!}
+
         <form method="POST" action="{{ route('admin.settings.users.store') }}" @submit.prevent="onSubmit">
             <div class="page-content">
                 <div class="form-container">
                     <div class="panel">
                         <div class="panel-header">
+                            {!! view_render_event('admin.settings.users.create.form_buttons.before') !!}
+
                             <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('admin::app.settings.users.save-btn-title') }}
                             </button>
@@ -27,9 +33,13 @@
                             <a href="{{ route('admin.settings.users.index') }}">
                                 {{ __('admin::app.settings.users.back') }}
                             </a>
+
+                            {!! view_render_event('admin.settings.users.create.form_buttons.after') !!}
                         </div>
 
                         <div class="panel-body">
+                            {!! view_render_event('admin.settings.users.create.form_controls.before') !!}
+
                             @csrf()
                             
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
@@ -155,6 +165,8 @@
                                     @{{ errors.first('confirm_password') }}
                                 </span>
                             </div>
+
+                            {!! view_render_event('admin.settings.users.create.form_controls.after') !!}
                         </div>
                     </div>
                 </div>

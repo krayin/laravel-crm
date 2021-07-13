@@ -82,18 +82,6 @@ class ActivityDataGrid extends DataGrid
             ],
         ];
 
-        // users list to filter table data
-        $userRepository = app('\Webkul\User\Repositories\UserRepository');
-
-        $users = $userRepository->all();
-
-        foreach ($users as $user) {
-            array_push($this->users, [
-                'value' => $user['id'],
-                'label' => $user['name'],
-            ]);
-        }
-
         // persons list to filter table data
         $personRepository = app('\Webkul\Contact\Repositories\PersonRepository');
 
@@ -142,19 +130,19 @@ class ActivityDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'user',
-            'label'             => trans('admin::app.datagrid.assigned_to'),
-            'type'              => 'hidden',
-            'sortable'          => true,
-            'filterable_type'   => 'dropdown',
-            'filterable_options' => $this->users,
+            'index'              => 'user',
+            'label'              => trans('admin::app.datagrid.assigned_to'),
+            'type'               => 'hidden',
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
         ]);
 
         $this->addColumn([
-            'index'             => 'lead',
-            'label'             => trans('admin::app.datagrid.lead'),
-            'type'              => 'string',
-            'closure'           => function ($row) {
+            'index'   => 'lead',
+            'label'   => trans('admin::app.datagrid.lead'),
+            'type'    => 'string',
+            'closure' => function ($row) {
                 $route = urldecode(route('admin.leads.index', ['view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
                 return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
@@ -162,17 +150,17 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'       => 'comment',
-            'label'       => trans('admin::app.datagrid.comment'),
-            'type'        => 'string',
-            'searchable'  => true,
+            'index'      => 'comment',
+            'label'      => trans('admin::app.datagrid.comment'),
+            'type'       => 'string',
+            'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'              => 'type',
-            'head_style'         => 'width: 70px',
-            'label'              => trans('admin::app.datagrid.type'),
-            'type'               => 'boolean',
+            'index'         => 'type',
+            'head_style'    => 'width: 70px',
+            'label'         => trans('admin::app.datagrid.type'),
+            'type'          => 'boolean',
         ]);
 
         $this->addColumn([
@@ -181,21 +169,21 @@ class ActivityDataGrid extends DataGrid
             'label'              => trans('admin::app.datagrid.is_done'),
             'type'               => 'boolean',
             'filterable_type'    => 'dropdown',
-            'filterable_options' => [[
-                'value' => 0,
-                'label' => __("admin::app.common.no"),
-            ], [
-                'value' => 1,
-                'label' => __("admin::app.common.yes"),
-            ]],
+            'filterable_options' => [
+                [
+                    'value' => 0,
+                    'label' => __("admin::app.common.no"),
+                ], [
+                    'value' => 1,
+                    'label' => __("admin::app.common.yes"),
+                ]
+            ],
             'closure'            => function ($row) {
                 if ($row->is_done) {
                     return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
                 } else {
                     return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
                 }
-
-                // return "<span class='checkbox'><input type='checkbox'" . ($row->is_done ? "checked=checked" : "") . "disabled='disabled'><label for='checkbox' class='checkbox-view'></label></span>";
             },
         ]);
 
@@ -213,10 +201,10 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'assigned_to',
-            'label'             => trans('admin::app.datagrid.assigned_to'),
-            'type'              => 'string',
-            'closure'           => function ($row) {
+            'index'   => 'assigned_to',
+            'label'   => trans('admin::app.datagrid.assigned_to'),
+            'type'    => 'string',
+            'closure' => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->assignee_id]));
 
                 return "<a href='" . $route . "'>" . $row->assigned_to . "</a>";
@@ -224,40 +212,40 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'schedule_from',
-            'head_style'        => 'width: 100px',
-            'label'             => trans('admin::app.datagrid.schedule_from'),
-            'title'             => true,
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'schedule_from',
+            'head_style'      => 'width: 100px',
+            'label'           => trans('admin::app.datagrid.schedule_from'),
+            'title'           => true,
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_from);
             },
         ]);
 
         $this->addColumn([
-            'index'             => 'schedule_to',
-            'head_style'        => 'width: 100px',
-            'label'             => trans('admin::app.datagrid.schedule_to'),
-            'title'             => true,
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'schedule_to',
+            'head_style'      => 'width: 100px',
+            'label'           => trans('admin::app.datagrid.schedule_to'),
+            'title'           => true,
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_to);
             },
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'head_style'        => 'width: 100px',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'title'             => true,
-            'type'              => 'string',
-            'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'index'           => 'created_at',
+            'head_style'      => 'width: 100px',
+            'label'           => trans('admin::app.datagrid.created_at'),
+            'title'           => true,
+            'type'            => 'string',
+            'sortable'        => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
