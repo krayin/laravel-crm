@@ -60,12 +60,12 @@ abstract class DataGrid
      */
     public function addAction($action)
     {
+        $eventName = null;
+
         if (isset($action['title'])) {
             $eventName = strtolower($action['title']);
             $eventName = explode(' ', $eventName);
             $eventName = implode('.', $eventName);
-        } else {
-            $eventName = null;
         }
 
         $this->fireEvent('action.before.' . $eventName);

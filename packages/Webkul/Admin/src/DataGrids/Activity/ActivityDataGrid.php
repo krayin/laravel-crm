@@ -170,12 +170,14 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'              => 'type',
+            'head_style'         => 'width: 70px',
             'label'              => trans('admin::app.datagrid.type'),
             'type'               => 'boolean',
         ]);
 
         $this->addColumn([
             'index'              => 'is_done',
+            'head_style'         => 'width: 100px',
             'label'              => trans('admin::app.datagrid.is_done'),
             'type'               => 'boolean',
             'filterable_type'    => 'dropdown',
@@ -223,6 +225,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'             => 'schedule_from',
+            'head_style'        => 'width: 100px',
             'label'             => trans('admin::app.datagrid.schedule_from'),
             'title'             => true,
             'type'              => 'string',
@@ -235,6 +238,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'             => 'schedule_to',
+            'head_style'        => 'width: 100px',
             'label'             => trans('admin::app.datagrid.schedule_to'),
             'title'             => true,
             'type'              => 'string',
@@ -247,6 +251,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'             => 'created_at',
+            'head_style'        => 'width: 100px',
             'label'             => trans('admin::app.datagrid.created_at'),
             'title'             => true,
             'type'              => 'string',

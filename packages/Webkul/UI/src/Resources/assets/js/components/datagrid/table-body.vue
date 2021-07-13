@@ -36,8 +36,8 @@
                         :key="rowIndex"
                         v-if="column.type != 'hidden'"
                         @click="redirectRow(row.redirect_url)"
-                        :title="column.title ? row[column.index] : ''"
                         v-html="getRowContent(row[column.index])"
+                        :title="column.title ? row[column.index] : ''"
                         :class="[row.redirect_url ? 'cursor-pointer' : '', column.class || column.index ]"
                     ></td>
                 </template>
@@ -64,9 +64,10 @@
                             :data-action="action.route"
                             :data-method="action.method"
                             @click="doAction({
-                                event: $event,
-                                route: action.route,
-                                method: action.method
+                                event           : $event,
+                                route           : action.route,
+                                method          : action.method,
+                                confirm_text    : action.confirm_text,
                             })"
                         >
                             <i :key="index" :data-route="action.route" :class="`icon ${action.icon}`"></i>
@@ -124,28 +125,13 @@
                 'selectTableRow',
             ]),
 
-            doAction: function ({event, route, method}) {
-                if (confirm(this.__('ui.datagrid.massaction.delete'))) {
-                    this.$http[method.toLowerCase()](route)
-                        .then(response => {
-                            event.preventDefault();
-
-                            if (response.data.status) {
-                                this.addFlashMessages({
-                                    type    : "success",
-                                    message : response.data.message,
-                                });
-
-                                EventBus.$emit('refresh_table_data', {usePrevious: true});
-                            }
-                        }).catch(error => {
-                            event.preventDefault();
-
-                            this.addFlashMessages({
-                                type    : "error",
-                                message : error.response.data.message,
-                            });
-                        });
+            doAction: function ({event, route, method, confirm_text}) {
+                if (confirm_text) {
+                    if (confirm(confirm_text)) {
+                        this.performAjax({event, route, method});
+                    }
+                } else {
+                    this.performAjax({event, route, method, type: 'download'});
                 }
             },
 
@@ -160,6 +146,46 @@
                     // content = content.replace("<script>", "<\/script>");
                 }
                 return content || (content === 0 ? content : '--')
+            },
+
+            performAjax: function ({event, route, method, type}) {
+                this.$http[method.toLowerCase()](route)
+                    .then(response => {
+                        event.preventDefault();
+
+                        if (response.data.status) {
+                            if (type == 'download') {
+                                var dlAnchorElem = document.createElement('a');
+                                dlAnchorElem.id = 'downloadAnchorElem';
+
+                                document.body.appendChild(dlAnchorElem);
+
+                                var dataStr = `data:text/plain;charset=utf-8,${response.data.fileContent}`;
+                                var dlAnchorElem = document.getElementById('downloadAnchorElem');
+
+                                dlAnchorElem.setAttribute("href", dataStr);
+                                dlAnchorElem.setAttribute("download", `${response.data.fileName}`);
+
+                                dlAnchorElem.click();
+
+                                dlAnchorElem.parentNode.removeChild(dlAnchorElem);
+                            } else {
+                                this.addFlashMessages({
+                                    type    : "success",
+                                    message : response.data.message,
+                                });
+    
+                                EventBus.$emit('refresh_table_data', {usePrevious: true});
+                            }
+                        }
+                    }).catch(error => {
+                        event.preventDefault();
+
+                        this.addFlashMessages({
+                            type    : "error",
+                            message : error.response.data.message,
+                        });
+                    });
             }
         }
     };
