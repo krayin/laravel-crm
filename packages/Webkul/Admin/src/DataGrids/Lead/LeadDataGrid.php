@@ -107,12 +107,13 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'lead_value',
-            'label'      => trans('admin::app.datagrid.lead_value'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'index'           => 'lead_value',
+            'label'           => trans('admin::app.datagrid.lead_value'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add',
+            'closure'         => function ($row) {
                 return round($row->lead_value, 2);
             },
         ]);

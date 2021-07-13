@@ -71,10 +71,13 @@ trait DatagridCollection
             foreach ($info as $condition => $filter_value) {
                 switch ($condition) {
                     case 'in':
-                        $collection->whereIn(
-                            $columnName,
-                            explode(',', $filter_value)
-                        );
+                        foreach (explode(',', $filter_value) as $value) {
+                            $collection->orWhere(
+                                $columnName,
+                                'like',
+                                "%$value%"
+                            );
+                        }
                         break;
     
                     case 'bw':

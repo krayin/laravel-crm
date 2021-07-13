@@ -82,18 +82,6 @@ class ActivityDataGrid extends DataGrid
             ],
         ];
 
-        // persons list to filter table data
-        $personRepository = app('\Webkul\Contact\Repositories\PersonRepository');
-
-        $persons = $personRepository->all();
-
-        foreach ($persons as $person) {
-            array_push($this->persons, [
-                'value' => $person['id'],
-                'label' => $person['name'],
-            ]);
-        }
-
         parent::__construct();
     }
 
@@ -120,7 +108,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addFilter('id', 'lead_activities.id');
         $this->addFilter('assigned_to', 'users.name');
-        $this->addFilter('contact_person', 'persons.id');
+        $this->addFilter('contact_person', 'persons.name');
         $this->addFilter('user', 'lead_activities.user_id');
         $this->addFilter('created_at', 'lead_activities.created_at');
 
@@ -191,8 +179,7 @@ class ActivityDataGrid extends DataGrid
             'index'              => 'contact_person',
             'label'              => trans('admin::app.datagrid.contact_person'),
             'type'               => 'string',
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->persons,
+            'filterable_type'    => 'add',
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->contact_person_id]));
 

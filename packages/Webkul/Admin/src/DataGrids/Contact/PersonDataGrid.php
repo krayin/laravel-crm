@@ -52,12 +52,13 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'emails',
-            'label'      => trans('admin::app.datagrid.emails'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => false,
-            'closure'    => function ($row) {
+            'index'             => 'emails',
+            'label'             => trans('admin::app.datagrid.emails'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => false,
+            'filterable_type'   => 'add',
+            'closure'           => function ($row) {
                 $emails = json_decode($row->emails, true);
 
                 if ($emails) {
@@ -69,12 +70,13 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'contact_numbers',
-            'label'      => trans('admin::app.datagrid.contact_numbers'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => false,
-            'closure'    => function ($row) {
+            'index'             => 'contact_numbers',
+            'label'             => trans('admin::app.datagrid.contact_numbers'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => false,
+            'filterable_type'   => 'add',
+            'closure'           => function ($row) {
                 $contactNumbers = json_decode($row->contact_numbers, true);
 
                 if ($contactNumbers) {
