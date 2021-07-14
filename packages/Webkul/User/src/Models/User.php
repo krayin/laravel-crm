@@ -44,6 +44,14 @@ class User extends Authenticatable implements UserContract
     }
 
     /**
+     * The groups that belong to the user.
+     */
+    public function groups()
+    {
+        return $this->belongsToMany(GroupProxy::modelClass(), 'user_groups');
+    }
+
+    /**
      * Checks if user has permission to perform certain action.
      *
      * @param  String  $permission

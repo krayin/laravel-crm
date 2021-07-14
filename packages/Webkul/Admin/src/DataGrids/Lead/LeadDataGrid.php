@@ -69,8 +69,14 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
             ;
 
-        if (($user = auth()->guard('user')->user())->lead_view_permission == 'individual') {
-            $queryBuilder->where('leads.user_id', $user->id);
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->lead_view_permission != 'global') {
+            if ($currentUser->lead_view_permission == 'group') {
+                $queryBuilder->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+            } else {
+                $queryBuilder->where('leads.user_id', $currentUser->id);
+            }
         }
 
         $this->addFilter('id', 'leads.id');

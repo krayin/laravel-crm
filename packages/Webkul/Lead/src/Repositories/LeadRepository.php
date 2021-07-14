@@ -81,8 +81,14 @@ class LeadRepository extends Repository
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
                 ->where(function ($query) {
-                    if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-                        $query->where('leads.user_id', $currentUser->id);
+                    $currentUser = auth()->guard('user')->user();
+
+                    if ($currentUser->lead_view_permission != 'global') {
+                        if ($currentUser->lead_view_permission == 'group') {
+                            $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                        } else {
+                            $query->where('leads.user_id', $currentUser->id);
+                        }
                     }
                 })
                 ->get();

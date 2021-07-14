@@ -115,8 +115,27 @@ Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
 // Settings
 Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.roles.index'));
+    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.groups.index'));
 });
+
+// Settings > Groups
+Breadcrumbs::for('settings.groups', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.groups'), route('admin.settings.groups.index'));
+});
+
+// Dashboard > Groups > Create Group
+Breadcrumbs::for('settings.groups.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.groups');
+    $trail->push(trans('admin::app.settings.groups.add-title'), route('admin.settings.groups.create'));
+});
+
+// Dashboard > Groups > Edit Group
+Breadcrumbs::for('settings.groups.edit', function (BreadcrumbTrail $trail, $role) {
+    $trail->parent('settings.groups');
+    $trail->push(trans('admin::app.settings.groups.edit-title'), route('admin.settings.groups.edit', $role->id));
+});
+
 
 // Settings > Roles
 Breadcrumbs::for('settings.roles', function (BreadcrumbTrail $trail) {

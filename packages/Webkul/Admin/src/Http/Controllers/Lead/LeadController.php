@@ -111,9 +111,19 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
-        if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-            if ($lead->user_id != $currentUser->id) {
-                return redirect()->route('admin.leads.index');
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->lead_view_permission != 'global') {
+            if ($currentUser->lead_view_permission == 'group') {
+                $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+
+                if (! in_array($lead->user_id, $userIds)) {
+                    return redirect()->route('admin.leads.index');
+                }
+            } else {
+                if ($lead->user_id != $currentUser->id) {
+                    return redirect()->route('admin.leads.index');
+                }
             }
         }
 
