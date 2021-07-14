@@ -20,79 +20,7 @@ class ActivityDataGrid extends DataGrid
     public function __construct()
     {
         // table tab filters
-        $this->tabFilters = [
-            [
-                'type'      => 'pill',
-                'key'       => 'type',
-                'condition' => 'eq',
-                'values'    => [
-                    [
-                        'name'      => trans('admin::app.leads.all'),
-                        'isActive'  => true,
-                        'key'       => 'all',
-                    ], [
-                        'name'      => trans('admin::app.leads.note'),
-                        'isActive'  => false,
-                        'key'       => 'note',
-                    ], [
-                        'name'      => trans('admin::app.leads.call'),
-                        'isActive'  => false,
-                        'key'       => 'call',
-                    ], [
-                        'name'      => trans('admin::app.leads.email'),
-                        'isActive'  => false,
-                        'key'       => 'email',
-                    ], [
-                        'name'      => trans('admin::app.leads.meeting'),
-                        'isActive'  => false,
-                        'key'       => 'meeting',
-                    ]
-                ]
-            ], [
-                'type'      => 'group',
-                'key'       => 'duration',
-                'condition' => 'eq',
-                'values'    => [
-                    [
-                        'name'      => 'Yesterday',
-                        'isActive'  => false,
-                        'key'       => 'yesterday',
-                    ], [
-                        'name'      => 'Today',
-                        'isActive'  => false,
-                        'key'       => 'today',
-                    ], [
-                        'name'      => 'Tomorrow',
-                        'isActive'  => false,
-                        'key'       => 'tomorrow',
-                    ], [
-                        'name'      => 'This week',
-                        'isActive'  => false,
-                        'key'       => 'this_week',
-                    ], [
-                        'name'      => 'This month',
-                        'isActive'  => true,
-                        'key'       => 'this_month',
-                    ], [
-                        'name'      => 'Custom',
-                        'isActive'  => false,
-                        'key'       => 'custom',
-                    ]
-                ]
-            ],
-        ];
-
-        // persons list to filter table data
-        $personRepository = app('\Webkul\Contact\Repositories\PersonRepository');
-
-        $persons = $personRepository->all();
-
-        foreach ($persons as $person) {
-            array_push($this->persons, [
-                'value' => $person['id'],
-                'label' => $person['name'],
-            ]);
-        }
+        $this->tabFilters = $this->prepareTabFilters("activities");
 
         parent::__construct();
     }
@@ -120,7 +48,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addFilter('id', 'lead_activities.id');
         $this->addFilter('assigned_to', 'users.name');
-        $this->addFilter('contact_person', 'persons.id');
+        $this->addFilter('contact_person', 'persons.name');
         $this->addFilter('user', 'lead_activities.user_id');
         $this->addFilter('created_at', 'lead_activities.created_at');
 
@@ -157,13 +85,15 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'type',
-            'label' => trans('admin::app.datagrid.type'),
-            'type'  => 'boolean',
+            'index'         => 'type',
+            'head_style'    => 'width: 70px',
+            'label'         => trans('admin::app.datagrid.type'),
+            'type'          => 'boolean',
         ]);
 
         $this->addColumn([
             'index'              => 'is_done',
+            'head_style'         => 'width: 100px',
             'label'              => trans('admin::app.datagrid.is_done'),
             'type'               => 'boolean',
             'filterable_type'    => 'dropdown',
@@ -189,8 +119,7 @@ class ActivityDataGrid extends DataGrid
             'index'              => 'contact_person',
             'label'              => trans('admin::app.datagrid.contact_person'),
             'type'               => 'string',
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->persons,
+            'filterable_type'    => 'add',
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->contact_person_id]));
 
@@ -211,6 +140,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'schedule_from',
+            'head_style'      => 'width: 100px',
             'label'           => trans('admin::app.datagrid.schedule_from'),
             'title'           => true,
             'type'            => 'string',
@@ -223,6 +153,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'schedule_to',
+            'head_style'      => 'width: 100px',
             'label'           => trans('admin::app.datagrid.schedule_to'),
             'title'           => true,
             'type'            => 'string',
@@ -235,6 +166,7 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'created_at',
+            'head_style'      => 'width: 100px',
             'label'           => trans('admin::app.datagrid.created_at'),
             'title'           => true,
             'type'            => 'string',

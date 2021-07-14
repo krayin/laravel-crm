@@ -99,6 +99,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/menu.php', 'menu.admin');
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/core_config.php', 'core_config');
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/dashboard_cards.php', 'dashboard_cards');
+        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/datagrid_filters.php', 'datagrid_filters');
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups');
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
     }

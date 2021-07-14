@@ -27,7 +27,7 @@ class QuoteDataGrid extends DataGrid
                 'users.id as user_id',
                 'users.name as user_name',
                 'persons.id as person_id',
-                'persons.name as person_name',
+                'persons.name as person_name'
             )
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');

@@ -112,4 +112,35 @@ trait DatagridHelper
 
         return $this->completeColumnDetails;
     }
+
+    /**
+     * Prepare tab filters.
+     *
+     * @return array
+     */
+    public function prepareTabFilters($key)
+    {
+        $tabFilters = config("datagrid_filters")[$key] ?? [];
+        
+        foreach ($tabFilters as $tabIndex => $filter) {
+            if (($filter['value_type'] ?? false) == "lookup") {
+                $values = app($filter['repositoryClass'])
+                            ->get(['name', 'code as key', \DB::raw("false as isActive")])
+                            ->prepend([
+                                'isActive'  => true,
+                                'key'       => 'all',
+                                'name'      => trans('admin::app.datagrid.all'),
+                            ])
+                            ->toArray();
+                            
+                $tabFilters[$tabIndex]['values'] = $values;
+            } else {
+                foreach ($filter['values'] as $valueIndex => $value) {
+                    $tabFilters[$tabIndex]['values'][$valueIndex]['name'] = trans($tabFilters[$tabIndex]['values'][$valueIndex]['name']);
+                }
+            }
+        }
+
+        return $tabFilters;
+    }
 }

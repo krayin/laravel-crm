@@ -47,12 +47,13 @@ class ProductDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'price',
-            'label'      => trans('admin::app.datagrid.price'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'index'           => 'price',
+            'label'           => trans('admin::app.datagrid.price'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add',
+            'closure'         => function ($row) {
                 return round($row->price, 2);
             },
         ]);
