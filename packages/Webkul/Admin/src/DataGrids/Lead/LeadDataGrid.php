@@ -19,32 +19,7 @@ class LeadDataGrid extends DataGrid
     public function __construct()
     {
         // get all stages
-        $stagesValues = [
-            [
-                'name'      => trans('admin::app.leads.all'),
-                'isActive'  => true,
-                'key'       => 'all',
-            ]
-        ];
-
-        $stages = app('\Webkul\Lead\Repositories\StageRepository')
-                    ->select('name', 'code as key')
-                    ->get()
-                    ->toArray();
-                    
-        foreach ($stages as $stage) {
-            $stage['isActive'] = false;
-            array_push($stagesValues, $stage);
-        }
-
-        $this->tabFilters = [
-            [
-                'type'      => 'pill',
-                'key'       => 'type',
-                'condition' => 'eq',
-                'values'    => $stagesValues,
-            ],
-        ];
+        $this->tabFilters = $this->prepareTabFilters("leads");
 
         parent::__construct();
     }
@@ -113,12 +88,13 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'lead_value',
-            'label'      => trans('admin::app.datagrid.lead_value'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'index'           => 'lead_value',
+            'label'           => trans('admin::app.datagrid.lead_value'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add',
+            'closure'         => function ($row) {
                 return round($row->lead_value, 2);
             },
         ]);
