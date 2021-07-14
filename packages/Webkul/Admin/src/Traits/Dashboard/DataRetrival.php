@@ -250,8 +250,14 @@ trait DataRetrival
                     ->orderBy('lead_value', 'desc')
                     ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                     ->where(function ($query) {
-                        if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-                            $query->where('leads.user_id', $currentUser->id);
+                        $currentUser = auth()->guard('user')->user();
+
+                        if ($currentUser->lead_view_permission != 'global') {
+                            if ($currentUser->lead_view_permission == 'group') {
+                                $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                            } else {
+                                $query->where('leads.user_id', $currentUser->id);
+                            }
                         }
                     })
                     ->limit(3)

@@ -2,13 +2,10 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-
-use Webkul\Admin\Http\Requests\UserForm;
 use Webkul\User\Repositories\RoleRepository;
+use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\UserRepository;
 use Webkul\Admin\Notifications\User\Create;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -33,14 +30,18 @@ class UserController extends Controller
      * Create a new controller instance.
      *
      * @param  \Webkul\User\Repositories\UserRepository  $userRepository
+     * @param  \Webkul\User\Repositories\GroupRepository  $groupRepository
      * @param  \Webkul\User\Repositories\RoleRepository  $roleRepository
      * @return void
      */
     public function __construct(
         UserRepository $userRepository,
+        GroupRepository $groupRepository,
         RoleRepository $roleRepository
     ) {
         $this->userRepository = $userRepository;
+
+        $this->groupRepository = $groupRepository;
 
         $this->roleRepository = $roleRepository;
     }
@@ -66,7 +67,9 @@ class UserController extends Controller
     {
         $roles = $this->roleRepository->all();
 
-        return view('admin::settings.users.create', compact('roles'));
+        $groups = $this->groupRepository->all();
+
+        return view('admin::settings.users.create', compact('groups', 'roles'));
     }
 
     /**
@@ -77,10 +80,11 @@ class UserController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'email'         => 'required|email|unique:users,email',
-            'name'          => 'required',
-            'password'      => 'required',
-            'role_id'       => 'required',
+            'email'            => 'required|email|unique:users,email',
+            'name'             => 'required',
+            'password'         => 'nullable',
+            'confirm_password' => 'nullable|required_with:password|same:password',
+            'role_id'          => 'required',
         ]);
         
         $data = request()->all();
@@ -98,6 +102,8 @@ class UserController extends Controller
         $admin->lead_view_permission = $data['lead_view_permission'];
 
         $admin->save();
+
+        $admin->groups()->sync(request('groups') ?? []);
 
         try {
             Mail::queue(new Create($admin));
@@ -124,7 +130,9 @@ class UserController extends Controller
 
         $roles = $this->roleRepository->all();
 
-        return view('admin::settings.users.edit', compact('admin', 'roles'));
+        $groups = $this->groupRepository->all();
+
+        return view('admin::settings.users.edit', compact('admin', 'groups', 'roles'));
     }
 
     /**
@@ -136,9 +144,11 @@ class UserController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'email'         => 'required|email',
-            'name'          => 'required',
-            'role_id'       => 'required',
+            'email'            => 'required|email',
+            'name'             => 'required',
+            'password'         => 'nullable',
+            'confirm_password' => 'nullable|required_with:password|same:password',
+            'role_id'          => 'required',
         ]);
 
         $data = request()->all();
@@ -165,6 +175,8 @@ class UserController extends Controller
         $admin->lead_view_permission = $data['lead_view_permission'];
 
         $admin->save();
+
+        $admin->groups()->sync(request('groups') ?? []);
 
         Event::dispatch('settings.user.update.after', $admin);
 

@@ -15,4 +15,20 @@ class UserRepository extends Repository
     {
         return 'Webkul\User\Contracts\User';
     }
+
+    /**
+     * This function will return user ids of current user's groups
+     * 
+     * @return array
+     */
+    public function getCurrentUserGroupsUserIds()
+    {
+        $userIds = $this->scopeQuery(function ($query) {
+            return $query->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+                ->leftJoin('groups', 'user_groups.group_id', 'groups.id')
+                ->whereIn('groups.id', auth()->guard('user')->user()->groups()->pluck('id'));
+        })->pluck('id')->toArray();
+
+        return $userIds;
+    }
 }

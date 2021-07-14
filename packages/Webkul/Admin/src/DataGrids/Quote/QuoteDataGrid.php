@@ -32,6 +32,16 @@ class QuoteDataGrid extends DataGrid
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');
 
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->lead_view_permission != 'global') {
+            if ($currentUser->lead_view_permission == 'group') {
+                $queryBuilder->whereIn('quotes.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+            } else {
+                $queryBuilder->where('quotes.user_id', $currentUser->id);
+            }
+        }
+
         $this->addFilter('id', 'quotes.id');
         $this->addFilter('user', 'quotes.user_id');
         $this->addFilter('person_name', 'persons.name');

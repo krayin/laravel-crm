@@ -218,6 +218,21 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
             ], function () {
+                // Groups Routes
+                Route::prefix('groups')->group(function () {
+                    Route::get('', 'GroupController@index')->name('admin.settings.groups.index');
+
+                    Route::get('create', 'GroupController@create')->name('admin.settings.groups.create');
+
+                    Route::post('create', 'GroupController@store')->name('admin.settings.groups.store');
+
+                    Route::get('edit/{id}', 'GroupController@edit')->name('admin.settings.groups.edit');
+
+                    Route::put('edit/{id}', 'GroupController@update')->name('admin.settings.groups.update');
+
+                    Route::delete('{id}', 'GroupController@destroy')->name('admin.settings.groups.delete');
+                });
+
                 // Roles Routes
                 Route::prefix('roles')->group(function () {
                     Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
