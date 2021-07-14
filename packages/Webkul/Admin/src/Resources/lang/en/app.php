@@ -510,6 +510,7 @@
             'comment'           => 'Comment',
             'is_done'           => 'Is Done',
             'type'              => 'Type',
+            'all'               => 'All',
             'user'              => 'User',
             'sales-person'      => 'Sales Person',
             'person'            => 'Person',
@@ -533,6 +534,14 @@
             'update-success'    => ':resource updated successfully.',
             'destroy-success'   => ':resource deleted successfully.',
             'destroy-failed'    => ':resource can not be deleted.',
+            'filters'           => [
+                'yesterday'     => 'Yesterday',
+                'today'         => 'Today',
+                'tomorrow'      => 'Tomorrow',
+                'this-week'     => 'This week',
+                'this-month'    => 'This month',
+                'custom'        => 'Custom',
+            ]
         ],
 
         'response' => [

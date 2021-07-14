@@ -20,67 +20,7 @@ class ActivityDataGrid extends DataGrid
     public function __construct()
     {
         // table tab filters
-        $this->tabFilters = [
-            [
-                'type'      => 'pill',
-                'key'       => 'type',
-                'condition' => 'eq',
-                'values'    => [
-                    [
-                        'name'      => trans('admin::app.leads.all'),
-                        'isActive'  => true,
-                        'key'       => 'all',
-                    ], [
-                        'name'      => trans('admin::app.leads.note'),
-                        'isActive'  => false,
-                        'key'       => 'note',
-                    ], [
-                        'name'      => trans('admin::app.leads.call'),
-                        'isActive'  => false,
-                        'key'       => 'call',
-                    ], [
-                        'name'      => trans('admin::app.leads.email'),
-                        'isActive'  => false,
-                        'key'       => 'email',
-                    ], [
-                        'name'      => trans('admin::app.leads.meeting'),
-                        'isActive'  => false,
-                        'key'       => 'meeting',
-                    ]
-                ]
-            ], [
-                'type'      => 'group',
-                'key'       => 'duration',
-                'condition' => 'eq',
-                'values'    => [
-                    [
-                        'name'      => 'Yesterday',
-                        'isActive'  => false,
-                        'key'       => 'yesterday',
-                    ], [
-                        'name'      => 'Today',
-                        'isActive'  => false,
-                        'key'       => 'today',
-                    ], [
-                        'name'      => 'Tomorrow',
-                        'isActive'  => false,
-                        'key'       => 'tomorrow',
-                    ], [
-                        'name'      => 'This week',
-                        'isActive'  => false,
-                        'key'       => 'this_week',
-                    ], [
-                        'name'      => 'This month',
-                        'isActive'  => true,
-                        'key'       => 'this_month',
-                    ], [
-                        'name'      => 'Custom',
-                        'isActive'  => false,
-                        'key'       => 'custom',
-                    ]
-                ]
-            ],
-        ];
+        $this->tabFilters = $this->prepareTabFilters("activities");
 
         parent::__construct();
     }
