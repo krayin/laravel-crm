@@ -133,45 +133,52 @@ class RoleController extends Controller
      */
     public function destroy($id)
     {
+        $response = [
+            'status'        => false,
+            'responseCode'  => 400,
+        ];
+
         $role = $this->roleRepository->findOrFail($id);
 
         if ($role->admins && $role->admins->count() >= 1) {
-            $status = false;
-            $responseCode = 400;
-            $message = trans('admin::app.settings.roles.being-used');
+            $response['message'] = trans('admin::app.settings.roles.being-used');
 
             session()->flash('error', $message);
         } else if ($this->roleRepository->count() == 1) {
-            $status = false;
-            $responseCode = 400;
-            $message = trans('admin::app.settings.roles.last-delete-error');
+            $response['message'] = trans('admin::app.settings.roles.last-delete-error');
 
             session()->flash('error', $message);
         } else {
             try {
                 Event::dispatch('settings.role.delete.before', $id);
 
-                $this->roleRepository->delete($id);
+                if (auth()->guard('user')->user()->role_id == $id) {
+                    $response['message'] = trans('admin::app.settings.roles.current-role-delete-error');
+                } else {
+                    $this->roleRepository->delete($id);
 
-                Event::dispatch('settings.role.delete.after', $id);
+                    Event::dispatch('settings.role.delete.after', $id);
+    
+                    $message = trans('admin::app.settings.roles.delete-success');
+    
+                    $response = [
+                        'status'        => true,
+                        'responseCode'  => 200,
+                        'message'       => $message,
+                    ];
+    
+                    session()->flash('success', $message);
+                }
 
-                $status = false;
-                $responseCode = 200;
-                $message = trans('admin::app.settings.roles.delete-success');
-
-                session()->flash('success', $message);
             } catch(\Exception $exception) {
-                $status = false;
-                $responseCode = 400;
                 $message = $exception->getMessage();
+
+                $response['message'] = $message;
 
                 session()->flash('error', $message);
             }
         }
 
-        return response()->json([
-            'status'    => $status,
-            'message'   => $message,
-        ], $responseCode);
+        return response()->json($response, $response['responseCode']);
     }
 }

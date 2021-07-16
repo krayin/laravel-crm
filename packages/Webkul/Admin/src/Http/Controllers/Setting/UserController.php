@@ -246,6 +246,12 @@ class UserController extends Controller
     {
         $data = request()->all();
 
+        $currentUserId = auth()->guard('user')->user()->id;
+
+        if ($index = array_search($currentUserId, $data['rows'])) {
+            unset($data['rows'][$index]);
+        }
+
         $this->userRepository->destroy($data['rows']);
 
         return response()->json([
