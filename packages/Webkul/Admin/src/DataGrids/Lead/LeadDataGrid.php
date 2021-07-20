@@ -95,7 +95,7 @@ class LeadDataGrid extends DataGrid
             'sortable'        => true,
             'filterable_type' => 'add',
             'closure'         => function ($row) {
-                return round($row->lead_value, 2);
+                return core()->formatBasePrice($row->lead_value, 2);
             },
         ]);
 

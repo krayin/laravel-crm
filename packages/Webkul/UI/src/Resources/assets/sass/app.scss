@@ -416,6 +416,7 @@ h5 {
 
                 &.actions {
                     width: 100px;
+                    text-align: right;
 
                     .action {
                         display: inline-flex;
@@ -459,6 +460,8 @@ h5 {
                     }
 
                     &.action {
+                        text-align: right;
+                        
                         a {
                             cursor: pointer;
                             margin-right: 5px;

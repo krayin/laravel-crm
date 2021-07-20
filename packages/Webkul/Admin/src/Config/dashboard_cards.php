@@ -76,7 +76,13 @@ return [
         "data_class"    => "column-grid-2",
         "label"         => 'admin::app.dashboard.top_products',
     ], [
-        "sort"          => 1,
+        "sort"          => 10,
+        "selected"      => true,
+        "card_id"       => "quotes",
+        "card_type"     => "line_chart",
+        "label"         => 'admin::app.dashboard.quotes',
+    ], [
+        "sort"          => 11,
         "card_type"     => "custom_card",
         "card_border"   => "dashed",
         "selected"      => false,
