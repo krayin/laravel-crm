@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\DB;
 class LeadDataGrid extends DataGrid
 {
     protected $users = [];
+
     protected $tabFilters = [];
+    
     protected $stagesMassActionOptions;
 
     protected $redirectRow = [

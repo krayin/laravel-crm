@@ -46,7 +46,7 @@
                                 <input name="_method" type="hidden" value="PUT">
                                 
                                 <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                    <label>
+                                    <label class="required">
                                         {{ __('admin::app.settings.users.name') }}
                                     </label>
 
@@ -55,7 +55,7 @@
                                         name="name"
                                         class="control"
                                         v-validate="'required'"
-                                        value="{{ $admin->name }}"
+                                        value="{{ old('name') ?? $admin->name }}"
                                         data-vv-as="{{ __('admin::app.settings.users.name') }}"
                                         placeholder="{{ __('admin::app.settings.users.name') }}"
                                     />
@@ -66,7 +66,7 @@
                                 </div>
 
                                 <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                                    <label>
+                                    <label class="required">
                                         {{ __('admin::app.settings.users.email') }}
                                     </label>
 
@@ -74,7 +74,7 @@
                                         type="email"
                                         name="email"
                                         class="control"
-                                        value="{{ $admin->email }}"
+                                        value="{{ old('email') ?? $admin->email }}"
                                         v-validate="'required|email'"
                                         data-vv-as="{{ __('admin::app.settings.users.email') }}"
                                         placeholder="{{ __('admin::app.settings.users.email') }}"
@@ -86,7 +86,7 @@
                                 </div>
 
                                 <div class="form-group" :class="[errors.has('status') ? 'has-error' : '']">
-                                    <label>
+                                    <label class="required">
                                         {{ __('admin::app.settings.users.status') }}
                                     </label>
 
@@ -95,8 +95,8 @@
                                             id="status"
                                             type="checkbox"
                                             name="status"
+                                            {{ (old('status') || $admin->status) ? 'checked' : '' }}
                                             class="control"
-                                            {{ $admin->status ? 'checked' : '' }}
                                         />
                                         <span class="slider round"></span>
                                     </label>
@@ -168,9 +168,11 @@
                                         {{ __('admin::app.settings.users.role') }}
                                     </label>
 
+                                    <?php $selectedOption = old('role_id') ?: $admin->role_id ?>
+
                                     <select name="role_id" class="control" data-vv-as="{{ __('admin::app.settings.users.role') }}" v-validate="'required'">
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}" {{ $admin->role_id == $role->id ? 'selected' : '' }}>
+                                            <option value="{{ $role->id }}" {{ $selectedOption == $role->id ? 'selected' : '' }}>
                                                 {{ $role->name }}
                                             </option>
                                         @endforeach
@@ -186,10 +188,20 @@
                                         {{ __('admin::app.settings.users.lead-view') }}
                                     </label>
 
+                                    <?php $selectedOption = old('lead_view_permission') ?: $admin->lead_view_permission ?>
+
                                     <select name="lead_view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.lead-view') }}">
-                                        <option value="global" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'global' ? 'selected' : '' }}>{{ __('admin::app.settings.users.global') }}</option>
-                                        <option value="group" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'group' ? 'selected' : '' }}>{{ __('admin::app.settings.users.group') }}</option>
-                                        <option value="individual" {{ old('lead_view_permission') ?? $admin->lead_view_permission == 'individual' ? 'selected' : '' }}>{{ __('admin::app.settings.users.individual') }}</option>
+                                        <option value="global" {{ old('lead_view_permission') ?? $selectedOption == 'global' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.users.global') }}
+                                        </option>
+
+                                        <option value="group" {{ old('lead_view_permission') ?? $selectedOption == 'group' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.users.group') }}
+                                        </option>
+
+                                        <option value="individual" {{ old('lead_view_permission') ?? $selectedOption == 'individual' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.users.individual') }}
+                                        </option>
                                     </select>
 
                                     <span class="control-error" v-if="errors.has('lead_view_permission')">
