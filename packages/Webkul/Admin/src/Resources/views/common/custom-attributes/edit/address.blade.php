@@ -116,14 +116,6 @@
                 }
             },
 
-            watch: { 
-                data: function(newVal, oldVal) {
-                    this.country = newVal ? newVal['country'] : '';
-
-                    this.state = newVal ? newVal['state'] : '';
-                }
-            },
-
             methods: {
                 haveStates: function () {
                     if (this.countryStates[this.country] && this.countryStates[this.country].length) {

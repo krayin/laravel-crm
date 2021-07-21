@@ -62,7 +62,9 @@ class QuoteController extends Controller
      */
     public function create()
     {
-        return view('admin::quotes.create');
+        $lead = $this->leadRepository->findOrFail(request('id'));
+
+        return view('admin::quotes.create', compact('lead'));
     }
 
     /**

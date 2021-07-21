@@ -45,7 +45,7 @@
                             <input name="_method" type="hidden" value="PUT">
                             
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.layouts.name') }}
                                 </label>
 
@@ -66,7 +66,7 @@
                             </div>
 
                             <div class="form-group" :class="[errors.has('description') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.settings.groups.description') }}
                                 </label>
 

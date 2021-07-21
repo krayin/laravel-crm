@@ -39,7 +39,7 @@
                 @csrf()
 
                 <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                    <label>
+                    <label class="required">
                         {{ __('admin::app.layouts.name') }}
                     </label>
 
