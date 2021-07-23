@@ -21,6 +21,11 @@
     background-image: url("../images/sprite-main.svg");
 }
 
+.quotes-icon {
+    background-position: -563px -2px;
+    background-image: url("../images/sprite-main.svg");
+}
+
 .emails-icon {
     width: 20px;
     height: 18px;
@@ -52,7 +57,8 @@
 }
 
 .tools-icon {
-    background-image: url("../images/tools-icon.svg");
+    background-position: -514px -2px;
+    background-image: url("../images/sprite-main.svg");
 }
 
 .avatar-icon {
@@ -99,6 +105,10 @@
         background-position: -106px -2px;
     }
 
+    .quotes-icon {
+        background-position: -539px -2px;
+    }
+
     .emails-icon {
         background-position: -395px -3px;
     }
@@ -120,7 +130,7 @@
     }
     
     .tools-icon {
-        background-image: url("../images/tools-active-icon.svg");
+        background-position: -490px -2px;
     }
 }
 

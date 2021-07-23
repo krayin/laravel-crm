@@ -5,53 +5,57 @@
 @stop
 
 @section('content-wrapper')
-    <div class="content full-page">
+    <div class="content full-page adjacent-center">
         <form method="POST" action="" @submit.prevent="onSubmit" enctype="multipart/form-data">
+
             <div class="page-header">
+
+                {{ Breadcrumbs::render('configuration.slug', request('slug')) }}
+
                 <div class="page-title">
                     <h1>
                         {{ __('admin::app.configuration.title') }}
                     </h1>
                 </div>
-
-                <div class="page-action">
-                    <button type="submit" class="btn btn-md btn-primary">
-                        {{ __('admin::app.configuration.save-btn-title') }}
-                    </button>
-                </div>
             </div>
 
             <div class="page-content">
                 <div class="form-container">
+
+                    <div class="panel">
+                        <div class="panel-header">
+                            <button type="submit" class="btn btn-md btn-primary">
+                                {{ __('admin::app.configuration.save-btn-title') }}
+                            </button>
+
+                            <a href="{{ route('admin.settings.users.index') }}">
+                                {{ __('admin::app.settings.users.back') }}
+                            </a>
+                        </div>
                     
-                    @csrf()
+                        @csrf()
 
-                    @php ($groups = \Illuminate\Support\Arr::get($config->items, request()->route('slug') . '.children.' . request()->route('slug2') . '.children'))
+                        @if ($groups = \Illuminate\Support\Arr::get(app('core_config')->items, request()->route('slug') . '.children'))
 
-                    @if ($groups)
+                            <tabs>
+                                @foreach ($groups as $key => $item)
 
-                        @foreach ($groups as $key => $item)
+                                    <tab :name="'{{ __($item['name']) }}'">
 
-                            <accordian :title="'{{ __($item['name']) }}'" :active="true">
-                                <div slot="body">
+                                        @foreach ($item['fields'] as $field)
 
-                                    @foreach ($item['fields'] as $field)
+                                            @include ('admin::configuration.field-type', ['field' => $field])
 
-                                        @include ('admin::configuration.field-type', ['field' => $field])
+                                        @endforeach
 
-                                        @php ($hint = $field['title'] . '-hint')
-                                        @if ($hint !== __($hint))
-                                            {{ __($hint) }}
-                                        @endif
+                                    </tab>
 
-                                    @endforeach
+                                @endforeach
+                            </tabs>
 
-                                </div>
-                            </accordian>
+                        @endif
 
-                        @endforeach
-
-                    @endif
+                    </div>
 
                 </div>
             </div>
@@ -59,16 +63,3 @@
         </form>
     </div>
 @stop
-
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            $('#channel-switcher, #locale-switcher').on('change', function (e) {
-                $('#channel-switcher').val()
-                var query = '?channel=' + $('#channel-switcher').val() + '&locale=' + $('#locale-switcher').val();
-
-                window.location.href = "{{ route('admin.configuration.index', [request()->route('slug'), request()->route('slug2')]) }}" + query;
-            })
-        });
-    </script>
-@endpush

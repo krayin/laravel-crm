@@ -23,7 +23,6 @@
             <div class="page-content">
                 <div class="form-container">
 
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.settings.users.create.form_buttons.before') !!}
@@ -205,6 +204,7 @@
                             </tab>
                         </tabs>
                     </div>
+                    
                 </div>
             </div>
         </form>

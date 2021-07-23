@@ -329,9 +329,9 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'configuration',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Configuration'
             ], function () {
-                Route::get('{slug?}/{slug2?}', 'ConfigurationController@index')->name('admin.configuration.index');
+                Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 
-                Route::post('{slug?}/{slug2?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+                Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
             });
         });
     });

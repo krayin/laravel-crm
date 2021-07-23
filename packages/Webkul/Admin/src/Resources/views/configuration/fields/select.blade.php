@@ -9,7 +9,7 @@
         $selectedOption = core()->getConfigData($name) ?? '';
     @endphp
 
-    @if (isset($field['repository']))
+    @if (isset($field['data_source']))
         @foreach ($value as $key => $option)
 
             <option value="{{ $key }}" {{ $key == $selectedOption ? 'selected' : ''}}>

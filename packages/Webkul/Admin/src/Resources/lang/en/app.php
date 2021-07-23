@@ -500,7 +500,10 @@
             'title'             => 'Configuration',
             'save-btn-title'    => 'Save',
             'general'           => 'General',
+            'locale-settings'   => 'Locale Settings',
             'locale'            => 'Locale',
+            'timezone'          => 'Timezone',
+            'date-time-formats' => 'Date And Time Formats',
             'save-message'      => 'Configuration updated successfully!',
             "emails"            => [
                 'email'                 => 'Email',

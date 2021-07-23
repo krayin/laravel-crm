@@ -6,27 +6,20 @@ return [
         'name' => 'admin::app.configuration.general',
         'sort' => 1,
     ], [
-        'key'  => 'general.general',
-        'name' => 'admin::app.configuration.general',
-        'sort' => 1,
-    ], [
-        'key'    => 'general.general.locale',
-        'name'   => 'admin::app.configuration.general',
+        'key'    => 'general.locale_settings',
+        'name'   => 'admin::app.configuration.locale-settings',
         'sort'   => 1,
         'fields' => [
             [
                 'name'          => 'locale',
                 'title'         => 'admin::app.configuration.locale',
                 'type'          => 'select',
-                'options'       => [
-                    [
-                        'title' => 'English',
-                        'value' => 'en',
-                    ], [
-                        'title' => 'Arabic',
-                        'value' => 'ar',
-                    ],
-                ],
+                'data_source'   => 'Webkul\Core\Core@locales'
+            ], [
+                'name'          => 'timezone',
+                'title'         => 'admin::app.configuration.timezone',
+                'type'          => 'select',
+                'data_source'   => 'Webkul\Core\Core@timezones'
             ],
         ],
     ],

@@ -10,12 +10,24 @@
                     <span class="menu-label">{{ $menuItem['name'] }}</span>
                 </a>
 
-                @if (count($menuItem['children']))
+                @if ($menuItem['key'] != 'configuration')
+                    @if (count($menuItem['children']))
+                        <ul class="sub-menubar">
+                            @foreach ($menuItem['children'] as $subMenuItem)
+                                <li class="sub-menu-item {{ Menu::getActive($subMenuItem) }}">
+                                    <a href="{{ count($subMenuItem['children']) ? current($subMenuItem['children'])['url'] : $subMenuItem['url'] }}">
+                                        <span class="menu-label">{{ $subMenuItem['name'] }}</span>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    @endif
+                @else
                     <ul class="sub-menubar">
-                        @foreach ($menuItem['children'] as $subMenuItem)
-                            <li class="sub-menu-item {{ Menu::getActive($subMenuItem) }}">
-                                <a href="{{ count($subMenuItem['children']) ? current($subMenuItem['children'])['url'] : $subMenuItem['url'] }}">
-                                    <span class="menu-label">{{ $subMenuItem['name'] }}</span>
+                        @foreach (app('core_config')->items as $key => $item)
+                            <li class="sub-menu-item {{ $item['key'] == request()->route('slug') ? 'active' : '' }}">
+                                <a href="{{ route('admin.configuration.index', $item['key']) }}">
+                                    {{ isset($item['name']) ? trans($item['name']) : '' }}
                                 </a>
                             </li>
                         @endforeach

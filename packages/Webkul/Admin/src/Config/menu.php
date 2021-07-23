@@ -18,7 +18,7 @@ return [
         'name'       => 'admin::app.layouts.quotes',
         'route'      => 'admin.quotes.index',
         'sort'       => 3,
-        'icon-class' => 'leads-icon',
+        'icon-class' => 'quotes-icon',
     ], [
         'key'        => 'mail',
         'name'       => 'admin::app.layouts.mail.title',
@@ -134,11 +134,11 @@ return [
         'name'       => 'admin::app.layouts.types',
         'route'      => 'admin.settings.types.index',
         'sort'       => 6,
-    // ], [
-    //     'key'        => 'configuration',
-    //     'name'       => 'admin::app.layouts.configuration',
-    //     'route'      => 'admin.configuration.index',
-    //     'sort'       => 7,
-    //     'icon-class' => 'tools-icon',
+    ], [
+        'key'        => 'configuration',
+        'name'       => 'admin::app.layouts.configuration',
+        'route'      => 'admin.configuration.index',
+        'sort'       => 9,
+        'icon-class' => 'tools-icon',
     ]
 ];
