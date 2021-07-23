@@ -96,6 +96,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available Locales Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application available locale determines the supported locales
+    | by application
+    |
+    */
+
+    'available_locales' => [
+        'en' => 'English',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |

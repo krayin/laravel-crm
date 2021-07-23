@@ -218,3 +218,16 @@ Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type)
     $trail->parent('settings.types');
     $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));
 });
+
+
+// Configuration
+Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('admin::app.layouts.configuration'), route('admin.configuration.index'));
+});
+
+// Configuration > Config
+Breadcrumbs::for('configuration.slug', function (BreadcrumbTrail $trail, $slug) {
+    $trail->parent('configuration');
+    $trail->push('', route('admin.configuration.index', ['slug' => $slug]));
+});
