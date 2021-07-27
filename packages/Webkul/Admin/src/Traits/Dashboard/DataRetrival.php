@@ -311,9 +311,9 @@ trait DataRetrival
             
 
             array_push($leadStages, [
-                'label'     => $stage['name'],
-                'count'     => $leadsCount,
-                'bar_type'  => $barType,
+                'label'    => $stage['name'],
+                'count'    => $leadsCount,
+                'bar_type' => $barType,
             ]);
         }
 
