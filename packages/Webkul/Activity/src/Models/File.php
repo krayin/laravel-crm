@@ -1,15 +1,14 @@
 <?php
 
-namespace Webkul\Lead\Models;
+namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
-use Webkul\User\Models\UserProxy;
-use Webkul\Lead\Contracts\File as FileContract;
+use Webkul\Activity\Contracts\File as FileContract;
 
 class File extends Model implements FileContract
 {
-    protected $table = 'lead_files';
+    protected $table = 'activity_files';
 
     /**
      * The attributes that are mass assignable.
@@ -19,8 +18,7 @@ class File extends Model implements FileContract
     protected $fillable = [
         'name',
         'path',
-        'lead_activity_id',
-        'lead_id',
+        'activity_id',
     ];
 
     /**
@@ -37,14 +35,6 @@ class File extends Model implements FileContract
     public function getUrlAttribute()
     {
         return $this->url();
-    }
-
-    /**
-     * Get the lead that owns the file.
-     */
-    public function lead()
-    {
-        return $this->belongsTo(LeadProxy::modelClass());
     }
 
     /**

@@ -14,20 +14,11 @@ class CreateLeadActivitiesTable extends Migration
     public function up()
     {
         Schema::create('lead_activities', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('type');
-            $table->text('comment')->nullable();
-            $table->json('additional')->nullable();
-            $table->datetime('schedule_from')->nullable();
-            $table->datetime('schedule_to')->nullable();
-            $table->boolean('is_done')->default(0);
+            $table->integer('activity_id')->unsigned();
+            $table->foreign('activity_id')->references('id')->on('activities')->onDelete('cascade');
 
             $table->integer('lead_id')->unsigned();
             $table->foreign('lead_id')->references('id')->on('leads')->onDelete('cascade');
-
-            $table->integer('user_id')->unsigned();
-            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->timestamps();
         });
     }
 

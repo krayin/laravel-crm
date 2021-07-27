@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Lead\Repositories;
+namespace Webkul\Activity\Repositories;
 
 use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
@@ -10,14 +10,14 @@ class FileRepository extends Repository
     /**
      * ActivityRepository object
      *
-     * @var \Webkul\Lead\Repositories\ActivityRepository
+     * @var \Webkul\Activity\Repositories\ActivityRepository
      */
     protected $activityRepository;
 
     /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Lead\Repositories\ActivityRepository  $activityRepository
+     * @param  \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
      * @return void
      */
     public function __construct(
@@ -37,15 +37,14 @@ class FileRepository extends Repository
      */
     function model()
     {
-        return 'Webkul\Lead\Contracts\File';
+        return 'Webkul\Activity\Contracts\File';
     }
 
     /**
      * @param array  $data
-     * @param int    $id
      * @return mixed|void
      */
-    public function upload(array $data, $id)
+    public function upload(array $data)
     {
         if (! request()->hasFile('file')) {
             return;
@@ -56,14 +55,12 @@ class FileRepository extends Repository
             'type'    => 'file',
             'comment' => $data['comment'],
             'user_id' => auth()->guard('user')->user()->id,
-            'lead_id' => $id,
         ]);
 
         return parent::create([
-            'name'             => $data['name'] ?? request()->file('file')->getClientOriginalName(),
-            'path'             => request()->file('file')->store('leads/' . $id),
-            'lead_id'          => $id,
-            'lead_activity_id' => $leadActivity->id,
+            'name'        => $data['name'] ?? request()->file('file')->getClientOriginalName(),
+            'path'        => request()->file('file')->store('activities/' . $leadActivity->id),
+            'activity_id' => $leadActivity->id,
         ]);
     }
 }

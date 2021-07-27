@@ -8,6 +8,7 @@
         }
     ],
     "require": {
+        "krayin/laravel-activity": "^1.0",
         "krayin/laravel-attribute": "^1.0",
         "krayin/laravel-contact": "^1.0",
         "krayin/laravel-core": "^1.0",
