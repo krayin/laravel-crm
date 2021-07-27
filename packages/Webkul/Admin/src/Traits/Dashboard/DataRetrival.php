@@ -220,7 +220,7 @@ trait DataRetrival
     {
         $totalCount = 0;
 
-        $activities = app('Webkul\Lead\Repositories\ActivityRepository')
+        $activities = app('Webkul\Activity\Repositories\ActivityRepository')
                         ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
                         ->groupBy('type')
                         ->orderBy('count', 'desc')
