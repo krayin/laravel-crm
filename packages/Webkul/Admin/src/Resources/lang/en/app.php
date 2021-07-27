@@ -127,8 +127,6 @@
             'update-success'           => 'Lead updated successfully.',
             'delete-success'           => 'Lead deleted successfully.',
             'delete-failed'            => 'Lead can not be deleted.',
-            'file-upload-success'      => 'File(s) uploaded successfully.',
-            'file-upload-error'        => 'File(s) can not be uploaded.',
             'note'                     => 'Note',
             'activity'                 => 'Activity',
             'call'                     => 'Call',
@@ -296,11 +294,13 @@
         ],
 
         'activities' => [
-            'title'           => 'Activities',
-            'create-success'  => 'Activity created successfully.',
-            'update-success'  => 'Activity updated successfully.',
-            'destroy-success' => 'Activity deleted successfully.',
-            'delete-failed'   => 'Activity can not be deleted.',
+            'title'               => 'Activities',
+            'file-upload-success' => 'File(s) uploaded successfully.',
+            'file-upload-error'   => 'File(s) can not be uploaded.',
+            'create-success'      => 'Activity created successfully.',
+            'update-success'      => 'Activity updated successfully.',
+            'destroy-success'     => 'Activity deleted successfully.',
+            'delete-failed'       => 'Activity can not be deleted.',
         ],
 
         'products' => [

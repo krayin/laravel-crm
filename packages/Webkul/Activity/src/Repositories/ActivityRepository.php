@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Lead\Repositories;
+namespace Webkul\Activity\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
 
@@ -13,6 +13,6 @@ class ActivityRepository extends Repository
      */
     function model()
     {
-        return 'Webkul\Lead\Contracts\Activity';
+        return 'Webkul\Activity\Contracts\Activity';
     }
 }

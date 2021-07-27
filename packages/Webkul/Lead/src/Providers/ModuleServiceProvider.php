@@ -7,8 +7,6 @@ use Webkul\Core\Providers\BaseModuleServiceProvider;
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
     protected $models = [
-        \Webkul\Lead\Models\Activity::class,
-        \Webkul\Lead\Models\File::class,
         \Webkul\Lead\Models\Lead::class,
         \Webkul\Lead\Models\Pipeline::class,
         \Webkul\Lead\Models\PipelineStage::class,

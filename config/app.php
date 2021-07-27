@@ -216,6 +216,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // CRM packages
+        Webkul\Activity\Providers\ActivityServiceProvider::class,
         Webkul\Admin\Providers\AdminServiceProvider::class,
         Webkul\Attribute\Providers\AttributeServiceProvider::class,
         Webkul\Contact\Providers\ContactServiceProvider::class,

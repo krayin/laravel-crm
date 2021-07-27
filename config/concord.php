@@ -2,6 +2,7 @@
 
 return [
     'modules' => [
+        \Webkul\Activity\Providers\ModuleServiceProvider::class,
         \Webkul\Admin\Providers\ModuleServiceProvider::class,
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,
         \Webkul\Contact\Providers\ModuleServiceProvider::class,

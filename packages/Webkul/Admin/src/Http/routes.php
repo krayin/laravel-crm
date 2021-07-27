@@ -74,10 +74,6 @@ Route::group(['middleware' => ['web']], function () {
     
                 Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
 
-                Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
-
-                Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
-
                 Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
 
                 Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
@@ -129,9 +125,13 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::get('', 'ActivityController@index')->name('admin.activities.index');
 
-                Route::post('create/{id}', 'ActivityController@store')->name('admin.activities.store');
+                Route::post('create', 'ActivityController@store')->name('admin.activities.store');
 
                 Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
+
+                Route::post('file-upload', 'ActivityController@upload')->name('admin.activities.file_upload');
+
+                Route::get('file-download/{id?}', 'ActivityController@download')->name('admin.activities.file_download');
             
                 Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
             });

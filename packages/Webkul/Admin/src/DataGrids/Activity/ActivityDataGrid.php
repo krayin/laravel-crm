@@ -27,36 +27,33 @@ class ActivityDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('lead_activities')
+        $queryBuilder = DB::table('activities')
                         ->select(
-                            'lead_activities.*',
+                            'activities.*',
                             'leads.id as lead_id',
                             'users.id as assignee_id',
                             'users.name as assigned_to',
                             'leads.title as lead_title',
-                            'persons.name as contact_person',
-                            'persons.id as contact_person_id'
                         )
+                        ->leftJoin('lead_activities', 'activities.id', '=', 'lead_activities.activity_id')
                         ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
-                        ->leftJoin('users', 'lead_activities.user_id', '=', 'users.id')
-                        ->leftJoin('persons', 'leads.person_id', '=', 'persons.id');
+                        ->leftJoin('users', 'activities.user_id', '=', 'users.id');
 
 
         $currentUser = auth()->guard('user')->user();
 
         if ($currentUser->lead_view_permission != 'global') {
             if ($currentUser->lead_view_permission == 'group') {
-                $queryBuilder->whereIn('lead_activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                $queryBuilder->whereIn('activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
             } else {
-                $queryBuilder->where('lead_activities.user_id', $currentUser->id);
+                $queryBuilder->where('activities.user_id', $currentUser->id);
             }
         }
 
-        $this->addFilter('id', 'lead_activities.id');
+        $this->addFilter('id', 'activities.id');
         $this->addFilter('assigned_to', 'users.name');
-        $this->addFilter('contact_person', 'persons.name');
-        $this->addFilter('user', 'lead_activities.user_id');
-        $this->addFilter('created_at', 'lead_activities.created_at');
+        $this->addFilter('user', 'activities.user_id');
+        $this->addFilter('created_at', 'activities.created_at');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -118,18 +115,6 @@ class ActivityDataGrid extends DataGrid
                 } else {
                     return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
                 }
-            },
-        ]);
-
-        $this->addColumn([
-            'index'              => 'contact_person',
-            'label'              => trans('admin::app.datagrid.contact_person'),
-            'type'               => 'string',
-            'filterable_type'    => 'add',
-            'closure'            => function ($row) {
-                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->contact_person_id]));
-
-                return "<a href='" . $route . "'>" . $row->contact_person . "</a>";
             },
         ]);
 
