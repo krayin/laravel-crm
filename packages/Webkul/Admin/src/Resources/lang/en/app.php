@@ -129,6 +129,7 @@
             'delete-failed'            => 'Lead can not be deleted.',
             'note'                     => 'Note',
             'activity'                 => 'Activity',
+            'title-control'            => 'Title',
             'call'                     => 'Call',
             'meeting'                  => 'Meeting',
             'lunch'                    => 'Lunch',
@@ -140,6 +141,7 @@
             'schedule'                 => 'Schedule',
             'from'                     => 'From',
             'to'                       => 'To',
+            'participants'             => 'Participants',
             'cc'                       => 'Cc',
             'bcc'                      => 'Bcc',
             'email-placeholder'        => 'Press enter to add emails',
@@ -295,6 +297,19 @@
 
         'activities' => [
             'title'               => 'Activities',
+            'title-control'       => 'Title',
+            'edit-title'          => 'Edit Activity',
+            'save-btn-title'      => 'Save as Activity',
+            'back'                => 'Back',
+            'type'                => 'Type',
+            'call'                => 'Call',
+            'meeting'             => 'Meeting',
+            'lunch'               => 'Lunch',
+            'description'         => 'Description',
+            'schedule'            => 'Schedule',
+            'from'                => 'From',
+            'to'                  => 'To',
+            'participants'        => 'Participants',
             'file-upload-success' => 'File(s) uploaded successfully.',
             'file-upload-error'   => 'File(s) can not be uploaded.',
             'create-success'      => 'Activity created successfully.',
@@ -396,7 +411,7 @@
                 'password'            => 'Password',
                 'groups'              => 'Groups',
                 'role'                => 'Role',
-                'lead-view'           => 'Lead View',
+                'view-permission'     => 'View Permission',
                 'global'              => 'Global',
                 'group'               => 'Group',
                 'individual'          => 'Individual',
@@ -522,6 +537,7 @@
             'email'             => 'Email',
             'from'              => 'From',
             'lead'              => 'Lead',
+            'title'             => 'Title',
             'subject'           => 'Subject',
             'emails'            => 'Emails',
             'stage'             => 'Stage',
@@ -545,6 +561,7 @@
             'grand-total'       => 'Grand Total',
             'persons_count'     => 'Persons count',
             'assigned_to'       => 'Assigned To',
+            'created_by'        => 'Created By',
             'entity_type'       => 'Entity Type',
             'created_at'        => 'Created Date',
             'schedule_from'     => 'Schedule From',
@@ -631,6 +648,27 @@
                 'confirm_password'  => 'Confirm password',
                 'password-match'    => 'Current password does not match.',
                 'account-save'      => 'Account changes saved successfully.',
+            ]
+        ],
+
+        'emails' => [
+            'activities' => [
+                'dear'             => 'Dear :name',
+                'create-subject'   => 'Activity created: :title',
+                'update-subject'   => 'Activity modified: :title',
+                'reminder-subject' => 'Activity reminder: :title',
+                'create-info'      => 'You have a new activity, please find the details bellow:',
+                'update-info'      => 'This activity has been modified, please find the details bellow:',
+                'reminder-info'    => 'This is a reminder for your upcoming activity, please find the details bellow:',
+                'details'          => 'Details',
+                'title'            => 'Title',
+                'type'             => 'Type',
+                'call'             => 'Call',
+                'meeting'          => 'Meeting',
+                'lunch'            => 'Lunch',
+                'date'             => 'Date',
+                'participants'     => 'Participants',
+                'cheers'           => 'Cheers,</br>Team :app_name'
             ]
         ]
     ];

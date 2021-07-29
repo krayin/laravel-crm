@@ -15,6 +15,7 @@ class Create extends Mailable
     public function __construct($user, $leadId)
     {
         $this->user = $user;
+        
         $this->leadId = $leadId;
     }
 

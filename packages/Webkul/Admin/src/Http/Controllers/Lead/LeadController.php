@@ -99,8 +99,8 @@ class LeadController extends Controller
 
         $currentUser = auth()->guard('user')->user();
 
-        if ($currentUser->lead_view_permission != 'global') {
-            if ($currentUser->lead_view_permission == 'group') {
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
                 $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
 
                 if (! in_array($lead->user_id, $userIds)) {

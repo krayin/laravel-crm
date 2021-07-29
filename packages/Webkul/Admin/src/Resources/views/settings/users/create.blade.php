@@ -176,27 +176,27 @@
                                     </span>
                                 </div>
     
-                                <div class="form-group" :class="[errors.has('lead_view_permission') ? 'has-error' : '']">
+                                <div class="form-group" :class="[errors.has('view_permission') ? 'has-error' : '']">
                                     <label>
-                                        {{ __('admin::app.settings.users.lead-view') }}
+                                        {{ __('admin::app.settings.users.view-permission') }}
                                     </label>
     
-                                    <select name="lead_view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.lead-view') }}">
-                                        <option value="global" {{ old('lead_view_permission') == 'global' ? 'selected' : '' }}>
+                                    <select name="view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.view-permission') }}">
+                                        <option value="global" {{ old('view_permission') == 'global' ? 'selected' : '' }}>
                                             {{ __('admin::app.settings.users.global') }}
                                         </option>
 
-                                        <option value="group" {{ old('lead_view_permission') == 'group' ? 'selected' : '' }}>
+                                        <option value="group" {{ old('view_permission') == 'group' ? 'selected' : '' }}>
                                             {{ __('admin::app.settings.users.group') }}
                                         </option>
 
-                                        <option value="individual" {{ old('lead_view_permission') == 'individual' ? 'selected' : '' }}>
+                                        <option value="individual" {{ old('view_permission') == 'individual' ? 'selected' : '' }}>
                                             {{ __('admin::app.settings.users.individual') }}
                                         </option>
                                     </select>
     
-                                    <span class="control-error" v-if="errors.has('lead_view_permission')">
-                                        @{{ errors.first('lead_view_permission') }}
+                                    <span class="control-error" v-if="errors.has('view_permission')">
+                                        @{{ errors.first('view_permission') }}
                                     </span>
                                 </div>
 

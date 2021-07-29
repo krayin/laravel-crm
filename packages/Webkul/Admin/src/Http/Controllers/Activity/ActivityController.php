@@ -85,8 +85,12 @@ class ActivityController extends Controller
             'user_id' => auth()->guard('user')->user()->id,
         ]));
 
-        if ($leadId = request('lead_id')) {
-            $lead = $this->leadRepository->find($leadId);
+        if (request('participants')) {
+            $activity->participants()->attach(request('participants'));
+        }
+
+        if (request('lead_id')) {
+            $lead = $this->leadRepository->find(request('lead_id'));
 
             $lead->activities()->attach($activity->id);
         }
@@ -96,6 +100,19 @@ class ActivityController extends Controller
         session()->flash('success', trans('admin::app.activities.create-success'));
 
         return redirect()->back();
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $activity = $this->activityRepository->findOrFail($id);
+
+        return view('admin::activities.edit', compact('activity'));
     }
 
     /**
@@ -110,8 +127,12 @@ class ActivityController extends Controller
 
         $activity = $this->activityRepository->update(request()->all(), $id);
 
-        if ($leadId = request('lead_id')) {
-            $lead = $this->leadRepository->find($leadId);
+        if (request('participants')) {
+            $activity->participants()->sync(request('participants'));
+        }
+
+        if (request('lead_id')) {
+            $lead = $this->leadRepository->find(request('lead_id'));
 
             if (! $lead->activities->contains($id)) {
                 $lead->activities()->attach($id);
@@ -128,7 +149,7 @@ class ActivityController extends Controller
         } else {
             session()->flash('success', trans('admin::app.activities.update-success'));
 
-            return redirect()->route('admin.products.index');
+            return redirect()->route('admin.activities.index');
         }
     }
 

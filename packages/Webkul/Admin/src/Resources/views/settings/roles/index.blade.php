@@ -15,7 +15,7 @@
 @stop
 
 @section('table-action')
-    <a href="{{ route('admin.settings.roles.create') }}" class="btn btn-sm btn-primary">
+    <a href="{{ route('admin.settings.roles.create') }}" class="btn btn-md btn-primary">
         {{ __('admin::app.settings.roles.add-title') }}
     </a>
 @stop

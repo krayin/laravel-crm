@@ -470,6 +470,14 @@
                     <input type="hidden" name="lead_id" value="{{ $lead->id }}">
 
                     @csrf()
+        
+                    <div class="form-group" :class="[errors.has('activity-form.title') ? 'has-error' : '']">
+                        <label for="comment" class="required">{{ __('admin::app.leads.title-control') }}</label>
+
+                        <input class="control" v-validate="'required'" name="title" data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"/>
+
+                        <span class="control-error" v-if="errors.has('activity-form.title')">@{{ errors.first('activity-form.title') }}</span>
+                    </div>
 
                     <div class="form-group" :class="[errors.has('activity-form.type') ? 'has-error' : '']">
                         <label for="type" class="required">{{ __('admin::app.leads.type') }}</label>
@@ -479,7 +487,6 @@
                             <option value="call">{{ __('admin::app.leads.call') }}</option>
                             <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
                             <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
-                            <option value="email">{{ __('admin::app.leads.email') }}</option>
                         </select>
 
                         <span class="control-error" v-if="errors.has('activity-form.type')">@{{ errors.first('activity-form.type') }}</span>
@@ -506,7 +513,14 @@
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_to')">@{{ errors.first('activity-form.schedule_to') }}</span>
                             </datetime>
                         </div>
+                    </div>
 
+                    @include ('admin::common.custom-attributes.edit.multi-lookup')
+
+                    <div class="form-group">
+                        <label for="participants">{{ __('admin::app.leads.participants') }}</label>
+
+                        <multi-lookup-component :attribute="{'id': 20, 'code': 'participants[]', 'name': 'Participants'}" :data='[@json($lead->user)]'></multi-lookup-component>
                     </div>
 
                     <button type="submit" class="btn btn-md btn-primary">
@@ -652,6 +666,8 @@
 
                     <div class="activity-item" v-for="activity in getActivities(type, subType)">
                         <div class="title">
+                            <h4 v-if="activity.title">@{{ activity.title }}</h4>
+
                             <span v-if="activity.type == 'note'">
                                 {{ __('admin::app.leads.note-added') }}
                             </span>

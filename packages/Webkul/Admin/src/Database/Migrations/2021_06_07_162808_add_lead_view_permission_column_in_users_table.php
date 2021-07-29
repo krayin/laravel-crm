@@ -14,7 +14,7 @@ class AddLeadViewPermissionColumnInUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('lead_view_permission')->after('status')->default('global')->nullable();
+            $table->string('view_permission')->after('status')->default('global')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ class AddLeadViewPermissionColumnInUsersTable extends Migration
     public function down()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('lead_view_permission');
+            $table->dropColumn('view_permission');
         });
     }
 }

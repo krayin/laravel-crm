@@ -48,8 +48,8 @@ class LeadDataGrid extends DataGrid
 
         $currentUser = auth()->guard('user')->user();
 
-        if ($currentUser->lead_view_permission != 'global') {
-            if ($currentUser->lead_view_permission == 'group') {
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
                 $queryBuilder->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
             } else {
                 $queryBuilder->where('leads.user_id', $currentUser->id);
