@@ -12,7 +12,7 @@
             </h1>
 
             <p style="font-size: 16px;color: #5E5E5E; ">
-                {{ __('admin::app.emails.activities.create-info', ['title' => $activity->title]) }}
+                {{ __('admin::app.emails.activities.reminder-info') }}
             </p>
 
             <h4 style="font-size: 16px; ">

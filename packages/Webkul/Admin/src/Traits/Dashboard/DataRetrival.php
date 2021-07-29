@@ -222,9 +222,23 @@ trait DataRetrival
 
         $activities = app('Webkul\Activity\Repositories\ActivityRepository')
                         ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
+                        ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
                         ->groupBy('type')
                         ->orderBy('count', 'desc')
                         ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
+                        ->where(function ($query) {
+                            $currentUser = auth()->guard('user')->user();
+    
+                            if ($currentUser->view_permission != 'global') {
+                                if ($currentUser->view_permission == 'group') {
+                                    $query->whereIn('activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds())
+                                        ->orWhereIn('activity_participants.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                                } else {
+                                    $query->where('activities.user_id', $currentUser->id)
+                                        ->orWhere('activity_participants.user_id', $currentUser->id);
+                                }
+                            }
+                        })
                         ->get()
                         ->toArray();
 
@@ -252,8 +266,8 @@ trait DataRetrival
                     ->where(function ($query) {
                         $currentUser = auth()->guard('user')->user();
 
-                        if ($currentUser->lead_view_permission != 'global') {
-                            if ($currentUser->lead_view_permission == 'group') {
+                        if ($currentUser->view_permission != 'global') {
+                            if ($currentUser->view_permission == 'group') {
                                 $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
                             } else {
                                 $query->where('leads.user_id', $currentUser->id);

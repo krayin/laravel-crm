@@ -99,7 +99,7 @@ class UserController extends Controller
 
         $admin = $this->userRepository->create($data);
 
-        $admin->lead_view_permission = $data['lead_view_permission'];
+        $admin->view_permission = $data['view_permission'];
 
         $admin->save();
 
@@ -172,7 +172,7 @@ class UserController extends Controller
 
         $admin = $this->userRepository->update($data, $id);
 
-        $admin->lead_view_permission = $data['lead_view_permission'];
+        $admin->view_permission = $data['view_permission'];
 
         $admin->save();
 

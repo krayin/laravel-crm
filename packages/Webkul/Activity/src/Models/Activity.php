@@ -12,12 +12,18 @@ class Activity extends Model implements ActivityContract
 
     protected $with = ['file', 'user'];
 
+    protected $dates= [
+        'schedule_from',
+        'schedule_to',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
+        'title',
         'type',
         'comment',
         'additional',
@@ -33,6 +39,14 @@ class Activity extends Model implements ActivityContract
     public function user()
     {
         return $this->belongsTo(UserProxy::modelClass());
+    }
+
+    /**
+     * The participants that belong to the activity.
+     */
+    public function participants()
+    {
+        return $this->belongsToMany(UserProxy::modelClass(), 'activity_participants');
     }
 
     /**

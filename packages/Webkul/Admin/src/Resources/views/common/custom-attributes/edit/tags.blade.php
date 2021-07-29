@@ -40,7 +40,7 @@
 
                 template: '#tags-component-template',
 
-                props: ['validations', 'attribute', 'searchRoute', 'searchLabelColumn', 'data'],
+                props: ['validations', 'attribute', 'searchRoute', 'data'],
 
                 inject: ['$validator'],
 
@@ -66,12 +66,6 @@
 
                         return tags.join(',');
                     },
-                },
-
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        this.tags = newVal || [];
-                    }
                 },
 
                 methods: {

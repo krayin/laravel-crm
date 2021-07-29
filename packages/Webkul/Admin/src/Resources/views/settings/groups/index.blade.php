@@ -15,7 +15,7 @@
 @stop
 
 @section('table-action')
-    <a href="{{ route('admin.settings.groups.create') }}" class="btn btn-sm btn-primary">
+    <a href="{{ route('admin.settings.groups.create') }}" class="btn btn-md btn-primary">
         {{ __('admin::app.settings.groups.add-title') }}
     </a>
 @stop

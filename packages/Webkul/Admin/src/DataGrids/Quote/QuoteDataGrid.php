@@ -34,8 +34,8 @@ class QuoteDataGrid extends DataGrid
 
         $currentUser = auth()->guard('user')->user();
 
-        if ($currentUser->lead_view_permission != 'global') {
-            if ($currentUser->lead_view_permission == 'group') {
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
                 $queryBuilder->whereIn('quotes.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
             } else {
                 $queryBuilder->where('quotes.user_id', $currentUser->id);
