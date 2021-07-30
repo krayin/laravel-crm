@@ -124,40 +124,46 @@ class AttributeRepository extends Repository
     }
 
     /**
-     * @param  integer  $id
+     * @param  integer  $lookup
      * @param  string  $query
      * @return array
      */
-    public function getLookUpOptions($id, $query = '')
+    public function getLookUpOptions($lookup, $query = '')
     {
-        $attribute = $this->findOrFail($id);
-
-        $lookup = config('attribute_lookups.' . $attribute->lookup_type);
+        $lookup = config('attribute_lookups.' . $lookup);
 
         return app($lookup['repository'])->findWhere([
-            ['name', 'like', '%' . urldecode($query) . '%']
+            [$lookup['label_column'] ?? 'name', 'like', '%' . urldecode($query) . '%']
+        ], [
+            ($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'
         ]);
     }
 
     /**
-     * @param  string  $code
+     * @param  string  $lookup
      * @param  integer|array  $entityId
      * @return mixed
      */
-    public function getLookUpEntity($code, $entityId)
+    public function getLookUpEntity($lookup, $entityId)
     {
         if (! $entityId) {
             return;
         }
 
-        $attribute = $this->getAttributeByCode($code);
-
-        $lookUp = config('attribute_lookups.' . $attribute->lookup_type);
+        $lookup = config('attribute_lookups.' . $lookup);
 
         if (is_array($entityId)) {
-            return app($lookUp['repository'])->findWhereIn('id', $entityId);
+            return app($lookup['repository'])->findWhereIn(
+                'id',
+                $entityId,
+                [
+                    ($lookup['value_column'] ?? 'id' . ' as id') , ($lookup['label_column'] ?? 'name') . ' as name'
+                ]
+            );
         } else {
-            return app($lookUp['repository'])->find($entityId);
+            return app($lookup['repository'])->find($entityId, [
+                ($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'
+            ]);
         }
     }
 }

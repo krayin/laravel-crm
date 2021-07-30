@@ -1,7 +1,7 @@
 @if (isset($attribute))
     @php
         $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')
-            ->getLookUpEntity($attribute->code, old($attribute->code) ?: $value);
+            ->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
     @endphp
 
     <lookup-component :attribute='@json($attribute)' :validations="'{{$validations}}'" :data='@json($lookUpEntityData)'></lookup-component>
@@ -55,7 +55,7 @@
 
                         results: [],
 
-                        search_route: this.searchRoute ?? `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.id}`,
+                        search_route: this.searchRoute ?? `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`,
                     }
                 },
 

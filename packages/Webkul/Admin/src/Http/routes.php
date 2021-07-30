@@ -281,7 +281,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
                     
-                    Route::get('lookup/{id?}', 'AttributeController@search')->name('admin.settings.attributes.lookup');
+                    Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
 
                     Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
 
