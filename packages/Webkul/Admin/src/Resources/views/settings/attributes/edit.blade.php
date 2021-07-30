@@ -230,7 +230,7 @@
     <script type="text/x-template" id="entity-type-template">
         <div>
             <label :for="name" :class="required == 'true' ? 'required' : ''">
-                {{ __('admin::app.settings.attributes.entity_type') }}
+                {{ __('admin::app.settings.attributes.lookup') }}
             </label>
 
             <select class="control" :id="name" :name="name" :value="value" :disabled="disabled == 'true'">
@@ -280,7 +280,7 @@
 
             data: function() {
                 return {
-                    lookupEntityTypes: @json(config('attribute_entity_types')),
+                    lookupEntityTypes: @json(config('attribute_lookups')),
                 }
             },
         });

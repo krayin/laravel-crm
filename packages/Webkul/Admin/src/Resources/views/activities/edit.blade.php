@@ -90,12 +90,13 @@
                                 </div>
                             </div>
         
+
                             @include ('admin::common.custom-attributes.edit.multi-lookup')
         
                             <div class="form-group">
                                 <label for="participants">{{ __('admin::app.activities.participants') }}</label>
         
-                                <multi-lookup-component :attribute="{'id': 20, 'code': 'participants[]', 'name': 'Participants'}" :data='@json($activity->participants)'></multi-lookup-component>
+                                <multi-lookup-component :attribute="{'lookup_type': 'users', 'code': 'participants[]', 'name': 'Participants'}" :data='@json($activity->participants)'></multi-lookup-component>
                             </div>
 
                             {!! view_render_event('admin.activities.edit.form_controls.after', ['activity' => $activity]) !!}

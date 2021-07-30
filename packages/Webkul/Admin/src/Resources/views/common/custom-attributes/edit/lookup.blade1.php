@@ -75,7 +75,7 @@
 
                     var self = this;
                     
-                    this.$http.get("{{ route('admin.settings.attributes.lookup', $attribute->id) }}", {params: {query: this.search_term}})
+                    this.$http.get("{{ route('admin.settings.attributes.lookup', $attribute->lookup_type) }}", {params: {query: this.search_term}})
                         .then (function(response) {
                             self.results = response.data;
 
