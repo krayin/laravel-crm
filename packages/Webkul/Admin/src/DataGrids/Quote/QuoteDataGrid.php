@@ -44,6 +44,7 @@ class QuoteDataGrid extends DataGrid
 
         $this->addFilter('id', 'quotes.id');
         $this->addFilter('user', 'quotes.user_id');
+        $this->addFilter('user_name', 'quotes.user_id');
         $this->addFilter('person_name', 'persons.name');
 
         $this->setQueryBuilder($queryBuilder);
