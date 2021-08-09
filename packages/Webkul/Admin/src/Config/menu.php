@@ -18,7 +18,7 @@ return [
         'name'       => 'admin::app.layouts.quotes',
         'route'      => 'admin.quotes.index',
         'sort'       => 3,
-        'icon-class' => 'leads-icon',
+        'icon-class' => 'quotes-icon',
     ], [
         'key'        => 'mail',
         'name'       => 'admin::app.layouts.mail.title',
@@ -101,39 +101,44 @@ return [
     ], [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
-        'route'      => 'admin.settings.roles.index',
+        'route'      => 'admin.settings.groups.index',
         'sort'       => 8,
         'icon-class' => 'settings-icon',
+    ], [
+        'key'        => 'settings.groups',
+        'name'       => 'admin::app.layouts.groups',
+        'route'      => 'admin.settings.groups.index',
+        'sort'       => 1,
     ], [
         'key'        => 'settings.roles',
         'name'       => 'admin::app.layouts.roles',
         'route'      => 'admin.settings.roles.index',
-        'sort'       => 1,
+        'sort'       => 2,
     ], [
         'key'        => 'settings.users',
         'name'       => 'admin::app.layouts.users',
         'route'      => 'admin.settings.users.index',
-        'sort'       => 2,
+        'sort'       => 3,
     ], [
         'key'        => 'settings.attributes',
         'name'       => 'admin::app.layouts.attributes',
         'route'      => 'admin.settings.attributes.index',
-        'sort'       => 3,
+        'sort'       => 4,
     ], [
         'key'        => 'settings.sources',
         'name'       => 'admin::app.layouts.sources',
         'route'      => 'admin.settings.sources.index',
-        'sort'       => 4,
+        'sort'       => 5,
     ], [
         'key'        => 'settings.types',
         'name'       => 'admin::app.layouts.types',
         'route'      => 'admin.settings.types.index',
-        'sort'       => 5,
-    // ], [
-    //     'key'        => 'configuration',
-    //     'name'       => 'admin::app.layouts.configuration',
-    //     'route'      => 'admin.configuration.index',
-    //     'sort'       => 7,
-    //     'icon-class' => 'tools-icon',
+        'sort'       => 6,
+    ], [
+        'key'        => 'configuration',
+        'name'       => 'admin::app.layouts.configuration',
+        'route'      => 'admin.configuration.index',
+        'sort'       => 9,
+        'icon-class' => 'tools-icon',
     ]
 ];

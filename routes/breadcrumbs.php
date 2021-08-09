@@ -66,6 +66,12 @@ Breadcrumbs::for('activities', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.activities'), route('admin.activities.index'));
 });
 
+// Dashboard > activities > Edit Activity
+Breadcrumbs::for('activities.edit', function (BreadcrumbTrail $trail, $activity) {
+    $trail->parent('activities');
+    $trail->push(trans('admin::app.activities.edit-title'), route('admin.activities.edit', $activity->id));
+});
+
 
 // Dashboard > Contacts
 Breadcrumbs::for('contacts', function (BreadcrumbTrail $trail) {
@@ -115,8 +121,27 @@ Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
 // Settings
 Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.roles.index'));
+    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.groups.index'));
 });
+
+// Settings > Groups
+Breadcrumbs::for('settings.groups', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.groups'), route('admin.settings.groups.index'));
+});
+
+// Dashboard > Groups > Create Group
+Breadcrumbs::for('settings.groups.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.groups');
+    $trail->push(trans('admin::app.settings.groups.add-title'), route('admin.settings.groups.create'));
+});
+
+// Dashboard > Groups > Edit Group
+Breadcrumbs::for('settings.groups.edit', function (BreadcrumbTrail $trail, $role) {
+    $trail->parent('settings.groups');
+    $trail->push(trans('admin::app.settings.groups.edit-title'), route('admin.settings.groups.edit', $role->id));
+});
+
 
 // Settings > Roles
 Breadcrumbs::for('settings.roles', function (BreadcrumbTrail $trail) {
@@ -198,4 +223,17 @@ Breadcrumbs::for('settings.types', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type) {
     $trail->parent('settings.types');
     $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));
+});
+
+
+// Configuration
+Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
+    $trail->parent('dashboard');
+    $trail->push(trans('admin::app.layouts.configuration'), route('admin.configuration.index'));
+});
+
+// Configuration > Config
+Breadcrumbs::for('configuration.slug', function (BreadcrumbTrail $trail, $slug) {
+    $trail->parent('configuration');
+    $trail->push('', route('admin.configuration.index', ['slug' => $slug]));
 });

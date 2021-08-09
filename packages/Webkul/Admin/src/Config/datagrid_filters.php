@@ -12,21 +12,17 @@ return [
                     'isActive'  => true,
                     'key'       => 'all',
                 ], [
-                    'name'      => 'admin::app.leads.note',
-                    'isActive'  => false,
-                    'key'       => 'note',
-                ], [
                     'name'      => 'admin::app.leads.call',
                     'isActive'  => false,
                     'key'       => 'call',
                 ], [
-                    'name'      => 'admin::app.leads.email',
-                    'isActive'  => false,
-                    'key'       => 'email',
-                ], [
                     'name'      => 'admin::app.leads.meeting',
                     'isActive'  => false,
                     'key'       => 'meeting',
+                ], [
+                    'name'      => 'admin::app.leads.lunch',
+                    'isActive'  => false,
+                    'key'       => 'lunch',
                 ]
             ]
         ], [

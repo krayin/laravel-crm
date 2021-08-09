@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Lead\Repositories;
+namespace Webkul\User\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
 
-class ActivityRepository extends Repository
+class GroupRepository extends Repository
 {
     /**
      * Specify Model class name
@@ -13,6 +13,6 @@ class ActivityRepository extends Repository
      */
     function model()
     {
-        return 'Webkul\Lead\Contracts\Activity';
+        return 'Webkul\User\Contracts\Group';
     }
 }

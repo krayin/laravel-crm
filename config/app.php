@@ -96,6 +96,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Available Locales Configuration
+    |--------------------------------------------------------------------------
+    |
+    | The application available locale determines the supported locales
+    | by application
+    |
+    */
+
+    'available_locales' => [
+        'en' => 'English',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Application Fallback Locale
     |--------------------------------------------------------------------------
     |
@@ -202,6 +216,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         // CRM packages
+        Webkul\Activity\Providers\ActivityServiceProvider::class,
         Webkul\Admin\Providers\AdminServiceProvider::class,
         Webkul\Attribute\Providers\AttributeServiceProvider::class,
         Webkul\Contact\Providers\ContactServiceProvider::class,

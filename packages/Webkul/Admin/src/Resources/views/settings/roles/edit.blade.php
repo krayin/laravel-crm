@@ -45,16 +45,16 @@
                             <input name="_method" type="hidden" value="PUT">
                             
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.layouts.name') }}
                                 </label>
 
                                 <input
                                     type="text"
                                     name="name"
+                                    value="{{ old('name') ?? $role->name }}"
                                     class="control"
                                     v-validate="'required'"
-                                    value="{{ $role->name }}"
                                     data-vv-as="{{ __('admin::app.layouts.name') }}"
                                     placeholder="{{ __('admin::app.layouts.name') }}"
                                 />
@@ -65,7 +65,7 @@
                             </div>
 
                             <div class="form-group" :class="[errors.has('description') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.settings.roles.description') }}
                                 </label>
 
@@ -75,7 +75,7 @@
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.description') }}"
                                     placeholder="{{ __('admin::app.settings.roles.description') }}"
-                                >{{ $role->description }}</textarea>
+                                >{{ old('description') ?? $role->description }}}</textarea>
 
                                 <span class="control-error" v-if="errors.has('description')">
                                     @{{ errors.first('description') }}
@@ -87,6 +87,8 @@
                                     {{ __('admin::app.settings.roles.permission_type') }}
                                 </label>
 
+                                <?php $selectedOption = old('permission_type') ?: $role->permission_type ?>
+
                                 <select
                                     class="control"
                                     id="permission_type"
@@ -94,11 +96,11 @@
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.role') }}"
                                 >
-                                    <option value="custom" {{ $role->permission_type == 'custom' ? 'selected' : '' }}>
+                                    <option value="custom" {{ $selectedOption == 'custom' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.roles.custom') }}
                                     </option>
 
-                                    <option value="all" {{ $role->permission_type == 'all' ? 'selected' : '' }}>
+                                    <option value="all" {{ $selectedOption == 'all' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.roles.all') }}
                                     </option>
                                 </select>
@@ -108,7 +110,7 @@
                                 </span>
                             </div>
 
-                            <div class="control-group tree-wrapper {{ $role->permission_type == 'all' ? 'hide' : '' }}">
+                            <div class="control-group tree-wrapper {{ $selectedOption == 'all' ? 'hide' : '' }}">
                                 <tree-view value-field="key" id-field="key" items='@json($acl->items)' value='@json($role->permissions)'></tree-view>
                             </div>
 

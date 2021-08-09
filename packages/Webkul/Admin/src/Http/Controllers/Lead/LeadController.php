@@ -4,12 +4,9 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Mail;
-
 use Webkul\Admin\Notifications\Lead\Create;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Lead\Repositories\FileRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
@@ -24,13 +21,6 @@ class LeadController extends Controller
     protected $leadRepository;
 
     /**
-     * FileRepository object
-     *
-     * @var \Webkul\Lead\Repositories\FileRepository
-     */
-    protected $fileRepository;
-
-    /**
      * StageRepository object
      *
      * @var \Webkul\Lead\Repositories\StageRepository
@@ -41,19 +31,15 @@ class LeadController extends Controller
      * Create a new controller instance.
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Lead\Repositories\FileRepository  $fileRepository
      * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
      *
      * @return void
      */
     public function __construct(
         LeadRepository $leadRepository,
-        FileRepository $fileRepository,
         StageRepository $stageRepository
     ) {
         $this->leadRepository = $leadRepository;
-
-        $this->fileRepository = $fileRepository;
 
         $this->stageRepository = $stageRepository;
 
@@ -111,9 +97,19 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
-        if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-            if ($lead->user_id != $currentUser->id) {
-                return redirect()->route('admin.leads.index');
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
+                $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+
+                if (! in_array($lead->user_id, $userIds)) {
+                    return redirect()->route('admin.leads.index');
+                }
+            } else {
+                if ($lead->user_id != $currentUser->id) {
+                    return redirect()->route('admin.leads.index');
+                }
             }
         }
 
@@ -163,46 +159,6 @@ class LeadController extends Controller
         ]);
 
         return response()->json($results);
-    }
-
-    /**
-     * Upload files to storage
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function upload($id)
-    {
-        $this->validate(request(), [
-            'file' => 'required',
-        ]);
-
-        Event::dispatch('leads.file.create.before');
-
-        $file = $this->fileRepository->upload(request()->all(), $id);
-
-        if ($file) {
-            Event::dispatch('leads.file.create.after', $file);
-            
-            session()->flash('success', trans('admin::app.leads.file-upload-success'));
-        } else {
-            session()->flash('error', trans('admin::app.leads.file-upload-error'));
-        }
-
-        return redirect()->back();
-    }
-
-    /**
-     * Download file from storage
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function download($id)
-    {
-        $file = $this->fileRepository->findOrFail($id);
-
-        return Storage::download($file->path);
     }
 
     /**

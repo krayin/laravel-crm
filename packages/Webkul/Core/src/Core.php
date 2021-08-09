@@ -51,6 +51,32 @@ class Core
     }
 
     /**
+     * Retrieve all timezones.
+     *
+     * @return array
+     */
+    public function timezones()
+    {
+        $timezones = [];
+
+        foreach (timezone_identifiers_list() as $timezone) {
+            $timezones[$timezone] = $timezone;
+        }
+
+        return $timezones;
+    }
+
+    /**
+     * Retrieve all locales.
+     *
+     * @return array
+     */
+    public function locales()
+    {
+        return config('app.available_locales');
+    }
+
+    /**
      * Retrieve all countries.
      *
      * @return \Illuminate\Support\Collection

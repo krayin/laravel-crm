@@ -74,10 +74,6 @@ Route::group(['middleware' => ['web']], function () {
     
                 Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
 
-                Route::post('file-upload/{id}', 'LeadController@upload')->name('admin.leads.file_upload');
-
-                Route::get('file-download/{id?}', 'LeadController@download')->name('admin.leads.file_download');
-
                 Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
 
                 Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
@@ -129,9 +125,15 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::get('', 'ActivityController@index')->name('admin.activities.index');
 
-                Route::post('create/{id}', 'ActivityController@store')->name('admin.activities.store');
+                Route::post('create', 'ActivityController@store')->name('admin.activities.store');
+    
+                Route::get('edit/{id?}', 'ActivityController@edit')->name('admin.activities.edit');
 
                 Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
+
+                Route::post('file-upload', 'ActivityController@upload')->name('admin.activities.file_upload');
+
+                Route::get('file-download/{id?}', 'ActivityController@download')->name('admin.activities.file_download');
             
                 Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
             });
@@ -218,6 +220,21 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
             ], function () {
+                // Groups Routes
+                Route::prefix('groups')->group(function () {
+                    Route::get('', 'GroupController@index')->name('admin.settings.groups.index');
+
+                    Route::get('create', 'GroupController@create')->name('admin.settings.groups.create');
+
+                    Route::post('create', 'GroupController@store')->name('admin.settings.groups.store');
+
+                    Route::get('edit/{id}', 'GroupController@edit')->name('admin.settings.groups.edit');
+
+                    Route::put('edit/{id}', 'GroupController@update')->name('admin.settings.groups.update');
+
+                    Route::delete('{id}', 'GroupController@destroy')->name('admin.settings.groups.delete');
+                });
+
                 // Roles Routes
                 Route::prefix('roles')->group(function () {
                     Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
@@ -264,7 +281,7 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
                     
-                    Route::get('lookup/{id?}', 'AttributeController@search')->name('admin.settings.attributes.lookup');
+                    Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
 
                     Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
 
@@ -314,9 +331,9 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'configuration',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Configuration'
             ], function () {
-                Route::get('{slug?}/{slug2?}', 'ConfigurationController@index')->name('admin.configuration.index');
+                Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 
-                Route::post('{slug?}/{slug2?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+                Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
             });
         });
     });

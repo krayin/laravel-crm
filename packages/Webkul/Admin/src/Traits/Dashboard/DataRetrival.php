@@ -220,11 +220,25 @@ trait DataRetrival
     {
         $totalCount = 0;
 
-        $activities = app('Webkul\Lead\Repositories\ActivityRepository')
+        $activities = app('Webkul\Activity\Repositories\ActivityRepository')
                         ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
+                        ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
                         ->groupBy('type')
                         ->orderBy('count', 'desc')
                         ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
+                        ->where(function ($query) {
+                            $currentUser = auth()->guard('user')->user();
+    
+                            if ($currentUser->view_permission != 'global') {
+                                if ($currentUser->view_permission == 'group') {
+                                    $query->whereIn('activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds())
+                                        ->orWhereIn('activity_participants.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                                } else {
+                                    $query->where('activities.user_id', $currentUser->id)
+                                        ->orWhere('activity_participants.user_id', $currentUser->id);
+                                }
+                            }
+                        })
                         ->get()
                         ->toArray();
 
@@ -250,8 +264,14 @@ trait DataRetrival
                     ->orderBy('lead_value', 'desc')
                     ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                     ->where(function ($query) {
-                        if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-                            $query->where('leads.user_id', $currentUser->id);
+                        $currentUser = auth()->guard('user')->user();
+
+                        if ($currentUser->view_permission != 'global') {
+                            if ($currentUser->view_permission == 'group') {
+                                $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                            } else {
+                                $query->where('leads.user_id', $currentUser->id);
+                            }
                         }
                     })
                     ->limit(3)
@@ -305,9 +325,9 @@ trait DataRetrival
             
 
             array_push($leadStages, [
-                'label'     => $stage['name'],
-                'count'     => $leadsCount,
-                'bar_type'  => $barType,
+                'label'    => $stage['name'],
+                'count'    => $leadsCount,
+                'bar_type' => $barType,
             ]);
         }
 

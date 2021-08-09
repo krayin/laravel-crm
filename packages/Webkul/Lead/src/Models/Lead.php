@@ -3,6 +3,7 @@
 namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\User\Models\UserProxy;
 use Webkul\Email\Models\EmailProxy;
@@ -88,7 +89,7 @@ class Lead extends Model implements LeadContract
      */
     public function activities()
     {
-        return $this->hasMany(ActivityProxy::modelClass());
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'lead_activities');
     }
 
     /**

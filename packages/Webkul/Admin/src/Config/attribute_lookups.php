@@ -1,18 +1,19 @@
 <?php
 
 return [
-    'organizations' => [
-        'name'         => 'Organization',
-        'repository'   => 'Webkul\Contact\Repositories\OrganizationRepository',
+    'leads' => [
+        'name'         => 'Leads',
+        'repository'   => 'Webkul\Lead\Repositories\LeadRepository',
+        'label_column' => 'title',
     ],
 
     'lead_sources' => [
-        'name'         => 'Lead Source',
+        'name'         => 'Lead Sources',
         'repository'   => 'Webkul\Lead\Repositories\SourceRepository',
     ],
 
     'lead_types' => [
-        'name'         => 'Lead Type',
+        'name'         => 'Lead Types',
         'repository'   => 'Webkul\Lead\Repositories\TypeRepository',
     ],
 
@@ -22,13 +23,18 @@ return [
     ],
 
     'lead_stages' => [
-        'name'         => 'Lead Stage',
+        'name'         => 'Lead Stages',
         'repository'   => 'Webkul\Lead\Repositories\StageRepository',
     ],
 
     'users' => [
-        'name'         => 'Sales Owner',
+        'name'         => 'Sales Owners',
         'repository'   => 'Webkul\User\Repositories\UserRepository',
+    ],
+
+    'organizations' => [
+        'name'         => 'Organizations',
+        'repository'   => 'Webkul\Contact\Repositories\OrganizationRepository',
     ],
 
     'persons' => [

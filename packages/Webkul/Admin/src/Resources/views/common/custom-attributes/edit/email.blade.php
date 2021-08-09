@@ -46,12 +46,6 @@
                         emails: this.data,
                     }
                 },
-
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        this.emails = newVal || [{'value': '', 'label': 'work'}];
-                    }
-                },
     
                 created: function() {
                     if (! this.emails || ! this.emails.length) {

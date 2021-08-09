@@ -44,6 +44,8 @@
                 
                 this.tabs = this.tabsCollection;
             }
+
+            this.selectDefaultTab();
         },
 
         watch: {
@@ -53,6 +55,20 @@
         },
 
         methods: {
+            selectDefaultTab: function () {
+                var hasActiveTab = false;
+
+                this.tabs.forEach(tab => {
+                    if (tab.isActive) {
+                        hasActiveTab = true;
+                    }
+                });
+
+                if (! hasActiveTab) {
+                    this.tabs[0].isActive = true;
+                }
+            },
+
             selectTab: function (selectedTab) {
                 this.tabs.forEach(tab => {
                     tab.isActive = (tab.name == selectedTab.name);

@@ -43,13 +43,14 @@
                             @csrf()
                             
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.layouts.name') }}
                                 </label>
 
                                 <input
                                     type="text"
                                     name="name"
+                                    value="{{ old('name') }}"
                                     class="control"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.layouts.name') }}"
@@ -62,7 +63,7 @@
                             </div>
 
                             <div class="form-group" :class="[errors.has('description') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.settings.roles.description') }}
                                 </label>
 
@@ -72,8 +73,7 @@
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.description') }}"
                                     placeholder="{{ __('admin::app.settings.roles.description') }}"
-                                >
-                                </textarea>
+                                >{{ old('description') }}</textarea>
 
                                 <span class="control-error" v-if="errors.has('description')">
                                     @{{ errors.first('description') }}
@@ -92,11 +92,11 @@
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.role') }}"
                                 >
-                                    <option value="custom">
+                                    <option value="custom" {{ old('permission_type') == 'custom' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.roles.custom') }}
                                     </option>
 
-                                    <option value="all">
+                                    <option value="all" {{ old('permission_type') == 'all' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.roles.all') }}
                                     </option>
                                 </select>
@@ -106,7 +106,7 @@
                                 </span>
                             </div>
 
-                            <div class="control-group tree-wrapper">
+                            <div class="control-group tree-wrapper {{ old('permission_type') == 'all' ? 'hide' : '' }}">
                                 <tree-view value-field="key" id-field="key" items='@json($acl->items)'></tree-view>
                             </div>
 

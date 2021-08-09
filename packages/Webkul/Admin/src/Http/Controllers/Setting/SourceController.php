@@ -115,7 +115,7 @@ class SourceController extends Controller
 
             return response()->json([
                 'status'  => true,
-                'message' => trans('admin::app.settings.sources.destroy-success'),
+                'message' => trans('admin::app.settings.sources.delete-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([

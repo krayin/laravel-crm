@@ -4,20 +4,12 @@ namespace Webkul\Admin\Http\Controllers\Configuration;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-
-use Webkul\Core\Tree;
 use Webkul\Core\Contracts\Validations\Code;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Core\Repositories\CoreConfigRepository as ConfigurationRepository;
 
 class ConfigurationController extends Controller
 {
-    /**
-     *
-     * @var array
-     */
-    protected $configTree;
-
     /**
      * ConfigurationRepository object
      *
@@ -34,26 +26,6 @@ class ConfigurationController extends Controller
     public function __construct(ConfigurationRepository $configurationRepository)
     {
         $this->configurationRepository = $configurationRepository;
-
-        $this->prepareConfigTree();
-    }
-
-    /**
-     * Prepares config tree
-     *
-     * @return void
-     */
-    public function prepareConfigTree()
-    {
-        $tree = Tree::create();
-
-        foreach (config('core_config') as $item) {
-            $tree->add($item);
-        }
-
-        $tree->items = core()->sortItems($tree->items);
-
-        $this->configTree = $tree;
     }
 
     /**
@@ -69,7 +41,7 @@ class ConfigurationController extends Controller
             return redirect()->route('admin.configuration.index', $slugs);
         }
 
-        return view('admin::configuration.index', ['config' => $this->configTree]);
+        return view('admin::configuration.index');
     }
 
     /**
@@ -80,16 +52,11 @@ class ConfigurationController extends Controller
     public function getDefaultConfigSlugs()
     {
         if (! request()->route('slug')) {
-            $firstItem = current($this->configTree->items);
-            $secondItem = current($firstItem['children']);
+            $firstItem = current(app('core_config')->items);
 
-            return $this->getSlugs($secondItem);
-        }
+            $temp = explode('.', $firstItem['key']);
 
-        if (! request()->route('slug2')) {
-            $secondItem = current($this->configTree->items[request()->route('slug')]['children']);
-
-            return $this->getSlugs($secondItem);
+            return ['slug' => current($temp)];
         }
 
         return [];
@@ -127,16 +94,5 @@ class ConfigurationController extends Controller
         $config = $this->configurationRepository->findOneByField('value', $fileName);
 
         return Storage::download($config['value']);
-    }
-
-    /**
-     * @param  string  $secondItem
-     * @return array
-     */
-    private function getSlugs($secondItem): array
-    {
-        $temp = explode('.', $secondItem['key']);
-
-        return ['slug' => current($temp), 'slug2' => end($temp)];
     }
 }

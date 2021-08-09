@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Lead\Models;
+namespace Webkul\Activity\Models;
 
 use Konekt\Concord\Proxies\ModelProxy;
 

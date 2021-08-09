@@ -1,16 +1,21 @@
 <?php
 
-namespace Webkul\Lead\Models;
+namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\User\Models\UserProxy;
-use Webkul\Lead\Contracts\Activity as ActivityContract;
+use Webkul\Activity\Contracts\Activity as ActivityContract;
 
 class Activity extends Model implements ActivityContract
 {
-    protected $table = 'lead_activities';
+    protected $table = 'activities';
 
     protected $with = ['file', 'user'];
+
+    protected $dates= [
+        'schedule_from',
+        'schedule_to',
+    ];
 
     /**
      * The attributes that are mass assignable.
@@ -18,23 +23,15 @@ class Activity extends Model implements ActivityContract
      * @var array
      */
     protected $fillable = [
+        'title',
         'type',
         'comment',
         'additional',
         'schedule_from',
         'schedule_to',
         'is_done',
-        'lead_id',
         'user_id',
     ];
-
-    /**
-     * Get the lead that owns the activity.
-     */
-    public function lead()
-    {
-        return $this->belongsTo(LeadProxy::modelClass());
-    }
 
     /**
      * Get the user that owns the activity.
@@ -45,10 +42,18 @@ class Activity extends Model implements ActivityContract
     }
 
     /**
+     * The participants that belong to the activity.
+     */
+    public function participants()
+    {
+        return $this->belongsToMany(UserProxy::modelClass(), 'activity_participants');
+    }
+
+    /**
      * Get the file associated with the activity.
      */
     public function file()
     {
-        return $this->hasOne(FileProxy::modelClass(), 'lead_activity_id');
+        return $this->hasOne(FileProxy::modelClass(), 'activity_id');
     }
 }

@@ -47,12 +47,6 @@
                     }
                 },
 
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
-                    }
-                },
-
                 created: function() {
                     if (! this.contactNumbers || ! this.contactNumbers.length) {
                         this.contactNumbers = [{

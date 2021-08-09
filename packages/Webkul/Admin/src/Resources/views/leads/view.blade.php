@@ -438,9 +438,12 @@
             {!! view_render_event('admin.leads.view.informations.activity_actions.note.before', ['lead' => $lead]) !!}
 
             <tab name="{{ __('admin::app.leads.note') }}" :selected="true">
-                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
+                <form action="{{ route('admin.activities.store') }}" method="post" data-vv-scope="note-form" @submit.prevent="onSubmit($event, 'note-form')">
 
                     <input type="hidden" name="type" value="note">
+
+                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+
                     @csrf()
 
                     <div class="form-group" :class="[errors.has('note-form.comment') ? 'has-error' : '']">
@@ -462,9 +465,19 @@
             {!! view_render_event('admin.leads.view.informations.activity_actions.activity.before', ['lead' => $lead]) !!}
 
             <tab name="{{ __('admin::app.leads.activity') }}">
-                <form action="{{ route('admin.activities.store', $lead->id) }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
+                <form action="{{ route('admin.activities.store') }}" method="post" data-vv-scope="activity-form" @submit.prevent="onSubmit($event, 'activity-form')">
+
+                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
 
                     @csrf()
+        
+                    <div class="form-group" :class="[errors.has('activity-form.title') ? 'has-error' : '']">
+                        <label for="comment" class="required">{{ __('admin::app.leads.title-control') }}</label>
+
+                        <input class="control" v-validate="'required'" name="title" data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"/>
+
+                        <span class="control-error" v-if="errors.has('activity-form.title')">@{{ errors.first('activity-form.title') }}</span>
+                    </div>
 
                     <div class="form-group" :class="[errors.has('activity-form.type') ? 'has-error' : '']">
                         <label for="type" class="required">{{ __('admin::app.leads.type') }}</label>
@@ -474,7 +487,6 @@
                             <option value="call">{{ __('admin::app.leads.call') }}</option>
                             <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
                             <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
-                            <option value="email">{{ __('admin::app.leads.email') }}</option>
                         </select>
 
                         <span class="control-error" v-if="errors.has('activity-form.type')">@{{ errors.first('activity-form.type') }}</span>
@@ -501,7 +513,14 @@
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_to')">@{{ errors.first('activity-form.schedule_to') }}</span>
                             </datetime>
                         </div>
+                    </div>
 
+                    @include ('admin::common.custom-attributes.edit.multi-lookup')
+
+                    <div class="form-group">
+                        <label for="participants">{{ __('admin::app.leads.participants') }}</label>
+
+                        <multi-lookup-component :attribute="{'id': 20, 'code': 'participants[]', 'name': 'Participants'}" :data='[@json($lead->user)]'></multi-lookup-component>
                     </div>
 
                     <button type="submit" class="btn btn-md btn-primary">
@@ -583,9 +602,12 @@
             {!! view_render_event('admin.leads.view.informations.activity_actions.files.before', ['lead' => $lead]) !!}
 
             <tab name="{{ __('admin::app.leads.files') }}">
-                <form action="{{ route('admin.leads.file_upload', $lead->id) }}" method="post" data-vv-scope="file-form" @submit.prevent="onSubmit($event, 'file-form')" enctype="multipart/form-data">
+                <form action="{{ route('admin.activities.file_upload') }}" method="post" data-vv-scope="file-form" @submit.prevent="onSubmit($event, 'file-form')" enctype="multipart/form-data">
 
                     <input type="hidden" name="type" value="file">
+
+                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+
                     @csrf()
 
                     <div class="form-group">
@@ -644,6 +666,8 @@
 
                     <div class="activity-item" v-for="activity in getActivities(type, subType)">
                         <div class="title">
+                            <h4 v-if="activity.title">@{{ activity.title }}</h4>
+
                             <span v-if="activity.type == 'note'">
                                 {{ __('admin::app.leads.note-added') }}
                             </span>
@@ -689,7 +713,7 @@
 
                         <div class="attachment" v-if="activity.file">
                             <i class="icon attachment-icon"></i>
-                            <a :href="'{{ route('admin.leads.file_download') }}/' + activity.file.id" target="_blank">@{{ activity.file.name }}</a>
+                            <a :href="'{{ route('admin.activities.file_download') }}/' + activity.file.id" target="_blank">@{{ activity.file.name }}</a>
                         </div>
 
                         <div class="comment" v-if="activity.comment">

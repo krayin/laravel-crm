@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class QuoteController extends Controller
@@ -16,15 +17,28 @@ class QuoteController extends Controller
     protected $leadRepository;
 
     /**
+     * QuoteRepository object
+     *
+     * @var \Webkul\Quote\Repositories\QuoteRepository
+     */
+    protected $quoteRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
+     * @param \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
      *
      * @return void
      */
-    public function __construct(LeadRepository $leadRepository)
+    public function __construct(
+        LeadRepository $leadRepository,
+        QuoteRepository $quoteRepository
+    )
     {
         $this->leadRepository = $leadRepository;
+
+        $this->quoteRepository = $quoteRepository;
     }
 
     /**

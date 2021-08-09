@@ -64,6 +64,8 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->registerConfig();
 
+        $this->registerCoreConfig();
+
         $this->registerACL();
     }
 
@@ -96,12 +98,38 @@ class AdminServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/acl.php', 'acl');
+
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/menu.php', 'menu.admin');
+
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/core_config.php', 'core_config');
+
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/dashboard_cards.php', 'dashboard_cards');
+
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/datagrid_filters.php', 'datagrid_filters');
+
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups');
+        
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
+    }
+
+    /**
+     * Register core config.
+     *
+     * @return void
+     */
+    protected function registerCoreConfig()
+    {
+        $this->app->singleton('core_config', function () {
+            $tree = Tree::create();
+
+            foreach (config('core_config') as $item) {
+                $tree->add($item);
+            }
+    
+            $tree->items = core()->sortItems($tree->items);
+
+            return $tree;
+        });
     }
     
     /**

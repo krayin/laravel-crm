@@ -1,45 +1,50 @@
 @php   
     $validations = [];
-    $disabled = false;
 
-    if (isset($field['validation'])) {
-        array_push($validations, $field['validation']);
+    if (isset($field['validations'])) {
+        array_push($validations, $field['validations']);
     }
 
     $validations = implode('|', array_filter($validations));
 
-    $key = $item['key'];
-    $key = explode(".", $key);
+    $key = explode(".", $item['key']);
+
     $firstField = current($key);
+
     $secondField = next($key);
-    $thirdField  = end($key);
 
     $name = $item['key'] . '.' . $field['name'];
 
-    if (isset($field['repository'])) {
-        $temp = explode("@", $field['repository']);
-        $class = app(current($temp));
-        $method = end($temp);
-        $value = $class->$method();
+    if (isset($field['data_source'])) {
+        $temp = explode("@", $field['data_source']);
+
+        $value = app(current($temp))->{end($temp)}();
     }
 
-    $fieldName = $firstField . "[" . $secondField . "][" . $thirdField . "][" . $field['name'] . "]";
+    $fieldName = $firstField . "[" . $secondField . "][" . $field['name'] . "]";
 @endphp
 
 @if ($field['type'] == 'depends')
     @php        
         $depends = explode(":", $field['depend']);
+
         $dependField = current($depends);
+
         $dependValue = end($depends);
 
         if (isset($value) && $value) {
             $i = 0;
+
             foreach ($value as $key => $result) {
                 $data['title'] = $result;
+
                 $data['value'] = $key;
+
                 $options[$i] = $data;
+
                 $i++;
             }
+
             $field['options'] = $options;
         }
 
@@ -57,7 +62,7 @@
         :options='@json($field['options'])'
         :validations="'{{ $validations }}'"
         :field_name="'{{ trans($field['title']) }}'"
-        :depend="'{{ $firstField }}[{{ $secondField }}][{{ $thirdField }}][{{ $dependField }}]'"
+        :depend="'{{ $firstField }}[{{ $secondField }}][{{ $dependField }}]'"
     ></depends>
 
 @else
@@ -72,7 +77,7 @@
 
         <label
             for="{{ $name }}"
-            {{ !isset($field['validation']) || preg_match('/\brequired\b/', $field['validation']) == false ? '' : 'class=required' }}
+            {{ !isset($field['validations']) || preg_match('/\brequired\b/', $field['validations']) == false ? '' : 'class=required' }}
         >
             {{ __($field['title']) }}
 
@@ -97,9 +102,9 @@
             @endif
         >
             @if ($field['type'] == 'multiselect')
-                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $thirdField !!}][{!! $field['name'] !!}][]') }}
+                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $field['name'] !!}][]') }}
             @else
-                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $thirdField !!}][{!! $field['name'] !!}]') }}
+                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $field['name'] !!}]') }}
             @endif
         </span>
 
@@ -288,7 +293,7 @@
                 'value',
                 'result',
                 'options',
-                'repository',
+                'data_source',
                 'field_name',
                 'validations',
             ],

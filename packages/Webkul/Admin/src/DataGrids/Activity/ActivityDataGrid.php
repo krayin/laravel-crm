@@ -27,30 +27,46 @@ class ActivityDataGrid extends DataGrid
 
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('lead_activities')
+        $queryBuilder = DB::table('activities')
+                        ->distinct()
                         ->select(
-                            'lead_activities.*',
+                            'activities.*',
                             'leads.id as lead_id',
-                            'users.id as assignee_id',
-                            'users.name as assigned_to',
+                            'users.id as created_by_id',
+                            'users.name as created_by',
                             'leads.title as lead_title',
-                            'persons.name as contact_person',
-                            'persons.id as contact_person_id'
                         )
-                        ->where(function ($query) {
-                            if (($currentUser = auth()->guard('user')->user())->lead_view_permission == "individual") {
-                                $query->where('lead_activities.user_id', $currentUser->id);
-                            }
-                        })
+                        ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
+                        ->leftJoin('lead_activities', 'activities.id', '=', 'lead_activities.activity_id')
                         ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
-                        ->leftJoin('users', 'lead_activities.user_id', '=', 'users.id')
-                        ->leftJoin('persons', 'leads.person_id', '=', 'persons.id');
+                        ->leftJoin('users', 'activities.user_id', '=', 'users.id')
+                        ->whereIn('type', ['call', 'meeting', 'lunch']);
 
-        $this->addFilter('id', 'lead_activities.id');
-        $this->addFilter('assigned_to', 'users.name');
-        $this->addFilter('contact_person', 'persons.name');
-        $this->addFilter('user', 'lead_activities.user_id');
-        $this->addFilter('created_at', 'lead_activities.created_at');
+
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
+                $queryBuilder->where(function ($query) use($currentUser) {
+                    $query->whereIn('activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds())
+                        ->orWhereIn('activity_participants.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+
+                    return $query;
+                });
+            } else {
+                $queryBuilder->where(function ($query) use($currentUser) {
+                    $query->where('activities.user_id', $currentUser->id)
+                        ->orWhere('activity_participants.user_id', $currentUser->id);
+
+                    return $query;
+                });
+            }
+        }
+
+        $this->addFilter('id', 'activities.id');
+        $this->addFilter('created_by', 'users.name');
+        $this->addFilter('user', 'activities.user_id');
+        $this->addFilter('created_at', 'activities.created_at');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -58,12 +74,26 @@ class ActivityDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
+            'index'      => 'title',
+            'label'      => trans('admin::app.datagrid.title'),
+            'type'       => 'string',
+            'searchable' => true,
+        ]);
+
+        $this->addColumn([
             'index'              => 'user',
-            'label'              => trans('admin::app.datagrid.assigned_to'),
+            'label'              => trans('admin::app.datagrid.created_by'),
             'type'               => 'hidden',
             'sortable'           => true,
             'filterable_type'    => 'dropdown',
             'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+        ]);
+
+        $this->addColumn([
+            'index'      => 'comment',
+            'label'      => trans('admin::app.datagrid.comment'),
+            'type'       => 'string',
+            'searchable' => true,
         ]);
 
         $this->addColumn([
@@ -75,13 +105,6 @@ class ActivityDataGrid extends DataGrid
 
                 return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
             },
-        ]);
-
-        $this->addColumn([
-            'index'      => 'comment',
-            'label'      => trans('admin::app.datagrid.comment'),
-            'type'       => 'string',
-            'searchable' => true,
         ]);
 
         $this->addColumn([
@@ -116,25 +139,13 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'contact_person',
-            'label'              => trans('admin::app.datagrid.contact_person'),
-            'type'               => 'string',
-            'filterable_type'    => 'add',
-            'closure'            => function ($row) {
-                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->contact_person_id]));
-
-                return "<a href='" . $route . "'>" . $row->contact_person . "</a>";
-            },
-        ]);
-
-        $this->addColumn([
-            'index'   => 'assigned_to',
-            'label'   => trans('admin::app.datagrid.assigned_to'),
+            'index'   => 'created_by',
+            'label'   => trans('admin::app.datagrid.created_by'),
             'type'    => 'string',
             'closure' => function ($row) {
-                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->assignee_id]));
+                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
-                return "<a href='" . $route . "'>" . $row->assigned_to . "</a>";
+                return "<a href='" . $route . "'>" . $row->created_by . "</a>";
             },
         ]);
 
@@ -180,6 +191,13 @@ class ActivityDataGrid extends DataGrid
 
     public function prepareActions()
     {
+        $this->addAction([
+            'title'  => trans('ui::app.datagrid.edit'),
+            'method' => 'GET',
+            'route'  => 'admin.activities.edit',
+            'icon'   => 'pencil-icon',
+        ]);
+
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',

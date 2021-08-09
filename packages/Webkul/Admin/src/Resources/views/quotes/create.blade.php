@@ -5,6 +5,19 @@
 @stop
 
 @section('content-wrapper')
+
+    @php
+        $quote = app('\Webkul\Quote\Repositories\QuoteRepository')->getModel();
+
+        if (isset($lead)) {
+            $quote->fill([
+                'person_id'       => $lead->person_id,
+                'user_id'         => $lead->user_id,
+                'billing_address' => $lead->person->organization ? $lead->person->organization->address : []
+            ]);
+        }
+    @endphp
+
     <div class="content full-page adjacent-center">
         {!! view_render_event('admin.quotes.create.header.before') !!}
 
@@ -51,17 +64,18 @@
 
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query){
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'user_id',
-                                                    'subject',
-                                                    'description',
-                                                    'expired_at',
-                                                    'person_id',
-                                                ]);
-                                        })->get()
+                                            ->scopeQuery(function($query){
+                                                return $query
+                                                    ->where('entity_type', 'quotes')
+                                                    ->whereIn('code', [
+                                                        'user_id',
+                                                        'subject',
+                                                        'description',
+                                                        'expired_at',
+                                                        'person_id',
+                                                    ]);
+                                            })->get(),
+                                        'entity'           => $quote,
                                     ])
 
                                 </div>
@@ -84,7 +98,8 @@
                                                     'billing_address',
                                                     'shipping_address',
                                                 ]);
-                                        })->get()
+                                        })->get(),
+                                        'entity'           => $quote,
                                     ])
 
                                 </div>

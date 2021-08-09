@@ -40,7 +40,7 @@
 
                 template: '#tags-component-template',
 
-                props: ['validations', 'attribute', 'searchRoute', 'searchLabelColumn', 'data'],
+                props: ['validations', 'attribute', 'searchRoute', 'data'],
 
                 inject: ['$validator'],
 
@@ -52,7 +52,7 @@
 
                         is_searching: false,
 
-                        search_route: this.searchRoute ? this.searchRoute : "{{ route('admin.settings.attributes.lookup') }}" + this.attribute['id'],
+                        search_route: this.searchRoute ? this.searchRoute : "{{ route('admin.settings.attributes.lookup') }}" + this.attribute['lookup_type'],
                     }
                 },
 
@@ -66,12 +66,6 @@
 
                         return tags.join(',');
                     },
-                },
-
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        this.tags = newVal || [];
-                    }
                 },
 
                 methods: {
