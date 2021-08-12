@@ -242,6 +242,12 @@
                 }
 
                 this.makeURL();
+            },
+
+            '$store.state.tableData.columns': function (newValue, oldValue) {
+                if (newValue.length != oldValue.length) {
+                    this.updateFilterValue();
+                }
             }
         },
 
@@ -471,6 +477,7 @@
 
                     obj.column = key.replace(']', '').split('[')[0];
                     obj.cond = key.replace(']', '').split('[')[1];
+
                     obj.val = value;
 
                     if (obj?.column?.replaceAll) {
@@ -537,17 +544,17 @@
 
                     if (key == "sort") {
                         data.prettyValue = `${data.cond.replaceAll("_", " ")} - ${data.val}`;
-                    } else {
-                        if (data.cond == 'bw') {
-                            var timestamp = Date.parse(data.val.split(",")[0]);
+                    } else if (data.cond == 'bw') {
+                        var timestamp = Date.parse(data.val.split(",")[0]);
 
-                            if (isNaN(timestamp) == false) {
-                                data.prettyValue = `${data.val.replaceAll(",", " - ")}`;
-                            }
+                        if (isNaN(timestamp) == false) {
+                            data.prettyValue = `${data.val.replaceAll(",", " - ")}`;
                         }
                     }
 
                     this.filters.push(data);
+
+                    this.updateFilterValue();
                 }
 
                 this.makeURL();
@@ -659,6 +666,20 @@
                     }
                 }
             },
+
+            updateFilterValue: function () {
+                this.filters = this.filters.map(filter => {
+                    let column = this.$store.state.tableData.columns.find(column => column.index == filter.column);
+
+                    if (column?.filterable_options) {
+                        let value = filter.val.split(",");
+                        value = value.map(id => column.filterable_options.find(option => option.value == id).label);
+                        filter.prettyValue = value.join(",");
+                    }
+
+                    return filter;
+                });
+            }
         }
     };
 </script>
