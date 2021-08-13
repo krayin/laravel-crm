@@ -373,7 +373,7 @@
                 'update-btn-title'  => 'Update Group',
                 'create-success'    => 'Group created successfully.',
                 'update-success'    => 'Group updated successfully.',
-                'delete-success'    => 'Group deleted successfully.',
+                'destroy-success'    => 'Group deleted successfully.',
                 'delete-failed'     => 'Group can not be deleted.',
                 'user-define-error' => 'Can not delete system group.',
             ],
