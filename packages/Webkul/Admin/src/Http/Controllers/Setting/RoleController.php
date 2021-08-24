@@ -68,6 +68,10 @@ class RoleController extends Controller
         $roleData = request()->all();
 
         if ($roleData['permission_type'] == 'custom') {
+            if (! isset($roleData['permissions'])) {
+                $roleData['permissions'] = [];
+            }
+
             array_push($roleData['permissions'], "admin.datagrid.api");
         }
 
