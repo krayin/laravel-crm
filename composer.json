@@ -15,10 +15,12 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "konekt/concord": "^1.10",
+        "krayin/krayin-package-generator": "dev-master",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
-        "prettus/l5-repository": "^2.7"
+        "prettus/l5-repository": "^2.7",
+        "ramsey/uuid": "^4.2"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",

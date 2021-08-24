@@ -46,7 +46,7 @@ class Activity extends Model implements ActivityContract
      */
     public function participants()
     {
-        return $this->belongsToMany(UserProxy::modelClass(), 'activity_participants');
+        return $this->hasMany(ParticipantProxy::modelClass());
     }
 
     /**

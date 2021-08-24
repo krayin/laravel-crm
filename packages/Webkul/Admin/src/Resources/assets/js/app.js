@@ -6,6 +6,7 @@ import VeeValidate from 'vee-validate';
 import VueKanban from 'vue-kanban';
 
 import './bootstrap';
+window.moment = require('moment');
 
 window.Vue = Vue;
 window.VeeValidate = VeeValidate;
