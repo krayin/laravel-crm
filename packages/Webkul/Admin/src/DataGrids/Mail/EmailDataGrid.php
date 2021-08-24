@@ -22,6 +22,8 @@ class EmailDataGrid extends DataGrid
             ->whereNull('parent_id');
 
         $this->addFilter('id', 'emails.id');
+        $this->addFilter('name', 'emails.name');
+        $this->addFilter('created_at', 'emails.created_at');
 
         $this->setQueryBuilder($queryBuilder);
     }
