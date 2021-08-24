@@ -90,13 +90,10 @@
                                 </div>
                             </div>
         
-
-                            @include ('admin::common.custom-attributes.edit.multi-lookup')
-        
                             <div class="form-group">
                                 <label for="participants">{{ __('admin::app.activities.participants') }}</label>
         
-                                <multi-lookup-component :attribute="{'lookup_type': 'users', 'code': 'participants[]', 'name': 'Participants'}" :data='@json($activity->participants)'></multi-lookup-component>
+                                <multi-lookup-component :data='@json($activity->participants)'></multi-lookup-component>
                             </div>
 
                             {!! view_render_event('admin.activities.edit.form_controls.after', ['activity' => $activity]) !!}
@@ -112,3 +109,146 @@
 
     </div>
 @stop
+
+@push('scripts')
+
+    <script type="text/x-template" id="multi-lookup-component-template">
+        <div class="lookup-control">
+            <div class="form-group" style="margin-bottom: 0">
+                <input type="text" class="control" v-model="search_term" v-on:keyup="search" autocomplete="off">
+
+                <div class="lookup-results grouped" v-if="search_term.length">
+                    <label>{{ __('admin::app.leads.users') }}</label>
+
+                    <ul>
+                        <li v-for='(participant, index) in searched_participants.users' @click="addParticipant('users', participant)">
+                            <span>@{{ participant.name }}</span>
+                        </li>
+
+                        <li v-if='! searched_participants.users.length && search_term.length && ! is_searching'>
+                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                        </li>
+                    </ul>
+
+                    <label>{{ __('admin::app.leads.persons') }}</label>
+
+                    <ul>
+                        <li v-for='(participant, index) in searched_participants.persons' @click="addParticipant('persons', participant)">
+                            <span>@{{ participant.name }}</span>
+                        </li>
+
+                        <li v-if='! searched_participants.persons.length && search_term.length && ! is_searching'>
+                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <i class="icon loader-active-icon" v-if="is_searching"></i>
+            </div>
+
+            <div class="lookup-selected-options">
+                <span class="badge badge-sm badge-pill badge-secondary-outline users" v-for='(participant, index) in participants.users'>
+                    <input type="hidden" name="participants[users][]" :value="participant.id"/>
+                    @{{ participant.name }}
+                    <i class="icon close-icon"  @click="removeParticipant('users', participant)"></i>
+                </span>
+
+                <span class="badge badge-sm badge-pill badge-warning-outline persons" v-for='(participant, index) in participants.persons'>
+                    <input type="hidden" name="participants[persons][]" :value="participant.id"/>
+                    @{{ participant.name }}
+                    <i class="icon close-icon"  @click="removeParticipant('persons', participant)"></i>
+                </span>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        Vue.component('multi-lookup-component', {
+
+            template: '#multi-lookup-component-template',
+    
+            props: ['data'],
+
+            inject: ['$validator'],
+
+            data: function () {
+                return {
+                    search_term: '',
+
+                    is_searching: false,
+
+                    searched_participants: {
+                        'users': [],
+
+                        'persons': []
+                    },
+
+                    participants: {
+                        'users': [],
+
+                        'persons': []
+                    },
+                }
+            },
+
+            mounted: function() {
+                var self = this;
+
+                this.data.forEach(function(participant) {
+                    if (participant.user) {
+                        self.participants.users.push({'id': participant.user.id, 'name': participant.user.name});
+                    } else {
+                        self.participants.persons.push({'id': participant.person.id, 'name': participant.person.name});
+                    }
+                });
+            },
+
+            methods: {
+                search: debounce(function () {
+                    this.is_searching = true;
+
+                    if (this.search_term.length < 2) {
+                        this.searched_participants = {
+                            'users': [],
+
+                            'persons': []
+                        };
+
+                        this.is_searching = false;
+
+                        return;
+                    }
+
+                    this.$http.get("{{ route('admin.activities.search_participants') }}", {params: {query: this.search_term}})
+                        .then (response => {
+                            this.searched_participants = response.data;
+
+                            this.is_searching = false;
+                        })
+                        .catch (error => {
+                            this.is_searching = false;
+                        })
+                }, 500),
+
+                addParticipant: function(type, participant) {
+                    this.search_term = '';
+
+                    this.searched_participants = {
+                        'users': [],
+
+                        'persons': []
+                    };
+
+                    this.participants[type].push(participant);
+                },
+
+                removeParticipant: function(type, participant) {
+                    const index = this.participants[type].indexOf(participant);
+
+                    Vue.delete(this.participants[type], index);
+                }
+            }
+        });
+    </script>
+
+@endpush

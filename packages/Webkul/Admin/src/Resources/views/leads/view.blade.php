@@ -17,6 +17,17 @@
         .content-container .content .page-header {
             margin-bottom: 30px;
         }
+
+        .lookup-results.grouped label {
+            padding: 10px 10px 0 10px;
+            font-weight: 500;
+            color: #263238;
+            font-size: 18px;
+        }
+
+        .lookup-results.grouped li {
+            padding-left: 15px;
+        }
     </style>
 @stop
 
@@ -515,12 +526,56 @@
                         </div>
                     </div>
 
-                    @include ('admin::common.custom-attributes.edit.multi-lookup')
-
                     <div class="form-group">
                         <label for="participants">{{ __('admin::app.leads.participants') }}</label>
 
-                        <multi-lookup-component :attribute="{'id': 20, 'code': 'participants[]', 'name': 'Participants'}" :data='[@json($lead->user)]'></multi-lookup-component>
+                        <div class="lookup-control">
+                            <div class="form-group" style="margin-bottom: 0">
+                                <input type="text" class="control" v-model="search_term" v-on:keyup="search" autocomplete="off">
+
+                                <div class="lookup-results grouped" v-if="search_term.length">
+                                    <label>{{ __('admin::app.leads.users') }}</label>
+
+                                    <ul>
+                                        <li v-for='(participant, index) in searched_participants.users' @click="addParticipant('users', participant)">
+                                            <span>@{{ participant.name }}</span>
+                                        </li>
+
+                                        <li v-if='! searched_participants.users.length && search_term.length && ! is_searching'>
+                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                        </li>
+                                    </ul>
+
+                                    <label>{{ __('admin::app.leads.persons') }}</label>
+
+                                    <ul>
+                                        <li v-for='(participant, index) in searched_participants.persons' @click="addParticipant('persons', participant)">
+                                            <span>@{{ participant.name }}</span>
+                                        </li>
+
+                                        <li v-if='! searched_participants.persons.length && search_term.length && ! is_searching'>
+                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <i class="icon loader-active-icon" v-if="is_searching"></i>
+                            </div>
+
+                            <div class="lookup-selected-options">
+                                <span class="badge badge-sm badge-pill badge-secondary-outline users" v-for='(participant, index) in participants.users'>
+                                    <input type="hidden" name="participants[users][]" :value="participant.id"/>
+                                    @{{ participant.name }}
+                                    <i class="icon close-icon"  @click="removeParticipant('users', participant)"></i>
+                                </span>
+
+                                <span class="badge badge-sm badge-pill badge-secondary-warning persons" v-for='(participant, index) in participants.persons'>
+                                    <input type="hidden" name="participants[persons][]" :value="participant.id"/>
+                                    @{{ participant.name }}
+                                    <i class="icon close-icon"  @click="removeParticipant('persons', participant)"></i>
+                                </span>
+                            </div>
+                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-md btn-primary">
@@ -673,19 +728,19 @@
                             </span>
                             
                             <span v-else-if="activity.type == 'call'">
-                                @{{ '{!! __('admin::app.leads.call-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                                @{{ '{!! __('admin::app.leads.call-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
 
                             <span v-else-if="activity.type == 'meeting'">
-                                @{{ '{!! __('admin::app.leads.meeting-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                                @{{ '{!! __('admin::app.leads.meeting-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
 
                             <span v-else-if="activity.type == 'lunch'">
-                                @{{ '{!! __('admin::app.leads.lunch-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                                @{{ '{!! __('admin::app.leads.lunch-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
 
                             <span v-else-if="activity.type == 'email'">
-                                @{{ '{!! __('admin::app.leads.email-scheduled') !!}'.replace(':from', activity.schedule_from).replace(':to', activity.schedule_to) }}
+                                @{{ '{!! __('admin::app.leads.email-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
                             
                             <span v-else-if="activity.type == 'file'">
@@ -700,9 +755,9 @@
                                         <li v-if="! activity.is_done" @click="markAsDone(activity)">
                                             {{ __('admin::app.leads.mark-as-done') }}
                                         </li>
-                                        {{-- <li @click="edit(activity)">
-                                            {{ __('admin::app.leads.edit') }}
-                                        </li> --}}
+                                        <li>
+                                            <a :href="'{{ route('admin.activities.edit') }}/' + activity.id" target="_blank">{{ __('admin::app.leads.edit') }}</a>
+                                        </li>
                                         <li @click="remove(activity)">
                                             {{ __('admin::app.leads.remove') }}
                                         </li>
@@ -721,7 +776,7 @@
                         </div>
 
                         <div class="info">
-                            @{{ activity.created_at | moment("Do MMMM YYYY, h:mm A") }}
+                            @{{ activity.created_at | moment("Do MMM YYYY, h:mm A") }}
                             <span class="seperator">·</span>
                             <a :href="'{{ route('admin.settings.users.edit') }}/' + activity.user.id" target="_blank">@{{ activity.user.name }}</a> 
                         </div>
@@ -1000,6 +1055,22 @@
                     show_cc: false,
 
                     show_bcc: false,
+
+                    search_term: '',
+
+                    is_searching: false,
+
+                    searched_participants: {
+                        'users': [],
+
+                        'persons': []
+                    },
+
+                    participants: {
+                        'users': [],
+
+                        'persons': []
+                    },
                 }
             },
 
@@ -1017,6 +1088,50 @@
             methods: {
                 onSubmit: function(e, formScope) {
                     this.$root.onSubmit(e, formScope);
+                },
+
+                search: debounce(function () {
+                    this.is_searching = true;
+
+                    if (this.search_term.length < 2) {
+                        this.searched_participants = {
+                            'users': [],
+
+                            'persons': []
+                        };
+
+                        this.is_searching = false;
+
+                        return;
+                    }
+
+                    this.$http.get("{{ route('admin.activities.search_participants') }}", {params: {query: this.search_term}})
+                        .then (response => {
+                            this.searched_participants = response.data;
+
+                            this.is_searching = false;
+                        })
+                        .catch (error => {
+                            this.is_searching = false;
+                        })
+                }, 500),
+
+                addParticipant: function(type, participant) {
+                    this.search_term = '';
+
+                    this.searched_participants = {
+                        'users': [],
+
+                        'persons': []
+                    };
+
+                    this.participants[type].push(participant);
+                },
+
+                removeParticipant: function(type, participant) {
+                    const index = this.participants[type].indexOf(participant);
+
+                    Vue.delete(this.participants[type], index);
                 }
             }
         });
@@ -1107,10 +1222,6 @@
                         })
                 },
 
-                edit: function(activity) {
-
-                },
-
                 remove: function(activity) {
                     var self = this;
 
@@ -1143,7 +1254,11 @@
                         })
                         .catch (function (error) {
                         })
-                }
+                },
+
+                formatDate: function(date) {
+                    return moment(String(date)).format('Do MMM YYYY, h:mm A')
+                },
             }
         });
     </script>

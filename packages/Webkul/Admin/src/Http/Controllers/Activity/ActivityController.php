@@ -8,6 +8,8 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\User\Repositories\UserRepository;
+use Webkul\Contact\Repositories\PersonRepository;
 
 class ActivityController extends Controller
 {
@@ -33,18 +35,36 @@ class ActivityController extends Controller
     protected $leadRepository;
 
     /**
+     * UserRepository object
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * PersonRepository object
+     *
+     * @var \Webkul\Contact\Repositories\PersonRepository
+     */
+    protected $personRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
      * @param \Webkul\Activity\Repositories\FileRepository  $fileRepository
      * @param \Webkul\Activity\Repositories\LeadRepository  $leadRepository
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      *
      * @return void
      */
     public function __construct(
         ActivityRepository $activityRepository,
         FileRepository $fileRepository,
-        LeadRepository $leadRepository
+        LeadRepository $leadRepository,
+        UserRepository $userRepository,
+        PersonRepository $personRepository
     )
     {
         $this->activityRepository = $activityRepository;
@@ -52,6 +72,10 @@ class ActivityController extends Controller
         $this->fileRepository = $fileRepository;
 
         $this->leadRepository = $leadRepository;
+
+        $this->userRepository = $userRepository;
+
+        $this->personRepository = $personRepository;
     }
 
     /**
@@ -86,7 +110,21 @@ class ActivityController extends Controller
         ]));
 
         if (request('participants')) {
-            $activity->participants()->attach(request('participants'));
+            if (is_array(request('participants.users'))) {
+                foreach (request('participants.users') as $userId) {
+                    $activity->participants()->create([
+                        'user_id' => $userId
+                    ]);
+                }
+            }
+
+            if (is_array(request('participants.persons'))) {
+                foreach (request('participants.persons') as $personId) {
+                    $activity->participants()->create([
+                        'person_id' => $personId,
+                    ]);
+                }
+            }
         }
 
         if (request('lead_id')) {
@@ -128,7 +166,23 @@ class ActivityController extends Controller
         $activity = $this->activityRepository->update(request()->all(), $id);
 
         if (request('participants')) {
-            $activity->participants()->sync(request('participants'));
+            $activity->participants()->delete();
+
+            if (is_array(request('participants.users'))) {
+                foreach (request('participants.users') as $userId) {
+                    $activity->participants()->create([
+                        'user_id' => $userId
+                    ]);
+                }
+            }
+
+            if (is_array(request('participants.persons'))) {
+                foreach (request('participants.persons') as $personId) {
+                    $activity->participants()->create([
+                        'person_id' => $personId,
+                    ]);
+                }
+            }
         }
 
         if (request('lead_id')) {
@@ -151,6 +205,27 @@ class ActivityController extends Controller
 
             return redirect()->route('admin.activities.index');
         }
+    }
+
+    /**
+     * Search participants results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function searchParticipants()
+    {
+        $users = $this->userRepository->findWhere([
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+        ]);
+
+        $persons = $this->personRepository->findWhere([
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+        ]);
+
+        return response()->json([
+            'users'   => $users,
+            'persons' => $persons,
+        ]);
     }
 
     /**

@@ -131,6 +131,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
 
+                Route::get('search-participants', 'ActivityController@searchParticipants')->name('admin.activities.search_participants');
+
                 Route::post('file-upload', 'ActivityController@upload')->name('admin.activities.file_upload');
 
                 Route::get('file-download/{id?}', 'ActivityController@download')->name('admin.activities.file_download');

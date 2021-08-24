@@ -142,6 +142,8 @@
             'from'                     => 'From',
             'to'                       => 'To',
             'participants'             => 'Participants',
+            'users'                    => 'Users',
+            'persons'                  => 'Persons',
             'cc'                       => 'Cc',
             'bcc'                      => 'Bcc',
             'email-placeholder'        => 'Press enter to add emails',

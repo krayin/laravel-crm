@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.12"
     },
     "dependencies": {
+        "moment": "^2.29.1",
         "vee-validate": "^2.2.15",
         "vue-kanban": "^1.8.0",
         "vue-timeago": "^5.1.3",

@@ -37,12 +37,12 @@ class Activity
             return;
         }
 
-        // try {
+        try {
             foreach ($activity->participants as $participant) {
                 Mail::queue(new Update($activity, $participant));
             }
-        // } catch (\Exception $e) {
-        //     report($e);
-        // }
+        } catch (\Exception $e) {
+            report($e);
+        }
     }
 }
