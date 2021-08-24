@@ -11,8 +11,6 @@ class LeadDataGrid extends DataGrid
 
     protected $tabFilters = [];
     
-    protected $stagesMassActionOptions;
-
     protected $redirectRow = [
         "id"    => "id",
         "route" => "admin.leads.view",
@@ -161,6 +159,12 @@ class LeadDataGrid extends DataGrid
 
     public function prepareMassActions()
     {
+        $stages = [];
+
+        foreach (app("\Webkul\Lead\Repositories\StageRepository")->get(['id', 'name'])->toArray() as $stage) {
+            $stages[$stage['name']] = $stage['id'];
+        }
+
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
@@ -173,7 +177,7 @@ class LeadDataGrid extends DataGrid
             'label'   => trans('admin::app.datagrid.update_stage'),
             'action'  => route('admin.leads.mass_update'),
             'method'  => 'PUT',
-            'options' => $this->stagesMassActionOptions,
+            'options' => $stages,
         ]);
     }
 }

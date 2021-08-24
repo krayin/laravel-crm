@@ -18,7 +18,7 @@ class GroupDataGrid extends DataGrid
             ->addSelect(
                 'groups.id',
                 'groups.name',
-                'groups.description',
+                'groups.description'
             );
 
         $this->setQueryBuilder($queryBuilder);
