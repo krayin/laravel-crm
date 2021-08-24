@@ -43,9 +43,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(AttributeForm $request)
     {
         Event::dispatch('product.create.before');
 

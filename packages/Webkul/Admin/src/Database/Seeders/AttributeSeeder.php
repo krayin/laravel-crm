@@ -222,7 +222,7 @@ class AttributeSeeder extends Seeder
                 'sort_order'          => '2',
                 'is_required'         => '0',
                 'is_unique'           => '0',
-                'quick_add'           => '0',
+                'quick_add'           => '1',
                 'is_user_defined'     => '0',
                 'created_at'          => $now,
                 'updated_at'          => $now,
