@@ -13,7 +13,7 @@
             $quote->fill([
                 'person_id'       => $lead->person_id,
                 'user_id'         => $lead->user_id,
-                'billing_address' => $lead->person->organization ? $lead->person->organization->address : []
+                'billing_address' => $lead->person->organization ? $lead->person->organization->address : null
             ]);
         }
     @endphp
@@ -91,14 +91,14 @@
 
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query){
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'billing_address',
-                                                    'shipping_address',
-                                                ]);
-                                        })->get(),
+                                            ->scopeQuery(function($query){
+                                                return $query
+                                                    ->where('entity_type', 'quotes')
+                                                    ->whereIn('code', [
+                                                        'billing_address',
+                                                        'shipping_address',
+                                                    ]);
+                                            })->get(),
                                         'entity'           => $quote,
                                     ])
 
