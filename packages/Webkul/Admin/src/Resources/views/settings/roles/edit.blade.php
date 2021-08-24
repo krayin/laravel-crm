@@ -75,7 +75,7 @@
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.description') }}"
                                     placeholder="{{ __('admin::app.settings.roles.description') }}"
-                                >{{ old('description') ?? $role->description }}}</textarea>
+                                >{{ old('description') ?? $role->description }}</textarea>
 
                                 <span class="control-error" v-if="errors.has('description')">
                                     @{{ errors.first('description') }}
