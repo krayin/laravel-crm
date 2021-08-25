@@ -203,6 +203,8 @@ Route::group(['middleware' => ['web']], function () {
                 'namespace' => 'Webkul\Admin\Http\Controllers\Product'
             ], function () {
                 Route::get('', 'ProductController@index')->name('admin.products.index');
+
+                Route::get('create', 'ProductController@create')->name('admin.products.create');
     
                 Route::post('create', 'ProductController@store')->name('admin.products.store');
 

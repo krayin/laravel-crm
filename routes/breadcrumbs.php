@@ -111,7 +111,13 @@ Breadcrumbs::for('products', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.products'), route('admin.products.index'));
 });
 
-// Dashboard > Leads > Edit Product
+// Dashboard > Products > Create Product
+Breadcrumbs::for('products.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('products');
+    $trail->push(trans('admin::app.products.add-title'), route('admin.products.create'));
+});
+
+// Dashboard > Products > Edit Product
 Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('products');
     $trail->push(trans('admin::app.products.edit-title'), route('admin.products.edit', $product->id));
