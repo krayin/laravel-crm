@@ -58,19 +58,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Installation and Configuration
 
-**1. You can install Krayin CRM by using the GUI installer.**
-
-##### a. Download zip from the link below:
-
-[Download the latest release](https://github.com/krayin/laravel-crm/releases/latest)
-
-##### b. Extract the contents of zip and execute the project in your browser:
-
-~~~
-http(s)://example.com
-~~~
-
-**2. Or you can install Krayin CRM from your console.**
+** Or you can install Krayin CRM from your console.**
 
 ##### Execute these commands below, in order
 
