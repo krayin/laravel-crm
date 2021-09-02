@@ -1,3 +1,36 @@
+## **v1.0.1 (2nd of September 2021)**
+
+* [feature] Activity participants
+
+
+* #117 [fixed] - Implement Pest PHP For Testing
+
+* #120 [fixed] - getting error when run migrate and seed database
+
+* #122 [fixed] - missing translation for alert message when deleting types and sources
+
+* #123 [fixed] - add more option is not working while edit person details
+
+* #134 [fixed] - update alert when delete groups
+
+* #133 [fixed] - exception when save new user roles
+
+* #135 [fixed] - default placeholder should be selected in quotes billing address
+
+* #136 [fixed] - buying leads stages are not assigned on mass action
+
+* #137 [fixed] - show names instead of id for search term at activities section
+
+* #139 [fixed] - filter is not working in quotes
+
+* #147 [fixed] - Getting exception while creating product with same sku
+
+* #148 [fixed] - Description field not visible while adding the products
+
+* #152 [fixed] - Automatically curly bracket is getting added in description while editing Role
+
+
+
 ## **v1.0.0 (21th of July 2021)** - *First Release*
 
 * [feature] Descriptive and Simple Admin Panel.
