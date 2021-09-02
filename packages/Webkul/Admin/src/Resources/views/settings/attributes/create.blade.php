@@ -18,9 +18,9 @@
         {!! view_render_event('admin.settings.attributes.create.header.before') !!}
 
         <div class="page-header">
-            
+
             {{ Breadcrumbs::render('settings.attributes.create') }}
-            
+
             <div class="page-title">
                 <h1>{{ __('admin::app.settings.attributes.add-title') }}</h1>
             </div>
@@ -45,7 +45,7 @@
 
                             {!! view_render_event('admin.settings.attributes.create.form_buttons.after') !!}
                         </div>
-        
+
                         <div class="panel-body">
                             {!! view_render_event('admin.settings.attributes.create.form_controls.before') !!}
 
@@ -56,7 +56,7 @@
                                 <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') }}"  data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;" v-code/>
                                 <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
                             </div>
-                            
+
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.settings.attributes.name') }}</label>
                                 <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
@@ -85,7 +85,6 @@
                                     <option value="date">{{ __('admin::app.settings.attributes.date') }}</option>
                                     <option value="image">{{ __('admin::app.settings.attributes.image') }}</option>
                                     <option value="file">{{ __('admin::app.settings.attributes.file') }}</option>
-                                    <option value="lookup">{{ __('admin::app.settings.attributes.lookup') }}</option>
                                 </select>
                             </div>
 
@@ -142,7 +141,7 @@
                         <option value="lookup">
                             {{ __('admin::app.settings.attributes.lookup') }}
                         </option>
-        
+
                         <option value="options">
                             {{ __('admin::app.settings.attributes.options') }}
                         </option>
