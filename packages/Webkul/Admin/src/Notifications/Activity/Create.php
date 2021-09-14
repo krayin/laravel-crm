@@ -19,7 +19,7 @@ class Create extends Mailable
 
     /**
      * @param  Webkul\Activity\Contracts\Activity  $activity
-     * @param  Webkul\User\Contracts\User  $user
+     * @param  mixed  $user
      * @return void
      */
     public function __construct($activity, $user)

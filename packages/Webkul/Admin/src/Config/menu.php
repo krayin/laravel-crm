@@ -135,6 +135,16 @@ return [
         'route'      => 'admin.settings.types.index',
         'sort'       => 6,
     ], [
+        'key'        => 'settings.email_templates',
+        'name'       => 'admin::app.layouts.email-templates',
+        'route'      => 'admin.settings.email_templates.index',
+        'sort'       => 7,
+    ], [
+        'key'        => 'settings.workflows',
+        'name'       => 'admin::app.layouts.workflows',
+        'route'      => 'admin.settings.workflows.index',
+        'sort'       => 8,
+    ], [
         'key'        => 'configuration',
         'name'       => 'admin::app.layouts.configuration',
         'route'      => 'admin.configuration.index',

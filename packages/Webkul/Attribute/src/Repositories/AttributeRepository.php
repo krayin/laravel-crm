@@ -126,25 +126,29 @@ class AttributeRepository extends Repository
     /**
      * @param  integer  $lookup
      * @param  string  $query
+     * @param  array  $columns
      * @return array
      */
-    public function getLookUpOptions($lookup, $query = '')
+    public function getLookUpOptions($lookup, $query = '', $columns = [])
     {
         $lookup = config('attribute_lookups.' . $lookup);
 
+        if (! count($columns)) {
+            $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
+        }
+
         return app($lookup['repository'])->findWhere([
             [$lookup['label_column'] ?? 'name', 'like', '%' . urldecode($query) . '%']
-        ], [
-            ($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'
-        ]);
+        ], $columns);
     }
 
     /**
      * @param  string  $lookup
      * @param  integer|array  $entityId
+     * @param  array  $columns
      * @return mixed
      */
-    public function getLookUpEntity($lookup, $entityId)
+    public function getLookUpEntity($lookup, $entityId = null, $columns = [])
     {
         if (! $entityId) {
             return;
@@ -152,18 +156,18 @@ class AttributeRepository extends Repository
 
         $lookup = config('attribute_lookups.' . $lookup);
 
+        if (! count($columns)) {
+            $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
+        }
+
         if (is_array($entityId)) {
             return app($lookup['repository'])->findWhereIn(
                 'id',
                 $entityId,
-                [
-                    ($lookup['value_column'] ?? 'id' . ' as id') , ($lookup['label_column'] ?? 'name') . ' as name'
-                ]
+                $columns
             );
         } else {
-            return app($lookup['repository'])->find($entityId, [
-                ($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'
-            ]);
+            return app($lookup['repository'])->find($entityId, $columns);
         }
     }
 }
