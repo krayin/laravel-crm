@@ -63,10 +63,10 @@ class ProductController extends Controller
         $product = $this->productRepository->create(request()->all());
 
         Event::dispatch('product.create.after', $product);
-        
+
         session()->flash('success', trans('admin::app.products.create-success'));
 
-        return redirect()->back();
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -96,7 +96,7 @@ class ProductController extends Controller
         $product = $this->productRepository->update(request()->all(), $id);
 
         Event::dispatch('product.update.after', $product);
-        
+
         session()->flash('success', trans('admin::app.products.update-success'));
 
         return redirect()->route('admin.products.index');
@@ -125,7 +125,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $this->productRepository->findOrFail($id);
-        
+
         try {
             Event::dispatch('settings.products.delete.before', $id);
 
