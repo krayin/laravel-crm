@@ -222,12 +222,14 @@ return [
         Webkul\Contact\Providers\ContactServiceProvider::class,
         Webkul\Core\Providers\CoreServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
+        Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,
         Webkul\Quote\Providers\QuoteServiceProvider::class,
         Webkul\Tag\Providers\TagServiceProvider::class,
         Webkul\UI\Providers\UIServiceProvider::class,
         Webkul\User\Providers\UserServiceProvider::class,
+        Webkul\Workflow\Providers\WorkflowServiceProvider::class,
     ],
 
     /*

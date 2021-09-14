@@ -87,19 +87,25 @@ class QuoteRepository extends Repository
 
         $this->attributeValueRepository->save($data, $id);
 
+        if (! isset($data['_method'])) {
+            return $quote;
+        }
+
         $previousItemIds = $quote->items->pluck('id');
 
-        foreach ($data['items'] as $itemId => $itemData) {
-            if (Str::contains($itemId, 'item_')) {
-                $this->quoteItemRepository->create(array_merge($itemData, [
-                    'quote_id' => $id,
-                ]));
-            } else {
-                if (is_numeric($index = $previousItemIds->search($itemId))) {
-                    $previousItemIds->forget($index);
-                }
+        if (isset($data['items'])) {
+            foreach ($data['items'] as $itemId => $itemData) {
+                if (Str::contains($itemId, 'item_')) {
+                    $this->quoteItemRepository->create(array_merge($itemData, [
+                        'quote_id' => $id,
+                    ]));
+                } else {
+                    if (is_numeric($index = $previousItemIds->search($itemId))) {
+                        $previousItemIds->forget($index);
+                    }
 
-                $this->quoteItemRepository->update($itemData, $itemId);
+                    $this->quoteItemRepository->update($itemData, $itemId);
+                }
             }
         }
 
@@ -111,7 +117,7 @@ class QuoteRepository extends Repository
     }
 
     /**
-     * Retreives customers count based on date
+     * Retrieves customers count based on date
      *
      * @return number
      */

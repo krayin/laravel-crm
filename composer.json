@@ -15,6 +15,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "konekt/concord": "^1.10",
+        "krayin/krayin-google-integration": "dev-master",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
@@ -51,12 +52,14 @@
             "Webkul\\Contact\\": "packages/Webkul/Contact/src",
             "Webkul\\Core\\": "packages/Webkul/Core/src",
             "Webkul\\Email\\": "packages/Webkul/Email/src",
+            "Webkul\\EmailTemplate\\": "packages/Webkul/EmailTemplate/src",
             "Webkul\\Lead\\": "packages/Webkul/Lead/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",
             "Webkul\\Quote\\": "packages/Webkul/Quote/src",
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
             "Webkul\\UI\\": "packages/Webkul/UI/src",
-            "Webkul\\User\\": "packages/Webkul/User/src"
+            "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
         }
     },
     "autoload-dev": {

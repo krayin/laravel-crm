@@ -261,7 +261,45 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.types.delete',
         'sort'  => 3,
+    ], [
+        'key'   => 'settings.email_templates',
+        'name'  => 'admin::app.acl.email-templates',
+        'route' => 'admin.settings.email_templates.index',
+        'sort'  => 7,
+    ], [
+        'key'   => 'settings.email_templates.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.email_templates.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.email_templates.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.email_templates.edit', 'admin.settings.email_templates.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.email_templates.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.email_templates.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.workflows',
+        'name'  => 'admin::app.acl.workflows',
+        'route' => 'admin.settings.workflows.index',
+        'sort'  => 8,
+    ], [
+        'key'   => 'settings.workflows.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.workflows.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.workflows.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.workflows.edit', 'admin.settings.workflows.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.workflows.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.workflows.delete',
+        'sort'  => 3,
     ]
 ];
-
-?>

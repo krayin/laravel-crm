@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e6b232201cf9f7a84ce36e97ba67f09f",
+    "content-hash": "c2b74c623ce2df30a40cf7557606e27c",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -1524,32 +1524,36 @@
             "time": "2020-11-28T22:13:08+00:00"
         },
         {
-            "name": "krayin/krayin-package-generator",
+            "name": "krayin/krayin-google-integration",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/krayin/krayin-package-generator.git",
-                "reference": "44458fba147812176c2f69dba6994d1d421017ce"
+                "url": "https://github.com/krayin/krayin-google-integration.git",
+                "reference": "f79b03818634d60386b5a5cf7ca03d545a218cc5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krayin/krayin-package-generator/zipball/44458fba147812176c2f69dba6994d1d421017ce",
-                "reference": "44458fba147812176c2f69dba6994d1d421017ce",
+                "url": "https://api.github.com/repos/krayin/krayin-google-integration/zipball/f79b03818634d60386b5a5cf7ca03d545a218cc5",
+                "reference": "f79b03818634d60386b5a5cf7ca03d545a218cc5",
                 "shasum": ""
+            },
+            "require": {
+                "google/apiclient": "^2.10",
+                "ramsey/uuid": "^4.2"
             },
             "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
                     "providers": [
-                        "Webkul\\PackageGenerator\\Providers\\PackageGeneratorServiceProvider"
+                        "Webkul\\Google\\Providers\\GoogleServiceProvider"
                     ],
                     "aliases": []
                 }
             },
             "autoload": {
                 "psr-4": {
-                    "Webkul\\PackageGenerator\\": "src/"
+                    "Webkul\\Google\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -1562,12 +1566,12 @@
                     "email": "jitendra@webkul.com"
                 }
             ],
-            "description": "Krayin Package Generator",
+            "description": "Krayin Google Integration",
             "support": {
-                "issues": "https://github.com/krayin/krayin-package-generator/issues",
-                "source": "https://github.com/krayin/krayin-package-generator/tree/master"
+                "issues": "https://github.com/krayin/krayin-google-integration/issues",
+                "source": "https://github.com/krayin/krayin-google-integration/tree/master"
             },
-            "time": "2021-07-26T15:58:50+00:00"
+            "time": "2021-08-25T08:01:19+00:00"
         },
         {
             "name": "laravel/framework",
@@ -6082,141 +6086,6 @@
             "time": "2020-11-12T00:07:28+00:00"
         },
         {
-            "name": "webklex/laravel-imap",
-            "version": "2.4.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Webklex/laravel-imap.git",
-                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Webklex/laravel-imap/zipball/97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
-                "reference": "97c480cc2dd6b76859c5e21ccb4fa6659b7ad6de",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "ext-iconv": "*",
-                "ext-mbstring": "*",
-                "laravel/framework": ">=5.0.0",
-                "php": ">=5.5.9",
-                "webklex/php-imap": "^2.4"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "Webklex\\IMAP\\Providers\\LaravelServiceProvider"
-                    ],
-                    "aliases": {
-                        "Client": "Webklex\\IMAP\\Facades\\Client"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webklex\\IMAP\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Goldenbaum",
-                    "email": "github@webklex.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "Laravel IMAP client",
-            "homepage": "https://github.com/webklex/laravel-imap",
-            "keywords": [
-                "idle",
-                "imap",
-                "laravel",
-                "laravel-imap",
-                "mail",
-                "oauth",
-                "pop3",
-                "webklex"
-            ],
-            "support": {
-                "issues": "https://github.com/Webklex/laravel-imap/issues",
-                "source": "https://github.com/Webklex/laravel-imap/tree/2.4.0"
-            },
-            "time": "2021-01-09T19:46:21+00:00"
-        },
-        {
-            "name": "webklex/php-imap",
-            "version": "2.5.1",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/Webklex/php-imap.git",
-                "reference": "f7db7aae9b86fca7b8d5fa9971b8b8dcfb156baf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/Webklex/php-imap/zipball/f7db7aae9b86fca7b8d5fa9971b8b8dcfb156baf",
-                "reference": "f7db7aae9b86fca7b8d5fa9971b8b8dcfb156baf",
-                "shasum": ""
-            },
-            "require": {
-                "ext-fileinfo": "*",
-                "ext-iconv": "*",
-                "ext-json": "*",
-                "ext-mbstring": "*",
-                "ext-openssl": "*",
-                "illuminate/pagination": ">=5.0.0",
-                "nesbot/carbon": ">=1.0",
-                "php": ">=5.5.9",
-                "symfony/http-foundation": ">=2.8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Webklex\\PHPIMAP\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Malte Goldenbaum",
-                    "email": "github@webklex.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "PHP IMAP client",
-            "homepage": "https://github.com/webklex/php-imap",
-            "keywords": [
-                "imap",
-                "mail",
-                "php-imap",
-                "pop3",
-                "webklex"
-            ],
-            "support": {
-                "issues": "https://github.com/Webklex/php-imap/issues",
-                "source": "https://github.com/Webklex/php-imap/tree/2.5.1"
-            },
-            "time": "2021-06-19T15:13:15+00:00"
-        },
-        {
             "name": "webmozart/assert",
             "version": "1.10.0",
             "source": {
@@ -6758,6 +6627,52 @@
                 "source": "https://github.com/hamcrest/hamcrest-php/tree/v2.0.1"
             },
             "time": "2020-07-09T08:09:16+00:00"
+        },
+        {
+            "name": "krayin/krayin-package-generator",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krayin/krayin-package-generator.git",
+                "reference": "44458fba147812176c2f69dba6994d1d421017ce"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krayin/krayin-package-generator/zipball/44458fba147812176c2f69dba6994d1d421017ce",
+                "reference": "44458fba147812176c2f69dba6994d1d421017ce",
+                "shasum": ""
+            },
+            "default-branch": true,
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webkul\\PackageGenerator\\Providers\\PackageGeneratorServiceProvider"
+                    ],
+                    "aliases": []
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Webkul\\PackageGenerator\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Jitendra Singh",
+                    "email": "jitendra@webkul.com"
+                }
+            ],
+            "description": "Krayin Package Generator",
+            "support": {
+                "issues": "https://github.com/krayin/krayin-package-generator/issues",
+                "source": "https://github.com/krayin/krayin-package-generator/tree/master"
+            },
+            "time": "2021-07-26T15:58:50+00:00"
         },
         {
             "name": "laravel/sail",
@@ -8946,6 +8861,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
+        "krayin/krayin-google-integration": 20,
         "krayin/krayin-package-generator": 20
     },
     "prefer-stable": true,

@@ -27,7 +27,7 @@ class TypeController extends Controller
     }
 
     /**
-     * Display a listing of the retype.
+     * Display a listing of the type.
      *
      * @return \Illuminate\View\View
      */
@@ -39,7 +39,7 @@ class TypeController extends Controller
     }
 
     /**
-     * Store a newly created retype in storage.
+     * Store a newly created type in storage.
      *
      * @return \Illuminate\Http\Response
      */
@@ -61,7 +61,7 @@ class TypeController extends Controller
     }
 
     /**
-     * Show the form for editing the specified retype.
+     * Show the form for editing the specified type.
      *
      * @param  int  $id
      * @return \Illuminate\View\View
@@ -74,7 +74,7 @@ class TypeController extends Controller
     }
 
     /**
-     * Update the specified retype in storage.
+     * Update the specified type in storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -97,7 +97,7 @@ class TypeController extends Controller
     }
 
     /**
-     * Remove the specified retype from storage.
+     * Remove the specified type from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
