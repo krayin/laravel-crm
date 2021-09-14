@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "c2b74c623ce2df30a40cf7557606e27c",
+    "content-hash": "53041ade7f501385c68fd5b5f4fc18f5",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -8627,6 +8627,7 @@
                     "type": "github"
                 }
             ],
+            "abandoned": true,
             "time": "2020-09-28T06:45:17+00:00"
         },
         {
@@ -8861,7 +8862,6 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "krayin/krayin-google-integration": 20,
         "krayin/krayin-package-generator": 20
     },
     "prefer-stable": true,
