@@ -46,6 +46,12 @@ class AccountController extends Controller
             return redirect()->back();
         }
 
+        if( isset($data['role_id']) || isset($data['view_permission']) ) {
+            session()->flash('warning', trans('admin::app.user.account.permission-denied'));
+
+            return redirect()->back();
+        }
+
         if (! $data['password']) {
             unset($data['password']);
         } else {
