@@ -138,8 +138,8 @@ class RoleController extends Controller
     public function destroy($id)
     {
         $response = [
-            'status'        => false,
-            'responseCode'  => 400,
+            'status'       => false,
+            'responseCode' => 400,
         ];
 
         $role = $this->roleRepository->findOrFail($id);
@@ -174,7 +174,7 @@ class RoleController extends Controller
                     session()->flash('success', $message);
                 }
 
-            } catch(\Exception $exception) {
+            } catch (\Exception $exception) {
                 $message = $exception->getMessage();
 
                 $response['message'] = $message;
