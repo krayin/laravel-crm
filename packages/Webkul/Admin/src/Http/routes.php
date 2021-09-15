@@ -168,6 +168,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::prefix('persons')->group(function () {
                     Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
     
+                    Route::get('create', 'PersonController@create')->name('admin.contacts.persons.create');
+
                     Route::post('create', 'PersonController@store')->name('admin.contacts.persons.store');
     
                     Route::get('edit/{id?}', 'PersonController@edit')->name('admin.contacts.persons.edit');
@@ -185,6 +187,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::prefix('organizations')->group(function () {
                     Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
     
+                    Route::get('create', 'OrganizationController@create')->name('admin.contacts.organizations.create');
+
                     Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
     
                     Route::get('edit/{id?}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
