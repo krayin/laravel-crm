@@ -1,7 +1,5 @@
 @section('table-action')
-    <button class="btn btn-md btn-primary" id="add-new" @click="openModal('addLeadModal')">
-        {{ __('admin::app.leads.add-title') }}
-    </button>
+    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.add-title') }}</a>
 @stop
 
 @section('table-section')

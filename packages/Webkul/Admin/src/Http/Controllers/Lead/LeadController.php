@@ -56,6 +56,16 @@ class LeadController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('admin::leads.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param \Webkul\Attribute\Http\Requests\AttributeForm $request

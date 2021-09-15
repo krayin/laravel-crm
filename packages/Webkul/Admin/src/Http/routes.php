@@ -68,6 +68,8 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::get('', 'LeadController@index')->name('admin.leads.index');
     
+                Route::get('create', 'LeadController@create')->name('admin.leads.create');
+
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
 
                 Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');

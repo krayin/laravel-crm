@@ -8,8 +8,6 @@
         $selectedOption = old($attribute->code) ?: $value;
     @endphp
 
-    <option value=""></option>
-
     @foreach ($options as $option)
         <option value="{{ $option->id }}" {{ in_array($option->id, explode(',', $selectedOption)) ? 'selected' : ''}}>
             {{ $option->name }}
