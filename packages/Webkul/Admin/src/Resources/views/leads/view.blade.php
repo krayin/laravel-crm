@@ -234,7 +234,7 @@
         {!! view_render_event('admin.leads.view.informations.after', ['lead' => $lead]) !!}
     </div>
 
-    <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit">
+    <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
         <modal id="updateLeadModal" :is-open="modalIds.updateLeadModal">
             <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
             
