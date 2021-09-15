@@ -21,7 +21,7 @@
                         </select>
                     </div>
 
-                    <i class="icon trash-icon" @click="removeEmail(email)"></i>
+                    <i class="icon trash-icon" v-if="emails.length > 1" @click="removeEmail(email)"></i>
 
                     <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
                         @{{ errors.first('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') }}
