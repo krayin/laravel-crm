@@ -19,7 +19,7 @@
 
         {!! view_render_event('admin.products.create.header.after') !!}
 
-        <form method="POST" action="{{ route('admin.products.store') }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.products.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
 
             <div class="page-content">
                 <div class="form-container">

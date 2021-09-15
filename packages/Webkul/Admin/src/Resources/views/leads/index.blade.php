@@ -67,7 +67,7 @@
 @endif
 
 @section('meta-content')
-    <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit">
+    <form action="{{ route('admin.leads.store') }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
         <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
             <h2 slot="header-title">{{ __('admin::app.leads.add-title') }}</h2>
             
