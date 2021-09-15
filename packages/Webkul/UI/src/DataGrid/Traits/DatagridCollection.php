@@ -71,13 +71,16 @@ trait DatagridCollection
             foreach ($info as $condition => $filter_value) {
                 switch ($condition) {
                     case 'in':
-                        foreach (explode(',', $filter_value) as $value) {
-                            $collection->where(
-                                $columnName,
-                                'like',
-                                "%$value%"
-                            );
-                        }
+                        $collection->where(function ($query) use ($filter_value, $columnName) {
+                            foreach (explode(',', $filter_value) as $value) {
+                                $query->orWhere(
+                                    $columnName,
+                                    'like',
+                                    "%$value%"
+                                );
+                            }
+                        });
+
                         break;
     
                     case 'bw':
@@ -93,6 +96,7 @@ trait DatagridCollection
                                 $dates
                             );
                         }
+
                         break;
     
                     default:
