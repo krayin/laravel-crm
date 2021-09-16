@@ -68,6 +68,8 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::get('', 'LeadController@index')->name('admin.leads.index');
     
+                Route::get('create', 'LeadController@create')->name('admin.leads.create');
+
                 Route::post('create', 'LeadController@store')->name('admin.leads.store');
 
                 Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');
@@ -168,6 +170,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::prefix('persons')->group(function () {
                     Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
     
+                    Route::get('create', 'PersonController@create')->name('admin.contacts.persons.create');
+
                     Route::post('create', 'PersonController@store')->name('admin.contacts.persons.store');
     
                     Route::get('edit/{id?}', 'PersonController@edit')->name('admin.contacts.persons.edit');
@@ -185,6 +189,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::prefix('organizations')->group(function () {
                     Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
     
+                    Route::get('create', 'OrganizationController@create')->name('admin.contacts.organizations.create');
+
                     Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
     
                     Route::get('edit/{id?}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
@@ -296,6 +302,20 @@ Route::group(['middleware' => ['web']], function () {
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
 
+                // Lead Sources Routes
+                Route::prefix('sources')->group(function () {
+                    Route::get('', 'SourceController@index')->name('admin.settings.sources.index');
+    
+                    Route::post('create', 'SourceController@store')->name('admin.settings.sources.store');
+
+                    Route::get('edit/{id?}', 'SourceController@edit')->name('admin.settings.sources.edit');
+
+                    Route::put('edit/{id}', 'SourceController@update')->name('admin.settings.sources.update');
+
+                    Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
+                });
+
+
                 // Lead Types Routes
                 Route::prefix('types')->group(function () {
                     Route::get('', 'TypeController@index')->name('admin.settings.types.index');
@@ -309,17 +329,36 @@ Route::group(['middleware' => ['web']], function () {
                     Route::delete('{id}', 'TypeController@destroy')->name('admin.settings.types.delete');
                 });
 
-                // Lead Sources Routes
-                Route::prefix('sources')->group(function () {
-                    Route::get('', 'SourceController@index')->name('admin.settings.sources.index');
+
+                // Email Templates Routes
+                Route::prefix('email-templates')->group(function () {
+                    Route::get('', 'EmailTemplateController@index')->name('admin.settings.email_templates.index');
     
-                    Route::post('create', 'SourceController@store')->name('admin.settings.sources.store');
+                    Route::get('create', 'EmailTemplateController@create')->name('admin.settings.email_templates.create');
+                    
+                    Route::post('create', 'EmailTemplateController@store')->name('admin.settings.email_templates.store');
 
-                    Route::get('edit/{id?}', 'SourceController@edit')->name('admin.settings.sources.edit');
+                    Route::get('edit/{id?}', 'EmailTemplateController@edit')->name('admin.settings.email_templates.edit');
 
-                    Route::put('edit/{id}', 'SourceController@update')->name('admin.settings.sources.update');
+                    Route::put('edit/{id}', 'EmailTemplateController@update')->name('admin.settings.email_templates.update');
 
-                    Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
+                    Route::delete('{id}', 'EmailTemplateController@destroy')->name('admin.settings.email_templates.delete');
+                });
+
+
+                // Workflows Routes
+                Route::prefix('workflows')->group(function () {
+                    Route::get('', 'WorkflowController@index')->name('admin.settings.workflows.index');
+    
+                    Route::get('create', 'WorkflowController@create')->name('admin.settings.workflows.create');
+                    
+                    Route::post('create', 'WorkflowController@store')->name('admin.settings.workflows.store');
+
+                    Route::get('edit/{id?}', 'WorkflowController@edit')->name('admin.settings.workflows.edit');
+
+                    Route::put('edit/{id}', 'WorkflowController@update')->name('admin.settings.workflows.update');
+
+                    Route::delete('{id}', 'WorkflowController@destroy')->name('admin.settings.workflows.delete');
                 });
 
                 // Tags Routes

@@ -234,7 +234,7 @@
         {!! view_render_event('admin.leads.view.informations.after', ['lead' => $lead]) !!}
     </div>
 
-    <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit">
+    <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
         <modal id="updateLeadModal" :is-open="modalIds.updateLeadModal">
             <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
             
@@ -508,18 +508,18 @@
                         <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
+                    <div class="form-group date" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
                         <label for="schedule_from" class="required">{{ __('admin::app.leads.schedule') }}</label>
 
                         <div class="input-group">
                             <datetime>
-                                <input type="text" name="schedule_from" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;" placeholder="{{ __('admin::app.leads.from') }}">
+                                <input type="text" name="schedule_from" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'" data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;" placeholder="{{ __('admin::app.leads.from') }}" ref="schedule_from">
 
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_from')">@{{ errors.first('activity-form.schedule_from') }}</span>
                             </datetime>
 
                             <datetime>
-                                <input type="text" name="schedule_to" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;" placeholder="{{ __('admin::app.leads.to') }}">
+                                <input type="text" name="schedule_to" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'" data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;" placeholder="{{ __('admin::app.leads.to') }}" ref="schedule_to">
 
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_to')">@{{ errors.first('activity-form.schedule_to') }}</span>
                             </datetime>

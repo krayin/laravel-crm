@@ -20,7 +20,7 @@
 
         {!! view_render_event('admin.contacts.organizations.edit.header.after', ['organization' => $organization]) !!}
 
-        <form method="POST" action="{{ route('admin.contacts.organizations.update', $organization->id) }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.contacts.organizations.update', $organization->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
 
             <div class="page-content">
                 <div class="form-container">

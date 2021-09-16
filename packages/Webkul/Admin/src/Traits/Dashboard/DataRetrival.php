@@ -460,7 +460,7 @@ trait DataRetrival
                 ]);
 
                 // get quotes count
-                array_push($quotes, $quotesRepository->getQuotesCount("all", $startDate, $endDate));
+                array_push($quotes, $quotesRepository->getQuotesCount($startDate, $endDate));
             }
         } else {
             $labels = [__("admin::app.dashboard.week") . "1"];

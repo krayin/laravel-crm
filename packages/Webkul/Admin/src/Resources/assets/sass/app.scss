@@ -1848,3 +1848,42 @@ body {
         }
     }
 }
+
+.workflow-container {
+    .panel-separator {
+        border-bottom: solid 1px #D3D3D3;
+        margin: 25px 0px;
+    }
+
+    .workflow-panel {
+        .header {
+            label {
+                color: $secondary-color;
+                font-size: $font-size-lg;
+                font-weight: $font-weight-medium;
+            }
+
+            p {
+                font-style: italic;
+                font-size: 16px;
+                color: #6F6F6F;
+                margin: 5px 0px 20px 0px;
+            }
+        }
+
+        table {
+            tr {
+                td {
+                    &.actions {
+                        width: 50px;
+
+                        .icon {
+                            margin-top: 20px;
+                            cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

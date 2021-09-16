@@ -71,13 +71,16 @@ trait DatagridCollection
             foreach ($info as $condition => $filter_value) {
                 switch ($condition) {
                     case 'in':
-                        foreach (explode(',', $filter_value) as $value) {
-                            $collection->where(
-                                $columnName,
-                                'like',
-                                "%$value%"
-                            );
-                        }
+                        $collection->where(function ($query) use ($filter_value, $columnName) {
+                            foreach (explode(',', $filter_value) as $value) {
+                                $query->orWhere(
+                                    $columnName,
+                                    'like',
+                                    "%$value%"
+                                );
+                            }
+                        });
+
                         break;
     
                     case 'bw':
@@ -93,6 +96,7 @@ trait DatagridCollection
                                 $dates
                             );
                         }
+
                         break;
     
                     default:
@@ -175,7 +179,14 @@ trait DatagridCollection
                 }
 
                 $value = array_values($info)[0];
-                $column = ($key === "duration") ? $this->filterMap["created_at"] ?? "created_at" : $key;
+
+                if ($key === "duration") {
+                    $column = $this->filterMap["created_at"] ?? "created_at";
+                } else if ($key === "scheduled") {
+                    $column = "schedule_from";
+                } else {
+                    $column = $key;
+                }
 
                 $endDate = Carbon::now()->format('Y-m-d');
 

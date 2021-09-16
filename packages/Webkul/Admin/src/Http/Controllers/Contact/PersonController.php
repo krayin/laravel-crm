@@ -2,9 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact;
 
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
-
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\Person\Create;
 use Webkul\Attribute\Http\Requests\AttributeForm;
@@ -44,6 +42,16 @@ class PersonController extends Controller
     }
 
     /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function create()
+    {
+        return view('admin::contacts.persons.create');
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
@@ -54,12 +62,6 @@ class PersonController extends Controller
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create(request()->all());
-
-        try {
-            // Mail::queue(new Create($person));
-        } catch (\Exception $e) {
-            report($e);
-        }
 
         Event::dispatch('contacts.person.create.after', $person);
         

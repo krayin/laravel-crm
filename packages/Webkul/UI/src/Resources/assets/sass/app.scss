@@ -883,7 +883,7 @@ h5 {
                 pointer-events: none;
                 position: absolute;
                 right: 10px;
-                top: 50%;
+                top: 29px;
                 margin-top: -9px;
             }
         }
@@ -995,11 +995,11 @@ h5 {
         > .date-container,
         > .datetime-container {
             &:not(:first-child) {
-                padding-left: 10px;
+                margin-left: 10px;
             }
         
             &:not(:last-child) {
-                padding-right: 10px;
+                margin-right: 10px;
             }
         }
 
@@ -1400,7 +1400,7 @@ accordian,
         border: none;
         padding: 16px;
         border-radius: 3px;
-        background-color: rgba(255,255,255,.5);
+        background-color: $white;
         box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
 }

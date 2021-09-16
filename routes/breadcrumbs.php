@@ -15,6 +15,12 @@ Breadcrumbs::for('leads', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.leads'), route('admin.leads.index'));
 });
 
+// Dashboard > Leads > Create
+Breadcrumbs::for('leads.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('leads');
+    $trail->push(trans('admin::app.leads.add-title'), route('admin.leads.create'));
+});
+
 // Dashboard > Leads > Title
 Breadcrumbs::for('leads.view', function (BreadcrumbTrail $trail, $lead) {
     $trail->parent('leads');
@@ -85,6 +91,12 @@ Breadcrumbs::for('contacts.persons', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.persons'), route('admin.contacts.persons.index'));
 });
 
+// Dashboard > Contacts > Persons > Create
+Breadcrumbs::for('contacts.persons.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts.persons');
+    $trail->push(trans('admin::app.contacts.persons.add-title'), route('admin.contacts.persons.create'));
+});
+
 // Dashboard > Contacts > Persons > Edit
 Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $person) {
     $trail->parent('contacts.persons');
@@ -96,6 +108,12 @@ Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $per
 Breadcrumbs::for('contacts.organizations', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts');
     $trail->push(trans('admin::app.layouts.organizations'), route('admin.contacts.organizations.index'));
+});
+
+// Dashboard > Contacts > Organizations > Create
+Breadcrumbs::for('contacts.organizations.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('contacts.organizations');
+    $trail->push(trans('admin::app.contacts.organizations.add-title'), route('admin.contacts.organizations.create'));
 });
 
 // Dashboard > Contacts > Organizations > Edit
@@ -219,16 +237,54 @@ Breadcrumbs::for('settings.sources.edit', function (BreadcrumbTrail $trail, $sou
 });
 
 
-// Settings > Sources
+// Settings > Types
 Breadcrumbs::for('settings.types', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
     $trail->push(trans('admin::app.layouts.types'), route('admin.settings.types.index'));
 });
 
-// Dashboard > Sources > Edit Attribute
+// Dashboard > Types > Edit Attribute
 Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type) {
     $trail->parent('settings.types');
     $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));
+});
+
+
+// Settings > Email Templates
+Breadcrumbs::for('settings.email_templates', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.email-templates'), route('admin.settings.email_templates.index'));
+});
+
+// Dashboard > Email Templates > Create Email Template
+Breadcrumbs::for('settings.email_templates.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.email_templates');
+    $trail->push(trans('admin::app.settings.email-templates.add-title'), route('admin.settings.email_templates.create'));
+});
+
+// Dashboard > Email Templates > Edit Email Template
+Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $trail, $emailTemplate) {
+    $trail->parent('settings.email_templates');
+    $trail->push(trans('admin::app.settings.email-templates.edit-title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
+});
+
+
+// Settings > Workflows
+Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.workflows'), route('admin.settings.workflows.index'));
+});
+
+// Dashboard > Workflows > Create Workflow
+Breadcrumbs::for('settings.workflows.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.workflows');
+    $trail->push(trans('admin::app.settings.workflows.add-title'), route('admin.settings.workflows.create'));
+});
+
+// Dashboard > Workflows > Edit Workflow
+Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $workflow) {
+    $trail->parent('settings.workflows');
+    $trail->push(trans('admin::app.settings.workflows.edit-title'), route('admin.settings.workflows.edit', $workflow->id));
 });
 
 

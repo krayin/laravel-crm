@@ -83,6 +83,10 @@ class AttributeValueRepository extends Repository
                 $data[$attribute->code] = implode(',', $data[$attribute->code]);
             }
 
+            if ($attribute->type === 'email' || $attribute->type === 'phone') {
+                $data[$attribute->code] = $this->sanitizeEmailAndPhone($data[$attribute->code]);
+            }
+
             if ($attribute->type === 'image' || $attribute->type === 'file') {
                 $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
                     ? request()->file($attribute->code)->store($data['entity_type'] . '/' . $entityId)
@@ -130,5 +134,22 @@ class AttributeValueRepository extends Repository
             ->where('entity_id', '!=', $entityId)->get();
 
         return $result->count() ? false : true;
+    }
+
+    /**
+     * Removed null values from email and phone fields.
+     * 
+     * @param  array  $data
+     * @return array
+     */
+    public function sanitizeEmailAndPhone($data)
+    {
+        foreach ($data as $key => $row) {
+            if (is_null($row['value'])) {
+                unset($data[$key]);
+            }
+        }
+
+        return $data;
     }
 }

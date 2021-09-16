@@ -19,7 +19,7 @@
 
         {!! view_render_event('admin.quotes.edit.header.after', ['quote' => $quote]) !!}
 
-        <form method="POST" action="{{ route('admin.quotes.update', $quote->id) }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.quotes.update', $quote->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
 
             <div class="page-content">
                 <div class="form-container">

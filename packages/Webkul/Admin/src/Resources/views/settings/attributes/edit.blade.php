@@ -184,7 +184,7 @@
         <div class="form-group dragable-container">
             <template v-if="typeValue != 'lookup'">
                 <div class="form-group">
-                    <label>{{ __('admin::app.settings.attributes.options') }}</label>
+                    <label>{{ __('admin::app.settings.attributes.options-type') }}</label>
 
                     <select class="control" name="option_type" v-model="optionType">
                         <option value="lookup">
@@ -230,7 +230,7 @@
     <script type="text/x-template" id="entity-type-template">
         <div>
             <label :for="name" :class="required == 'true' ? 'required' : ''">
-                {{ __('admin::app.settings.attributes.lookup') }}
+                {{ __('admin::app.settings.attributes.entity-type') }}
             </label>
 
             <select class="control" :id="name" :name="name" :value="value" :disabled="disabled == 'true'">

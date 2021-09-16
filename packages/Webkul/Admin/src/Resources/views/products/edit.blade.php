@@ -19,7 +19,7 @@
 
         {!! view_render_event('admin.products.edit.header.after', ['product' => $product]) !!}
 
-        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.products.update', $product->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
 
             <div class="page-content">
                 <div class="form-container">
