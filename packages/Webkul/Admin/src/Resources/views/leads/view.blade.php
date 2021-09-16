@@ -513,13 +513,13 @@
 
                         <div class="input-group">
                             <datetime>
-                                <input type="text" name="schedule_from" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;" placeholder="{{ __('admin::app.leads.from') }}">
+                                <input type="text" name="schedule_from" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'" data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;" placeholder="{{ __('admin::app.leads.from') }}" ref="schedule_from">
 
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_from')">@{{ errors.first('activity-form.schedule_from') }}</span>
                             </datetime>
 
                             <datetime>
-                                <input type="text" name="schedule_to" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;" placeholder="{{ __('admin::app.leads.to') }}">
+                                <input type="text" name="schedule_to" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'" data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;" placeholder="{{ __('admin::app.leads.to') }}" ref="schedule_to">
 
                                 <span class="control-error" v-if="errors.has('activity-form.schedule_to')">@{{ errors.first('activity-form.schedule_to') }}</span>
                             </datetime>
