@@ -179,7 +179,14 @@ trait DatagridCollection
                 }
 
                 $value = array_values($info)[0];
-                $column = ($key === "duration") ? $this->filterMap["created_at"] ?? "created_at" : $key;
+
+                if ($key === "duration") {
+                    $column = $this->filterMap["created_at"] ?? "created_at";
+                } else if ($key === "scheduled") {
+                    $column = "schedule_from";
+                } else {
+                    $column = $key;
+                }
 
                 $endDate = Carbon::now()->format('Y-m-d');
 

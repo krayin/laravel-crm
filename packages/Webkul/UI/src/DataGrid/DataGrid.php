@@ -120,6 +120,7 @@ abstract class DataGrid
 
                 case 'type':
                 case 'duration':
+                case 'scheduled':
                     $collection = $this->prepareTabFilter($collection, $key, $info);
                     break;
 
