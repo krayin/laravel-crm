@@ -36,7 +36,7 @@
                         :key="rowIndex"
                         v-if="column.type != 'hidden'"
                         @click="redirectRow(row.redirect_url)"
-                        v-html="getRowContent(row[column.index])"
+                        v-text="getRowContent(row[column.index])"
                         :title="column.title ? row[column.index] : ''"
                         :class="[row.redirect_url ? 'cursor-pointer' : '', column.class || column.index ]"
                     ></td>
@@ -174,7 +174,7 @@
                                     type    : "success",
                                     message : response.data.message,
                                 });
-    
+
                                 EventBus.$emit('refresh_table_data', {usePrevious: true});
                             }
                         }
