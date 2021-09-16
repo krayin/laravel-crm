@@ -70,8 +70,8 @@ trait Helper
 
         $endDate = $currentIndex == 1 ? $endDate->addDays(1) : (clone $startDate)->addDays(7);
         
-        $startDate = $startDate->format('Y-m-d');
-        $endDate = $endDate->format('Y-m-d');
+        $startDate = $startDate->format('Y-m-d  00:00:01');
+        $endDate = $endDate->format('Y-m-d 23:59:59');
 
         return compact('startDate', 'endDate', 'labels');
     }
