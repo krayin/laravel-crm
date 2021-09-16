@@ -883,7 +883,7 @@ h5 {
                 pointer-events: none;
                 position: absolute;
                 right: 10px;
-                top: 50%;
+                top: 29px;
                 margin-top: -9px;
             }
         }
@@ -995,11 +995,11 @@ h5 {
         > .date-container,
         > .datetime-container {
             &:not(:first-child) {
-                padding-left: 10px;
+                margin-left: 10px;
             }
         
             &:not(:last-child) {
-                padding-right: 10px;
+                margin-right: 10px;
             }
         }
 

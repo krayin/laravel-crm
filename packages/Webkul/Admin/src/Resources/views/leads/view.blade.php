@@ -508,7 +508,7 @@
                         <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
+                    <div class="form-group date" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
                         <label for="schedule_from" class="required">{{ __('admin::app.leads.schedule') }}</label>
 
                         <div class="input-group">
