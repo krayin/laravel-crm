@@ -140,7 +140,7 @@ trait DatagridHelper
                 }
             }
         }
-
+        
         return $tabFilters;
     }
 }

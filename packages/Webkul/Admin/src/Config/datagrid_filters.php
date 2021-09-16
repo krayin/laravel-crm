@@ -27,7 +27,7 @@ return [
             ]
         ], [
             'type'      => 'group',
-            'key'       => 'duration',
+            'key'       => 'scheduled',
             'condition' => 'eq',
             'values'    => [
                 [
@@ -69,5 +69,3 @@ return [
         ]
     ]
 ];
-
-?>

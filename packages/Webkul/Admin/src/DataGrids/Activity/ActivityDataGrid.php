@@ -9,7 +9,9 @@ use Illuminate\Support\Facades\DB;
 class ActivityDataGrid extends DataGrid
 {
     protected $users = [];
+
     protected $persons = [];
+
     protected $tabFilters = [];
 
     protected $redirectRow = [
@@ -108,10 +110,10 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'         => 'type',
-            'head_style'    => 'width: 70px',
-            'label'         => trans('admin::app.datagrid.type'),
-            'type'          => 'boolean',
+            'index'      => 'type',
+            'head_style' => 'width: 70px',
+            'label'      => trans('admin::app.datagrid.type'),
+            'type'       => 'boolean',
         ]);
 
         $this->addColumn([
