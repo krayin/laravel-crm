@@ -15,11 +15,6 @@ return [
                 'title'         => 'admin::app.configuration.locale',
                 'type'          => 'select',
                 'data_source'   => 'Webkul\Core\Core@locales'
-            ], [
-                'name'          => 'timezone',
-                'title'         => 'admin::app.configuration.timezone',
-                'type'          => 'select',
-                'data_source'   => 'Webkul\Core\Core@timezones'
             ],
         ],
     ],

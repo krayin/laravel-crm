@@ -28,10 +28,7 @@ class Locale
     public function handle($request, Closure $next)
     {
         $this->app->setLocale(core()->getConfigData('general.locale_settings.locale'));
-
-        config('app.timezone', core()->getConfigData('general.locale_settings.timezone'));
         
         return $next($request);
     }
-
 }

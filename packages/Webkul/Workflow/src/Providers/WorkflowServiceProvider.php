@@ -21,7 +21,7 @@ class WorkflowServiceProvider extends ServiceProvider
                 return;
             }
 
-            // app(\Webkul\Workflow\Listeners\Entity::class)->process($eventName, current($data));
+            app(\Webkul\Workflow\Listeners\Entity::class)->process($eventName, current($data));
         });
     }
 
