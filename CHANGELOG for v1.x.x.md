@@ -1,3 +1,59 @@
+## **v1.1.0 (16th of September 2021)**
+
+* [feature] Workflow (CRM Automation) feature implemented
+
+
+
+* #132 [fixed] - filter option for mails are not working
+
+* #162 [fixed] - Issue with seeder during installation
+
+* #163 [fixed] - Lookup field is showing 2 times while creating the attribute
+
+* #164 [fixed] - No option is coming to update lead status in grid view
+
+* #165 [fixed] - Image type Attribute is not working
+
+* #166 [fixed] - Getting exception when new user Login
+
+* #172 [fixed] - If user have not Permission to delete the Roles and the user is trying to delete the Roles then the warning message should be present inside the error box
+
+* #174 [fixed] - If the user Applying multiple filter to search sources then data should be searched.
+
+* #175 [fixed] - After Added a new product the page should be redirect to product list page.
+
+* #177 [fixed] - result: When admin/user adding new Person after deleting email input field. then required validation of email should be work
+
+* #178 [fixed] - Getting Error " Class "Webklex\PHPIMAP\IMAP" not found" while integration of Google calender in Krayin
+
+* #180 [fixed] - admin/user adding new Lead after deleting email input field inside Contact Person tab. then required validation of email should be work.
+
+* #181 [fixed] - When admin/user run the **php artisan krayin-crm:version** command on root directory to check their Krayin version. then krayin version is there in the place of V
+
+* #182 [fixed] - While Adding a new attribute Lookup field should be come only one time
+
+* #184 [fixed] - When Customer running " composer create-project krayin/laravel-crm " and " php artisan krayin-crm:install ". command to install the laravel-crm. Then the project should be setup successfully .
+
+* #186 [fixed] - When we creating person and selecting the value from the Attributes dropdown which is unique then the it should be give warning to user/admin
+
+* #189 [fixed] - When we creating Lead and selecting the value from the Attributes dropdown which is unique then the it should be give warning to user/admin
+
+* #193 [fixed] - When we clicking on locale dropdown inside configuration tab. there should be multiple options of languages
+
+* #197 [fixed] - When we creating Quote. then the Quote should be show in dashboard
+
+* #199 [fixed] - When we changing timezone from timezone dropdown inside Configuration tab . then time should be convert according to timezone
+
+* #202 [fixed] - When we creating an activity, then the date icon should be shown in the schedule input box.
+
+* #203 [fixed] - When we creating an activity, the schedule input box should not take date before today
+
+* #204 [fixed] - When we creating activity and selecting date in 'To' input box which is less then 'From' date. Inside schedule label. then it should give an error. 
+
+* #208 [fixed] - When we applying filters to search activities . then filters should be work properly to search activities
+
+
+
 ## **v1.0.1 (2nd of September 2021)**
 
 * [feature] Activity participants
