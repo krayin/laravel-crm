@@ -77,13 +77,13 @@
         
                                 <div class="input-group">
                                     <datetime>
-                                        <input type="text" name="schedule_from" value="{{ old('schedule_from') ?: $activity->schedule_from }}" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.activities.from') }}&quot;" placeholder="{{ __('admin::app.activities.from') }}">
+                                        <input type="text" name="schedule_from" value="{{ old('schedule_from') ?: $activity->schedule_from }}" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'" data-vv-as="&quot;{{ __('admin::app.activities.from') }}&quot;" placeholder="{{ __('admin::app.activities.from') }}" ref="schedule_from">
         
                                         <span class="control-error" v-if="errors.has('schedule_from')">@{{ errors.first('schedule_from') }}</span>
                                     </datetime>
         
                                     <datetime>
-                                        <input type="text" name="schedule_to" value="{{ old('schedule_to') ?: $activity->schedule_to }}" class="control" v-validate="'required'" data-vv-as="&quot;{{ __('admin::app.activities.to') }}&quot;" placeholder="{{ __('admin::app.activities.to') }}">
+                                        <input type="text" name="schedule_to" value="{{ old('schedule_to') ?: $activity->schedule_to }}" class="control"  v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'" data-vv-as="&quot;{{ __('admin::app.activities.to') }}&quot;" placeholder="{{ __('admin::app.activities.to') }}" ref="schedule_to">
         
                                         <span class="control-error" v-if="errors.has('schedule_to')">@{{ errors.first('schedule_to') }}</span>
                                     </datetime>
