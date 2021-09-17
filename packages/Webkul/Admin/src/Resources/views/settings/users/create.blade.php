@@ -122,7 +122,7 @@
                                 </div>
     
                                 <div class="form-group" :class="[errors.has('confirm_password') ? 'has-error' : '']">
-                                    <label>
+                                    <label class="required">
                                         {{ __('admin::app.settings.users.confirm_password') }}
                                     </label>
     
