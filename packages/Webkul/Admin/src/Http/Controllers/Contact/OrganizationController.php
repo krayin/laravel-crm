@@ -67,7 +67,7 @@ class OrganizationController extends Controller
         
         session()->flash('success', trans('admin::app.contacts.organizations.create-success'));
 
-        return redirect()->back();
+        return redirect()->route('admin.contacts.organizations.index');
     }
 
     /**

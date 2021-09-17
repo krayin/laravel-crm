@@ -67,7 +67,7 @@ class PersonController extends Controller
         
         session()->flash('success', trans('admin::app.contacts.persons.create-success'));
 
-        return redirect()->back();
+        return redirect()->route('admin.contacts.persons.index');
     }
 
     /**
