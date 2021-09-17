@@ -28,20 +28,8 @@ class Handler extends AppExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        $path = $this->isAdminUri() ? 'admin' : 'front';
-
-        if ($path == "front") {
-            return redirect()->route('admin.session.create');
-        }
-
-        if ($exception instanceof HttpException) {
-            $statusCode = in_array($exception->getStatusCode(), [401, 403, 404, 503]) ? $exception->getStatusCode() : 500;
-
-            return $this->response($path, $statusCode);
-        } elseif ($exception instanceof ModelNotFoundException) {
-            return $this->response($path, 404);
-        } elseif ($exception instanceof PDOException) {
-            return $this->response($path, 500);
+        if (! config('app.debug')) {
+            return $this->renderCustomResponse($request, $exception);
         }
 
         return parent::render($request, $exception);
@@ -66,6 +54,32 @@ class Handler extends AppExceptionHandler
     private function isAdminUri()
     {
         return strpos(Request::path(), 'admin') !== false ? true : false;
+    }
+
+    /**
+     * Render custom HTTP response.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable  $exception
+     * @return \Illuminate\Http\Response|null
+     */
+    private function renderCustomResponse($request, Throwable $exception)
+    {
+        $path = $this->isAdminUri() ? 'admin' : 'front';
+
+        if ($path == "front") {
+            return redirect()->route('admin.session.create');
+        }
+
+        if ($exception instanceof HttpException) {
+            $statusCode = in_array($exception->getStatusCode(), [401, 403, 404, 503]) ? $exception->getStatusCode() : 500;
+
+            return $this->response($path, $statusCode);
+        } elseif ($exception instanceof ModelNotFoundException) {
+            return $this->response($path, 404);
+        } elseif ($exception instanceof PDOException) {
+            return $this->response($path, 500);
+        }
     }
 
     private function response($path, $statusCode)

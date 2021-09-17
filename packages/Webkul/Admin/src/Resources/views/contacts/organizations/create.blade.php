@@ -42,8 +42,6 @@
                             {!! view_render_event('admin.contacts.organizations.create.form_controls.before') !!}
 
                             @csrf()
-                            
-                            <input name="_method" type="hidden" value="PUT">
                 
                             @include('admin::common.custom-attributes.edit', [
                                 'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
