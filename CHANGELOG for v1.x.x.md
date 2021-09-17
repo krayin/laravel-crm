@@ -1,3 +1,20 @@
+## **v1.1.1 (17th of September 2021)**
+
+
+* #217 [fixed] - When we adding a new organization then it should not give an exception.
+
+* #221 [fixed] - if the user has no permission to add a role and the user is trying to add a role. then it should be shown a warning
+
+* #225 [fixed] - When we creating a person then after creating person it is not redirecting to persons list page
+
+* #226 [fixed] - When we creating a user then the the 'asterisk icon' should visible on Confirm password label 
+
+* #218 [fixed] - When we creating a new lead, Then after create lead it should be redirect to leads page
+
+* #230 [fixed] - Automatic publish should be done at the time of installation
+
+
+
 ## **v1.1.0 (16th of September 2021)**
 
 * [feature] Workflow (CRM Automation) feature implemented
