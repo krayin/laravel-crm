@@ -78,8 +78,8 @@
                                         'customValidations'      => [
                                             'expired_at' => [
                                                'required',
-                                               'date_format:yyyy-MM-dd HH:mm:ss',
-                                               'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')
+                                               'date_format:yyyy-MM-dd',
+                                               'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
                                         ],
                                         'entity'                  => $quote,
