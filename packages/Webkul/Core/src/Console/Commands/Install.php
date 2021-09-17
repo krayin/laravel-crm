@@ -55,7 +55,7 @@ class Install extends Command
 
         // running `php artisan vendor:publish --all`
         $this->warn('Step: Publishing assets and configurations...');
-        $result = $this->call('vendor:publish', ['--all']);
+        $result = $this->call('vendor:publish', ['--all' => true, '--force' => true]);
         $this->info($result);
 
         // running `php artisan storage:link`
@@ -118,7 +118,7 @@ class Install extends Command
             $input_admin_path = $this->ask('Please Enter the Admin URL : ');
             $this->envUpdate('APP_ADMIN_PATH=', $input_admin_path ?: $default_admin_path);
 
-            $locale = $this->choice('Please select the default locale or press enter to continue', ['ar', 'en', 'fa', 'nl', 'pt_BR'], 1);
+            $locale = $this->choice('Please select the default available locale or press enter to continue', ['en'], 0);
             $this->envUpdate('APP_LOCALE=', $locale);
 
             $TimeZones = timezone_identifiers_list();
