@@ -5,28 +5,32 @@
 @foreach ($customAttributes as $attribute)
 
     @php
-        $validations = [];
-
-        if ($attribute->code != 'sku') {
-            if ($attribute->is_required) {
-                array_push($validations, 'required');
-            }
-
-            if ($attribute->type == 'price') {
-                array_push($validations, 'decimal');
-            }
-
-            array_push($validations, $attribute->validation);
-
-            $validations = implode('|', array_filter($validations));
+        if (isset($customValidations[$attribute->code])) {
+            $validations = implode('|', $customValidations[$attribute->code]);
         } else {
-            $validations = "{ ";
+            $validations = [];
 
-            if ($attribute->is_required) {
-                $validations .= "required: true, ";
+            if ($attribute->code != 'sku') {
+                if ($attribute->is_required) {
+                    array_push($validations, 'required');
+                }
+
+                if ($attribute->type == 'price') {
+                    array_push($validations, 'decimal');
+                }
+
+                array_push($validations, $attribute->validation);
+
+                $validations = implode('|', array_filter($validations));
+            } else {
+                $validations = "{ ";
+
+                if ($attribute->is_required) {
+                    $validations .= "required: true, ";
+                }
+
+                $validations .= "regex: /^[a-z0-9]+(?:-[a-z0-9]+)*$/ }";
             }
-
-            $validations .= "regex: /^[a-z0-9]+(?:-[a-z0-9]+)*$/ }";
         }
     @endphp
 

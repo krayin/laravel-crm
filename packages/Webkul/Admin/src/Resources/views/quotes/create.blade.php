@@ -63,8 +63,8 @@
                                 <div slot="body">
 
                                     @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                            ->scopeQuery(function($query){
+                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
+                                            ->scopeQuery(function($query) {
                                                 return $query
                                                     ->where('entity_type', 'quotes')
                                                     ->whereIn('code', [
@@ -75,7 +75,14 @@
                                                         'person_id',
                                                     ]);
                                             })->get(),
-                                        'entity'           => $quote,
+                                        'customValidations'      => [
+                                            'expired_at' => [
+                                               'required',
+                                               'date_format:yyyy-MM-dd HH:mm:ss',
+                                               'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')
+                                            ],
+                                        ],
+                                        'entity'                  => $quote,
                                     ])
 
                                 </div>
