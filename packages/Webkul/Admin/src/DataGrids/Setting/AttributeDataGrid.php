@@ -73,28 +73,31 @@ class AttributeDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'      => 'id',
-            'head_style' => 'width: 50px',
-            'label'      => trans('admin::app.datagrid.id'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
+            'index'           => 'id',
+            'head_style'      => 'width: 50px',
+            'label'           => trans('admin::app.datagrid.id'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
-            'index'      => 'code',
-            'label'      => trans('admin::app.datagrid.code'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
+            'index'           => 'code',
+            'label'           => trans('admin::app.datagrid.code'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
-            'type'       => 'string',
-            'searchable' => true,
-            'sortable'   => true,
+            'index'           => 'name',
+            'label'           => trans('admin::app.datagrid.name'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'sortable'        => true,
+            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
