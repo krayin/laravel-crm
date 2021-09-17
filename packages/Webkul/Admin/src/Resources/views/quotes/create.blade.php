@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.quotes.add-title') }}
+    {{ __('admin::app.quotes.create-title') }}
 @stop
 
 @section('content-wrapper')
@@ -26,7 +26,7 @@
             {{ Breadcrumbs::render('quotes.create') }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.quotes.add-title') }}</h1>
+                <h1>{{ __('admin::app.quotes.create-title') }}</h1>
             </div>
         </div>
 

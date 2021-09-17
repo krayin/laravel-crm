@@ -66,7 +66,7 @@
 
     <form action="{{ route('admin.contacts.persons.store') }}" data-vv-scope="person-form" method="post" @submit.prevent="onSubmit($event, 'person-form')">
         <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
-            <h3 slot="header-title">{{ __('admin::app.contacts.persons.add-title') }}</h3>
+            <h3 slot="header-title">{{ __('admin::app.contacts.persons.create-title') }}</h3>
             
             <div slot="header-actions">
                 {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.before', ['email' => $email]) !!}
@@ -103,7 +103,7 @@
 
     <form action="{{ route('admin.leads.store') }}" data-vv-scope="lead-form" method="post" @submit.prevent="onSubmit($event, 'lead-form')" class="lead-form">
         <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
-            <h3 slot="header-title">{{ __('admin::app.leads.add-title') }}</h3>
+            <h3 slot="header-title">{{ __('admin::app.leads.create-title') }}</h3>
             
             <div slot="header-actions">
                 {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.before', ['email' => $email]) !!}

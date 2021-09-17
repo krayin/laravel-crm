@@ -64,7 +64,7 @@
             'organizations' => [
                 'title'          => 'Organizations',
                 'organization'   => 'Organization',
-                'add-title'      => 'Add Organization',
+                'create-title'   => 'Create Organization',
                 'edit-title'     => 'Edit Organization',
                 'save-btn-title' => 'Save as Organization',
                 'back'           => 'Back',
@@ -78,7 +78,7 @@
             'persons' => [
                 'title'          => 'Persons',
                 'person'         => 'Person',
-                'add-title'      => 'Add Person',
+                'create-title'   => 'Create Person',
                 'edit-title'     => 'Edit Person',
                 'save-btn-title' => 'Save as Person',
                 'back'           => 'Back',
@@ -93,7 +93,7 @@
         'leads' => [
             'title'                    => 'Leads',
             'lead'                     => 'Lead',
-            'add-title'                => 'Add Lead',
+            'create-title'             => 'Create Lead',
             'edit-title'               => 'Edit Lead',
             'save-btn-title'           => 'Save as Lead',
             'save'                     => 'Save',
@@ -193,7 +193,7 @@
         'quotes' => [
             'title'               => 'Quotes',
             'quote'               => 'Quote',
-            'add-title'           => 'Add Quote',
+            'create-title'        => 'Create Quote',
             'edit-title'          => 'Edit Quote',
             'save-btn-title'      => 'Save as Quote',
             'back'                => 'Back',
@@ -315,7 +315,7 @@
         'products' => [
             'title'          => 'Products',
             'product'        => 'Product',
-            'add-title'      => 'Add Product',
+            'create-title'   => 'Create Product',
             'edit-title'     => 'Edit Product',
             'save-btn-title' => 'Save as Product',
             'back'           => 'Back',
@@ -362,7 +362,7 @@
                 'group'             => 'Group',
                 'edit-title'        => 'Edit Group',
                 'description'       => 'Description',
-                'add-title'         => 'Create Group',
+                'create-title'      => 'Create Group',
                 'save-btn-title'    => 'Save as Group',
                 'update-btn-title'  => 'Update Group',
                 'create-success'    => 'Group created successfully.',
@@ -377,7 +377,7 @@
                 'role'                      => 'Role',
                 'edit-title'                => 'Edit Role',
                 'description'               => 'Description',
-                'add-title'                 => 'Create Role',
+                'create-title'              => 'Create Role',
                 'permission_type'           => 'Permission type',
                 'custom'                    => 'Custom',
                 'all'                       => 'All',
@@ -395,7 +395,7 @@
 
             'users' => [
                 'title'               => 'Users',
-                'add-title'           => 'Create User',
+                'create-title'        => 'Create User',
                 'edit-title'          => 'Edit User',
                 'general'             => 'General',
                 'permission'          => 'Permission',
@@ -426,7 +426,7 @@
             'attributes' => [
                 'title'                 => 'Attributes',
                 'attribute'             => 'Attribute',
-                'add-title'             => 'Add Attribute',
+                'create-title'          => 'Create Attribute',
                 'edit-title'            => 'Edit Attribute',
                 'save-btn-title'        => 'Save as Attribute',
                 'back'                  => 'Back',
@@ -474,7 +474,7 @@
             'sources' => [
                 'title'          => 'Sources',
                 'organization'   => 'Source',
-                'add-title'      => 'Add Source',
+                'create-title'   => 'Create Source',
                 'edit-title'     => 'Edit Source',
                 'save-btn-title' => 'Save as Source',
                 'back'           => 'Back',
@@ -488,7 +488,7 @@
             'types' => [
                 'title'          => 'Types',
                 'organization'   => 'Type',
-                'add-title'      => 'Add Type',
+                'create-title'   => 'Create Type',
                 'edit-title'     => 'Edit Type',
                 'save-btn-title' => 'Save as Type',
                 'back'           => 'Back',
@@ -501,7 +501,7 @@
 
             'email-templates' => [
                 'title'          => 'Email Templates',
-                'add-title'      => 'Add Email Template',
+                'create-title'   => 'Create Email Template',
                 'edit-title'     => 'Edit Email Template',
                 'save-btn-title' => 'Save as Email Template',
                 'back'           => 'Back',
@@ -518,7 +518,7 @@
 
             'workflows' => [
                 'title'                     => 'Workflows',
-                'add-title'                 => 'Add Workflow',
+                'create-title'              => 'Create Workflow',
                 'edit-title'                => 'Edit Workflow',
                 'save-btn-title'            => 'Save as Workflow',
                 'back'                      => 'Back',

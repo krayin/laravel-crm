@@ -18,7 +18,7 @@ Breadcrumbs::for('leads', function (BreadcrumbTrail $trail) {
 // Dashboard > Leads > Create
 Breadcrumbs::for('leads.create', function (BreadcrumbTrail $trail) {
     $trail->parent('leads');
-    $trail->push(trans('admin::app.leads.add-title'), route('admin.leads.create'));
+    $trail->push(trans('admin::app.leads.create-title'), route('admin.leads.create'));
 });
 
 // Dashboard > Leads > Title
@@ -37,7 +37,7 @@ Breadcrumbs::for('quotes', function (BreadcrumbTrail $trail) {
 // Dashboard > Quotes > Add Quote
 Breadcrumbs::for('quotes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('quotes');
-    $trail->push(trans('admin::app.quotes.add-title'), route('admin.quotes.create'));
+    $trail->push(trans('admin::app.quotes.create-title'), route('admin.quotes.create'));
 });
 
 // Dashboard > Quotes > Edit Quote
@@ -94,7 +94,7 @@ Breadcrumbs::for('contacts.persons', function (BreadcrumbTrail $trail) {
 // Dashboard > Contacts > Persons > Create
 Breadcrumbs::for('contacts.persons.create', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts.persons');
-    $trail->push(trans('admin::app.contacts.persons.add-title'), route('admin.contacts.persons.create'));
+    $trail->push(trans('admin::app.contacts.persons.create-title'), route('admin.contacts.persons.create'));
 });
 
 // Dashboard > Contacts > Persons > Edit
@@ -113,7 +113,7 @@ Breadcrumbs::for('contacts.organizations', function (BreadcrumbTrail $trail) {
 // Dashboard > Contacts > Organizations > Create
 Breadcrumbs::for('contacts.organizations.create', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts.organizations');
-    $trail->push(trans('admin::app.contacts.organizations.add-title'), route('admin.contacts.organizations.create'));
+    $trail->push(trans('admin::app.contacts.organizations.create-title'), route('admin.contacts.organizations.create'));
 });
 
 // Dashboard > Contacts > Organizations > Edit
@@ -132,7 +132,7 @@ Breadcrumbs::for('products', function (BreadcrumbTrail $trail) {
 // Dashboard > Products > Create Product
 Breadcrumbs::for('products.create', function (BreadcrumbTrail $trail) {
     $trail->parent('products');
-    $trail->push(trans('admin::app.products.add-title'), route('admin.products.create'));
+    $trail->push(trans('admin::app.products.create-title'), route('admin.products.create'));
 });
 
 // Dashboard > Products > Edit Product
@@ -157,7 +157,7 @@ Breadcrumbs::for('settings.groups', function (BreadcrumbTrail $trail) {
 // Dashboard > Groups > Create Group
 Breadcrumbs::for('settings.groups.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.groups');
-    $trail->push(trans('admin::app.settings.groups.add-title'), route('admin.settings.groups.create'));
+    $trail->push(trans('admin::app.settings.groups.create-title'), route('admin.settings.groups.create'));
 });
 
 // Dashboard > Groups > Edit Group
@@ -176,7 +176,7 @@ Breadcrumbs::for('settings.roles', function (BreadcrumbTrail $trail) {
 // Dashboard > Roles > Create Role
 Breadcrumbs::for('settings.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.roles');
-    $trail->push(trans('admin::app.settings.roles.add-title'), route('admin.settings.roles.create'));
+    $trail->push(trans('admin::app.settings.roles.create-title'), route('admin.settings.roles.create'));
 });
 
 // Dashboard > Roles > Edit Role
@@ -195,7 +195,7 @@ Breadcrumbs::for('settings.users', function (BreadcrumbTrail $trail) {
 // Dashboard > Users > Create Role
 Breadcrumbs::for('settings.users.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.users');
-    $trail->push(trans('admin::app.settings.users.add-title'), route('admin.settings.users.create'));
+    $trail->push(trans('admin::app.settings.users.create-title'), route('admin.settings.users.create'));
 });
 
 // Dashboard > Users > Edit Role
@@ -214,7 +214,7 @@ Breadcrumbs::for('settings.attributes', function (BreadcrumbTrail $trail) {
 // Dashboard > Attributes > Create Attribute
 Breadcrumbs::for('settings.attributes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.attributes');
-    $trail->push(trans('admin::app.settings.attributes.add-title'), route('admin.settings.attributes.create'));
+    $trail->push(trans('admin::app.settings.attributes.create-title'), route('admin.settings.attributes.create'));
 });
 
 // Dashboard > Attributes > Edit Attribute
@@ -259,7 +259,7 @@ Breadcrumbs::for('settings.email_templates', function (BreadcrumbTrail $trail) {
 // Dashboard > Email Templates > Create Email Template
 Breadcrumbs::for('settings.email_templates.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.email_templates');
-    $trail->push(trans('admin::app.settings.email-templates.add-title'), route('admin.settings.email_templates.create'));
+    $trail->push(trans('admin::app.settings.email-templates.create-title'), route('admin.settings.email_templates.create'));
 });
 
 // Dashboard > Email Templates > Edit Email Template
@@ -278,7 +278,7 @@ Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
 // Dashboard > Workflows > Create Workflow
 Breadcrumbs::for('settings.workflows.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.workflows');
-    $trail->push(trans('admin::app.settings.workflows.add-title'), route('admin.settings.workflows.create'));
+    $trail->push(trans('admin::app.settings.workflows.create-title'), route('admin.settings.workflows.create'));
 });
 
 // Dashboard > Workflows > Edit Workflow

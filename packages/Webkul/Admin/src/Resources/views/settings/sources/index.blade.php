@@ -15,13 +15,13 @@
 @stop
 
 @section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.add-title') }}</button>
+    <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
 @stop
 
 @section('meta-content')
     <form action="{{ route('admin.settings.sources.store') }}" method="POST" @submit.prevent="onSubmit">
         <modal id="addSourceModal" :is-open="modalIds.addSourceModal">
-            <h3 slot="header-title">{{ __('admin::app.settings.sources.add-title') }}</h3>
+            <h3 slot="header-title">{{ __('admin::app.settings.sources.create-title') }}</h3>
             
             <div slot="header-actions">
                 {!! view_render_event('admin.settings.sources.create.form_buttons.before') !!}

@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.settings.groups.add-title') }}
+    {{ __('admin::app.settings.groups.create-title') }}
 @stop
 
 @section('content-wrapper')
@@ -13,7 +13,7 @@
             {{ Breadcrumbs::render('settings.groups.create') }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.settings.groups.add-title') }}</h1>
+                <h1>{{ __('admin::app.settings.groups.create-title') }}</h1>
             </div>
         </div>
 

@@ -16,6 +16,6 @@
 
 @section('table-action')
     <a href="{{ route('admin.settings.attributes.create') }}" class="btn btn-md btn-primary">
-        {{ __('admin::app.settings.attributes.add-title') }}
+        {{ __('admin::app.settings.attributes.create-title') }}
     </a>
 @stop
