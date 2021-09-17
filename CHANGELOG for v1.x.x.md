@@ -1,4 +1,4 @@
-## **v1.1.1 (17th of September 2021)**
+## **v1.1.2 (17th of September 2021)**
 
 
 * #217 [fixed] - When we adding a new organization then it should not give an exception.
