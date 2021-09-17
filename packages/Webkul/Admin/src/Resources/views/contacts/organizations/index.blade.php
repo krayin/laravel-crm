@@ -19,5 +19,5 @@
 @endphp
 
 @section('table-action')
-    <a href="{{ route('admin.contacts.organizations.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.contacts.organizations.add-title') }}</a>
+    <a href="{{ route('admin.contacts.organizations.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.contacts.organizations.create-title') }}</a>
 @stop

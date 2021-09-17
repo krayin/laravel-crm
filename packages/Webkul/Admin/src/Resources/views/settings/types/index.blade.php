@@ -15,13 +15,13 @@
 @stop
 
 @section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.add-title') }}</button>
+    <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
 @stop
 
 @section('meta-content')
     <form action="{{ route('admin.settings.types.store') }}" method="POST" @submit.prevent="onSubmit">
         <modal id="addTypeModal" :is-open="modalIds.addTypeModal">
-            <h3 slot="header-title">{{ __('admin::app.settings.types.add-title') }}</h3>
+            <h3 slot="header-title">{{ __('admin::app.settings.types.create-title') }}</h3>
             
             <div slot="header-actions">
                 {!! view_render_event('admin.settings.types.create.form_buttons.before') !!}

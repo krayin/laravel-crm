@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.products.add-title') }}
+    {{ __('admin::app.products.create-title') }}
 @stop
 
 @section('content-wrapper')
@@ -13,7 +13,7 @@
             {{ Breadcrumbs::render('products.create') }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.products.add-title') }}</h1>
+                <h1>{{ __('admin::app.products.create-title') }}</h1>
             </div>
         </div>
 

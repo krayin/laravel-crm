@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.settings.attributes.add-title') }}
+    {{ __('admin::app.settings.attributes.create-title') }}
 @stop
 
 @push('css')
@@ -22,7 +22,7 @@
             {{ Breadcrumbs::render('settings.attributes.create') }}
 
             <div class="page-title">
-                <h1>{{ __('admin::app.settings.attributes.add-title') }}</h1>
+                <h1>{{ __('admin::app.settings.attributes.create-title') }}</h1>
             </div>
         </div>
 

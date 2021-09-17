@@ -19,5 +19,5 @@
 @endphp
 
 @section('table-action')
-    <a href="{{ route('admin.products.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.products.add-title') }}</a>
+    <a href="{{ route('admin.products.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.products.create-title') }}</a>
 @stop

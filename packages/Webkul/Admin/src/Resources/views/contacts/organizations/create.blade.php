@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.contacts.organizations.add-title') }}
+    {{ __('admin::app.contacts.organizations.create-title') }}
 @stop
 
 @section('content-wrapper')
@@ -14,7 +14,7 @@
             {{ Breadcrumbs::render('contacts.organizations.create') }}
             
             <div class="page-title">
-                <h1>{{ __('admin::app.contacts.organizations.add-title') }}</h1>
+                <h1>{{ __('admin::app.contacts.organizations.create-title') }}</h1>
             </div>
         </div>
 

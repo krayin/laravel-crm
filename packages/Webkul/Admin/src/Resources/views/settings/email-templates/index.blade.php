@@ -15,5 +15,5 @@
 @stop
 
 @section('table-action')
-    <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.add-title') }}</a>
+    <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.create-title') }}</a>
 @stop

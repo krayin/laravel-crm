@@ -11,7 +11,7 @@
 @endpush
 
 @section('table-action')
-    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.add-title') }}</a>
+    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
 @stop
 
 @section('table-section')
@@ -20,7 +20,7 @@
     <kanban-component
         no-data-text="{{ __('admin::app.leads.no-lead') }}"
         get-url="{{ route('admin.leads.kanban.index') }}"
-        detail-text="{{ __('admin::app.leads.add-title') }}"
+        detail-text="{{ __('admin::app.leads.create-title') }}"
         update-url="{{ route('admin.leads.kanban.update') }}"
     ></kanban-component>
 @stop

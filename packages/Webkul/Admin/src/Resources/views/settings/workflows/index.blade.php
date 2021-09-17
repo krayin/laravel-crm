@@ -15,5 +15,5 @@
 @stop
 
 @section('table-action')
-    <a href="{{ route('admin.settings.workflows.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.workflows.add-title') }}</a>
+    <a href="{{ route('admin.settings.workflows.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.workflows.create-title') }}</a>
 @stop
