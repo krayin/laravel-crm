@@ -87,7 +87,7 @@ class LeadController extends Controller
         
         session()->flash('success', trans('admin::app.leads.create-success'));
 
-        return redirect()->back();
+        return redirect()->route('admin.leads.index');
     }
 
     /**
