@@ -42,6 +42,13 @@ abstract class DataGrid
     protected $filterMap = [];
 
     /**
+     * Tab filters.
+     *
+     * @var string[]
+     */
+    protected $tabFilters = [];
+
+    /**
      * Array to hold all the columns which will be displayed on frontend.
      *
      * @var array
@@ -120,33 +127,26 @@ abstract class DataGrid
      */
     protected $itemsPerPage = 10;
 
-     /**
-     * enable search field
-     *
-     * @var boolean
-     */
-    protected $enableSearch = true;
-
     /**
-     * enable items per page
+     * Enable items per page.
      *
      * @var boolean
      */
     protected $enablePerPage = true;
 
     /**
-     * enable sidebar filters
+     * Enable search field.
+     *
+     * @var boolean
+     */
+    protected $enableSearch = true;
+
+    /**
+     * Enable sidebar filters.
      *
      * @var boolean
      */
     protected $enableFilters = true;
-
-    /**
-     * redirect on row click
-     *
-     * @var boolean
-     */
-    protected $redirectRow = false;
 
     /**
      * Operators mapping.
@@ -205,20 +205,6 @@ abstract class DataGrid
         9  => 'offset',
         10 => 'lock',
     ];
-
-    /**
-     * Contains the keys for which extra filters to show.
-     *
-     * @var string[]
-     */
-    protected $extraFilters = [];
-
-    /**
-     * Tab filters.
-     *
-     * @var string[]
-     */
-    protected $tabFilters = [];
 
     /**
      * Create datagrid instance.
