@@ -59,7 +59,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Installation and Configuration
 
-** Or you can install Krayin CRM from your console.**
+**Or you can install Krayin CRM from your console.**
 
 ##### Execute these commands below, in order
 
