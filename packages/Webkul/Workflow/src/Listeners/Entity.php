@@ -54,11 +54,11 @@ class Entity
 
             $workflowEntity = app(config('workflows.trigger_entities.' . $workflow->entity_type . '.class'));
 
-            // try {
+            try {
                 $workflowEntity->executeActions($workflow, $entity);
-            // } catch (\Exception $e) {
+            } catch (\Exception $e) {
                 // Skip exception for now
-            // }
+            }
         }
     }
 }
