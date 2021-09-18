@@ -35,9 +35,6 @@ class DatagridAPIController extends BaseController
      */
     public function index()
     {
-        $params = request()->all();
-        $result = app($params['table'])->toArray();
-
-        return response()->json($result);
+        return app(\Webkul\Admin\DataGrids\Contact\PersonDataGrid::class)->toJson();
     }
 }

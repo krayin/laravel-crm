@@ -37,7 +37,7 @@
                 baseURL: window.baseURL,
             }
         },
-        
+
         computed: {
             ...mapState({
                 tableData : state => state.tableData,
@@ -70,7 +70,7 @@
             getData: ({newParams, self, url, usePrevious}) => {
                 if (self.resultLoaded) {
                     self.resultLoaded = false;
-    
+
                     if (usePrevious) {
                         url = self.previousURL;
                     } else {
@@ -83,14 +83,14 @@
                             url += `&${paramKey}=${window.params[paramKey]}`;
                         });
                     }
-    
+
                     self.$http.get(url)
                         .then(response => {
                             self.pageLoaded = self.resultLoaded = true;
-    
+
                             // update store data
                             self.updateTableData(response.data);
-    
+
                             if (newParams || newParams == "") {
                                 self.updatedURI(newParams);
                             }
@@ -101,7 +101,7 @@
                             if (error.response.status == 500 && actualFilters.length > 0) {
                                 self.$store.state.filters = self.$store.state.filters.filter(filter => filter.column == 'view_type' && filter.val == 'table');
                                 self.toggleSidebarFilter();
-    
+
                                 self.addFlashMessages({
                                     type    : "error",
                                     message : error?.response?.data?.message,
@@ -115,6 +115,7 @@
 
             updatedURI: function (params) {
                 var newURL = window.location.origin + window.location.pathname + `${params != '' ? '?' + params : ''}`;
+
                 window.history.pushState({path: newURL}, '', newURL);
             }
         }

@@ -42,35 +42,33 @@
                     ></td>
                 </template>
 
-                <td v-if="row['action']" class="action">
-                    <template v-for="(action, index) in row['action']">
+                <td class="action">
+                    <template v-for="(action, index) in actions">
                         <a
                             :key="index"
-                            :href="action.route"
+                            :href="row[`${action.key}_url`]"
                             :title="action.title"
-                            :target="action.target"
-                            :data-action="action.route"
+                            :data-action="row[`${action.key}_url`]"
                             v-if="action.method == 'GET'"
                             :data-method="action.method"
                         >
-                            <i :data-route="action.route" :class="`icon ${action.icon}`"></i>
+                            <i :data-route="row[`${action.key}_url`]" :class="`icon ${action.icon}`"></i>
                         </a>
 
                         <a
                             v-else
                             :key="index"
                             :title="action.title"
-                            :target="action.target"
-                            :data-action="action.route"
+                            :data-action="row[`${action.key}_url`]"
                             :data-method="action.method"
                             @click="doAction({
                                 event           : $event,
-                                route           : action.route,
+                                route           : row[`${action.key}_url`],
                                 method          : action.method,
                                 confirm_text    : action.confirm_text,
                             })"
                         >
-                            <i :key="index" :data-route="action.route" :class="`icon ${action.icon}`"></i>
+                            <i :key="index" :data-route="row[`${action.key}_url`]" :class="`icon ${action.icon}`"></i>
                         </a>
                     </template>
                 </td>
@@ -112,7 +110,7 @@
             },
 
             massActions: function () {
-                return this.tableData.massactions;
+                return this.tableData.massActions;
             },
 
             dataCollection: function () {
@@ -142,9 +140,6 @@
             },
 
             getRowContent: function (content) {
-                if (content) {
-                    // content = content.replace("<script>", "<\/script>");
-                }
                 return content || (content === 0 ? content : '--')
             },
 

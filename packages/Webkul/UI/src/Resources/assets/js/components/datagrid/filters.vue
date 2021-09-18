@@ -98,7 +98,7 @@
                 :class="`${tableData.tabFilters[0].type} tabs-left-container`"
                 :event-data="{key: tableData.tabFilters[0].key, 'cond' : tableData.tabFilters[0].condition}"
             ></tabs>
-            
+
             <div v-else></div>
 
             <div class="tabs-right-container">
@@ -133,7 +133,7 @@
                         </date>
 
                         <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
-                        
+
                         <date>
                             <input
                                 type="text"
@@ -202,7 +202,7 @@
         },
 
         computed: {
-            ...mapState({                
+            ...mapState({
                 tableData : state => state.tableData,
                 customTabFilter : state => state.customTabFilter,
                 selectedTableRows : state => state.selectedTableRows,
@@ -488,7 +488,7 @@
                         case "search":
                             obj.label = "Search";
                             break;
-                            
+
                         case "sort":
                             obj.prettyValue = `${obj.cond.replaceAll("_", " ")} - ${obj.val}`;
                             break;
@@ -537,7 +537,7 @@
                     if (data?.column?.replaceAll) {
                         data.prettyColumn = `${data.column.replaceAll("_", " ")}`;
                     }
-    
+
                     if (cond) {
                         data['cond'] = cond;
                     }
@@ -642,7 +642,7 @@
                         key     : 'duration',
                         value   : `${this.custom_filter[0]},${this.custom_filter[1]}`
                     }
-                    
+
                     this.updateFilter(data);
                 }
 
