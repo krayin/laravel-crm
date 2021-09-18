@@ -18,14 +18,15 @@ abstract class AbstractEntity
      * Returns attributes
      *
      * @param  string  $entityType
+     * @param  array  $skipAttributes
      * @return array
      */
-    public function getAttributes($entityType)
+    public function getAttributes($entityType, $skipAttributes = ['textarea', 'image', 'file', 'address'])
     {
         $attributes = [];
 
         foreach ($this->attributeRepository->findByField('entity_type', $entityType) as $attribute) {
-            if (in_array($attribute->type, ['textarea', 'image', 'file', 'address'])) {
+            if (in_array($attribute->type, $skipAttributes)) {
                 continue;
             }
 
@@ -58,6 +59,29 @@ abstract class AbstractEntity
     }
 
     /**
+     * Returns placeholders for email templates
+     * 
+     * @param  array  $entity
+     * @return array
+     */
+    public function getEmailTemplatePlaceholders($entity)
+    {
+        $menuItems = [];
+
+        foreach ($this->getAttributes($this->entityType) as $attribute) {
+            $menuItems[] = [
+                'text'  => $attribute['name'],
+                'value' => '{%' . $this->entityType . '.' . $attribute['id'] . '%}',
+            ];
+        }
+
+        return [
+            'text' => $entity['name'],
+            'menu' => $menuItems,
+        ];
+    }
+
+    /**
      * Replace placeholders with values
      * 
      * @param  array  $entity
@@ -66,29 +90,27 @@ abstract class AbstractEntity
      */
     public function replacePlaceholders($entity, $content)
     {
-        $attributes = $this->attributeRepository->findByField('entity_type', $this->entityType);
-
-        foreach ($attributes as $attribute) {
+        foreach ($this->getAttributes($this->entityType, []) as $attribute) {
             $value = '';
             
-            switch ($attribute->type) {
+            switch ($attribute['type']) {
                 case 'price':
-                    $value = core()->formatBasePrice($entity->{$attribute->code});
+                    $value = core()->formatBasePrice($entity->{$attribute['id']});
 
                     break;
 
                 case 'boolean':
-                    $value = $entity->{$attribute->code} ? __('admin::app.common.yes') : __('admin::app.common.no');
+                    $value = $entity->{$attribute['id']} ? __('admin::app.common.yes') : __('admin::app.common.no');
 
                     break;
 
                 case 'select':
                 case 'radio':
                 case 'lookup':
-                    if ($attribute->lookup_type) {
-                        $option = $this->attributeRepository->getLookUpEntity($attribute->lookup_type, $entity->{$attribute->code});
+                    if ($attribute['lookup_type']) {
+                        $option = $this->attributeRepository->getLookUpEntity($attribute['lookup_type'], $entity->{$attribute['id']});
                     } else {
-                        $option = $attribute->options()->where('id', $entity->{$attribute->code})->first();
+                        $option = $attribute['options']->where('id', $entity->{$attribute['id']})->first();
                     }
 
                     $value = $option ? $option->name : __('admin::app.common.not-available');
@@ -97,10 +119,10 @@ abstract class AbstractEntity
 
                 case 'multiselect':
                 case 'checkbox':
-                    if ($attribute->lookup_type) {
-                        $options = $this->attributeRepository->getLookUpEntity($attribute->lookup_type, explode(',', $entity->{$attribute->code}));
+                    if ($attribute['lookup_type']) {
+                        $options = $this->attributeRepository->getLookUpEntity($attribute['lookup_type'], explode(',', $entity->{$attribute['id']}));
                     } else {
-                        $options = $attribute->options()->where('id', $entity->{$attribute->code})->get();
+                        $options = $attribute['options']->whereIn('id', explode(',', $entity->{$attribute['id']}));
                     }
 
                     $optionsLabels = [];
@@ -115,13 +137,13 @@ abstract class AbstractEntity
 
                 case 'email':
                 case 'phone':
-                    if (! is_array($entity->{$attribute->code})) {
+                    if (! is_array($entity->{$attribute['id']})) {
                         break;
                     }
 
                     $optionsLabels = [];
 
-                    foreach ($entity->{$attribute->code} as $item) {
+                    foreach ($entity->{$attribute['id']} as $item) {
                         $optionsLabels[] = $item['value'] . ' (' . $item['label'] . ')';
                     }
 
@@ -130,26 +152,44 @@ abstract class AbstractEntity
                     break;
 
                 case 'address':
-                    if (! $entity->{$attribute->code} || ! count(array_filter($entity->{$attribute->code}))) {
+                    if (! $entity->{$attribute['id']} || ! count(array_filter($entity->{$attribute['id']}))) {
                         break;
                     }
 
-                    $value = $entity->{$attribute->code}['address']. "<br>"
-                             . $entity->{$attribute->code}['postcode'] . '  ' . $entity->{$attribute->code}['city'] . "<br>"
-                             . core()->state_name($entity->{$attribute->code}['state']) . "<br>"
-                             . core()->country_name($entity->{$attribute->code}['country']) . "<br>";
+                    $value = $entity->{$attribute['id']}['address']. "<br>"
+                             . $entity->{$attribute['id']}['postcode'] . '  ' . $entity->{$attribute['id']}['city'] . "<br>"
+                             . core()->state_name($entity->{$attribute['id']}['state']) . "<br>"
+                             . core()->country_name($entity->{$attribute['id']}['country']) . "<br>";
 
                     break;
                 
+                case 'date':
+                    if ($entity->{$attribute['id']}) {
+                        $value = $entity->{$attribute['id']}->format("D M d, Y");
+                    } else {
+                        $value = 'N/A';
+                    }
+
+                    break;
+
+                case 'datetime':
+                    if ($entity->{$attribute['id']}) {
+                        $value = $entity->{$attribute['id']}->format("D M d, Y H:i A");
+                    } else {
+                        $value = 'N/A';
+                    }
+                
+                    break;
+
                 default:
-                    $value = $entity->{$attribute->code};
+                    $value = $entity->{$attribute['id']};
 
                     break;
             }
 
             $content = strtr($content, [
-                '{%' . $this->entityType . '.' . $attribute->code . '%}'   => $value,
-                '{% ' . $this->entityType . '.' . $attribute->code . ' %}' => $value,
+                '{%' . $this->entityType . '.' . $attribute['id'] . '%}'   => $value,
+                '{% ' . $this->entityType . '.' . $attribute['id'] . ' %}' => $value,
             ]);
         }
 
