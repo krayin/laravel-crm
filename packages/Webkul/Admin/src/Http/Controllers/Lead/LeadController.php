@@ -4,7 +4,6 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Notifications\Lead\Create;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Admin\Http\Controllers\Controller;

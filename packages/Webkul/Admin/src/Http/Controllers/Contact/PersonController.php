@@ -4,7 +4,6 @@ namespace Webkul\Admin\Http\Controllers\Contact;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Admin\Notifications\Person\Create;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
 
