@@ -52,11 +52,11 @@
                                 <input
                                     type="text"
                                     name="name"
-                                    value="{{ old('name') ?? $role->name }}"
                                     class="control"
+                                    value="{{ old('name') ?? $role->name }}"
+                                    placeholder="{{ __('admin::app.layouts.name') }}"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.layouts.name') }}"
-                                    placeholder="{{ __('admin::app.layouts.name') }}"
                                 />
 
                                 <span class="control-error" v-if="errors.has('name')">
@@ -72,9 +72,9 @@
                                 <textarea
                                     class="control"
                                     name="description"
+                                    placeholder="{{ __('admin::app.settings.roles.description') }}"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.description') }}"
-                                    placeholder="{{ __('admin::app.settings.roles.description') }}"
                                 >{{ old('description') ?? $role->description }}</textarea>
 
                                 <span class="control-error" v-if="errors.has('description')">
@@ -91,8 +91,8 @@
 
                                 <select
                                     class="control"
-                                    id="permission_type"
                                     name="permission_type"
+                                    id="permission_type"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.roles.role') }}"
                                 >

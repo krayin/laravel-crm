@@ -13,9 +13,26 @@
         <script type="text/x-template" id="lookup-component-template">
             <div class="lookup-control">
                 <div class="form-group" style="margin-bottom: 0">
-                    <input type="text" v-validate="validations" :name="attribute['code']" :id="attribute['code']" class="control" v-model="search_term" v-on:keyup="search" :for="attribute['code']" :data-vv-as="attribute['name']" autocomplete="off">
+                    <input
+                        type="text"
+                        :name="attribute['code']"
+                        class="control"
+                        :id="attribute['code']"
+                        :for="attribute['code']"
+                        autocomplete="off"
+                        v-model="search_term"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                        v-on:keyup="search"
+                    >
 
-                    <input type="hidden" v-validate="validations" :name="attribute['code']" :data-vv-as="attribute['name']" v-model="entity_id"/>
+                    <input
+                        type="hidden"
+                        :name="attribute['code']"
+                        v-model="entity_id"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                    />
 
                     <div class="lookup-results" v-if="state == ''">
                         <ul>

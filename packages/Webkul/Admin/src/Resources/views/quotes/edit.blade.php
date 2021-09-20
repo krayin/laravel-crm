@@ -138,27 +138,34 @@
                     <thead>
                         <tr>
                             <th class="name">{{ __('admin::app.quotes.name') }}</th>
+
                             <th class="quantity">{{ __('admin::app.quotes.quantity') }}</th>
+
                             <th class="price">
                                 {{ __('admin::app.quotes.price') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
+
                             <th class="amount">
                                 {{ __('admin::app.quotes.amount') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
+
                             <th class="discount">
                                 {{ __('admin::app.quotes.discount') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
+
                             <th class="tax">
                                 {{ __('admin::app.quotes.tax') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
+
                             <th class="total">
                                 {{ __('admin::app.quotes.total') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
+
                             <th class="actions"></th>
                         </tr>
                     </thead>
@@ -189,55 +196,69 @@
                             {{ __('admin::app.quotes.sub-total') }}
                             <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                         </td>
+
                         <td>-</td>
+
                         <td>
                             <div class="form-group">
                                 <input type="text" name="sub_total" class="control" :value="subTotal" readonly>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             {{ __('admin::app.quotes.discount') }}
                             <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                         </td>
+
                         <td>-</td>
+
                         <td>
                             <div class="form-group">
                                 <input type="text" name="discount_amount" class="control" v-model="discountAmount" readonly>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             {{ __('admin::app.quotes.tax') }}
                             <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                         </td>
+
                         <td>-</td>
+
                         <td>
                             <div class="form-group">
                                 <input type="text" name="tax_amount" class="control" :value="taxAmount" readonly>
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             {{ __('admin::app.quotes.adjustment') }}
                             <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                         </td>
+
                         <td>-</td>
+
                         <td>
                             <div class="form-group">
                                 <input type="text" name="adjustment_amount" class="control" v-model="adjustmentAmount">
                             </div>
                         </td>
                     </tr>
+
                     <tr>
                         <td>
                             {{ __('admin::app.quotes.grand-total') }}
                             <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                         </td>
+
                         <td>-</td>
+
                         <td>
                             <div class="form-group">
                                 <input type="text" name="grand_total" class="control" :value="grandTotal" readonly>
@@ -255,9 +276,24 @@
         <tr>
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[product_id]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" :name="[inputName + '[product_id]']" v-model="product['name']" v-on:keyup="search" class="control" data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;" autocomplete="off"/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[product_id]']"
+                        class="control"
+                        v-model="product['name']"
+                        autocomplete="off"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;"
+                        v-on:keyup="search"
+                    />
 
-                    <input type="hidden" v-validate="'required'" :name="[inputName + '[product_id]']" data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;" v-model="product.product_id"/>
+                    <input
+                        type="hidden"
+                        :name="[inputName + '[product_id]']"
+                        v-model="product.product_id"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;"
+                    />
 
                     <div class="lookup-results" v-if="state == ''">
                         <ul>
@@ -273,51 +309,100 @@
 
                     <i class="icon loader-active-icon" v-if="is_searching"></i>
 
-                    <span class="control-error" v-if="errors.has(inputName + '[product_id]')">@{{ errors.first(inputName + '[product_id]') }}</span>
+                    <span class="control-error" v-if="errors.has(inputName + '[product_id]')">
+                        @{{ errors.first(inputName + '[product_id]') }}
+                    </span>
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[quantity]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" :name="[inputName + '[quantity]']" v-model="product.quantity" class="control" data-vv-as="&quot;{{ __('admin::app.quotes.quantity') }}&quot;"/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[quantity]']"
+                        class="control"
+                        v-model="product.quantity"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.quantity') }}&quot;"
+                    />
 
-                    <span class="control-error" v-if="errors.has(inputName + '[quantity]')">@{{ errors.first(inputName + '[quantity]') }}</span>
+                    <span class="control-error" v-if="errors.has(inputName + '[quantity]')">
+                        @{{ errors.first(inputName + '[quantity]') }}
+                    </span>
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[price]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" :name="[inputName + '[price]']" v-model="product.price" class="control" data-vv-as="&quot;{{ __('admin::app.quotes.price') }}&quot;"/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[price]']"
+                        class="control"
+                        v-model="product.price"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.price') }}&quot;"
+                    />
 
-                    <span class="control-error" v-if="errors.has(inputName + '[price]')">@{{ errors.first(inputName + '[price]') }}</span>
+                    <span class="control-error" v-if="errors.has(inputName + '[price]')">
+                        @{{ errors.first(inputName + '[price]') }}
+                    </span>
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[price]') ? 'has-error' : '']">
-                    <input type="text" :name="[inputName + '[total]']" v-model="product.price * product.quantity" class="control" readonly/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[total]']"
+                        class="control"
+                        v-model="product.price * product.quantity"
+                        readonly
+                    />
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[discount_amount]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" :name="[inputName + '[discount_amount]']" v-model="product.discount_amount" class="control" data-vv-as="&quot;{{ __('admin::app.quotes.discount') }}&quot;"/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[discount_amount]']"
+                        class="control"
+                        v-model="product.discount_amount"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.discount') }}&quot;"
+                    />
 
-                    <span class="control-error" v-if="errors.has(inputName + '[discount_amount]')">@{{ errors.first(inputName + '[discount_amount]') }}</span>
+                    <span class="control-error" v-if="errors.has(inputName + '[discount_amount]')">
+                        @{{ errors.first(inputName + '[discount_amount]') }}
+                    </span>
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[tax_amount]') ? 'has-error' : '']">
-                    <input type="text" v-validate="'required'" :name="[inputName + '[tax_amount]']" v-model="product.tax_amount" class="control" data-vv-as="&quot;{{ __('admin::app.quotes.tax') }}&quot;"/>
+                    <input
+                        type="text"
+                        :name="[inputName + '[tax_amount]']"
+                        class="control"
+                        v-model="product.tax_amount"
+                        v-validate="'required'"
+                        data-vv-as="&quot;{{ __('admin::app.quotes.tax') }}&quot;"
+                    />
 
-                    <span class="control-error" v-if="errors.has(inputName + '[tax_amount]')">@{{ errors.first(inputName + '[tax_amount]') }}</span>
+                    <span class="control-error" v-if="errors.has(inputName + '[tax_amount]')">
+                        @{{ errors.first(inputName + '[tax_amount]') }}
+                    </span>
                 </div>
             </td>
 
             <td>
                 <div class="form-group" :class="[errors.has(inputName + '[price]') ? 'has-error' : '']">
-                    <input type="text" :value="parseInt(product.price * product.quantity) + parseInt(product.tax_amount) - parseInt(product.discount_amount)" class="control" readonly/>
+                    <input
+                        type="text"
+                        :value="parseInt(product.price * product.quantity) + parseInt(product.tax_amount) - parseInt(product.discount_amount)"
+                        class="control"
+                        readonly
+                    />
                 </div>
             </td>
 

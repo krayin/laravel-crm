@@ -11,12 +11,23 @@
     <script type="text/x-template" id="address-component-template">
         <div class="form-group" :class="[errors.has(attribute['code'] + '[address]') || errors.has(attribute['code'] + '[country]') || errors.has(attribute['code'] + '[state]') || errors.has(attribute['code'] + '[city]') || errors.has(attribute['code'] + '[postcode]') ? 'has-error' : '']">
             <div class="address-left">
-                <textarea v-validate="validations" class="control" :name="attribute['code'] + '[address]'" data-vv-as="&quot;{{ __('admin::app.common.address') }}&quot;">@{{ data ? data['address'] : '' }}</textarea>
+                <textarea
+                    :name="attribute['code'] + '[address]'"
+                    class="control"
+                    v-validate="validations"
+                    data-vv-as="&quot;{{ __('admin::app.common.address') }}&quot;"
+                >@{{ data ? data['address'] : '' }}</textarea>
             </div>
     
             <div class="address-right">
 
-                <select type="text" v-validate="validations" class="control" :name="attribute['code'] + '[country]'" v-model="country" data-vv-as="&quot;{{ __('admin::app.common.country') }}&quot;">
+                <select
+                    :name="attribute['code'] + '[country]'"
+                    class="control"
+                    v-model="country"
+                    v-validate="validations"
+                    data-vv-as="&quot;{{ __('admin::app.common.country') }}&quot;"
+                >
                     <option value="">{{ __('admin::app.common.select-country') }}</option>
 
                     @foreach (core()->countries() as $country)
@@ -26,7 +37,14 @@
                     @endforeach
                 </select>
 
-                <select v-validate="validations" class="control" :name="attribute['code'] + '[state]'" v-model="state" v-if="haveStates()" data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;">
+                <select
+                    :name="attribute['code'] + '[state]'"
+                    class="control"
+                    v-model="state"
+                    v-validate="validations"
+                    data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
+                    v-if="haveStates()"
+                >
 
                     <option value="">{{ __('admin::app.common.select-state') }}</option>
 
@@ -37,57 +55,57 @@
                 </select>
 
                 <input
-                    v-else
                     type="text"
-                    v-model="state"
-                    class="control"
-                    v-validate="validations"
                     :name="attribute['code'] + '[state]'"
+                    class="control"
+                    v-model="state"
                     placeholder="{{ __('admin::app.common.state') }}"
+                    v-validate="validations"
                     data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
+                    v-else
                 />
 
                 
                 <input
                     type="text"
+                    :name="attribute['code'] + '[city]'"
                     class="control"
                     :value="data['city']"
-                    v-validate="validations"
-                    v-if="data && data['city']"
-                    :name="attribute['code'] + '[city]'"
                     placeholder="{{ __('admin::app.common.city') }}"
+                    v-validate="validations"
                     data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
+                    v-if="data && data['city']"
                 />
 
                 <input
-                    v-else
                     type="text"
-                    class="control"
-                    v-validate="validations"
                     :name="attribute['code'] + '[city]'"
+                    class="control"
                     placeholder="{{ __('admin::app.common.city') }}"
+                    v-validate="validations"
                     data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
+                    v-else
                 />
                 
                 <input
                     type="text"
-                    class="control"
-                    v-validate="validations"
-                    :value="data['postcode']"
-                    v-if="data && data['postcode']"
                     :name="attribute['code'] + '[postcode]'"
+                    class="control"
+                    :value="data['postcode']"
                     placeholder="{{ __('admin::app.common.postcode') }}"
+                    v-validate="validations"
                     data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
+                    v-if="data && data['postcode']"
                 />
 
                 <input
-                    v-else
                     type="text"
-                    class="control"
-                    v-validate="validations"
                     :name="attribute['code'] + '[postcode]'"
+                    class="control"
                     placeholder="{{ __('admin::app.common.postcode') }}"
+                    v-validate="validations"
                     data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
+                    v-else
                 />
             </div>
 

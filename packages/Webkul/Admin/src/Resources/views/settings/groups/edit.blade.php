@@ -54,10 +54,9 @@
                                     name="name"
                                     value="{{ old('name') ?: $group->name }}"
                                     class="control"
-                                    v-validate="'required'"
-                                    value="{{ $group->name }}"
-                                    data-vv-as="{{ __('admin::app.layouts.name') }}"
                                     placeholder="{{ __('admin::app.layouts.name') }}"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ __('admin::app.layouts.name') }}"
                                 />
 
                                 <span class="control-error" v-if="errors.has('name')">
@@ -73,9 +72,9 @@
                                 <textarea
                                     class="control"
                                     name="description"
+                                    placeholder="{{ __('admin::app.settings.groups.description') }}"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.settings.groups.description') }}"
-                                    placeholder="{{ __('admin::app.settings.groups.description') }}"
                                 >{{ old('description') ?: $group->description }}</textarea>
 
                                 <span class="control-error" v-if="errors.has('description')">

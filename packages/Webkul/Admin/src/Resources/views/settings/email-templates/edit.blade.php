@@ -49,7 +49,14 @@
                                     {{ __('admin::app.settings.email-templates.name') }}
                                 </label>
 
-                                <input type="text" name="name" class="control" v-validate="'required'" value="{{ old('name') ?? $emailTemplate->name }}" data-vv-as="{{ __('admin::app.settings.email-templates.name') }}"/>
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="control"
+                                    value="{{ old('name') ?? $emailTemplate->name }}"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ __('admin::app.settings.email-templates.name') }}"
+                                />
 
                                 <span class="control-error" v-if="errors.has('name')">
                                     @{{ errors.first('name') }}
@@ -63,7 +70,15 @@
 
                                 <div>
                                     <div class="form-group input-group" :class="[errors.has('subject') ? 'has-error' : '']">
-                                        <input type="text" name="subject" class="control" id="subject" v-validate="'required'" value="{{ old('subject') ?? $emailTemplate->subject }}" data-vv-as="{{ __('admin::app.settings.email-templates.subject') }}"/>
+                                        <input
+                                            type="text"
+                                            name="subject"
+                                            class="control"
+                                            id="subject"
+                                            value="{{ old('subject') ?? $emailTemplate->subject }}"
+                                            v-validate="'required'"
+                                            data-vv-as="{{ __('admin::app.settings.email-templates.subject') }}"
+                                        />
 
                                         <div class="input-group-append">
                                             <select class="control subject-placeholers" id="subject-placeholders">
@@ -71,11 +86,13 @@
 
                                                 @foreach ($placeholders as $entity)
                                                     <optgroup label="{{ $entity['text'] }}">
+
                                                         @foreach ($entity['menu'] as $placeholder)
                                                             <option value="{{ $placeholder['value'] }}">
                                                                 {{ $placeholder['text'] }}
                                                             </option>
                                                         @endforeach
+
                                                     </optgroup>
                                                 @endforeach
                                             </select>
@@ -93,7 +110,13 @@
                                     {{ __('admin::app.settings.email-templates.content') }}
                                 </label>
 
-                                <textarea name="content" class="control" id="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.email-templates.content') }}">{{ old('content') ?? $emailTemplate->content }}</textarea>
+                                <textarea
+                                    name="content"
+                                    class="control"
+                                    id="control"
+                                    v-validate="'required'"
+                                    data-vv-as="{{ __('admin::app.settings.email-templates.content') }}"
+                                >{{ old('content') ?? $emailTemplate->content }}</textarea>
 
                                 <span class="control-error" v-if="errors.has('content')">
                                     @{{ errors.first('content') }}
@@ -140,11 +163,17 @@
 
             tinymce.init({
                 selector: 'textarea#control',
+
                 height: 200,
+
                 width: "100%",
+
                 menubar: false,
+
                 plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
+
                 toolbar: 'placeholders | formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
+                
                 image_advtab: true,
 
                 setup: function (editor) {

@@ -4,12 +4,21 @@
     </a>
 @endif
 
-<input type="file" v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" style="padding-top: 5px;"/>
+<input
+    type="file"
+    name="{{ $attribute->code }}"
+    class="control"
+    id="{{ $attribute->code }}"
+    value="{{ old($attribute->code) ?: $value }}"
+    v-validate="'{{$validations}}'"
+    data-vv-as="&quot;{{ $attribute->name }}&quot;"
+    style="padding-top: 5px;"
+/>
 
 @if ($value)
     <div class="form-group" style="margin-top: 5px;">
         <span class="checkbox">
-            <input type="checkbox" id="{{ $attribute->code }}[delete]"  name="{{ $attribute->code }}[delete]" value="1">
+            <input type="checkbox" name="{{ $attribute->code }}[delete]" id="{{ $attribute->code }}[delete]" value="1">
 
             <label class="checkbox-view" for="delete"></label>
                 {{ __('admin::app.common.delete') }}

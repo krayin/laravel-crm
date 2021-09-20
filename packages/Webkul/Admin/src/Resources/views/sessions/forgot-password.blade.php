@@ -19,8 +19,20 @@
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
                         <label for="email">{{ __('admin::app.sessions.forgot-password.email') }}</label>
-                        <input type="text" v-validate="'required'" class="control" id="email" name="email" data-vv-as="&quot;{{ __('admin::app.sessions.forgot-password.email') }}&quot;" value="{{ old('email') }}"/>
-                        <span class="control-error" v-if="errors.has('email')">@{{ errors.first('email') }}</span>
+
+                        <input
+                            type="text"
+                            name="email"
+                            class="control"
+                            id="email"
+                            value="{{ old('email') }}"
+                            v-validate="'required'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.forgot-password.email') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('email')">
+                            @{{ errors.first('email') }}
+                        </span>
                     </div>
 
                     <a href="{{ route('admin.session.create') }}">{{ __('admin::app.sessions.forgot-password.back-to-login') }}</a>
@@ -30,7 +42,9 @@
                     <div class="button-group">
                         {!! view_render_event('admin.sessions.forgot_password.form_buttons.before') !!}
 
-                        <button class="btn btn-xl btn-primary">{{ __('admin::app.sessions.forgot-password.send-reset-password-email') }}</button>
+                        <button class="btn btn-xl btn-primary">
+                            {{ __('admin::app.sessions.forgot-password.send-reset-password-email') }}
+                        </button>
 
                         {!! view_render_event('admin.sessions.forgot_password.form_buttons.after') !!}
                     </div>

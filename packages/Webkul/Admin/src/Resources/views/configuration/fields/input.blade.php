@@ -1,9 +1,9 @@
 <input
+    type="{{ $field['type'] }}"
+    name="{{ $fieldName }}"
     class="control"
     id="{{ $fieldName }}"
-    name="{{ $fieldName }}"
-    type="{{ $field['type'] }}"
+    value="{{ old($name) ?: core()->getConfigData($name) }}"
     v-validate="'{{ $validations }}'"
     data-vv-as="&quot;{{ trans($field['title']) }}&quot;"
-    value="{{ old($name) ?: core()->getConfigData($name) }}"
 />
