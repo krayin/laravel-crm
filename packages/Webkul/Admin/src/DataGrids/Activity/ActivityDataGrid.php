@@ -126,6 +126,14 @@ class ActivityDataGrid extends DataGrid
             'head_style'         => 'width: 100px',
             'label'              => trans('admin::app.datagrid.is_done'),
             'type'               => 'boolean',
+            'closure'            => true,
+            'wrapper'            => function ($row) {
+                if ($row->is_done) {
+                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
+                } else {
+                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
+                }
+            },
             'filterable_type'    => 'dropdown',
             'filterable_options' => [
                 [
@@ -136,14 +144,6 @@ class ActivityDataGrid extends DataGrid
                     'label' => __("admin::app.common.yes"),
                 ]
             ],
-            'closure'            => true,
-            'wrapper'            => function ($row) {
-                if ($row->is_done) {
-                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
-                } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
-                }
-            },
         ]);
 
         $this->addColumn([
@@ -165,10 +165,10 @@ class ActivityDataGrid extends DataGrid
             'title'           => true,
             'type'            => 'string',
             'sortable'        => true,
-            'filterable_type' => 'date_range',
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->schedule_from);
             },
+            'filterable_type' => 'date_range',
         ]);
 
         $this->addColumn([
@@ -178,10 +178,10 @@ class ActivityDataGrid extends DataGrid
             'title'           => true,
             'type'            => 'string',
             'sortable'        => true,
-            'filterable_type' => 'date_range',
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->schedule_to);
             },
+            'filterable_type' => 'date_range',
         ]);
 
         $this->addColumn([
@@ -191,10 +191,10 @@ class ActivityDataGrid extends DataGrid
             'title'           => true,
             'type'            => 'string',
             'sortable'        => true,
-            'filterable_type' => 'date_range',
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
+            'filterable_type' => 'date_range',
         ]);
     }
 

@@ -786,11 +786,11 @@ export default {
                     column => column.index == filter.column
                 );
 
-                if (column?.filterable_options) {
+                if (column?.dropdown_options) {
                     let value = filter.val.split(",");
                     value = value.map(
                         id =>
-                            column.filterable_options.find(
+                            column.dropdown_options.find(
                                 option => option.value == id
                             ).label
                     );

@@ -52,7 +52,6 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
@@ -68,7 +67,6 @@ class PersonDataGrid extends DataGrid
                     return collect($emails)->pluck('value')->join(', ');
                 }
             },
-            'filterable_type'   => 'add',
         ]);
 
         $this->addColumn([
@@ -84,17 +82,15 @@ class PersonDataGrid extends DataGrid
                     return collect($contactNumbers)->pluck('value')->join(', ');
                 }
             },
-            'filterable_type'   => 'add',
         ]);
 
         $this->addColumn([
             'index'              => 'organization',
             'label'              => trans('admin::app.datagrid.organization_name'),
-            'type'               => 'string',
+            'type'               => 'dropdown',
+            'dropdown_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
             'searchable'         => true,
             'sortable'           => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
         ]);
     }
 
