@@ -2,16 +2,11 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class EmailTemplateDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.email_templates.edit",
-    ];
-
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('email_templates')
@@ -28,7 +23,6 @@ class EmailTemplateDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,

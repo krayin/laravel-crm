@@ -2,16 +2,11 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class RoleDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.roles.edit",
-    ];
-
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('roles')
@@ -29,7 +24,6 @@ class RoleDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
@@ -89,9 +83,5 @@ class RoleDataGrid extends DataGrid
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'trash-icon',
         ]);
-    }
-
-    public function prepareMassActions()
-    {
     }
 }

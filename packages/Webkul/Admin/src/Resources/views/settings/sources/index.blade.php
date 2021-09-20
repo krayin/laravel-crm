@@ -1,31 +1,37 @@
-@extends('ui::datagrid.table')
+@extends('admin::layouts.master')
 
 @section('page_title')
     {{ __('admin::app.settings.sources.title') }}
 @stop
 
-@section('table-header')
-    {!! view_render_event('admin.settings.sources.index.header.before') !!}
+@section('content-wrapper')
+    <div class="content full-page">
+        <table-component data-src="{{ route('admin.settings.roles.index') }}">
+            <template v-slot:table-header>
+                <h1>
+                    {!! view_render_event('admin.settings.sources.index.header.before') !!}
 
-    {{ Breadcrumbs::render('settings.sources') }}
+                    {{ Breadcrumbs::render('settings.sources') }}
 
-    {{ __('admin::app.settings.sources.title') }}
+                    {{ __('admin::app.settings.sources.title') }}
 
-    {!! view_render_event('admin.settings.sources.index.header.after') !!}
-@stop
+                    {!! view_render_event('admin.settings.sources.index.header.after') !!}
+                </h1>
+            </template>
 
-@section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
-@stop
+            <template v-slot:table-action>
+                <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
+            </template>
+        <table-component>
+    </div>
 
-@section('meta-content')
     <form action="{{ route('admin.settings.sources.store') }}" method="POST" @submit.prevent="onSubmit">
         <modal id="addSourceModal" :is-open="modalIds.addSourceModal">
             <h3 slot="header-title">{{ __('admin::app.settings.sources.create-title') }}</h3>
-            
+
             <div slot="header-actions">
                 {!! view_render_event('admin.settings.sources.create.form_buttons.before') !!}
-                
+
                 <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addSourceModal')">{{ __('admin::app.settings.sources.cancel') }}</button>
 
                 <button type="submit" class="btn btn-sm btn-primary">{{ __('admin::app.settings.sources.save-btn-title') }}</button>

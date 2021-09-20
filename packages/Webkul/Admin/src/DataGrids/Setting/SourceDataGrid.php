@@ -2,16 +2,11 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class SourceDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.sources.edit",
-    ];
-
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('lead_sources')
