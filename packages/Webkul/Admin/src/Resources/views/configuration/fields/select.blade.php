@@ -1,7 +1,7 @@
 <select
+    name="{{ $fieldName }}"
     class="control"
     id="{{ $fieldName }}"
-    name="{{ $fieldName }}"
     v-validate="'{{ $validations }}'"
     data-vv-as="&quot;{{ trans($field['title']) }}&quot;"
 >

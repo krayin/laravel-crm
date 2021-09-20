@@ -21,20 +21,55 @@
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
                         <label for="email">{{ __('admin::app.sessions.reset-password.email') }}</label>
-                        <input type="text" v-validate="'required|email'" class="control" id="email" name="email" data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.email') }}&quot;" value="{{ old('email') }}"/>
-                        <span class="control-error" v-if="errors.has('email')">@{{ errors.first('email') }}</span>
+
+                        <input
+                            type="text"
+                            name="email"
+                            class="control"
+                            id="email"
+                            value="{{ old('email') }}"
+                            v-validate="'required|email'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.email') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('email')">
+                            @{{ errors.first('email') }}
+                        </span>
                     </div>
 
                     <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                         <label for="password">{{ __('admin::app.sessions.reset-password.password') }}</label>
-                        <input type="password" v-validate="'required|min:6'" class="control" id="password" name="password" ref="password" data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.password') }}&quot;"/>
-                        <span class="control-error" v-if="errors.has('password')">@{{ errors.first('password') }}</span>
+
+                        <input
+                            type="password"
+                            name="password"
+                            class="control"
+                            id="password"
+                            ref="password"
+                            v-validate="'required|min:6'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.password') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('password')">
+                            @{{ errors.first('password') }}
+                        </span>
                     </div>
 
                     <div class="form-group" :class="[errors.has('password_confirmation') ? 'has-error' : '']">
                         <label for="password_confirmation">{{ __('admin::app.sessions.reset-password.confirm-password') }}</label>
-                        <input type="password" v-validate="'required|min:6|confirmed:password'" class="control" id="password_confirmation" name="password_confirmation" data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.confirm-password') }}&quot;" data-vv-as="password"/>
-                        <span class="control-error" v-if="errors.has('password_confirmation')">@{{ errors.first('password_confirmation') }}</span>
+
+                        <input
+                            type="password"
+                            name="password_confirmation"
+                            class="control"
+                            id="password_confirmation"
+                            v-validate="'required|min:6|confirmed:password'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.confirm-password') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('password_confirmation')">
+                            @{{ errors.first('password_confirmation') }}
+                        </span>
                     </div>
 
                     {!! view_render_event('admin.sessions.reset_password.form_controls.after') !!}
@@ -42,7 +77,9 @@
                     <div class="button-group">
                         {!! view_render_event('admin.sessions.reset_password.form_buttons.before') !!}
 
-                        <button type="submit" class="btn btn-xl btn-primary">{{ __('admin::app.sessions.reset-password.reset-password') }}</button>
+                        <button type="submit" class="btn btn-xl btn-primary">
+                            {{ __('admin::app.sessions.reset-password.reset-password') }}
+                        </button>
 
                         {!! view_render_event('admin.sessions.reset_password.form_buttons.after') !!}
                     </div>

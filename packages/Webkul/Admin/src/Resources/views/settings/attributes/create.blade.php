@@ -53,14 +53,39 @@
 
                             <div class="form-group" :class="[errors.has('code') ? 'has-error' : '']">
                                 <label for="code" class="required">{{ __('admin::app.settings.attributes.code') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') }}"  data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;" v-code/>
-                                <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
+
+                                <input
+                                    type="text"
+                                    name="code"
+                                    class="control"
+                                    id="code"
+                                    value="{{ old('code') }}"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;"
+                                    v-code
+                                />
+
+                                <span class="control-error" v-if="errors.has('code')">
+                                    @{{ errors.first('code') }}
+                                </span>
                             </div>
 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.settings.attributes.name') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') }}" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="control"
+                                    id="name"
+                                    value="{{ old('name') }}"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
+                                />
+
+                                <span class="control-error" v-if="errors.has('name')">
+                                    @{{ errors.first('name') }}
+                                </span>
                             </div>
 
                             <div class="form-group">
@@ -96,6 +121,7 @@
 
                             <div class="form-group">
                                 <label for="is_required">{{ __('admin::app.settings.attributes.is_required') }}</label>
+
                                 <select class="control" id="is_required" name="is_required">
                                     <option value="0">{{ __('admin::app.settings.attributes.no') }}</option>
                                     <option value="1">{{ __('admin::app.settings.attributes.yes') }}</option>
@@ -104,6 +130,7 @@
 
                             <div class="form-group">
                                 <label for="is_unique">{{ __('admin::app.settings.attributes.is_unique') }}</label>
+
                                 <select class="control" id="is_unique" name="is_unique">
                                     <option value="0">{{ __('admin::app.settings.attributes.no') }}</option>
                                     <option value="1">{{ __('admin::app.settings.attributes.yes') }}</option>
@@ -112,6 +139,7 @@
 
                             <div class="form-group">
                                 <label for="validation">{{ __('admin::app.settings.attributes.input_validation') }}</label>
+
                                 <select class="control" id="validation" name="validation">
                                     <option value=""></option>
                                     <option value="numeric">{{ __('admin::app.settings.attributes.number') }}</option>
@@ -156,8 +184,18 @@
                             v-for="(row, index) in optionRows"
                         >
                             <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
-                                <input type="text" v-validate="'required'" v-model="row['name']" :name="'options[' + row.id + '][name]'" class="control" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">@{{ errors.first('options[' + row.id + '][name]') }}</span>
+                                <input
+                                    type="text"
+                                    :name="'options[' + row.id + '][name]'"
+                                    class="control"
+                                    v-model="row['name']"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
+                                />
+
+                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">
+                                    @{{ errors.first('options[' + row.id + '][name]') }}
+                                </span>
 
                                 <i class="icon align-justify-icon"></i>
                             </div>

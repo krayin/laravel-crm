@@ -52,11 +52,11 @@
                                     <input
                                         type="text"
                                         name="name"
-                                        value="{{ old('name') }}"
                                         class="control"
+                                        value="{{ old('name') }}"
+                                        placeholder="{{ __('admin::app.settings.users.name') }}"
                                         v-validate="'required'"
                                         data-vv-as="{{ __('admin::app.settings.users.name') }}"
-                                        placeholder="{{ __('admin::app.settings.users.name') }}"
                                     />
 
                                     <span class="control-error" v-if="errors.has('name')">
@@ -72,11 +72,11 @@
                                     <input
                                         type="email"
                                         name="email"
-                                        value="{{ old('email') }}"
                                         class="control"
+                                        value="{{ old('email') }}"
+                                        placeholder="{{ __('admin::app.settings.users.email') }}"
                                         v-validate="'required|email'"
                                         data-vv-as="{{ __('admin::app.settings.users.email') }}"
-                                        placeholder="{{ __('admin::app.settings.users.email') }}"
                                     />
 
                                     <span class="control-error" v-if="errors.has('email')">
@@ -92,10 +92,10 @@
                                     <label class="switch">
                                         <input
                                             type="checkbox"
-                                            id="status"
                                             name="status"
-                                            {{ old('status') ? 'checked' : '' }}
                                             class="control"
+                                            id="status"
+                                            {{ old('status') ? 'checked' : '' }}
                                         />
                                         <span class="slider round"></span>
                                     </label>
@@ -107,13 +107,13 @@
                                     </label>
     
                                     <input
-                                        ref="password"
                                         type="password"
                                         name="password"
                                         class="control"
+                                        ref="password"
+                                        placeholder="{{ __('admin::app.settings.users.password') }}"
                                         v-validate="'required|min:6'"
                                         data-vv-as="{{ __('admin::app.settings.users.password') }}"
-                                        placeholder="{{ __('admin::app.settings.users.password') }}"
                                     />
     
                                     <span class="control-error" v-if="errors.has('password')">
@@ -130,9 +130,9 @@
                                         type="password"
                                         class="control"
                                         name="confirm_password"
+                                        placeholder="{{ __('admin::app.settings.users.confirm_password') }}"
                                         v-validate="'required|confirmed:password'"
                                         data-vv-as="{{ __('admin::app.settings.users.confirm_password') }}"
-                                        placeholder="{{ __('admin::app.settings.users.confirm_password') }}"
                                     />
     
                                     <span class="control-error" v-if="errors.has('confirm_password')">
@@ -165,9 +165,16 @@
                                         {{ __('admin::app.settings.users.role') }}
                                     </label>
     
-                                    <select name="role_id" class="control" data-vv-as="{{ __('admin::app.settings.users.role') }}" v-validate="'required'">
+                                    <select
+                                        name="role_id"
+                                        class="control"
+                                        data-vv-as="{{ __('admin::app.settings.users.role') }}"
+                                        v-validate="'required'"
+                                    >
                                         @foreach ($roles as $role)
-                                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>
+                                                {{ $role->name }}
+                                            </option>
                                         @endforeach
                                     </select>
     
@@ -181,7 +188,12 @@
                                         {{ __('admin::app.settings.users.view-permission') }}
                                     </label>
     
-                                    <select name="view_permission" class="control" v-validate="'required'" data-vv-as="{{ __('admin::app.settings.users.view-permission') }}">
+                                    <select
+                                        name="view_permission"
+                                        class="control"
+                                        v-validate="'required'"
+                                        data-vv-as="{{ __('admin::app.settings.users.view-permission') }}"
+                                    >
                                         <option value="global" {{ old('view_permission') == 'global' ? 'selected' : '' }}>
                                             {{ __('admin::app.settings.users.global') }}
                                         </option>

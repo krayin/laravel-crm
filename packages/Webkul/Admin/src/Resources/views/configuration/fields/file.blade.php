@@ -12,22 +12,22 @@
 
 <input
     type="file"
+    name="{{ $fieldName }}"
     class="control"
+    id="{{ $fieldName }}"
+    value="{{ old($name) ?: core()->getConfigData($name) }}"
     v-validate="'{{ $validations }}'"
     data-vv-as="&quot;{{ trans($field['title']) }}&quot;"
-    value="{{ old($name) ?: core()->getConfigData($name) }}"
-    id="{{ $fieldName }}"
-    name="{{ $fieldName }}"
 />
 
 @if ($result)
     <div class="form-group">
         <span class="checkbox">
             <input
-                value="1"
+                name="{{ $fieldName }}[delete]"
                 type="checkbox"
                 id="{{ $fieldName }}[delete]"
-                name="{{ $fieldName }}[delete]"
+                value="1"
             />
 
             <label class="checkbox-view" for="delete"></label>

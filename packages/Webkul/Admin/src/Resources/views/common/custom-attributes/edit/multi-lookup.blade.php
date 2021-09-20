@@ -13,8 +13,21 @@
         <script type="text/x-template" id="multi-lookup-component-template">
             <div class="lookup-control">
                 <div class="form-group" style="margin-bottom: 0">
-                    <input type="hidden" v-validate="validations" :name="attribute['code']" :data-vv-as="attribute['name']" v-if="! selected_results.length"/>
-                    <input type="text" class="control" v-model="search_term" v-on:keyup="search" autocomplete="off">
+                    <input
+                        type="hidden"
+                        :name="attribute['code']"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                        v-if="! selected_results.length"
+                    />
+
+                    <input
+                        type="text"
+                        class="control"
+                        autocomplete="off"
+                        v-model="search_term"
+                        v-on:keyup="search"
+                    >
 
                     <div class="lookup-results" v-if="search_term.length">
                         <ul>

@@ -11,11 +11,22 @@
 
         <script type="text/x-template" id="email-component-template">
             <div class="emails-control">
-                <div class="form-group input-group" v-for="(email, index) in emails" :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
-                    <input type="text" v-validate="validations" class="control" :name="attribute['code'] + '[' + index + '][value]'" v-model="email['value']" :data-vv-as="attribute['name']">
+                <div
+                    class="form-group input-group"
+                    v-for="(email, index) in emails"
+                    :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
+                >
+                    <input
+                        type="text"
+                        :name="attribute['code'] + '[' + index + '][value]'"
+                        class="control"
+                        v-model="email['value']"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                    >
 
                     <div class="input-group-append">
-                        <select :name="attribute['code'] + '[' + index + '][label]'" v-model="email['label']" class="control">
+                        <select :name="attribute['code'] + '[' + index + '][label]'" class="control" v-model="email['label']">
                             <option value="work">{{ __('admin::app.common.work') }}</option>
                             <option value="home">{{ __('admin::app.common.home') }}</option>
                         </select>

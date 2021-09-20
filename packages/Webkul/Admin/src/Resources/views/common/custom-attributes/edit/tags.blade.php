@@ -11,10 +11,29 @@
 
         <script type="text/x-template" id="tags-component-template">
             <div class="tags-control">
-                <div class="form-group input-group" v-for="(tag, index) in tags" :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
-                    <input type="text" class="control" v-model="search_term" v-on:keyup="search" :for="attribute['code']" :data-vv-as="attribute['name']" autocomplete="off">
+                <div
+                    class="form-group input-group"
+                    v-for="(tag, index) in tags"
+                    :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
+                >
+                
+                    <input
+                        type="text"
+                        class="control"
+                        :for="attribute['code']"
+                        autocomplete="off"
+                        v-model="search_term"
+                        :data-vv-as="attribute['name']"
+                        v-on:keyup="search"
+                    />
 
-                    <input type="hidden" v-validate="validations" :name="attribute['code']" :data-vv-as="attribute['name']" v-model="tag_ids"/>
+                    <input
+                        type="hidden"
+                        :name="attribute['code']"
+                        v-model="tag_ids"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                    />
 
                     <div class="lookup-results" v-if="state == ''">
                         <ul>

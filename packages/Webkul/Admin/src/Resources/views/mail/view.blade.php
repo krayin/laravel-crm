@@ -71,9 +71,13 @@
             <div slot="header-actions">
                 {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.before', ['email' => $email]) !!}
 
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">{{ __('admin::app.contacts.persons.cancel') }}</button>
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">
+                    {{ __('admin::app.contacts.persons.cancel') }}
+                </button>
 
-                <button class="btn btn-sm btn-primary">{{ __('admin::app.contacts.persons.save-btn-title') }}</button>
+                <button class="btn btn-sm btn-primary">
+                    {{ __('admin::app.contacts.persons.save-btn-title') }}
+                </button>
 
                 {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.after', ['email' => $email]) !!}
             </div>
@@ -101,16 +105,27 @@
         </modal>
     </form>
 
-    <form action="{{ route('admin.leads.store') }}" data-vv-scope="lead-form" method="post" @submit.prevent="onSubmit($event, 'lead-form')" class="lead-form">
+    <form
+        action="{{ route('admin.leads.store') }}"
+        method="post"
+        class="lead-form"
+        data-vv-scope="lead-form"
+        @submit.prevent="onSubmit($event, 'lead-form')"
+    >
+
         <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
             <h3 slot="header-title">{{ __('admin::app.leads.create-title') }}</h3>
             
             <div slot="header-actions">
                 {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.before', ['email' => $email]) !!}
 
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
+                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">
+                    {{ __('admin::app.leads.cancel') }}
+                </button>
 
-                <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+                <button class="btn btn-sm btn-primary">
+                    {{ __('admin::app.leads.save-btn-title') }}
+                </button>
 
                 {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.after', ['email' => $email]) !!}
             </div>
@@ -179,6 +194,7 @@
         <div class="email-action-container">
             <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
                 <i class="icon link-icon"></i>
+
                 <span>{{ __('admin::app.mail.link-mail') }}</span>
             </button>
 
@@ -201,10 +217,21 @@
                             <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.person" @click="enabled_search.person = true">{{ __('admin::app.mail.add-to-existing-contact') }}</button>
+                                <button
+                                    class="btn btn-sm btn-primary-outline"
+                                    @click="enabled_search.person = true"
+                                    v-if="! enabled_search.person"
+                                >
+                                    {{ __('admin::app.mail.add-to-existing-contact') }}
+                                </button>
 
                                 <div class="form-group" v-else>
-                                    <input class="control" v-model="search_term.person" v-on:keyup="search('person')" placeholder="{{ __('admin::app.mail.search-contact') }}"/>
+                                    <input
+                                        class="control"
+                                        v-model="search_term.person"
+                                        placeholder="{{ __('admin::app.mail.search-contact') }}"
+                                        v-on:keyup="search('person')"
+                                    />
 
                                     <div class="lookup-results" v-if="search_term.person.length">
                                         <ul>
@@ -222,7 +249,10 @@
 
                                     <i class="icon loader-active-icon" v-if="is_searching.person"></i>
                                 </div>
-                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">{{ __('admin::app.mail.create-new-contact') }}</button>
+
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
+                                    {{ __('admin::app.mail.create-new-contact') }}
+                                </button>
                             </div>
                         </div>
 
@@ -241,6 +271,7 @@
 
                             <div class="contact-details">
                                 <div class="name">@{{ email.person.name }}</div>
+
                                 <div class="email">
                                     <i class="icon emails-icon"></i>
                                     @{{ email.person.name }}
@@ -259,10 +290,21 @@
                             <h3>{{ __('admin::app.mail.link-lead') }}</h3>
 
                             <div class="btn-group">
-                                <button class="btn btn-sm btn-primary-outline" v-if="! enabled_search.lead" @click="enabled_search.lead = true">{{ __('admin::app.mail.link-to-existing-lead') }}</button>
+                                <button
+                                    class="btn btn-sm btn-primary-outline"
+                                    @click="enabled_search.lead = true"
+                                    v-if="! enabled_search.lead"
+                                >
+                                    {{ __('admin::app.mail.link-to-existing-lead') }}
+                                </button>
 
                                 <div class="form-group" v-else>
-                                    <input class="control" v-model="search_term.lead" v-on:keyup="search('lead')" placeholder="{{ __('admin::app.mail.search-lead') }}"/>
+                                    <input
+                                        class="control"
+                                        v-model="search_term.lead"
+                                        placeholder="{{ __('admin::app.mail.search-lead') }}"
+                                        v-on:keyup="search('lead')"
+                                    />
 
                                     <div class="lookup-results" v-if="search_term.lead.length">
                                         <ul>
@@ -276,12 +318,18 @@
                                         </ul>
                                     </div>
 
-                                    <i class="icon close-icon"  v-if="! is_searching.lead" @click="enabled_search.lead = false; reset('lead')"></i>
+                                    <i
+                                        class="icon close-icon"
+                                        v-if="! is_searching.lead"
+                                        @click="enabled_search.lead = false; reset('lead')"
+                                    ></i>
 
                                     <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                                 </div>
 
-                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">{{ __('admin::app.mail.add-new-lead') }}</button>
+                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
+                                    {{ __('admin::app.mail.add-new-lead') }}
+                                </button>
                             </div>
                         </div>
 
@@ -317,8 +365,8 @@
                 :email="email"
                 :key="0"
                 :index="0"
-                @onEmailAction="emailAction($event)">
-            </email-item-component>
+                @onEmailAction="emailAction($event)"
+            ></email-item-component>
 
 
             <div class="email-reply-list">
@@ -327,18 +375,20 @@
                     :email="email"
                     :key="0"
                     :index="0"
-                    @onEmailAction="emailAction($event)">
-                </email-item-component>
+                    @onEmailAction="emailAction($event)"
+                ></email-item-component>
             </div>
 
             <div class="email-action" v-if="! action">
                 <span class="reply-button" @click="emailAction({'type': 'reply'})">
                     <i class="icon reply-icon"></i>
+
                     {{ __('admin::app.mail.reply') }}
                 </span>
 
                 <span class="forward-button" @click="emailAction({'type': 'forward'})">
                     <i class="icon forward-icon"></i>
+
                     {{ __('admin::app.mail.forward') }}
                 </span>
             </div>
@@ -372,23 +422,48 @@
                         <div class="dropdown-list">
                             <div class="dropdown-container">
                                 <ul>
-                                    <li @mouseover="hovering = 'reply-white-icon'" @mouseout="hovering = ''" @click="emailAction('reply')">
+                                    <li
+                                        @mouseover="hovering = 'reply-white-icon'"
+                                        @mouseout="hovering = ''"
+                                        @click="emailAction('reply')"
+                                    >
                                         <i class="icon reply-icon" :class="{'reply-white-icon': hovering == 'reply-white-icon'}"></i>
+
                                         {{ __('admin::app.mail.reply') }}
                                     </li>
-                                    <li @mouseover="hovering = 'reply-all-white-icon'" @mouseout="hovering = ''" @click="emailAction('reply-all')">
+
+                                    <li
+                                        @mouseover="hovering = 'reply-all-white-icon'"
+                                        @mouseout="hovering = ''"
+                                        @click="emailAction('reply-all')"
+                                    >
                                         <i class="icon reply-all-icon" :class="{'reply-all-white-icon': hovering == 'reply-all-white-icon'}"></i>
+
                                         {{ __('admin::app.mail.reply-all') }}
                                     </li>
-                                    <li @mouseover="hovering = 'forward-white-icon'" @mouseout="hovering = ''" @click="emailAction('forward')">
+
+                                    <li
+                                        @mouseover="hovering = 'forward-white-icon'"
+                                        @mouseout="hovering = ''"
+                                        @click="emailAction('forward')"
+                                    >
                                         <i class="icon forward-icon" :class="{'forward-white-icon': hovering == 'forward-white-icon'}"></i>
+
                                         {{ __('admin::app.mail.forward') }}
                                     </li>
-                                    <li @mouseover="hovering = 'trash-white-icon'" @mouseout="hovering = ''" @click="emailAction('delete')">
+
+                                    <li
+                                        @mouseover="hovering = 'trash-white-icon'"
+                                        @mouseout="hovering = ''"
+                                        @click="emailAction('delete')"
+                                    >
                                         <form :action="'{{ route('admin.mail.delete') }}/' + email.id" method="post" :ref="'form-' + email.id">
                                             @csrf()
+
                                             <input type="hidden" name="_method" value="DELETE"/>
+
                                             <i class="icon trash-icon" :class="{'trash-white-icon': hovering == 'trash-white-icon'}"></i>
+
                                             {{ __('admin::app.mail.delete') }}
                                         </form>
                                     </li>
@@ -436,6 +511,7 @@
                     <div class="attachment-item" v-for='(attachment, index) in email.attachments'>
                         <a :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id">
                             <i class="icon attachment-icon"></i>
+
                             @{{ attachment.name }}
                         </a>
                     </div>
@@ -445,7 +521,13 @@
     </script>
 
     <script type="text/x-template" id="email-form-template">
-        <form method="POST" action="{{ route('admin.mail.store') }}" data-vv-scope="email-form" enctype="multipart/form-data" @submit.prevent="$root.onSubmit($event, 'email-form')">
+        <form
+            action="{{ route('admin.mail.store') }}"
+            method="POST"
+            enctype="multipart/form-data"
+            data-vv-scope="email-form"
+            @submit.prevent="$root.onSubmit($event, 'email-form')"
+        >
 
             <div class="form-container">
 
@@ -463,36 +545,78 @@
                         <div class="form-group email-control-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
-                            <email-tags-component control-name="email-form.reply_to[]" control-label="{{ __('admin::app.leads.to') }}" :validations="'required'" :data="reply_to"></email-tags-component>
+                            <email-tags-component
+                                control-name="email-form.reply_to[]"
+                                control-label="{{ __('admin::app.leads.to') }}"
+                                :validations="'required'"
+                                :data="reply_to"
+                            ></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('email-form.reply_to[]')">@{{ errors.first('email-form.reply_to[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.reply_to[]')">
+                                @{{ errors.first('email-form.reply_to[]') }}
+                            </span>
 
                             <div class="email-address-options">
-                                <label @click="show_cc = ! show_cc">{{ __('admin::app.leads.cc') }}</label>
-                                <label @click="show_bcc = ! show_bcc">{{ __('admin::app.leads.bcc') }}</label>
+                                <label @click="show_cc = ! show_cc">
+                                    {{ __('admin::app.leads.cc') }}
+                                </label>
+
+                                <label @click="show_bcc = ! show_bcc">
+                                    {{ __('admin::app.leads.bcc') }}
+                                </label>
                             </div>
                         </div>
     
-                        <div class="form-group email-control-group" :class="[errors.has('email-form.cc[]') ? 'has-error' : '']" v-if="show_cc">
+                        <div
+                            class="form-group email-control-group"
+                            :class="[errors.has('email-form.cc[]') ? 'has-error' : '']"
+                            v-if="show_cc"
+                        >
                             <label for="cc">{{ __('admin::app.leads.cc') }}</label>
     
-                            <email-tags-component control-name="cc[]" control-label="{{ __('admin::app.leads.cc') }}" :data='cc'></email-tags-component>
+                            <email-tags-component
+                                control-name="cc[]"
+                                control-label="{{ __('admin::app.leads.cc') }}"
+                                :data='cc'
+                            ></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('email-form.cc[]')">@{{ errors.first('email-form.cc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.cc[]')">
+                                @{{ errors.first('email-form.cc[]') }}
+                            </span>
                         </div>
     
-                        <div class="form-group email-control-group" :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']" v-if="show_bcc">
+                        <div
+                            class="form-group email-control-group"
+                            :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']"
+                            v-if="show_bcc"
+                        >
                             <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
     
-                            <email-tags-component control-name="bcc[]" control-label="{{ __('admin::app.leads.bcc') }}" :data='bcc'></email-tags-component>
+                            <email-tags-component
+                                control-name="bcc[]"
+                                control-label="{{ __('admin::app.leads.bcc') }}"
+                                :data='bcc'
+                            ></email-tags-component>
     
-                            <span class="control-error" v-if="errors.has('email-form.bcc[]')">@{{ errors.first('email-form.bcc[]') }}</span>
+                            <span class="control-error" v-if="errors.has('email-form.bcc[]')">
+                                @{{ errors.first('email-form.bcc[]') }}
+                            </span>
                         </div>
                         
                         <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
                             <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
-                            <textarea v-validate="'required'" class="control" id="reply" name="reply" data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;">@{{ reply }}</textarea>
-                            <span class="control-error" v-if="errors.has('email-form.reply')">@{{ errors.first('email-form.reply') }}</span>
+
+                            <textarea
+                                name="reply"
+                                class="control"
+                                id="reply"
+                                v-validate="'required'"
+                                data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;"
+                            >@{{ reply }}</textarea>
+
+                            <span class="control-error" v-if="errors.has('email-form.reply')">
+                                @{{ errors.first('email-form.reply') }}
+                            </span>
                         </div>
     
                         <div class="form-group">

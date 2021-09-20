@@ -10,23 +10,23 @@
 @endif
 
 <input
+    name="{{ $fieldName }}"
     type="file"
     class="control"
     id="{{ $fieldName }}"
-    name="{{ $fieldName }}"
+    value="{{ old($name) ?: core()->getConfigData($name) }}"
     v-validate="'{{ $validations }}'"
     data-vv-as="&quot;{{ trans($field['title']) }}&quot;"
-    value="{{ old($name) ?: core()->getConfigData($name) }}"
 />
 
 @if ($result)
     <div class="form-group">
         <span class="checkbox">
             <input
-                value="1"
                 type="checkbox"
-                id="{{ $fieldName }}[delete]"
                 name="{{ $fieldName }}[delete]"
+                id="{{ $fieldName }}[delete]"
+                value="1"
             />
 
             <label class="checkbox-view" for="delete"></label>

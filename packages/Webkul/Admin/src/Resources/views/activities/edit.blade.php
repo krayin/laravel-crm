@@ -47,7 +47,13 @@
                             <div class="form-group" :class="[errors.has('title') ? 'has-error' : '']">
                                 <label for="comment" class="required">{{ __('admin::app.activities.title-control') }}</label>
 
-                                <input class="control" v-validate="'required'" name="title" value="{{ old('title') ?: $activity->title }}" data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"/>
+                                <input
+                                    name="title"
+                                    class="control"
+                                    value="{{ old('title') ?: $activity->title }}"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"
+                                />
         
                                 <span class="control-error" v-if="errors.has('title')">@{{ errors.first('title') }}</span>
                             </div>
@@ -57,11 +63,25 @@
         
                                 <?php $selectedOption = old('type') ?: $activity->type ?>
 
-                                <select v-validate="'required'" class="control" name="type" data-vv-as="&quot;{{ __('admin::app.activities.type') }}&quot;">
+                                <select
+                                    name="type"
+                                    class="control"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.activities.type') }}&quot;"
+                                >
                                     <option value=""></option>
-                                    <option value="call" {{ $selectedOption == 'call' ? 'selected' : '' }}>{{ __('admin::app.activities.call') }}</option>
-                                    <option value="meeting" {{ $selectedOption == 'meeting' ? 'selected' : '' }}>{{ __('admin::app.activities.meeting') }}</option>
-                                    <option value="lunch" {{ $selectedOption == 'lunch' ? 'selected' : '' }}>{{ __('admin::app.activities.lunch') }}</option>
+
+                                    <option value="call" {{ $selectedOption == 'call' ? 'selected' : '' }}>
+                                        {{ __('admin::app.activities.call') }}
+                                    </option>
+
+                                    <option value="meeting" {{ $selectedOption == 'meeting' ? 'selected' : '' }}>
+                                        {{ __('admin::app.activities.meeting') }}
+                                    </option>
+
+                                    <option value="lunch" {{ $selectedOption == 'lunch' ? 'selected' : '' }}>
+                                        {{ __('admin::app.activities.lunch') }}
+                                    </option>
                                 </select>
         
                                 <span class="control-error" v-if="errors.has('type')">@{{ errors.first('type') }}</span>
@@ -77,13 +97,29 @@
         
                                 <div class="input-group">
                                     <datetime>
-                                        <input type="text" name="schedule_from" value="{{ old('schedule_from') ?: $activity->schedule_from }}" class="control" v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'" data-vv-as="&quot;{{ __('admin::app.activities.from') }}&quot;" placeholder="{{ __('admin::app.activities.from') }}" ref="schedule_from">
+                                        <input
+                                            type="text"
+                                            name="schedule_from"
+                                            class="control"
+                                            value="{{ old('schedule_from') ?: $activity->schedule_from }}"
+                                            placeholder="{{ __('admin::app.activities.from') }}" ref="schedule_from"
+                                            v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'"
+                                            data-vv-as="&quot;{{ __('admin::app.activities.from') }}&quot;"
+                                        >
         
                                         <span class="control-error" v-if="errors.has('schedule_from')">@{{ errors.first('schedule_from') }}</span>
                                     </datetime>
         
                                     <datetime>
-                                        <input type="text" name="schedule_to" value="{{ old('schedule_to') ?: $activity->schedule_to }}" class="control"  v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'" data-vv-as="&quot;{{ __('admin::app.activities.to') }}&quot;" placeholder="{{ __('admin::app.activities.to') }}" ref="schedule_to">
+                                        <input
+                                            type="text"
+                                            name="schedule_to"
+                                            class="control"
+                                            value="{{ old('schedule_to') ?: $activity->schedule_to }}"
+                                            placeholder="{{ __('admin::app.activities.to') }}" ref="schedule_to"
+                                            v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'"
+                                            data-vv-as="&quot;{{ __('admin::app.activities.to') }}&quot;"
+                                        >
         
                                         <span class="control-error" v-if="errors.has('schedule_to')">@{{ errors.first('schedule_to') }}</span>
                                     </datetime>
