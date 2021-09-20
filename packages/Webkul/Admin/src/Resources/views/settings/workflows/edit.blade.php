@@ -92,11 +92,13 @@
                     <input type="hidden" name="entity_type" :value="entityType"/>
 
                     <select name="event" class="control" v-validate="'required'" v-model="event">
+
                         <optgroup v-for='entity in events' :label="entity.name">
                             <option v-for='event in entity.events' :value="event.event">
                                 @{{ event.name }}
                             </option>
                         </optgroup>
+
                     </select>
 
                     <span class="control-error" v-if="errors.has('event')">
@@ -110,6 +112,7 @@
             <div class="workflow-panel">
                 <div class="header">
                     <label>{{ __('admin::app.settings.workflows.conditions') }}</label>
+
                     <p>{{ __('admin::app.settings.workflows.condition-info') }}</p>
                 </div>
 
@@ -118,6 +121,7 @@
 
                     <select class="control" id="condition_type" name="condition_type" v-model="condition_type">
                         <option value="and">{{ __('admin::app.settings.workflows.all-conditions-true') }}</option>
+
                         <option value="or">{{ __('admin::app.settings.workflows.any-condition-true') }}</option>
                     </select>
                 </div>
@@ -125,6 +129,7 @@
                 <div class="table workflow-conditions" style="overflow-x: unset;">
                     <table>
                         <tbody>
+
                             <workflow-condition-item
                                 v-for='(condition, index) in conditions'
                                 :entityType="entityType"
@@ -133,6 +138,7 @@
                                 :index="index"
                                 @onRemoveCondition="removeCondition($event)">
                             </workflow-condition-item>
+
                         </tbody>
                     </table>
                 </div>
@@ -148,11 +154,13 @@
             <div class="workflow-panel">
                 <div class="header">
                     <label>{{ __('admin::app.settings.workflows.actions') }}</label>
+
                     <p>{{ __('admin::app.settings.workflows.action-info') }}</p>
                 </div>
                 
                 <div class="table workflow-actions" style="overflow-x: unset;">
                     <table>
+
                         <tbody>
                             <workflow-action-item
                                 v-for='(action, index) in actions'
@@ -163,6 +171,7 @@
                                 @onRemoveAction="removeAction($event)">
                             </workflow-action-item>
                         </tbody>
+
                     </table>
                 </div>
 
@@ -180,6 +189,7 @@
                 <div class="form-group">
                     <select :name="['conditions[' + index + '][attribute]']" class="control" v-model="condition.attribute">
                         <option value="">{{ __('admin::app.settings.workflows.choose-condition-to-add') }}</option>
+
                         <option v-for='attribute in conditions[entityType]' :value="attribute.id">
                             @{{ attribute.name }}
                         </option>
@@ -254,6 +264,7 @@
                 <div class="form-group">
                     <select :name="['actions[' + index + '][id]']" class="control" v-model="action.id">
                         <option value="">{{ __('admin::app.settings.workflows.choose-action-to-add') }}</option>
+
                         <option v-for='action in actions[entityType]' :value="action.id">
                             @{{ action.name }}
                         </option>
@@ -265,6 +276,7 @@
                 <div class="form-group">
                     <select :name="['actions[' + index + '][attribute]']" class="control" v-model="action.attribute">
                         <option value="">{{ __('admin::app.settings.workflows.choose-attribute') }}</option>
+
                         <option v-for='attribute in matchedAction.attributes' :value="attribute.id">
                             @{{ attribute.name }}
                         </option>
@@ -328,6 +340,7 @@
                 <div class="form-group">
                     <select :name="['actions[' + index + '][value]']" class="control" v-model="action.value">
                         <option value="">{{ __('admin::app.settings.workflows.choose-option') }}</option>
+                        
                         <option v-for='option in matchedAction.options' :value="option.id">
                             @{{ option.name }}
                         </option>

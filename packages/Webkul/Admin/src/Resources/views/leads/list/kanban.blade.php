@@ -35,6 +35,7 @@
             get-url="{{ route('admin.leads.kanban.index') }}"
             detail-text="{{ __('admin::app.leads.create-title') }}"
             update-url="{{ route('admin.leads.kanban.update') }}"
+            create-url="{{ route('admin.leads.create') }}"
         ></kanban-component>
     </div>
 </div>

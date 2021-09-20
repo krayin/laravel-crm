@@ -18,14 +18,36 @@
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
                         <label for="email">{{ __('admin::app.sessions.login.email') }}</label>
-                        <input type="text" v-validate.disable="'required|email'" class="control" id="email" name="email" data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;" />
-                        <span class="control-error" v-if="errors.has('email')">@{{ errors.first('email') }}</span>
+
+                        <input
+                            type="text"
+                            name="email"
+                            class="control"
+                            id="email"
+                            v-validate.disable="'required|email'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;"
+                            />
+
+                        <span class="control-error" v-if="errors.has('email')">
+                            @{{ errors.first('email') }}
+                        </span>
                     </div>
 
                     <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                         <label for="password">{{ __('admin::app.sessions.login.password') }}</label>
-                        <input type="password" v-validate.disable="'required|min:6'" class="control" id="password" name="password" data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;" />
-                        <span class="control-error" v-if="errors.has('password')">@{{ errors.first('password') }}</span>
+
+                        <input
+                            type="password"
+                            name="password"
+                            class="control"
+                            id="password"
+                            v-validate.disable="'required|min:6'"
+                            data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('password')">
+                            @{{ errors.first('password') }}
+                        </span>
                     </div>
 
                     {!! view_render_event('admin.sessions.login.form_controls.after') !!}
@@ -35,7 +57,9 @@
                     <div class="button-group">
                         {!! view_render_event('admin.sessions.login.form_buttons.before') !!}
 
-                        <button type="submit" class="btn btn-xl btn-primary">{{ __('admin::app.sessions.login.login') }}</button>
+                        <button type="submit" class="btn btn-xl btn-primary">
+                            {{ __('admin::app.sessions.login.login') }}
+                        </button>
 
                         {!! view_render_event('admin.sessions.login.form_buttons.after') !!}
                     </div>

@@ -4,7 +4,16 @@
     </a>
 @endif
 
-<input type="file" v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" value="{{ old($attribute->code) ?: $value }}" data-vv-as="&quot;{{ $attribute->name }}&quot;" style="padding-top: 5px;"/>
+<input
+    type="file"
+    name="{{ $attribute->code }}"
+    class="control"
+    id="{{ $attribute->code }}"
+    value="{{ old($attribute->code) ?: $value }}"
+    v-validate="'{{$validations}}'"
+    data-vv-as="&quot;{{ $attribute->name }}&quot;"
+    style="padding-top: 5px;"
+/>
 
 @if ($value)
     <div class="form-group" style="margin-top: 5px;">

@@ -1,7 +1,7 @@
 <select
+    name="{{ $fieldName }}[]"
     class="control"
     id="{{ $fieldName }}"
-    name="{{ $fieldName }}[]"
     v-validate="'{{ $validations }}'"
     data-vv-as="&quot;{{ trans($field['title']) }}&quot;"
     multiple
@@ -18,7 +18,7 @@
         @endforeach
     @else
         @foreach ($field['options'] as $option)
-            <?php
+            @php
                 if (! isset($option['value'])) {
                     $value = null;
                 } else {
@@ -28,7 +28,7 @@
                         $value = 0;
                     }
                 }
-            ?>
+            @endphp
 
             <option value="{{ $value }}" {{ in_array($option['value'], explode(',', $selectedOption)) ? 'selected' : ''}}>
                 {{ trans($option['title']) }}

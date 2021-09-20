@@ -118,14 +118,14 @@
 
             <div>
                 <select
-                    :id="name"
                     type="text"
                     :name="name"
                     class="control"
+                    :id="name"
                     v-model="country"
                     v-validate="validations"
-                    @change="sendCountryCode"
                     data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
+                    @change="sendCountryCode"
                 >
                     <option value=""></option>
 
@@ -144,23 +144,23 @@
             <div>
                 <input
                     type="text"
-                    :id="name"
                     :name="name"
                     class="control"
+                    :id="name"
                     v-model="state"
-                    v-if="!haveStates()"
                     v-validate="'required'"
                     data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                    v-if="! haveStates()"
                 />
 
                 <select
-                    :id="name"
                     :name="name"
                     class="control"
+                    :id="name"
                     v-model="state"
-                    v-if="haveStates()"
                     v-validate="'required'"
                     data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                    v-if="haveStates()"
                 >
 
                     <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>

@@ -11,11 +11,27 @@
 
         <script type="text/x-template" id="phone-component-template">
             <div class="phone-control">
-                <div class="form-group input-group" v-for="(contactNumber, index) in contactNumbers" :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']">
-                    <input type="text" v-validate="validations" class="control" :name="attribute['code'] + '[' + index + '][value]'" v-model="contactNumber['value']" :data-vv-as="attribute['name']">
+                <div
+                    class="form-group input-group"
+                    v-for="(contactNumber, index) in contactNumbers"
+                    :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
+                >
+
+                    <input
+                        type="text"
+                        :name="attribute['code'] + '[' + index + '][value]'"
+                        class="control"
+                        v-model="contactNumber['value']"
+                        v-validate="validations"
+                        :data-vv-as="attribute['name']"
+                    />
 
                     <div class="input-group-append">
-                        <select :name="attribute['code'] + '[' + index + '][label]'" v-model="contactNumber['label']" class="control">
+                        <select
+                            :name="attribute['code'] + '[' + index + '][label]'"
+                            class="control"
+                            v-model="contactNumber['label']"
+                        >
                             <option value="work">{{ __('admin::app.common.work') }}</option>
                             <option value="home">{{ __('admin::app.common.home') }}</option>
                         </select>

@@ -3,26 +3,29 @@
 namespace Webkul\Admin\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Event;
-use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Admin\Traits\Dashboard\Helper as DashboardHelper;
+use Webkul\Admin\Helpers\Dashboard as DashboardHelper;
 
 class DashboardController extends Controller
 {
-    use DashboardHelper;
+    /**
+     * Dashboard object
+     *
+     * @var \Webkul\Admin\Helpers\Dashboard
+     */
+    protected $dashboardHelper;
 
-    private $cards;
-
-    private $cardData = [];
-
-    private $leadRepository;
-
-    public function __construct(LeadRepository $leadRepository)
+    /**
+     * Create a new controller instance.
+     *
+     * @param \Webkul\Admin\Helpers\DashboardHelper  $dashboardHelper
+     * @return void
+     */
+    public function __construct(DashboardHelper $dashboardHelper)
     {
-        $this->leadRepository = $leadRepository;
+        $this->dashboardHelper = $dashboardHelper;
 
-        $this->setCardsData();
+        $this->dashboardHelper->setCards();
     }
 
     /**
@@ -32,7 +35,7 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $cards = $this->cards;
+        $cards = $this->dashboardHelper->getCards();
 
         if ($dateRange = request('date-range')) {
             $dateRange = explode(",", $dateRange);
@@ -41,6 +44,7 @@ class DashboardController extends Controller
             $startDate = $dateRange[0];
         } else {
             $endDate = Carbon::now()->format('Y-m-d');
+            
             $startDate = Carbon::now()->subMonth()->addDays(1)->format('Y-m-d');
         }
 
@@ -62,17 +66,19 @@ class DashboardController extends Controller
      */
     public function getCardData()
     {
-        $cardData = $this->getFormattedCardData(request()->all());
+        $cardData = $this->dashboardHelper->getFormattedCardData(request()->all());
 
         return response()->json($cardData);
     }
 
     /**
      * Returns json data for available dashboard cards.
+     * 
+     * @return \Illuminate\Http\Response
      */
     public function getCards()
     {
-        $response = $this->cards;
+        $response = $this->dashboardHelper->getCards();;
 
         $response = array_map(function ($card) {
             if ($card['view_url'] ?? false) {
@@ -87,19 +93,26 @@ class DashboardController extends Controller
 
     /**
      * Returns updated json data for available dashboard cards.
+     * 
+     * @return \Illuminate\Http\Response
      */
     public function updateCards()
     {
         $requestData = request()->all();
 
+        $cards = $this->dashboardHelper->getCards();
+
         foreach ($requestData['cards'] as $requestedCardData) {
-            foreach ($this->cards as $cardIndex => $card) {
-                if (isset($card['card_id']) && isset($requestedCardData['card_id']) && $card['card_id'] == $requestedCardData['card_id']) {
-                    $this->cards[$cardIndex]['selected'] = $requestedCardData['selected'];
+            foreach ($cards as $cardIndex => $card) {
+                if (isset($card['card_id'])
+                    && isset($requestedCardData['card_id'])
+                    && $card['card_id'] == $requestedCardData['card_id']
+                ) {
+                    $cards[$cardIndex]['selected'] = $requestedCardData['selected'];
                 }
             }
         }
 
-        return response()->json($this->cards);
+        return response()->json($cards);
     }
 }

@@ -132,6 +132,7 @@
                         <thead>
                             <tr>
                                 <th style="width: 50%">{{ __('admin::app.quotes.bill-to') }}</th>
+
                                 @if ($quote->shipping_address)
                                     <th>{{ __('admin::app.quotes.ship-to') }}</th>
                                 @endif
@@ -167,12 +168,19 @@
                         <thead>
                             <tr>
                                 <th>{{ __('admin::app.quotes.sku') }}</th>
+
                                 <th>{{ __('admin::app.quotes.product-name') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.price') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.quantity') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.amount') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.discount') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.tax') }}</th>
+
                                 <th class="text-center">{{ __('admin::app.quotes.grand-total') }}</th>
                             </tr>
                         </thead>
@@ -182,14 +190,21 @@
                             @foreach ($quote->items as $item)
                                 <tr>
                                     <td>{{ $item->sku }}</td>
+
                                     <td>
                                         {{ $item->name }}
                                     </td>
+
                                     <td>{!! core()->formatBasePrice($item->price, true) !!}</td>
+
                                     <td class="text-center">{{ $item->quantity }}</td>
+
                                     <td class="text-center">{!! core()->formatBasePrice($item->total, true) !!}</td>
+
                                     <td class="text-center">{!! core()->formatBasePrice($item->discount_amount, true) !!}</td>
+
                                     <td class="text-center">{!! core()->formatBasePrice($item->tax_amount, true) !!}</td>
+                                    
                                     <td class="text-center">{!! core()->formatBasePrice($item->total + $item->tax_amount, true) !!}</td>
                                 </tr>
                             @endforeach

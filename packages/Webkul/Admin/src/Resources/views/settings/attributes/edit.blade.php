@@ -55,67 +55,115 @@
 
                             <div class="form-group" :class="[errors.has('code') ? 'has-error' : '']">
                                 <label for="code" class="required">{{ __('admin::app.settings.attributes.code') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="code" name="code" value="{{ old('code') ?: $attribute->code }}" disabled="disabled" data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;" v-code/>
+
+                                <input
+                                    type="text"
+                                    name="code"
+                                    class="control"
+                                    id="code"
+                                    value="{{ old('code') ?: $attribute->code }}"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;"
+                                    disabled="disabled"
+                                    v-code
+                                />
+
                                 <input type="hidden" name="code" value="{{ $attribute->code }}"/>
-                                <span class="control-error" v-if="errors.has('code')">@{{ errors.first('code') }}</span>
+
+                                <span class="control-error" v-if="errors.has('code')">
+                                    @{{ errors.first('code') }}
+                                </span>
                             </div>
 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">{{ __('admin::app.settings.attributes.name') }}</label>
-                                <input type="text" v-validate="'required'" class="control" id="name" name="name" value="{{ old('name') ?: $attribute->name }}" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('name')">@{{ errors.first('name') }}</span>
+
+                                <input
+                                    type="text"
+                                    name="name"
+                                    class="control"
+                                    id="name"
+                                    value="{{ old('name') ?: $attribute->name }}"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
+                                />
+
+                                <span class="control-error" v-if="errors.has('name')">
+                                    @{{ errors.first('name') }}
+                                </span>
                             </div>
 
                             <div class="form-group">
-                                <entity-type name="entity_type" value="{{ $attribute->entity_type }}" disabled="true" required="true"></entity-type>
+                                <entity-type
+                                    name="entity_type"
+                                    value="{{ $attribute->entity_type }}"
+                                    disabled="true"
+                                    required="true"
+                                ></entity-type>
                             </div>
 
                             <div class="form-group">
                                 <?php $selectedOption = old('type') ?: $attribute->type ?>
+
                                 <label for="type">{{ __('admin::app.settings.attributes.type') }}</label>
+
                                 <select class="control" id="type" disabled="disabled">
                                     <option value="text" {{ $selectedOption == 'text' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.text') }}
                                     </option>
+
                                     <option value="textarea" {{ $selectedOption == 'textarea' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.textarea') }}
                                     </option>
+
                                     <option value="price" {{ $selectedOption == 'price' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.price') }}
                                     </option>
+
                                     <option value="boolean" {{ $selectedOption == 'boolean' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.boolean') }}
                                     </option>
+
                                     <option value="select" {{ $selectedOption == 'select' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.select') }}
                                     </option>
+
                                     <option value="multiselect" {{ $selectedOption == 'multiselect' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.multiselect') }}
                                     </option>
+
                                     <option value="checkbox" {{ $selectedOption == 'checkbox' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.checkbox') }}
                                     </option>
+
                                     <option value="email" {{ $selectedOption == 'email' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.email') }}
                                     </option>
+
                                     <option value="address" {{ $selectedOption == 'address' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.address') }}
                                     </option>
+
                                     <option value="phone" {{ $selectedOption == 'phone' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.phone') }}
                                     </option>
+
                                     <option value="datetime" {{ $selectedOption == 'datetime' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.datetime') }}
                                     </option>
+
                                     <option value="date" {{ $selectedOption == 'date' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.date') }}
                                     </option>
+
                                     <option value="image" {{ $selectedOption == 'image' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.image') }}
                                     </option>
+
                                     <option value="file" {{ $selectedOption == 'file' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.file') }}
                                     </option>
+
                                     <option value="lookup" {{ $selectedOption == 'lookup' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.lookup') }}
                                     </option>
@@ -131,39 +179,54 @@
 
                             <div class="form-group">
                                 <label for="is_required">{{ __('admin::app.settings.attributes.is_required') }}</label>
+
                                 <select class="control" id="is_required" name="is_required">
-                                    <option value="0" {{ $attribute->is_required ? '' : 'selected' }}>{{ __('admin::app.settings.attributes.no') }}</option>
-                                    <option value="1" {{ $attribute->is_required ? 'selected' : '' }}>{{ __('admin::app.settings.attributes.yes') }}</option>
+                                    <option value="0" {{ $attribute->is_required ? '' : 'selected' }}>
+                                        {{ __('admin::app.settings.attributes.no') }}
+                                    </option>
+
+                                    <option value="1" {{ $attribute->is_required ? 'selected' : '' }}>
+                                        {{ __('admin::app.settings.attributes.yes') }}
+                                    </option>
                                 </select>
                             </div>
 
                             <div class="form-group">
                                 <label for="is_unique">{{ __('admin::app.settings.attributes.is_unique') }}</label>
+
                                 <select class="control" id="is_unique" name="is_unique" disabled>
                                     <option value="0" {{ $attribute->is_unique ? '' : 'selected' }}>
                                         {{ __('admin::app.settings.attributes.no') }}
                                     </option>
+                                    
                                     <option value="1" {{ $attribute->is_unique ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.yes') }}
                                     </option>
                                 </select>
+
                                 <input type="hidden" name="is_unique" value="{{ $attribute->is_unique }}"/>
                             </div>
 
                             <div class="form-group">
                                 <?php $selectedValidation = old('validation') ?: $attribute->validation ?>
+
                                 <label for="validation">{{ __('admin::app.settings.attributes.input_validation') }}</label>
+
                                 <select class="control" id="validation" name="validation">
                                     <option value=""></option>
+
                                     <option value="numeric" {{ $selectedValidation == 'numeric' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.number') }}
                                     </option>
+
                                     <option value="decimal" {{ $selectedValidation == 'decimal' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.decimal') }}
                                     </option>
+
                                     <option value="email" {{ $selectedValidation == 'email' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.email') }}
                                     </option>
+
                                     <option value="url" {{ $selectedValidation == 'url' ? 'selected' : '' }}>
                                         {{ __('admin::app.settings.attributes.url') }}
                                     </option>
@@ -205,8 +268,18 @@
                             :key="row.id"
                         >
                             <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
-                                <input type="text" v-validate="'required'" v-model="row['name']" :name="'options[' + row.id + '][name]'" class="control" data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"/>
-                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">@{{ errors.first('options[' + row.id + '][name]') }}</span>
+                                <input
+                                    type="text"
+                                    :name="'options[' + row.id + '][name]'"
+                                    class="control"
+                                    v-model="row['name']"
+                                    v-validate="'required'"
+                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
+                                />
+
+                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">
+                                    @{{ errors.first('options[' + row.id + '][name]') }}
+                                </span>
 
                                 <i class="icon align-justify-icon"></i>
                             </div>
@@ -220,16 +293,26 @@
                     </button>
                 </template>
 
-                <entity-type v-else-if="optionType == 'lookup'" name="lookup_type" value="{{ $attribute->lookup_type }}" disabled="false"></entity-type>
+                <entity-type
+                    name="lookup_type"
+                    value="{{ $attribute->lookup_type }}"
+                    v-else-if="optionType == 'lookup'"
+                    disabled="false"
+                ></entity-type>
             </template>
 
-            <entity-type v-else name="lookup_type" disabled="false" value="{{ $attribute->lookup_type }}"></entity-type>
+            <entity-type
+                name="lookup_type"
+                value="{{ $attribute->lookup_type }}"
+                disabled="false"
+                v-else
+            ></entity-type>
         </div>
     </script>
 
     <script type="text/x-template" id="entity-type-template">
         <div>
-            <label :for="name" :class="required == 'true' ? 'required' : ''">
+            <label :for="name" class="required">
                 {{ __('admin::app.settings.attributes.entity-type') }}
             </label>
 
