@@ -218,7 +218,7 @@
 
     <script type="text/x-template" id="entity-type-template">
         <div>
-            <label :for="name" :class="required == 'true' ? 'required' : ''">
+            <label :for="name" class="required">
                 {{ __('admin::app.settings.attributes.entity-type') }}
             </label>
 
