@@ -6,7 +6,7 @@
 
 @section('content-wrapper')
     <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.roles.index') }}">
+        <table-component data-src="{{ route('admin.settings.sources.index') }}">
             <template v-slot:table-header>
                 <h1>
                     {!! view_render_event('admin.settings.sources.index.header.before') !!}
