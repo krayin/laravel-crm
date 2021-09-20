@@ -7,6 +7,11 @@ use Webkul\UI\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
 {
+    /**
+     * Create datagrid instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         parent::__construct();
@@ -47,6 +52,11 @@ class AttributeDataGrid extends DataGrid
         ];
     }
 
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('attributes')
@@ -63,6 +73,11 @@ class AttributeDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
@@ -110,6 +125,11 @@ class AttributeDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -128,6 +148,11 @@ class AttributeDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

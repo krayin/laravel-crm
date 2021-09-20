@@ -7,6 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class WorkflowDataGrid extends DataGrid
 {
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('workflows')
@@ -18,6 +23,11 @@ class WorkflowDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
@@ -39,6 +49,11 @@ class WorkflowDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([

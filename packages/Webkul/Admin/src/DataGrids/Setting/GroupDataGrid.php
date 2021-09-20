@@ -7,6 +7,11 @@ use Webkul\UI\DataGrid\DataGrid;
 
 class GroupDataGrid extends DataGrid
 {
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('groups')
@@ -19,6 +24,11 @@ class GroupDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
@@ -48,6 +58,11 @@ class GroupDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
