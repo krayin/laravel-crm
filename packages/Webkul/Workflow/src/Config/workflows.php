@@ -2,23 +2,6 @@
 
 return [
     'trigger_entities' => [
-        
-        'persons' => [
-            'name'   => 'Persons',
-            'class'  => 'Webkul\Workflow\Helpers\Entity\Person',
-            'events' => [
-                [
-                    'event' => 'contacts.person.create.after',
-                    'name'  => 'Created',  
-                ], [
-                    'event' => 'contacts.person.update.after',
-                    'name'  => 'Updated',  
-                ], [
-                    'event' => 'contacts.person.delete.before',
-                    'name'  => 'Deleted',  
-                ],
-            ]
-        ],
 
         'leads' => [
             'name'   => 'Leads',
@@ -32,6 +15,40 @@ return [
                     'name'  => 'Updated',  
                 ], [
                     'event' => 'lead.delete.before',
+                    'name'  => 'Deleted',  
+                ],
+            ]
+        ],
+
+        'activities' => [
+            'name'   => 'Activities',
+            'class'  => 'Webkul\Workflow\Helpers\Entity\Activity',
+            'events' => [
+                [
+                    'event' => 'activity.create.after',
+                    'name'  => 'Created',  
+                ], [
+                    'event' => 'activity.update.after',
+                    'name'  => 'Updated',  
+                ], [
+                    'event' => 'activity.delete.before',
+                    'name'  => 'Deleted',  
+                ],
+            ]
+        ],
+        
+        'persons' => [
+            'name'   => 'Persons',
+            'class'  => 'Webkul\Workflow\Helpers\Entity\Person',
+            'events' => [
+                [
+                    'event' => 'contacts.person.create.after',
+                    'name'  => 'Created',  
+                ], [
+                    'event' => 'contacts.person.update.after',
+                    'name'  => 'Updated',  
+                ], [
+                    'event' => 'contacts.person.delete.before',
                     'name'  => 'Deleted',  
                 ],
             ]

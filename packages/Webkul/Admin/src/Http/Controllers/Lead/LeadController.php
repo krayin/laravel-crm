@@ -4,12 +4,10 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
-use Webkul\Admin\Notifications\Lead\Create;
-use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Lead\Repositories\StageRepository;
 
 class LeadController extends Controller
 {

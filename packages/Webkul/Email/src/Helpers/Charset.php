@@ -315,7 +315,7 @@ class Charset implements CharsetManager
 
     /**
      * Decode the string from Charset
-     * 
+     *
      * @param  string  $encodedString
      * @param  string  $charset
      * @return string
@@ -324,18 +324,18 @@ class Charset implements CharsetManager
     {
         if (strtolower($charset) == 'utf-8' || strtolower($charset) == 'us-ascii') {
             return $encodedString;
-        } else {
-            try {
-                return iconv($this->getCharsetAlias($charset), 'UTF-8//TRANSLIT', $encodedString);
-            } catch (\Exception $e) {
-                return iconv($this->getCharsetAlias($charset), 'UTF-8//IGNORE', $encodedString);
-            }
+        }
+
+        try {
+            return iconv($this->getCharsetAlias($charset), 'UTF-8//TRANSLIT', $encodedString);
+        } catch (\Exception $e) {
+            return iconv($this->getCharsetAlias($charset), 'UTF-8//IGNORE', $encodedString);
         }
     }
 
     /**
      * Get charset alias
-     * 
+     *
      * @param  string  $charset.
      * @return string
      */

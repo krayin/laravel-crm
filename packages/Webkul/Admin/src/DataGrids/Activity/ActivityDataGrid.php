@@ -46,9 +46,11 @@ class ActivityDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->where(function ($query) use ($currentUser) {
-                    $query->whereIn('activities.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds())
-                        ->orWhereIn('activity_participants.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                $queryBuilder->where(function ($query) use($currentUser) {
+                    $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+
+                    $query->whereIn('activities.user_id', $userIds)
+                        ->orWhereIn('activity_participants.user_id', $userIds);
 
                     return $query;
                 });
