@@ -70,8 +70,12 @@ class EmailController extends Controller
         switch (request('route')) {
             case 'compose':
                 return view('admin::mail.compose');
-            
+
             default:
+                if (request()->ajax()) {
+                    return app(\Webkul\Admin\DataGrids\Mail\EmailDataGrid::class)->toJson();
+                }
+
                 return view('admin::mail.index');
         }
     }
@@ -186,7 +190,7 @@ class EmailController extends Controller
         if (! is_null(request('is_draft'))) {
             if (request('is_draft')) {
                 session()->flash('success', trans('admin::app.mail.saved-to-draft'));
-    
+
                 return redirect()->route('admin.mail.index', ['route' => 'draft']);
             } else {
                 session()->flash('success', trans('admin::app.mail.create-success'));
@@ -213,7 +217,7 @@ class EmailController extends Controller
             return response()->json($response);
         } else {
             session()->flash('success', trans('admin::app.mail.update-success'));
-    
+
             return redirect()->back();
 
         }

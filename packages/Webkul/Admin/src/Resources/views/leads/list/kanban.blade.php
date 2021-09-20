@@ -10,20 +10,34 @@
     </style>
 @endpush
 
-@section('table-action')
-    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
-@stop
+<div class="table">
+    <div class="table-header">
+        <h1>
+            {!! view_render_event('admin.leads.index.header.before') !!}
 
-@section('table-section')
-    <kanban-filters></kanban-filters>
+            {{ Breadcrumbs::render('leads') }}
 
-    <kanban-component
-        no-data-text="{{ __('admin::app.leads.no-lead') }}"
-        get-url="{{ route('admin.leads.kanban.index') }}"
-        detail-text="{{ __('admin::app.leads.create-title') }}"
-        update-url="{{ route('admin.leads.kanban.update') }}"
-    ></kanban-component>
-@stop
+            {{ __('admin::app.leads.title') }}
+
+            {!! view_render_event('admin.leads.index.header.after') !!}
+        </h1>
+
+        <div class="table-action">
+            <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
+        </div>
+    </div>
+
+    <div class="table-body">
+        <kanban-filters></kanban-filters>
+
+        <kanban-component
+            no-data-text="{{ __('admin::app.leads.no-lead') }}"
+            get-url="{{ route('admin.leads.kanban.index') }}"
+            detail-text="{{ __('admin::app.leads.create-title') }}"
+            update-url="{{ route('admin.leads.kanban.update') }}"
+        ></kanban-component>
+    </div>
+</div>
 
 @push('scripts')
     <script type="text/x-template" id="kanban-filters-tempalte">
@@ -46,7 +60,7 @@
                     <a class="icon-container active">
                         <i class="icon layout-column-line-active-icon"></i>
                     </a>
-            
+
                     <a href="{{ route('admin.leads.index', ['view_type' => 'table']) }}" class="icon-container">
                         <i class="icon table-line-icon"></i>
                     </a>

@@ -2,18 +2,11 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
-use Illuminate\Support\Facades\DB;
 use Webkul\UI\DataGrid\DataGrid;
+use Illuminate\Support\Facades\DB;
 
 class PersonDataGrid extends DataGrid
 {
-    /**
-     * Set index columns, ex: id.
-     *
-     * @var int
-     */
-    protected $index = 'id';
-
     /**
      * Prepare query builder.
      *
@@ -24,15 +17,15 @@ class PersonDataGrid extends DataGrid
         $queryBuilder = DB::table('persons')
             ->addSelect(
                 'persons.id',
-                'persons.name',
+                'persons.name as person_name',
                 'persons.emails',
                 'persons.contact_numbers',
-                'organizations.name as organization'
+                'organizations.name as organization_name'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
         $this->addFilter('id', 'persons.id');
-        $this->addFilter('name', 'persons.name');
+        $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.id');
 
         $this->setQueryBuilder($queryBuilder);
@@ -54,7 +47,7 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'name',
+            'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
             'searchable'        => true,
@@ -62,51 +55,47 @@ class PersonDataGrid extends DataGrid
             'filterable_type'   => 'add'
         ]);
 
-        // $this->addColumn([
-        //     'index'             => 'emails',
-        //     'label'             => trans('admin::app.datagrid.emails'),
-        //     'type'              => 'string',
-        //     'searchable'        => true,
-        //     'sortable'          => false,
-        //     'filterable_type'   => 'add',
-        //     'closure'           => function ($row) {
-        //         $emails = json_decode($row->emails, true);
+        $this->addColumn([
+            'index'             => 'emails',
+            'label'             => trans('admin::app.datagrid.emails'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => false,
+            'wrapper'           => function ($row) {
+                $emails = json_decode($row->emails, true);
 
-        //         if ($emails) {
-        //             $emails = \Arr::pluck($emails, 'value');
+                if ($emails) {
+                    return collect($emails)->pluck('value')->join(', ');
+                }
+            },
+            'filterable_type'   => 'add',
+        ]);
 
-        //             return implode(', ', $emails);
-        //         }
-        //     },
-        // ]);
+        $this->addColumn([
+            'index'             => 'contact_numbers',
+            'label'             => trans('admin::app.datagrid.contact_numbers'),
+            'type'              => 'string',
+            'searchable'        => true,
+            'sortable'          => false,
+            'wrapper'           => function ($row) {
+                $contactNumbers = json_decode($row->contact_numbers, true);
 
-        // $this->addColumn([
-        //     'index'             => 'contact_numbers',
-        //     'label'             => trans('admin::app.datagrid.contact_numbers'),
-        //     'type'              => 'string',
-        //     'searchable'        => true,
-        //     'sortable'          => false,
-        //     'filterable_type'   => 'add',
-        //     'closure'           => function ($row) {
-        //         $contactNumbers = json_decode($row->contact_numbers, true);
+                if ($contactNumbers) {
+                    return collect($contactNumbers)->pluck('value')->join(', ');
+                }
+            },
+            'filterable_type'   => 'add',
+        ]);
 
-        //         if ($contactNumbers) {
-        //             $contactNumbers = \Arr::pluck($contactNumbers, 'value');
-
-        //             return implode(', ', $contactNumbers);
-        //         }
-        //     },
-        // ]);
-
-        // $this->addColumn([
-        //     'index'              => 'organization',
-        //     'label'              => trans('admin::app.datagrid.organization_name'),
-        //     'type'               => 'string',
-        //     'searchable'         => true,
-        //     'sortable'           => true,
-        //     'filterable_type'    => 'dropdown',
-        //     'filterable_options' => app('\Webkul\Contact\Repositories\OrganizationRepository')->get(['id as value', 'name as label'])->toArray(),
-        // ]);
+        $this->addColumn([
+            'index'              => 'organization',
+            'label'              => trans('admin::app.datagrid.organization_name'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
+        ]);
     }
 
     /**

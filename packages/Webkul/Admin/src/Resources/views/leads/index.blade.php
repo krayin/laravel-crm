@@ -1,24 +1,8 @@
-@extends('ui::datagrid.table')
+@extends('admin::layouts.master')
 
 @section('page_title')
     {{ __('admin::app.leads.title') }}
 @stop
-
-@section('table-header')
-    {!! view_render_event('admin.leads.index.header.before') !!}
-
-    {{ Breadcrumbs::render('leads') }}
-
-    {{ __('admin::app.leads.title') }}
-
-    {!! view_render_event('admin.leads.index.header.after') !!}
-@stop
-
-@php
-    $viewType = request()->view_type ?? "kanban";
-    
-    $tableClass = "\Webkul\Admin\DataGrids\Lead\LeadDataGrid";
-@endphp
 
 @push('css')
     <style>
@@ -50,18 +34,26 @@
     </style>
 @endpush
 
-@if ($viewType == "table")
-    {!! view_render_event('admin.leads.index.list.table.before') !!}
+@section('content-wrapper')
+    <div class="content full-page">
+        @php
+            $viewType = request()->view_type ?? "kanban";
+        @endphp
 
-    @include('admin::leads.list.table')
+        @if ($viewType == "table")
+            {!! view_render_event('admin.leads.index.list.table.before') !!}
 
-    {!! view_render_event('admin.leads.index.list.table.after') !!}
-@else
-    @php($showDefaultTable = false)
+                @include('admin::leads.list.table')
 
-    {!! view_render_event('admin.leads.index.list.kanban.before') !!}
+            {!! view_render_event('admin.leads.index.list.table.after') !!}
+        @else
+            @php($showDefaultTable = false)
 
-    @include('admin::leads.list.kanban')
+            {!! view_render_event('admin.leads.index.list.kanban.before') !!}
 
-    {!! view_render_event('admin.leads.index.list.kanban.after') !!}
-@endif
+                @include('admin::leads.list.kanban')
+
+            {!! view_render_event('admin.leads.index.list.kanban.after') !!}
+        @endif
+    </div>
+@stop

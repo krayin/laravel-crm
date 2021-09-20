@@ -3,12 +3,20 @@
         <template v-if="resultLoaded">
             <tr
                 :key="collectionIndex"
-                v-for="(row, collectionIndex) in dataCollection"
-                :class="`${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`"
+                v-for="(row, collectionIndex) in records"
+                :class="
+                    `${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`
+                "
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
-                        <template v-if="selectedTableRows.filter((item, index) => item == row.id).length">
+                        <template
+                            v-if="
+                                selectedTableRows.filter(
+                                    (item, index) => item == row.id
+                                ).length
+                            "
+                        >
                             <input
                                 type="checkbox"
                                 checked="checked"
@@ -51,7 +59,10 @@
                             v-if="action.method == 'GET'"
                             :data-method="action.method"
                         >
-                            <i :data-route="row[`${action.key}_url`]" :class="`icon ${action.icon}`"></i>
+                            <i
+                                :data-route="row[`${action.key}_url`]"
+                                :class="`icon ${action.icon}`"
+                            ></i>
                         </a>
 
                         <a
@@ -60,22 +71,28 @@
                             :title="action.title"
                             :data-action="row[`${action.key}_url`]"
                             :data-method="action.method"
-                            @click="doAction({
-                                event           : $event,
-                                route           : row[`${action.key}_url`],
-                                method          : action.method,
-                                confirm_text    : action.confirm_text,
-                            })"
+                            @click="
+                                doAction({
+                                    event: $event,
+                                    route: row[`${action.key}_url`],
+                                    method: action.method,
+                                    confirm_text: action.confirm_text
+                                })
+                            "
                         >
-                            <i :key="index" :data-route="row[`${action.key}_url`]" :class="`icon ${action.icon}`"></i>
+                            <i
+                                :key="index"
+                                :data-route="row[`${action.key}_url`]"
+                                :class="`icon ${action.icon}`"
+                            ></i>
                         </a>
                     </template>
                 </td>
             </tr>
 
-            <tr v-if="dataCollection.length == 0" class="no-records">
+            <tr v-if="records.length == 0" class="no-records">
                 <td colspan="10">
-                    {{ __('ui.datagrid.no-records') }}
+                    {{ __("ui.datagrid.no-records") }}
                 </td>
             </tr>
         </template>
@@ -89,98 +106,104 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
-    export default {
-        props: ['resultLoaded'],
+export default {
+    props: ["resultLoaded"],
 
-        computed: {
-            ...mapState({
-                tableData : state => state.tableData,
-                selectedTableRows : state => state.selectedTableRows,
-            }),
+    computed: {
+        ...mapState({
+            tableData: state => state.tableData,
+            selectedTableRows: state => state.selectedTableRows
+        }),
 
-            columns: function () {
-                return this.tableData.columns;
-            },
-
-            actions: function () {
-                return this.tableData.actions;
-            },
-
-            massActions: function () {
-                return this.tableData.massActions;
-            },
-
-            dataCollection: function () {
-                return this.tableData.records.data;
-            },
+        columns: function() {
+            return this.tableData.columns;
         },
 
-        methods: {
-            ...mapActions([
-                'selectTableRow',
-            ]),
+        actions: function() {
+            return this.tableData.actions;
+        },
 
-            doAction: function ({event, route, method, confirm_text}) {
-                if (confirm_text) {
-                    if (confirm(confirm_text)) {
-                        this.performAjax({event, route, method});
-                    }
-                } else {
-                    this.performAjax({event, route, method, type: 'download'});
-                }
-            },
+        massActions: function() {
+            return this.tableData.massActions;
+        },
 
-            redirectRow: function (redirectURL) {
-                if (redirectURL) {
-                    window.location = redirectURL;
-                }
-            },
-
-            getRowContent: function (content) {
-                return content || (content === 0 ? content : '--')
-            },
-
-            performAjax: function ({event, route, method, type}) {
-                this.$http[method.toLowerCase()](route)
-                    .then(response => {
-                        event.preventDefault();
-
-                        if (response.data.status) {
-                            if (type == 'download') {
-                                var dlAnchorElem = document.createElement('a');
-                                dlAnchorElem.id = 'downloadAnchorElem';
-
-                                document.body.appendChild(dlAnchorElem);
-
-                                var dataStr = `data:text/plain;charset=utf-8,${response.data.fileContent}`;
-                                var dlAnchorElem = document.getElementById('downloadAnchorElem');
-
-                                dlAnchorElem.setAttribute("href", dataStr);
-                                dlAnchorElem.setAttribute("download", `${response.data.fileName}`);
-
-                                dlAnchorElem.click();
-
-                                dlAnchorElem.parentNode.removeChild(dlAnchorElem);
-                            } else {
-                                this.addFlashMessages({
-                                    type    : "success",
-                                    message : response.data.message,
-                                });
-
-                                EventBus.$emit('refresh_table_data', {usePrevious: true});
-                            }
-                        }
-                    }).catch(error => {
-                        event.preventDefault();
-
-                        this.addFlashMessages({
-                            type    : "error",
-                            message : error.response.data.message,
-                        });
-                    });
-            }
+        records: function() {
+            return this.tableData.records.data;
         }
-    };
+    },
+
+    methods: {
+        ...mapActions(["selectTableRow"]),
+
+        doAction: function({ event, route, method, confirm_text }) {
+            if (confirm_text) {
+                if (confirm(confirm_text)) {
+                    this.performAjax({ event, route, method });
+                }
+            } else {
+                this.performAjax({ event, route, method, type: "download" });
+            }
+        },
+
+        redirectRow: function(redirectURL) {
+            if (redirectURL) {
+                window.location = redirectURL;
+            }
+        },
+
+        getRowContent: function(content) {
+            return content || (content === 0 ? content : "--");
+        },
+
+        performAjax: function({ event, route, method, type }) {
+            this.$http[method.toLowerCase()](route)
+                .then(response => {
+                    event.preventDefault();
+
+                    if (response.data.status) {
+                        if (type == "download") {
+                            var dlAnchorElem = document.createElement("a");
+                            dlAnchorElem.id = "downloadAnchorElem";
+
+                            document.body.appendChild(dlAnchorElem);
+
+                            var dataStr = `data:text/plain;charset=utf-8,${response.data.fileContent}`;
+                            var dlAnchorElem = document.getElementById(
+                                "downloadAnchorElem"
+                            );
+
+                            dlAnchorElem.setAttribute("href", dataStr);
+                            dlAnchorElem.setAttribute(
+                                "download",
+                                `${response.data.fileName}`
+                            );
+
+                            dlAnchorElem.click();
+
+                            dlAnchorElem.parentNode.removeChild(dlAnchorElem);
+                        } else {
+                            this.addFlashMessages({
+                                type: "success",
+                                message: response.data.message
+                            });
+
+                            EventBus.$emit("refresh_table_data", {
+                                usePrevious: true
+                            });
+                        }
+                    }
+                })
+                .catch(error => {
+                    event.preventDefault();
+
+                    this.addFlashMessages({
+                        type: "error",
+                        message: error.response.data.message
+                    });
+                });
+        }
+    }
+};
 </script>

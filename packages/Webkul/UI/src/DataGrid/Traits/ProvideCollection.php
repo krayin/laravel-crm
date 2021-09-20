@@ -63,6 +63,8 @@ trait ProvideCollection
                         return $collection;
                     }
 
+                    $this->attachColumnValues($columnName, $info);
+
                     $this->filterCollection($collection, $info, $columnType, $columnName);
                     break;
             }
@@ -100,6 +102,22 @@ trait ProvideCollection
                 return [$column['type'], $column['index']];
             }
         }
+    }
+
+    /**
+     * Prepare column filtered values.
+     *
+     * @return collection
+     */
+    public function attachColumnValues($columnName, $info)
+    {
+        foreach ($this->completeColumnDetails as $index => $column) {
+            if ($column['index'] == $columnName) {
+                $this->completeColumnDetails[$index]['values'] = explode(',', array_values($info)[0]);
+            }
+        }
+
+        return $this->completeColumnDetails;
     }
 
     /**
@@ -297,9 +315,26 @@ trait ProvideCollection
             foreach ($info as $condition => $filterValue) {
                 $this->resolve($collection, $columnName, $condition, '%' . $filterValue . '%');
             }
+        } else if (array_keys($info)[0] === 'in') {
+            foreach ($info as $condition => $filterValue) {
+                foreach (explode(',', $filterValue) as $value) {
+                    $this->resolve($collection, $columnName, 'like', "%{$value}%", 'orWhere');
+                }
+            }
+        } else if (array_keys($info)[0] === 'bw') {
+            foreach ($info as $condition => $filterValue) {
+                $dates = explode(',', $filterValue);
+
+                if (sizeof($dates) == 2) {
+                    if ($dates[1] == "") {
+                        $dates[1] = Carbon::today()->format('Y-m-d');
+                    }
+
+                    $this->resolve($collection, $columnName, $condition, $dates, 'whereBetween');
+                }
+            }
         } else {
             foreach ($info as $condition => $filterValue) {
-
                 $condition = ($condition === 'undefined') ? '=' : $condition;
 
                 if ($columnType === 'datetime') {
@@ -321,7 +356,7 @@ trait ProvideCollection
      */
     private function transformColumns($record)
     {
-        foreach($this->columns as $column) {
+        foreach($this->columns as $index => $column) {
             if (isset($column['wrapper'])) {
                 if (isset($column['closure']) && $column['closure'] == true) {
                     $record->{$column['index']} = $column['wrapper']($record);
@@ -335,6 +370,12 @@ trait ProvideCollection
                     } else {
                         $record->{$column['index']} = htmlspecialchars(core()->formatBasePrice($record->{$column['index']}));
                     }
+                }
+            }
+
+            if (isset($column['filterable_type']) && $column['filterable_type'] == "date_range") {
+                if (! isset($this->completeColumnDetails[$index]['values'])) {
+                    $this->completeColumnDetails[$index]['values'] = ["", ""];
                 }
             }
         }
@@ -370,7 +411,7 @@ trait ProvideCollection
     private function exceptionCheckInColumns($columnName)
     {
         foreach ($this->completeColumnDetails as $column) {
-            if ($column['index'] === $columnName && ! $column['filterable']) {
+            if ($column['index'] === $columnName && (isset($column['filterable']) && ! $column['filterable'])) {
                 return true;
             }
         }

@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class ProductDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.products.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('products')
@@ -26,6 +26,11 @@ class ProductDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
@@ -52,10 +57,11 @@ class ProductDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add',
-            'closure'         => function ($row) {
+            'closure'         => true,
+            'wrapper'         => function ($row) {
                 return round($row->price, 2);
             },
+            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
@@ -67,6 +73,11 @@ class ProductDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -85,6 +96,11 @@ class ProductDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

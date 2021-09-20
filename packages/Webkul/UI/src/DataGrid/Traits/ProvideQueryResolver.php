@@ -38,11 +38,16 @@ trait ProvideQueryResolver
      */
     private function resolveQuery($query, $columnName, $condition, $filterValue, $clause = 'where')
     {
-        $query->$clause(
-            $columnName,
-            $this->operators[$condition],
-            $filterValue
-        );
+        return $clause === 'whereBetween'
+            ? $query->$clause(
+                $columnName,
+                $filterValue
+            )
+            : $query->$clause(
+                $columnName,
+                $this->operators[$condition],
+                $filterValue
+            );
     }
 
     /**
@@ -77,7 +82,7 @@ trait ProvideQueryResolver
      */
     private function resolveFilterQuery($collection, $columnName, $condition, $filterValue, $nullCheck = null)
     {
-        $clause = is_null($nullCheck) ? null : ( $nullCheck ? 'orWhereNull' : 'whereNotNull' );
+        $clause = is_null($nullCheck) ? null : ($nullCheck ? 'orWhereNull' : 'whereNotNull');
 
         $collection->where(function ($query) use ($columnName, $condition, $filterValue, $clause) {
             $this->resolveQuery($query, $columnName, $condition, $filterValue);

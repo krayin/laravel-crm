@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class QuoteDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.quotes.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('quotes')
@@ -50,6 +50,11 @@ class QuoteDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
@@ -66,13 +71,14 @@ class QuoteDataGrid extends DataGrid
             'label'              => trans('admin::app.datagrid.sales-person'),
             'type'               => 'string',
             'sortable'           => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
-            'closure'            => function ($row) {
+            'closure'            => true,
+            'wrapper'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
                 return "<a href='" . $route . "'>" . $row->user_name . "</a>";
             },
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
         ]);
 
         $this->addColumn([
@@ -80,12 +86,13 @@ class QuoteDataGrid extends DataGrid
             'label'           => trans('admin::app.datagrid.person'),
             'type'            => 'string',
             'sortable'        => true,
-            'filterable_type' => 'add',
-            'closure'         => function ($row) {
+            'closure'         => true,
+            'wrapper'         => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
                 return "<a href='" . $route . "'>" . $row->person_name . "</a>";
             },
+            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
@@ -144,6 +151,11 @@ class QuoteDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -162,6 +174,11 @@ class QuoteDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

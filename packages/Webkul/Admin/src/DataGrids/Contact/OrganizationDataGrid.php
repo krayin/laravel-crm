@@ -8,20 +8,30 @@ use Webkul\Contact\Repositories\PersonRepository;
 
 class OrganizationDataGrid extends DataGrid
 {
+    /**
+     * Person repository instance.
+     *
+     * @var \Webkul\Contact\Repositories\PersonRepository
+     */
     protected $personRepository;
 
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.contacts.organizations.edit",
-    ];
-
+    /**
+     * Create datagrid instance.
+     *
+     * @return void
+     */
     public function __construct(PersonRepository $personRepository)
     {
-        $this->personRepository = $personRepository;
-
         parent::__construct();
+
+        $this->personRepository = $personRepository;
     }
 
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('organizations')
@@ -35,11 +45,15 @@ class OrganizationDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'             => 'id',
-            'head_style'        => 'width: 50px',
             'label'             => trans('admin::app.datagrid.id'),
             'type'              => 'string',
             'searchable'        => true,
@@ -58,14 +72,12 @@ class OrganizationDataGrid extends DataGrid
 
         $this->addColumn([
             'index'             => 'persons_count',
-            'head_style'        => 'width: 100px',
             'label'             => trans('admin::app.datagrid.persons_count'),
             'type'              => 'string',
             'searchable'        => false,
-            'closure'           => function ($row) {
-                $personsCount = $this->personRepository
-                                ->findWhere(['organization_id' => $row->id])
-                                ->count();
+            'closure'           => true,
+            'wrapper'           => function ($row) {
+                $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
 
                 $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
 
@@ -78,13 +90,18 @@ class OrganizationDataGrid extends DataGrid
             'label'             => trans('admin::app.datagrid.created_at'),
             'type'              => 'string',
             'sortable'          => true,
-            'filterable_type'   => 'date_range',
-            'closure'           => function ($row) {
+            'wrapper'           => function ($row) {
                 return core()->formatDate($row->created_at);
             },
+            'filterable_type'   => 'date_range',
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -103,6 +120,11 @@ class OrganizationDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

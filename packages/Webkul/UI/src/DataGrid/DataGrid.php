@@ -2,6 +2,7 @@
 
 namespace Webkul\UI\DataGrid;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Webkul\UI\DataGrid\Traits\ProvideBouncer;
@@ -17,7 +18,7 @@ abstract class DataGrid
      *
      * @var int
      */
-    protected $index;
+    protected $index = 'id';
 
     /**
      * Default sort order of datagrid.
@@ -356,12 +357,34 @@ abstract class DataGrid
     }
 
     /**
-     * Preprare mass actions.
+     * Prepare tab filters.
      *
-     * @return void
+     * @return array
      */
-    public function prepareMassActions()
+    public function prepareTabFilters($key)
     {
+        $tabFilters = config("datagrid_filters")[$key] ?? [];
+
+        foreach ($tabFilters as $tabIndex => $filter) {
+            if (($filter['value_type'] ?? false) == "lookup") {
+                $values = app($filter['repositoryClass'])
+                            ->get(['name', 'code as key', DB::raw("false as isActive")])
+                            ->prepend([
+                                'isActive'  => true,
+                                'key'       => 'all',
+                                'name'      => trans('admin::app.datagrid.all'),
+                            ])
+                            ->toArray();
+
+                $tabFilters[$tabIndex]['values'] = $values;
+            } else {
+                foreach ($filter['values'] as $valueIndex => $value) {
+                    $tabFilters[$tabIndex]['values'][$valueIndex]['name'] = trans($tabFilters[$tabIndex]['values'][$valueIndex]['name']);
+                }
+            }
+        }
+
+        return $tabFilters;
     }
 
     /**
@@ -370,6 +393,15 @@ abstract class DataGrid
      * @return void
      */
     public function prepareActions()
+    {
+    }
+
+    /**
+     * Preprare mass actions.
+     *
+     * @return void
+     */
+    public function prepareMassActions()
     {
     }
 
@@ -391,22 +423,11 @@ abstract class DataGrid
             'enableMassActions' => $this->enableMassAction,
             'paginated'         => $this->paginate,
             'itemsPerPage'      => $this->itemsPerPage,
-            'translations'      => $this->getTranslations(),
             'enableSearch'      => $this->enableSearch,
             'tabFilters'        => $this->tabFilters,
             'enablePerPage'     => $this->enablePerPage,
             'enableFilters'     => $this->enableFilters,
         ];
-    }
-
-    /**
-     * Get all translations for json response fully controlled by backend.
-     *
-     * @return array
-     */
-    public function getTranslations()
-    {
-        return [];
     }
 
     /**

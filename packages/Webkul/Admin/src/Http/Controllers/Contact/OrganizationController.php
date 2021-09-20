@@ -37,6 +37,10 @@ class OrganizationController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Contact\OrganizationDataGrid::class)->toJson();
+        }
+
         return view('admin::contacts.organizations.index');
     }
 
@@ -64,7 +68,7 @@ class OrganizationController extends Controller
         $organization = $this->organizationRepository->create(request()->all());
 
         Event::dispatch('contacts.organization.create.after', 1);
-        
+
         session()->flash('success', trans('admin::app.contacts.organizations.create-success'));
 
         return redirect()->route('admin.contacts.organizations.index');
@@ -97,7 +101,7 @@ class OrganizationController extends Controller
         $organization = $this->organizationRepository->update(request()->all(), $id);
 
         Event::dispatch('contacts.organization.update.after', $organization);
-        
+
         session()->flash('success', trans('admin::app.contacts.organizations.update-success'));
 
         return redirect()->route('admin.contacts.organizations.index');
@@ -112,7 +116,7 @@ class OrganizationController extends Controller
     public function destroy($id)
     {
         $this->organizationRepository->findOrFail($id);
-        
+
         try {
             Event::dispatch('contact.organization.delete.before', $id);
 

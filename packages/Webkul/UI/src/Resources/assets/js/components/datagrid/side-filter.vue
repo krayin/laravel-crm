@@ -11,7 +11,7 @@
                 </div>
             </h1>
         </header>
-        
+
         <template v-for="(data, key) in (columns || tableData.columns)">
             <div :class="`form-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
                 <label>{{ data.label }}</label>
@@ -26,7 +26,7 @@
                         />
 
                         <span class="middle-text">to</span>
-                        
+
                         <input
                             type="text"
                             placeholder="End"
@@ -63,7 +63,7 @@
                         </date>
 
                         <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
-                        
+
                         <date>
                             <input
                                 type="text"
@@ -150,7 +150,7 @@
 
                 if (values.indexOf(target.value) == -1) {
                     values.push(target.value);
-    
+
                     this.updateFilterValues({
                         key: indexKey,
                         values
@@ -165,7 +165,7 @@
             removeFieldValue: function (key, index, indexKey) {
                 const values = (this.columns || this.tableData.columns)[key].values;
                 values.splice(index, 1);
-                
+
                 this.updateFilterValues({
                     key: indexKey,
                     values
@@ -193,7 +193,7 @@
 
                 var values = (this.columns || this.tableData.columns)[key].values;
                 values = "";
-                
+
                 this.updateFilterValues({
                     key,
                     values
