@@ -1,15 +1,3 @@
-@push('css')
-    <style>
-        .content-container {
-            overflow: hidden;
-        }
-
-        .full-page {
-            height: 100%;
-        }
-    </style>
-@endpush
-
 <div class="table">
     <div class="table-header">
         <h1>

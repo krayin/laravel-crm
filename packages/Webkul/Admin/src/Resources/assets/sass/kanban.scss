@@ -11,8 +11,8 @@ ul.drag-inner-list {
 
 .drag-container {
     margin: 0px;
-    overflow: scroll;
-    height: calc(100% - 120px);
+    overflow: auto;
+    height: 420px;
 
     span div a {
         @include border-radius(4px);
@@ -62,7 +62,7 @@ ul.drag-inner-list {
         padding: 20px;
         align-items: center;
         justify-content: space-between;
-        
+
         > div {
             width: 100%;
 
@@ -106,7 +106,7 @@ ul.drag-inner-list {
             position: absolute;
             top: calc(50% - 75px);
             left: calc(50% - 49px);
-            
+
             .empty-kanban-icon {
                 width: 98px;
                 height: 98px;
