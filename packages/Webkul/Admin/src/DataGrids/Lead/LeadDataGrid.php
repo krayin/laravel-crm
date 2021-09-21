@@ -8,18 +8,6 @@ use Illuminate\Support\Facades\DB;
 class LeadDataGrid extends DataGrid
 {
     /**
-     * Create datagrid instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->tabFilters = $this->prepareTabFilters("leads");
-    }
-
-    /**
      * Prepare query builder.
      *
      * @return void
@@ -41,8 +29,7 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')
             ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
             ->leftJoin('lead_sources', 'leads.lead_source_id', '=', 'lead_sources.id')
-            ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
-            ;
+            ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id');
 
         $currentUser = auth()->guard('user')->user();
 
@@ -144,6 +131,22 @@ class LeadDataGrid extends DataGrid
                 return core()->formatDate($row->created_at);
             },
             'filterable_type' => 'date_range',
+        ]);
+    }
+
+    /**
+     * Prepare tab filters.
+     *
+     * @return array
+     */
+    public function prepareTabFilters()
+    {
+        $this->addTabFilter([
+            'type'              => 'pill',
+            'key'               => 'type',
+            'condition'         => 'eq',
+            "value_type"        => "lookup",
+            "repositoryClass"   => "\Webkul\Lead\Repositories\StageRepository",
         ]);
     }
 

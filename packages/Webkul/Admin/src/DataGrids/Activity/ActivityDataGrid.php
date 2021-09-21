@@ -8,18 +8,6 @@ use Webkul\UI\DataGrid\DataGrid;
 class ActivityDataGrid extends DataGrid
 {
     /**
-     * Create datagrid instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->tabFilters = $this->prepareTabFilters("activities");
-    }
-
-    /**
      * Prepare query builder.
      *
      * @return void
@@ -46,7 +34,7 @@ class ActivityDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->where(function ($query) use($currentUser) {
+                $queryBuilder->where(function ($query) use ($currentUser) {
                     $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
 
                     $query->whereIn('activities.user_id', $userIds)
@@ -195,6 +183,72 @@ class ActivityDataGrid extends DataGrid
                 return core()->formatDate($row->created_at);
             },
             'filterable_type' => 'date_range',
+        ]);
+    }
+
+    /**
+     * Prepare tab filters.
+     *
+     * @return array
+     */
+    public function prepareTabFilters()
+    {
+        $this->addTabFilter([
+            'type'      => 'pill',
+            'key'       => 'type',
+            'condition' => 'eq',
+            'values'    => [
+                [
+                    'name'      => 'admin::app.leads.all',
+                    'isActive'  => true,
+                    'key'       => 'all',
+                ], [
+                    'name'      => 'admin::app.leads.call',
+                    'isActive'  => false,
+                    'key'       => 'call',
+                ], [
+                    'name'      => 'admin::app.leads.meeting',
+                    'isActive'  => false,
+                    'key'       => 'meeting',
+                ], [
+                    'name'      => 'admin::app.leads.lunch',
+                    'isActive'  => false,
+                    'key'       => 'lunch',
+                ]
+            ]
+        ]);
+
+        $this->addTabFilter([
+            'type'      => 'group',
+            'key'       => 'scheduled',
+            'condition' => 'eq',
+            'values'    => [
+                [
+                    'name'      => 'admin::app.datagrid.filters.yesterday',
+                    'isActive'  => false,
+                    'key'       => 'yesterday',
+                ], [
+                    'name'      => 'admin::app.datagrid.filters.today',
+                    'isActive'  => false,
+                    'key'       => 'today',
+                ], [
+                    'name'      => 'admin::app.datagrid.filters.tomorrow',
+                    'isActive'  => false,
+                    'key'       => 'tomorrow',
+                ], [
+                    'name'      => 'admin::app.datagrid.filters.this-week',
+                    'isActive'  => false,
+                    'key'       => 'this_week',
+                ], [
+                    'name'      => 'admin::app.datagrid.filters.this-month',
+                    'isActive'  => true,
+                    'key'       => 'this_month',
+                ], [
+                    'name'      => 'admin::app.datagrid.filters.custom',
+                    'isActive'  => false,
+                    'key'       => 'custom',
+                ]
+            ]
         ]);
     }
 

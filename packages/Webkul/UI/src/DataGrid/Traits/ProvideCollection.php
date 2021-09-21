@@ -44,26 +44,34 @@ trait ProvideCollection
             $columnName = $this->findColumnType($key)[1] ?? null;
 
             switch ($key) {
-                case 'type':
-                case 'duration':
-                case 'scheduled':
-                    $this->prepareTabFilter($collection, $key, $info);
-                    break;
-
+                /**
+                 * All sorting related method will go here.
+                 */
                 case 'sort':
                     $this->sortCollection($collection, $info);
                     break;
 
+                /**
+                 * All search related method will go here.
+                 */
                 case 'search':
                     $this->searchCollection($collection, $info);
                     break;
 
+                /**
+                 *  Default case is for filter. All filter related method will go here.
+                 */
                 default:
                     if ($this->exceptionCheckInColumns($columnName)) {
                         return $collection;
                     }
 
                     $this->attachColumnValues($columnName, $info);
+
+                    if (in_array($key, ['type', 'duration', 'scheduled'])) {
+                        $this->filterCollectionFromTabFilter($collection, $key, $info);
+                        break;
+                    }
 
                     $this->filterCollection($collection, $info, $columnType, $columnName);
                     break;
@@ -74,7 +82,8 @@ trait ProvideCollection
     }
 
     /**
-     * Finalyze your collection here.
+     * Finalyze your collection here. If you want to manipulate actions, then
+     * go to action method or if you want to manipulate columns then go to columns method.
      *
      * @return void
      */
@@ -163,12 +172,119 @@ trait ProvideCollection
     }
 
     /**
+     * Sort collection.
+     *
+     * @param  \Illuminate\Support\Collection  $collection
+     * @param  array                           $info
+     * @return void
+     */
+    private function sortCollection($collection, $info)
+    {
+        $availableOptions = ['asc', 'desc'];
+
+        $selectedSortOption = strtolower(array_values($info)[0]);
+
+        $countKeys = count(array_keys($info));
+
+        if ($countKeys > 1) {
+            throw new \Exception(__('ui::app.datagrid.error.multiple-sort-keys-error'));
+        }
+
+        $columnName = $this->findColumnType(array_keys($info)[0]);
+
+        $collection->orderBy(
+            $columnName[1],
+            in_array($selectedSortOption, $availableOptions) ? $selectedSortOption : 'asc'
+        );
+    }
+
+    /**
+     * Search collection.
+     *
+     * @param  \Illuminate\Support\Collection  $collection
+     * @param  array                           $info
+     * @return void
+     */
+    private function searchCollection($collection, $info)
+    {
+        $countKeys = count(array_keys($info));
+
+        if ($countKeys > 1) {
+            throw new \Exception(__('ui::app.datagrid.error.multiple-search-keys-error'));
+        }
+
+        if ($countKeys == 1) {
+            $collection->where(function ($collection) use ($info) {
+                foreach ($this->completeColumnDetails as $column) {
+                    if ($column['searchable'] == true) {
+                        $this->resolve($collection, $column['index'], 'like', '%' . $info['all'] . '%', 'orWhere');
+                    }
+                }
+            });
+        }
+    }
+
+    /**
+     * Filter collection.
+     *
+     * @param  \Illuminate\Support\Collection  $collection
+     * @param  array                           $info
+     * @param  string                          $columnType
+     * @param  string                          $columnName
+     * @return void
+     */
+    private function filterCollection($collection, $info, $columnType, $columnName)
+    {
+        foreach ($info as $condition => $filterValue) {
+            switch (array_keys($info)[0]) {
+                case 'like':
+                case 'nlike':
+                    $this->resolve($collection, $columnName, $condition, '%' . $filterValue . '%');
+                    break;
+
+                case 'in':
+                    foreach (explode(',', $filterValue) as $value) {
+                        $this->resolve($collection, $columnName, 'like', "%{$value}%", 'orWhere');
+                    }
+                    break;
+
+                case 'bw':
+                    $dates = explode(',', $filterValue);
+
+                    if (sizeof($dates) == 2) {
+                        if ($dates[1] == "") {
+                            $dates[1] = Carbon::today()->format('Y-m-d');
+                        }
+
+                        $this->resolve($collection, $columnName, $condition, $dates, 'whereBetween');
+                    }
+                    break;
+
+                default:
+                    $condition = ($condition === 'undefined') ? '=' : $condition;
+
+                    if ($columnType === 'datetime') {
+                        $this->resolve($collection, $columnName, $condition, $filterValue, 'whereDate');
+                    } else if ($columnType === 'boolean') {
+                        $this->resolve($collection, $columnName, $condition, $filterValue, 'where', 'resolveBooleanQuery');
+                    } else {
+                        $this->resolve($collection, $columnName, $condition, $filterValue);
+                    }
+                    break;
+            }
+        }
+    }
+
+    /**
      * Prepare tab filter.
      *
      * @return void
      */
-    public function prepareTabFilter($collection, $key, $info)
+    public function filterCollectionFromTabFilter($collection, $key, $info)
     {
+        /**
+         * To Do (@devansh-webkul): Will refactor after functionality check.
+         */
         foreach ($this->tabFilters as $filterIndex => $filter) {
             if ($filter['key'] == $key) {
                 foreach ($filter['values'] as $filterValueIndex => $filterValue) {
@@ -248,107 +364,6 @@ trait ProvideCollection
     }
 
     /**
-     * Sort collection.
-     *
-     * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
-     * @return void
-     */
-    private function sortCollection($collection, $info)
-    {
-        $availableOptions = ['asc', 'desc'];
-
-        $selectedSortOption = strtolower(array_values($info)[0]);
-
-        $countKeys = count(array_keys($info));
-
-        if ($countKeys > 1) {
-            throw new \Exception(__('ui::app.datagrid.error.multiple-sort-keys-error'));
-        }
-
-        $columnName = $this->findColumnType(array_keys($info)[0]);
-
-        $collection->orderBy(
-            $columnName[1],
-            in_array($selectedSortOption, $availableOptions) ? $selectedSortOption : 'asc'
-        );
-    }
-
-    /**
-     * Search collection.
-     *
-     * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
-     * @return void
-     */
-    private function searchCollection($collection, $info)
-    {
-        $countKeys = count(array_keys($info));
-
-        if ($countKeys > 1) {
-            throw new \Exception(__('ui::app.datagrid.error.multiple-search-keys-error'));
-        }
-
-        if ($countKeys == 1) {
-            $collection->where(function ($collection) use ($info) {
-                foreach ($this->completeColumnDetails as $column) {
-                    if ($column['searchable'] == true) {
-                        $this->resolve($collection, $column['index'], 'like', '%' . $info['all'] . '%', 'orWhere');
-                    }
-                }
-            });
-        }
-    }
-
-    /**
-     * Filter collection.
-     *
-     * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
-     * @param  string                          $columnType
-     * @param  string                          $columnName
-     * @return void
-     */
-    private function filterCollection($collection, $info, $columnType, $columnName)
-    {
-        if (array_keys($info)[0] === 'like' || array_keys($info)[0] === 'nlike') {
-            foreach ($info as $condition => $filterValue) {
-                $this->resolve($collection, $columnName, $condition, '%' . $filterValue . '%');
-            }
-        } else if (array_keys($info)[0] === 'in') {
-            foreach ($info as $condition => $filterValue) {
-                foreach (explode(',', $filterValue) as $value) {
-                    $this->resolve($collection, $columnName, 'like', "%{$value}%", 'orWhere');
-                }
-            }
-        } else if (array_keys($info)[0] === 'bw') {
-            foreach ($info as $condition => $filterValue) {
-                $dates = explode(',', $filterValue);
-
-                if (sizeof($dates) == 2) {
-                    if ($dates[1] == "") {
-                        $dates[1] = Carbon::today()->format('Y-m-d');
-                    }
-
-                    $this->resolve($collection, $columnName, $condition, $dates, 'whereBetween');
-                }
-            }
-        } else {
-            foreach ($info as $condition => $filterValue) {
-                $condition = ($condition === 'undefined') ? '=' : $condition;
-
-                if ($columnType === 'datetime') {
-                    $this->resolve($collection, $columnName, $condition, $filterValue, 'whereDate');
-                } else if ($columnType === 'boolean') {
-                    $this->resolve($collection, $columnName, $condition, $filterValue, 'where', 'resolveBooleanQuery');
-                } else {
-                    $this->resolve($collection, $columnName, $condition, $filterValue);
-                }
-            }
-        }
-    }
-
-    /**
      * Transform your columns.
      *
      * @parma  object  $record
@@ -373,6 +388,9 @@ trait ProvideCollection
                 }
             }
 
+            /**
+             * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
+             */
             if (isset($column['filterable_type']) && $column['filterable_type'] == "date_range") {
                 if (! isset($this->completeColumnDetails[$index]['values'])) {
                     $this->completeColumnDetails[$index]['values'] = ["", ""];
