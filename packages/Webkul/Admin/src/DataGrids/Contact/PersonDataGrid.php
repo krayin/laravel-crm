@@ -18,9 +18,9 @@ class PersonDataGrid extends DataGrid
             ->addSelect(
                 'persons.id',
                 'persons.name as person_name',
-                'persons.emails as emails',
+                'persons.emails',
                 'persons.contact_numbers',
-                'organizations.name as organization_name'
+                'organizations.name as organization'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
@@ -80,7 +80,7 @@ class PersonDataGrid extends DataGrid
             'index'              => 'organization',
             'label'              => trans('admin::app.datagrid.organization_name'),
             'type'               => 'dropdown',
-            'dropdown_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options'   => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
             'searchable'         => true,
             'sortable'           => false,
         ]);
