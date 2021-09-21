@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Quote;
 
 use Illuminate\Support\Facades\Event;
 use Barryvdh\DomPDF\Facade as PDF;
+use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Quote\Repositories\QuoteRepository;
@@ -52,6 +53,10 @@ class QuoteController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(QuoteDataGrid::class)->toJson();
+        }
+
         return view('admin::quotes.index');
     }
 
@@ -86,7 +91,7 @@ class QuoteController extends Controller
         }
 
         Event::dispatch('quote.create.after', $quote);
-        
+
         session()->flash('success', trans('admin::app.quotes.create-success'));
 
         return redirect()->route('admin.quotes.index');
@@ -119,7 +124,7 @@ class QuoteController extends Controller
         $quote = $this->quoteRepository->update(request()->all(), $id);
 
         Event::dispatch('quote.update.after', $quote);
-        
+
         session()->flash('success', trans('admin::app.quotes.update-success'));
 
         return redirect()->route('admin.quotes.index');
@@ -148,7 +153,7 @@ class QuoteController extends Controller
     public function destroy($id)
     {
         $this->quoteRepository->findOrFail($id);
-        
+
         try {
             Event::dispatch('settings.quotes.delete.before', $id);
 

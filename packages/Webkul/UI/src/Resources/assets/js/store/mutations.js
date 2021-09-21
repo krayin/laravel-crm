@@ -22,7 +22,7 @@ const SELECT_ALL_ROWS = (state, payload) => {
         state.selectedTableRows = [];
 
         state.allSelected = payload || ! state.allSelected;
-    
+
         state.tableData.records.data.forEach(row => {
             if (state.allSelected) {
                 state.selectedTableRows.push(row.id);

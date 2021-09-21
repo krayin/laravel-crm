@@ -47,9 +47,11 @@ class EmailTemplateController extends Controller
      */
     public function index()
     {
-        return view('admin::settings.email-templates.index', [
-            'tableClass' => '\Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid'
-        ]);
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid::class)->toJson();
+        }
+
+        return view('admin::settings.email-templates.index');
     }
 
     /**

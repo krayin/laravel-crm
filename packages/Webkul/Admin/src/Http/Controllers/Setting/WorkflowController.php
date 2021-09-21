@@ -33,9 +33,11 @@ class WorkflowController extends Controller
      */
     public function index()
     {
-        return view('admin::settings.workflows.index', [
-            'tableClass' => '\Webkul\Admin\DataGrids\Setting\WorkflowDataGrid'
-        ]);
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Setting\WorkflowDataGrid::class)->toJson();
+        }
+
+        return view('admin::settings.workflows.index');
     }
 
     /**

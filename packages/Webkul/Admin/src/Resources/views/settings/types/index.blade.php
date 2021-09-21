@@ -1,28 +1,34 @@
-@extends('ui::datagrid.table')
+@extends('admin::layouts.master')
 
 @section('page_title')
     {{ __('admin::app.settings.types.title') }}
 @stop
 
-@section('table-header')
-    {!! view_render_event('admin.settings.types.index.header.before') !!}
+@section('content-wrapper')
+    <div class="content full-page">
+        <table-component data-src="{{ route('admin.settings.types.index') }}">
+            <template v-slot:table-header>
+                <h1>
+                    {!! view_render_event('admin.settings.types.index.header.before') !!}
 
-    {{ Breadcrumbs::render('settings.types') }}
+                    {{ Breadcrumbs::render('settings.types') }}
 
-    {{ __('admin::app.settings.types.title') }}
+                    {{ __('admin::app.settings.types.title') }}
 
-    {!! view_render_event('admin.settings.types.index.header.after') !!}
-@stop
+                    {!! view_render_event('admin.settings.types.index.header.after') !!}
+                </h1>
+            </template>
 
-@section('table-action')
-    <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
-@stop
+            <template v-slot:table-action>
+                <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
+            </template>
+        <table-component>
+    </div>
 
-@section('meta-content')
     <form action="{{ route('admin.settings.types.store') }}" method="POST" @submit.prevent="onSubmit">
         <modal id="addTypeModal" :is-open="modalIds.addTypeModal">
             <h3 slot="header-title">{{ __('admin::app.settings.types.create-title') }}</h3>
-            
+
             <div slot="header-actions">
                 {!! view_render_event('admin.settings.types.create.form_buttons.before') !!}
 

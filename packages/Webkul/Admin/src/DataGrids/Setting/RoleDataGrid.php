@@ -2,16 +2,16 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class RoleDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.roles.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('roles')
@@ -22,19 +22,24 @@ class RoleDataGrid extends DataGrid
                 'roles.permission_type'
             );
 
+        $this->addFilter('id', 'roles.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -43,7 +48,6 @@ class RoleDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -55,13 +59,10 @@ class RoleDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'permission_type',
-            'label'              => trans('admin::app.datagrid.permission_type'),
-            'type'               => 'boolean',
-            'searchable'         => true,
-            'sortable'           => false,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => [
+            'index'            => 'permission_type',
+            'label'            => trans('admin::app.datagrid.permission_type'),
+            'type'             => 'dropdown',
+            'dropdown_options' => [
                 [
                     'label' => trans('admin::app.settings.roles.all'),
                     'value' => 'all',
@@ -70,9 +71,16 @@ class RoleDataGrid extends DataGrid
                     'value' => 'custom',
                 ],
             ],
+            'searchable'       => true,
+            'sortable'         => false,
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -89,9 +97,5 @@ class RoleDataGrid extends DataGrid
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
             'icon'         => 'trash-icon',
         ]);
-    }
-
-    public function prepareMassActions()
-    {
     }
 }

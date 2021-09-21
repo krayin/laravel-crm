@@ -2,53 +2,48 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Arr;
 use Webkul\UI\DataGrid\DataGrid;
+use Illuminate\Support\Facades\DB;
 
 class PersonDataGrid extends DataGrid
 {
-    protected $organizations = [];
-
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.contacts.persons.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('persons')
             ->addSelect(
                 'persons.id',
-                'persons.name',
-                'persons.emails',
+                'persons.name as person_name',
+                'persons.emails as emails',
                 'persons.contact_numbers',
-                'organizations.name as organization'
+                'organizations.name as organization_name'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
         $this->addFilter('id', 'persons.id');
-        $this->addFilter('name', 'persons.name');
+        $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'id',
-            'type'              => 'hidden',
-            'searchable'        => true,
-        ]);
-
-        $this->addColumn([
-            'index'             => 'name',
+            'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
@@ -57,14 +52,11 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'filterable_type'   => 'add',
-            'closure'           => function ($row) {
+            'wrapper'           => function ($row) {
                 $emails = json_decode($row->emails, true);
 
                 if ($emails) {
-                    $emails = \Arr::pluck($emails, 'value');
-    
-                    return implode(', ', $emails);
+                    return collect($emails)->pluck('value')->join(', ');
                 }
             },
         ]);
@@ -75,14 +67,11 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'filterable_type'   => 'add',
-            'closure'           => function ($row) {
+            'wrapper'           => function ($row) {
                 $contactNumbers = json_decode($row->contact_numbers, true);
 
                 if ($contactNumbers) {
-                    $contactNumbers = \Arr::pluck($contactNumbers, 'value');
-    
-                    return implode(', ', $contactNumbers);
+                    return collect($contactNumbers)->pluck('value')->join(', ');
                 }
             },
         ]);
@@ -90,14 +79,18 @@ class PersonDataGrid extends DataGrid
         $this->addColumn([
             'index'              => 'organization',
             'label'              => trans('admin::app.datagrid.organization_name'),
-            'type'               => 'string',
+            'type'               => 'dropdown',
+            'dropdown_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
             'searchable'         => true,
-            'sortable'           => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => app('\Webkul\Contact\Repositories\OrganizationRepository')->get(['id as value', 'name as label'])->toArray(),
+            'sortable'           => false,
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -116,6 +109,11 @@ class PersonDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

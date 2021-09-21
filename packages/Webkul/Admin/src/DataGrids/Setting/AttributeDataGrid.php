@@ -2,20 +2,20 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
 {
-    protected $tabFilters = [];
-    
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.attributes.edit",
-    ];
-
+    /**
+     * Create datagrid instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
+        parent::__construct();
+
         $this->tabFilters = [
             [
                 'type'      => 'pill',
@@ -50,12 +50,13 @@ class AttributeDataGrid extends DataGrid
                 ]
             ]
         ];
-
-        $this->addFilter('type', 'entity_type');
-
-        parent::__construct();
     }
 
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('attributes')
@@ -67,19 +68,25 @@ class AttributeDataGrid extends DataGrid
                 'attributes.entity_type'
             );
 
+        $this->addFilter('id', 'attributes.id');
+        $this->addFilter('type', 'entity_type');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -88,7 +95,6 @@ class AttributeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -97,7 +103,6 @@ class AttributeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -118,6 +123,11 @@ class AttributeDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -136,6 +146,11 @@ class AttributeDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

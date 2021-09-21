@@ -7,11 +7,11 @@ use Illuminate\Support\Facades\DB;
 
 class TypeDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.types.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('lead_types')
@@ -20,19 +20,24 @@ class TypeDataGrid extends DataGrid
                 'lead_types.name'
             );
 
+        $this->addFilter('id', 'lead_types.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -41,10 +46,14 @@ class TypeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([

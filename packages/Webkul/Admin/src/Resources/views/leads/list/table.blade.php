@@ -1,7 +1,17 @@
-@section('table-action')
-    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
-@stop
+<table-component data-src="{{ route('admin.leads.index') }}" switch-page-url="{{ route('admin.leads.index') }}">
+    <template v-slot:table-header>
+        <h1>
+            {!! view_render_event('admin.leads.index.header.before') !!}
 
-@section('table-section')
-    <table-component table-class="{{ $tableClass }}" switch-page-url="{{ route('admin.leads.index') }}"><table-component>
-@show
+            {{ Breadcrumbs::render('leads') }}
+
+            {{ __('admin::app.leads.title') }}
+
+            {!! view_render_event('admin.leads.index.header.after') !!}
+        </h1>
+    </template>
+
+    <template v-slot:table-action>
+        <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
+    </template>
+<table-component>

@@ -7,11 +7,11 @@ use Webkul\UI\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.mail.view",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('emails')
@@ -28,15 +28,21 @@ class EmailDataGrid extends DataGrid
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => '<i class="icon attachment-icon"></i>',
+            'label'      => trans('admin::app.datagrid.attachments'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
-            'closure'    => function ($row) {
+            'closure'    => true,
+            'wrapper'    => function ($row) {
                 if ($row->attachments) {
                     return '<i class="icon attachment-icon"></i>';
                 }
@@ -49,7 +55,6 @@ class EmailDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
@@ -58,37 +63,40 @@ class EmailDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add',
-            'class'           => 'subject',
-            'closure'         => function ($row) {
+            'closure'         => true,
+            'wrapper'         => function ($row) {
                 return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
             },
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
+            'index'           => 'date_range',
             'label'           => trans('admin::app.datagrid.created_at'),
             'type'            => 'string',
             'sortable'        => true,
-            'filterable_type' => 'date_range',
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
             'title'  => request('route') == 'draft'
-                        ? trans('ui::app.datagrid.edit')
-                        : trans('ui::app.datagrid.view'),
+                ? trans('ui::app.datagrid.edit')
+                : trans('ui::app.datagrid.view'),
             'method' => 'GET',
             'route'  => 'admin.mail.view',
             'params' => ['route' => request('route')],
             'icon'   => request('route') == 'draft'
-                        ? 'pencil-icon'
-                        : 'eye-icon'
+                ? 'pencil-icon'
+                : 'eye-icon'
         ]);
 
         $this->addAction([
@@ -100,6 +108,11 @@ class EmailDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

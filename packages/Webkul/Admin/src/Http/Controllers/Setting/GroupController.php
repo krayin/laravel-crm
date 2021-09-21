@@ -34,9 +34,11 @@ class GroupController extends Controller
      */
     public function index()
     {
-        return view('admin::settings.groups.index', [
-            'tableClass' => '\Webkul\Admin\DataGrids\Setting\GroupDataGrid'
-        ]);
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Setting\GroupDataGrid::class)->toJson();
+        }
+
+        return view('admin::settings.groups.index');
     }
 
     /**

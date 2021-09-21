@@ -11,13 +11,13 @@
                 </div>
             </h1>
         </header>
-        
+
         <template v-for="(data, key) in (columns || tableData.columns)">
-            <div :class="`form-group ${data.filterable_type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.filterable_type">
+            <div :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.type">
                 <label>{{ data.label }}</label>
 
                 <div class="field-container">
-                    <template v-if="data.filterable_type == 'integer_range'">
+                    <template v-if="data.type == 'integer_range'">
                         <input
                             type="text"
                             placeholder="Start"
@@ -26,7 +26,7 @@
                         />
 
                         <span class="middle-text">to</span>
-                        
+
                         <input
                             type="text"
                             placeholder="End"
@@ -35,7 +35,54 @@
                         />
                     </template>
 
-                    <template v-else-if="data.filterable_type == 'add'">
+                    <template v-else-if="data.type == 'date_range'">
+                        <date>
+                            <input
+                                type="text"
+                                class="control half"
+                                placeholder="Start Date"
+                                v-model="data.values[0]"
+                                @change="changeDateRange(key, data.values)"
+                            />
+                        </date>
+
+                        <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
+
+                        <date>
+                            <input
+                                type="text"
+                                class="control half"
+                                placeholder="End Date"
+                                v-model="data.values[1]"
+                                @change="changeDateRange(key, data.values)"
+                            />
+                        </date>
+                    </template>
+
+                    <template v-else-if="data.type == 'dropdown'">
+                        <select class="control" @change="pushFieldValue(key, $event, data.index)">
+                            <option value="" disabled selected>
+                                {{ data.label }}
+                            </option>
+                            <option :value="option.value" :key="index" v-for="(option, index) in data.dropdown_options">
+                                {{ option.label }}
+                            </option>
+                        </select>
+
+                        <div class="selected-options">
+                            <span
+                                :key="index"
+                                v-for="(value, index) in data.values"
+                                class="badge badge-md badge-pill badge-secondary"
+                            >
+                                {{ getFilteredValue(value, data) }}
+
+                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
+                            </span>
+                        </div>
+                    </template>
+
+                    <template v-else>
                         <span class="control" @click="toggleInput(data.index)" v-if="! addField[data.index]">
                             <i class="icon add-icon"></i> {{ data.label }}
                         </span>
@@ -49,46 +96,7 @@
                                 @keyup.enter="pushFieldValue(key, $event, data.index)"
                             />
                         </div>
-                    </template>
 
-                    <template v-else-if="data.filterable_type == 'date_range'">
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                placeholder="Start Date"
-                                v-model="data.values[0]"
-                                @change="changeDateRange(key, data.values)"
-                            />
-                        </date>
-
-                        <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
-                        
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                placeholder="End Date"
-                                v-model="data.values[1]"
-                                @change="changeDateRange(key, data.values)"
-                            />
-                        </date>
-                    </template>
-
-                    <template v-else-if="data.filterable_type == 'dropdown'">
-                        <select class="control" @change="pushFieldValue(key, $event, data.index)">
-                            <option value="" disabled selected>
-                                {{ data.label }}
-                            </option>
-                            <option :value="option.value" :key="index" v-for="(option, index) in data.filterable_options">
-                                {{ option.label }}
-                            </option>
-                        </select>
-                    </template>
-
-                    <i class="icon close-icon" @click="removeFilter({type: data.filterable_type, key, index: data.index})"></i>
-
-                    <template v-if="data.filterable_type == 'add' || data.filterable_type == 'dropdown'">
                         <div class="selected-options">
                             <span
                                 :key="index"
@@ -101,6 +109,8 @@
                             </span>
                         </div>
                     </template>
+
+                    <i class="icon close-icon" @click="removeFilter({type: data.type, key, index: data.index})"></i>
                 </div>
             </div>
         </template>
@@ -150,7 +160,7 @@
 
                 if (values.indexOf(target.value) == -1) {
                     values.push(target.value);
-    
+
                     this.updateFilterValues({
                         key: indexKey,
                         values
@@ -165,7 +175,7 @@
             removeFieldValue: function (key, index, indexKey) {
                 const values = (this.columns || this.tableData.columns)[key].values;
                 values.splice(index, 1);
-                
+
                 this.updateFilterValues({
                     key: indexKey,
                     values
@@ -178,7 +188,7 @@
                 this.$store.state.filters = this.$store.state.filters.filter(filter => filter.column == 'view_type' && filter.val == 'table');
 
                 (this.columns || this.tableData.columns).forEach((column, index) => {
-                    if (column.filterable_type && column.filterable_type == 'date_range') {
+                    if (column.type && column.type == 'date_range') {
                         $('.flatpickr-input').val();
                     }
                 });
@@ -191,9 +201,9 @@
                     this.addField[index] = false;
                 }
 
-                var values = (this.columns || this.tableData.columns)[key].values;
+                let values = (this.columns || this.tableData.columns)[key].values;
                 values = "";
-                
+
                 this.updateFilterValues({
                     key,
                     values
@@ -209,11 +219,11 @@
             },
 
             getFilteredValue: function (value, data) {
-                if (data.filterable_type == 'dropdown' && data.filterable_options) {
-                    var filterable_option = data.filterable_options.filter(option => option.value == value);
+                if (data.type == 'dropdown' && data.dropdown_options) {
+                    let dropdown_option = data.dropdown_options.filter(option => option.value == value);
 
-                    if (filterable_option.length > 0) {
-                        return filterable_option[0].label;
+                    if (dropdown_option.length > 0) {
+                        return dropdown_option[0].label;
                     }
                 }
 

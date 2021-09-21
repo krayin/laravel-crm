@@ -37,6 +37,10 @@ class PersonController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Contact\PersonDataGrid::class)->toJson();
+        }
+
         return view('admin::contacts.persons.index');
     }
 
@@ -63,7 +67,7 @@ class PersonController extends Controller
         $person = $this->personRepository->create(request()->all());
 
         Event::dispatch('contacts.person.create.after', $person);
-        
+
         session()->flash('success', trans('admin::app.contacts.persons.create-success'));
 
         return redirect()->route('admin.contacts.persons.index');
@@ -96,7 +100,7 @@ class PersonController extends Controller
         $person = $this->personRepository->update(request()->all(), $id);
 
         Event::dispatch('contacts.person.update.after', $person);
-        
+
         session()->flash('success', trans('admin::app.contacts.persons.update-success'));
 
         return redirect()->route('admin.contacts.persons.index');
@@ -125,7 +129,7 @@ class PersonController extends Controller
     public function destroy($id)
     {
         $this->personRepository->findOrFail($id);
-        
+
         try {
             Event::dispatch('contact.person.delete.before', $id);
 

@@ -10,7 +10,7 @@
                             :key="Math.random()"
                             @change="selectAllRows(false)"
                         />
-                        
+
                         <label class="checkbox-view" for="checkbox"></label>
                     </template>
 
@@ -71,7 +71,7 @@
             },
 
             massActions: function () {
-                return this.tableData.massactions;
+                return this.tableData.massActions;
             },
 
             dataCollection: function () {
@@ -83,7 +83,7 @@
             ...mapActions([
                 'selectAllRows',
             ]),
-            
+
             findCurrentSort: function () {
                 for (let i in this.filters) {
                     if (this.filters[i].column === 'sort') {

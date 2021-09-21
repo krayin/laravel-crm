@@ -4,12 +4,12 @@ namespace Webkul\Admin\Http\Controllers\Activity;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\Contact\Repositories\PersonRepository;
 
 class ActivityController extends Controller
 {
@@ -85,6 +85,10 @@ class ActivityController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return app(\Webkul\Admin\DataGrids\Activity\ActivityDataGrid::class)->toJson();
+        }
+
         return view('admin::activities.index');
     }
 
@@ -134,7 +138,7 @@ class ActivityController extends Controller
         }
 
         Event::dispatch('activity.create.after', $activity);
-        
+
         session()->flash('success', trans('admin::app.activities.create-success'));
 
         return redirect()->back();
@@ -246,12 +250,12 @@ class ActivityController extends Controller
         if ($file) {
             if ($leadId = request('lead_id')) {
                 $lead = $this->leadRepository->find($leadId);
-    
+
                 $lead->activities()->attach($file->activity->id);
             }
 
             Event::dispatch('activities.file.create.after', $file);
-            
+
             session()->flash('success', trans('admin::app.activities.file-upload-success'));
         } else {
             session()->flash('error', trans('admin::app.activities.file-upload-error'));
@@ -282,7 +286,7 @@ class ActivityController extends Controller
     public function destroy($id)
     {
         $this->activityRepository->findOrFail($id);
-        
+
         try {
             Event::dispatch('activity.delete.before', $id);
 

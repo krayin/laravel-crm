@@ -80,13 +80,15 @@
             @endforeach
 
             window.serverErrors = [];
-            
+
             @if (isset($errors) && count($errors))
                 window.serverErrors = @json($errors->getMessages());
             @endif
 
             window._translations = {};
             window._translations['ui'] = @json(app('Webkul\Core\Helpers\Helper')->jsonTranslations("UI"));
+            window.baseURL = '{{ url()->to('/') }}';
+            window.params = @json(request()->route()->parameters());
         </script>
 
         <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>

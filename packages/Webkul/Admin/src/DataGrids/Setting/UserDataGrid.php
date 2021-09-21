@@ -2,17 +2,16 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\User\Models\User;
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class UserDataGrid extends DataGrid
 {
-    protected $redirectRow = [
-        "id"    => "id",
-        "route" => "admin.settings.users.edit",
-    ];
-
+    /**
+     * Prepare query builder.
+     *
+     * @return void
+     */
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('users')
@@ -24,19 +23,24 @@ class UserDataGrid extends DataGrid
                 'users.created_at'
             );
 
+        $this->addFilter('id', 'users.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
+    /**
+     * Add columns.
+     *
+     * @return void
+     */
     public function addColumns()
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -45,7 +49,6 @@ class UserDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -54,15 +57,13 @@ class UserDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
             'index'              => 'status',
             'label'              => trans('admin::app.datagrid.status'),
-            'type'               => 'boolean',
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => [
+            'type'               => 'dropdown',
+            'dropdown_options' => [
                 [
                     'label' => trans('admin::app.datagrid.active'),
                     'value' => 1,
@@ -71,7 +72,8 @@ class UserDataGrid extends DataGrid
                     'value' => 0,
                 ],
             ],
-            'closure'            => function ($row) {
+            'closure'            => true,
+            'wrapper'            => function ($row) {
                 if ($row->status == 1) {
                     return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {
@@ -83,15 +85,19 @@ class UserDataGrid extends DataGrid
         $this->addColumn([
             'index'           => 'created_at',
             'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'string',
+            'type'            => 'date_range',
             'sortable'        => true,
-            'filterable_type' => 'date_range',
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
     }
 
+    /**
+     * Prepare actions.
+     *
+     * @return void
+     */
     public function prepareActions()
     {
         $this->addAction([
@@ -110,6 +116,11 @@ class UserDataGrid extends DataGrid
         ]);
     }
 
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
     public function prepareMassActions()
     {
         $this->addMassAction([

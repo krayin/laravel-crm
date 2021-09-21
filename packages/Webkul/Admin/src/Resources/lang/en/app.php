@@ -603,6 +603,7 @@
             'type'              => 'Type',
             'price'             => 'Price',
             'email'             => 'Email',
+            'attachments'       => 'Attachments',
             'from'              => 'From',
             'lead'              => 'Lead',
             'title'             => 'Title',
