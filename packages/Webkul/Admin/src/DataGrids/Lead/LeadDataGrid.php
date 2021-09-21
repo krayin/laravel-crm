@@ -59,7 +59,7 @@ class LeadDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => 'ID',
+            'label'      => trans('admin::app.datagrid.id'),
             'type'       => 'hidden',
             'searchable' => true,
             'sortable'   => true,

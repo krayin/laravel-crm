@@ -37,7 +37,7 @@ class EmailDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => 'Attachments',
+            'label'      => trans('admin::app.datagrid.attachments'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
