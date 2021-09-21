@@ -68,7 +68,7 @@ trait ProvideCollection
 
                     $this->attachColumnValues($columnName, $info);
 
-                    if (in_array($key, ['type', 'duration', 'scheduled'])) {
+                    if (in_array($key, $this->customTabFilters)) {
                         $this->filterCollectionFromTabFilter($collection, $key, $info);
                         break;
                     }
