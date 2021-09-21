@@ -22,6 +22,8 @@ class RoleDataGrid extends DataGrid
                 'roles.permission_type'
             );
 
+        $this->addFilter('id', 'roles.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -38,7 +40,6 @@ class RoleDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -47,7 +48,6 @@ class RoleDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -59,13 +59,10 @@ class RoleDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'permission_type',
-            'label'              => trans('admin::app.datagrid.permission_type'),
-            'type'               => 'boolean',
-            'searchable'         => true,
-            'sortable'           => false,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => [
+            'index'            => 'permission_type',
+            'label'            => trans('admin::app.datagrid.permission_type'),
+            'type'             => 'dropdown',
+            'dropdown_options' => [
                 [
                     'label' => trans('admin::app.settings.roles.all'),
                     'value' => 'all',
@@ -74,6 +71,8 @@ class RoleDataGrid extends DataGrid
                     'value' => 'custom',
                 ],
             ],
+            'searchable'       => true,
+            'sortable'         => false,
         ]);
     }
 

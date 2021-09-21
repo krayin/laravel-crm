@@ -68,6 +68,7 @@ class AttributeDataGrid extends DataGrid
                 'attributes.entity_type'
             );
 
+        $this->addFilter('id', 'attributes.id');
         $this->addFilter('type', 'entity_type');
 
         $this->setQueryBuilder($queryBuilder);
@@ -86,7 +87,6 @@ class AttributeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -95,7 +95,6 @@ class AttributeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -104,7 +103,6 @@ class AttributeDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([

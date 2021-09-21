@@ -23,6 +23,8 @@ class UserDataGrid extends DataGrid
                 'users.created_at'
             );
 
+        $this->addFilter('id', 'users.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -39,7 +41,6 @@ class UserDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -48,7 +49,6 @@ class UserDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -57,23 +57,13 @@ class UserDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
             'index'              => 'status',
             'label'              => trans('admin::app.datagrid.status'),
-            'type'               => 'boolean',
-            'closure'            => true,
-            'wrapper'            => function ($row) {
-                if ($row->status == 1) {
-                    return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
-                } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . trans('admin::app.datagrid.inactive');
-                }
-            },
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => [
+            'type'               => 'dropdown',
+            'dropdown_options' => [
                 [
                     'label' => trans('admin::app.datagrid.active'),
                     'value' => 1,
@@ -82,17 +72,24 @@ class UserDataGrid extends DataGrid
                     'value' => 0,
                 ],
             ],
+            'closure'            => true,
+            'wrapper'            => function ($row) {
+                if ($row->status == 1) {
+                    return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
+                } else {
+                    return '<span class="badge badge-round badge-danger"></span>' . trans('admin::app.datagrid.inactive');
+                }
+            },
         ]);
 
         $this->addColumn([
             'index'           => 'created_at',
             'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'string',
+            'type'            => 'date_range',
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
-            'filterable_type' => 'date_range',
         ]);
     }
 

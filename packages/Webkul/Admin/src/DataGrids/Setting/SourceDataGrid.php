@@ -20,6 +20,8 @@ class SourceDataGrid extends DataGrid
                 'lead_sources.name'
             );
 
+        $this->addFilter('id', 'lead_sources.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -32,12 +34,10 @@ class SourceDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'           => 'id',
-            'head_style'      => 'width: 50px',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -46,7 +46,6 @@ class SourceDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
     }
 

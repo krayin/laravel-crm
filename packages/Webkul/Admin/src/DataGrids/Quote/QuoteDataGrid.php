@@ -63,13 +63,13 @@ class QuoteDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
             'index'              => 'user_name',
             'label'              => trans('admin::app.datagrid.sales-person'),
-            'type'               => 'string',
+            'type'               => 'dropdown',
+            'dropdown_options'   => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
             'sortable'           => true,
             'closure'            => true,
             'wrapper'            => function ($row) {
@@ -77,8 +77,6 @@ class QuoteDataGrid extends DataGrid
 
                 return "<a href='" . $route . "'>" . $row->user_name . "</a>";
             },
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
         ]);
 
         $this->addColumn([
@@ -92,7 +90,6 @@ class QuoteDataGrid extends DataGrid
 
                 return "<a href='" . $route . "'>" . $row->person_name . "</a>";
             },
-            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([

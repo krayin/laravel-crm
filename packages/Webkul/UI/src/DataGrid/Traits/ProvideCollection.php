@@ -193,7 +193,7 @@ trait ProvideCollection
         $columnName = $this->findColumnType(array_keys($info)[0]);
 
         $collection->orderBy(
-            $columnName[1],
+            $this->filterMap[$columnName[1]] ?? $columnName[1],
             in_array($selectedSortOption, $availableOptions) ? $selectedSortOption : 'asc'
         );
     }
@@ -252,7 +252,7 @@ trait ProvideCollection
                     $dates = explode(',', $filterValue);
 
                     if (sizeof($dates) == 2) {
-                        if ($dates[1] == "") {
+                        if ($dates[1] == '') {
                             $dates[1] = Carbon::today()->format('Y-m-d');
                         }
 
@@ -288,7 +288,7 @@ trait ProvideCollection
         foreach ($this->tabFilters as $filterIndex => $filter) {
             if ($filter['key'] == $key) {
                 foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                    if (array_keys($info)[0] == "bw" && $filterValue['key'] == 'custom') {
+                    if (array_keys($info)[0] == 'bw' && $filterValue['key'] == 'custom') {
                         $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
                     } else {
                         $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
@@ -297,10 +297,10 @@ trait ProvideCollection
 
                 $value = array_values($info)[0];
 
-                if ($key === "duration") {
-                    $column = $this->filterMap["created_at"] ?? "created_at";
-                } else if ($key === "scheduled") {
-                    $column = "schedule_from";
+                if ($key === 'duration') {
+                    $column = $this->filterMap['created_at'] ?? 'created_at';
+                } else if ($key === 'scheduled') {
+                    $column = 'schedule_from';
                 } else {
                     $column = $key;
                 }
@@ -348,11 +348,11 @@ trait ProvideCollection
                         break;
 
                     default:
-                        if ($value != "all") {
-                            if ($key == "duration") {
+                        if ($value != 'all') {
+                            if ($key == 'duration') {
                                 $collection->whereBetween(
                                     $column,
-                                    explode(",", $value)
+                                    explode(',', $value)
                                 );
                             } else {
                                 $collection->where($this->filterMap[$column] ?? $column, $value);
@@ -391,9 +391,9 @@ trait ProvideCollection
             /**
              * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
              */
-            if (isset($column['filterable_type']) && $column['filterable_type'] == "date_range") {
+            if (isset($column['type']) && $column['type'] == 'date_range') {
                 if (! isset($this->completeColumnDetails[$index]['values'])) {
-                    $this->completeColumnDetails[$index]['values'] = ["", ""];
+                    $this->completeColumnDetails[$index]['values'] = ['', ''];
                 }
             }
         }

@@ -37,11 +37,12 @@ class EmailDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => '<i class="icon attachment-icon"></i>',
+            'label'      => 'Attachments',
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
-            'closure'    => function ($row) {
+            'closure'    => true,
+            'wrapper'    => function ($row) {
                 if ($row->attachments) {
                     return '<i class="icon attachment-icon"></i>';
                 }
@@ -54,7 +55,6 @@ class EmailDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
@@ -63,23 +63,20 @@ class EmailDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'closure'                => true,
+            'closure'         => true,
             'wrapper'         => function ($row) {
                 return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
             },
-            'class'           => 'subject',
-            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
+            'index'           => 'date_range',
             'label'           => trans('admin::app.datagrid.created_at'),
             'type'            => 'string',
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
-            'filterable_type' => 'date_range',
         ]);
     }
 

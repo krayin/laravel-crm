@@ -21,6 +21,8 @@ class EmailTemplateDataGrid extends DataGrid
                 'email_templates.subject',
             );
 
+        $this->addFilter('id', 'email_templates.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -37,7 +39,6 @@ class EmailTemplateDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -46,7 +47,6 @@ class EmailTemplateDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -55,7 +55,6 @@ class EmailTemplateDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
     }
 

@@ -23,6 +23,8 @@ class ProductDataGrid extends DataGrid
                 'products.quantity'
             );
 
+        $this->addFilter('id', 'products.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -39,7 +41,6 @@ class ProductDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -48,7 +49,6 @@ class ProductDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -61,7 +61,6 @@ class ProductDataGrid extends DataGrid
             'wrapper'         => function ($row) {
                 return round($row->price, 2);
             },
-            'filterable_type' => 'add',
         ]);
 
         $this->addColumn([

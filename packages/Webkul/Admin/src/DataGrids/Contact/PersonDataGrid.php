@@ -18,7 +18,7 @@ class PersonDataGrid extends DataGrid
             ->addSelect(
                 'persons.id',
                 'persons.name as person_name',
-                'persons.emails',
+                'persons.emails as emails',
                 'persons.contact_numbers',
                 'organizations.name as organization_name'
             )
@@ -38,14 +38,6 @@ class PersonDataGrid extends DataGrid
      */
     public function addColumns()
     {
-        $this->addColumn([
-            'index'             => 'id',
-            'label'             => 'ID',
-            'type'              => 'string',
-            'searchable'        => true,
-            'sortable'          => true,
-        ]);
-
         $this->addColumn([
             'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
@@ -90,7 +82,7 @@ class PersonDataGrid extends DataGrid
             'type'               => 'dropdown',
             'dropdown_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
             'searchable'         => true,
-            'sortable'           => true,
+            'sortable'           => false,
         ]);
     }
 

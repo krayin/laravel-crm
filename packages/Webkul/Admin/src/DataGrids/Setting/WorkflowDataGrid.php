@@ -20,6 +20,8 @@ class WorkflowDataGrid extends DataGrid
                 'workflows.name'
             );
 
+        $this->addFilter('id', 'workflows.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -36,7 +38,6 @@ class WorkflowDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -45,7 +46,6 @@ class WorkflowDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
     }
 

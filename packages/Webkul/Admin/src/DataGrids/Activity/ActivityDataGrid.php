@@ -75,12 +75,11 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'user',
-            'label'              => trans('admin::app.datagrid.created_by'),
-            'type'               => 'hidden',
-            'sortable'           => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'index'            => 'user',
+            'label'            => trans('admin::app.datagrid.created_by'),
+            'type'             => 'dropdown',
+            'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'sortable'         => true,
         ]);
 
         $this->addColumn([
@@ -104,26 +103,15 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'type',
-            'head_style' => 'width: 70px',
             'label'      => trans('admin::app.datagrid.type'),
             'type'       => 'boolean',
         ]);
 
         $this->addColumn([
             'index'              => 'is_done',
-            'head_style'         => 'width: 100px',
             'label'              => trans('admin::app.datagrid.is_done'),
-            'type'               => 'boolean',
-            'closure'            => true,
-            'wrapper'            => function ($row) {
-                if ($row->is_done) {
-                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
-                } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
-                }
-            },
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => [
+            'type'               => 'dropdown',
+            'dropdown_options' => [
                 [
                     'value' => 0,
                     'label' => __("admin::app.common.no"),
@@ -132,6 +120,14 @@ class ActivityDataGrid extends DataGrid
                     'label' => __("admin::app.common.yes"),
                 ]
             ],
+            'closure'            => true,
+            'wrapper'            => function ($row) {
+                if ($row->is_done) {
+                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
+                } else {
+                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
+                }
+            },
         ]);
 
         $this->addColumn([
@@ -148,41 +144,32 @@ class ActivityDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'schedule_from',
-            'head_style'      => 'width: 100px',
             'label'           => trans('admin::app.datagrid.schedule_from'),
-            'title'           => true,
-            'type'            => 'string',
+            'type'            => 'date_range',
             'sortable'        => true,
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->schedule_from);
             },
-            'filterable_type' => 'date_range',
         ]);
 
         $this->addColumn([
             'index'           => 'schedule_to',
-            'head_style'      => 'width: 100px',
             'label'           => trans('admin::app.datagrid.schedule_to'),
-            'title'           => true,
-            'type'            => 'string',
+            'type'            => 'date_range',
             'sortable'        => true,
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->schedule_to);
             },
-            'filterable_type' => 'date_range',
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'head_style'      => 'width: 100px',
+            'index'           => 'date_range',
             'label'           => trans('admin::app.datagrid.created_at'),
-            'title'           => true,
             'type'            => 'string',
             'sortable'        => true,
             'wrapper'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
-            'filterable_type' => 'date_range',
         ]);
     }
 

@@ -338,7 +338,7 @@ abstract class DataGrid
     /**
      * Add tab filter.
      *
-     * @param  string  $filterConfig
+     * @param  array  $filterConfig
      * @return void
      */
     public function addTabFilter($filterConfig)

@@ -21,6 +21,8 @@ class GroupDataGrid extends DataGrid
                 'groups.description'
             );
 
+        $this->addFilter('id', 'groups.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -37,7 +39,6 @@ class GroupDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([
@@ -46,7 +47,6 @@ class GroupDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'filterable_type' => 'add'
         ]);
 
         $this->addColumn([

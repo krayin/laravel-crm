@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\UI\DataGrid\DataGrid;
 
 class OrganizationDataGrid extends DataGrid
 {
@@ -42,6 +42,8 @@ class OrganizationDataGrid extends DataGrid
                 'organizations.created_at'
             );
 
+        $this->addFilter('id', 'organizations.id');
+
         $this->setQueryBuilder($queryBuilder);
     }
 
@@ -58,7 +60,6 @@ class OrganizationDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
@@ -67,7 +68,6 @@ class OrganizationDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => true,
-            'filterable_type'   => 'add'
         ]);
 
         $this->addColumn([
@@ -75,6 +75,7 @@ class OrganizationDataGrid extends DataGrid
             'label'             => trans('admin::app.datagrid.persons_count'),
             'type'              => 'string',
             'searchable'        => false,
+            'sortable'          => false,
             'closure'           => true,
             'wrapper'           => function ($row) {
                 $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
@@ -88,12 +89,11 @@ class OrganizationDataGrid extends DataGrid
         $this->addColumn([
             'index'             => 'created_at',
             'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'string',
+            'type'              => 'date_range',
             'sortable'          => true,
             'wrapper'           => function ($row) {
                 return core()->formatDate($row->created_at);
             },
-            'filterable_type'   => 'date_range',
         ]);
     }
 
