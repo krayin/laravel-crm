@@ -449,6 +449,7 @@
                 'entity-type'           => 'Entity Type',
                 'lookup'                => 'Lookup',
                 'entity_type'           => 'Entity type',
+                'lookup-type'           => 'Lookup Type',
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
