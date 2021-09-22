@@ -619,6 +619,7 @@
                                     class="control"
                                     v-model="search_term"
                                     autocomplete="off"
+                                    placeholder="{{ __('admin::app.leads.participant-info') }}"
                                     v-on:keyup="search"
                                 >
 
