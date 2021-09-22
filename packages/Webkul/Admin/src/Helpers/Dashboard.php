@@ -613,9 +613,10 @@ class Dashboard
     public function getTopProducts($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topProducts = $this->leadProductRepository
-            ->select('leads.title as label', \DB::raw("(COUNT(*)) as count"))
+            ->select('lead_products.*', 'products.name as label', \DB::raw("(COUNT(*)) as count"))
             ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
-            ->groupBy('product_id')
+            ->leftJoin('products', 'lead_products.product_id', '=', 'products.id')
+            ->groupBy('lead_products.product_id')
             ->whereBetween('lead_products.created_at', [$startDateFilter, $endDateFilter])
             ->limit(6)
             ->get()
