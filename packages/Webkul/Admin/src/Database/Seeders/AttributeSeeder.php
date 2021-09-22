@@ -176,7 +176,7 @@ class AttributeSeeder extends Seeder
                 'validation'          => NULL,
                 'sort_order'          => '1',
                 'is_required'         => '1',
-                'is_unique'           => '0',
+                'is_unique'           => '1',
                 'quick_add'           => '1',
                 'is_user_defined'     => '0',
                 'created_at'          => $now,
