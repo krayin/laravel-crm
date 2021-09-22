@@ -39,6 +39,14 @@ class PersonDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
+            'index'      => 'id',
+            'label'      => trans('admin::app.datagrid.id'),
+            'type'       => 'hidden',
+            'searchable' => true,
+            'sortable'   => true,
+        ]);
+        
+        $this->addColumn([
             'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
@@ -52,7 +60,7 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 $emails = json_decode($row->emails, true);
 
                 if ($emails) {
@@ -67,7 +75,7 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 $contactNumbers = json_decode($row->contact_numbers, true);
 
                 if ($contactNumbers) {

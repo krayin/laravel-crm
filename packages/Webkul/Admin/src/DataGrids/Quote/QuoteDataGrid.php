@@ -71,8 +71,7 @@ class QuoteDataGrid extends DataGrid
             'type'               => 'dropdown',
             'dropdown_options'   => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
             'sortable'           => true,
-            'closure'            => true,
-            'wrapper'            => function ($row) {
+            'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
                 return "<a href='" . $route . "'>" . $row->user_name . "</a>";
@@ -84,8 +83,7 @@ class QuoteDataGrid extends DataGrid
             'label'           => trans('admin::app.datagrid.person'),
             'type'            => 'string',
             'sortable'        => true,
-            'closure'         => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
                 return "<a href='" . $route . "'>" . $row->person_name . "</a>";

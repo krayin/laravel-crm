@@ -372,12 +372,8 @@ trait ProvideCollection
     private function transformColumns($record)
     {
         foreach($this->columns as $index => $column) {
-            if (isset($column['wrapper'])) {
-                if (isset($column['closure']) && $column['closure'] == true) {
-                    $record->{$column['index']} = $column['wrapper']($record);
-                } else {
-                    $record->{$column['index']} = htmlspecialchars($column['wrapper']($record));
-                }
+            if (isset($column['closure'])) {
+                $record->{$column['index']} = $column['closure']($record);
             } else {
                 if ($column['type'] == 'price') {
                     if (isset($column['currencyCode'])) {
@@ -385,6 +381,8 @@ trait ProvideCollection
                     } else {
                         $record->{$column['index']} = htmlspecialchars(core()->formatBasePrice($record->{$column['index']}));
                     }
+                } else {
+                    $record->{$column['index']} = htmlspecialchars($record->{$column['index']});
                 }
             }
 

@@ -23,9 +23,12 @@ class LeadDataGrid extends DataGrid
                 'leads.created_at',
                 'users.id as user_id',
                 'users.name as user_name',
+                'persons.id as person_id',
+                'persons.name as person_name',
                 'lead_stages.name as stage'
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
+            ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')
             ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
             ->leftJoin('lead_sources', 'leads.lead_source_id', '=', 'lead_sources.id')
@@ -66,7 +69,7 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'user',
+            'index'            => 'user_name',
             'label'            => trans('admin::app.datagrid.user'),
             'type'             => 'dropdown',
             'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
@@ -87,22 +90,21 @@ class LeadDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return core()->formatBasePrice($row->lead_value, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'   => 'user_name',
+            'index'   => 'person_name',
             'label'   => trans('admin::app.datagrid.contact_person'),
             'type'    => 'string',
             'searchable' => false,
             'sortable' => false,
-            'closure' => true,
-            'wrapper' => function ($row) {
-                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->user_id]));
+            'closure' => function ($row) {
+                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
-                return "<a href='" . $route . "'>" . $row->user_name . "</a>";
+                return "<a href='" . $route . "'>" . $row->person_name . "</a>";
             },
         ]);
 
@@ -112,8 +114,7 @@ class LeadDataGrid extends DataGrid
             'type'    => 'boolean',
             'searchable' => false,
             'sortable' => false,
-            'closure' => true,
-            'wrapper' => function ($row) {
+            'closure' => function ($row) {
                 if ($row->stage == "Won") {
                     $badge = 'success';
                 } else if ($row->stage == "Lost") {
@@ -132,7 +133,7 @@ class LeadDataGrid extends DataGrid
             'type'            => 'date_range',
             'searchable'      => false,
             'sortable'        => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
