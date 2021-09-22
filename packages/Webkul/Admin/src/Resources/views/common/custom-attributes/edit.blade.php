@@ -29,7 +29,7 @@
                     $validations .= "required: true, ";
                 }
 
-                $validations .= "regex: /^[a-z0-9]+(?:-[a-z0-9]+)*$/ }";
+                $validations .= "regex: /^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/ }";
             }
         }
     @endphp
