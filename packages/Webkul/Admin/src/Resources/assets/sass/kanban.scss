@@ -12,7 +12,7 @@ ul.drag-inner-list {
 .drag-container {
     margin: 0px;
     overflow: auto;
-    height: 420px;
+    height: 100%;
 
     span div a {
         @include border-radius(4px);

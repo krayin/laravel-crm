@@ -1,4 +1,12 @@
-<div class="table">
+@push('css')
+    <style>
+        .content-container {
+            overflow: hidden;
+        }
+    </style>
+@endpush
+
+<div class="content full-page table">
     <div class="table-header">
         <h1>
             {!! view_render_event('admin.leads.index.header.before') !!}
