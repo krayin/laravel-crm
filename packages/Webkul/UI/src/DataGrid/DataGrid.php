@@ -2,7 +2,6 @@
 
 namespace Webkul\UI\DataGrid;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Webkul\UI\DataGrid\Traits\ProvideBouncer;
@@ -317,34 +316,6 @@ abstract class DataGrid
         $this->setCompleteColumnDetails($column);
 
         $this->fireEvent('add.column.after.' . $column['index']);
-    }
-
-    /**
-     * Add tab filter.
-     *
-     * @param  array  $filterConfig
-     * @return void
-     */
-    public function addTabFilter($filterConfig)
-    {
-        if (($filterConfig['value_type'] ?? false) == "lookup") {
-            $values = app($filterConfig['repositoryClass'])
-                ->get(['name', 'code as key', DB::raw("false as isActive")])
-                ->prepend([
-                    'isActive'  => true,
-                    'key'       => 'all',
-                    'name'      => trans('admin::app.datagrid.all'),
-                ])
-                ->toArray();
-
-            $filterConfig['values'] = $values;
-        } else {
-            foreach ($filterConfig['values'] as $valueIndex => $value) {
-                $filterConfig['values'][$valueIndex]['name'] = trans($filterConfig['values'][$valueIndex]['name']);
-            }
-        }
-
-        $this->tabFilters[] = $filterConfig;
     }
 
     /**
