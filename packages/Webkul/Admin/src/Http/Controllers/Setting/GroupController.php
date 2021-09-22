@@ -59,7 +59,7 @@ class GroupController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:groups,name',
         ]);
 
         Event::dispatch('settings.group.create.before');
@@ -95,7 +95,7 @@ class GroupController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:groups,name,' . $id,
         ]);
 
         Event::dispatch('settings.group.update.before', $id);
