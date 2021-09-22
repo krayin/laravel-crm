@@ -1,4 +1,4 @@
-<div class="table">
+<div class="table inner-section">
     <div class="table-header">
         <h1>
             {!! view_render_event('admin.leads.index.header.before') !!}
@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="table-body">
+    <div class="table-body inner-section">
         <kanban-filters></kanban-filters>
 
         <kanban-component
