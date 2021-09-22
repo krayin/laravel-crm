@@ -459,7 +459,7 @@
                             <input type="text" name="lead_value" class="control" value="{{ $lead->lead_value }}" />
                         </div>
 
-                        <div class="form-group">
+                        <div class="form-group date">
                             <label>{{ __('admin::app.leads.closed-date') }}</label>
 
                             <date>
