@@ -1,4 +1,12 @@
-<div class="table inner-section">
+@push('css')
+    <style>
+        .content-container {
+            overflow: hidden;
+        }
+    </style>
+@endpush
+
+<div class="content full-page table">
     <div class="table-header">
         <h1>
             {!! view_render_event('admin.leads.index.header.before') !!}
@@ -15,7 +23,7 @@
         </div>
     </div>
 
-    <div class="table-body inner-section">
+    <div class="table-body">
         <kanban-filters></kanban-filters>
 
         <kanban-component
