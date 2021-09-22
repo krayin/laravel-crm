@@ -29,6 +29,7 @@
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^5.0",
         "phpunit/phpunit": "^9.3.3",
+        "imanghafoori/laravel-microscope": "^1.0",
         "krayin/krayin-package-generator": "dev-master"
     },
     "config": {
