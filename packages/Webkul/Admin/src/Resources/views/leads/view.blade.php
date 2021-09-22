@@ -659,7 +659,7 @@
                                     <i class="icon close-icon"  @click="removeParticipant('users', participant)"></i>
                                 </span>
 
-                                <span class="badge badge-sm badge-pill badge-secondary-warning persons" v-for='(participant, index) in participants.persons'>
+                                <span class="badge badge-sm badge-pill badge-warning-outline persons" v-for='(participant, index) in participants.persons'>
                                     <input type="hidden" name="participants[persons][]" :value="participant.id"/>
                                     @{{ participant.name }}
                                     <i class="icon close-icon"  @click="removeParticipant('persons', participant)"></i>
