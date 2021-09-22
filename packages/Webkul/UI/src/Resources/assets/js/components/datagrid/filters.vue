@@ -104,7 +104,7 @@
                 <pagination-component
                     tab-view="true"
                     :per-page="perPage"
-                    v-if="!tableData.tabFilters.length > 0"
+                    v-if="! tableData.tabFilters.length > 0"
                 ></pagination-component>
 
                 <div class="switch-icons-container" v-if="switchPageUrl">
@@ -346,7 +346,7 @@ export default {
                     $(event.target).parents(".flatpickr-calendar").length ||
                     $(event.target).parents(".custom-design-container")
                         .length) &&
-                !$(event.target).attr("data-close-container")
+                ! $(event.target).attr("data-close-container")
             ) {
                 event.stopPropagation();
             }
@@ -702,7 +702,7 @@ export default {
                     }
                 });
 
-                if (!applied) {
+                if (! applied) {
                     this.tableData.tabFilters[index].values[
                         defaultSelectrdIndex[index]
                     ].isActive = true;

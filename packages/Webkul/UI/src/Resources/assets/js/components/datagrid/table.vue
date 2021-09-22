@@ -11,7 +11,7 @@
         <sidebar-filter></sidebar-filter>
 
         <div class="table-body" v-if="Object.keys(tableData).length > 0">
-            <spinner-meter :full-page="true" v-if="!pageLoaded"></spinner-meter>
+            <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
             <filter-component
                 :switch-page-url="switchPageUrl"
@@ -112,7 +112,7 @@ export default {
                     .catch(error => {
                         const actualFilters = self.$store.state.filters.filter(
                             filter =>
-                                !(
+                                ! (
                                     filter.column == "view_type" &&
                                     filter.val == "table"
                                 )
