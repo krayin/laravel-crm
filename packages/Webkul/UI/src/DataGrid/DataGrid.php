@@ -65,20 +65,6 @@ abstract class DataGrid
     protected $completeColumnDetails = [];
 
     /**
-     * Tab filters.
-     *
-     * @var array
-     */
-    protected $tabFilters = [];
-
-    /**
-     * Custom tab filter listing.
-     *
-     * @var array
-     */
-    protected $customTabFilters = ['type', 'duration', 'scheduled'];
-
-    /**
      * To enable actions or not.
      *
      * @var bool
@@ -238,15 +224,6 @@ abstract class DataGrid
      * @return void
      */
     abstract public function addColumns();
-
-    /**
-     * Prepare tab filters. Optional method.
-     *
-     * @return array
-     */
-    public function prepareTabFilters()
-    {
-    }
 
     /**
      * Prepare actions. Optional method.

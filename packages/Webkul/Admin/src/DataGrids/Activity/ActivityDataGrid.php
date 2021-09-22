@@ -53,6 +53,7 @@ class ActivityDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'activities.id');
+        $this->addFilter('schedule_from', 'activities.schedule_from');
         $this->addFilter('created_by', 'users.name');
         $this->addFilter('created_by_id', 'activities.user_id');
         $this->addFilter('created_at', 'activities.created_at');

@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 trait ProvideCollection
 {
-    use ProvideQueryResolver, ProvideQueryStringParser;
+    use ProvideTabFilters, ProvideQueryResolver, ProvideQueryStringParser;
 
     /**
      * Get collections.
@@ -271,94 +271,6 @@ trait ProvideCollection
                         $this->resolve($collection, $columnName, $condition, $filterValue);
                     }
                     break;
-            }
-        }
-    }
-
-    /**
-     * Prepare tab filter.
-     *
-     * @return void
-     */
-    public function filterCollectionFromTabFilter($collection, $key, $info)
-    {
-        /**
-         * To Do (@devansh-webkul): Will refactor after functionality check.
-         */
-        foreach ($this->tabFilters as $filterIndex => $filter) {
-            if ($filter['key'] == $key) {
-                foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                    if (array_keys($info)[0] == 'bw' && $filterValue['key'] == 'custom') {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                    } else {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
-                    }
-                }
-
-                $value = array_values($info)[0];
-
-                if ($key === 'duration') {
-                    $column = $this->filterMap['created_at'] ?? 'created_at';
-                } else if ($key === 'scheduled') {
-                    $column = 'schedule_from';
-                } else {
-                    $column = $key;
-                }
-
-                $endDate = Carbon::now()->format('Y-m-d');
-
-                switch ($value) {
-                    case 'yesterday':
-                        $collection->where(
-                            $column,
-                            Carbon::yesterday()
-                        );
-                        break;
-
-                    case 'today':
-                        $collection->where(
-                            $column,
-                            Carbon::today()
-                        );
-                        break;
-
-                    case 'tomorrow':
-                        $collection->where(
-                            $column,
-                            Carbon::tomorrow()
-                        );
-                        break;
-
-                    case 'this_week':
-                        $startDate = Carbon::now()->subDays(7)->format('Y-m-d');
-
-                        $collection->whereBetween(
-                            $column,
-                            [$startDate, $endDate]
-                        );
-                        break;
-
-                    case 'this_month':
-                        $startDate = Carbon::now()->subDays(30)->format('Y-m-d');
-
-                        $collection->whereBetween(
-                            $column,
-                            [$startDate, $endDate]
-                        );
-                        break;
-
-                    default:
-                        if ($value != 'all') {
-                            if ($key == 'duration') {
-                                $collection->whereBetween(
-                                    $column,
-                                    explode(',', $value)
-                                );
-                            } else {
-                                $collection->where($this->filterMap[$column] ?? $column, $value);
-                            }
-                        }
-                }
             }
         }
     }
