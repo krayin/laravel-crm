@@ -57,8 +57,7 @@ class ProductDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'closure'         => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return round($row->price, 2);
             },
         ]);

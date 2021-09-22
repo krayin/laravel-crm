@@ -1,8 +1,9 @@
 <template>
     <div class="grid-container">
-        <!-- searchbox and filters section -->
         <div class="datagrid-filters" id="datagrid-filters">
+            <!-- searchbox and mass action -->
             <div>
+                <!-- searchbox and filters section -->
                 <div
                     class="search-filter form-group"
                     v-if="tableData.enableSearch"
@@ -73,6 +74,7 @@
                 </div>
             </div>
 
+            <!-- items per page, pagination and filter section -->
             <div class="filter-right">
                 <div
                     class="dropdown-filters per-page"
@@ -140,12 +142,12 @@
                 event-value-key="value"
                 event-key="updateFilter"
                 :tabs-collection="tableData.tabFilters[0].values"
-                v-if="tableData.tabFilters && tableData.tabFilters[0]"
                 :class="`${tableData.tabFilters[0].type} tabs-left-container`"
                 :event-data="{
                     key: tableData.tabFilters[0].key,
                     cond: tableData.tabFilters[0].condition
                 }"
+                v-if="tableData.tabFilters && tableData.tabFilters[0]"
             ></tabs>
 
             <div v-else></div>
@@ -285,8 +287,8 @@ export default {
             return this.tableData.columns;
         },
 
-        extraFilters: function() {
-            return this.tableData.extraFilters;
+        customTabFilters: function() {
+            return this.tableData.customTabFilters;
         }
     },
 
@@ -351,7 +353,7 @@ export default {
         });
 
         EventBus.$on("updateFilter", data => {
-            if (data.key == "duration" && data.value == "custom") {
+            if (this.customTabFilters.includes(data.key) && data.value == "custom") {
                 setTimeout(() => {
                     $(".custom-design-container").toggle();
                 });

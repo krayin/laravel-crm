@@ -88,9 +88,7 @@ export default {
                 if (usePrevious) {
                     url = self.previousURL;
                 } else {
-                    url = url
-                        ? url
-                        : `${self.dataSrc}?${newParams}`;
+                    url = url ? url : `${self.dataSrc}?${newParams}`;
                     self.previousURL = url;
                 }
 

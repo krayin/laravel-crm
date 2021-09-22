@@ -72,8 +72,7 @@ class UserDataGrid extends DataGrid
                     'value' => 0,
                 ],
             ],
-            'closure'            => true,
-            'wrapper'            => function ($row) {
+            'closure'            => function ($row) {
                 if ($row->status == 1) {
                     return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {

@@ -65,13 +65,6 @@ abstract class DataGrid
     protected $completeColumnDetails = [];
 
     /**
-     * Tab filters.
-     *
-     * @var array
-     */
-    protected $tabFilters = [];
-
-    /**
      * To enable actions or not.
      *
      * @var bool
@@ -231,15 +224,6 @@ abstract class DataGrid
      * @return void
      */
     abstract public function addColumns();
-
-    /**
-     * Prepare tab filters. Optional method.
-     *
-     * @return array
-     */
-    public function prepareTabFilters()
-    {
-    }
 
     /**
      * Prepare actions. Optional method.
@@ -424,14 +408,14 @@ abstract class DataGrid
             'records'           => $this->collection,
             'columns'           => $this->completeColumnDetails,
             'tabFilters'        => $this->tabFilters,
-            'actions'           => $this->actions,
+            'customTabFilters'  => $this->customTabFilters,
             'enableActions'     => $this->enableAction,
-            'massActions'       => $this->massActions,
+            'actions'           => $this->actions,
             'enableMassActions' => $this->enableMassAction,
+            'massActions'       => $this->massActions,
             'paginated'         => $this->paginate,
             'itemsPerPage'      => $this->itemsPerPage,
             'enableSearch'      => $this->enableSearch,
-            'tabFilters'        => $this->tabFilters,
             'enablePerPage'     => $this->enablePerPage,
             'enableFilters'     => $this->enableFilters,
         ];

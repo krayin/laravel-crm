@@ -53,8 +53,9 @@ class ActivityDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'activities.id');
+        $this->addFilter('schedule_from', 'activities.schedule_from');
         $this->addFilter('created_by', 'users.name');
-        $this->addFilter('user', 'activities.user_id');
+        $this->addFilter('created_by_id', 'activities.user_id');
         $this->addFilter('created_at', 'activities.created_at');
 
         $this->setQueryBuilder($queryBuilder);
@@ -75,7 +76,7 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'user',
+            'index'            => 'created_by',
             'label'            => trans('admin::app.datagrid.created_by'),
             'type'             => 'dropdown',
             'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
@@ -93,8 +94,7 @@ class ActivityDataGrid extends DataGrid
             'index'   => 'lead',
             'label'   => trans('admin::app.datagrid.lead'),
             'type'    => 'string',
-            'closure' => true,
-            'wrapper' => function ($row) {
+            'closure' => function ($row) {
                 $route = urldecode(route('admin.leads.index', ['view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
                 return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
@@ -120,8 +120,7 @@ class ActivityDataGrid extends DataGrid
                     'label' => __("admin::app.common.yes"),
                 ]
             ],
-            'closure'            => true,
-            'wrapper'            => function ($row) {
+            'closure'            => function ($row) {
                 if ($row->is_done) {
                     return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
                 } else {
@@ -134,8 +133,7 @@ class ActivityDataGrid extends DataGrid
             'index'   => 'created_by',
             'label'   => trans('admin::app.datagrid.created_by'),
             'type'    => 'string',
-            'closure' => true,
-            'wrapper' => function ($row) {
+            'closure' => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
                 return "<a href='" . $route . "'>" . $row->created_by . "</a>";
@@ -147,7 +145,7 @@ class ActivityDataGrid extends DataGrid
             'label'           => trans('admin::app.datagrid.schedule_from'),
             'type'            => 'string',
             'sortable'        => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_from);
             },
         ]);
@@ -157,7 +155,7 @@ class ActivityDataGrid extends DataGrid
             'label'           => trans('admin::app.datagrid.schedule_to'),
             'type'            => 'string',
             'sortable'        => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_to);
             },
         ]);
@@ -167,7 +165,7 @@ class ActivityDataGrid extends DataGrid
             'label'           => trans('admin::app.datagrid.created_at'),
             'type'            => 'string',
             'sortable'        => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);

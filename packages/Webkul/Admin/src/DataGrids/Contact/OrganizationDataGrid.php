@@ -76,8 +76,7 @@ class OrganizationDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => false,
             'sortable'          => false,
-            'closure'           => true,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
 
                 $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
@@ -91,7 +90,7 @@ class OrganizationDataGrid extends DataGrid
             'label'             => trans('admin::app.datagrid.created_at'),
             'type'              => 'date_range',
             'sortable'          => true,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);

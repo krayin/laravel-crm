@@ -18,9 +18,9 @@ class PersonDataGrid extends DataGrid
             ->addSelect(
                 'persons.id',
                 'persons.name as person_name',
-                'persons.emails as emails',
+                'persons.emails',
                 'persons.contact_numbers',
-                'organizations.name as organization_name'
+                'organizations.name as organization'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
@@ -39,6 +39,14 @@ class PersonDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
+            'index'      => 'id',
+            'label'      => trans('admin::app.datagrid.id'),
+            'type'       => 'hidden',
+            'searchable' => true,
+            'sortable'   => true,
+        ]);
+        
+        $this->addColumn([
             'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
@@ -52,7 +60,7 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 $emails = json_decode($row->emails, true);
 
                 if ($emails) {
@@ -67,7 +75,7 @@ class PersonDataGrid extends DataGrid
             'type'              => 'string',
             'searchable'        => true,
             'sortable'          => false,
-            'wrapper'           => function ($row) {
+            'closure'           => function ($row) {
                 $contactNumbers = json_decode($row->contact_numbers, true);
 
                 if ($contactNumbers) {
@@ -80,7 +88,7 @@ class PersonDataGrid extends DataGrid
             'index'              => 'organization',
             'label'              => trans('admin::app.datagrid.organization_name'),
             'type'               => 'dropdown',
-            'dropdown_options' => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options'   => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
             'searchable'         => true,
             'sortable'           => false,
         ]);

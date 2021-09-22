@@ -47,8 +47,6 @@
 
             {!! view_render_event('admin.leads.index.list.table.after') !!}
         @else
-            @php($showDefaultTable = false)
-
             {!! view_render_event('admin.leads.index.list.kanban.before') !!}
 
                 @include('admin::leads.list.kanban')

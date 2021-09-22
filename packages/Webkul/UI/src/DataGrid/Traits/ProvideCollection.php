@@ -7,7 +7,7 @@ use Illuminate\Support\Str;
 
 trait ProvideCollection
 {
-    use ProvideQueryResolver, ProvideQueryStringParser;
+    use ProvideTabFilters, ProvideQueryResolver, ProvideQueryStringParser;
 
     /**
      * Get collections.
@@ -68,7 +68,7 @@ trait ProvideCollection
 
                     $this->attachColumnValues($columnName, $info);
 
-                    if (in_array($key, ['type', 'duration', 'scheduled'])) {
+                    if (in_array($key, $this->customTabFilters)) {
                         $this->filterCollectionFromTabFilter($collection, $key, $info);
                         break;
                     }
@@ -276,94 +276,6 @@ trait ProvideCollection
     }
 
     /**
-     * Prepare tab filter.
-     *
-     * @return void
-     */
-    public function filterCollectionFromTabFilter($collection, $key, $info)
-    {
-        /**
-         * To Do (@devansh-webkul): Will refactor after functionality check.
-         */
-        foreach ($this->tabFilters as $filterIndex => $filter) {
-            if ($filter['key'] == $key) {
-                foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                    if (array_keys($info)[0] == 'bw' && $filterValue['key'] == 'custom') {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                    } else {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
-                    }
-                }
-
-                $value = array_values($info)[0];
-
-                if ($key === 'duration') {
-                    $column = $this->filterMap['created_at'] ?? 'created_at';
-                } else if ($key === 'scheduled') {
-                    $column = 'schedule_from';
-                } else {
-                    $column = $key;
-                }
-
-                $endDate = Carbon::now()->format('Y-m-d');
-
-                switch ($value) {
-                    case 'yesterday':
-                        $collection->where(
-                            $column,
-                            Carbon::yesterday()
-                        );
-                        break;
-
-                    case 'today':
-                        $collection->where(
-                            $column,
-                            Carbon::today()
-                        );
-                        break;
-
-                    case 'tomorrow':
-                        $collection->where(
-                            $column,
-                            Carbon::tomorrow()
-                        );
-                        break;
-
-                    case 'this_week':
-                        $startDate = Carbon::now()->subDays(7)->format('Y-m-d');
-
-                        $collection->whereBetween(
-                            $column,
-                            [$startDate, $endDate]
-                        );
-                        break;
-
-                    case 'this_month':
-                        $startDate = Carbon::now()->subDays(30)->format('Y-m-d');
-
-                        $collection->whereBetween(
-                            $column,
-                            [$startDate, $endDate]
-                        );
-                        break;
-
-                    default:
-                        if ($value != 'all') {
-                            if ($key == 'duration') {
-                                $collection->whereBetween(
-                                    $column,
-                                    explode(',', $value)
-                                );
-                            } else {
-                                $collection->where($this->filterMap[$column] ?? $column, $value);
-                            }
-                        }
-                }
-            }
-        }
-    }
-
-    /**
      * Transform your columns.
      *
      * @parma  object  $record
@@ -372,12 +284,8 @@ trait ProvideCollection
     private function transformColumns($record)
     {
         foreach($this->columns as $index => $column) {
-            if (isset($column['wrapper'])) {
-                if (isset($column['closure']) && $column['closure'] == true) {
-                    $record->{$column['index']} = $column['wrapper']($record);
-                } else {
-                    $record->{$column['index']} = htmlspecialchars($column['wrapper']($record));
-                }
+            if (isset($column['closure'])) {
+                $record->{$column['index']} = $column['closure']($record);
             } else {
                 if ($column['type'] == 'price') {
                     if (isset($column['currencyCode'])) {
@@ -385,6 +293,8 @@ trait ProvideCollection
                     } else {
                         $record->{$column['index']} = htmlspecialchars(core()->formatBasePrice($record->{$column['index']}));
                     }
+                } else {
+                    $record->{$column['index']} = htmlspecialchars($record->{$column['index']});
                 }
             }
 

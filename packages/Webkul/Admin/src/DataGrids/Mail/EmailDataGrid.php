@@ -41,8 +41,7 @@ class EmailDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
-            'closure'    => true,
-            'wrapper'    => function ($row) {
+            'closure'    => function ($row) {
                 if ($row->attachments) {
                     return '<i class="icon attachment-icon"></i>';
                 }
@@ -63,8 +62,7 @@ class EmailDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'sortable'        => true,
-            'closure'         => true,
-            'wrapper'         => function ($row) {
+            'closure'         => function ($row) {
                 return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
             },
         ]);
