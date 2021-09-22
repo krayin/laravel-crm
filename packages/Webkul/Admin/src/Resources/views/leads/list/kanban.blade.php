@@ -23,7 +23,7 @@
         </div>
     </div>
 
-    <div class="table-body">
+    <div class="table-body inner-section">
         <kanban-filters></kanban-filters>
 
         <kanban-component
