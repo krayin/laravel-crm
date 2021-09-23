@@ -13,13 +13,13 @@
 
 * #260 [fixed] - When we changing the lead stage to Won/Lost. then date icon should be visible in Closed Date input field.
 
+* #263 [fixed] - When we are creating a activity and selecting persons for participants. then persons name should be visible below Participants input box.
+
 * #269 [fixed] - [BUG] Add Lead Buttons Do Nothing
 
 * #270 [fixed] - When we are creating multiple group with the same details. then there should be a warning message
 
 * #272 [fixed] - When we are creating multiple Organizations with the same details. then there should be a warning message
-
-* #263 [fixed] - When we are creating a activity and selecting persons for participants. then persons name should be visible below Participants input box.
 
 
 
