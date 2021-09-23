@@ -2,6 +2,8 @@
 
 * [feature] Refactored data grid code
 
+* [feature] Add app version in admin ui
+
 
 * #244 [fixed] - The modal box should be open if we click on add lead button of the leads page.
 
