@@ -1,3 +1,30 @@
+## **v1.1.3 (23rd of September 2021)**
+
+* [feature] Refactored data grid code
+
+* [feature] Add app version in admin ui
+
+
+* #244 [fixed] - The modal box should be open if we click on add lead button of the leads page.
+
+* #251 [fixed] - While Adding a new attribute Entity Type field should be come only one time.
+
+* #255 [fixed] - When we creating Activity. then there should be a suggestion in placeholder of Participants input field for search Participants.
+
+* #257 [fixed] - [BUG] SKU Validation Bug
+
+* #260 [fixed] - When we changing the lead stage to Won/Lost. then date icon should be visible in Closed Date input field.
+
+* #263 [fixed] - When we are creating a activity and selecting persons for participants. then persons name should be visible below Participants input box.
+
+* #269 [fixed] - [BUG] Add Lead Buttons Do Nothing
+
+* #270 [fixed] - When we are creating multiple group with the same details. then there should be a warning message
+
+* #272 [fixed] - When we are creating multiple Organizations with the same details. then there should be a warning message
+
+
+
 ## **v1.1.2 (17th of September 2021)**
 
 

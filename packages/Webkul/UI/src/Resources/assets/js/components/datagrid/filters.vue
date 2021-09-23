@@ -713,6 +713,12 @@ export default {
         onSubmit: function(event) {
             this.toggleButtonDisable(true);
 
+            if (! confirm('Do you really want to perform this action?')) {
+                this.toggleButtonDisable(false);
+                
+                return;
+            }
+
             this.$validator.validateAll().then(result => {
                 if (result) {
                     this.$http[this.massActionValue.method.toLowerCase()](
