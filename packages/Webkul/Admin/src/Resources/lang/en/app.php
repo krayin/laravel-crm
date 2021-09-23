@@ -24,6 +24,7 @@
         ],
 
         'layouts' => [
+            'app-version'     => 'Version : :version',
             'dashboard'       => 'Dashboard',
             'leads'           => 'Leads',
             'quotes'          => 'Quotes',

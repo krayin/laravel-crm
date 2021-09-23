@@ -76,6 +76,15 @@ body {
                 top: 50px;
                 right: 0px;
                 bottom: inherit !important;
+
+                .app-version {
+                    padding: 8px 12px;
+                    display: block;
+                    cursor: default;
+                    color: #a2a2a2;
+                    font-size: $font-size-lg;
+                    border-bottom: 1px solid $border-color;
+                }
             }
         }
     }
