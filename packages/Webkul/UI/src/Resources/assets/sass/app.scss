@@ -414,6 +414,10 @@ h5 {
                     text-overflow: unset;
                 }
 
+                &.id {
+                    width: 80px;
+                }
+
                 &.actions {
                     width: 100px;
                     text-align: right;
