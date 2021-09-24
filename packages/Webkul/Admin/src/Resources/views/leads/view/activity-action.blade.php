@@ -326,9 +326,9 @@
             {!! view_render_event('admin.leads.view.informations.activity_actions.email.after', ['lead' => $lead]) !!}
 
 
-            {!! view_render_event('admin.leads.view.informations.activity_actions.files.before', ['lead' => $lead]) !!}
+            {!! view_render_event('admin.leads.view.informations.activity_actions.file.before', ['lead' => $lead]) !!}
 
-            <tab name="{{ __('admin::app.leads.files') }}">
+            <tab name="{{ __('admin::app.leads.file') }}">
                 <form
                     action="{{ route('admin.activities.file_upload') }}"
                     method="post"
@@ -379,7 +379,7 @@
                 </form>
             </tab>
 
-            {!! view_render_event('admin.leads.view.informations.activity_actions.files.after', ['lead' => $lead]) !!}
+            {!! view_render_event('admin.leads.view.informations.activity_actions.file.after', ['lead' => $lead]) !!}
 
 
             {!! view_render_event('admin.leads.view.informations.activity_actions.quote.before', ['lead' => $lead]) !!}
