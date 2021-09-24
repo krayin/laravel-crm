@@ -257,6 +257,22 @@
 
                     this.$http.get("{{ route('admin.activities.search_participants') }}", {params: {query: this.search_term}})
                         .then (response => {
+                            var self = this;
+                            
+                            ['users', 'persons'].forEach(function(userType) {
+                                if (self.participants[userType].length) {
+                                    self.participants[userType].forEach(function(addedUser) {
+                                        
+                                        response.data[userType].forEach(function(user, index) {
+                                            if (user.id == addedUser.id) {
+                                                response.data[userType].splice(index, 1);
+                                            }
+                                        });
+
+                                    })
+                                }
+                            })
+
                             this.searched_participants = response.data;
 
                             this.is_searching = false;
