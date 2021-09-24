@@ -19,6 +19,7 @@
                         class="control"
                         :id="attribute['code']"
                         :for="attribute['code']"
+                        placeholder="{{ __('admin::app.common.start-typing') }}"
                         autocomplete="off"
                         v-model="search_term"
                         v-validate="validations"

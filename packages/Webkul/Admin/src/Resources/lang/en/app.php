@@ -710,6 +710,7 @@
             'save'               => 'Save',
             'add-as'             => 'Add as new',
             'no-records-found'   => 'No Records Found',
+            'start-typing'       => 'Start typing to search records'
         ],
 
         'user' => [

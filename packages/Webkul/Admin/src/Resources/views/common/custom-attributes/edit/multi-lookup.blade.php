@@ -24,6 +24,7 @@
                     <input
                         type="text"
                         class="control"
+                        placeholder="{{ __('admin::app.common.start-typing') }}"
                         autocomplete="off"
                         v-model="search_term"
                         v-on:keyup="search"
