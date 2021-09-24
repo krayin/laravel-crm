@@ -302,6 +302,10 @@
                 },
 
                 remove: function(activity) {
+                    if (! confirm('Do you really want to perform this action?')) {
+                        return;
+                    }
+
                     var self = this;
 
                     this.$http.delete("{{ route('admin.activities.delete') }}/" + activity['id'])
