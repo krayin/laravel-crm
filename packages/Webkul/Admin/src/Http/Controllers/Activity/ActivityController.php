@@ -139,7 +139,13 @@ class ActivityController extends Controller
 
         Event::dispatch('activity.create.after', $activity);
 
-        session()->flash('success', trans('admin::app.activities.create-success'));
+        if (request('type') == 'note') {
+            session()->flash('success', trans('admin::app.activities.note-success'));
+        } else if (request('type') == 'file') {
+            session()->flash('success', trans('admin::app.activities.file-success'));
+        } else {
+            session()->flash('success', trans('admin::app.activities.create-success'));
+        }
 
         return redirect()->back();
     }
