@@ -40,16 +40,16 @@
     @endphp
 
     @if ($viewType == "table")
-        {!! view_render_event('admin.leads.index.list.table.before') !!}
+        {!! view_render_event('admin.leads.index.table.before') !!}
 
-            @include('admin::leads.list.table')
+            @include('admin::leads.index.table')
 
-        {!! view_render_event('admin.leads.index.list.table.after') !!}
+        {!! view_render_event('admin.leads.index.table.after') !!}
     @else
-        {!! view_render_event('admin.leads.index.list.kanban.before') !!}
+        {!! view_render_event('admin.leads.index.kanban.before') !!}
 
-            @include('admin::leads.list.kanban')
+            @include('admin::leads.index.kanban')
 
-        {!! view_render_event('admin.leads.index.list.kanban.after') !!}
+        {!! view_render_event('admin.leads.index.kanban.after') !!}
     @endif
 @stop

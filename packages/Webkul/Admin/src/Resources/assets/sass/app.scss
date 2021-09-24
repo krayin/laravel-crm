@@ -586,6 +586,19 @@ body {
     max-height: 200px;
     overflow-y: auto;
 
+    &.grouped {
+        label {
+            padding: 10px 10px 0 10px;
+            font-weight: 500;
+            color: #263238;
+            font-size: 18px;
+        }
+
+        li {
+            padding-left: 15px;
+        }
+    }
+
     li {
         padding: 5px 0px;
         cursor: pointer;
