@@ -58,7 +58,7 @@ class TagController extends Controller
      * @param  integer  $tagId
      * @return \Illuminate\Http\Response
      */
-    public function detete($leadId)
+    public function delete($leadId)
     {
         Event::dispatch('leads.tag.delete.before');
 

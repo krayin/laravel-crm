@@ -88,5 +88,3 @@ return [
         "selected"      => false,
     ]
 ];
-
-?>

@@ -67,7 +67,7 @@ class QuoteController extends Controller
      */
     public function create()
     {
-        $lead = $this->leadRepository->findOrFail(request('id'));
+        $lead = $this->leadRepository->find(request('id'));
 
         return view('admin::quotes.create', compact('lead'));
     }
@@ -122,6 +122,14 @@ class QuoteController extends Controller
         Event::dispatch('quote.update.before');
 
         $quote = $this->quoteRepository->update(request()->all(), $id);
+
+        $quote->leads()->detach();
+
+        if (request('lead_id')) {
+            $lead = $this->leadRepository->find(request('lead_id'));
+
+            $lead->quotes()->attach($quote->id);
+        }
 
         Event::dispatch('quote.update.after', $quote);
 

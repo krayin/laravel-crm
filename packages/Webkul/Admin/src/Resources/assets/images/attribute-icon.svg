@@ -1,0 +1,23 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<mask id="path-1-inside-1" fill="white">
+<rect x="36" y="8" width="2" height="18" rx="1" transform="rotate(90 36 8)"/>
+</mask>
+<rect x="36" y="8" width="2" height="18" rx="1" transform="rotate(90 36 8)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-1-inside-1)"/>
+<mask id="path-2-inside-2" fill="white">
+<rect x="36" y="19" width="2" height="18" rx="1" transform="rotate(90 36 19)"/>
+</mask>
+<rect x="36" y="19" width="2" height="18" rx="1" transform="rotate(90 36 19)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-2-inside-2)"/>
+<path d="M12 32V29H14.5V34H9V32H12Z" fill="#D4EDFB"/>
+<mask id="path-4-inside-3" fill="white">
+<rect x="36" y="31" width="2" height="18" rx="1" transform="rotate(90 36 31)"/>
+</mask>
+<rect x="36" y="31" width="2" height="18" rx="1" transform="rotate(90 36 31)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-4-inside-3)"/>
+<path d="M15.5 9.00004C14.8333 7.1667 13.5 4.10004 13.5 6.50004C13.5 8.90003 10.5 10.1667 9 10.5L9.5 12H12.5L14.5 10.5L15.5 9.00004Z" fill="#D4EDFB"/>
+<circle cx="11.5" cy="8.5" r="3.5" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+<path d="M10 23L12 19.5L12.5 19L15 23.5L10 23Z" fill="#D4EDFB"/>
+<path d="M11.5 16L15.3971 22.75H7.60289L11.5 16Z" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+<mask id="path-9-inside-4" fill="white">
+<rect x="7" y="27" width="9" height="9" rx="1"/>
+</mask>
+<rect x="7" y="27" width="9" height="9" rx="1" stroke="#546E7A" stroke-width="4" stroke-linecap="round" mask="url(#path-9-inside-4)"/>
+</svg>

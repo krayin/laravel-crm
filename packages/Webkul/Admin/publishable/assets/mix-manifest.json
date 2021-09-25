@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=171e3e15e5938d102a71",
-    "/css/admin.css": "/css/admin.css?id=b0bceb72ba6fc38f3cc8",
+    "/css/admin.css": "/css/admin.css?id=02206a8e2ddfa7654e83",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f",
     "/images/avatar-dark-icon.svg": "/images/avatar-dark-icon.svg?id=abefe06bd1ce2bfe7029",
@@ -32,5 +32,15 @@
     "/images/table-line-active-icon.svg": "/images/table-line-active-icon.svg?id=2bb1b3e9f60637957c6d",
     "/images/table-line-icon.svg": "/images/table-line-icon.svg?id=65226bad0a9e66616945",
     "/images/tools-active-icon.svg": "/images/tools-active-icon.svg?id=3dc420a57a350cfb07a9",
-    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64"
+    "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64",
+    "/images/attribute-icon.svg": "/images/attribute-icon.svg?id=897647bedcd5f699a3ad",
+    "/images/ellipsis-icon.svg": "/images/ellipsis-icon.svg?id=9fcc4d65e936885ff1ca",
+    "/images/lead-icon.svg": "/images/lead-icon.svg?id=069ede76b321879a62fd",
+    "/images/mail-icon.svg": "/images/mail-icon.svg?id=feec7ec8dabb22616542",
+    "/images/organization-icon.svg": "/images/organization-icon.svg?id=174b2e64019078546604",
+    "/images/person-icon.svg": "/images/person-icon.svg?id=43f0a9bbb9ed3f4822b2",
+    "/images/product-icon.svg": "/images/product-icon.svg?id=85c5a19c5f2314383a34",
+    "/images/quotation-icon.svg": "/images/quotation-icon.svg?id=9be397426d3239061dbb",
+    "/images/role-icon.svg": "/images/role-icon.svg?id=8c65bd7537660994873b",
+    "/images/user-icon.svg": "/images/user-icon.svg?id=5504788e912ea441b4ae"
 }

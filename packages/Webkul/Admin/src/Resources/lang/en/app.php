@@ -59,6 +59,16 @@
             'name'            => 'Name',
             'configuration'   => 'Configuration',
             'activities'      => 'Activities',
+            'lead'            => 'Lead',
+            'quote'           => 'Quote',
+            'email'           => 'Email',
+            'person'          => 'Person',
+            'organization'    => 'Organization',
+            'product'         => 'Product',
+            'attribute'       => 'Attribute',
+            'role'            => 'Role',
+            'user'            => 'User',
+            'howdy'           => 'Howdy!'
         ],
 
         'contacts' => [
@@ -201,6 +211,7 @@
             'back'                => 'Back',
             'cancel'              => 'Cancel',
             'quote-information'   => 'Quote Information',
+            'lead'                => 'Lead',
             'address-information' => 'Address Information',
             'quote-items'         => 'Quote Items',
             'name'                => 'Name',

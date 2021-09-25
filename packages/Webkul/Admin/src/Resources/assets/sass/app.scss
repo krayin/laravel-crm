@@ -55,6 +55,75 @@ body {
         display: inline-block;
         vertical-align: middle;
 
+        .quick-create {
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 10px;
+            position: relative;
+
+            .button {
+                display: inline-block;
+                width: 40px;
+                height: 40px;
+                border-radius: 43px;
+                border: 2px solid $primary-color;
+                background: $primary-color;
+                cursor: pointer;
+
+                &.active {
+                    box-shadow: inset 0px 0px 0px 2px white;
+                }
+
+                .icon {
+                    margin-top: 6px;
+                    margin-right: 9px;
+                }
+            }
+
+            .dropdown-list {
+                top: 50px;
+                right: 0;
+                bottom: unset;
+                width: 284px;
+                padding: 12px;
+
+                .quick-link-container {
+                    font-size: 12px;
+                    font-weight: $font-weight-medium;
+                    text-align: center;
+                    display: grid;
+                    grid-gap: 10px;
+                    grid-template-columns: auto auto auto;
+
+                    .quick-link-item {
+                        background: white;
+                        width: 80px;
+
+                        &:hover {
+                            background: $body-background;
+                            border-radius: 8px;
+                        }
+
+                        a {
+                            color: $secondary-font-color;
+                            display: block;
+                            padding: 5px;
+
+                            .icon {
+                                width: 40px;
+                                height: 40px;
+                                margin-bottom: 5px;
+                            }
+
+                            span {
+                                display: block;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         .profile-info {
             display: inline-block;
             vertical-align: middle;
@@ -63,20 +132,44 @@ body {
             cursor: pointer;
 
             .avatar {
-                width: 42px;
-                height: 42px;
+                display: inline-block;
+                width: 40px;
+                height: 40px;
                 border-radius: 43px;
                 background-color: $body-background;
                 border: 1px solid $border-color;
                 text-align: center;
                 padding: 8px;
+                margin-right: 10px;
+            }
+            
+            .info {
+                display: inline-block;
+                vertical-align: middle;
+                min-width: 50px;
+                font-size: 16px;
+                line-height: 20px;
+
+                .howdy {
+                    color: #9E9E9E;
+                }
+
+                .user {
+                    display: block;
+                }
+            }
+
+            .icon.ellipsis-icon {
+                width: 30px !important;
+                height: 30px !important;
+                vertical-align: middle;
             }
 
             .dropdown-list {
                 top: 50px;
-                right: 0px;
-                bottom: inherit !important;
-
+                right: 0;
+                bottom: unset;
+    
                 .app-version {
                     padding: 8px 12px;
                     display: block;
