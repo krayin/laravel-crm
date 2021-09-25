@@ -72,7 +72,7 @@ class QuoteController extends Controller
      * @param  integer  $tagId
      * @return \Illuminate\Http\Response
      */
-    public function detete($leadId)
+    public function delete($leadId)
     {
         Event::dispatch('leads.quote.delete.before');
 

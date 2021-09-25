@@ -88,12 +88,12 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::post('tags/{id}', 'TagController@store')->name('admin.leads.tags.store');
 
-                Route::delete('{lead_id}/{tag_id?}', 'TagController@detete')->name('admin.leads.tags.delete');
+                Route::delete('{lead_id}/{tag_id?}', 'TagController@delete')->name('admin.leads.tags.delete');
 
                 Route::group([
                     'prefix'    => 'quotes',
                 ], function () {
-                    Route::delete('{lead_id}/{quote_id?}', 'QuoteController@detete')->name('admin.leads.quotes.delete');
+                    Route::delete('{lead_id}/{quote_id?}', 'QuoteController@delete')->name('admin.leads.quotes.delete');
                 });
             });
 

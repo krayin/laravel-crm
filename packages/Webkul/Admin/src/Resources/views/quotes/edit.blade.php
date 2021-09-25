@@ -44,8 +44,6 @@
 
                             <input name="_method" type="hidden" value="PUT">
 
-                            <input type="hidden" name="lead_id" value="{{ request('id') }}"/>
-
                             {!! view_render_event('admin.quotes.edit.form_controls.information.before', ['quote' => $quote]) !!}
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
@@ -73,6 +71,30 @@
                                         ],
                                         'entity'                 => $quote,
                                     ])
+
+                                    <div class="form-group">
+                                        <label for="validation">{{ __('admin::app.quotes.lead') }}</label>
+
+                                        @include('admin::common.custom-attributes.edit.lookup')
+
+                                        @php
+                                            $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')
+                                                ->getLookUpEntity(
+                                                    'leads',
+                                                    old('lead_id')
+                                                        ?: (
+                                                            ($lead = $quote->leads()->first())
+                                                            ? $lead->id
+                                                            : null
+                                                        )
+                                                    );
+                                        @endphp
+
+                                        <lookup-component
+                                            :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                            :data='@json($lookUpEntityData)'
+                                        ></lookup-component>
+                                    </div>
 
                                 </div>
                             </accordian>

@@ -1,7 +1,7 @@
 @extends('admin::layouts.master')
 
 @section('page_title')
-    {{ __('admin::app.products.title') }}
+    {{ __('admin::app.quotes.title') }}
 @stop
 
 @section('content-wrapper')
@@ -17,6 +17,10 @@
 
                     {!! view_render_event('admin.quotes.index.header.after') !!}
                 </h1>
+            </template>
+
+            <template v-slot:table-action>
+                <a href="{{ route('admin.quotes.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.quotes.create-title') }}</a>
             </template>
         <table-component>
     </div>
