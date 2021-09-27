@@ -139,13 +139,7 @@ class ActivityController extends Controller
 
         Event::dispatch('activity.create.after', $activity);
 
-        if (request('type') == 'note') {
-            session()->flash('success', trans('admin::app.activities.note-success'));
-        } else if (request('type') == 'file') {
-            session()->flash('success', trans('admin::app.activities.file-success'));
-        } else {
-            session()->flash('success', trans('admin::app.activities.create-success'));
-        }
+        session()->flash('success', trans('admin::app.activities.create-success', ['type' => trans('admin::app.activities.' . $activity->type)]));
 
         return redirect()->back();
     }
@@ -208,10 +202,10 @@ class ActivityController extends Controller
         if (request()->ajax()) {
             return response()->json([
                 'status'  => true,
-                'message' => trans('admin::app.activities.update-success'),
+                'message' => trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ]);
         } else {
-            session()->flash('success', trans('admin::app.activities.update-success'));
+            session()->flash('success', trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.' . $activity->type)]));
 
             return redirect()->route('admin.activities.index');
         }
@@ -291,7 +285,7 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        $this->activityRepository->findOrFail($id);
+        $activity = $this->activityRepository->findOrFail($id);
 
         try {
             Event::dispatch('activity.delete.before', $id);
@@ -302,12 +296,12 @@ class ActivityController extends Controller
 
             return response()->json([
                 'status'    => true,
-                'message'   => trans('admin::app.activities.destroy-success'),
+                'message'   => trans('admin::app.activities.destroy-success', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
                 'status'  => false,
-                'message' => trans('admin::app.activities.destroy-failed'),
+                'message' => trans('admin::app.activities.destroy-failed', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 400);
         }
     }
