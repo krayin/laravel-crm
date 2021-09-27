@@ -19,11 +19,13 @@
                 </h1>
             </template>
 
-            <template v-slot:table-action>
-                <a href="{{ route('admin.settings.users.create') }}" class="btn btn-md btn-primary">
-                    {{ __('admin::app.settings.users.create-title') }}
-                </a>
-            </template>
+            @if (bouncer()->hasPermission('settings.users.create'))
+                <template v-slot:table-action>
+                    <a href="{{ route('admin.settings.users.create') }}" class="btn btn-md btn-primary">
+                        {{ __('admin::app.settings.users.create-title') }}
+                    </a>
+                </template>
+            @endif
         <table-component>
     </div>
 @stop

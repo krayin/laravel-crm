@@ -19,9 +19,11 @@
                 </h1>
             </template>
 
-            <template v-slot:table-action>
-                <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
-            </template>
+            @if (bouncer()->hasPermission('settings.sources.create'))
+                <template v-slot:table-action>
+                    <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
+                </template>
+            @endif
         <table-component>
     </div>
 

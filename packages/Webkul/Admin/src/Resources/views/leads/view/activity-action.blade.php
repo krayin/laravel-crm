@@ -52,162 +52,164 @@
 
             {!! view_render_event('admin.leads.view.informations.activity_actions.activity.before', ['lead' => $lead]) !!}
 
-            <tab name="{{ __('admin::app.leads.activity') }}">
-                <form
-                    action="{{ route('admin.activities.store') }}"
-                    method="post"
-                    data-vv-scope="activity-form"
-                    @submit.prevent="onSubmit($event, 'activity-form')"
-                >
+            @if (bouncer()->hasPermission('activities.create'))
+                <tab name="{{ __('admin::app.leads.activity') }}">
+                    <form
+                        action="{{ route('admin.activities.store') }}"
+                        method="post"
+                        data-vv-scope="activity-form"
+                        @submit.prevent="onSubmit($event, 'activity-form')"
+                    >
 
-                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+                        <input type="hidden" name="lead_id" value="{{ $lead->id }}">
 
-                    @csrf()
-        
-                    <div class="form-group" :class="[errors.has('activity-form.title') ? 'has-error' : '']">
-                        <label for="comment" class="required">{{ __('admin::app.leads.title-control') }}</label>
+                        @csrf()
+            
+                        <div class="form-group" :class="[errors.has('activity-form.title') ? 'has-error' : '']">
+                            <label for="comment" class="required">{{ __('admin::app.leads.title-control') }}</label>
 
-                        <input
-                            name="title"
-                            class="control"
-                            v-validate="'required'"
-                            data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"
-                        />
+                            <input
+                                name="title"
+                                class="control"
+                                v-validate="'required'"
+                                data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"
+                            />
 
-                        <span class="control-error" v-if="errors.has('activity-form.title')">
-                            @{{ errors.first('activity-form.title') }}
-                        </span>
-                    </div>
-
-                    <div class="form-group" :class="[errors.has('activity-form.type') ? 'has-error' : '']">
-                        <label for="type" class="required">{{ __('admin::app.leads.type') }}</label>
-
-                        <select
-                            name="type"
-                            class="control"
-                            v-validate="'required'"
-                            data-vv-as="&quot;{{ __('admin::app.leads.type') }}&quot;"
-                        >
-                            <option value=""></option>
-                            <option value="call">{{ __('admin::app.leads.call') }}</option>
-                            <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
-                            <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
-                        </select>
-
-                        <span class="control-error" v-if="errors.has('activity-form.type')">
-                            @{{ errors.first('activity-form.type') }}
-                        </span>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="comment">{{ __('admin::app.leads.description') }}</label>
-
-                        <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
-                    </div>
-
-                    <div class="form-group date" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
-                        <label for="schedule_from" class="required">{{ __('admin::app.leads.schedule') }}</label>
-
-                        <div class="input-group">
-                            <datetime>
-                                <input
-                                    type="text"
-                                    name="schedule_from"
-                                    class="control"
-                                    ref="schedule_from"
-                                    placeholder="{{ __('admin::app.leads.from') }}"
-                                    v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'"
-                                    data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;"
-                                />
-
-                                <span class="control-error" v-if="errors.has('activity-form.schedule_from')">
-                                    @{{ errors.first('activity-form.schedule_from') }}
-                                </span>
-                            </datetime>
-
-                            <datetime>
-                                <input
-                                    type="text"
-                                    name="schedule_to"
-                                    class="control"
-                                    ref="schedule_to"
-                                    placeholder="{{ __('admin::app.leads.to') }}"
-                                    v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'"
-                                    data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;"
-                                />
-
-                                <span class="control-error" v-if="errors.has('activity-form.schedule_to')">
-                                    @{{ errors.first('activity-form.schedule_to') }}
-                                </span>
-                            </datetime>
+                            <span class="control-error" v-if="errors.has('activity-form.title')">
+                                @{{ errors.first('activity-form.title') }}
+                            </span>
                         </div>
-                    </div>
 
-                    <div class="form-group">
-                        <label for="participants">{{ __('admin::app.leads.participants') }}</label>
+                        <div class="form-group" :class="[errors.has('activity-form.type') ? 'has-error' : '']">
+                            <label for="type" class="required">{{ __('admin::app.leads.type') }}</label>
 
-                        <div class="lookup-control">
-                            <div class="form-group" style="margin-bottom: 0">
-                                <input
-                                    type="text"
-                                    class="control"
-                                    v-model="search_term"
-                                    autocomplete="off"
-                                    placeholder="{{ __('admin::app.leads.participant-info') }}"
-                                    v-on:keyup="search"
-                                >
+                            <select
+                                name="type"
+                                class="control"
+                                v-validate="'required'"
+                                data-vv-as="&quot;{{ __('admin::app.leads.type') }}&quot;"
+                            >
+                                <option value=""></option>
+                                <option value="call">{{ __('admin::app.leads.call') }}</option>
+                                <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
+                                <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
+                            </select>
 
-                                <div class="lookup-results grouped" v-if="search_term.length">
-                                    <label>{{ __('admin::app.leads.users') }}</label>
+                            <span class="control-error" v-if="errors.has('activity-form.type')">
+                                @{{ errors.first('activity-form.type') }}
+                            </span>
+                        </div>
 
-                                    <ul>
-                                        <li v-for='(participant, index) in searched_participants.users' @click="addParticipant('users', participant)">
-                                            <span>@{{ participant.name }}</span>
-                                        </li>
+                        <div class="form-group">
+                            <label for="comment">{{ __('admin::app.leads.description') }}</label>
 
-                                        <li v-if='! searched_participants.users.length && search_term.length && ! is_searching'>
-                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                        </li>
-                                    </ul>
+                            <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
+                        </div>
 
-                                    <label>{{ __('admin::app.leads.persons') }}</label>
+                        <div class="form-group date" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
+                            <label for="schedule_from" class="required">{{ __('admin::app.leads.schedule') }}</label>
 
-                                    <ul>
-                                        <li v-for='(participant, index) in searched_participants.persons' @click="addParticipant('persons', participant)">
-                                            <span>@{{ participant.name }}</span>
-                                        </li>
+                            <div class="input-group">
+                                <datetime>
+                                    <input
+                                        type="text"
+                                        name="schedule_from"
+                                        class="control"
+                                        ref="schedule_from"
+                                        placeholder="{{ __('admin::app.leads.from') }}"
+                                        v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'"
+                                        data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;"
+                                    />
 
-                                        <li v-if='! searched_participants.persons.length && search_term.length && ! is_searching'>
-                                            <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                        </li>
-                                    </ul>
+                                    <span class="control-error" v-if="errors.has('activity-form.schedule_from')">
+                                        @{{ errors.first('activity-form.schedule_from') }}
+                                    </span>
+                                </datetime>
+
+                                <datetime>
+                                    <input
+                                        type="text"
+                                        name="schedule_to"
+                                        class="control"
+                                        ref="schedule_to"
+                                        placeholder="{{ __('admin::app.leads.to') }}"
+                                        v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'"
+                                        data-vv-as="&quot;{{ __('admin::app.leads.to') }}&quot;"
+                                    />
+
+                                    <span class="control-error" v-if="errors.has('activity-form.schedule_to')">
+                                        @{{ errors.first('activity-form.schedule_to') }}
+                                    </span>
+                                </datetime>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="participants">{{ __('admin::app.leads.participants') }}</label>
+
+                            <div class="lookup-control">
+                                <div class="form-group" style="margin-bottom: 0">
+                                    <input
+                                        type="text"
+                                        class="control"
+                                        v-model="search_term"
+                                        autocomplete="off"
+                                        placeholder="{{ __('admin::app.leads.participant-info') }}"
+                                        v-on:keyup="search"
+                                    >
+
+                                    <div class="lookup-results grouped" v-if="search_term.length">
+                                        <label>{{ __('admin::app.leads.users') }}</label>
+
+                                        <ul>
+                                            <li v-for='(participant, index) in searched_participants.users' @click="addParticipant('users', participant)">
+                                                <span>@{{ participant.name }}</span>
+                                            </li>
+
+                                            <li v-if='! searched_participants.users.length && search_term.length && ! is_searching'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+
+                                        <label>{{ __('admin::app.leads.persons') }}</label>
+
+                                        <ul>
+                                            <li v-for='(participant, index) in searched_participants.persons' @click="addParticipant('persons', participant)">
+                                                <span>@{{ participant.name }}</span>
+                                            </li>
+
+                                            <li v-if='! searched_participants.persons.length && search_term.length && ! is_searching'>
+                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <i class="icon loader-active-icon" v-if="is_searching"></i>
                                 </div>
 
-                                <i class="icon loader-active-icon" v-if="is_searching"></i>
-                            </div>
+                                <div class="lookup-selected-options">
+                                    <span class="badge badge-sm badge-pill badge-secondary-outline users" v-for='(participant, index) in participants.users'>
+                                        <input type="hidden" name="participants[users][]" :value="participant.id"/>
+                                        @{{ participant.name }}
+                                        <i class="icon close-icon"  @click="removeParticipant('users', participant)"></i>
+                                    </span>
 
-                            <div class="lookup-selected-options">
-                                <span class="badge badge-sm badge-pill badge-secondary-outline users" v-for='(participant, index) in participants.users'>
-                                    <input type="hidden" name="participants[users][]" :value="participant.id"/>
-                                    @{{ participant.name }}
-                                    <i class="icon close-icon"  @click="removeParticipant('users', participant)"></i>
-                                </span>
-
-                                <span class="badge badge-sm badge-pill badge-warning-outline persons" v-for='(participant, index) in participants.persons'>
-                                    <input type="hidden" name="participants[persons][]" :value="participant.id"/>
-                                    @{{ participant.name }}
-                                    <i class="icon close-icon"  @click="removeParticipant('persons', participant)"></i>
-                                </span>
+                                    <span class="badge badge-sm badge-pill badge-warning-outline persons" v-for='(participant, index) in participants.persons'>
+                                        <input type="hidden" name="participants[persons][]" :value="participant.id"/>
+                                        @{{ participant.name }}
+                                        <i class="icon close-icon"  @click="removeParticipant('persons', participant)"></i>
+                                    </span>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <button type="submit" class="btn btn-md btn-primary">
-                        {{ __('admin::app.leads.save') }}
-                    </button>
+                        <button type="submit" class="btn btn-md btn-primary">
+                            {{ __('admin::app.leads.save') }}
+                        </button>
 
-                </form>
-            </tab>
+                    </form>
+                </tab>
+            @endif
 
             {!! view_render_event('admin.leads.view.informations.activity_actions.activity.after', ['lead' => $lead]) !!}
 

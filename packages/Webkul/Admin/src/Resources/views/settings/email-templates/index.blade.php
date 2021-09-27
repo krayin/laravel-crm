@@ -19,9 +19,11 @@
                 </h1>
             </template>
 
-            <template v-slot:table-action>
-                <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.create-title') }}</a>
-            </template>
+            @if (bouncer()->hasPermission('settings.email_templates.create'))
+                <template v-slot:table-action>
+                    <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.create-title') }}</a>
+                </template>
+            @endif
         <table-component>
     </div>
 @stop

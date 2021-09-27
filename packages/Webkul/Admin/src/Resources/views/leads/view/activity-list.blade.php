@@ -59,15 +59,19 @@
                                             {{ __('admin::app.leads.mark-as-done') }}
                                         </li>
 
-                                        <li>
-                                            <a :href="'{{ route('admin.activities.edit') }}/' + activity.id" target="_blank">
-                                                {{ __('admin::app.leads.edit') }}
-                                            </a>
-                                        </li>
+                                        @if (bouncer()->hasPermission('activities.edit'))
+                                            <li>
+                                                <a :href="'{{ route('admin.activities.edit') }}/' + activity.id" target="_blank">
+                                                    {{ __('admin::app.leads.edit') }}
+                                                </a>
+                                            </li>
+                                        @endif
 
-                                        <li @click="remove(activity)">
-                                            {{ __('admin::app.leads.remove') }}
-                                        </li>
+                                        @if (bouncer()->hasPermission('activities.delete'))
+                                            <li @click="remove(activity)">
+                                                {{ __('admin::app.leads.remove') }}
+                                            </li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>

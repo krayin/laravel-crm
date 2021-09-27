@@ -14,12 +14,12 @@ return [
     ], [
         'key'   => 'leads.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.leads.store',
+        'route' => ['admin.leads.create', 'admin.leads.store'],
         'sort'  => 1,
     ], [
         'key'   => 'leads.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => 'admin.leads.update',
+        'route' => ['admin.leads.edit', 'admin.leads.update'],
         'sort'  => 2,
     ], [
         'key'   => 'leads.delete',
@@ -59,12 +59,12 @@ return [
     ], [
         'key'   => 'activities.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.activities.store',
+        'route' => ['admin.activities.create', 'admin.activities.store'],
         'sort'  => 1,
     ], [
         'key'   => 'activities.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => 'admin.activities.update',
+        'route' => ['admin.activities.edit', 'admin.activities.update'],
         'sort'  => 2,
     ], [
         'key'   => 'activities.delete',
@@ -84,7 +84,7 @@ return [
     ], [
         'key'   => 'contacts.persons.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.contacts.persons.store',
+        'route' => ['admin.contacts.persons.create', 'admin.contacts.persons.store'],
         'sort'  => 2,
     ], [
         'key'   => 'contacts.persons.edit',
@@ -104,7 +104,7 @@ return [
     ], [
         'key'   => 'contacts.organizations.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.contacts.organizations.store',
+        'route' => ['admin.contacts.organizations.create', 'admin.contacts.organizations.store'],
         'sort'  => 1,
     ], [
         'key'   => 'contacts.organizations.edit',
@@ -124,7 +124,7 @@ return [
     ], [
         'key'   => 'products.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.products.store',
+        'route' => ['admin.products.create', 'admin.products.store'],
         'sort'  => 1,
     ], [
         'key'   => 'products.edit',
@@ -269,7 +269,7 @@ return [
     ], [
         'key'   => 'settings.email_templates.create',
         'name'  => 'admin::app.acl.create',
-        'route' => ['admin.settings.email_templates.store'],
+        'route' => ['admin.settings.email_templates.create', 'admin.settings.email_templates.store'],
         'sort'  => 1,
     ], [
         'key'   => 'settings.email_templates.edit',
@@ -289,7 +289,7 @@ return [
     ], [
         'key'   => 'settings.workflows.create',
         'name'  => 'admin::app.acl.create',
-        'route' => ['admin.settings.workflows.store'],
+        'route' => ['admin.settings.workflows.create', 'admin.settings.workflows.store'],
         'sort'  => 1,
     ], [
         'key'   => 'settings.workflows.edit',
