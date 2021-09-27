@@ -582,6 +582,16 @@
                     
                     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
                         .then (function(response) {
+                            self.$parent.products.forEach(function(addedProduct) {
+                                
+                                response.data.forEach(function(product, index) {
+                                    if (product.id == addedProduct.product_id) {
+                                        response.data.splice(index, 1);
+                                    }
+                                });
+
+                            });
+
                             self.products = response.data;
 
                             self.is_searching = false;
