@@ -38,6 +38,8 @@
             addHasErrorClass: function() {
                 var self = this;
 
+                self.hasError = false;
+
                 setTimeout(function() {
                     $(self.$el).find('.form-group').each(function(index, element) {
                         if ($(element).hasClass('has-error')) {
