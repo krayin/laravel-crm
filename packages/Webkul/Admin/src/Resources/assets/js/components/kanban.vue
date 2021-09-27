@@ -6,7 +6,10 @@
                 <span class="float-right">{{ totalCounts[stage] || 0 }}</span>
             </h2>
 
-            <a :href="createUrl + '?lead_stage_id=' + openAddModal(stage, stagesId)">{{ detailText }}</a>
+            <a
+                :href="createUrl + '?lead_stage_id=' + openAddModal(stage, stagesId)"
+                v-if="createUrl"
+            >{{ detailText }}</a>
         </div>
 
         <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">

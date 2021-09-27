@@ -54,8 +54,8 @@ class User extends Authenticatable implements UserContract
     /**
      * Checks if user has permission to perform certain action.
      *
-     * @param  String  $permission
-     * @return Boolean
+     * @param  string  $permission
+     * @return boolean
      */
     public function hasPermission($permission)
     {

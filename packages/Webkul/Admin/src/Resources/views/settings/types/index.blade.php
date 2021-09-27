@@ -19,9 +19,11 @@
                 </h1>
             </template>
 
-            <template v-slot:table-action>
-                <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
-            </template>
+            @if (bouncer()->hasPermission('settings.types.create'))
+                <template v-slot:table-action>
+                    <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
+                </template>
+            @endif
         <table-component>
     </div>
 

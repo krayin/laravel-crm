@@ -18,9 +18,11 @@
             {!! view_render_event('admin.leads.index.header.after') !!}
         </h1>
 
-        <div class="table-action">
-            <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
-        </div>
+        @if (bouncer()->hasPermission('leads.create'))
+            <div class="table-action">
+                <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
+            </div>
+        @endif
     </div>
 
     <div class="table-body inner-section">
@@ -31,7 +33,7 @@
             get-url="{{ route('admin.leads.kanban.index') }}"
             detail-text="{{ __('admin::app.leads.create-title') }}"
             update-url="{{ route('admin.leads.kanban.update') }}"
-            create-url="{{ route('admin.leads.create') }}"
+            @if (bouncer()->hasPermission('leads.create'))create-url="{{ route('admin.leads.create') }}"@endif
         ></kanban-component>
     </div>
 </div>

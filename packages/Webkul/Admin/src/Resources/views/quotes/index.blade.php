@@ -19,9 +19,11 @@
                 </h1>
             </template>
 
-            <template v-slot:table-action>
-                <a href="{{ route('admin.quotes.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.quotes.create-title') }}</a>
-            </template>
+            @if (bouncer()->hasPermission('quotes.create'))
+                <template v-slot:table-action>
+                    <a href="{{ route('admin.quotes.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.quotes.create-title') }}</a>
+                </template>
+            @endif
         <table-component>
     </div>
 @stop
