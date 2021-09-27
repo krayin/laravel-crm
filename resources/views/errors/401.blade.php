@@ -1,5 +1,5 @@
-@extends('errors::minimal')
+@extends('errors::illustrated-layout')
 
 @section('title', __('Unauthorized'))
 @section('code', '401')
-@section('message', __('Unauthorized'))
+@section('message', __('You don\'t have necessary permissions to perform this action.'))
