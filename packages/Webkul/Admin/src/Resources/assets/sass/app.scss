@@ -744,6 +744,10 @@ body {
             padding-top: 0;
         }
 
+        &:last-of-type {
+            margin-bottom: 20px;
+        }
+
         .top-control-group {
             width: 100%;
             display: inline-block;
