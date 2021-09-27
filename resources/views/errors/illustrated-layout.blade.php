@@ -165,7 +165,7 @@
                     <div class="copyright">
                         <span class="separator">. . .</span>
 
-                        <p>© Copyright 2021 <a href="https:krayin.com">Krayin</a>, All right reserved.</p>
+                        <p>© Copyright 2021 <a href="https:krayincrm.com">Krayin</a>, All right reserved.</p>
                     </div>
 
                 </div>
