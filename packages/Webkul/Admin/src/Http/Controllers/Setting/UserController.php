@@ -146,7 +146,7 @@ class UserController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'email'            => 'required|email',
+            'email'            => 'required|email|unique:users,email,' . $id,
             'name'             => 'required',
             'password'         => 'nullable',
             'confirm_password' => 'nullable|required_with:password|same:password',
@@ -156,19 +156,14 @@ class UserController extends Controller
         $data = request()->all();
 
         if (! $data['password']) {
-            unset($data['password']);
-            unset($data['confirm_password']);
+            unset($data['password'], $data['confirm_password']);
         } else {
             $data['password'] = bcrypt($data['password']);
         }
 
-        $data['status'] = isset($data['status']) ? 1 : 0;
-
-        $currentUser = auth()->guard('user')->user();
-
-        // make status true if the current user is being edited
-        $data['status'] = ($id == $currentUser->id) ? 1 : $data['status'];
-        $data['email'] = ($id == $currentUser->id) ? $currentUser->email : $data['email'];
+        if (auth()->guard('user')->user()->id != $id) {
+            $data['status'] = isset($data['status']) ? 1 : 0;
+        }
 
         Event::dispatch('settings.user.update.before', $id);
 

@@ -85,23 +85,25 @@
                                     </span>
                                 </div>
 
-                                <div class="form-group" :class="[errors.has('status') ? 'has-error' : '']">
-                                    <label class="required">
-                                        {{ __('admin::app.settings.users.status') }}
-                                    </label>
+                                @if ($admin->id != auth()->guard('user')->user()->id)
+                                    <div class="form-group" :class="[errors.has('status') ? 'has-error' : '']">
+                                        <label class="required">
+                                            {{ __('admin::app.settings.users.status') }}
+                                        </label>
 
-                                    <label class="switch">
-                                        <input
-                                            type="checkbox"
-                                            name="status"
-                                            class="control"
-                                            id="status"
-                                            {{ (old('status') || $admin->status) ? 'checked' : '' }}
-                                        />
+                                        <label class="switch">
+                                            <input
+                                                type="checkbox"
+                                                name="status"
+                                                class="control"
+                                                id="status"
+                                                {{ (old('status') || $admin->status) ? 'checked' : '' }}
+                                            />
 
-                                        <span class="slider round"></span>
-                                    </label>
-                                </div>
+                                            <span class="slider round"></span>
+                                        </label>
+                                    </div>
+                                @endif
 
                                 <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
                                     <label>
