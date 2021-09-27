@@ -6,480 +6,170 @@
 
         <title>@yield('title')</title>
 
+        <link rel="apple-touch-icon" sizes="57x57" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-57x57.png') }}">
+        <link rel="apple-touch-icon" sizes="60x60" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-60x60.png') }}">
+        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-72x72.png') }}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-76x76.png') }}">
+        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-114x114.png') }}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-120x120.png') }}">
+        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-144x144.png') }}">
+        <link rel="apple-touch-icon" sizes="152x152" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-152x152.png') }}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('vendor/webkul/admin/assets/images/favicon/apple-icon-180x180.png') }}">
+        <link rel="icon" type="image/png" sizes="192x192"  href="{{ asset('vendor/webkul/admin/assets/images/favicon/android-icon-192x192.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('vendor/webkul/admin/assets/images/favicon/favicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="96x96" href="{{ asset('vendor/webkul/admin/assets/images/favicon/favicon-96x96.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('vendor/webkul/admin/assets/images/favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('vendor/webkul/admin/assets/images/favicon/manifest.json') }}">
+
         <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Nunito&display=swap" rel="stylesheet">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;500&display=swap" rel="stylesheet">
+
 
         <!-- Styles -->
         <style>
-            html {
-                line-height: 1.15;
-                    -ms-text-size-adjust: 100%;
-                -webkit-text-size-adjust: 100%;
+            * {
+                box-sizing: border-box;
+                -webkit-font-smoothing: antialiased;
             }
 
             body {
+                overflow: unset;
                 margin: 0;
+                position: static;
+                height: 100%;
+                width: 100%;
+                background: #F7F8F9;
+                color: #263238;
+                font-family: "Roboto";
+                font-size: 18px;
+                font-weight: 400;
+                letter-spacing: -0.26px;
+                line-height: 22px;
             }
 
-            header,
-            nav,
-            section {
-                display: block;
-            }
-
-            figcaption,
-            main {
-                display: block;
-            }
-
-            a {
-                background-color: transparent;
-                -webkit-text-decoration-skip: objects;
-            }
-
-            strong {
-                font-weight: inherit;
-            }
-
-            strong {
-                font-weight: bolder;
-            }
-
-            code {
-                font-family: monospace, monospace;
-                font-size: 1em;
-            }
-
-            dfn {
-                font-style: italic;
-            }
-
-            svg:not(:root) {
-                overflow: hidden;
-            }
-
-            button,
-            input {
-                font-family: sans-serif;
-                font-size: 100%;
-                line-height: 1.15;
-                margin: 0;
-            }
-
-            button,
-            input {
-                overflow: visible;
-            }
-
-            button {
-                text-transform: none;
-            }
-
-            button,
-            html [type="button"],
-            [type="reset"],
-            [type="submit"] {
-                -webkit-appearance: button;
-            }
-
-            button::-moz-focus-inner,
-            [type="button"]::-moz-focus-inner,
-            [type="reset"]::-moz-focus-inner,
-            [type="submit"]::-moz-focus-inner {
-                border-style: none;
-                padding: 0;
-            }
-
-            button:-moz-focusring,
-            [type="button"]:-moz-focusring,
-            [type="reset"]:-moz-focusring,
-            [type="submit"]:-moz-focusring {
-                outline: 1px dotted ButtonText;
-            }
-
-            legend {
-                -webkit-box-sizing: border-box;
-                        box-sizing: border-box;
-                color: inherit;
+            .anonymous-layout-container {
+                text-align: center;
+                position: absolute;
+                width: 100%;
+                height: 100%;
                 display: table;
-                max-width: 100%;
-                padding: 0;
-                white-space: normal;
+                z-index: 1;
+                background: #F7F8F9;
             }
 
-            [type="checkbox"],
-            [type="radio"] {
-                -webkit-box-sizing: border-box;
-                        box-sizing: border-box;
-                padding: 0;
+            .center-box {
+                display: table-cell;
+                vertical-align: middle;
             }
 
-            [type="number"]::-webkit-inner-spin-button,
-            [type="number"]::-webkit-outer-spin-button {
-                height: auto;
-            }
-
-            [type="search"] {
-                -webkit-appearance: textfield;
-                outline-offset: -2px;
-            }
-
-            [type="search"]::-webkit-search-cancel-button,
-            [type="search"]::-webkit-search-decoration {
-                -webkit-appearance: none;
-            }
-
-            ::-webkit-file-upload-button {
-                -webkit-appearance: button;
-                font: inherit;
-            }
-
-            menu {
-                display: block;
-            }
-
-            canvas {
+            .adjacent-center {
+                width: 476px;
                 display: inline-block;
             }
 
-            template {
-                display: none;
+            .brand-logo img {
+                width: 200px;
+                margin-bottom: 20px;
             }
 
-            [hidden] {
-                display: none;
+            label {
+                font-size: 65px;
+                font-weight: 300;
+                margin-bottom: 25px;
+                line-height: 65px;
+                display: inline-block;
             }
 
-            html {
-                -webkit-box-sizing: border-box;
-                        box-sizing: border-box;
-                font-family: sans-serif;
-            }
-
-            *,
-            *::before,
-            *::after {
-                -webkit-box-sizing: inherit;
-                        box-sizing: inherit;
+            h1 {
+                font-size: 23px;
+                font-weight: 500;
+                margin: 0;
+                margin-bottom: 17px;
             }
 
             p {
-                margin: 0;
+                font-size: 14px;
+                font-weight: 400;
             }
 
-            button {
-                background: transparent;
+            .error-illustraton {
+                margin-bottom: 20px;
+            }
+
+            ul {
                 padding: 0;
+                margin-bottom: 40px;
             }
 
-            button:focus {
-                outline: 1px dotted;
-                outline: 5px auto -webkit-focus-ring-color;
+            ul li {
+                list-style: none;
+                display: inline;
             }
 
-            *,
-            *::before,
-            *::after {
-                border-width: 0;
-                border-style: solid;
-                border-color: #dae1e7;
+            ul li:after {
+                content: " \00b7";
             }
 
-            button,
-            [type="button"],
-            [type="reset"],
-            [type="submit"] {
-                border-radius: 0;
+            ul li:last-child:after {
+                content: none;
             }
 
-            button,
-            input {
-                font-family: inherit;
+            a {
+                font-size: 14px;
+                text-decoration: none;
+                color: #0E90D9;
             }
 
-            input::-webkit-input-placeholder {
-                color: inherit;
-                opacity: .5;
+            .copyright .separator {
+                color: #000000;
             }
 
-            input:-ms-input-placeholder {
-                color: inherit;
-                opacity: .5;
-            }
-
-            input::-ms-input-placeholder {
-                color: inherit;
-                opacity: .5;
-            }
-
-            input::placeholder {
-                color: inherit;
-                opacity: .5;
-            }
-
-            button,
-            [role=button] {
-                cursor: pointer;
-            }
-
-            .bg-transparent {
-                background-color: transparent;
-            }
-
-            .bg-white {
-                background-color: #fff;
-            }
-
-            .bg-teal-light {
-                background-color: #64d5ca;
-            }
-
-            .bg-blue-dark {
-                background-color: #2779bd;
-            }
-
-            .bg-indigo-light {
-                background-color: #7886d7;
-            }
-
-            .bg-purple-light {
-                background-color: #a779e9;
-            }
-
-            .bg-no-repeat {
-                background-repeat: no-repeat;
-            }
-
-            .bg-cover {
-                background-size: cover;
-            }
-
-            .border-grey-light {
-                border-color: #dae1e7;
-            }
-
-            .hover\:border-grey:hover {
-                border-color: #b8c2cc;
-            }
-
-            .rounded-lg {
-                border-radius: .5rem;
-            }
-
-            .border-2 {
-                border-width: 2px;
-            }
-
-            .hidden {
-                display: none;
-            }
-
-            .flex {
-                display: -webkit-box;
-                display: -ms-flexbox;
-                display: flex;
-            }
-
-            .items-center {
-                -webkit-box-align: center;
-                    -ms-flex-align: center;
-                        align-items: center;
-            }
-
-            .justify-center {
-                -webkit-box-pack: center;
-                    -ms-flex-pack: center;
-                        justify-content: center;
-            }
-
-            .font-sans {
-                font-family: Nunito, sans-serif;
-            }
-
-            .font-light {
-                font-weight: 300;
-            }
-
-            .font-bold {
-                font-weight: 700;
-            }
-
-            .font-black {
-                font-weight: 900;
-            }
-
-            .h-1 {
-                height: .25rem;
-            }
-
-            .leading-normal {
-                line-height: 1.5;
-            }
-
-            .m-8 {
-                margin: 2rem;
-            }
-
-            .my-3 {
-                margin-top: .75rem;
-                margin-bottom: .75rem;
-            }
-
-            .mb-8 {
-                margin-bottom: 2rem;
-            }
-
-            .max-w-sm {
-                max-width: 30rem;
-            }
-
-            .min-h-screen {
-                min-height: 100vh;
-            }
-
-            .py-3 {
-                padding-top: .75rem;
-                padding-bottom: .75rem;
-            }
-
-            .px-6 {
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
-            }
-
-            .pb-full {
-                padding-bottom: 100%;
-            }
-
-            .absolute {
-                position: absolute;
-            }
-
-            .relative {
-                position: relative;
-            }
-
-            .pin {
-                top: 0;
-                right: 0;
-                bottom: 0;
-                left: 0;
-            }
-
-            .text-black {
-                color: #22292f;
-            }
-
-            .text-grey-darkest {
-                color: #3d4852;
-            }
-
-            .text-grey-darker {
-                color: #606f7b;
-            }
-
-            .text-2xl {
-                font-size: 1.5rem;
-            }
-
-            .text-5xl {
-                font-size: 3rem;
-            }
-
-            .uppercase {
-                text-transform: uppercase;
-            }
-
-            .antialiased {
-                -webkit-font-smoothing: antialiased;
-                -moz-osx-font-smoothing: grayscale;
-            }
-
-            .tracking-wide {
-                letter-spacing: .05em;
-            }
-
-            .w-16 {
-                width: 4rem;
-            }
-
-            .w-full {
-                width: 100%;
-            }
-
-            @media (min-width: 768px) {
-                .md\:bg-left {
-                    background-position: left;
-                }
-
-                .md\:bg-right {
-                    background-position: right;
-                }
-
-                .md\:flex {
-                    display: -webkit-box;
-                    display: -ms-flexbox;
-                    display: flex;
-                }
-
-                .md\:my-6 {
-                    margin-top: 1.5rem;
-                    margin-bottom: 1.5rem;
-                }
-
-                .md\:min-h-screen {
-                    min-height: 100vh;
-                }
-
-                .md\:pb-0 {
-                    padding-bottom: 0;
-                }
-
-                .md\:text-3xl {
-                    font-size: 1.875rem;
-                }
-
-                .md\:text-15xl {
-                    font-size: 9rem;
-                }
-
-                .md\:w-1\/2 {
-                    width: 50%;
-                }
-            }
-
-            @media (min-width: 992px) {
-                .lg\:bg-center {
-                    background-position: center;
-                }
+            .copyright p {
+                color: #000000;
+                font-size: 12px;
             }
         </style>
     </head>
-    <body class="antialiased font-sans">
-        <div class="md:flex min-h-screen">
-            <div class="w-full md:w-1/2 bg-white flex items-center justify-center">
-                <div class="max-w-sm m-8">
-                    <div class="text-black text-5xl md:text-15xl font-black">
-                        @yield('code', __('Oh no'))
+
+    <body>
+        <div class="anonymous-layout-container">
+            <div class="center-box">
+
+                <div class="adjacent-center">
+
+                    <div class="brand-logo">
+                        <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
                     </div>
 
-                    <div class="w-16 h-1 bg-purple-light my-3 md:my-6"></div>
+                    <label>{{ __('Oops!') }}</label>
 
-                    <p class="text-grey-darker text-2xl md:text-3xl font-light mb-8 leading-normal">
-                        @yield('message')
-                    </p>
+                    <h1>@yield('code') - @yield('title')</h1>
 
-                    <a href="{{ app('router')->has('home') ? route('home') : url('/') }}">
-                        <button class="bg-transparent text-grey-darkest font-bold uppercase tracking-wide py-3 px-6 border-2 border-grey-light hover:border-grey rounded-lg">
-                            {{ __('Go Home') }}
-                        </button>
-                    </a>
+                    <p>@yield('message')</p>
+
+                    <img class="error-illustraton" src="{{ asset('vendor/webkul/admin/assets/images/error-illustraton.svg') }}">
+
+                    <p>{{ __('Few of the links which may help you to get back on the track -') }}</p>
+
+                    <div class="quick-links">
+                        <ul>
+                            <li><a href="{{ route('admin.dashboard.index') }}">{{ __('Dashboard') }}</a></li>
+                            <li><a href="{{ route('admin.session.create') }}">{{ __('Login') }}</a></li>
+                            <li><a href="https://webkul.uvdesk.com">{{ __('Support') }}</a></li>
+                            <li><a href="mailto: support@krayincrm.com">{{ __('Contact Krayin Team') }}</a></li>
+                        </ul>
+                    </div>
+
+                    <div class="copyright">
+                        <span class="separator">. . .</span>
+
+                        <p>© Copyright 2021 <a href="https:krayin.com">Krayin</a>, All right reserved.</p>
+                    </div>
+
                 </div>
-            </div>
 
-            <div class="relative pb-full md:flex md:pb-0 md:min-h-screen w-full md:w-1/2">
-                @yield('image')
             </div>
         </div>
     </body>
