@@ -65,8 +65,7 @@ class ActivityController extends Controller
         LeadRepository $leadRepository,
         UserRepository $userRepository,
         PersonRepository $personRepository
-    )
-    {
+    ) {
         $this->activityRepository = $activityRepository;
 
         $this->fileRepository = $fileRepository;
@@ -192,7 +191,7 @@ class ActivityController extends Controller
         if (request('lead_id')) {
             $lead = $this->leadRepository->find(request('lead_id'));
 
-            if (! $lead->activities->contains($id)) {
+            if (!$lead->activities->contains($id)) {
                 $lead->activities()->attach($id);
             }
         }
@@ -298,11 +297,28 @@ class ActivityController extends Controller
                 'status'    => true,
                 'message'   => trans('admin::app.activities.destroy-success', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'status'  => false,
                 'message' => trans('admin::app.activities.destroy-failed', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 400);
         }
+    }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        $this->activityRepository->destroy($data['rows']);
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.activities.title')])
+        ]);
     }
 }

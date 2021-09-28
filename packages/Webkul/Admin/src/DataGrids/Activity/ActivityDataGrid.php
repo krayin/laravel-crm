@@ -268,4 +268,19 @@ class ActivityDataGrid extends DataGrid
             'icon'         => 'trash-icon',
         ]);
     }
+
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
+    public function prepareMassActions()
+    {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.activities.mass_delete'),
+            'method' => 'PUT',
+        ]);
+    }
 }
