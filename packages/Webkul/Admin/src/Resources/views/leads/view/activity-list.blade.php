@@ -120,10 +120,6 @@
                     <table>
                         <thead>
                             <tr>
-                                <th class="sales-owner">{{ __('admin::app.leads.sales-owner') }}</th>
-
-                                <th class="person">{{ __('admin::app.leads.person') }}</th>
-
                                 <th class="quote-subject">{{ __('admin::app.leads.subject') }}</th>
 
                                 <th class="expired-at">{{ __('admin::app.leads.expired-at') }}</th>
@@ -153,16 +149,12 @@
                                     <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                 </th>
 
-                                <th class="actions">{{ __('admin::app.leads.actions') }}</th>
+                                <th class="actions" style="width: 40px;"></th>
                             </tr>
                         </thead>
                         
                         <tbody>
                             <tr v-for="quote in quotes">
-                                <td class="sales-owner">@{{ quote.user.name }}</td>
-
-                                <td class="person">@{{ quote.person.name }}</td>
-
                                 <td class="quote-subject">@{{ quote.subject }}</td>
 
                                 <td class="expired-at">@{{ quote.expired_at }}</td>
