@@ -230,6 +230,9 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
             ], function () {
+
+                Route::get('', 'SettingController@index')->name('admin.settings.index');
+
                 // Groups Routes
                 Route::prefix('groups')->group(function () {
                     Route::get('', 'GroupController@index')->name('admin.settings.groups.index');

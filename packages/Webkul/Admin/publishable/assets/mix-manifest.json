@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=04371b11c28bdaa65a9e",
-    "/css/admin.css": "/css/admin.css?id=b65c2d4e634989958863",
+    "/css/admin.css": "/css/admin.css?id=4c6b9990dc9636f4f464",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f",
     "/images/avatar-dark-icon.svg": "/images/avatar-dark-icon.svg?id=abefe06bd1ce2bfe7029",
@@ -42,5 +42,11 @@
     "/images/product-icon.svg": "/images/product-icon.svg?id=85c5a19c5f2314383a34",
     "/images/quotation-icon.svg": "/images/quotation-icon.svg?id=9be397426d3239061dbb",
     "/images/role-icon.svg": "/images/role-icon.svg?id=8c65bd7537660994873b",
-    "/images/user-icon.svg": "/images/user-icon.svg?id=5504788e912ea441b4ae"
+    "/images/user-icon.svg": "/images/user-icon.svg?id=5504788e912ea441b4ae",
+    "/images/email-template-icon.svg": "/images/email-template-icon.svg?id=55a4b8929f5d3cabe1c0",
+    "/images/error-illustraton.svg": "/images/error-illustraton.svg?id=6b4bd3b26072c5612ce4",
+    "/images/group-icon.svg": "/images/group-icon.svg?id=7be77107629e7728ba0c",
+    "/images/source-icon.svg": "/images/source-icon.svg?id=861e8fa2f24de39071a2",
+    "/images/type-icon.svg": "/images/type-icon.svg?id=625cb6dfa3b39d72b65b",
+    "/images/workflow-icon.svg": "/images/workflow-icon.svg?id=0a8721c15a54790d1e85"
 }
