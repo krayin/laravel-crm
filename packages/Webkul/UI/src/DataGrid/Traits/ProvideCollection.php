@@ -243,9 +243,13 @@ trait ProvideCollection
                     break;
 
                 case 'in':
-                    foreach (explode(',', $filterValue) as $value) {
-                        $this->resolve($collection, $columnName, 'like', "%{$value}%", 'orWhere');
-                    }
+                    $collection->where(function ($query) use ($columnName, $filterValue) {
+                        foreach (explode(',', $filterValue) as $value) {
+                            $query->orWhere(function ($query) use ($columnName, $value) {
+                                $this->resolve($query, $columnName, 'like', "%{$value}%", 'orWhere');
+                            });
+                        }
+                    });
                     break;
 
                 case 'bw':

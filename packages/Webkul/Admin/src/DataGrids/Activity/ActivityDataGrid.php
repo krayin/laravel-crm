@@ -19,9 +19,9 @@ class ActivityDataGrid extends DataGrid
             ->select(
                 'activities.*',
                 'leads.id as lead_id',
+                'leads.title as lead_title',
                 'users.id as created_by_id',
                 'users.name as created_by',
-                'leads.title as lead_title',
             )
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->leftJoin('lead_activities', 'activities.id', '=', 'lead_activities.activity_id')
@@ -58,6 +58,7 @@ class ActivityDataGrid extends DataGrid
         $this->addFilter('created_by', 'users.name');
         $this->addFilter('created_by_id', 'activities.user_id');
         $this->addFilter('created_at', 'activities.created_at');
+        $this->addFilter('lead_title', 'leads.title');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -93,7 +94,7 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'lead',
+            'index'      => 'lead_title',
             'label'      => trans('admin::app.datagrid.lead'),
             'type'       => 'string',
             'searchable' => false,
