@@ -325,7 +325,14 @@ trait ProvideCollection
 
             if ($toDisplay) {
                 $urlKey = $this->generateKeyFromActionTitle($action['title'], '_url');
-                $record->$urlKey = route($action['route'], $record->{$action['index'] ?? $this->index});
+
+                if (isset($action['params']) && ! empty($action['params'])) {
+                    $action['params'][] = $record->{$action['index'] ?? $this->index};
+
+                    $record->$urlKey = route($action['route'], $action['params']);
+                } else {
+                    $record->$urlKey = route($action['route'], $record->{$action['index'] ?? $this->index});
+                }
             }
         }
     }
