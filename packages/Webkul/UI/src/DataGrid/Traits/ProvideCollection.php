@@ -43,8 +43,6 @@ trait ProvideCollection
             $columnType = $this->findColumnType($key)[0] ?? null;
             $columnName = $this->findColumnType($key)[1] ?? null;
 
-
-
             switch ($key) {
                 /**
                  * All sorting related method will go here.
@@ -68,16 +66,12 @@ trait ProvideCollection
                         return $collection;
                     }
 
-
-
                     $this->attachColumnValues($columnName, $info);
 
                     if (in_array($key, $this->customTabFilters)) {
                         $this->filterCollectionFromTabFilter($collection, $key, $info);
                         break;
                     }
-
-
 
                     $this->filterCollection($collection, $info, $columnType, $columnName);
                     break;
