@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Quote;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class QuoteDataGrid extends DataGrid
 {
@@ -70,6 +70,7 @@ class QuoteDataGrid extends DataGrid
             'label'              => trans('admin::app.datagrid.sales-person'),
             'type'               => 'dropdown',
             'dropdown_options'   => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'searchable'         => true,
             'sortable'           => true,
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
@@ -82,6 +83,7 @@ class QuoteDataGrid extends DataGrid
             'index'           => 'person_name',
             'label'           => trans('admin::app.datagrid.person'),
             'type'            => 'string',
+            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));

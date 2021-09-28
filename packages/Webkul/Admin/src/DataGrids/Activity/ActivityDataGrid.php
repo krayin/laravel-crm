@@ -53,6 +53,7 @@ class ActivityDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'activities.id');
+        $this->addFilter('title', 'activities.title');
         $this->addFilter('schedule_from', 'activities.schedule_from');
         $this->addFilter('created_by', 'users.name');
         $this->addFilter('created_by_id', 'activities.user_id');
@@ -80,6 +81,7 @@ class ActivityDataGrid extends DataGrid
             'label'            => trans('admin::app.datagrid.created_by'),
             'type'             => 'dropdown',
             'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'searchable'       => false,
             'sortable'         => true,
         ]);
 
@@ -91,10 +93,11 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'   => 'lead',
-            'label'   => trans('admin::app.datagrid.lead'),
-            'type'    => 'string',
-            'closure' => function ($row) {
+            'index'      => 'lead',
+            'label'      => trans('admin::app.datagrid.lead'),
+            'type'       => 'string',
+            'searchable' => false,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.leads.index', ['view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
                 return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
@@ -105,6 +108,7 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'type',
             'label'      => trans('admin::app.datagrid.type'),
             'type'       => 'boolean',
+            'searchable' => false,
         ]);
 
         $this->addColumn([
@@ -120,6 +124,7 @@ class ActivityDataGrid extends DataGrid
                     'label' => __("admin::app.common.yes"),
                 ]
             ],
+            'searchable'         => false,
             'closure'            => function ($row) {
                 if ($row->is_done) {
                     return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
@@ -130,10 +135,11 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'   => 'created_by',
-            'label'   => trans('admin::app.datagrid.created_by'),
-            'type'    => 'string',
-            'closure' => function ($row) {
+            'index'      => 'created_by',
+            'label'      => trans('admin::app.datagrid.created_by'),
+            'type'       => 'string',
+            'searchable' => false,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
                 return "<a href='" . $route . "'>" . $row->created_by . "</a>";
@@ -144,6 +150,7 @@ class ActivityDataGrid extends DataGrid
             'index'           => 'schedule_from',
             'label'           => trans('admin::app.datagrid.schedule_from'),
             'type'            => 'string',
+            'searchable'      => false,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_from);
@@ -154,6 +161,7 @@ class ActivityDataGrid extends DataGrid
             'index'           => 'schedule_to',
             'label'           => trans('admin::app.datagrid.schedule_to'),
             'type'            => 'string',
+            'searchable'      => false,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->schedule_to);
@@ -164,6 +172,7 @@ class ActivityDataGrid extends DataGrid
             'index'           => 'date_range',
             'label'           => trans('admin::app.datagrid.created_at'),
             'type'            => 'string',
+            'searchable'      => false,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
@@ -257,6 +266,21 @@ class ActivityDataGrid extends DataGrid
             'route'        => 'admin.activities.delete',
             'confirm_text' => trans('ui::app.datagrid.massaction.delete'),
             'icon'         => 'trash-icon',
+        ]);
+    }
+
+    /**
+     * Prepare mass actions.
+     *
+     * @return void
+     */
+    public function prepareMassActions()
+    {
+        $this->addMassAction([
+            'type'   => 'delete',
+            'label'  => trans('ui::app.datagrid.delete'),
+            'action' => route('admin.activities.mass_delete'),
+            'method' => 'PUT',
         ]);
     }
 }

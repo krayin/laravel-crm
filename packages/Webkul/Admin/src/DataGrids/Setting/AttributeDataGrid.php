@@ -106,10 +106,11 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'   => 'entity_type',
-            'label'   => trans('admin::app.datagrid.entity_type'),
-            'type'    => 'string',
-            'closure' => function ($row) {
+            'index'      => 'entity_type',
+            'label'      => trans('admin::app.datagrid.entity_type'),
+            'type'       => 'string',
+            'searchable' => false,
+            'closure'    => function ($row) {
                 return ucfirst($row->entity_type);
             },
         ]);
