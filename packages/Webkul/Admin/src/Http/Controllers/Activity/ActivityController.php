@@ -191,7 +191,7 @@ class ActivityController extends Controller
         if (request('lead_id')) {
             $lead = $this->leadRepository->find(request('lead_id'));
 
-            if (!$lead->activities->contains($id)) {
+            if (! $lead->activities->contains($id)) {
                 $lead->activities()->attach($id);
             }
         }
