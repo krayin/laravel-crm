@@ -11,7 +11,7 @@
                 </a>
 
                 @if ($menuItem['key'] != 'configuration')
-                    @if (count($menuItem['children']))
+                    @if ($menuItem['key'] != 'settings' && count($menuItem['children']))
                         <ul class="sub-menubar">
                             @foreach ($menuItem['children'] as $subMenuItem)
                                 <li class="sub-menu-item {{ Menu::getActive($subMenuItem) }}">

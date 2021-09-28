@@ -58,11 +58,13 @@ class Menu
                 continue;
             }
 
-            $item['url'] = route($item['route'], $item['params'] ?? []);
+            if (isset($item['route'])) {
+                $item['url'] = route($item['route'], $item['params'] ?? []);
 
-			if (strpos($this->current, $item['url']) !== false) {
-                $this->currentKey = $item['key'];
-			}
+                if (strpos($this->current, $item['url']) !== false) {
+                    $this->currentKey = $item['key'];
+                }
+            }
 
             $tree->add($item, 'menu');
         }

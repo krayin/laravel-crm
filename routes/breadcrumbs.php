@@ -145,7 +145,7 @@ Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
 // Settings
 Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
-    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.groups.index'));
+    $trail->push(trans('admin::app.layouts.settings'), route('admin.settings.index'));
 });
 
 // Settings > Groups

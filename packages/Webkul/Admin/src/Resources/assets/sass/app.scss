@@ -350,6 +350,80 @@ body {
     }
 }
 
+.settings-container {
+    .panel {
+        margin-bottom: 30px;
+        width: 1100px;
+
+        .panel-header {
+            h3 {
+                margin: 0 0 5px 0;
+            }
+
+            p {
+                font-size: $font-size-md;
+                font-weight: $font-weight-regular;
+                margin: 0;
+            }
+        }
+
+        .setting-link-container {
+            display: grid;
+            grid-gap: 80px;
+            grid-template-columns: auto auto auto;
+
+            .setting-link-item {
+                width: 300px;
+
+                a {
+                    padding: 20px;
+                    height: 100px;
+                    display: flex;
+                    -ms-flex-align: center;
+                    -webkit-align-items: center;
+                    align-items: center;
+
+                    .icon {
+                        width: 40px;
+                        height: 40px;
+                    }
+
+                    .setting-info {
+                        margin-left: 25px;
+                        display: inline-block;
+
+                        label {
+                            font-size: $font-size-lg;
+                            color: $font-color;
+                            font-weight: $font-weight-regular;
+                            cursor: pointer;
+                        }
+
+                        p {
+                            display: none;
+                            font-size: $font-size-sm;
+                            color: $font-color;
+                            font-weight: $font-weight-regular;
+                            margin: 0 0 3px 0;
+                        }
+                    }
+                }
+
+                &:hover {
+                    background-color: #F7F8F9;
+                    border-radius: 8px;
+    
+                    .setting-info {
+                        p {
+                            display: block;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 .content-container {
     left: 0;
     right: 0;
