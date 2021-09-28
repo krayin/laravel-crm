@@ -4,6 +4,7 @@
             'title'     => 'DataGrid',
             'actions'   => 'Actions',
             'edit'      => 'Edit',
+            'view'      => 'View',
             'delete'    => 'Delete',
             'id'        => 'Index columns have value greater than zero only',
 
