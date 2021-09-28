@@ -117,7 +117,7 @@
                                         class="control"
                                         ref="schedule_from"
                                         placeholder="{{ __('admin::app.leads.from') }}"
-                                        v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::yesterday()->format('Y-m-d 23:59:59')}}'"
+                                        v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::now()->format('Y-m-d H:i:s')}}'"
                                         data-vv-as="&quot;{{ __('admin::app.leads.from') }}&quot;"
                                     />
 
