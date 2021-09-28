@@ -138,6 +138,8 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('file-download/{id?}', 'ActivityController@download')->name('admin.activities.file_download');
 
                 Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
+
+                Route::put('mass-destroy', 'ActivityController@massDestroy')->name('admin.activities.mass_delete');
             });
 
             Route::group([
