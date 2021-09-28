@@ -72,6 +72,7 @@ class UserDataGrid extends DataGrid
                     'value' => 0,
                 ],
             ],
+            'searchable'         => false,
             'closure'            => function ($row) {
                 if ($row->status == 1) {
                     return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
@@ -85,6 +86,7 @@ class UserDataGrid extends DataGrid
             'index'           => 'created_at',
             'label'           => trans('admin::app.datagrid.created_at'),
             'type'            => 'date_range',
+            'searchable'      => false,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
