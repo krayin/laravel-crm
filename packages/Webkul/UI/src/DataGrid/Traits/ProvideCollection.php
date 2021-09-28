@@ -43,6 +43,8 @@ trait ProvideCollection
             $columnType = $this->findColumnType($key)[0] ?? null;
             $columnName = $this->findColumnType($key)[1] ?? null;
 
+
+
             switch ($key) {
                 /**
                  * All sorting related method will go here.
@@ -66,12 +68,16 @@ trait ProvideCollection
                         return $collection;
                     }
 
+
+
                     $this->attachColumnValues($columnName, $info);
 
                     if (in_array($key, $this->customTabFilters)) {
                         $this->filterCollectionFromTabFilter($collection, $key, $info);
                         break;
                     }
+
+
 
                     $this->filterCollection($collection, $info, $columnType, $columnName);
                     break;
@@ -243,9 +249,13 @@ trait ProvideCollection
                     break;
 
                 case 'in':
-                    foreach (explode(',', $filterValue) as $value) {
-                        $this->resolve($collection, $columnName, 'like', "%{$value}%", 'orWhere');
-                    }
+                    $collection->where(function ($query) use ($columnName, $filterValue) {
+                        foreach (explode(',', $filterValue) as $value) {
+                            $query->orWhere(function ($query) use ($columnName, $value) {
+                                $this->resolve($query, $columnName, 'like', "%{$value}%", 'orWhere');
+                            });
+                        }
+                    });
                     break;
 
                 case 'bw':
