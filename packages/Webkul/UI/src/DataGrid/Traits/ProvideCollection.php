@@ -101,6 +101,10 @@ trait ProvideCollection
          * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
          */
         foreach($this->columns as $index => $column) {
+            if (! isset($this->completeColumnDetails[$index]['filterable'])) {
+                $this->completeColumnDetails[$index]['filterable'] = true;
+            }
+
             if (isset($column['type']) && $column['type'] == 'date_range') {
                 if (! isset($this->completeColumnDetails[$index]['values'])) {
                     $this->completeColumnDetails[$index]['values'] = ['', ''];

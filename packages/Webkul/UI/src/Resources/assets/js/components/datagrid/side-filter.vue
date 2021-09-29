@@ -14,10 +14,10 @@
 
         <template v-for="(data, key) in (columns || tableData.columns)">
             <div :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.type">
-                <label>{{ data.label }}</label>
+                <label v-if="data.filterable">{{ data.label }}</label>
 
                 <div class="field-container">
-                    <template v-if="data.type == 'integer_range'">
+                    <template v-if="data.filterable && data.type == 'integer_range'">
                         <input
                             type="text"
                             placeholder="Start"
@@ -35,7 +35,7 @@
                         />
                     </template>
 
-                    <template v-else-if="data.type == 'date_range'">
+                    <template v-else-if="data.filterable && data.type == 'date_range'">
                         <date>
                             <input
                                 type="text"
@@ -59,7 +59,7 @@
                         </date>
                     </template>
 
-                    <template v-else-if="data.type == 'dropdown'">
+                    <template v-else-if="data.filterable && data.type == 'dropdown'">
                         <select class="control" @change="pushFieldValue(key, $event, data.index)">
                             <option value="" disabled selected>
                                 {{ data.label }}
@@ -83,34 +83,36 @@
                     </template>
 
                     <template v-else>
-                        <span class="control" @click="toggleInput(data.index)" v-if="! addField[data.index]">
-                            <i class="icon add-icon"></i> {{ data.label }}
-                        </span>
-
-                        <div class="enter-new" v-else>
-                            <input
-                                type="text"
-                                class="control mb-10"
-                                :placeholder="data.label"
-                                :id="`enter-new-${data.index}`"
-                                @keyup.enter="pushFieldValue(key, $event, data.index)"
-                            />
-                        </div>
-
-                        <div class="selected-options">
-                            <span
-                                :key="index"
-                                v-for="(value, index) in data.values"
-                                class="badge badge-md badge-pill badge-secondary"
-                            >
-                                {{ getFilteredValue(value, data) }}
-
-                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
+                        <template v-if="data.filterable">
+                            <span class="control" @click="toggleInput(data.index)" v-if="! addField[data.index]">
+                                <i class="icon add-icon"></i> {{ data.label }}
                             </span>
-                        </div>
+
+                            <div class="enter-new" v-else>
+                                <input
+                                    type="text"
+                                    class="control mb-10"
+                                    :placeholder="data.label"
+                                    :id="`enter-new-${data.index}`"
+                                    @keyup.enter="pushFieldValue(key, $event, data.index)"
+                                />
+                            </div>
+
+                            <div class="selected-options">
+                                <span
+                                    :key="index"
+                                    v-for="(value, index) in data.values"
+                                    class="badge badge-md badge-pill badge-secondary"
+                                >
+                                    {{ getFilteredValue(value, data) }}
+
+                                    <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
+                                </span>
+                            </div>
+                        </template>
                     </template>
 
-                    <i class="icon close-icon" @click="removeFilter({type: data.type, key, index: data.index})"></i>
+                    <i class="icon close-icon" @click="removeFilter({type: data.type, key, index: data.index})" v-if="data.filterable"></i>
                 </div>
             </div>
         </template>
