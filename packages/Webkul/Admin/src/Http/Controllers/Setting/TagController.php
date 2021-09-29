@@ -76,10 +76,10 @@ class TagController extends Controller
             return response()->json([
                 'tag'     => $tag,
                 'status'  => true,
-                'message' => trans('admin::app.tags.create-success'),
+                'message' => trans('admin::app.settings.tags.create-success'),
             ]);
         } else {
-            session()->flash('success', trans('admin::app.tags.create-success'));
+            session()->flash('success', trans('admin::app.settings.tags.create-success'));
 
             return redirect()->route('admin.settings.tags.index');
         }

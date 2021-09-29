@@ -18,6 +18,7 @@ class TagDataGrid extends DataGrid
             ->addSelect(
                 'tags.id',
                 'tags.name',
+                'tags.color',
                 'tags.created_at',
                 'users.name as user_name',
             )
@@ -49,19 +50,25 @@ class TagDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'           => 'id',
-            'label'           => trans('admin::app.datagrid.id'),
-            'type'            => 'string',
-            'searchable'      => true,
-            'sortable'        => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.datagrid.id'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'name',
-            'label'           => trans('admin::app.datagrid.name'),
-            'type'            => 'string',
-            'searchable'      => true,
-            'sortable'        => true,
+            'index'      => 'color',
+            'label'      => trans('admin::app.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => false,
+            'closure'    => function ($row) {
+                $html = '<span style="background: ' . ($row->color ?? '#546E7A') . ';width: 15px;height: 15px;margin-top: 3px;border-radius: 50%;float: left;margin-right: 10px;box-shadow: 0px 4px 15.36px 0.75px rgb(0 0 0 / 10%), 0px 2px 6px 0px rgb(0 0 0 / 15%);"></span>';
+
+
+                return $html . $row->name;
+            },
         ]);
 
         $this->addColumn([
