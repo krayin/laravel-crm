@@ -275,12 +275,12 @@ class EmailController extends Controller
                     'message'   => trans('admin::app.mail.delete-success'),
                 ], 200);
             } else {
-                session()->flash('success', trans('admin::app.mail.delete-failed'));
+                session()->flash('success', trans('admin::app.mail.delete-success'));
 
                 if ($parentId) {
-                    return redirect()->route('admin.mail.index', ['route' => 'inbox']);
-                } else {
                     return redirect()->back();
+                } else {
+                    return redirect()->route('admin.mail.index', ['route' => 'inbox']);
                 }
             }
         } catch(\Exception $exception) {
