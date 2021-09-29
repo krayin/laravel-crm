@@ -95,7 +95,7 @@
                             <span
                                 class="control"
                                 @click="toggleInput(data.index)"
-                                v-if="!addField[data.index]"
+                                v-if="! addField[data.index]"
                             >
                                 <i class="icon add-icon"></i> {{ data.label }}
                             </span>
@@ -176,7 +176,7 @@ export default {
         ...mapActions(["toggleSidebarFilter", "updateFilterValues"]),
 
         toggleInput: function(key, event) {
-            this.addField[key] = !this.addField[key];
+            this.addField[key] = ! this.addField[key];
 
             this.$forceUpdate();
 
