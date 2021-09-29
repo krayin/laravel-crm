@@ -353,7 +353,7 @@ body {
 .settings-container {
     .panel {
         margin-bottom: 30px;
-        width: 1100px;
+        max-width: 941px;
 
         .panel-header {
             h3 {
@@ -368,12 +368,9 @@ body {
         }
 
         .setting-link-container {
-            display: grid;
-            grid-gap: 80px;
-            grid-template-columns: auto auto auto;
-
             .setting-link-item {
                 width: 300px;
+                display: inline-block;
 
                 a {
                     padding: 20px;
