@@ -15,7 +15,14 @@ class EmailDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('emails')
-            ->select('emails.id', 'emails.name', 'emails.subject', 'emails.reply', 'emails.created_at', DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.id) as attachments'))
+            ->select(
+                'emails.id',
+                'emails.name',
+                'emails.subject',
+                'emails.reply',
+                'emails.created_at',
+                DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.id) as attachments')
+            )
             ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
             ->groupBy('emails.id')
             ->where('folders', 'like', '%"' . request('route') . '"%')
@@ -37,15 +44,10 @@ class EmailDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => '<i class="icon attachment-icon"></i>',
+            'label'      => trans('admin::app.datagrid.attachments'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
-            'closure'    => function ($row) {
-                if ($row->attachments) {
-                    return '<i class="icon attachment-icon"></i>';
-                }
-            },
         ]);
 
         $this->addColumn([
@@ -68,9 +70,10 @@ class EmailDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'date_range',
+            'index'           => 'created_at',
             'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'string',
+            'type'            => 'date_range',
+            'searchable'      => false,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);

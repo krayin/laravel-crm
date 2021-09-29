@@ -96,6 +96,17 @@ trait ProvideCollection
 
             return $record;
         });
+
+        /**
+         * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
+         */
+        foreach($this->columns as $index => $column) {
+            if (isset($column['type']) && $column['type'] == 'date_range') {
+                if (! isset($this->completeColumnDetails[$index]['values'])) {
+                    $this->completeColumnDetails[$index]['values'] = ['', ''];
+                }
+            }
+        }
     }
 
     /**
@@ -299,15 +310,6 @@ trait ProvideCollection
                     }
                 } else {
                     $record->{$column['index']} = htmlspecialchars($record->{$column['index']});
-                }
-            }
-
-            /**
-             * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
-             */
-            if (isset($column['type']) && $column['type'] == 'date_range') {
-                if (! isset($this->completeColumnDetails[$index]['values'])) {
-                    $this->completeColumnDetails[$index]['values'] = ['', ''];
                 }
             }
         }
