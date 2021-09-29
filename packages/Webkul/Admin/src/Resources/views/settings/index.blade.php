@@ -36,11 +36,13 @@
 
                                 <div class="setting-link-item">
                                     <a href="{{ $subSetting['url'] }}">
-                                        <i class="icon {{ $subSetting['icon-class'] }}"></i>
+                                        <div class="icon-container">
+                                            <i class="icon {{ $subSetting['icon-class'] ?? '' }}"></i>
+                                        </div>
                                         
                                         <div class="setting-info">
                                             <label>{{ $subSetting['name'] }}</label>
-                                            <p>{{ __($subSetting['info']) }}</p>
+                                            <p>{{ __($subSetting['info'] ?? '') }}</p>
                                         </div>
                                     </a>
                                 </div>

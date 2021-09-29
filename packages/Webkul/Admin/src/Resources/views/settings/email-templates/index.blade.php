@@ -19,7 +19,7 @@
                 </h1>
             </template>
 
-            @if (bouncer()->hasPermission('settings.email_templates.create'))
+            @if (bouncer()->hasPermission('settings.automation.email_templates.create'))
                 <template v-slot:table-action>
                     <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.create-title') }}</a>
                 </template>
