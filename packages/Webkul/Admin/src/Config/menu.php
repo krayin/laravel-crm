@@ -135,7 +135,6 @@ return [
         'name'       => 'admin::app.layouts.lead',
         'info'       => 'admin::app.layouts.lead-info',
         'sort'       => 2,
-        'icon-class' => 'settings-icon',
     ], [
         'key'        => 'settings.lead.sources',
         'name'       => 'admin::app.layouts.sources',
@@ -155,7 +154,6 @@ return [
         'name'       => 'admin::app.layouts.automation',
         'info'       => 'admin::app.layouts.automation-info',
         'sort'       => 3,
-        'icon-class' => 'settings-icon',
     ], [
         'key'        => 'settings.automation.attributes',
         'name'       => 'admin::app.layouts.attributes',
@@ -177,6 +175,19 @@ return [
         'route'      => 'admin.settings.workflows.index',
         'sort'       => 3,
         'icon-class' => 'workflow-icon',
+    ], [
+        'key'        => 'settings.other_settings',
+        'name'       => 'admin::app.layouts.other-settings',
+        'info'       => 'admin::app.layouts.other-settings-info',
+        'sort'       => 4,
+        'icon-class' => 'settings-icon',
+    ], [
+        'key'        => 'settings.other_settings.tags',
+        'name'       => 'admin::app.layouts.tags',
+        'info'       => 'admin::app.layouts.tags-info',
+        'route'      => 'admin.settings.tags.index',
+        'sort'       => 1,
+        'icon-class' => 'tag-icon',
     ], [
         'key'        => 'configuration',
         'name'       => 'admin::app.layouts.configuration',

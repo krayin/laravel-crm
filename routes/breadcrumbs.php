@@ -288,6 +288,13 @@ Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $w
 });
 
 
+// Settings > Tags
+Breadcrumbs::for('settings.tags', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.tags'), route('admin.settings.tags.index'));
+});
+
+
 // Configuration
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
