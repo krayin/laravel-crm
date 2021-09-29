@@ -23,7 +23,7 @@
             <div class="lead-person">
                 <i class="icon avatar-dark-icon"></i>{{ block.person_name }}
             </div>
-            
+
             <div class="lead-cost">
                 <i class="icon dollar-circle-icon"></i>{{ currencySymbol }}{{ block.lead_value }}
             </div>
@@ -50,9 +50,9 @@
             this.getData();
 
             queueMicrotask(() => {
-                $('#search-field').keyup(({target}) => {
+                $('#search-field').on('search keyup', ({target}) => {
                     clearTimeout(this.debounce);
-    
+
                     this.debounce = setTimeout(() => {
                         this.search(target.value)
                     }, 2000);
@@ -93,7 +93,7 @@
                     id, status
                 }).then(response => {
                     this.getData();
-                    
+
                     this.addFlashMessages({message : response.data.message });
                 })
                 .catch(error => {});
