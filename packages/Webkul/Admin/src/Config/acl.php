@@ -316,5 +316,25 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.workflows.delete',
         'sort'  => 3,
+    ], [
+        'key'   => 'settings.other_settings',
+        'name'  => 'admin::app.acl.other-settings',
+        'route' => 'admin.settings.tags.index',
+        'sort'  => 4,
+    ], [
+        'key'   => 'settings.other_settings.tags',
+        'name'  => 'admin::app.acl.tags',
+        'route' => 'admin.settings.tags.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.other_settings.tags.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.tags.create', 'admin.settings.tags.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.other_settings.tags.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.tags.delete',
+        'sort'  => 2,
     ]
 ];

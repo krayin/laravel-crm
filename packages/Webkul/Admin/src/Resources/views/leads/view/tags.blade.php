@@ -11,7 +11,7 @@
             <i class="icon tags-icon" @click="is_dropdown_open = ! is_dropdown_open"></i>
 
             <ul class="tag-list">
-                <li v-for='(tag, index) in tags' :style="'background-color: ' + tag.color">
+                <li v-for='(tag, index) in tags' :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')">
                     @{{ tag.name }} <i class="icon close-white-icon" @click="removeTag(tag)"></i>
                 </li>
             </ul>
@@ -172,7 +172,11 @@
                                 .then(response => {
                                     self.addTag(response.data.tag);
                                 })
-                                .catch(error => {});
+                                .catch(error => {
+                                    window.flashMessages = [{'type': 'error', 'message': error.response.data.errors['name'][0]}];
+
+                                    self.$root.addFlashMessages()
+                                });
                         }
                     });
                 },

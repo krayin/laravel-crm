@@ -1,4 +1,4 @@
-@extends('errors::illustrated-layout')
+@extends('admin::errors.illustrated-layout')
 
 @section('title', __('Page Expired'))
 @section('code', '419')

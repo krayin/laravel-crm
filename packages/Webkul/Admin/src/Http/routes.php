@@ -364,11 +364,16 @@ Route::group(['middleware' => ['web']], function () {
                     Route::delete('{id}', 'WorkflowController@destroy')->name('admin.settings.workflows.delete');
                 });
 
+
                 // Tags Routes
                 Route::prefix('tags')->group(function () {
+                    Route::get('', 'TagController@index')->name('admin.settings.tags.index');
+
                     Route::post('create', 'TagController@store')->name('admin.settings.tags.store');
 
                     Route::get('search', 'TagController@search')->name('admin.settings.tags.search');
+
+                    Route::delete('{id}', 'TagController@destroy')->name('admin.settings.tags.delete');
                 });
             });
 
