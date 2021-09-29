@@ -319,6 +319,10 @@
                 },
 
                 removeQuote: function(quote) {
+                    if (! confirm('Do you really want to perform this action?')) {
+                        return;
+                    }
+                    
                     var self = this;
 
                     this.$http.delete("{{ route('admin.leads.quotes.delete', $lead->id) }}/" + quote['id'])
