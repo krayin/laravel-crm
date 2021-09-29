@@ -266,12 +266,14 @@ trait ProvideCollection
                 case 'bw':
                     $dates = explode(',', $filterValue);
 
-                    if (sizeof($dates) == 2) {
+                    if (! empty($dates) && count($dates) == 2) {
                         if ($dates[1] == '') {
                             $dates[1] = Carbon::today()->format('Y-m-d');
                         }
 
-                        $this->resolve($collection, $columnName, $condition, $dates, 'whereBetween');
+                        $this->resolve($collection, $columnName, 'gte', $dates[0], 'whereDate');
+
+                        $this->resolve($collection, $columnName, 'lte', $dates[1], 'whereDate');
                     }
                     break;
 

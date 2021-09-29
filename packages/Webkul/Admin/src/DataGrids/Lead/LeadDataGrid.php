@@ -73,6 +73,7 @@ class LeadDataGrid extends DataGrid
             'label'            => trans('admin::app.datagrid.user'),
             'type'             => 'dropdown',
             'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'searchable'       => false,
             'sortable'         => true,
         ]);
 
