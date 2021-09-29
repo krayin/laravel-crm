@@ -3,38 +3,49 @@
         .content-container {
             overflow: hidden;
         }
+
+        .table {
+            height: 100%;
+            width: 100%;
+        }
+
+        .viewport-height {
+            height: calc(100vh - 240px);
+        }
     </style>
 @endpush
 
-<div class="content full-page table">
-    <div class="table-header">
-        <h1>
-            {!! view_render_event('admin.leads.index.header.before') !!}
+<div class="content full-page">
+    <div class="table">
+        <div class="table-header">
+            <h1>
+                {!! view_render_event('admin.leads.index.header.before') !!}
 
-            {{ Breadcrumbs::render('leads') }}
+                {{ Breadcrumbs::render('leads') }}
 
-            {{ __('admin::app.leads.title') }}
+                {{ __('admin::app.leads.title') }}
 
-            {!! view_render_event('admin.leads.index.header.after') !!}
-        </h1>
+                {!! view_render_event('admin.leads.index.header.after') !!}
+            </h1>
 
-        @if (bouncer()->hasPermission('leads.create'))
-            <div class="table-action">
-                <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
-            </div>
-        @endif
-    </div>
+            @if (bouncer()->hasPermission('leads.create'))
+                <div class="table-action">
+                    <a href="{{ route('admin.leads.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.leads.create-title') }}</a>
+                </div>
+            @endif
+        </div>
 
-    <div class="table-body inner-section">
-        <kanban-filters></kanban-filters>
+        <div class="table-body viewport-height">
+            <kanban-filters></kanban-filters>
 
-        <kanban-component
-            no-data-text="{{ __('admin::app.leads.no-lead') }}"
-            get-url="{{ route('admin.leads.kanban.index') }}"
-            detail-text="{{ __('admin::app.leads.create-title') }}"
-            update-url="{{ route('admin.leads.kanban.update') }}"
-            @if (bouncer()->hasPermission('leads.create'))create-url="{{ route('admin.leads.create') }}"@endif
-        ></kanban-component>
+            <kanban-component
+                no-data-text="{{ __('admin::app.leads.no-lead') }}"
+                get-url="{{ route('admin.leads.kanban.index') }}"
+                detail-text="{{ __('admin::app.leads.create-title') }}"
+                update-url="{{ route('admin.leads.kanban.update') }}"
+                @if (bouncer()->hasPermission('leads.create'))create-url="{{ route('admin.leads.create') }}"@endif
+            ></kanban-component>
+        </div>
     </div>
 </div>
 
