@@ -19,7 +19,7 @@
                 </h1>
             </template>
 
-            @if (bouncer()->hasPermission('settings.attributes.create'))
+            @if (bouncer()->hasPermission('settings.automation.attributes.create'))
                 <template v-slot:table-action>
                     <a href="{{ route('admin.settings.attributes.create') }}" class="btn btn-md btn-primary">
                         {{ __('admin::app.settings.attributes.create-title') }}

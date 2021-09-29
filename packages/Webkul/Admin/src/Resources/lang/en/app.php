@@ -691,6 +691,7 @@
 
         'acl' => [
             'leads'           => 'Leads',
+            'lead'            => 'Lead',
             'mail'            => 'Mail',
             'activities'      => 'Activities',
             'contacts'        => 'Contacts',
@@ -701,6 +702,8 @@
             'groups'          => 'Groups',
             'roles'           => 'Roles',
             'users'           => 'Users',
+            'user'            => 'User',
+            'automation'      => 'Automation',
             'attributes'      => 'Attributes',
             'sources'         => 'Sources',
             'types'           => 'Types',

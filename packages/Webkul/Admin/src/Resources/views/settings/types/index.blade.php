@@ -19,7 +19,7 @@
                 </h1>
             </template>
 
-            @if (bouncer()->hasPermission('settings.types.create'))
+            @if (bouncer()->hasPermission('settings.lead.types.create'))
                 <template v-slot:table-action>
                     <button class="btn btn-md btn-primary" @click="openModal('addTypeModal')">{{ __('admin::app.settings.types.create-title') }}</button>
                 </template>

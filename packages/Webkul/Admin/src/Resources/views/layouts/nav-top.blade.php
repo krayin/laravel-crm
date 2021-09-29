@@ -14,9 +14,9 @@
             || bouncer()->hasPermission('contacts.persons.create')
             || bouncer()->hasPermission('contacts.organizations.create')
             || bouncer()->hasPermission('products.create')
-            || bouncer()->hasPermission('settings.attributes.create')
-            || bouncer()->hasPermission('settings.roles.create')
-            || bouncer()->hasPermission('settings.users.create')
+            || bouncer()->hasPermission('settings.automation.attributes.create')
+            || bouncer()->hasPermission('settings.user.roles.create')
+            || bouncer()->hasPermission('settings.user.users.create')
         )
             <div class="quick-create">
                 <span class="button dropdown-toggle">
@@ -86,7 +86,7 @@
                             </div>
                         @endif
                         
-                        @if (bouncer()->hasPermission('settings.attributes.create'))
+                        @if (bouncer()->hasPermission('settings.automation.attributes.create'))
                             <div class="quick-link-item">
                                 <a href="{{ route('admin.settings.attributes.create') }}">
                                     <i class="icon attribute-icon"></i>
@@ -96,7 +96,7 @@
                             </div>
                         @endif
                         
-                        @if (bouncer()->hasPermission('settings.roles.create'))
+                        @if (bouncer()->hasPermission('settings.user.roles.create'))
                             <div class="quick-link-item">
                                 <a href="{{ route('admin.settings.roles.create') }}">
                                     <i class="icon role-icon"></i>
@@ -106,7 +106,7 @@
                             </div>
                         @endif
                         
-                        @if (bouncer()->hasPermission('settings.users.create'))
+                        @if (bouncer()->hasPermission('settings.user.users.create'))
                             <div class="quick-link-item">
                                 <a href="{{ route('admin.settings.users.create') }}">
                                     <i class="icon user-icon"></i>

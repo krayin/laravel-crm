@@ -19,7 +19,7 @@
                 </h1>
             </template>
 
-            @if (bouncer()->hasPermission('settings.sources.create'))
+            @if (bouncer()->hasPermission('settings.lead.sources.create'))
                 <template v-slot:table-action>
                     <button class="btn btn-md btn-primary" @click="openModal('addSourceModal')">{{ __('admin::app.settings.sources.create-title') }}</button>
                 </template>
