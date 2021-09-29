@@ -278,9 +278,9 @@ class EmailController extends Controller
                 session()->flash('success', trans('admin::app.mail.delete-failed'));
 
                 if ($parentId) {
-                    return redirect()->route('admin.mail.index', ['route' => 'inbox']);
-                } else {
                     return redirect()->back();
+                } else {
+                    return redirect()->route('admin.mail.index', ['route' => 'inbox']);
                 }
             }
         } catch(\Exception $exception) {
