@@ -275,7 +275,7 @@ class EmailController extends Controller
                     'message'   => trans('admin::app.mail.delete-success'),
                 ], 200);
             } else {
-                session()->flash('success', trans('admin::app.mail.delete-failed'));
+                session()->flash('success', trans('admin::app.mail.delete-success'));
 
                 if ($parentId) {
                     return redirect()->back();
