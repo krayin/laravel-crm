@@ -2,22 +2,30 @@
     <div :class="`sidebar-filter`">
         <header>
             <h1>
-                <span>{{ __('ui.datagrid.filter.title') }}</span>
+                <span>{{ __("ui.datagrid.filter.title") }}</span>
 
                 <div class="right">
-                    <label @click="removeAll">{{ __('ui.datagrid.filter.remove_all') }}</label>
+                    <label @click="removeAll">{{
+                        __("ui.datagrid.filter.remove_all")
+                    }}</label>
 
                     <i class="icon close-icon" @click="toggleSidebarFilter"></i>
                 </div>
             </h1>
         </header>
 
-        <template v-for="(data, key) in (columns || tableData.columns)">
-            <div :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`" :key="key" v-if="data.type">
+        <template v-for="(data, key) in columns || tableData.columns">
+            <div
+                :class="`form-group ${data.type == 'date_range' ? 'date' : ''}`"
+                :key="key"
+                v-if="data.type"
+            >
                 <label v-if="data.filterable">{{ data.label }}</label>
 
                 <div class="field-container">
-                    <template v-if="data.filterable && data.type == 'integer_range'">
+                    <template
+                        v-if="data.filterable && data.type == 'integer_range'"
+                    >
                         <input
                             type="text"
                             placeholder="Start"
@@ -35,36 +43,31 @@
                         />
                     </template>
 
-                    <template v-else-if="data.filterable && data.type == 'date_range'">
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                placeholder="Start Date"
-                                v-model="data.values[0]"
-                                @change="changeDateRange(key, data.values)"
-                            />
-                        </date>
-
-                        <span class="middle-text">{{ __('ui.datagrid.filter.to') }}</span>
-
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                placeholder="End Date"
-                                v-model="data.values[1]"
-                                @change="changeDateRange(key, data.values)"
-                            />
-                        </date>
+                    <template
+                        v-else-if="data.filterable && data.type == 'date_range'"
+                    >
+                        <date-range
+                            :start-date="data.values[0]"
+                            :end-date="data.values[1]"
+                            @onChange="changeDateRange(key, $event)"
+                        ></date-range>
                     </template>
 
-                    <template v-else-if="data.filterable && data.type == 'dropdown'">
-                        <select class="control" @change="pushFieldValue(key, $event, data.index)">
+                    <template
+                        v-else-if="data.filterable && data.type == 'dropdown'"
+                    >
+                        <select
+                            class="control"
+                            @change="pushFieldValue(key, $event, data.index)"
+                        >
                             <option value="" disabled selected>
                                 {{ data.label }}
                             </option>
-                            <option :value="option.value" :key="index" v-for="(option, index) in data.dropdown_options">
+                            <option
+                                :value="option.value"
+                                :key="index"
+                                v-for="(option, index) in data.dropdown_options"
+                            >
                                 {{ option.label }}
                             </option>
                         </select>
@@ -77,14 +80,23 @@
                             >
                                 {{ getFilteredValue(value, data) }}
 
-                                <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
+                                <i
+                                    class="icon close-icon ml-10"
+                                    @click="
+                                        removeFieldValue(key, index, data.index)
+                                    "
+                                ></i>
                             </span>
                         </div>
                     </template>
 
                     <template v-else>
                         <template v-if="data.filterable">
-                            <span class="control" @click="toggleInput(data.index)" v-if="! addField[data.index]">
+                            <span
+                                class="control"
+                                @click="toggleInput(data.index)"
+                                v-if="!addField[data.index]"
+                            >
                                 <i class="icon add-icon"></i> {{ data.label }}
                             </span>
 
@@ -94,7 +106,9 @@
                                     class="control mb-10"
                                     :placeholder="data.label"
                                     :id="`enter-new-${data.index}`"
-                                    @keyup.enter="pushFieldValue(key, $event, data.index)"
+                                    @keyup.enter="
+                                        pushFieldValue(key, $event, data.index)
+                                    "
                                 />
                             </div>
 
@@ -106,13 +120,32 @@
                                 >
                                     {{ getFilteredValue(value, data) }}
 
-                                    <i class="icon close-icon ml-10" @click="removeFieldValue(key, index, data.index)"></i>
+                                    <i
+                                        class="icon close-icon ml-10"
+                                        @click="
+                                            removeFieldValue(
+                                                key,
+                                                index,
+                                                data.index
+                                            )
+                                        "
+                                    ></i>
                                 </span>
                             </div>
                         </template>
                     </template>
 
-                    <i class="icon close-icon" @click="removeFilter({type: data.type, key, index: data.index})" v-if="data.filterable"></i>
+                    <i
+                        class="icon close-icon"
+                        @click="
+                            removeFilter({
+                                type: data.type,
+                                key,
+                                index: data.index
+                            })
+                        "
+                        v-if="data.filterable"
+                    ></i>
                 </div>
             </div>
         </template>
@@ -120,117 +153,125 @@
 </template>
 
 <script>
-    import { mapState, mapActions } from 'vuex';
+import { mapState, mapActions } from "vuex";
 
-    export default {
-        props: ['columns'],
+export default {
+    props: ["columns"],
 
-        data: function () {
-            return {
-                addField: {},
-            }
+    data: function() {
+        return {
+            addField: {}
+        };
+    },
+
+    computed: {
+        ...mapState({
+            filterData: state => state.filterData,
+            tableData: state => state.tableData,
+            sidebarFilter: state => state.sidebarFilter
+        })
+    },
+
+    methods: {
+        ...mapActions(["toggleSidebarFilter", "updateFilterValues"]),
+
+        toggleInput: function(key, event) {
+            this.addField[key] = !this.addField[key];
+
+            this.$forceUpdate();
+
+            setTimeout(() => {
+                document.getElementById(`enter-new-${key}`).focus();
+            });
         },
 
-        computed: {
-            ...mapState({
-                filterData      : state => state.filterData,
-                tableData       : state => state.tableData,
-                sidebarFilter   : state => state.sidebarFilter,
-            }),
-        },
+        pushFieldValue: function(key, { target }, indexKey) {
+            this.addField[indexKey] = false;
 
-        methods: {
-            ...mapActions([
-                'toggleSidebarFilter',
-                'updateFilterValues'
-            ]),
+            const values =
+                (this.columns || this.tableData.columns)[key].values || [];
 
-            toggleInput: function (key, event) {
-                this.addField[key] = ! this.addField[key];
-
-                this.$forceUpdate();
-
-                setTimeout(() => {
-                    document.getElementById(`enter-new-${key}`).focus();
-                })
-            },
-
-            pushFieldValue: function (key, {target}, indexKey) {
-                this.addField[indexKey] = false;
-
-                const values = (this.columns || this.tableData.columns)[key].values || [];
-
-                if (values.indexOf(target.value) == -1) {
-                    values.push(target.value);
-
-                    this.updateFilterValues({
-                        key: indexKey,
-                        values
-                    });
-                }
-
-                target.value = "";
-
-                this.$forceUpdate();
-            },
-
-            removeFieldValue: function (key, index, indexKey) {
-                const values = (this.columns || this.tableData.columns)[key].values;
-                values.splice(index, 1);
+            if (values.indexOf(target.value) == -1) {
+                values.push(target.value);
 
                 this.updateFilterValues({
                     key: indexKey,
                     values
                 });
+            }
 
-                this.$forceUpdate();
-            },
+            target.value = "";
 
-            removeAll: function () {
-                this.$store.state.filters = this.$store.state.filters.filter(filter => filter.column == 'view_type' && filter.val == 'table');
+            this.$forceUpdate();
+        },
 
-                (this.columns || this.tableData.columns).forEach((column, index) => {
-                    if (column.type && column.type == 'date_range') {
-                        $('.flatpickr-input').val();
+        removeFieldValue: function(key, index, indexKey) {
+            const values = (this.columns || this.tableData.columns)[key].values;
+            values.splice(index, 1);
+
+            this.updateFilterValues({
+                key: indexKey,
+                values
+            });
+
+            this.$forceUpdate();
+        },
+
+        removeAll: function() {
+            this.$store.state.filters = this.$store.state.filters.filter(
+                filter => filter.column == "view_type" && filter.val == "table"
+            );
+
+            (this.columns || this.tableData.columns).forEach(
+                (column, index) => {
+                    if (column.type && column.type == "date_range") {
+                        $(".flatpickr-input").val();
                     }
-                });
-
-                this.$forceUpdate();
-            },
-
-            removeFilter: function ({type, key, index}) {
-                if (type == "add" && this.addField[index]) {
-                    this.addField[index] = false;
                 }
+            );
 
-                let values = (this.columns || this.tableData.columns)[key].values;
-                values = "";
+            this.$forceUpdate();
+        },
 
+        removeFilter: function({ type, key, index }) {
+            if (type == "add" && this.addField[index]) {
+                this.addField[index] = false;
+            }
+
+            let values = (this.columns || this.tableData.columns)[key].values;
+            values = "";
+
+            this.updateFilterValues({
+                key,
+                values
+            });
+
+            this.$forceUpdate();
+        },
+
+        changeDateRange: function(key, event) {
+            setTimeout(() => {
                 this.updateFilterValues({
                     key,
-                    values
+                    values: event,
+                    condition: "bw"
                 });
-
-                this.$forceUpdate();
-            },
-
-            changeDateRange: function (key, values) {
-                setTimeout(() => {
-                    this.updateFilterValues({key, values, condition: 'bw'})
-                }, 0);
-            },
-
-            getFilteredValue: function (value, data) {
-                if (data.type == 'dropdown' && data.dropdown_options) {
-                    let dropdown_option = data.dropdown_options.filter(option => option.value == value);
-
-                    if (dropdown_option.length > 0) {
-                        return dropdown_option[0].label;
-                    }
-                }
-
-                return value;
-            }
+            }, 0);
         },
-    };
+
+        getFilteredValue: function(value, data) {
+            if (data.type == "dropdown" && data.dropdown_options) {
+                let dropdown_option = data.dropdown_options.filter(
+                    option => option.value == value
+                );
+
+                if (dropdown_option.length > 0) {
+                    return dropdown_option[0].label;
+                }
+            }
+
+            return value;
+        }
+    }
+};
 </script>
