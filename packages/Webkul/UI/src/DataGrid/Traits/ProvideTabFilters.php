@@ -137,10 +137,17 @@ trait ProvideTabFilters
             default:
                 if ($value != 'all') {
                     if ($key == 'duration') {
-                        $collection->whereBetween(
-                            $column,
-                            explode(',', $value)
-                        );
+                        $dates = explode(',', $value);
+
+                        if (! empty($dates) && count($dates) == 2) {
+                            if ($dates[1] == '') {
+                                $dates[1] = Carbon::today()->format('Y-m-d');
+                            }
+
+                            $collection->whereDate($column, '>=', $dates[0]);
+
+                            $collection->whereDate($column, '<=', $dates[1]);
+                        }
                     } else {
                         $collection->where($column, $value);
                     }
