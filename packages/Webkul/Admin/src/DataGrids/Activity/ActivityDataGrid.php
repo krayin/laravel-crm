@@ -74,7 +74,6 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'title',
             'label'      => trans('admin::app.datagrid.title'),
             'type'       => 'string',
-            'searchable' => true,
         ]);
 
         $this->addColumn([
@@ -90,7 +89,6 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'comment',
             'label'      => trans('admin::app.datagrid.comment'),
             'type'       => 'string',
-            'searchable' => true,
         ]);
 
         $this->addColumn([

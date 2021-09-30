@@ -68,7 +68,6 @@ class LeadDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.datagrid.id'),
             'type'       => 'hidden',
-            'searchable' => true,
             'sortable'   => true,
         ]);
 
@@ -85,7 +84,6 @@ class LeadDataGrid extends DataGrid
             'index'      => 'title',
             'label'      => trans('admin::app.datagrid.subject'),
             'type'       => 'string',
-            'searchable' => true,
             'sortable'   => true,
         ]);
 
@@ -93,7 +91,6 @@ class LeadDataGrid extends DataGrid
             'index'           => 'lead_value',
             'label'           => trans('admin::app.datagrid.lead_value'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatBasePrice($row->lead_value, 2);

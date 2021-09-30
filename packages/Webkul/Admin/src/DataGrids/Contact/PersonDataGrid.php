@@ -42,15 +42,13 @@ class PersonDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.datagrid.id'),
             'type'       => 'hidden',
-            'searchable' => true,
             'sortable'   => true,
         ]);
-        
+
         $this->addColumn([
             'index'             => 'person_name',
             'label'             => trans('admin::app.datagrid.name'),
             'type'              => 'string',
-            'searchable'        => true,
             'sortable'          => true,
         ]);
 
@@ -58,7 +56,6 @@ class PersonDataGrid extends DataGrid
             'index'             => 'emails',
             'label'             => trans('admin::app.datagrid.emails'),
             'type'              => 'string',
-            'searchable'        => true,
             'sortable'          => false,
             'closure'           => function ($row) {
                 $emails = json_decode($row->emails, true);
@@ -73,7 +70,6 @@ class PersonDataGrid extends DataGrid
             'index'             => 'contact_numbers',
             'label'             => trans('admin::app.datagrid.contact_numbers'),
             'type'              => 'string',
-            'searchable'        => true,
             'sortable'          => false,
             'closure'           => function ($row) {
                 $contactNumbers = json_decode($row->contact_numbers, true);
@@ -89,7 +85,6 @@ class PersonDataGrid extends DataGrid
             'label'              => trans('admin::app.datagrid.organization_name'),
             'type'               => 'dropdown',
             'dropdown_options'   => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
-            'searchable'         => true,
             'sortable'           => false,
         ]);
     }

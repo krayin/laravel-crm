@@ -85,7 +85,6 @@ class AttributeDataGrid extends DataGrid
             'index'           => 'id',
             'label'           => trans('admin::app.datagrid.id'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -93,7 +92,6 @@ class AttributeDataGrid extends DataGrid
             'index'           => 'code',
             'label'           => trans('admin::app.datagrid.code'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -101,7 +99,6 @@ class AttributeDataGrid extends DataGrid
             'index'           => 'name',
             'label'           => trans('admin::app.datagrid.name'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -119,7 +116,6 @@ class AttributeDataGrid extends DataGrid
             'index'      => 'type',
             'label'      => trans('admin::app.datagrid.type'),
             'type'       => 'string',
-            'searchable' => true,
             'sortable'   => true,
         ]);
     }
