@@ -46,6 +46,10 @@ class LeadDataGrid extends DataGrid
 
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
+
+        /* linked should be `leads.user_id` but displaying should be `user_name` */
+        $this->addFilter('user_name', 'leads.user_id');
+
         $this->addFilter('type', 'lead_stages.code');
         $this->addFilter('stage', 'leads.lead_stage_id');
         $this->addFilter('created_at', 'leads.created_at');
@@ -64,7 +68,6 @@ class LeadDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.datagrid.id'),
             'type'       => 'hidden',
-            'searchable' => true,
             'sortable'   => true,
         ]);
 
@@ -81,7 +84,6 @@ class LeadDataGrid extends DataGrid
             'index'      => 'title',
             'label'      => trans('admin::app.datagrid.subject'),
             'type'       => 'string',
-            'searchable' => true,
             'sortable'   => true,
         ]);
 
@@ -89,7 +91,6 @@ class LeadDataGrid extends DataGrid
             'index'           => 'lead_value',
             'label'           => trans('admin::app.datagrid.lead_value'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return core()->formatBasePrice($row->lead_value, 2);

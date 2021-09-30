@@ -61,7 +61,6 @@ class QuoteDataGrid extends DataGrid
             'index'             => 'subject',
             'label'             => trans('admin::app.datagrid.subject'),
             'type'              => 'string',
-            'searchable'        => true,
             'sortable'          => true,
         ]);
 
@@ -70,7 +69,6 @@ class QuoteDataGrid extends DataGrid
             'label'              => trans('admin::app.datagrid.sales-person'),
             'type'               => 'dropdown',
             'dropdown_options'   => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
-            'searchable'         => true,
             'sortable'           => true,
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
@@ -83,7 +81,6 @@ class QuoteDataGrid extends DataGrid
             'index'           => 'person_name',
             'label'           => trans('admin::app.datagrid.person'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
@@ -96,7 +93,6 @@ class QuoteDataGrid extends DataGrid
             'index'         => 'sub_total',
             'label'         => trans('admin::app.datagrid.sub-total'),
             'type'          => 'string',
-            'searchable'    => true,
             'sortable'      => true,
             'closure'       => function ($row) {
                 return core()->formatBasePrice($row->sub_total, 2);
@@ -107,7 +103,6 @@ class QuoteDataGrid extends DataGrid
             'index'         => 'discount_amount',
             'label'         => trans('admin::app.datagrid.discount'),
             'type'          => 'string',
-            'searchable'    => true,
             'sortable'      => true,
             'closure'       => function ($row) {
                 return core()->formatBasePrice($row->discount_amount, 2);
@@ -118,7 +113,6 @@ class QuoteDataGrid extends DataGrid
             'index'         => 'tax_amount',
             'label'         => trans('admin::app.datagrid.tax'),
             'type'          => 'string',
-            'searchable'    => true,
             'sortable'      => true,
             'closure'       => function ($row) {
                 return core()->formatBasePrice($row->tax_amount, 2);
@@ -129,7 +123,6 @@ class QuoteDataGrid extends DataGrid
             'index'         => 'adjustment_amount',
             'label'         => trans('admin::app.datagrid.adjustment'),
             'type'          => 'string',
-            'searchable'    => true,
             'sortable'      => true,
             'closure'       => function ($row) {
                 return core()->formatBasePrice($row->adjustment_amount, 2);
@@ -140,7 +133,6 @@ class QuoteDataGrid extends DataGrid
             'index'         => 'grand_total',
             'label'         => trans('admin::app.datagrid.grand-total'),
             'type'          => 'string',
-            'searchable'    => true,
             'sortable'      => true,
             'closure'       => function ($row) {
                 return core()->formatBasePrice($row->grand_total, 2);

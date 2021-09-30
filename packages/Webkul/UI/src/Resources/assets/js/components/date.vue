@@ -3,8 +3,8 @@
         <slot>
             <input
                 type="text"
-                :name="name"
                 class="control"
+                :name="name"
                 :value="value"
                 data-input
             />
@@ -13,47 +13,50 @@
 </template>
 
 <script>
-    import Flatpickr from "flatpickr";
+import Flatpickr from "flatpickr";
 
-    export default {
-        props: {
-            name: String,
+export default {
+    props: {
+        name: String,
 
-            value: String,
+        value: String,
 
-            minDate: String,
+        minDate: String,
 
-            maxDate: String,
-        },
+        maxDate: String
+    },
 
-        data() {
-            return {
-                datepicker: null,
-            };
-        },
+    data() {
+        return {
+            datepicker: null
+        };
+    },
 
-        mounted() {
-            var self = this;
+    mounted() {
+        let self = this;
 
-            var options = {
-                allowInput: true,
-                altFormat: "Y-m-d",
-                dateFormat: "Y-m-d",
-                weekNumbers: true,
-                onChange: function(selectedDates, dateStr, instance) {
-                    self.$emit("onChange", dateStr);
-                },
-            };
-
-            if (this.minDate) {
-                options.minDate = this.minDate;
+        let options = {
+            allowInput: true,
+            altFormat: "Y-m-d",
+            dateFormat: "Y-m-d",
+            weekNumbers: true,
+            onChange: function(selectedDates, dateStr, instance) {
+                self.$emit("onChange", dateStr);
             }
+        };
 
-            if (this.maxDate) {
-                options.maxDate = this.maxDate;
-            }
+        if (this.minDate) {
+            options.minDate = this.minDate;
+        }
 
-            this.datepicker = new Flatpickr(this.$el.getElementsByTagName("input")[0], options);
-        },
-    };
+        if (this.maxDate) {
+            options.maxDate = this.maxDate;
+        }
+
+        this.datepicker = new Flatpickr(
+            this.$el.getElementsByTagName("input")[0],
+            options
+        );
+    }
+};
 </script>

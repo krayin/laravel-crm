@@ -23,7 +23,7 @@ class TagDataGrid extends DataGrid
                 'users.name as user_name',
             )
             ->leftJoin('users', 'tags.user_id', '=', 'users.id');
-        
+
         $currentUser = auth()->guard('user')->user();
 
         if ($currentUser->view_permission != 'global') {
