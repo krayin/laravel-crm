@@ -101,6 +101,10 @@ trait ProvideCollection
          * To Do (@devansh-webkul): Need to handle from record's column. For this frontend also needs to adjust.
          */
         foreach($this->columns as $index => $column) {
+            if (! isset($this->completeColumnDetails[$index]['searchable'])) {
+                $this->completeColumnDetails[$index]['searchable'] = true;
+            }
+
             if (! isset($this->completeColumnDetails[$index]['filterable'])) {
                 $this->completeColumnDetails[$index]['filterable'] = true;
             }
