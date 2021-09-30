@@ -231,7 +231,12 @@ trait ProvideCollection
         if ($countKeys == 1) {
             $collection->where(function ($collection) use ($info) {
                 foreach ($this->completeColumnDetails as $column) {
-                    if ($column['searchable'] == true) {
+                    /**
+                     * If searchable key not found, then searching will work because default will be true.
+                     *
+                     * Or if searchable key found, then it should be `true` for working or `false` for disabling.
+                     */
+                    if (! isset($column['searchable']) || (isset($column['searchable']) && $column['searchable'])) {
                         $this->resolve($collection, $column['index'], 'like', '%' . $info['all'] . '%', 'orWhere');
                     }
                 }

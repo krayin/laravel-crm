@@ -60,7 +60,6 @@ class EmailDataGrid extends DataGrid
             'index'           => 'name',
             'label'           => trans('admin::app.datagrid.from'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -68,7 +67,6 @@ class EmailDataGrid extends DataGrid
             'index'           => 'subject',
             'label'           => trans('admin::app.datagrid.subject'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';

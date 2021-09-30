@@ -39,7 +39,6 @@ class ProductDataGrid extends DataGrid
             'index'           => 'sku',
             'label'           => trans('admin::app.datagrid.sku'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -47,7 +46,6 @@ class ProductDataGrid extends DataGrid
             'index'           => 'name',
             'label'           => trans('admin::app.datagrid.name'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
         ]);
 
@@ -55,7 +53,6 @@ class ProductDataGrid extends DataGrid
             'index'           => 'price',
             'label'           => trans('admin::app.datagrid.price'),
             'type'            => 'string',
-            'searchable'      => true,
             'sortable'        => true,
             'closure'         => function ($row) {
                 return round($row->price, 2);
@@ -66,7 +63,6 @@ class ProductDataGrid extends DataGrid
             'index'      => 'quantity',
             'label'      => trans('admin::app.datagrid.quantity'),
             'type'       => 'string',
-            'searchable' => true,
             'sortable'   => true,
         ]);
     }
