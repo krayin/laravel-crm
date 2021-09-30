@@ -57,7 +57,7 @@ class TagDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'color',
+            'index'      => 'name',
             'label'      => trans('admin::app.datagrid.name'),
             'type'       => 'string',
             'searchable' => false,
