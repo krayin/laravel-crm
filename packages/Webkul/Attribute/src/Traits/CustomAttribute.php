@@ -163,4 +163,14 @@ trait CustomAttribute {
 
         return parent::fill($attributes);
     }
+
+    // Delete model's attribute values
+    public static function boot()
+    {
+        parent::boot();
+
+        static::deleting(function ($entity) {
+            $entity->attribute_values()->delete();
+        });
+    }
 }
