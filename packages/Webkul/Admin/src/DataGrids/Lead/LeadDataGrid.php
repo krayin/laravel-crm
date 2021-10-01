@@ -2,8 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Lead;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\Lead\Repositories\StageRepository;
+use Webkul\UI\DataGrid\DataGrid;
 
 class LeadDataGrid extends DataGrid
 {
@@ -47,7 +48,9 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
 
-        /* linked should be `leads.user_id` but displaying should be `user_name` */
+        /**
+         * Linked should be `leads.user_id` but displaying should be `user_name`.
+         */
         $this->addFilter('user_name', 'leads.user_id');
 
         $this->addFilter('type', 'lead_stages.code');
@@ -117,15 +120,15 @@ class LeadDataGrid extends DataGrid
             'searchable' => false,
             'sortable' => false,
             'closure' => function ($row) {
-                if ($row->stage == "Won") {
+                if ($row->stage == 'Won') {
                     $badge = 'success';
-                } else if ($row->stage == "Lost") {
+                } else if ($row->stage == 'Lost') {
                     $badge = 'danger';
                 } else {
                     $badge = 'primary';
                 }
 
-                return "<span class='badge badge-round badge-$badge'></span>" . $row->stage;
+                return "<span class='badge badge-round badge-{$badge}'></span>" . $row->stage;
             },
         ]);
 
@@ -148,12 +151,21 @@ class LeadDataGrid extends DataGrid
      */
     public function prepareTabFilters()
     {
+        $values = app(StageRepository::class)
+            ->get(['name', 'code as key', DB::raw('false as isActive')])
+            ->prepend([
+                'isActive'  => true,
+                'key'       => 'all',
+                'name'      => trans('admin::app.datagrid.all'),
+            ])
+            ->toArray();
+
         $this->addTabFilter([
             'type'              => 'pill',
             'key'               => 'type',
             'condition'         => 'eq',
-            "value_type"        => "lookup",
-            "repositoryClass"   => "\Webkul\Lead\Repositories\StageRepository",
+            'value_type'        => 'lookup',
+            'values'            => $values,
         ]);
     }
 
@@ -189,7 +201,7 @@ class LeadDataGrid extends DataGrid
     {
         $stages = [];
 
-        foreach (app("\Webkul\Lead\Repositories\StageRepository")->get(['id', 'name'])->toArray() as $stage) {
+        foreach (app(StageRepository::class)->get(['id', 'name'])->toArray() as $stage) {
             $stages[$stage['name']] = $stage['id'];
         }
 
