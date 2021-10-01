@@ -33,11 +33,11 @@ return [
         "label"         => 'admin::app.dashboard.top_leads',
     ], [
         "selected"      => true,
-        "card_id"       => "stages",
+        "card_id"       => "pipelines",
         "sort"          => 5,
-        "card_type"     => "stages_bar",
+        "card_type"     => "pipelines_bar",
         "data_class"    => "display-grid",
-        "label"         => 'admin::app.dashboard.stages',
+        "label"         => 'admin::app.dashboard.pipelines',
     ], [
         "selected"      => true,
         "card_id"       => "emails",

@@ -15,7 +15,6 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(AttributeSeeder::class);
         $this->call(EmailTemplateSeeder::class);
-        $this->call(LeadStageSeeder::class);
         $this->call(LeadPipelineSeeder::class);
         $this->call(LeadTypeSeeder::class);
         $this->call(LeadSourceSeeder::class);

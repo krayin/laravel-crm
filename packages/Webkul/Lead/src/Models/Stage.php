@@ -7,8 +7,10 @@ use Webkul\Lead\Contracts\Stage as StageContract;
 
 class Stage extends Model implements StageContract
 {
-    protected $table = 'lead_stages';
-
+    public $timestamps = false;
+    
+    protected $table = 'lead_pipeline_stages';
+    
     /**
      * The attributes that are mass assignable.
      *
@@ -17,14 +19,16 @@ class Stage extends Model implements StageContract
     protected $fillable = [
         'code',
         'name',
-        'is_user_defined',
+        'probability',
+        'sort_order',
+        'lead_pipeline_id',
     ];
 
     /**
-     * Get the leads.
+     * Get the pipeline that owns the pipeline stage.
      */
-    public function leads()
+    public function pipeline()
     {
-        return $this->hasMany(LeadProxy::modelClass());
+        return $this->belongsTo(PipelineProxy::modelClass(), 'lead_pipeline_id');
     }
 }

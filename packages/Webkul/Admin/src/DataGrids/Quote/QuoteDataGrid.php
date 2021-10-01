@@ -4,9 +4,30 @@ namespace Webkul\Admin\DataGrids\Quote;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\User\Repositories\UserRepository;
 
 class QuoteDataGrid extends DataGrid
 {
+    /**
+     * UserRepository object
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * Create data grid instance.
+     *
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+
+        parent::__construct();
+    }
+
     /**
      * Prepare query builder.
      *
@@ -36,7 +57,7 @@ class QuoteDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('quotes.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                $queryBuilder->whereIn('quotes.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
             } else {
                 $queryBuilder->where('quotes.user_id', $currentUser->id);
             }
@@ -68,7 +89,7 @@ class QuoteDataGrid extends DataGrid
             'index'              => 'user_name',
             'label'              => trans('admin::app.datagrid.sales-person'),
             'type'               => 'dropdown',
-            'dropdown_options'   => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options'   => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
             'sortable'           => true,
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));

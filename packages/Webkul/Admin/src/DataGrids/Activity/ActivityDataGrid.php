@@ -4,9 +4,30 @@ namespace Webkul\Admin\DataGrids\Activity;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
 {
+    /**
+     * UserRepository object
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * Create data grid instance.
+     *
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+
+        parent::__construct();
+    }
+
     /**
      * Prepare query builder.
      *
@@ -35,7 +56,7 @@ class ActivityDataGrid extends DataGrid
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
                 $queryBuilder->where(function ($query) use ($currentUser) {
-                    $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+                    $userIds = $this->userRepository->getCurrentUserGroupsUserIds();
 
                     $query->whereIn('activities.user_id', $userIds)
                         ->orWhereIn('activity_participants.user_id', $userIds);
@@ -80,7 +101,7 @@ class ActivityDataGrid extends DataGrid
             'index'            => 'created_by',
             'label'            => trans('admin::app.datagrid.created_by'),
             'type'             => 'dropdown',
-            'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
             'searchable'       => false,
             'sortable'         => true,
         ]);

@@ -89,7 +89,7 @@
                 "
             ></line-chart>
 
-            <template v-else-if="['activities', 'stages_bar'].indexOf(cardType) > -1">
+            <template v-else-if="['activities', 'pipelines_bar'].indexOf(cardType) > -1">
                 <h3 v-if="dataCollection.header_data">
                     <template v-for="(header_data, index) in dataCollection.header_data">
                         @{{ header_data }}

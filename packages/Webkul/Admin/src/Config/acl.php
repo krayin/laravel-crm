@@ -212,10 +212,30 @@ return [
         'route' => 'admin.settings.sources.index',
         'sort'  => 2,
     ], [
+        'key'   => 'settings.lead.pipelines',
+        'name'  => 'admin::app.acl.pipelines',
+        'route' => 'admin.settings.pipelines.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.lead.pipelines.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.pipelines.create', 'admin.settings.pipelines.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.lead.pipelines.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.pipelines.edit', 'admin.settings.pipelines.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.lead.pipelines.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.pipelines.delete',
+        'sort'  => 3,
+    ], [
         'key'   => 'settings.lead.sources',
         'name'  => 'admin::app.acl.sources',
         'route' => 'admin.settings.sources.index',
-        'sort'  => 1,
+        'sort'  => 2,
     ], [
         'key'   => 'settings.lead.sources.create',
         'name'  => 'admin::app.acl.create',
@@ -235,7 +255,7 @@ return [
         'key'   => 'settings.lead.types',
         'name'  => 'admin::app.acl.types',
         'route' => 'admin.settings.types.index',
-        'sort'  => 2,
+        'sort'  => 3,
     ], [
         'key'   => 'settings.lead.types.create',
         'name'  => 'admin::app.acl.create',

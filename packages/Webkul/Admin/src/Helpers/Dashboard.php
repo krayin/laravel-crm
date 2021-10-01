@@ -4,7 +4,7 @@ namespace Webkul\Admin\Helpers;
 
 use Carbon\Carbon;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Lead\Repositories\StageRepository;
+use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository as LeadProductRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Product\Repositories\ProductRepository;
@@ -28,11 +28,11 @@ class Dashboard
     protected $leadRepository;
 
     /**
-     * StageRepository object
+     * PipelineRepository object
      *
-     * @var \Webkul\Lead\Repositories\StageRepository
+     * @var \Webkul\Lead\Repositories\PipelineRepository
      */
-    protected $stageRepository;
+    protected $pipelineRepository;
 
     /**
      * ProductRepository object
@@ -87,7 +87,7 @@ class Dashboard
      * Create a new helper instance.
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
+     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
      * @param \Webkul\Lead\Repositories\ProductRepository  $leadProductRepository
      * @param \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
      * @param \Webkul\Product\Repositories\ProductRepository  $productRepository
@@ -99,7 +99,7 @@ class Dashboard
      */
     public function __construct(
         LeadRepository $leadRepository,
-        StageRepository $stageRepository,
+        PipelineRepository $pipelineRepository,
         LeadProductRepository $leadProductRepository,
         QuoteRepository $quoteRepository,
         ProductRepository $productRepository,
@@ -111,7 +111,7 @@ class Dashboard
     {
         $this->leadRepository = $leadRepository;
 
-        $this->stageRepository = $stageRepository;
+        $this->pipelineRepository = $pipelineRepository;
 
         $this->leadProductRepository = $leadProductRepository;
 
@@ -392,6 +392,7 @@ class Dashboard
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->groupBy('type')
             ->orderBy('count', 'desc')
+            ->whereIn('type', ['call', 'meeting', 'lunch'])
             ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
             ->where(function ($query) {
                 $currentUser = auth()->guard('user')->user();
@@ -433,8 +434,8 @@ class Dashboard
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topLeads = $this->leadRepository
-            ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_stages.name as statusLabel')
-            ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+            ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
+            ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->where(function ($query) {
@@ -467,49 +468,28 @@ class Dashboard
      * @param  array  $totalWeeks
      * @return array
      */
-    public function getStages($startDateFilter, $endDateFilter, $totalWeeks)
+    public function getPipelines($startDateFilter, $endDateFilter, $totalWeeks)
     {
-        $leadStages = [];
+        $leadPipelines = [];
 
-        $stages = $this->stageRepository->select('id', 'name')
-                    ->get()
-                    ->toArray();
+        $pipelines = $this->pipelineRepository->select('id', 'name')
+                    ->get();
 
-        foreach ($stages as $key => $stage) {
+        foreach ($pipelines as $pipeline) {
             $leadsCount = $this->leadRepository
-                ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                ->where('lead_stages.id', $stage['id'])
+                ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
+                ->where('lead_pipelines.id', $pipeline->id)
                 ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                 ->count();
 
-            switch ($stage['name']) {
-                case 'Aqcuistion':
-                case 'Propects':
-                    $barType = "warning";
-                    break;
-
-                case 'Won':
-                    $barType = "success";
-                    break;
-                    
-                case 'Lost':
-                    $barType = "danger";
-                    break;
-
-                default:
-                    $barType = "primary";
-            }
-            
-
-            array_push($leadStages, [
-                'label'    => $stage['name'],
-                'count'    => $leadsCount,
-                'bar_type' => $barType,
+            array_push($leadPipelines, [
+                'label' => $pipeline->name,
+                'count' => $leadsCount,
             ]);
         }
 
         $cardData = [
-            "data" => $leadStages
+            "data" => $leadPipelines
         ];
 
         return $cardData;

@@ -57,7 +57,7 @@
 
                         <input name="_method" type="hidden" value="PUT">
 
-                        <input type="hidden" name="lead_stage_id" :value="this[nextStageCode] && this[nextStageCode].id">
+                        <input type="hidden" name="lead_pipeline_stage_id" :value="this[nextStageCode] && this[nextStageCode].id">
 
                         <div class="form-group" v-if="this[nextStageCode] && this[nextStageCode].code == 'lost'">
                             <label>{{ __('admin::app.leads.lost-reason') }}</label>
@@ -97,7 +97,7 @@
 
                     nextStageCode: null,
 
-                    customStages: @json(app('\Webkul\Lead\Repositories\StageRepository')->all()),
+                    customStages: @json($lead->pipeline->stages),
                 }
             },
 
@@ -119,7 +119,7 @@
                 changeStage: function(stage) {
                     var self = this;
 
-                    this.$http.put("{{ route('admin.leads.update', $lead->id) }}", {'lead_stage_id': stage.id})
+                    this.$http.put("{{ route('admin.leads.update', $lead->id) }}", {'lead_pipeline_stage_id': stage.id})
                         .then (function(response) {
                             self.currentStage = stage;
 

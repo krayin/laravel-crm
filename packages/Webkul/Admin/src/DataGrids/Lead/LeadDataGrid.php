@@ -3,11 +3,70 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\Lead\Repositories\StageRepository;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\Lead\Repositories\PipelineRepository;
+use Webkul\Lead\Repositories\StageRepository;
+use Webkul\User\Repositories\UserRepository;
 
 class LeadDataGrid extends DataGrid
 {
+    /**
+     * PipelineRepository object
+     *
+     * @var \Webkul\Lead\Repositories\PipelineRepository
+     */
+    protected $pipelineRepository;
+
+    /**
+     * Pipeline object
+     *
+     * @var \Webkul\Contract\Repositories\Pipeline
+     */
+    protected $pipeline;
+
+    /**
+     * StageRepository object
+     *
+     * @var \Webkul\Lead\Repositories\StageRepository
+     */
+    protected $stageRepository;
+
+    /**
+     * UserRepository object
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * Create data grid instance.
+     *
+     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
+     * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(
+        PipelineRepository $pipelineRepository,
+        StageRepository $stageRepository,
+        UserRepository $userRepository
+    )
+    {
+        $this->pipelineRepository = $pipelineRepository;
+
+        if (request('pipeline_id')) {
+            $this->pipeline = $this->pipelineRepository->find(request('pipeline_id'));
+        } else {
+            $this->pipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+        }
+
+        $this->stageRepository = $stageRepository;
+
+        $this->userRepository = $userRepository;
+
+        parent::__construct();
+    }
+
     /**
      * Prepare query builder.
      *
@@ -26,20 +85,21 @@ class LeadDataGrid extends DataGrid
                 'users.name as user_name',
                 'persons.id as person_id',
                 'persons.name as person_name',
-                'lead_stages.name as stage'
+                'lead_pipeline_stages.name as stage'
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')
-            ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
+            ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->leftJoin('lead_sources', 'leads.lead_source_id', '=', 'lead_sources.id')
-            ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id');
+            ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
+            ->where('leads.lead_pipeline_id', $this->pipeline->id);
 
         $currentUser = auth()->guard('user')->user();
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                $queryBuilder->whereIn('leads.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
             } else {
                 $queryBuilder->where('leads.user_id', $currentUser->id);
             }
@@ -53,8 +113,8 @@ class LeadDataGrid extends DataGrid
          */
         $this->addFilter('user_name', 'leads.user_id');
 
-        $this->addFilter('type', 'lead_stages.code');
-        $this->addFilter('stage', 'leads.lead_stage_id');
+        $this->addFilter('type', 'lead_pipeline_stages.code');
+        $this->addFilter('stage', 'lead_pipeline_stages.name');
         $this->addFilter('created_at', 'leads.created_at');
 
         $this->setQueryBuilder($queryBuilder);
@@ -68,45 +128,45 @@ class LeadDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
-            'type'       => 'hidden',
-            'sortable'   => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.datagrid.id'),
+            'type'     => 'hidden',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'            => 'user_name',
             'label'            => trans('admin::app.datagrid.user'),
             'type'             => 'dropdown',
-            'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
             'searchable'       => false,
             'sortable'         => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'title',
-            'label'      => trans('admin::app.datagrid.subject'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index'    => 'title',
+            'label'    => trans('admin::app.datagrid.subject'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'lead_value',
-            'label'           => trans('admin::app.datagrid.lead_value'),
-            'type'            => 'string',
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'    => 'lead_value',
+            'label'    => trans('admin::app.datagrid.lead_value'),
+            'type'     => 'string',
+            'sortable' => true,
+            'closure'  => function ($row) {
                 return core()->formatBasePrice($row->lead_value, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'   => 'person_name',
-            'label'   => trans('admin::app.datagrid.contact_person'),
-            'type'    => 'string',
+            'index'      => 'person_name',
+            'label'      => trans('admin::app.datagrid.contact_person'),
+            'type'       => 'string',
             'searchable' => false,
-            'sortable' => false,
-            'closure' => function ($row) {
+            'sortable'   => false,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
                 return "<a href='" . $route . "'>" . $row->person_name . "</a>";
@@ -114,12 +174,12 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'   => 'stage',
-            'label'   => trans('admin::app.datagrid.stage'),
-            'type'    => 'boolean',
+            'index'      => 'stage',
+            'label'      => trans('admin::app.datagrid.stage'),
+            'type'       => 'string',
             'searchable' => false,
-            'sortable' => false,
-            'closure' => function ($row) {
+            'sortable'   => false,
+            'closure'    => function ($row) {
                 if ($row->stage == 'Won') {
                     $badge = 'success';
                 } else if ($row->stage == 'Lost') {
@@ -133,12 +193,12 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'date_range',
-            'searchable'      => false,
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'      => 'created_at',
+            'label'      => trans('admin::app.datagrid.created_at'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -151,7 +211,7 @@ class LeadDataGrid extends DataGrid
      */
     public function prepareTabFilters()
     {
-        $values = app(StageRepository::class)
+        $values = $this->pipeline->stages()
             ->get(['name', 'code as key', DB::raw('false as isActive')])
             ->prepend([
                 'isActive'  => true,
@@ -201,7 +261,7 @@ class LeadDataGrid extends DataGrid
     {
         $stages = [];
 
-        foreach (app(StageRepository::class)->get(['id', 'name'])->toArray() as $stage) {
+        foreach ($this->stageRepository->get(['id', 'name'])->toArray() as $stage) {
             $stages[$stage['name']] = $stage['id'];
         }
 

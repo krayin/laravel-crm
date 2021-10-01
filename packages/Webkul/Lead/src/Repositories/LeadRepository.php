@@ -67,16 +67,19 @@ class LeadRepository extends Repository
     }
 
     /**
-     * @param array $data
+     * @param  integer  $pipelineId
+     * @param  string  $term
+     * @param  string  $createdAtRange
      * @return \Webkul\Lead\Contracts\Lead
      */
-    public function getLeads($searchedKeyword, $createdAtRange)
+    public function getLeads($pipelineId, $term, $createdAtRange)
     {
         return $this
-                ->select('leads.id as id', 'title', 'lead_value', 'lead_stages.name as status', 'persons.name as person_name', 'lead_stages.id as stage_id')
+                ->select('leads.id as id', 'title', 'lead_value', 'lead_pipeline_stages.name as status', 'persons.name as person_name', 'lead_pipeline_stages.id as stage_id')
                 ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
-                ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                ->where("title", 'like', "%$searchedKeyword%")
+                ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
+                ->where("title", 'like', "%$term%")
+                ->where("leads.lead_pipeline_id", $pipelineId)
                 ->when($createdAtRange, function($query) use ($createdAtRange) {
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
@@ -113,7 +116,7 @@ class LeadRepository extends Repository
         $lead = parent::create(array_merge([
             'person_id'        => $person->id,
             'lead_pipeline_id' => 1,
-            'lead_stage_id'    => $data['lead_stage_id'] ?? 1,
+            'lead_pipeline_stage_id'    => $data['lead_pipeline_stage_id'] ?? 1,
         ], $data));
 
         $this->attributeValueRepository->save($data, $lead->id);
@@ -208,8 +211,8 @@ class LeadRepository extends Repository
 
         if ($leadStage != "all") {
             $query
-                ->leftJoin('lead_stages', 'leads.lead_stage_id', '=', 'lead_stages.id')
-                ->where('lead_stages.name', $leadStage);
+                ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
+                ->where('lead_pipeline_stages.name', $leadStage);
         }
 
         return $query
@@ -218,7 +221,7 @@ class LeadRepository extends Repository
     }
 
     /**
-     * Retreives user details by lead id
+     * Retrieves user details by lead id
      *
      * @return \Webkul\Lead\Contracts\Lead
      */
