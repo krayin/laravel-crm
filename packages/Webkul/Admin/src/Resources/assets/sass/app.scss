@@ -1946,7 +1946,18 @@ body {
     }
 }
 
-.switch-icons-container {
+.switch-pipeline-container {
+    margin-right: 6px;
+    display: inline-block;
+
+    .control {
+        margin: 0;
+        height: 40px;
+        border: 1px solid #C1C2C3;
+    }
+}
+
+.switch-view-container {
     margin-left: -5px;
     margin-right: 6px;
     vertical-align: top;
