@@ -4,9 +4,30 @@ namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\User\Repositories\UserRepository;
 
 class TagDataGrid extends DataGrid
 {
+    /**
+     * UserRepository object
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+    /**
+     * Create data grid instance.
+     *
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+
+        parent::__construct();
+    }
+
     /**
      * Prepare query builder.
      *
@@ -28,7 +49,7 @@ class TagDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('tags.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                $queryBuilder->whereIn('tags.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
             } else {
                 $queryBuilder->where('tags.user_id', $currentUser->id);
             }
@@ -75,7 +96,7 @@ class TagDataGrid extends DataGrid
             'index'            => 'user_name',
             'label'            => trans('admin::app.datagrid.user'),
             'type'             => 'dropdown',
-            'dropdown_options' => app('\Webkul\User\Repositories\UserRepository')->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
             'searchable'       => false,
             'sortable'         => true,
         ]);

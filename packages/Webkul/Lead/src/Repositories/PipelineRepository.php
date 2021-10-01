@@ -69,6 +69,8 @@ class PipelineRepository extends Repository
     {
         $pipeline = $this->find($id);
 
+        $this->model->query()->update(['is_default' => 0]);
+
         $pipeline->update($data);
 
         $previousStageIds = $pipeline->stages()->pluck('id');

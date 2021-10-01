@@ -132,6 +132,13 @@ class PipelineController extends Controller
                 'status'  => false,
                 'message' => trans('admin::app.settings.pipelines.default-delete-error'),
             ], 400);
+        } else {
+            $defaultPipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+
+            $pipeline->leads()->update([
+                'lead_pipeline_id'       => $defaultPipeline->id,
+                'lead_pipeline_stage_id' => $defaultPipeline->stages()->first()->id,
+            ]);
         }
 
         try {
@@ -153,8 +160,8 @@ class PipelineController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.pipelines.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.pipelines.delete-failed'),
         ], 400);
     }
 }

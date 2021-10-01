@@ -25,7 +25,7 @@ class Pipeline extends Model implements PipelineContract
      */
     public function leads()
     {
-        return $this->hasMany(LeadProxy::modelClass());
+        return $this->hasMany(LeadProxy::modelClass(), 'lead_pipeline_id');
     }
 
     /**

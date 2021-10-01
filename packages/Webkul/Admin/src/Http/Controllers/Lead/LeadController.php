@@ -271,7 +271,11 @@ class LeadController extends Controller
         foreach ($data['rows'] as $leadId) {
             $lead = $this->leadRepository->find($leadId);
 
+            Event::dispatch('lead.update.before');
+
             $lead->update(['lead_pipeline_stage_id' => $data['value']]);
+
+            Event::dispatch('lead.update.before', $leadId);
         }
 
         return response()->json([
