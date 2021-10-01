@@ -34,7 +34,7 @@ class Lead extends Model implements LeadContract
         'lead_source_id',
         'lead_type_id',
         'lead_pipeline_id',
-        'lead_stage_id',
+        'lead_pipeline_stage_id',
     ];
 
     /**
@@ -74,15 +74,15 @@ class Lead extends Model implements LeadContract
      */
     public function pipeline()
     {
-        return $this->belongsTo(PipelineProxy::modelClass());
+        return $this->belongsTo(PipelineProxy::modelClass(), 'lead_pipeline_id');
     }
 
     /**
-     * Get the stage that owns the lead.
+     * Get the pipeline stage that owns the lead.
      */
     public function stage()
     {
-        return $this->belongsTo(StageProxy::modelClass(), 'lead_stage_id');
+        return $this->belongsTo(StageProxy::modelClass(), 'lead_pipeline_stage_id');
     }
 
     /**

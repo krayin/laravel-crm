@@ -23,7 +23,6 @@ Vue.use(VueKanban);
 Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
 
 Vue.component('draggable', draggable);
-Vue.component('kanban-component', require('./components/kanban').default);
 
 $(function() {
     var app = new Vue({

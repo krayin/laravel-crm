@@ -224,13 +224,32 @@ Breadcrumbs::for('settings.attributes.edit', function (BreadcrumbTrail $trail, $
 });
 
 
+// Settings > Pipelines
+Breadcrumbs::for('settings.pipelines', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.layouts.pipelines'), route('admin.settings.pipelines.index'));
+});
+
+// Dashboard > Pipelines > Create Pipeline
+Breadcrumbs::for('settings.pipelines.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.pipelines');
+    $trail->push(trans('admin::app.settings.pipelines.create-title'), route('admin.settings.pipelines.create'));
+});
+
+// Dashboard > Pipelines > Edit Pipeline
+Breadcrumbs::for('settings.pipelines.edit', function (BreadcrumbTrail $trail, $pipeline) {
+    $trail->parent('settings.pipelines');
+    $trail->push(trans('admin::app.settings.pipelines.edit-title'), route('admin.settings.pipelines.edit', $pipeline->id));
+});
+
+
 // Settings > Sources
 Breadcrumbs::for('settings.sources', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
     $trail->push(trans('admin::app.layouts.sources'), route('admin.settings.sources.index'));
 });
 
-// Dashboard > Sources > Edit Attribute
+// Dashboard > Sources > Edit Source
 Breadcrumbs::for('settings.sources.edit', function (BreadcrumbTrail $trail, $source) {
     $trail->parent('settings.sources');
     $trail->push(trans('admin::app.settings.sources.edit-title'), route('admin.settings.sources.edit', $source->id));
@@ -243,7 +262,7 @@ Breadcrumbs::for('settings.types', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.types'), route('admin.settings.types.index'));
 });
 
-// Dashboard > Types > Edit Attribute
+// Dashboard > Types > Edit Type
 Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type) {
     $trail->parent('settings.types');
     $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));

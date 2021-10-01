@@ -30,39 +30,45 @@ class LeadPipelineSeeder extends Seeder
         DB::table('lead_pipeline_stages')->insert([
             [
                 'id'               => 1,
+                'code'             => 'new',
+                'name'             => 'New',
                 'probability'      => 100,
                 'sort_order'       => 1,
-                'lead_stage_id'    => 1,
                 'lead_pipeline_id' => 1,
             ], [
                 'id'               => 2,
+                'code'             => 'follow-up',
+                'name'             => 'Follow Up',
                 'probability'      => 100,
                 'sort_order'       => 2,
-                'lead_stage_id'    => 2,
                 'lead_pipeline_id' => 1,
             ], [
                 'id'               => 3,
+                'code'             => 'prospect',
+                'name'             => 'Prospect',
                 'probability'      => 100,
                 'sort_order'       => 3,
-                'lead_stage_id'    => 3,
                 'lead_pipeline_id' => 1,
             ], [
                 'id'               => 4,
+                'code'             => 'negotiation',
+                'name'             => 'Negotiation',
                 'probability'      => 100,
                 'sort_order'       => 4,
-                'lead_stage_id'    => 4,
                 'lead_pipeline_id' => 1,
             ], [
                 'id'               => 5,
+                'code'             => 'won',
+                'name'             => 'Won',
                 'probability'      => 100,
                 'sort_order'       => 5,
-                'lead_stage_id'    => 5,
                 'lead_pipeline_id' => 1,
             ], [
                 'id'               => 6,
+                'code'             => 'lost',
+                'name'             => 'Lost',
                 'probability'      => 0,
                 'sort_order'       => 6,
-                'lead_stage_id'    => 6,
                 'lead_pipeline_id' => 1,
             ]
         ]);

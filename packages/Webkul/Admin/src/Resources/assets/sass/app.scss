@@ -718,8 +718,8 @@ body {
                     width: 24px;
                     height: 24px;
                     position: absolute;
-                    right: 45px;
-                    top: 5px;
+                    right: 50px;
+                    top: 9px;
                     cursor: pointer;
                 }
             }
@@ -730,7 +730,48 @@ body {
                 cursor: pointer;
                 position: absolute;
                 right: 5px;
-                top: 5px;
+                top: 9px;
+            }
+        }
+    }
+
+    table {
+        box-shadow: none;
+        
+        tr {
+            th {
+                &:first-child {
+                    width: 40px;
+                }
+
+                &:last-child {
+                    width: 40px;
+                }
+            }
+
+            td {
+                &.dragable-icon,
+                &.delete-icon {
+                    .icon {
+                        width: 24px;
+                        height: 24px;
+                        margin-top: 9px;
+                        cursor: pointer;
+                    }
+                }
+
+                .form-group {
+                    .control {
+                        margin-top: 0;
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            &:not(.draggable) {
+                .control {
+                    background-color: #f0f0f0;;
+                }
             }
         }
     }
@@ -1417,7 +1458,6 @@ body {
                 }
             }
 
-            &.name,
             &.created_at {
                 width: 200px;
             }

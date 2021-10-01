@@ -136,18 +136,25 @@ return [
         'info'       => 'admin::app.layouts.lead-info',
         'sort'       => 2,
     ], [
+        'key'        => 'settings.lead.pipelines',
+        'name'       => 'admin::app.layouts.pipelines',
+        'info'       => 'admin::app.layouts.pipelines-info',
+        'route'      => 'admin.settings.pipelines.index',
+        'sort'       => 1,
+        'icon-class' => 'pipeline-icon',
+    ], [
         'key'        => 'settings.lead.sources',
         'name'       => 'admin::app.layouts.sources',
         'info'       => 'admin::app.layouts.sources-info',
         'route'      => 'admin.settings.sources.index',
-        'sort'       => 1,
+        'sort'       => 2,
         'icon-class' => 'source-icon',
     ], [
         'key'        => 'settings.lead.types',
         'name'       => 'admin::app.layouts.types',
         'info'       => 'admin::app.layouts.types-info',
         'route'      => 'admin.settings.types.index',
-        'sort'       => 2,
+        'sort'       => 3,
         'icon-class' => 'type-icon',
     ], [
         'key'        => 'settings.automation',

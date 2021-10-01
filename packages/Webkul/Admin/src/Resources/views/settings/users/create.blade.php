@@ -84,7 +84,7 @@
                                     </span>
                                 </div>
 
-                                <div class="form-group" :class="[errors.has('status') ? 'has-error' : '']">
+                                <div class="form-group">
                                     <label class="required">
                                         {{ __('admin::app.settings.users.status') }}
                                     </label>

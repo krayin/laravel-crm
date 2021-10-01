@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
 
 class LeadController extends Controller
@@ -19,6 +20,13 @@ class LeadController extends Controller
     protected $leadRepository;
 
     /**
+     * PipelineRepository object
+     *
+     * @var \Webkul\Lead\Repositories\PipelineRepository
+     */
+    protected $pipelineRepository;
+
+    /**
      * StageRepository object
      *
      * @var \Webkul\Lead\Repositories\StageRepository
@@ -29,15 +37,19 @@ class LeadController extends Controller
      * Create a new controller instance.
      *
      * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
+     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
      * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
      *
      * @return void
      */
     public function __construct(
         LeadRepository $leadRepository,
+        PipelineRepository $pipelineRepository,
         StageRepository $stageRepository
     ) {
         $this->leadRepository = $leadRepository;
+
+        $this->pipelineRepository = $pipelineRepository;
 
         $this->stageRepository = $stageRepository;
 
@@ -80,7 +92,17 @@ class LeadController extends Controller
 
         $data = request()->all();
 
-        $data['user_id'] = $data['status'] = $data['lead_pipeline_id'] = 1;
+        $data['status'] = 1;
+
+        if ($data['lead_pipeline_stage_id']) {
+            $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
+
+            $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
+        } else {
+            $pipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+
+            $data['lead_pipeline_stage_id'] = $pipeline->stages()->first()->id;
+        }
 
         $lead = $this->leadRepository->create($data);
 
@@ -174,39 +196,38 @@ class LeadController extends Controller
      */
     public function fetchLeads()
     {
-        $totalCount = [];
-        $searchedKeyword = request('search') ?? '';
         $createdAt = request('created_at') ?? null;
-        $currencySymbol = core()->currencySymbol(config('app.currency'));
 
         if ($createdAt) {
             $createdAt = explode(",", $createdAt["bw"]);
 
-            $createdAt[0] = $createdAt[0] . ' ' . Carbon::parse('00:01')->format('H:i');
-            $createdAt[1] = ($createdAt[1] ? $createdAt[1] : Carbon::now()->format('Y-m-d')) . ' ' . Carbon::parse('23:59')->format('H:i');
+            $createdAt[0] .= ' 00:01';
+            
+            $createdAt[1] = $createdAt[1]
+                ? $createdAt[1] . ' 23:59'
+                : Carbon::now()->format('Y-m-d 23:59');
         }
 
-        $leads = $this->leadRepository->getLeads($searchedKeyword, $createdAt)->toArray();
+        $leads = $this->leadRepository->getLeads(request('search') ?? '', $createdAt)->toArray();
 
-        $stages = $this->stageRepository->get();
+        $totalCount = [];
 
         foreach ($leads as $key => $lead) {
             $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
 
-            $leads[$key]['view_url'] = route('admin.leads.view', ["id" => $lead['id']]);
+            $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
         }
 
-        $totalCount = array_map(function ($count) use ($currencySymbol) {
-            return $currencySymbol . number_format($count);
+        $totalCount = array_map(function ($count) {
+            return core()->formatBasePrice($count);
         }, $totalCount);
 
-        $stages = \Arr::pluck($stages, "name", "id");
+        $stages = $this->pipelineRepository->findOneByField('is_default', 1)->stages()->pluck('name', 'id');
 
         return response()->json([
-            'blocks'          => $leads,
-            'stages'          => $stages,
-            'total_count'     => $totalCount,
-            'currency_symbol' => $currencySymbol,
+            'blocks'      => $leads,
+            'stages'      => $stages,
+            'total_count' => $totalCount,
         ]);
     }
 
@@ -223,13 +244,13 @@ class LeadController extends Controller
 
         $this->leadRepository
             ->update([
-                "lead_stage_id" => $stages->id,
-                "entity_type"   => $requestParams["entity_type"],
+                "lead_pipeline_stage_id" => $stages->id,
+                "entity_type"            => $requestParams["entity_type"],
             ], $requestParams['id']);
 
         return response()->json([
-            'status'    => true,
-            'message'   => __("admin::app.leads.lead_stage_updated"),
+            'status'  => true,
+            'message' => __("admin::app.leads.lead_pipeline_stage_updated"),
         ]);
     }
 
@@ -251,8 +272,8 @@ class LeadController extends Controller
             Event::dispatch('lead.delete.after', $id);
 
             return response()->json([
-                'status'    => true,
-                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
+                'status'  => true,
+                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
@@ -274,7 +295,7 @@ class LeadController extends Controller
         foreach ($data['rows'] as $leadId) {
             $lead = $this->leadRepository->find($leadId);
 
-            $lead->update(['lead_stage_id' => $data['value']]);
+            $lead->update(['lead_pipeline_stage_id' => $data['value']]);
         }
 
         return response()->json([

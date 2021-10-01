@@ -146,7 +146,7 @@
 
                 <input type="hidden" name="quick_add" value="1" />
 
-                <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="1" />
+                <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="1" />
 
                 <tabs>
                     {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.details.before', ['email' => $email]) !!}

@@ -38,13 +38,7 @@
         <div class="table-body viewport-height">
             <kanban-filters></kanban-filters>
 
-            <kanban-component
-                no-data-text="{{ __('admin::app.leads.no-lead') }}"
-                get-url="{{ route('admin.leads.kanban.index') }}"
-                detail-text="{{ __('admin::app.leads.create-title') }}"
-                update-url="{{ route('admin.leads.kanban.update') }}"
-                @if (bouncer()->hasPermission('leads.create'))create-url="{{ route('admin.leads.create') }}"@endif
-            ></kanban-component>
+            <kanban-component></kanban-component>
         </div>
     </div>
 </div>
@@ -87,6 +81,40 @@
         </div>
     </script>
 
+    <script type="text/x-template" id="kanban-component-tempalte">
+        <kanban-board :stages="stages" :blocks="blocks" @update-block="updateLeadStage">
+            <div v-for="(stage, index) in stages" :slot="stage" :key="`stage-${stage}`">
+                <h2>
+                    @{{ stage }}
+                    <span class="float-right">@{{ totalCounts[stage] || 0 }}</span>
+                </h2>
+
+                @if (bouncer()->hasPermission('leads.create'))
+                    <a :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + getStageId(stage)">
+                        {{ __('admin::app.leads.create-title') }}
+                    </a>
+                @endif
+            </div>
+
+            <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">
+                <div class="lead-title">@{{ block.title }}</div>
+
+                <div class="icons">
+                    <a :href="'{{ route('admin.leads.view') }}' + block.id" class="icon eye-icon"></a>
+                    <i class="icon drag-icon"></i>
+                </div>
+
+                <div class="lead-person">
+                    <i class="icon avatar-dark-icon"></i>@{{ block.person_name }}
+                </div>
+
+                <div class="lead-cost">
+                    <i class="icon dollar-circle-icon"></i>@{{ block.lead_value }}
+                </div>
+            </div>
+        </kanban-board>
+    </script>
+
     <script>
         Vue.component('kanban-filters', {
             template: '#kanban-filters-tempalte',
@@ -96,10 +124,10 @@
                     debounce: [],
                     columns: {
                         'created_at': {
-                            'type'              : 'date_range',
-                            'label'             : "{{ trans('admin::app.datagrid.created_at') }}",
-                            'values'            : [null, null],
-                            'filterable'        : true
+                            'type' : 'date_range',
+                            'label' : "{{ trans('admin::app.datagrid.created_at') }}",
+                            'values' : [null, null],
+                            'filterable' : true
                         },
                     }
                 }
@@ -115,6 +143,112 @@
                 toggleSidebarFilter: function () {
                     $('.sidebar-filter').toggleClass('show');
                 },
+            }
+        });
+
+        Vue.component('kanban-component', {
+
+            template: '#kanban-component-tempalte',
+
+            data: function () {
+                return {
+                    stages: [],
+
+                    blocks: [],
+
+                    debounce: null,
+
+                    totalCounts: [],
+                }
+            },
+
+            created: function () {
+                this.getLeads();
+
+                queueMicrotask(() => {
+                    $('#search-field').on('search keyup', ({target}) => {
+                        clearTimeout(this.debounce);
+
+                        this.debounce = setTimeout(() => {
+                            this.search(target.value)
+                        }, 2000);
+                    });
+                });
+            },
+
+            mounted: function () {
+                EventBus.$on('updateKanbanFilter', this.updateFilter);
+            },
+
+            methods: {
+                getLeads: function (searchedKeyword, filterValues) {
+                    this.$root.pageLoaded = false;
+
+                    this.$http.get("{{ route('admin.leads.kanban.index') }}" + `${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
+                        .then(response => {
+                            this.$root.pageLoaded = true;
+
+                            this.blocks = response.data.blocks;
+
+                            this.totalCounts = response.data.total_count;
+
+                            this.stages = Object.values(response.data.stages);
+
+                            setTimeout(() => {
+                                this.toggleEmptyStateIcon();
+                            })
+                        })
+                        .catch(error => {
+                            this.$root.pageLoaded = true;
+                        });
+                },
+
+                updateLeadStage: function (id, status) {
+                    this.$http.post("{{ route('admin.leads.kanban.update') }}", {id, status})
+                        .then(response => {
+                            this.getLeads();
+
+                            this.addFlashMessages({message : response.data.message });
+                        })
+                        .catch(error => {});
+                },
+
+                search: function (searchedKeyword) {
+                    this.getLeads(searchedKeyword);
+                },
+
+                getStageId: function (stage) {
+                    for (let stageId in this.stages) {
+                        if (this.stages[stageId] == stage) {
+                            return stageId;
+                        }
+                    }
+
+                    return 0;
+                },
+
+                updateFilter: function (data) {
+                    let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
+
+                    this.getLeads(false, href);
+                },
+
+                toggleEmptyStateIcon: function () {
+                    $('.empty-icon-container').remove();
+
+                    $('ul.drag-inner-list').each((index, item) => {
+                        if (! $(item).children('.drag-item').length) {
+                            $(item).append(`
+                                <div class='empty-icon-container disable-drag'>
+                                    <div class="icon-text-container">
+                                        <i class='icon empty-kanban-icon'></i>
+                                        <span>{{ __('admin::app.leads.no-lead') }}</span>
+                                    </div>
+                                </div>
+                            `)
+                        }
+                    });
+                }
             }
         });
     </script>

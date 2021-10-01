@@ -211,7 +211,7 @@
                         </li>
                     </draggable>
 
-                    <button type="button" class="btn btn-md btn-primary mt-20" id="add-option-btn" @click="addOptionRow()">
+                    <button type="button" class="btn btn-md btn-primary mt-20" id="add-option-btn" @click="addOptionRow">
                         {{ __('admin::app.settings.attributes.add-option-btn-title') }}
                     </button>
                 </template>

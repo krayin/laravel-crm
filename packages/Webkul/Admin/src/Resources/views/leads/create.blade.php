@@ -41,7 +41,7 @@
 
                         @csrf()
                         
-                        <input type="hidden" id="lead_stage_id" name="lead_stage_id" value="{{ request('lead_stage_id') ?? 1 }}" />
+                        <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ request('stage_id') }}" />
 
                         <tabs>
                             {!! view_render_event('admin.leads.create.form_controls.details.before') !!}

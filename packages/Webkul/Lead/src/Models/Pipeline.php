@@ -16,6 +16,7 @@ class Pipeline extends Model implements PipelineContract
      */
     protected $fillable = [
         'name',
+        'rotten_days',
         'is_default',
     ];
 
@@ -28,10 +29,10 @@ class Pipeline extends Model implements PipelineContract
     }
 
     /**
-     * Get the stages that owns the pipline.
+     * Get the stages that owns the pipeline.
      */
     public function stages()
     {
-        return $this->hasMany(PipelineStageProxy::modelClass());
+        return $this->hasMany(StageProxy::modelClass(), 'lead_pipeline_id')->orderBy('sort_order', 'ASC');
     }
 }

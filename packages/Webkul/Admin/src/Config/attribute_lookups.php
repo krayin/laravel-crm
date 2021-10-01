@@ -22,8 +22,8 @@ return [
         'repository'   => 'Webkul\Lead\Repositories\PipelineRepository',
     ],
 
-    'lead_stages' => [
-        'name'         => 'Lead Stages',
+    'lead_pipeline_stages' => [
+        'name'         => 'Lead Pipeline Stages',
         'repository'   => 'Webkul\Lead\Repositories\StageRepository',
     ],
 

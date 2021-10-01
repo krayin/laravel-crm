@@ -64,7 +64,9 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'leads',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Lead',
             ], function () {
-                Route::get('', 'LeadController@index')->name('admin.leads.index');
+                Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
+
+                Route::get('{pipeline_id?}', 'LeadController@index')->name('admin.leads.index');
 
                 Route::get('create', 'LeadController@create')->name('admin.leads.create');
 
@@ -73,8 +75,6 @@ Route::group(['middleware' => ['web']], function () {
                 Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');
 
                 Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
-
-                Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
 
                 Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
 
@@ -304,6 +304,23 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
+
+
+                // Lead Pipelines Routes
+                Route::prefix('pipelines')->group(function () {
+                    Route::get('', 'PipelineController@index')->name('admin.settings.pipelines.index');
+
+                    Route::get('create', 'PipelineController@create')->name('admin.settings.pipelines.create');
+
+                    Route::post('create', 'PipelineController@store')->name('admin.settings.pipelines.store');
+
+                    Route::get('edit/{id?}', 'PipelineController@edit')->name('admin.settings.pipelines.edit');
+
+                    Route::put('edit/{id}', 'PipelineController@update')->name('admin.settings.pipelines.update');
+
+                    Route::delete('{id}', 'PipelineController@destroy')->name('admin.settings.pipelines.delete');
+                });
+
 
                 // Lead Sources Routes
                 Route::prefix('sources')->group(function () {
