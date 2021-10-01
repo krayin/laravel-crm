@@ -57,8 +57,11 @@
         computed: {
             ...mapState({
                 tableData : state => state.tableData,
+
                 filters : state => state.filters,
+
                 allSelected : state => state.allSelected,
+
                 selectedTableRows : state => state.selectedTableRows,
             }),
 
@@ -96,9 +99,9 @@
                 this.findCurrentSort();
 
                 EventBus.$emit('updateFilter', {
-                    key     : 'sort',
-                    cond    : this.columns[index].index,
-                    value   : this.currentSort == 'desc' ? 'asc' : 'desc',
+                    key   : 'sort',
+                    cond  : this.columns[index].index,
+                    value : this.currentSort == 'desc' ? 'asc' : 'desc',
                 });
             },
         }

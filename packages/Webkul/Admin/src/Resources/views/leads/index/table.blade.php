@@ -1,5 +1,10 @@
 <div class="content full-page">
     <table-component data-src="{{ route('admin.leads.index') }}" switch-page-url="{{ route('admin.leads.index') }}">
+
+        <template v-slot:extra-filters>
+            @include('admin::leads.index.view-swither')
+        </template>
+
         <template v-slot:table-header>
             <h1>
                 {!! view_render_event('admin.leads.index.header.before') !!}
