@@ -4,9 +4,7 @@
             <tr
                 :key="collectionIndex"
                 v-for="(row, collectionIndex) in records"
-                :class="
-                    `${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`
-                "
+                :class="`${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`"
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
@@ -114,6 +112,7 @@ export default {
     computed: {
         ...mapState({
             tableData: state => state.tableData,
+            
             selectedTableRows: state => state.selectedTableRows
         }),
 

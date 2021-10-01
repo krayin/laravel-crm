@@ -13,9 +13,11 @@
         <div class="table-body" v-if="Object.keys(tableData).length > 0">
             <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
-            <filter-component
-                :switch-page-url="switchPageUrl"
-            ></filter-component>
+            <filter-component>
+                <template v-slot:extra-filters>
+                    <slot name="extra-filters"></slot>
+                </template>
+            </filter-component>
 
             <table v-if="tableData.records.total">
                 <thead-component></thead-component>
@@ -27,11 +29,7 @@
 
             <div class="empty-table" v-else>
                 <div>
-                    <img
-                        :src="
-                            `${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`
-                        "
-                    />
+                    <img :src="`${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`"/>
 
                     <span>{{ __("ui.datagrid.no-records") }}</span>
                 </div>
@@ -44,13 +42,16 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-    props: ["dataSrc", "switchPageUrl"],
+    props: ["dataSrc"],
 
     data: function() {
         return {
             pageLoaded: false,
+
             previousURL: null,
+
             resultLoaded: true,
+
             baseURL: window.baseURL
         };
     },
@@ -63,6 +64,7 @@ export default {
 
     mounted: function() {
         let search = window.location.search;
+        
         const initialIndex = search.indexOf("?");
 
         if (initialIndex > -1) {

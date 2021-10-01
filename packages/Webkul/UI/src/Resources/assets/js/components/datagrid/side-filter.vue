@@ -5,9 +5,9 @@
                 <span>{{ __("ui.datagrid.filter.title") }}</span>
 
                 <div class="right">
-                    <label @click="removeAll">{{
-                        __("ui.datagrid.filter.remove_all")
-                    }}</label>
+                    <label @click="removeAll">
+                        {{ __("ui.datagrid.filter.remove_all") }}
+                    </label>
 
                     <i class="icon close-icon" @click="toggleSidebarFilter"></i>
                 </div>
@@ -63,6 +63,7 @@
                             <option value="" disabled selected>
                                 {{ data.label }}
                             </option>
+
                             <option
                                 :value="option.value"
                                 :key="index"
@@ -82,9 +83,7 @@
 
                                 <i
                                     class="icon close-icon ml-10"
-                                    @click="
-                                        removeFieldValue(key, index, data.index)
-                                    "
+                                    @click="removeFieldValue(key, index, data.index)"
                                 ></i>
                             </span>
                         </div>
@@ -167,7 +166,9 @@ export default {
     computed: {
         ...mapState({
             filterData: state => state.filterData,
+
             tableData: state => state.tableData,
+            
             sidebarFilter: state => state.sidebarFilter
         })
     },

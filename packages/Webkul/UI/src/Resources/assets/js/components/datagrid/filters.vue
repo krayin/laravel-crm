@@ -31,9 +31,9 @@
                         v-model="massActionValue"
                         v-validate="'required'"
                     >
-                        <option value="NA" disbaled="disbaled">{{
-                            __("ui.datagrid.massaction.select_action")
-                        }}</option>
+                        <option value="NA" disbaled="disbaled">
+                            {{ __("ui.datagrid.massaction.select_action") }}
+                        </option>
 
                         <option
                             :value="massAction"
@@ -51,9 +51,9 @@
                         v-validate="'required'"
                         v-if="massActionValue.type == 'update'"
                     >
-                        <option value="NA" disbaled="disbaled">{{
-                            __("ui.datagrid.massaction.select_action")
-                        }}</option>
+                        <option value="NA" disbaled="disbaled">
+                            {{ __("ui.datagrid.massaction.select_action") }}
+                        </option>
 
                         <option
                             :key="key"
@@ -107,15 +107,7 @@
                     v-if="! tableData.tabFilters.length > 0"
                 ></pagination-component>
 
-                <div class="switch-icons-container" v-if="switchPageUrl">
-                    <a class="icon-container" :href="switchPageUrl">
-                        <i class="icon layout-column-line-icon"></i>
-                    </a>
-
-                    <a class="icon-container active">
-                        <i class="icon table-line-active-icon"></i>
-                    </a>
-                </div>
+                <slot name="extra-filters"></slot>
 
                 <div
                     class="filter-btn"
@@ -250,28 +242,46 @@
 import { mapState, mapActions } from "vuex";
 
 export default {
-    props: ["switchPageUrl", "tabs"],
+    props: ["tabs"],
 
     data: function() {
         return {
             type: null,
+
             filters: [],
+
             perPage: 10,
+
             debounce: {},
+
             sortAsc: "asc",
+
             searchValue: "",
+
             sortDesc: "desc",
+
             stringValue: null,
+
             booleanValue: null,
+
             massActionValue: "NA",
+
             sidebarFilter: false,
+
             stringCondition: null,
+
             numberCondition: null,
+
             booleanCondition: null,
+
             datetimeCondition: null,
+
             massActionOptionValue: "NA",
+
             custom_filter: [null, null],
+
             url: new URL(window.location.href),
+            
             ignoreDisplayFilter: ["duration", "view_type"]
         };
     },
@@ -279,7 +289,9 @@ export default {
     computed: {
         ...mapState({
             tableData: state => state.tableData,
+
             customTabFilter: state => state.customTabFilter,
+
             selectedTableRows: state => state.selectedTableRows
         }),
 

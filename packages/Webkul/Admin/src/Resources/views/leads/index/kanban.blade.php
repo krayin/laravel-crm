@@ -60,15 +60,8 @@
             <sidebar-filter :columns="columns"></sidebar-filter>
 
             <div class="filter-right">
-                <div class="switch-icons-container">
-                    <a class="icon-container active">
-                        <i class="icon layout-column-line-active-icon"></i>
-                    </a>
 
-                    <a href="{{ route('admin.leads.index', ['view_type' => 'table']) }}" class="icon-container">
-                        <i class="icon table-line-icon"></i>
-                    </a>
-                </div>
+                @include('admin::leads.index.view-swither')
 
                 <div class="filter-btn">
                     <div class="grid-dropdown-header" @click="toggleSidebarFilter">
