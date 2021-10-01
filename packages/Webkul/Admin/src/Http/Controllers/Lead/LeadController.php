@@ -64,7 +64,48 @@ class LeadController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Lead\LeadDataGrid::class)->toJson();
+            if (request('view_type')) {
+                return app(\Webkul\Admin\DataGrids\Lead\LeadDataGrid::class)->toJson();
+            } else {
+                $createdAt = request('created_at') ?? null;
+
+                if ($createdAt) {
+                    $createdAt = explode(",", $createdAt["bw"]);
+        
+                    $createdAt[0] .= ' 00:01';
+                    
+                    $createdAt[1] = $createdAt[1]
+                        ? $createdAt[1] . ' 23:59'
+                        : Carbon::now()->format('Y-m-d 23:59');
+                }
+
+                if (request('pipeline_id')) {
+                    $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
+                } else {
+                    $pipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+                }
+        
+                $leads = $this->leadRepository->getLeads($pipeline->id, request('search') ?? '', $createdAt)->toArray();
+        
+                $totalCount = [];
+        
+                foreach ($leads as $key => $lead) {
+                    $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
+        
+                    $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
+                }
+        
+                $totalCount = array_map(function ($count) {
+                    return core()->formatBasePrice($count);
+                }, $totalCount);
+
+                return response()->json([
+                    'blocks'      => $leads,
+                    'stage_names' => $pipeline->stages->pluck('name'),
+                    'stages'      => $pipeline->stages->toArray(),
+                    'total_count' => $totalCount,
+                ]);
+            }
         }
 
         return view('admin::leads.index');
@@ -187,71 +228,6 @@ class LeadController extends Controller
         ]);
 
         return response()->json($results);
-    }
-
-    /**
-     * Returns json format data of leads for kanban
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function fetchLeads()
-    {
-        $createdAt = request('created_at') ?? null;
-
-        if ($createdAt) {
-            $createdAt = explode(",", $createdAt["bw"]);
-
-            $createdAt[0] .= ' 00:01';
-            
-            $createdAt[1] = $createdAt[1]
-                ? $createdAt[1] . ' 23:59'
-                : Carbon::now()->format('Y-m-d 23:59');
-        }
-
-        $leads = $this->leadRepository->getLeads(request('search') ?? '', $createdAt)->toArray();
-
-        $totalCount = [];
-
-        foreach ($leads as $key => $lead) {
-            $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
-
-            $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
-        }
-
-        $totalCount = array_map(function ($count) {
-            return core()->formatBasePrice($count);
-        }, $totalCount);
-
-        $stages = $this->pipelineRepository->findOneByField('is_default', 1)->stages()->pluck('name', 'id');
-
-        return response()->json([
-            'blocks'      => $leads,
-            'stages'      => $stages,
-            'total_count' => $totalCount,
-        ]);
-    }
-
-    /**
-     * Update status of a lead
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function updateLeadStage()
-    {
-        $requestParams = request()->all();
-
-        $stages = $this->stageRepository->findOneWhere(['name' => $requestParams['status']]);
-
-        $this->leadRepository
-            ->update([
-                "lead_pipeline_stage_id" => $stages->id,
-                "entity_type"            => $requestParams["entity_type"],
-            ], $requestParams['id']);
-
-        return response()->json([
-            'status'  => true,
-            'message' => __("admin::app.leads.lead_pipeline_stage_updated"),
-        ]);
     }
 
     /*

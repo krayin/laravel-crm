@@ -82,15 +82,15 @@
     </script>
 
     <script type="text/x-template" id="kanban-component-tempalte">
-        <kanban-board :stages="stages" :blocks="blocks" @update-block="updateLeadStage">
-            <div v-for="(stage, index) in stages" :slot="stage" :key="`stage-${stage}`">
+        <kanban-board :stages="stage_names" :blocks="blocks" @update-block="updateLeadStage">
+            <div v-for="(stage, index) in stage_names" :slot="stage" :key="`stage-${stage}`">
                 <h2>
                     @{{ stage }}
                     <span class="float-right">@{{ totalCounts[stage] || 0 }}</span>
                 </h2>
 
                 @if (bouncer()->hasPermission('leads.create'))
-                    <a :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + getStageId(stage)">
+                    <a :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + stages[index].id">
                         {{ __('admin::app.leads.create-title') }}
                     </a>
                 @endif
@@ -100,7 +100,7 @@
                 <div class="lead-title">@{{ block.title }}</div>
 
                 <div class="icons">
-                    <a :href="'{{ route('admin.leads.view') }}' + block.id" class="icon eye-icon"></a>
+                    <a :href="'{{ route('admin.leads.view') }}/' + block.id" class="icon eye-icon"></a>
                     <i class="icon drag-icon"></i>
                 </div>
 
@@ -152,6 +152,8 @@
 
             data: function () {
                 return {
+                    stage_names: [],
+
                     stages: [],
 
                     blocks: [],
@@ -184,7 +186,7 @@
                 getLeads: function (searchedKeyword, filterValues) {
                     this.$root.pageLoaded = false;
 
-                    this.$http.get("{{ route('admin.leads.kanban.index') }}" + `${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
+                    this.$http.get("{{ route('admin.leads.index', request('pipeline_id')) }}" + `${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
                         .then(response => {
                             this.$root.pageLoaded = true;
 
@@ -192,7 +194,9 @@
 
                             this.totalCounts = response.data.total_count;
 
-                            this.stages = Object.values(response.data.stages);
+                            this.stage_names = Object.values(response.data.stage_names);
+
+                            this.stages = response.data.stages;
 
                             setTimeout(() => {
                                 this.toggleEmptyStateIcon();
@@ -203,8 +207,10 @@
                         });
                 },
 
-                updateLeadStage: function (id, status) {
-                    this.$http.post("{{ route('admin.leads.kanban.update') }}", {id, status})
+                updateLeadStage: function (id, stageName) {
+                    var stage = this.stages.filter(stage => stage.name === stageName);
+
+                    this.$http.put("{{ route('admin.leads.update') }}/" + id, {'lead_pipeline_stage_id': stage[0].id})
                         .then(response => {
                             this.getLeads();
 

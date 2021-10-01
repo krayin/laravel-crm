@@ -64,8 +64,6 @@ Route::group(['middleware' => ['web']], function () {
                 'prefix'    => 'leads',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Lead',
             ], function () {
-                Route::get('kanban-format', 'LeadController@fetchLeads')->name('admin.leads.kanban.index');
-
                 Route::get('{pipeline_id?}', 'LeadController@index')->name('admin.leads.index');
 
                 Route::get('create', 'LeadController@create')->name('admin.leads.create');
@@ -74,9 +72,7 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');
 
-                Route::put('edit/{id}', 'LeadController@update')->name('admin.leads.update');
-
-                Route::post('update-lead', 'LeadController@updateLeadStage')->name('admin.leads.kanban.update');
+                Route::put('edit/{id?}', 'LeadController@update')->name('admin.leads.update');
 
                 Route::get('search', 'LeadController@search')->name('admin.leads.search');
 
