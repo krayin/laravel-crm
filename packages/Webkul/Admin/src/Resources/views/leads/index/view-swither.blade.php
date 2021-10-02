@@ -4,7 +4,7 @@
             $pipelineRepository = app('Webkul\Lead\Repositories\PipelineRepository');
 
             if (! $pipelineId = request('pipeline_id')) {
-                $pipelineId = $pipelineRepository->findOneByField('is_default', 1)->id;
+                $pipelineId = $pipelineRepository->getDefaultPipeline()->id;
             }
         @endphp
 

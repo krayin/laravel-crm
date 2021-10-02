@@ -73,7 +73,7 @@
                                     name="rotten_days"
                                     class="control"
                                     value="{{ old('rotten_days') ?: $pipeline->rotten_days }}"
-                                    v-validate="'required'"
+                                    v-validate="'required|numeric|min_value:1'"
                                     data-vv-as="{{ __('admin::app.settings.pipelines.rotting-days') }}"
                                 />
 
@@ -93,7 +93,7 @@
                                         name="is_default"
                                         class="control"
                                         id="is_default"
-                                        {{ (old('is_default') || $pipeline->is_default) ? 'checked' : '' }}
+                                        {{ $pipeline->is_default ? 'checked disabled' : '' }}
                                     />
                                     <span class="slider round"></span>
                                 </label>

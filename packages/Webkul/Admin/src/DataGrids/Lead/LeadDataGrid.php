@@ -57,7 +57,7 @@ class LeadDataGrid extends DataGrid
         if (request('pipeline_id')) {
             $this->pipeline = $this->pipelineRepository->find(request('pipeline_id'));
         } else {
-            $this->pipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+            $this->pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
 
         $this->stageRepository = $stageRepository;

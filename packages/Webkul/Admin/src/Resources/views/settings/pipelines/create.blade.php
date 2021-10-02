@@ -70,8 +70,8 @@
                                     type="text"
                                     name="rotten_days"
                                     class="control"
-                                    value="{{ old('rotten_days') }}"
-                                    v-validate="'required'"
+                                    value="{{ old('rotten_days') ?? 30 }}"
+                                    v-validate="'required|numeric|min_value:1'"
                                     data-vv-as="{{ __('admin::app.settings.pipelines.rotting-days') }}"
                                 />
 

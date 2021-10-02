@@ -14,7 +14,7 @@ class AddColumnRottenDaysInLeadPipelinesTable extends Migration
     public function up()
     {
         Schema::table('lead_pipelines', function (Blueprint $table) {
-            $table->integer('rotten_days')->after('is_default')->default(0);
+            $table->integer('rotten_days')->after('is_default')->default(30);
         });
     }
 
