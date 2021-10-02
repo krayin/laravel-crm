@@ -105,10 +105,10 @@ class PipelineRepository extends Repository
      */
     public function getDefaultPipeline()
     {
-        $pipeline = $this->pipelineRepository->findOneByField('is_default', 1);
+        $pipeline = $this->findOneByField('is_default', 1);
 
         if (! $pipeline) {
-            $pipeline = $this->pipelineRepository->first();
+            $pipeline = $this->first();
         }
 
         return $pipeline;

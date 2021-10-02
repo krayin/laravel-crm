@@ -37,8 +37,6 @@
         <div id="app" class="anonymous-layout-container">
             <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
-            @include("admin::banner.header")
-
             <flash-wrapper ref='flashes'></flash-wrapper>
 
             <div class="center-box">
