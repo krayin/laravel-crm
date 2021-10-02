@@ -902,6 +902,23 @@ body {
 
         .panel {
             margin-bottom: 30px;
+
+            .lead-rotten-info {
+                float: right;
+                font-weight: 400;
+                font-size: 14px;
+                color: #FF4D50;
+                background: #ff4d501a;
+                padding: 2px 12px;
+                border-radius: 4px;
+
+                .icon {
+                    width: 16px;
+                    height: 16px;
+                    margin-top: 3px;
+                    margin-right: 5px;
+                }
+            }
         }
     }
 

@@ -130,6 +130,7 @@
             'cancel'                   => 'Cancel',
             'no-lead'                  => 'No Lead',
             'details'                  => 'Details',
+            'rotten-info'              => 'Lead has been rotten for :days day(s)',
             'stage'                    => 'Stage',
             'new'                      => 'New',
             'won-lost'                 => 'Won/Lost',

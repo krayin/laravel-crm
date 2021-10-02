@@ -1,6 +1,6 @@
 {
     "/js/ui.js": "/js/ui.js?id=cdcd44e5f1e93548ced8",
-    "/css/ui.css": "/css/ui.css?id=a86fe6fd721910983b0e",
+    "/css/ui.css": "/css/ui.css?id=305ba87cbd5ce07c772d",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
@@ -62,5 +62,6 @@
     "/fonts/Roboto-MediumItalic.ttf": "/fonts/Roboto-MediumItalic.ttf?id=cc69ce1bcb64e3479da0",
     "/fonts/Roboto-Regular.ttf": "/fonts/Roboto-Regular.ttf?id=487357337a180effe639",
     "/fonts/Roboto-Thin.ttf": "/fonts/Roboto-Thin.ttf?id=4621c139182c23270ef6",
-    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d"
+    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d",
+    "/images/alert-danger-icon.svg": "/images/alert-danger-icon.svg?id=d77f6a8646ed23b5c3b7"
 }
