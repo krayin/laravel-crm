@@ -1,17 +1,21 @@
 <div class="switch-pipeline-container">
     <div class="form-group">
         @php
-            $pipelineRepository =app('Webkul\Lead\Repositories\PipelineRepository');
+            $pipelineRepository = app('Webkul\Lead\Repositories\PipelineRepository');
 
             if (! $pipelineId = request('pipeline_id')) {
-                $pipelineId = $pipelineRepository->findOneByField('is_default', 1)->id;
+                $pipelineId = $pipelineRepository->getDefaultPipeline()->id;
             }
         @endphp
+
         <select class="control" onchange="window.location.href = this.value">
             @foreach (app('Webkul\Lead\Repositories\PipelineRepository')->all() as $pipeline)
                 @php
                     if ($viewType = request('view_type')) {
-                        $url = route('admin.leads.index', ['pipeline_id' => $pipeline->id, 'view_type' => $viewType]);
+                        $url = route('admin.leads.index', [
+                            'pipeline_id' => $pipeline->id,
+                            'view_type' => $viewType
+                        ]);
                     } else {
                         $url = route('admin.leads.index', ['pipeline_id' => $pipeline->id]);
                     }

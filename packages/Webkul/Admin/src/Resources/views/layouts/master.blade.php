@@ -40,8 +40,6 @@
         <div id="app">
             <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
-            @include("admin::banner.header")
-
             <flash-wrapper ref='flashes'></flash-wrapper>
 
             {!! view_render_event('admin.layout.nav-top.before') !!}

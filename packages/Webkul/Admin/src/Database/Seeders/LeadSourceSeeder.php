@@ -17,10 +17,10 @@ class LeadSourceSeeder extends Seeder
 
         DB::table('lead_sources')->insert([
             [
-                'id'              => 1,
-                'name'            => 'Email',
-                'created_at'      => $now,
-                'updated_at'      => $now,
+                'id'         => 1,
+                'name'       => 'Email',
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         ]);
     }

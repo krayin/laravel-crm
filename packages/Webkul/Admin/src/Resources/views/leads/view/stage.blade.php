@@ -40,6 +40,31 @@
                         </div>
                     </li>
                 </ul>
+
+                <div class="date-panel">
+                    <span class="pull-left">
+                        <i class="icon calendar-icon"></i>
+                        <label>{{ __('admin::app.leads.created-date:') }}</label>
+                        <span>{{ $lead->created_at->diffForHumans() }}</span>
+                    </span>
+
+                    <span class="pull-right">
+
+                        @if (in_array($lead->stage->code, ['won', 'lost']))
+
+                            <i class="icon calendar-icon"></i>
+                            <label>{{ __('admin::app.leads.closed-date:') }}</label>
+                            <span>{{ $lead->closed_at->diffForHumans() }}</span>
+
+                        @elseif ($lead->expected_close_date)
+
+                             <i class="icon calendar-icon"></i>
+                            <label>{{ __('admin::app.leads.expected-close-date:') }}</label>
+                            <span>{{ $lead->expected_close_date->diffForHumans() }}</span>
+
+                        @endif
+                    </span>
+                </div>
             </div>
 
             <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" data-vv-scope="change-stage-form">

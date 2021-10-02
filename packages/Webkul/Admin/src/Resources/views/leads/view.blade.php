@@ -56,6 +56,13 @@
                 <div class="panel">
                     <div class="panel-header" style="padding-top: 0">
                         {{ __('admin::app.leads.details') }}
+
+                        @if (($days = $lead->rotten_days) > 0)
+                            <span class="lead-rotten-info">
+                                <i class="icon alert-danger-icon"></i>
+                                {{ __('admin::app.leads.rotten-info', ['days' => $days]) }}
+                            </span>
+                        @endif
                     </div>
 
                     <div class="panel-body">
