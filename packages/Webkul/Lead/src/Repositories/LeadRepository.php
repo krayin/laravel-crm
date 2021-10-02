@@ -86,8 +86,19 @@ class LeadRepository extends Repository
     public function getLeads($pipelineId, $term, $createdAtRange)
     {
         return $this
-                ->select('leads.id as id', 'title', 'lead_value', 'lead_pipeline_stages.name as status', 'persons.name as person_name', 'lead_pipeline_stages.id as stage_id')
+                ->select(
+                    'leads.id as id',
+                    'leads.created_at as created_at',
+                    'title',
+                    'lead_value',
+                    'persons.name as person_name',
+                    'lead_pipelines.id as lead_pipeline_id',
+                    'lead_pipeline_stages.name as status',
+                    'lead_pipeline_stages.id as lead_pipeline_stage_id'
+                )
+                ->addSelect(\DB::raw('DATEDIFF(leads.created_at + INTERVAL lead_pipelines.rotten_days DAY, now()) as rotten_days'))
                 ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
+                ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
                 ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
                 ->where("title", 'like', "%$term%")
                 ->where("leads.lead_pipeline_id", $pipelineId)
@@ -212,7 +223,7 @@ class LeadRepository extends Repository
     }
 
     /**
-     * Retreives lead count based on lead stage name
+     * Retrieves lead count based on lead stage name
      *
      * @return number
      */

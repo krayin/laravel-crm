@@ -140,16 +140,8 @@ class Lead extends Model implements LeadContract
             return 0;
         }
 
-        $currentDate = Carbon::now();
-
         $rottenDate = $this->created_at->addDays($this->pipeline->rotten_days);
 
-        if ($rottenDate > $currentDate) {
-            return 0;
-        }
-
-        $days = $rottenDate->diff($currentDate)->days;
-
-        return $days;
+        return $rottenDate->diffInDays(Carbon::now(), false);
     }
 }
