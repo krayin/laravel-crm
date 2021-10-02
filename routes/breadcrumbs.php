@@ -313,6 +313,12 @@ Breadcrumbs::for('settings.tags', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.tags'), route('admin.settings.tags.index'));
 });
 
+// Dashboard > Tags > Edit Tag
+Breadcrumbs::for('settings.tags.edit', function (BreadcrumbTrail $trail, $tag) {
+    $trail->parent('settings.tags');
+    $trail->push(trans('admin::app.settings.tags.edit-title'), route('admin.settings.tags.edit', $tag->id));
+});
+
 
 // Configuration
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
