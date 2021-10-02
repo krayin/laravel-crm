@@ -174,4 +174,23 @@ class TagController extends Controller
 
         return response()->json($results);
     }
+
+    /**
+     * Mass Delete the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massDestroy()
+    {
+        $data = request()->all();
+
+        $this->tagRepository
+            ->whereIn('id', $data['rows'])
+            ->delete();
+
+        return response()->json([
+            'status'    => true,
+            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.tags.title')]),
+        ]);
+    }
 }
