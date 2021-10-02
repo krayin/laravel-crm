@@ -15,7 +15,7 @@ class Person extends Model implements PersonContract
     protected $with = 'organization';
 
     protected $casts = [
-        'emails' => 'array',
+        'emails'          => 'array',
         'contact_numbers' => 'array',
     ];
 

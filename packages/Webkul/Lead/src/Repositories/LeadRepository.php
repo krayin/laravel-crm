@@ -12,6 +12,13 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 class LeadRepository extends Repository
 {
     /**
+     * StageRepository object
+     *
+     * @var \Webkul\Lead\Repositories\StageRepository
+     */
+    protected $stageRepository;
+
+    /**
      * PersonRepository object
      *
      * @var \Webkul\Contact\Repositories\PersonRepository
@@ -35,6 +42,7 @@ class LeadRepository extends Repository
     /**
      * Create a new repository instance.
      *
+     * @param  \Webkul\Lead\Repositories\StageRepository  $stageRepository
      * @param  \Webkul\Contact\Repositories\PersonRepository  $personRepository
      * @param  \Webkul\Lead\Repositories\ProductRepository  $productRepository
      * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
@@ -42,11 +50,14 @@ class LeadRepository extends Repository
      * @return void
      */
     public function __construct(
+        StageRepository $stageRepository,
         PersonRepository $personRepository,
         ProductRepository $productRepository,
         AttributeValueRepository $attributeValueRepository,
         Container $container
     ) {
+        $this->stageRepository = $stageRepository;
+
         $this->personRepository = $personRepository;
 
         $this->productRepository = $productRepository;
@@ -157,8 +168,14 @@ class LeadRepository extends Repository
             ], $data);
         }
 
-        if (isset($data['closed_at']) && ! $data['closed_at']) {
-            $data['closed_at'] = Carbon::now();
+        if (isset($data['lead_pipeline_stage_id'])) {
+            $stage = $this->stageRepository->find($data['lead_pipeline_stage_id']);
+
+            if (in_array($stage->code, ['won', 'lost'])) {
+                $data['closed_at'] = $data['closed_at'] ?? Carbon::now();
+            } else {
+                $data['closed_at'] = null;
+            }
         }
 
         $lead = parent::update($data, $id);

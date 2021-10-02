@@ -80,6 +80,7 @@ class LeadDataGrid extends DataGrid
                 'leads.title',
                 'leads.status',
                 'leads.lead_value',
+                'leads.expected_close_date',
                 'leads.created_at',
                 'users.id as user_id',
                 'users.name as user_name',
@@ -189,6 +190,21 @@ class LeadDataGrid extends DataGrid
                 }
 
                 return "<span class='badge badge-round badge-{$badge}'></span>" . $row->stage;
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'expected_close_date',
+            'label'      => trans('admin::app.datagrid.expected_close_date'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
+                if (! $row->expected_close_date) {
+                    return '--';
+                }
+
+                return core()->formatDate($row->expected_close_date);
             },
         ]);
 

@@ -16,6 +16,11 @@ class Lead extends Model implements LeadContract
 {
     use CustomAttribute;
 
+    protected $casts = [
+        'closed_at'           => 'datetime',
+        'expected_close_date' => 'date',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *

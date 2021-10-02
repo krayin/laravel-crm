@@ -1944,6 +1944,39 @@ body {
             }
         }
     }
+
+    .date-panel {
+        margin-top: 5px;
+        font-size: $font-size-sm;
+        display: inline-block;
+        width: 100%;
+
+        .pull-left {
+            float: left;
+        }
+
+        .pull-right {
+            float: right;
+        }
+
+        .pull-left,
+        .pull-right {
+            .icon {
+                width: 18px;
+                height: 18px;
+                vertical-align: middle;
+            }
+
+            label {
+                color: $secondary-font-color;
+                font-weight: $font-weight-medium;
+            }
+
+            span {
+                color: $font-color;
+            }
+        }
+    }
 }
 
 .switch-pipeline-container {
