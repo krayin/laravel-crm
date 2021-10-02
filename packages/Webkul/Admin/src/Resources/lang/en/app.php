@@ -627,6 +627,7 @@
             'tags' => [
                 'title'          => 'Tags',
                 'create-title'   => 'Create Tag',
+                'edit-title'     => 'Edit Tag',
                 'cancel'         => 'Cancel',
                 'save-btn-title' => 'Save as Tag',
                 'name'           => 'Name',

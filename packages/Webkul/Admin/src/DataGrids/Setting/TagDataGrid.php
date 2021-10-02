@@ -121,6 +121,13 @@ class TagDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
+            'title'  => trans('ui::app.datagrid.edit'),
+            'method' => 'GET',
+            'route'  => 'admin.settings.tags.edit',
+            'icon'   => 'pencil-icon',
+        ]);
+
+        $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.tags.delete',

@@ -384,6 +384,10 @@ Route::group(['middleware' => ['web']], function () {
 
                     Route::post('create', 'TagController@store')->name('admin.settings.tags.store');
 
+                    Route::get('edit/{id?}', 'TagController@edit')->name('admin.settings.tags.edit');
+
+                    Route::put('edit/{id}', 'TagController@update')->name('admin.settings.tags.update');
+
                     Route::get('search', 'TagController@search')->name('admin.settings.tags.search');
 
                     Route::delete('{id}', 'TagController@destroy')->name('admin.settings.tags.delete');

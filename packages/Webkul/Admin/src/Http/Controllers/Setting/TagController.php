@@ -86,6 +86,48 @@ class TagController extends Controller
     }
 
     /**
+     * Show the form for editing the specified tag.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $tag = $this->tagRepository->findOrFail($id);
+
+        return view('admin::settings.tags.edit', compact('tag'));
+    }
+
+    /**
+     * Update the specified tag in storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update($id)
+    {
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:tags,name,' . $id,
+        ]);
+
+        if ($validator->fails()) {
+            session()->flash('error', $validator->errors()->first('name'));
+
+            return redirect()->back();
+        }
+        
+        Event::dispatch('settings.tag.update.before', $id);
+
+        $tag = $this->tagRepository->update(request()->all(), $id);
+
+        Event::dispatch('settings.tag.update.after', $tag);
+
+        session()->flash('success', trans('admin::app.settings.tags.update-success'));
+
+        return redirect()->route('admin.settings.tags.index');
+    }
+
+    /**
      * Remove the specified type from storage.
      *
      * @param  int  $id
