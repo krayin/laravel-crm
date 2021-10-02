@@ -69,7 +69,7 @@ class AttributeDataGrid extends DataGrid
             );
 
         $this->addFilter('id', 'attributes.id');
-        $this->addFilter('type', 'entity_type');
+        $this->addFilter('type', 'attributes.type');
 
         $this->setQueryBuilder($queryBuilder);
     }
