@@ -82,22 +82,26 @@
                                 </span>
                             </div>
 
-                            <div class="form-group">
-                                <label>
-                                    {{ __('admin::app.settings.pipelines.is-default') }}
-                                </label>
+                            @if ($pipeline->is_default)
+                                <input type="hidden" name="is_default" value="1"/>
+                            @else
+                                <div class="form-group">
+                                    <label>
+                                        {{ __('admin::app.settings.pipelines.is-default') }}
+                                    </label>
 
-                                <label class="switch">
-                                    <input
-                                        type="checkbox"
-                                        name="is_default"
-                                        class="control"
-                                        id="is_default"
-                                        {{ $pipeline->is_default ? 'checked disabled' : '' }}
-                                    />
-                                    <span class="slider round"></span>
-                                </label>
-                            </div>
+                                    <label class="switch">
+                                        <input
+                                            type="checkbox"
+                                            name="is_default"
+                                            class="control"
+                                            id="is_default"
+                                            {{ $pipeline->is_default ? 'checked disabled' : '' }}
+                                        />
+                                        <span class="slider round"></span>
+                                    </label>
+                                </div>
+                            @endif
 
                             <stages-component></stages-component>
 
