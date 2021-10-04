@@ -104,7 +104,9 @@ class ActivityDataGrid extends DataGrid
             'searchable'       => false,
             'sortable'         => true,
             'closure'          => function ($row) {
-                return $row->created_by;
+                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
+
+                return "<a href='" . $route . "'>" . $row->created_by . "</a>";
             },
         ]);
 
