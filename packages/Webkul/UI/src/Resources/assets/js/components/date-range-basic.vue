@@ -1,5 +1,5 @@
 <template>
-    <div :id="`dateRange${dateRangeKey}`">
+    <div :id="`dateRange${dateRangeKey}`" class="form-group date">
         <div class="date-container">
             <input
                 ref="startDate"

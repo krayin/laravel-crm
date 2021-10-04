@@ -175,31 +175,12 @@
                         @click="$store.state.customTabFilter = false"
                     ></i>
 
-                    <div class="form-group date">
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                v-model="custom_filter[0]"
-                                :placeholder="
-                                    __('ui.datagrid.filter.start_date')
-                                "
-                            />
-                        </date>
-
-                        <span class="middle-text">{{
-                            __("ui.datagrid.filter.to")
-                        }}</span>
-
-                        <date>
-                            <input
-                                type="text"
-                                class="control half"
-                                v-model="custom_filter[1]"
-                                :placeholder="__('ui.datagrid.filter.end_date')"
-                            />
-                        </date>
-                    </div>
+                    <date-range-basic
+                        date-range-key="duration"
+                        :start-date="custom_filter[0]"
+                        :end-date="custom_filter[1]"
+                        @onChange="changeDateRange($event)"
+                    ></date-range-basic>
 
                     <button
                         type="button"
@@ -281,7 +262,7 @@ export default {
             custom_filter: [null, null],
 
             url: new URL(window.location.href),
-            
+
             ignoreDisplayFilter: ["duration", "view_type"]
         };
     },
@@ -365,7 +346,10 @@ export default {
         });
 
         EventBus.$on("updateFilter", data => {
-            if (this.customTabFilters.includes(data.key) && data.value == "custom") {
+            if (
+                this.customTabFilters.includes(data.key) &&
+                data.value == "custom"
+            ) {
                 setTimeout(() => {
                     $(".custom-design-container").toggle();
                 });
@@ -724,16 +708,16 @@ export default {
 
         onSubmit: function(event) {
             if (! this.massActionValue.action) {
-                alert('Please select an action to perform.')
+                alert("Please select an action to perform.");
 
                 return;
             }
 
             this.toggleButtonDisable(true);
 
-            if (! confirm('Do you really want to perform this action?')) {
+            if (! confirm("Do you really want to perform this action?")) {
                 this.toggleButtonDisable(false);
-                
+
                 return;
             }
 
@@ -772,6 +756,10 @@ export default {
                     EventBus.$emit("onFormError");
                 }
             });
+        },
+
+        changeDateRange: function(event) {
+            this.custom_filter = event;
         },
 
         applyCustomFilter: function() {
