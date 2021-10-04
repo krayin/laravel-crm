@@ -247,7 +247,7 @@ class ActivityDataGrid extends DataGrid
                     'key'       => 'this_week',
                 ], [
                     'name'      => 'admin::app.datagrid.filters.this-month',
-                    'isActive'  => true,
+                    'isActive'  => false,
                     'key'       => 'this_month',
                 ], [
                     'name'      => 'admin::app.datagrid.filters.custom',
