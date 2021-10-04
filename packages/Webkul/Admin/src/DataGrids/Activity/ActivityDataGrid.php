@@ -9,7 +9,7 @@ use Webkul\User\Repositories\UserRepository;
 class ActivityDataGrid extends DataGrid
 {
     /**
-     * UserRepository object
+     * User repository instance.
      *
      * @var \Webkul\User\Repositories\UserRepository
      */
@@ -49,7 +49,6 @@ class ActivityDataGrid extends DataGrid
             ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
             ->whereIn('type', ['call', 'meeting', 'lunch']);
-
 
         $currentUser = auth()->guard('user')->user();
 
@@ -98,12 +97,15 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'created_by',
+            'index'            => 'created_by_id',
             'label'            => trans('admin::app.datagrid.created_by'),
             'type'             => 'dropdown',
             'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
             'searchable'       => false,
             'sortable'         => true,
+            'closure'          => function ($row) {
+                return $row->created_by;
+            },
         ]);
 
         $this->addColumn([
@@ -138,31 +140,19 @@ class ActivityDataGrid extends DataGrid
             'dropdown_options' => [
                 [
                     'value' => 0,
-                    'label' => __("admin::app.common.no"),
+                    'label' => __('admin::app.common.no'),
                 ], [
                     'value' => 1,
-                    'label' => __("admin::app.common.yes"),
+                    'label' => __('admin::app.common.yes'),
                 ]
             ],
             'searchable'         => false,
             'closure'            => function ($row) {
                 if ($row->is_done) {
-                    return '<span class="badge badge-round badge-success"></span>' . __("admin::app.common.yes");
+                    return '<span class="badge badge-round badge-success"></span>' . __('admin::app.common.yes');
                 } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . __("admin::app.common.no");
+                    return '<span class="badge badge-round badge-danger"></span>' . __('admin::app.common.no');
                 }
-            },
-        ]);
-
-        $this->addColumn([
-            'index'      => 'created_by',
-            'label'      => trans('admin::app.datagrid.created_by'),
-            'type'       => 'string',
-            'searchable' => false,
-            'closure'    => function ($row) {
-                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
-
-                return "<a href='" . $route . "'>" . $row->created_by . "</a>";
             },
         ]);
 
