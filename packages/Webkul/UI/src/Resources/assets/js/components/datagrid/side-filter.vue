@@ -47,6 +47,7 @@
                         v-else-if="data.filterable && data.type == 'date_range'"
                     >
                         <date-range-basic
+                            :date-range-key="key"
                             :start-date="data.values[0]"
                             :end-date="data.values[1]"
                             @onChange="changeDateRange(key, $event)"
@@ -168,7 +169,7 @@ export default {
             filterData: state => state.filterData,
 
             tableData: state => state.tableData,
-            
+
             sidebarFilter: state => state.sidebarFilter
         })
     },
@@ -241,6 +242,10 @@ export default {
 
             let values = (this.columns || this.tableData.columns)[key].values;
             values = "";
+
+            if (type === 'date_range') {
+                $(`#dateRange${key}`).find($(".flatpickr-input")).val('');
+            }
 
             this.updateFilterValues({
                 key,

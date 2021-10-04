@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div :id="`dateRange${dateRangeKey}`">
         <div class="date-container">
             <input
                 ref="startDate"
@@ -26,7 +26,7 @@
 import Flatpickr from "flatpickr";
 
 export default {
-    props: ["startDate", "endDate"],
+    props: ["dateRangeKey", "startDate", "endDate"],
 
     data: function() {
         return {
