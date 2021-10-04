@@ -104,7 +104,7 @@
                 <pagination-component
                     tab-view="true"
                     :per-page="perPage"
-                    v-if="!tableData.tabFilters.length > 0"
+                    v-if="! tableData.tabFilters.length > 0"
                 ></pagination-component>
 
                 <slot name="extra-filters"></slot>
@@ -175,14 +175,12 @@
                         @click="$store.state.customTabFilter = false"
                     ></i>
 
-                    <div class="form-group date">
-                        <date-range-basic
-                            date-range-key="duration"
-                            :start-date="custom_filter[0]"
-                            :end-date="custom_filter[1]"
-                            @onChange="changeDateRange($event)"
-                        ></date-range-basic>
-                    </div>
+                    <date-range-basic
+                        date-range-key="duration"
+                        :start-date="custom_filter[0]"
+                        :end-date="custom_filter[1]"
+                        @onChange="changeDateRange($event)"
+                    ></date-range-basic>
 
                     <button
                         type="button"
@@ -341,7 +339,7 @@ export default {
                     $(event.target).parents(".flatpickr-calendar").length ||
                     $(event.target).parents(".custom-design-container")
                         .length) &&
-                !$(event.target).attr("data-close-container")
+                ! $(event.target).attr("data-close-container")
             ) {
                 event.stopPropagation();
             }
@@ -700,7 +698,7 @@ export default {
                     }
                 });
 
-                if (!applied) {
+                if (! applied) {
                     this.tableData.tabFilters[index].values[
                         defaultSelectrdIndex[index]
                     ].isActive = true;
@@ -709,7 +707,7 @@ export default {
         },
 
         onSubmit: function(event) {
-            if (!this.massActionValue.action) {
+            if (! this.massActionValue.action) {
                 alert("Please select an action to perform.");
 
                 return;
@@ -717,7 +715,7 @@ export default {
 
             this.toggleButtonDisable(true);
 
-            if (!confirm("Do you really want to perform this action?")) {
+            if (! confirm("Do you really want to perform this action?")) {
                 this.toggleButtonDisable(false);
 
                 return;
@@ -760,7 +758,7 @@ export default {
             });
         },
 
-        changeDateRange: function (event) {
+        changeDateRange: function(event) {
             this.custom_filter = event;
         },
 
