@@ -294,7 +294,7 @@ export default {
             if (duration) {
                 duration = duration.val.split(",");
 
-                var timestamp = Date.parse(duration[0]);
+                let timestamp = Date.parse(duration[0]);
 
                 if (isNaN(timestamp) == false) {
                     this.custom_filter = duration;
@@ -380,7 +380,7 @@ export default {
         },
 
         setParamsAndUrl: function() {
-            var params = new URL(window.location.href).search;
+            let params = new URL(window.location.href).search;
 
             if (params.slice(1, params.length).length > 0) {
                 this.arrayFromUrl();
@@ -390,7 +390,7 @@ export default {
         },
 
         formURL: function(column, condition, response, label) {
-            var obj = {};
+            let obj = {};
 
             if (
                 column === "" ||
@@ -497,7 +497,7 @@ export default {
         },
 
         makeURL: function() {
-            var newParams = "";
+            let newParams = "";
 
             for (let i = 0; i < this.filters.length; i++) {
                 if (
@@ -585,7 +585,7 @@ export default {
                 }
 
                 if (obj.cond == "bw") {
-                    var timestamp = Date.parse(obj.val.split(",")[0]);
+                    let timestamp = Date.parse(obj.val.split(",")[0]);
 
                     if (isNaN(timestamp) == false) {
                         obj.prettyValue = `${obj.val.replaceAll(",", " - ")}`;
@@ -638,7 +638,7 @@ export default {
                         data.val
                     }`;
                 } else if (data.cond == "bw") {
-                    var timestamp = Date.parse(data.val.split(",")[0]);
+                    let timestamp = Date.parse(data.val.split(",")[0]);
 
                     if (isNaN(timestamp) == false) {
                         data.prettyValue = `${data.val.replaceAll(",", " - ")}`;
@@ -654,7 +654,7 @@ export default {
         },
 
         setActiveTabs: function() {
-            var defaultSelectrdIndex = [];
+            let defaultSelectrdIndex = [];
 
             for (const index in this.tableData.tabFilters) {
                 for (const tabValueIndex in this.tableData.tabFilters[index]
@@ -673,7 +673,7 @@ export default {
             }
 
             for (const index in this.tableData.tabFilters) {
-                var applied = false;
+                let applied = false;
 
                 this.filters.forEach(filter => {
                     if (filter.column == this.tableData.tabFilters[index].key) {
@@ -764,7 +764,7 @@ export default {
 
         applyCustomFilter: function() {
             if (this.custom_filter[0] && this.custom_filter[1]) {
-                var data = {
+                let data = {
                     cond: "bw",
                     key: "duration",
                     value: `${this.custom_filter[0]},${this.custom_filter[1]}`
@@ -795,7 +795,21 @@ export default {
         },
 
         updateFilterValue: function() {
-            this.filters = this.filters.map(filter => {
+            let allFilter = this.filters.filter(filter => filter.val === "all");
+
+            if (allFilter.length > 0) {
+                this.filters = this.generateNewFilters(allFilter);
+            } else {
+                let otherFilters = this.filters.filter(
+                    filter => filter.val !== "all"
+                );
+
+                this.filters = this.generateNewFilters(otherFilters);
+            }
+        },
+
+        generateNewFilters: function(filters) {
+            return filters.map(filter => {
                 let column = this.$store.state.tableData.columns.find(
                     column => column.index == filter.column
                 );
