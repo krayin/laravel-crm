@@ -798,17 +798,17 @@ export default {
             let allFilter = this.filters.filter(filter => filter.val === "all");
 
             if (allFilter.length > 0) {
-                this.filters = this.generateNewFilter(allFilter);
+                this.filters = this.generateNewFilters(allFilter);
             } else {
                 let otherFilters = this.filters.filter(
                     filter => filter.val !== "all"
                 );
 
-                this.filters = this.generateNewFilter(otherFilters);
+                this.filters = this.generateNewFilters(otherFilters);
             }
         },
 
-        generateNewFilter: function(filters) {
+        generateNewFilters: function(filters) {
             return filters.map(filter => {
                 let column = this.$store.state.tableData.columns.find(
                     column => column.index == filter.column
