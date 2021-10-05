@@ -13,21 +13,21 @@ use Webkul\Lead\Repositories\StageRepository;
 class LeadController extends Controller
 {
     /**
-     * LeadRepository object
+     * Lead repository instance.
      *
      * @var \Webkul\Lead\Repositories\LeadRepository
      */
     protected $leadRepository;
 
     /**
-     * PipelineRepository object
+     * Pipeline repository instance.
      *
      * @var \Webkul\Lead\Repositories\PipelineRepository
      */
     protected $pipelineRepository;
 
     /**
-     * StageRepository object
+     * Stage repository instance.
      *
      * @var \Webkul\Lead\Repositories\StageRepository
      */
@@ -69,14 +69,16 @@ class LeadController extends Controller
             } else {
                 $createdAt = request('created_at') ?? null;
 
-                if ($createdAt) {
+                if ($createdAt && isset($createdAt["bw"])) {
                     $createdAt = explode(",", $createdAt["bw"]);
-        
+
                     $createdAt[0] .= ' 00:01';
-                    
+
                     $createdAt[1] = $createdAt[1]
                         ? $createdAt[1] . ' 23:59'
                         : Carbon::now()->format('Y-m-d 23:59');
+                } else {
+                    $createdAt = null;
                 }
 
                 if (request('pipeline_id')) {
@@ -84,17 +86,17 @@ class LeadController extends Controller
                 } else {
                     $pipeline = $this->pipelineRepository->getDefaultPipeline();
                 }
-        
+
                 $leads = $this->leadRepository->getLeads($pipeline->id, request('search') ?? '', $createdAt)->toArray();
-        
+
                 $totalCount = [];
-        
+
                 foreach ($leads as $key => $lead) {
                     $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
-        
+
                     $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
                 }
-        
+
                 $totalCount = array_map(function ($count) {
                     return core()->formatBasePrice($count);
                 }, $totalCount);
@@ -147,7 +149,7 @@ class LeadController extends Controller
 
         $lead = $this->leadRepository->create($data);
 
-        $user = $this->leadRepository->getUserByLeadId($lead->id);
+        $this->leadRepository->getUserByLeadId($lead->id);
 
         Event::dispatch('lead.create.after', $lead);
 
@@ -217,7 +219,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Search person results
+     * Search person results.
      *
      * @return \Illuminate\Http\Response
      */
@@ -251,7 +253,7 @@ class LeadController extends Controller
                 'status'  => true,
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'status'  => false,
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.leads.lead')]),
