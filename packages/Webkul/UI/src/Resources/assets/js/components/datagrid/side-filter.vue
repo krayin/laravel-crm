@@ -220,17 +220,34 @@ export default {
         },
 
         removeAll: function() {
-            this.$store.state.filters = this.$store.state.filters.filter(
-                filter => filter.column == "view_type" && filter.val == "table"
-            );
+            /* for default tables cases */
+            if (this.$store.state.filters.length !== undefined) {
+                this.$store.state.filters = this.$store.state.filters.filter(
+                    filter => filter.column == "view_type" && filter.val == "table"
+                );
 
-            (this.columns || this.tableData.columns).forEach(
-                (column, index) => {
-                    if (column.type && column.type == "date_range") {
-                        $(".flatpickr-input").val();
+                (this.columns || this.tableData.columns).forEach(
+                    (column, index) => {
+                        if (column.type && column.type == "date_range") {
+                            $(".flatpickr-input").val('');
+                        }
                     }
-                }
-            );
+                );
+            } else {
+                /**
+                 * For kanban case.
+                 *
+                 * To Do (@devansh-webkul): This needs to be supported by
+                 * all types present in the kanban columns. Currently added
+                 * for `created_at`.
+                 */
+                $(".flatpickr-input").val('');
+
+                this.updateFilterValues({
+                    key: 'created_at',
+                    values: ['', '']
+                });
+            }
 
             this.$forceUpdate();
         },
