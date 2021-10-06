@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class AttributeSeeder extends Seeder
 {
-
     public function run()
     {
         DB::table('attributes')->delete();
@@ -61,7 +60,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '4',
                 'code'            => 'lead_source_id',
                 'name'            => 'Source',
@@ -76,7 +75,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '5',
                 'code'            => 'lead_type_id',
                 'name'            => 'Type',
@@ -91,7 +90,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '6',
                 'code'            => 'user_id',
                 'name'            => 'Sales Owner',
@@ -106,7 +105,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '7',
                 'code'            => 'expected_close_date',
                 'name'            => 'Expected Close Date',
@@ -121,7 +120,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '9',
                 'code'            => 'name',
                 'name'            => 'Name',
@@ -136,7 +135,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '10',
                 'code'            => 'emails',
                 'name'            => 'Emails',
@@ -151,7 +150,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '11',
                 'code'            => 'contact_numbers',
                 'name'            => 'Contact Numbers',
@@ -166,7 +165,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '12',
                 'code'            => 'organization_id',
                 'name'            => 'Organization',
@@ -181,7 +180,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '13',
                 'code'            => 'name',
                 'name'            => 'Name',
@@ -196,7 +195,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '14',
                 'code'            => 'address',
                 'name'            => 'Address',
@@ -211,7 +210,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '15',
                 'code'            => 'name',
                 'name'            => 'Name',
@@ -226,7 +225,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '16',
                 'code'            => 'description',
                 'name'            => 'Description',
@@ -241,7 +240,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '17',
                 'code'            => 'sku',
                 'name'            => 'SKU',
@@ -256,7 +255,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '18',
                 'code'            => 'quantity',
                 'name'            => 'Quantity',
@@ -271,7 +270,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '19',
                 'code'            => 'price',
                 'name'            => 'Price',
@@ -286,7 +285,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '20',
                 'code'            => 'user_id',
                 'name'            => 'Sales Owner',
@@ -301,7 +300,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '21',
                 'code'            => 'subject',
                 'name'            => 'Subject',
@@ -316,7 +315,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '22',
                 'code'            => 'description',
                 'name'            => 'Description',
@@ -331,7 +330,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '23',
                 'code'            => 'billing_address',
                 'name'            => 'Billing Address',
@@ -346,7 +345,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '24',
                 'code'            => 'shipping_address',
                 'name'            => 'Shipping Address',
@@ -361,7 +360,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '25',
                 'code'            => 'discount_percent',
                 'name'            => 'Discount Percent',
@@ -376,7 +375,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '26',
                 'code'            => 'discount_amount',
                 'name'            => 'Discount Amount',
@@ -391,7 +390,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '27',
                 'code'            => 'tax_amount',
                 'name'            => 'Tax Amount',
@@ -406,7 +405,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '28',
                 'code'            => 'adjustment_amount',
                 'name'            => 'Adjustment Amount',
@@ -421,7 +420,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '29',
                 'code'            => 'sub_total',
                 'name'            => 'Sub Total',
@@ -436,7 +435,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '30',
                 'code'            => 'grand_total',
                 'name'            => 'Grand Total',
@@ -451,7 +450,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '31',
                 'code'            => 'expired_at',
                 'name'            => 'Expired At',
@@ -466,7 +465,7 @@ class AttributeSeeder extends Seeder
                 'is_user_defined' => '0',
                 'created_at'      => $now,
                 'updated_at'      => $now,
-            
+            ], [
                 'id'              => '32',
                 'code'            => 'person_id',
                 'name'            => 'Person',
