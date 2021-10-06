@@ -1,7 +1,12 @@
 <template>
     <div class="attachment-item" v-show="show">
         <span>
-            <input type="file" :name="inputName" @change="attachmentSelected($event)" ref="attachment" />
+            <input
+                type="file"
+                :name="inputName"
+                @change="attachmentSelected($event)"
+                ref="attachment"
+            />
 
             {{ name }}
 
@@ -11,49 +16,67 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            attachment: {
-                type: Object,
+export default {
+    props: {
+        attachment: {
+            type: Object,
 
-                required: false,
+            required: false,
 
-                default: null
-            },
-
-            inputName: {
-                type: String,
-
-                required: false,
-            },
+            default: null
         },
 
-        data: function() {
-            return {
-                show: false,
+        inputName: {
+            type: String,
 
-                name: ''
+            required: false
+        }
+    },
+
+    data: function() {
+        return {
+            show: false,
+
+            name: ""
+        };
+    },
+
+    mounted: function() {
+        this.activate();
+    },
+
+    methods: {
+        activate: function() {
+            if (this.attachment.isNew) {
+                this.openFileBrowser();
+            } else {
+                this.showExistingAttachment();
             }
         },
 
-        mounted: function() {
+        openFileBrowser: function() {
             this.$refs.attachment.click();
         },
 
-        methods: {
-            attachmentSelected: function() {
-                var attachment = this.$refs.attachment;
+        attachmentSelected: function() {
+            let attachment = this.$refs.attachment;
 
-                if (attachment.files && attachment.files[0]) {
-                    this.show = true;
+            if (attachment.files && attachment.files[0]) {
+                this.show = true;
 
-                    this.name = attachment.files[0].name;
-                }
-            },
-
-            removeAttachment () {
-                this.$emit('onRemoveAttachment', this.attachment);
+                this.name = attachment.files[0].name;
             }
+        },
+
+        showExistingAttachment: function() {
+            this.show = true;
+
+            this.name = this.attachment.name;
+        },
+
+        removeAttachment: function() {
+            this.$emit("onRemoveAttachment", this.attachment);
         }
     }
+};
 </script>
