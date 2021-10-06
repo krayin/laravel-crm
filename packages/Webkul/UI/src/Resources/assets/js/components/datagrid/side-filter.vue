@@ -220,18 +220,12 @@ export default {
         },
 
         removeAll: function() {
-            /* for default tables cases */
             if (this.$store.state.filters.length !== undefined) {
+                /**
+                 * For default table case.
+                 */
                 this.$store.state.filters = this.$store.state.filters.filter(
                     filter => filter.column == "view_type" && filter.val == "table"
-                );
-
-                (this.columns || this.tableData.columns).forEach(
-                    (column, index) => {
-                        if (column.type && column.type == "date_range") {
-                            $(".flatpickr-input").val('');
-                        }
-                    }
                 );
             } else {
                 /**
@@ -239,30 +233,25 @@ export default {
                  *
                  * To Do (@devansh-webkul): This needs to be supported by
                  * all types present in the kanban columns. Currently added
-                 * for `created_at`.
+                 * for `created_at` because in `kanban-filter` need to
+                 * do some changes.
                  */
-                $(".flatpickr-input").val('');
-
                 this.updateFilterValues({
                     key: 'created_at',
                     values: ['', '']
                 });
             }
 
+            this.resetAllDateRangePickers();
+
             this.$forceUpdate();
         },
 
         removeFilter: function({ type, key, index }) {
-            if (type == "add" && this.addField[index]) {
-                this.addField[index] = false;
-            }
-
             let values = (this.columns || this.tableData.columns)[key].values;
             values = "";
 
-            if (type === 'date_range') {
-                $(`#dateRange${key}`).find($(".flatpickr-input")).val('');
-            }
+            if (type === 'date_range') this.resetSpecificDateRangePicker(key);
 
             this.updateFilterValues({
                 key,
@@ -270,16 +259,6 @@ export default {
             });
 
             this.$forceUpdate();
-        },
-
-        changeDateRange: function(key, event) {
-            setTimeout(() => {
-                this.updateFilterValues({
-                    key,
-                    values: event,
-                    condition: "bw"
-                });
-            }, 0);
         },
 
         getFilteredValue: function(value, data) {
@@ -294,6 +273,46 @@ export default {
             }
 
             return value;
+        },
+
+        changeDateRange: function(key, event) {
+            setTimeout(() => {
+                this.updateFilterValues({
+                    key,
+                    values: event,
+                    condition: "bw"
+                });
+            }, 0);
+        },
+
+        resetAllDateRangePickers: function () {
+            let allDatePickers = document.querySelectorAll('.flatpickr-input');
+
+            allDatePickers.forEach((datePicker) => {
+                let fp = datePicker._flatpickr;
+
+                fp.set('minDate', '');
+
+                fp.set('maxDate', '');
+            });
+
+            $(allDatePickers).val('');
+        },
+
+        resetSpecificDateRangePicker: function(key) {
+            let specificRangeDiv = document.querySelector(`#dateRange${key}`);
+
+            let datePickers = specificRangeDiv.querySelectorAll('.flatpickr-input');
+
+            datePickers.forEach((datePicker) => {
+                let fp = datePicker._flatpickr;
+
+                fp.set('minDate', '');
+
+                fp.set('maxDate', '');
+            });
+
+            $(datePickers).val('');
         }
     }
 };
