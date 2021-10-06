@@ -1,8 +1,8 @@
 <template>
     <div class="attachment-wrapper">
         <attachment-item
-            v-for='attachment in attachments'
-            :key='attachment.id'
+            v-for="attachment in attachments"
+            :key="attachment.id"
             :attachment="attachment"
             :input-name="inputName"
             @onRemoveAttachment="removeAttachment($event)"
@@ -16,56 +16,60 @@
 </template>
 
 <script>
-    export default {
-        props: {
-            data: {
-                type: Array|String,
+export default {
+    props: {
+        data: {
+            type: Array | String,
 
-                required: false,
+            required: false,
 
-                default: () => ([])
-            },
-
-            inputName: {
-                type: String,
-
-                required: false,
-
-                default: 'attachments[]'
-            }
+            default: () => []
         },
 
-        data: function() {
-            return {
-                attachmentCount: 0,
-                
-                attachments: []
-            }
-        },
+        inputName: {
+            type: String,
 
-        created () {
-            var self = this;
+            required: false,
 
-            this.data.forEach(function(attachment) {
-                self.attachments.push(attachment)
+            default: "attachments[]"
+        }
+    },
 
-                self.attachmentCount++;
+    data: function() {
+        return {
+            attachmentCount: 0,
+
+            attachments: []
+        };
+    },
+
+    created() {
+        let self = this;
+
+        this.data.forEach(function(attachment) {
+            attachment.isNew = false;
+
+            self.attachments.push(attachment);
+
+            self.attachmentCount++;
+        });
+    },
+
+    methods: {
+        addAttachment() {
+            this.attachmentCount++;
+
+            this.attachments.push({
+                id: "attachment_" + this.attachmentCount,
+                isNew: true
             });
         },
 
-        methods: {
-            addAttachment () {
-                this.attachmentCount++;
+        removeAttachment(attachment) {
+            let index = this.attachments.indexOf(attachment);
 
-                this.attachments.push({'id': 'attachment_' + this.attachmentCount});
-            },
-
-            removeAttachment (attachment) {
-                let index = this.attachments.indexOf(attachment);
-
-                Vue.delete(this.attachments, index);
-            }
+            Vue.delete(this.attachments, index);
         }
-
     }
+};
 </script>
