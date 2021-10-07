@@ -19,7 +19,7 @@ class AttributeDataGrid extends DataGrid
         $this->tabFilters = [
             [
                 'type'      => 'pill',
-                'key'       => 'type',
+                'key'       => 'entity_type',
                 'condition' => 'eq',
                 'values'    => [
                     [
