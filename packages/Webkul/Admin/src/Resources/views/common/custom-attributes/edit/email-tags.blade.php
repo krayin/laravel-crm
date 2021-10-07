@@ -1,12 +1,13 @@
 @once
     @push('scripts')
-    
         <script type="text/x-template" id="email-tags-component-template">
             <div class="tags-control control">
                 <ul class="tags">
                     <li class="tag-choice" v-for="email in emails">
                         <input type="hidden" :name="controlName" :value="email"/>
+
                         @{{ email }}
+
                         <i class="icon close-icon" @click="removeTag(email)"></i>
                     </li>
 
@@ -35,7 +36,6 @@
 
         <script>
             Vue.component('email-tags-component', {
-
                 template: '#email-tags-component-template',
 
                 props: ['controlName', 'controlLabel', 'validations', 'data'],
@@ -52,9 +52,13 @@
 
                 methods: {
                     addTag: function() {
-                        this.emails.push(this.email_term)
+                        let sanitizedEmail = this.email_term.trim();
 
-                        this.email_term = '';
+                        if (sanitizedEmail !== '') {
+                            this.emails.push(sanitizedEmail);
+
+                            this.email_term = '';
+                        }
                     },
 
                     removeTag: function(email) {
@@ -65,6 +69,5 @@
                 }
             });
         </script>
-
     @endpush
 @endonce
