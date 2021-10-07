@@ -58,8 +58,22 @@ class PipelineDataGrid extends DataGrid
         $this->addColumn([
             'index'    => 'is_default',
             'label'    => trans('admin::app.datagrid.is-default'),
-            'type'     => 'boolean',
+            'type'     => 'dropdown',
+            'dropdown_options' => [
+                [
+                    'value' => 0,
+                    'label' => __('admin::app.common.no'),
+                ], [
+                    'value' => 1,
+                    'label' => __('admin::app.common.yes'),
+                ]
+            ],
             'sortable' => false,
+            'closure'  => function ($row) {
+                return (bool) $row->is_default
+                    ? __('admin::app.common.yes')
+                    : __('admin::app.common.no');
+            }
         ]);
     }
 
