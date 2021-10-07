@@ -188,13 +188,14 @@ export default {
         },
 
         pushFieldValue: function(key, { target }, indexKey) {
+            let targetValue = target.value.trim();
+
             this.addField[indexKey] = false;
 
-            const values =
-                (this.columns || this.tableData.columns)[key].values || [];
+            const values = (this.columns || this.tableData.columns)[key].values || [];
 
-            if (values.indexOf(target.value) == -1) {
-                values.push(target.value);
+            if (values.indexOf(targetValue) == -1) {
+                values.push(targetValue);
 
                 this.updateFilterValues({
                     key: indexKey,
@@ -202,13 +203,12 @@ export default {
                 });
             }
 
-            target.value = "";
-
             this.$forceUpdate();
         },
 
         removeFieldValue: function(key, index, indexKey) {
             const values = (this.columns || this.tableData.columns)[key].values;
+
             values.splice(index, 1);
 
             this.updateFilterValues({
