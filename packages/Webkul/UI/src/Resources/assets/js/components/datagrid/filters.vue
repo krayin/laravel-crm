@@ -654,7 +654,7 @@ export default {
         },
 
         setActiveTabs: function() {
-            let defaultSelectrdIndex = [];
+            let defaultSelectedIndex = [];
 
             for (const index in this.tableData.tabFilters) {
                 for (const tabValueIndex in this.tableData.tabFilters[index]
@@ -663,7 +663,7 @@ export default {
                         this.tableData.tabFilters[index].values[tabValueIndex]
                             .isActive
                     ) {
-                        defaultSelectrdIndex[index] = tabValueIndex;
+                        defaultSelectedIndex[index] = tabValueIndex;
                     }
 
                     this.tableData.tabFilters[index].values[
@@ -700,7 +700,7 @@ export default {
 
                 if (! applied) {
                     this.tableData.tabFilters[index].values[
-                        defaultSelectrdIndex[index]
+                        defaultSelectedIndex[index]
                     ].isActive = true;
                 }
             }
