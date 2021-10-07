@@ -374,8 +374,10 @@ export default {
         searchCollection: function(searchValue) {
             clearTimeout(this.debounce["search"]);
 
+            let sanitizedSearchValue =  searchValue.trim();
+
             this.debounce["search"] = setTimeout(() => {
-                this.formURL("search", "all", searchValue, "Search");
+                this.formURL("search", "all", sanitizedSearchValue, "Search");
             }, 1000);
         },
 
