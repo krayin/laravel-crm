@@ -18,7 +18,7 @@ trait ProvideTabFilters
      *
      * @var array
      */
-    protected $customTabFilters = ['type', 'duration', 'scheduled'];
+    protected $customTabFilters = ['type', 'entity_type', 'duration', 'scheduled'];
 
     /**
      * Prepare tab filters. Optional method.
