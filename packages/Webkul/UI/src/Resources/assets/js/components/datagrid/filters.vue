@@ -376,9 +376,11 @@ export default {
 
             let sanitizedSearchValue =  searchValue.trim();
 
-            this.debounce["search"] = setTimeout(() => {
-                this.formURL("search", "all", sanitizedSearchValue, "Search");
-            }, 1000);
+            if (sanitizedSearchValue != '') {
+                this.debounce["search"] = setTimeout(() => {
+                    this.formURL("search", "all", sanitizedSearchValue, "Search");
+                }, 1000);
+            }
         },
 
         setParamsAndUrl: function() {
