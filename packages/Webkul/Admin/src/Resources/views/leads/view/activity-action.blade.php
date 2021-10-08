@@ -64,7 +64,7 @@
                         <input type="hidden" name="lead_id" value="{{ $lead->id }}">
 
                         @csrf()
-            
+
                         <div class="form-group" :class="[errors.has('activity-form.title') ? 'has-error' : '']">
                             <label for="comment" class="required">{{ __('admin::app.leads.title-control') }}</label>
 
@@ -89,7 +89,7 @@
                                 v-validate="'required'"
                                 data-vv-as="&quot;{{ __('admin::app.leads.type') }}&quot;"
                             >
-                                <option value=""></option>
+                                <option value="" disabled selected>Select Type</option>
                                 <option value="call">{{ __('admin::app.leads.call') }}</option>
                                 <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
                                 <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
@@ -280,7 +280,7 @@
                             @{{ errors.first('email-form.bcc[]') }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group" :class="[errors.has('email-form.subject') ? 'has-error' : '']">
                         <label for="subject" class="required">{{ __('admin::app.leads.subject') }}</label>
 
@@ -297,7 +297,7 @@
                             @{{ errors.first('email-form.subject') }}
                         </span>
                     </div>
-                    
+
                     <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
                         <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
 
@@ -400,7 +400,7 @@
         Vue.component('activity-action-component', {
 
             template: '#activity-action-component-template',
-    
+
             props: ['data'],
 
             inject: ['$validator'],
@@ -466,7 +466,7 @@
 
                             ['users', 'persons'].forEach(function(userType) {
                                 self.participants[userType].forEach(function(addedUser) {
-                                    
+
                                     response.data[userType].forEach(function(user, index) {
                                         if (user.id == addedUser.id) {
                                             response.data[userType].splice(index, 1);
