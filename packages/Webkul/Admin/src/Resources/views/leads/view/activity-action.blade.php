@@ -89,7 +89,7 @@
                                 v-validate="'required'"
                                 data-vv-as="&quot;{{ __('admin::app.leads.type') }}&quot;"
                             >
-                                <option value="" disabled selected>Select Type</option>
+                                <option value="" disabled selected>{{ __('admin::app.leads.select-type') }}</option>
                                 <option value="call">{{ __('admin::app.leads.call') }}</option>
                                 <option value="meeting">{{ __('admin::app.leads.meeting') }}</option>
                                 <option value="lunch">{{ __('admin::app.leads.lunch') }}</option>
