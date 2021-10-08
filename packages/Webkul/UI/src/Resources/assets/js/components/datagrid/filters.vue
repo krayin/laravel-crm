@@ -797,9 +797,12 @@ export default {
         },
 
         updateFilterValue: function() {
-            let allFilter = this.filters.filter(filter => filter.val === "all");
+            let allFilter = this.filters.filter(filter => filter.val == 'table' || filter.val === "all");
 
-            if (allFilter.length > 0) {
+            /**
+             * Only two elements are possible here first is `table` and second is `all`.
+             */
+            if (allFilter.length === 2) {
                 this.filters = this.generateNewFilters(allFilter);
             } else {
                 let otherFilters = this.filters.filter(
