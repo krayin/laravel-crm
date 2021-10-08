@@ -188,6 +188,7 @@
             'send'                     => 'Send',
             'all'                      => 'All',
             'notes'                    => 'Notes',
+            'select-type'              => 'Select Type',
             'calls'                    => 'Calls',
             'meetings'                 => 'Meetings',
             'lunches'                  => 'Lunches',
