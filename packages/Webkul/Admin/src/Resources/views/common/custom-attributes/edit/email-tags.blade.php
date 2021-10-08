@@ -54,7 +54,7 @@
                     addTag: function() {
                         let sanitizedEmail = this.email_term.trim();
 
-                        if (sanitizedEmail !== '') {
+                        if (this.validateEmail(sanitizedEmail)) {
                             this.emails.push(sanitizedEmail);
 
                             this.email_term = '';
@@ -65,6 +65,12 @@
                         const index = this.emails.indexOf(email);
 
                         Vue.delete(this.emails, index);
+                    },
+
+                    validateEmail: function (email) {
+                        const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+                        return re.test(String(email).toLowerCase());
                     }
                 }
             });
