@@ -30,6 +30,7 @@ const SELECT_ALL_ROWS = (state, payload) => {
         });
     } else {
         state.selectedTableRows = [];
+        state.allSelected = false;
     }
 };
 
