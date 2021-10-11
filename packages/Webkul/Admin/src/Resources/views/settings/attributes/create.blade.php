@@ -172,7 +172,7 @@
                 <div class="form-group">
                     <label>{{ __('admin::app.settings.attributes.options-type') }}</label>
 
-                    <select class="control" name="option_type" v-model="optionType">
+                    <select class="control" name="option_type" v-model="optionType" @change="toggleInputValidation">
                         <option value="lookup">
                             {{ __('admin::app.settings.attributes.lookup') }}
                         </option>
@@ -296,6 +296,14 @@
 
                     Vue.delete(this.optionRows, index);
                 },
+
+                toggleInputValidation: function () {
+                    if (this.optionType === 'options') {
+                        $('#validation').prop('disabled', true);
+                    } else {
+                        $('#validation').prop('disabled', false);
+                    }
+                }
             },
         });
     </script>
