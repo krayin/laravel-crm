@@ -68,7 +68,7 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => 'Select Users',
+                'label'    => __('admin::app.common.select-users'),
                 'value'    => '',
                 'disabled' => true,
                 'selected' => true,
@@ -97,7 +97,7 @@ trait ProvideDropdownOptions
 
         return [
             [
-                'label'    => 'Select Organizations',
+                'label'    => __('admin::app.common.select-organization'),
                 'value'    => '',
                 'disabled' => true,
                 'selected' => true,
