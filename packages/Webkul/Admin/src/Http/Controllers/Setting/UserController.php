@@ -190,10 +190,12 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->userRepository->count() == 1) {
+        if ($this->userRepository->count() == 1 || ($isTargetCurrentUser = (auth()->guard('user')->user()->id == $id))) {
             $status = false;
             $responseCode = 400;
-            $message = trans('admin::app.settings.users.last-delete-error');
+            $messageKey = ($isTargetCurrentUser ?? false) ? "current-user-error" : "last-delete-error";
+
+            $message = trans("admin::app.settings.users.$messageKey");
         } else {
             Event::dispatch('settings.user.delete.before', $id);
 
