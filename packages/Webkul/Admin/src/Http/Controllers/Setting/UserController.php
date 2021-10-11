@@ -257,7 +257,7 @@ class UserController extends Controller
 
         $currentUserId = auth()->guard('user')->user()->id;
 
-        if ($index = array_search($currentUserId, $data['rows'])) {
+        if (($index = array_search($currentUserId, $data['rows'])) !== false) {
             unset($data['rows'][$index]);
         }
 
