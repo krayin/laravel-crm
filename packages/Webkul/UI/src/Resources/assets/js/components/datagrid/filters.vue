@@ -374,7 +374,7 @@ export default {
         searchCollection: function(searchValue) {
             clearTimeout(this.debounce["search"]);
 
-            let sanitizedSearchValue =  searchValue.trim();
+            let sanitizedSearchValue = searchValue.trim();
 
             this.debounce["search"] = setTimeout(() => {
                 this.formURL("search", "all", sanitizedSearchValue, "Search");
@@ -797,12 +797,18 @@ export default {
         },
 
         updateFilterValue: function() {
-            let allFilter = this.filters.filter(filter => filter.val == 'table' || filter.val === "all");
+            let allFilter = this.filters.filter(filter => filter.val === "all");
 
-            /**
-             * Only two elements are possible here first is `table` and second is `all`.
-             */
-            if (allFilter.length === 2) {
+            if (allFilter.length > 0) {
+                let viewType =
+                    this.filters.find(
+                        filter => filter.column === "view_type"
+                    ) ?? false;
+
+                if (viewType) {
+                    allFilter.push(viewType);
+                }
+
                 this.filters = this.generateNewFilters(allFilter);
             } else {
                 let otherFilters = this.filters.filter(
