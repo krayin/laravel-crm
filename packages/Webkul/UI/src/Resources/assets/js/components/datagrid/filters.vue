@@ -710,14 +710,14 @@ export default {
 
         onSubmit: function(event) {
             if (! this.massActionValue.action) {
-                alert("Please select an action to perform.");
+                alert(this.__("ui.datagrid.mandatory_mass_action"));
 
                 return;
             }
 
             this.toggleButtonDisable(true);
 
-            if (! confirm("Do you really want to perform this action?")) {
+            if (! confirm(this.__("ui.datagrid.massaction.delete"))) {
                 this.toggleButtonDisable(false);
 
                 return;
