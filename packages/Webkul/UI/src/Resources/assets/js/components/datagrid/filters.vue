@@ -263,7 +263,7 @@ export default {
 
             url: new URL(window.location.href),
 
-            ignoreDisplayFilter: ["duration", "view_type"]
+            ignoreDisplayFilter: ["view_type"]
         };
     },
 
