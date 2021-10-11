@@ -3,10 +3,13 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 
 class PipelineDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * Prepare query builder.
      *
@@ -59,15 +62,7 @@ class PipelineDataGrid extends DataGrid
             'index'    => 'is_default',
             'label'    => trans('admin::app.datagrid.is-default'),
             'type'     => 'dropdown',
-            'dropdown_options' => [
-                [
-                    'value' => 0,
-                    'label' => __('admin::app.common.no'),
-                ], [
-                    'value' => 1,
-                    'label' => __('admin::app.common.yes'),
-                ]
-            ],
+            'dropdown_options' => $this->getBooleanDropdownOptions(),
             'sortable' => false,
             'closure'  => function ($row) {
                 return (bool) $row->is_default

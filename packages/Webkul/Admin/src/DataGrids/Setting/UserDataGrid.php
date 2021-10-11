@@ -3,10 +3,13 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 
 class UserDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * Prepare query builder.
      *
@@ -60,15 +63,7 @@ class UserDataGrid extends DataGrid
             'index'              => 'status',
             'label'              => trans('admin::app.datagrid.status'),
             'type'               => 'dropdown',
-            'dropdown_options' => [
-                [
-                    'label' => trans('admin::app.datagrid.active'),
-                    'value' => 1,
-                ], [
-                    'label' => trans('admin::app.datagrid.inactive'),
-                    'value' => 0,
-                ],
-            ],
+            'dropdown_options' => $this->getBooleanDropdownOptions('active_inactive'),
             'searchable'         => false,
             'closure'            => function ($row) {
                 if ($row->status == 1) {

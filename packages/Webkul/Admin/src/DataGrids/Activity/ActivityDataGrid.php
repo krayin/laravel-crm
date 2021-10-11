@@ -3,11 +3,14 @@
 namespace Webkul\Admin\DataGrids\Activity;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * User repository instance.
      *
@@ -100,7 +103,7 @@ class ActivityDataGrid extends DataGrid
             'index'            => 'created_by_id',
             'label'            => trans('admin::app.datagrid.created_by'),
             'type'             => 'dropdown',
-            'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options' => $this->getUserDropdownOptions(),
             'searchable'       => false,
             'sortable'         => true,
             'closure'          => function ($row) {
@@ -139,15 +142,7 @@ class ActivityDataGrid extends DataGrid
             'index'              => 'is_done',
             'label'              => trans('admin::app.datagrid.is_done'),
             'type'               => 'dropdown',
-            'dropdown_options' => [
-                [
-                    'value' => 0,
-                    'label' => __('admin::app.common.no'),
-                ], [
-                    'value' => 1,
-                    'label' => __('admin::app.common.yes'),
-                ]
-            ],
+            'dropdown_options'   => $this->getBooleanDropdownOptions(),
             'searchable'         => false,
             'closure'            => function ($row) {
                 if ($row->is_done) {

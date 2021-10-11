@@ -3,20 +3,23 @@
 namespace Webkul\Admin\DataGrids\Quote;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class QuoteDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
-     * UserRepository object
+     * User repository instance.
      *
      * @var \Webkul\User\Repositories\UserRepository
      */
     protected $userRepository;
 
     /**
-     * Create data grid instance.
+     * Create datagrid instance.
      *
      * @param \Webkul\User\Repositories\UserRepository  $userRepository
      * @return void
@@ -89,7 +92,7 @@ class QuoteDataGrid extends DataGrid
             'index'              => 'user_name',
             'label'              => trans('admin::app.datagrid.sales-person'),
             'type'               => 'dropdown',
-            'dropdown_options'   => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options'   => $this->getUserDropdownOptions(),
             'sortable'           => true,
             'closure'            => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
