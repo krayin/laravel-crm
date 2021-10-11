@@ -61,14 +61,12 @@
                             class="control"
                             @change="pushFieldValue(key, $event, data.index)"
                         >
-                            <option value="" disabled selected>
-                                {{ data.label }}
-                            </option>
-
                             <option
                                 :value="option.value"
                                 :key="index"
                                 v-for="(option, index) in data.dropdown_options"
+                                :selected="option.selected"
+                                :disabled="option.disabled"
                             >
                                 {{ option.label }}
                             </option>

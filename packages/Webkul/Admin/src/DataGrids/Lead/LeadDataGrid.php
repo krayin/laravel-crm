@@ -3,36 +3,39 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
+use Webkul\UI\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
-     * PipelineRepository object
+     * Pipeline repository instance.
      *
      * @var \Webkul\Lead\Repositories\PipelineRepository
      */
     protected $pipelineRepository;
 
     /**
-     * Pipeline object
+     * Pipeline instance.
      *
      * @var \Webkul\Contract\Repositories\Pipeline
      */
     protected $pipeline;
 
     /**
-     * StageRepository object
+     * Stage repository instance.
      *
      * @var \Webkul\Lead\Repositories\StageRepository
      */
     protected $stageRepository;
 
     /**
-     * UserRepository object
+     * User repository instance.
      *
      * @var \Webkul\User\Repositories\UserRepository
      */
@@ -50,8 +53,7 @@ class LeadDataGrid extends DataGrid
         PipelineRepository $pipelineRepository,
         StageRepository $stageRepository,
         UserRepository $userRepository
-    )
-    {
+    ) {
         $this->pipelineRepository = $pipelineRepository;
 
         if (request('pipeline_id')) {
@@ -139,7 +141,7 @@ class LeadDataGrid extends DataGrid
             'index'            => 'user_name',
             'label'            => trans('admin::app.datagrid.user'),
             'type'             => 'dropdown',
-            'dropdown_options' => $this->userRepository->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options' => $this->getUserDropdownOptions(),
             'searchable'       => false,
             'sortable'         => true,
         ]);

@@ -2,11 +2,14 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
+use Webkul\UI\DataGrid\DataGrid;
 
 class PersonDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * Prepare query builder.
      *
@@ -84,7 +87,7 @@ class PersonDataGrid extends DataGrid
             'index'              => 'organization',
             'label'              => trans('admin::app.datagrid.organization_name'),
             'type'               => 'dropdown',
-            'dropdown_options'   => app(\Webkul\Contact\Repositories\OrganizationRepository::class)->get(['id as value', 'name as label'])->toArray(),
+            'dropdown_options'   => $this->getOrganizationDropdownOptions(),
             'sortable'           => false,
         ]);
     }

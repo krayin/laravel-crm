@@ -3,10 +3,13 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 
 class RoleDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * Prepare query builder.
      *
@@ -59,15 +62,7 @@ class RoleDataGrid extends DataGrid
             'index'            => 'permission_type',
             'label'            => trans('admin::app.datagrid.permission_type'),
             'type'             => 'dropdown',
-            'dropdown_options' => [
-                [
-                    'label' => trans('admin::app.settings.roles.all'),
-                    'value' => 'all',
-                ], [
-                    'label' => trans('admin::app.settings.roles.custom'),
-                    'value' => 'custom',
-                ],
-            ],
+            'dropdown_options' => $this->getRoleDropdownOptions(),
             'sortable'         => false,
         ]);
     }
