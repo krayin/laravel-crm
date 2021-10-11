@@ -22,6 +22,12 @@ class Bouncer
             return redirect()->route('admin.session.create');
         }
 
+        if (! (bool) auth()->guard($guard)->user()->status) {
+            auth()->guard($guard)->logout();
+
+            return redirect()->route('admin.session.create');
+        }
+
         $this->checkIfAuthorized($request);
 
         return $next($request);
