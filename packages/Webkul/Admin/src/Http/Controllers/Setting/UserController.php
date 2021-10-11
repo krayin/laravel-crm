@@ -194,8 +194,6 @@ class UserController extends Controller
             $status = false;
             $responseCode = 400;
             $message = trans('admin::app.settings.users.last-delete-error');
-
-            session()->flash('error', $message);
         } else {
             Event::dispatch('settings.user.delete.before', $id);
 
@@ -206,15 +204,11 @@ class UserController extends Controller
                 $responseCode = 200;
                 $message = trans('admin::app.settings.users.delete-success');
 
-                session()->flash('success', $message);
-
                 Event::dispatch('settings.user.delete.after', $id);
             } catch (\Exception $exception) {
                 $status = false;
                 $responseCode = 400;
                 $message = $exception->getMessage();
-
-                session()->flash('error', trans('admin::app.settings.users.delete-failed'));
             }
         }
 
