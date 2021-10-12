@@ -49,7 +49,7 @@
 
                             {!! view_render_event('admin.quotes.create.form_buttons.after') !!}
                         </div>
-        
+
                         <div class="panel-body">
                             {!! view_render_event('admin.quotes.create.form_controls.before') !!}
 
@@ -190,7 +190,7 @@
                                 {{ __('admin::app.quotes.total') }}
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </th>
-                            
+
                             <th class="actions"></th>
                         </tr>
                     </thead>
@@ -211,7 +211,7 @@
 
                 <a class="add-more-link" href @click.prevent="addProduct">+ {{ __('admin::app.common.add_more') }}</a>
             </div>
-            
+
             <div class="quote-summary">
                 <table>
                     <tr>
@@ -343,7 +343,7 @@
                         :name="[inputName + '[quantity]']"
                         class="control"
                         v-model="product.quantity"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.quantity') }}&quot;"
                     />
 
@@ -510,7 +510,7 @@
                         'discount_amount': null,
                         'tax_amount': null,
                     })
-                }, 
+                },
 
                 removeProduct: function(product) {
                     if (this.products.length == 1) {
@@ -577,11 +577,11 @@
                     }
 
                     var self = this;
-                    
+
                     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
                         .then (function(response) {
                             self.$parent.products.forEach(function(addedProduct) {
-                                
+
                                 response.data.forEach(function(product, index) {
                                     if (product.id == addedProduct.product_id) {
                                         response.data.splice(index, 1);
