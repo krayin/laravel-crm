@@ -9,7 +9,7 @@ use Webkul\Core\Eloquent\Repository;
 class PipelineRepository extends Repository
 {
     /**
-     * StageRepository object
+     * Stage repository instance.
      *
      * @var \Webkul\Lead\Repositories\StageRepository
      */
@@ -25,15 +25,14 @@ class PipelineRepository extends Repository
     public function __construct(
         StageRepository $stageRepository,
         Container $container
-    )
-    {
+    ) {
         $this->stageRepository = $stageRepository;
 
         parent::__construct($container);
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
@@ -43,12 +42,16 @@ class PipelineRepository extends Repository
     }
 
     /**
+     * Create pipeline.
+     *
      * @param  array  $data
      * @return \Webkul\Lead\Contracts\Pipeline
      */
     public function create(array $data)
     {
-        $this->model->query()->update(['is_default' => 0]);
+        if ($data['is_default'] ?? false) {
+            $this->model->query()->update(['is_default' => 0]);
+        }
 
         $pipeline = $this->model->create($data);
 
@@ -62,8 +65,10 @@ class PipelineRepository extends Repository
     }
 
     /**
+     * Update pipeline.
+     *
      * @param  array  $data
-     * @param  int $id
+     * @param  int  $id
      * @param  string  $pipeline
      * @return \Webkul\Lead\Contracts\Pipeline
      */
@@ -99,8 +104,8 @@ class PipelineRepository extends Repository
     }
 
     /**
-     * Return the default pipeline
-     * 
+     * Return the default pipeline.
+     *
      * @return \Webkul\Lead\Contracts\Pipeline
      */
     public function getDefaultPipeline()
