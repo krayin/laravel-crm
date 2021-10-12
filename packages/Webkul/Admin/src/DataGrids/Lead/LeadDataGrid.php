@@ -139,7 +139,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'            => 'user_name',
-            'label'            => trans('admin::app.datagrid.user'),
+            'label'            => trans('admin::app.datagrid.sales-person'),
             'type'             => 'dropdown',
             'dropdown_options' => $this->getUserDropdownOptions(),
             'searchable'       => false,
