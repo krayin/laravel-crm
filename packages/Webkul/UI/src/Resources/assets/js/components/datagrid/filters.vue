@@ -794,6 +794,24 @@ export default {
                         this.perPage = "10";
                     }
 
+                    if (this.filters[index].column == "duration") {
+                        let key = "duration";
+
+                        let specificRangeDiv = document.querySelector(`#dateRange${key}`);
+
+                        let datePickers = specificRangeDiv.querySelectorAll('.flatpickr-input');
+
+                        datePickers.forEach((datePicker) => {
+                            let fp = datePicker._flatpickr;
+
+                            fp.set('minDate', '');
+
+                            fp.set('maxDate', '');
+                        });
+
+                        $(datePickers).val('');
+                    }
+
                     this.filters.splice(index, 1);
 
                     this.makeURL();
