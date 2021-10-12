@@ -756,6 +756,7 @@
             'edit'            => 'Edit',
             'view'            => 'View',
             'delete'          => 'Delete',
+            'mass-delete'     => 'Mass Delete',
         ],
 
         'common' => [

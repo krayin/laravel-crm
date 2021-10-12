@@ -751,6 +751,11 @@ export default {
                         })
                         .catch(error => {
                             this.toggleButtonDisable(false);
+
+                            this.addFlashMessages({
+                                type: "error",
+                                message: error.response.data.message
+                            });
                         });
                 } else {
                     this.toggleButtonDisable(false);
