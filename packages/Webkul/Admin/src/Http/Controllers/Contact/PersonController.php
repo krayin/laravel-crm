@@ -10,16 +10,16 @@ use Webkul\Contact\Repositories\PersonRepository;
 class PersonController extends Controller
 {
     /**
-     * PersonRepository object
+     * Person repository instance.
      *
-     * @var \Webkul\Product\Repositories\PersonRepository
+     * @var \Webkul\Contact\Repositories\PersonRepository
      */
     protected $personRepository;
 
     /**
      * Create a new controller instance.
      *
-     * @param \Webkul\Product\Repositories\PersonRepository  $personRepository
+     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      *
      * @return void
      */
@@ -64,7 +64,7 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create(request()->all());
+        $person = $this->personRepository->create($this->sanitizeRequestedPersonData());
 
         Event::dispatch('contacts.person.create.after', $person);
 
@@ -97,7 +97,7 @@ class PersonController extends Controller
     {
         Event::dispatch('contacts.person.update.before');
 
-        $person = $this->personRepository->update(request()->all(), $id);
+        $person = $this->personRepository->update($this->sanitizeRequestedPersonData(), $id);
 
         Event::dispatch('contacts.person.update.after', $person);
 
@@ -107,7 +107,7 @@ class PersonController extends Controller
     }
 
     /**
-     * Search person results
+     * Search person results.
      *
      * @return \Illuminate\Http\Response
      */
@@ -141,7 +141,7 @@ class PersonController extends Controller
                 'status'    => true,
                 'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.person')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'status'    => false,
                 'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.persons.person')]),
@@ -164,5 +164,21 @@ class PersonController extends Controller
             'status'    => true,
             'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')])
         ]);
+    }
+
+    /**
+     * Sanitize requested person data and return the clean array.
+     *
+     * @return array
+     */
+    private function sanitizeRequestedPersonData(): array
+    {
+        $data = request()->all();
+
+        $data['contact_numbers'] = collect($data['contact_numbers'])->filter(function ($number) {
+            return !is_null($number['value']);
+        })->toArray();
+
+        return $data;
     }
 }
