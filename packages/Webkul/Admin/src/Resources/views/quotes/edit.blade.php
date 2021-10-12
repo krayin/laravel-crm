@@ -268,7 +268,14 @@
 
                         <td>
                             <div class="form-group">
-                                <input type="text" name="adjustment_amount" class="control" v-model="adjustmentAmount">
+                                <input
+                                    type="text"
+                                    name="adjustment_amount"
+                                    class="control"
+                                    v-model="adjustmentAmount"
+                                    v-validate="'decimal:4'"
+                                    data-vv-as="&quot;{{ __('admin::app.quotes.adjustment') }}&quot;"
+                                    @keyup="validateAmount">
                             </div>
                         </td>
                     </tr>
@@ -344,7 +351,7 @@
                         :name="[inputName + '[quantity]']"
                         class="control"
                         v-model="product.quantity"
-                        v-validate="'required|numeric'"
+                        v-validate="'required|decimal:4'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.quantity') }}&quot;"
                     />
 
@@ -361,7 +368,7 @@
                         :name="[inputName + '[price]']"
                         class="control"
                         v-model="product.price"
-                        v-validate="'required'"
+                        v-validate="'required|decimal:4'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.price') }}&quot;"
                     />
 
@@ -390,7 +397,7 @@
                         :name="[inputName + '[discount_amount]']"
                         class="control"
                         v-model="product.discount_amount"
-                        v-validate="'required'"
+                        v-validate="'required|decimal:4'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.discount') }}&quot;"
                     />
 
@@ -407,7 +414,7 @@
                         :name="[inputName + '[tax_amount]']"
                         class="control"
                         v-model="product.tax_amount"
-                        v-validate="'required'"
+                        v-validate="'required|decimal:4'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.tax') }}&quot;"
                     />
 
@@ -530,6 +537,10 @@
 
                         Vue.delete(this.products, index);
                     }
+                },
+
+                validateAmount: function () {
+                    this.adjustmentAmount = this.adjustmentAmount.replace(/[^0-9.]/g, '');
                 }
             }
         });
