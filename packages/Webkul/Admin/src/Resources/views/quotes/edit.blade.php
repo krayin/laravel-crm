@@ -361,7 +361,7 @@
                         :name="[inputName + '[price]']"
                         class="control"
                         v-model="product.price"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.price') }}&quot;"
                     />
 
@@ -390,7 +390,7 @@
                         :name="[inputName + '[discount_amount]']"
                         class="control"
                         v-model="product.discount_amount"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.discount') }}&quot;"
                     />
 
@@ -407,7 +407,7 @@
                         :name="[inputName + '[tax_amount]']"
                         class="control"
                         v-model="product.tax_amount"
-                        v-validate="'required'"
+                        v-validate="'required|numeric'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.tax') }}&quot;"
                     />
 
