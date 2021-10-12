@@ -62,12 +62,6 @@ trait ProvideQueryStringParser
      */
     private function updateQueryStrings($parsedQueryStrings)
     {
-        if (isset($parsedQueryStrings['grand_total'])) {
-            foreach ($parsedQueryStrings['grand_total'] as $key => $value) {
-                $parsedQueryStrings['grand_total'][$key] = str_replace(',', '.', $parsedQueryStrings['grand_total'][$key]);
-            }
-        }
-
         foreach ($parsedQueryStrings as $key => $value) {
             if (in_array($key, ['locale'])) {
                 if (! is_array($value)) {
