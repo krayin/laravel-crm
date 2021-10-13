@@ -15,22 +15,7 @@ class PipelineForm extends FormRequest
      */
     public function __construct(ValidationFactory $validationFactory)
     {
-        $validationFactory->extend(
-            'unique_key',
-            function ($attribute, $value, $parameters) {
-                $key = last(explode('.', $attribute));
-
-                $stages = collect(request()->get('stages'))->filter(function ($stage) use ($key, $value) {
-                    return $stage[$key] === $value;
-                });
-
-                if ($stages->count() > 1) {
-                    return false;
-                }
-
-                return true;
-            }
-        );
+        $this->validatorExtensions($validationFactory);
     }
 
     /**
@@ -50,10 +35,57 @@ class PipelineForm extends FormRequest
      */
     public function rules()
     {
+        if (request('id')) {
+            return [
+                'name' => 'required',
+                'stages.*.name' => 'unique_key',
+                'stages.*.code' => 'unique_key',
+            ];
+        }
+
         return [
-            'name' => 'required',
+            'name'        => 'required',
+            'rotten_days' => 'required',
             'stages.*.name' => 'unique_key',
             'stages.*.code' => 'unique_key',
         ];
+    }
+
+    /**
+     * Get the error messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'stages.*.name.unique_key' => __('admin::app.settings.pipelines.duplicate-name'),
+        ];
+    }
+
+    /**
+     * Place all your validator extensions here.
+     *
+     * @param  \Illuminate\Validation\Factory  $validationFactory
+     * @return void
+     */
+    public function validatorExtensions(ValidationFactory $validationFactory)
+    {
+        $validationFactory->extend(
+            'unique_key',
+            function ($attribute, $value, $parameters) {
+                $key = last(explode('.', $attribute));
+
+                $stages = collect(request()->get('stages'))->filter(function ($stage) use ($key, $value) {
+                    return $stage[$key] === $value;
+                });
+
+                if ($stages->count() > 1) {
+                    return false;
+                }
+
+                return true;
+            }
+        );
     }
 }

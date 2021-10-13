@@ -56,20 +56,17 @@ class PipelineController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(PipelineForm $request)
     {
-        $this->validate(request(), [
-            'name'        => 'required',
-            'rotten_days' => 'required',
-        ]);
+        $request->validated();
 
-        request()->merge([
+        $request->merge([
             'is_default' => request()->has('is_default') ? 1 : 0,
         ]);
 
         Event::dispatch('settings.pipeline.create.before');
 
-        $pipeline = $this->pipelineRepository->create(request()->all());
+        $pipeline = $this->pipelineRepository->create($request->all());
 
         Event::dispatch('settings.pipeline.create.after', $pipeline);
 
