@@ -26,6 +26,11 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.leads.delete',
         'sort'  => 3,
+    ], [
+        'key'   => 'leads.mass-delete',
+        'name'  => 'admin::app.acl.mass-delete',
+        'route' => 'admin.leads.mass_delete',
+        'sort'  => 4,
     ],  [
         'key'   => 'quotes',
         'name'  => 'admin::app.acl.quotes',
