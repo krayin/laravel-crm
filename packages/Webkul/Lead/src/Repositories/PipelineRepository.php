@@ -76,7 +76,9 @@ class PipelineRepository extends Repository
     {
         $pipeline = $this->find($id);
 
-        $this->model->query()->where('id', '<>', $id)->update(['is_default' => 0]);
+        if ($data['is_default'] ?? false) {
+            $this->model->query()->where('id', '<>', $id)->update(['is_default' => 0]);
+        }
 
         $pipeline->update($data);
 
