@@ -125,7 +125,7 @@ return [
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',
         'route' => 'admin.contacts.organizations.index',
-        'sort'  => 5,
+        'sort'  => 2,
     ], [
         'key'   => 'contacts.organizations.create',
         'name'  => 'admin::app.acl.create',
