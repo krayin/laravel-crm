@@ -26,16 +26,36 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.leads.delete',
         'sort'  => 3,
-    ], [
-        'key'   => 'leads.mass-delete',
-        'name'  => 'admin::app.acl.mass-delete',
-        'route' => 'admin.leads.mass_delete',
+    ],  [
+        'key'   => 'quotes',
+        'name'  => 'admin::app.acl.quotes',
+        'route' => 'admin.quotes.index',
         'sort'  => 3,
+    ], [
+        'key'   => 'quotes.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.quotes.create', 'admin.quotes.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'quotes.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.quotes.edit', 'admin.quotes.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'quotes.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.quotes.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'quotes.mass-delete',
+        'name'  => 'admin::app.acl.mass-delete',
+        'route' => 'admin.quotes.mass_delete',
+        'sort'  => 4,
     ],  [
         'key'   => 'mail',
         'name'  => 'admin::app.acl.mail',
         'route' => 'admin.mail.index',
-        'sort'  => 3,
+        'sort'  => 4,
     ], [
         'key'   => 'mail.view',
         'name'  => 'admin::app.acl.view',
@@ -60,7 +80,7 @@ return [
         'key'   => 'activities',
         'name'  => 'admin::app.acl.activities',
         'route' => 'admin.activities.index',
-        'sort'  => 4,
+        'sort'  => 5,
     ], [
         'key'   => 'activities.create',
         'name'  => 'admin::app.acl.create',
@@ -80,7 +100,7 @@ return [
         'key'   => 'contacts',
         'name'  => 'admin::app.acl.contacts',
         'route' => 'admin.contacts.users.index',
-        'sort'  => 5,
+        'sort'  => 6,
     ],  [
         'key'   => 'contacts.persons',
         'name'  => 'admin::app.acl.persons',
@@ -125,7 +145,7 @@ return [
         'key'   => 'products',
         'name'  => 'admin::app.acl.products',
         'route' => 'admin.products.index',
-        'sort'  => 6,
+        'sort'  => 7,
     ], [
         'key'   => 'products.create',
         'name'  => 'admin::app.acl.create',
@@ -145,7 +165,7 @@ return [
         'key'   => 'settings',
         'name'  => 'admin::app.acl.settings',
         'route' => 'admin.settings.index',
-        'sort'  => 7,
+        'sort'  => 8,
     ], [
         'key'   => 'settings.user',
         'name'  => 'admin::app.acl.user',
