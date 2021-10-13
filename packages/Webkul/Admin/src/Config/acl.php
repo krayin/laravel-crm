@@ -125,7 +125,7 @@ return [
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',
         'route' => 'admin.contacts.organizations.index',
-        'sort'  => 7,
+        'sort'  => 5,
     ], [
         'key'   => 'contacts.organizations.create',
         'name'  => 'admin::app.acl.create',
@@ -145,7 +145,7 @@ return [
         'key'   => 'products',
         'name'  => 'admin::app.acl.products',
         'route' => 'admin.products.index',
-        'sort'  => 8,
+        'sort'  => 7,
     ], [
         'key'   => 'products.create',
         'name'  => 'admin::app.acl.create',
@@ -165,7 +165,7 @@ return [
         'key'   => 'settings',
         'name'  => 'admin::app.acl.settings',
         'route' => 'admin.settings.index',
-        'sort'  => 9,
+        'sort'  => 8,
     ], [
         'key'   => 'settings.user',
         'name'  => 'admin::app.acl.user',
