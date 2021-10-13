@@ -72,8 +72,6 @@ class RoleController extends Controller
             if (! isset($roleData['permissions'])) {
                 $roleData['permissions'] = [];
             }
-
-            array_push($roleData['permissions'], "admin.datagrid.api");
         }
 
         $role = $this->roleRepository->create($roleData);
@@ -121,8 +119,6 @@ class RoleController extends Controller
             if (! isset($roleData['permissions'])) {
                 $roleData['permissions'] = [];
             }
-
-            array_push($roleData['permissions'], "admin.datagrid.api");
         }
 
         $role = $this->roleRepository->update($roleData, $id);
