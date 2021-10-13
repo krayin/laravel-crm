@@ -523,6 +523,7 @@
                 'is-default'           => 'Mark as Default',
                 'probability'          => 'Probability (%)',
                 'add-stage-btn-title'  => 'Add Stage',
+                'duplicate-name'       => 'The "Name" field cannot be duplicate',
                 'create-success'       => 'Pipeline created successfully.',
                 'update-success'       => 'Pipeline updated successfully.',
                 'delete-success'       => 'Pipeline deleted successfully.',

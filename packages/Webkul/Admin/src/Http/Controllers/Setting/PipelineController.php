@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\PipelineForm;
 use Webkul\Lead\Repositories\PipelineRepository;
 
 class PipelineController extends Controller
@@ -96,19 +97,17 @@ class PipelineController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(PipelineForm $request, $id)
     {
-        $this->validate(request(), [
-            'name' => 'required',
-        ]);
+        $request->validated();
 
-        request()->merge([
+        $request->merge([
             'is_default' => request()->has('is_default') ? 1 : 0,
         ]);
 
         Event::dispatch('settings.pipeline.update.before', $id);
 
-        $pipeline = $this->pipelineRepository->update(request()->all(), $id);
+        $pipeline = $this->pipelineRepository->update($request->all(), $id);
 
         Event::dispatch('settings.pipeline.update.after', $pipeline);
 

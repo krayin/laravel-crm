@@ -9,7 +9,6 @@
         {!! view_render_event('admin.settings.pipelines.edit.header.before', ['pipeline' => $pipeline]) !!}
 
         <div class="page-header">
-            
             {{ Breadcrumbs::render('settings.pipelines.edit', $pipeline) }}
 
             <div class="page-title">
@@ -116,9 +115,7 @@
 
 @push('scripts')
     <script type="text/x-template" id="stages-component-template">
-
         <div class="table dragable-container">
-
             <table>
                 <thead class="thead-dark">
                     <tr>
@@ -130,7 +127,6 @@
                 </thead>
 
                 <draggable tag="tbody" :list="stages" draggable=".draggable">
-
                     <tr :key="stage.id" v-for="(stage, index) in stages" v-bind:class="{ draggable: isDragable(stage) }">
                         <td class="dragable-icon">
                             <i class="icon align-justify-icon" v-if="isDragable(stage)"></i>
@@ -152,8 +148,9 @@
                                     v-validate="'required'"
                                     data-vv-as="&quot;{{ __('admin::app.settings.pipelines.name') }}&quot;"
                                     :readonly="! isDragable(stage)"
+                                    @keyup="checkDuplicateNames($event)"
                                 />
-                                
+
                                 <input
                                     type="hidden"
                                     :value="index + 1"
@@ -188,9 +185,7 @@
                             <i class="icon trash-icon" @click="removeStage(stage)" v-if="isDragable(stage)"></i>
                         </td>
                     </tr>
-
                 </draggable>
-
             </table>
 
             <button type="button" class="btn btn-md btn-primary mt-20" @click="addStage">
@@ -248,7 +243,24 @@
                         // avoid having multiple dashes (---- translates into -)
                         .replace('![-\s]+!u', '-')
                         .trim();
-                }
+                },
+
+                checkDuplicateNames: function ({ target }) {
+                    let filteredStages = this.stages.filter((stage) => {
+                        return stage.name == target.value;
+                    });
+
+                    if (filteredStages.length > 1) {
+                        this.errors.add({
+                            field: target.name,
+                            msg: '{!! __('admin::app.settings.pipelines.duplicate-name') !!}',
+                        });
+
+                        this.$root.toggleButtonDisable(true);
+                    } else {
+                        this.$root.toggleButtonDisable(false);
+                    }
+                },
             },
         });
     </script>
