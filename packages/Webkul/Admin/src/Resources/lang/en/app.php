@@ -732,6 +732,7 @@
         'acl' => [
             'leads'           => 'Leads',
             'lead'            => 'Lead',
+            'quotes'          => 'Quotes',
             'mail'            => 'Mail',
             'activities'      => 'Activities',
             'contacts'        => 'Contacts',
