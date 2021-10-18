@@ -39,33 +39,33 @@ class UserDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'           => 'id',
-            'label'           => trans('admin::app.datagrid.id'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.datagrid.id'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'name',
-            'label'           => trans('admin::app.datagrid.name'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'name',
+            'label'    => trans('admin::app.datagrid.name'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'email',
-            'label'           => trans('admin::app.datagrid.email'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'email',
+            'label'    => trans('admin::app.datagrid.email'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'              => 'status',
-            'label'              => trans('admin::app.datagrid.status'),
-            'type'               => 'dropdown',
+            'index'            => 'status',
+            'label'            => trans('admin::app.datagrid.status'),
+            'type'             => 'dropdown',
             'dropdown_options' => $this->getBooleanDropdownOptions('active_inactive'),
-            'searchable'         => false,
-            'closure'            => function ($row) {
+            'searchable'       => false,
+            'closure'          => function ($row) {
                 if ($row->status == 1) {
                     return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {
@@ -75,12 +75,12 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'date_range',
-            'searchable'      => false,
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'      => 'created_at',
+            'label'      => trans('admin::app.datagrid.created_at'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);

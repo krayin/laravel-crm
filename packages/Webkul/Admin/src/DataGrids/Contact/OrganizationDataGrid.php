@@ -55,26 +55,26 @@ class OrganizationDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'             => 'id',
-            'label'             => trans('admin::app.datagrid.id'),
-            'type'              => 'string',
-            'sortable'          => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.datagrid.id'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'             => 'name',
-            'label'             => trans('admin::app.datagrid.name'),
-            'type'              => 'string',
-            'sortable'          => true,
+            'index'    => 'name',
+            'label'    => trans('admin::app.datagrid.name'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'             => 'persons_count',
-            'label'             => trans('admin::app.datagrid.persons_count'),
-            'type'              => 'string',
-            'searchable'        => false,
-            'sortable'          => false,
-            'closure'           => function ($row) {
+            'index'      => 'persons_count',
+            'label'      => trans('admin::app.datagrid.persons_count'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => false,
+            'closure'    => function ($row) {
                 $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
 
                 $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
@@ -84,11 +84,11 @@ class OrganizationDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'             => 'created_at',
-            'label'             => trans('admin::app.datagrid.created_at'),
-            'type'              => 'date_range',
-            'sortable'          => true,
-            'closure'           => function ($row) {
+            'index'    => 'created_at',
+            'label'    => trans('admin::app.datagrid.created_at'),
+            'type'     => 'date_range',
+            'sortable' => true,
+            'closure'  => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);

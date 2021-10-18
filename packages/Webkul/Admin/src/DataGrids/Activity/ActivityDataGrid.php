@@ -94,9 +94,9 @@ class ActivityDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'      => 'title',
-            'label'      => trans('admin::app.datagrid.title'),
-            'type'       => 'string',
+            'index' => 'title',
+            'label' => trans('admin::app.datagrid.title'),
+            'type'  => 'string',
         ]);
 
         $this->addColumn([
@@ -114,9 +114,9 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'comment',
-            'label'      => trans('admin::app.datagrid.comment'),
-            'type'       => 'string',
+            'index' => 'comment',
+            'label' => trans('admin::app.datagrid.comment'),
+            'type'  => 'string',
         ]);
 
         $this->addColumn([
@@ -139,12 +139,12 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'              => 'is_done',
-            'label'              => trans('admin::app.datagrid.is_done'),
-            'type'               => 'dropdown',
-            'dropdown_options'   => $this->getBooleanDropdownOptions(),
-            'searchable'         => false,
-            'closure'            => function ($row) {
+            'index'            => 'is_done',
+            'label'            => trans('admin::app.datagrid.is_done'),
+            'type'             => 'dropdown',
+            'dropdown_options' => $this->getBooleanDropdownOptions(),
+            'searchable'       => false,
+            'closure'          => function ($row) {
                 if ($row->is_done) {
                     return '<span class="badge badge-round badge-success"></span>' . __('admin::app.common.yes');
                 } else {
@@ -154,34 +154,34 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'schedule_from',
-            'label'           => trans('admin::app.datagrid.schedule_from'),
-            'type'            => 'string',
-            'searchable'      => false,
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'      => 'schedule_from',
+            'label'      => trans('admin::app.datagrid.schedule_from'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatDate($row->schedule_from);
             },
         ]);
 
         $this->addColumn([
-            'index'           => 'schedule_to',
-            'label'           => trans('admin::app.datagrid.schedule_to'),
-            'type'            => 'string',
-            'searchable'      => false,
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'      => 'schedule_to',
+            'label'      => trans('admin::app.datagrid.schedule_to'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatDate($row->schedule_to);
             },
         ]);
 
         $this->addColumn([
-            'index'           => 'created_at',
-            'label'           => trans('admin::app.datagrid.created_at'),
-            'type'            => 'date_range',
-            'searchable'      => false,
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'      => 'created_at',
+            'label'      => trans('admin::app.datagrid.created_at'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -200,21 +200,21 @@ class ActivityDataGrid extends DataGrid
             'condition' => 'eq',
             'values'    => [
                 [
-                    'name'      => 'admin::app.leads.all',
-                    'isActive'  => true,
-                    'key'       => 'all',
+                    'name'     => 'admin::app.leads.all',
+                    'isActive' => true,
+                    'key'      => 'all',
                 ], [
-                    'name'      => 'admin::app.leads.call',
-                    'isActive'  => false,
-                    'key'       => 'call',
+                    'name'     => 'admin::app.leads.call',
+                    'isActive' => false,
+                    'key'      => 'call',
                 ], [
-                    'name'      => 'admin::app.leads.meeting',
-                    'isActive'  => false,
-                    'key'       => 'meeting',
+                    'name'     => 'admin::app.leads.meeting',
+                    'isActive' => false,
+                    'key'      => 'meeting',
                 ], [
-                    'name'      => 'admin::app.leads.lunch',
-                    'isActive'  => false,
-                    'key'       => 'lunch',
+                    'name'     => 'admin::app.leads.lunch',
+                    'isActive' => false,
+                    'key'      => 'lunch',
                 ]
             ]
         ]);
@@ -225,29 +225,29 @@ class ActivityDataGrid extends DataGrid
             'condition' => 'eq',
             'values'    => [
                 [
-                    'name'      => 'admin::app.datagrid.filters.yesterday',
-                    'isActive'  => false,
-                    'key'       => 'yesterday',
+                    'name'     => 'admin::app.datagrid.filters.yesterday',
+                    'isActive' => false,
+                    'key'      => 'yesterday',
                 ], [
-                    'name'      => 'admin::app.datagrid.filters.today',
-                    'isActive'  => false,
-                    'key'       => 'today',
+                    'name'     => 'admin::app.datagrid.filters.today',
+                    'isActive' => false,
+                    'key'      => 'today',
                 ], [
-                    'name'      => 'admin::app.datagrid.filters.tomorrow',
-                    'isActive'  => false,
-                    'key'       => 'tomorrow',
+                    'name'     => 'admin::app.datagrid.filters.tomorrow',
+                    'isActive' => false,
+                    'key'      => 'tomorrow',
                 ], [
-                    'name'      => 'admin::app.datagrid.filters.this-week',
-                    'isActive'  => false,
-                    'key'       => 'this_week',
+                    'name'     => 'admin::app.datagrid.filters.this-week',
+                    'isActive' => false,
+                    'key'      => 'this_week',
                 ], [
-                    'name'      => 'admin::app.datagrid.filters.this-month',
-                    'isActive'  => false,
-                    'key'       => 'this_month',
+                    'name'     => 'admin::app.datagrid.filters.this-month',
+                    'isActive' => false,
+                    'key'      => 'this_month',
                 ], [
-                    'name'      => 'admin::app.datagrid.filters.custom',
-                    'isActive'  => false,
-                    'key'       => 'custom',
+                    'name'     => 'admin::app.datagrid.filters.custom',
+                    'isActive' => false,
+                    'key'      => 'custom',
                 ]
             ]
         ]);
