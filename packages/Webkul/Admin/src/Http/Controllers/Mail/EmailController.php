@@ -307,13 +307,9 @@ class EmailController extends Controller
         foreach (request('rows') as $emailId) {
             Event::dispatch('email.delete.before', $emailId);
 
-            $email = $this->emailRepository->find($emailId);
+            $this->emailRepository->delete($emailId);
 
-            if ($email) {
-                $this->emailRepository->delete($email);
-
-                Event::dispatch('email.delete.after', $email);
-            }
+            Event::dispatch('email.delete.after', $emailId);
         }
 
         return response()->json([
