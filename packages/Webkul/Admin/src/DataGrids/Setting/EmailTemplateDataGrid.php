@@ -34,24 +34,24 @@ class EmailTemplateDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'           => 'id',
-            'label'           => trans('admin::app.datagrid.id'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.datagrid.id'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'name',
-            'label'           => trans('admin::app.datagrid.name'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'name',
+            'label'    => trans('admin::app.datagrid.name'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'subject',
-            'label'           => trans('admin::app.datagrid.subject'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'subject',
+            'label'    => trans('admin::app.datagrid.subject'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
     }
 

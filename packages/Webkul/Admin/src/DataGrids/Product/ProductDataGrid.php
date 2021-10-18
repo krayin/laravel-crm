@@ -36,34 +36,34 @@ class ProductDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'           => 'sku',
-            'label'           => trans('admin::app.datagrid.sku'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'sku',
+            'label'    => trans('admin::app.datagrid.sku'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'name',
-            'label'           => trans('admin::app.datagrid.name'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'name',
+            'label'    => trans('admin::app.datagrid.name'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'           => 'price',
-            'label'           => trans('admin::app.datagrid.price'),
-            'type'            => 'string',
-            'sortable'        => true,
-            'closure'         => function ($row) {
+            'index'    => 'price',
+            'label'    => trans('admin::app.datagrid.price'),
+            'type'     => 'string',
+            'sortable' => true,
+            'closure'  => function ($row) {
                 return round($row->price, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'      => 'quantity',
-            'label'      => trans('admin::app.datagrid.quantity'),
-            'type'       => 'string',
-            'sortable'   => true,
+            'index'    => 'quantity',
+            'label'    => trans('admin::app.datagrid.quantity'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
     }
 

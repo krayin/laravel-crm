@@ -38,10 +38,10 @@ class PipelineDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
-            'index'           => 'id',
-            'label'           => trans('admin::app.datagrid.id'),
-            'type'            => 'string',
-            'sortable'        => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.datagrid.id'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
@@ -59,12 +59,12 @@ class PipelineDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'is_default',
-            'label'    => trans('admin::app.datagrid.is-default'),
-            'type'     => 'dropdown',
+            'index'            => 'is_default',
+            'label'            => trans('admin::app.datagrid.is-default'),
+            'type'             => 'dropdown',
             'dropdown_options' => $this->getBooleanDropdownOptions(),
-            'sortable' => false,
-            'closure'  => function ($row) {
+            'sortable'         => false,
+            'closure'          => function ($row) {
                 return (bool) $row->is_default
                     ? __('admin::app.common.yes')
                     : __('admin::app.common.no');
