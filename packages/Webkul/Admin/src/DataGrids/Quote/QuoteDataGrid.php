@@ -48,6 +48,7 @@ class QuoteDataGrid extends DataGrid
                 'quotes.tax_amount',
                 'quotes.adjustment_amount',
                 'quotes.grand_total',
+                'quotes.created_at',
                 'users.id as user_id',
                 'users.name as user_name',
                 'persons.id as person_id',
@@ -160,6 +161,17 @@ class QuoteDataGrid extends DataGrid
             'sortable' => true,
             'closure'  => function ($row) {
                 return core()->formatBasePrice($row->grand_total, 2);
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'created_at',
+            'label'      => trans('admin::app.datagrid.created_at'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
+                return core()->formatDate($row->created_at);
             },
         ]);
     }
