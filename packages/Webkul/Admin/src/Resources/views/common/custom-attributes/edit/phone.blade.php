@@ -63,6 +63,14 @@
                     }
                 },
 
+                watch: { 
+                    data: function(newVal, oldVal) {
+                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                            this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
+                        }
+                    }
+                },
+
                 created: function() {
                     if (! this.contactNumbers || ! this.contactNumbers.length) {
                         this.contactNumbers = [{
