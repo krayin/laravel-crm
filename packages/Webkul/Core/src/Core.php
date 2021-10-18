@@ -305,7 +305,7 @@ class Core
      */
     public function formatDate($date)
     {
-        return Carbon::parse($date)->format('d M Y H:i');
+        return Carbon::parse($date)->format('d M Y h:iA');
     }
 
     /**
