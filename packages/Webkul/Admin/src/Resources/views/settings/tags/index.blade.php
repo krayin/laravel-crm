@@ -53,7 +53,7 @@
                 </h1>
             </template>
 
-            @if (bouncer()->hasPermission('settings.other_setting.tags.create'))
+            @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
                 <template v-slot:table-action>
                     <button class="btn btn-md btn-primary" @click="openModal('addTagModal')">{{ __('admin::app.settings.tags.create-title') }}</button>
                 </template>
