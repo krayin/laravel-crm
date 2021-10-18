@@ -154,6 +154,16 @@
                     
                     this.$http.get("{{ route('admin.settings.tags.search') }}", {params: {query: this.term}})
                         .then (function(response) {
+                            self.tags.forEach(function(addedTag) {
+                                
+                                response.data.forEach(function(tag, index) {
+                                    if (tag.id == addedTag.id) {
+                                        response.data.splice(index, 1);
+                                    }
+                                });
+
+                            });
+
                             self.search_results = response.data;
 
                             self.is_searching = false;
