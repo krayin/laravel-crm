@@ -53,8 +53,10 @@ class Menu
         // $adminMenus = array_merge(config('menu.admin'), $configurations);
         $adminMenus = config('menu.admin');
 
+        $acl = app('acl');
+
         foreach ($adminMenus as $index => $item) {
-            if (! bouncer()->hasPermission($item['key'])) {
+            if (! isset($item['route']) || ! bouncer()->hasPermission($acl->roles[$item['route']])) {
                 continue;
             }
 

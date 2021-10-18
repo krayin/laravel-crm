@@ -69,7 +69,7 @@ return [
     ], [
         'key'   => 'mail.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.mail.store',
+        'route' => ['admin.mail.index', 'admin.mail.store'],
         'sort'  => 2,
     ], [
         'key'   => 'mail.edit',
@@ -386,5 +386,10 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.tags.delete',
         'sort'  => 2,
+    ], [
+        'key'   => 'configuration',
+        'name'  => 'admin::app.acl.configuration',
+        'route' => 'admin.configuration.index',
+        'sort'  => 9,
     ]
 ];
