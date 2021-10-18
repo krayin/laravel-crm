@@ -69,7 +69,7 @@ return [
     ], [
         'key'   => 'mail.create',
         'name'  => 'admin::app.acl.create',
-        'route' => 'admin.mail.store',
+        'route' => ['admin.mail.index', 'admin.mail.store'],
         'sort'  => 2,
     ], [
         'key'   => 'mail.edit',
