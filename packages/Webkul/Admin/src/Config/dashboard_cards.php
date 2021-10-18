@@ -6,7 +6,7 @@ return [
         "card_id"       => "leads",
         "sort"          => 1,
         "card_type"     => "bar_chart",
-        "view_url"      => "admin.leads.index",
+        // "view_url"      => "admin.leads.index",
         "label"         => 'admin::app.dashboard.leads_over_time',
         // "class_name"    => "Webkul\Admin\Helpers\DashboardHelper",
         // "method_name"   => "getLeads",
