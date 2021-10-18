@@ -754,6 +754,7 @@
             'workflows'       => 'Workflows',
             'other-settings'  => 'Other Settings',
             'tags'            => 'Tags',
+            'configuration'   => 'Configuration',
             'create'          => 'Create',
             'edit'            => 'Edit',
             'view'            => 'View',

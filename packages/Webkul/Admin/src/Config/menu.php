@@ -107,6 +107,7 @@ return [
     ], [
         'key'        => 'settings.user',
         'name'       => 'admin::app.layouts.user',
+        'route'      => 'admin.settings.groups.index',
         'info'       => 'admin::app.layouts.user-info',
         'sort'       => 1,
     ], [
@@ -134,6 +135,7 @@ return [
         'key'        => 'settings.lead',
         'name'       => 'admin::app.layouts.lead',
         'info'       => 'admin::app.layouts.lead-info',
+        'route'      => 'admin.settings.pipelines.index',
         'sort'       => 2,
     ], [
         'key'        => 'settings.lead.pipelines',
@@ -160,6 +162,7 @@ return [
         'key'        => 'settings.automation',
         'name'       => 'admin::app.layouts.automation',
         'info'       => 'admin::app.layouts.automation-info',
+        'route'      => 'admin.settings.attributes.index',
         'sort'       => 3,
     ], [
         'key'        => 'settings.automation.attributes',
@@ -186,6 +189,7 @@ return [
         'key'        => 'settings.other_settings',
         'name'       => 'admin::app.layouts.other-settings',
         'info'       => 'admin::app.layouts.other-settings-info',
+        'route'      => 'admin.settings.tags.index',
         'sort'       => 4,
         'icon-class' => 'settings-icon',
     ], [

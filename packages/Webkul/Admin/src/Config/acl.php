@@ -386,5 +386,10 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.tags.delete',
         'sort'  => 2,
+    ], [
+        'key'   => 'configuration',
+        'name'  => 'admin::app.acl.configuration',
+        'route' => 'admin.configuration.index',
+        'sort'  => 9,
     ]
 ];

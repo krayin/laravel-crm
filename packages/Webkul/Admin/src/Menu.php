@@ -55,13 +55,8 @@ class Menu
 
         $acl = app('acl');
 
-        dump($adminMenus);
-
         foreach ($adminMenus as $index => $item) {
-            if (isset($item['route'])
-                && isset($acl->roles[$item['route']])
-                && ! bouncer()->hasPermission($acl->roles[$item['route']])
-            ) {
+            if (! isset($item['route']) || ! bouncer()->hasPermission($acl->roles[$item['route']])) {
                 continue;
             }
 
@@ -75,8 +70,6 @@ class Menu
 
             $tree->add($item, 'menu');
         }
-
-        dd($tree->items);
 
         $tree->items = core()->sortItems($tree->items);
 
