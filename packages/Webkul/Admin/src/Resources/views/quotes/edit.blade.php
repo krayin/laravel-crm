@@ -436,7 +436,7 @@
             </td>
 
             <td class="actions">
-                <i class="icon trash-icon" @click="removeProduct"></i>
+                <i class="icon trash-icon" @click="removeProduct" v-if="this.products.length > 1"></i>
             </td>
         </tr>
     </script>
