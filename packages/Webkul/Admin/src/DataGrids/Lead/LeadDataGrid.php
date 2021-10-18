@@ -279,7 +279,7 @@ class LeadDataGrid extends DataGrid
     {
         $stages = [];
 
-        foreach ($this->stageRepository->get(['id', 'name'])->toArray() as $stage) {
+        foreach ($this->pipeline->stages->toArray() as $stage) {
             $stages[$stage['name']] = $stage['id'];
         }
 
