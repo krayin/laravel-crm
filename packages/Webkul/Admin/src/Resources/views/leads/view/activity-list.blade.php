@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.view.informations.activity_list.before', ['lead' => $lead]) !!}
 
-<activity-list-component></activity-list-component>
+<activity-list-component :current-time="{{ json_encode(Carbon\Carbon::now())}}"></activity-list-component>
 
 {!! view_render_event('admin.leads.view.informations.activity_list.after', ['lead' => $lead]) !!}
 
@@ -217,6 +217,16 @@
     
             inject: ['$validator'],
 
+            props: {
+            currentTime: {
+                type: [Array, String, Object],
+                required: false,
+                default: (function() {
+                    return [];
+                })
+            },
+        },
+
             data: function () {
                 return {
                     activities: @json($lead->activities),
@@ -241,6 +251,12 @@
 
                     quotes: @json($lead->quotes()->with(['person', 'user'])->get())
                 }
+            },
+
+            mounted() {
+
+                var currentTime = this.currentTime;
+                
             },
 
             computed: {
@@ -285,16 +301,22 @@
                 markAsDone: function(activity) {
                     var self = this;
 
-                    this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
-                        .then (function(response) {
-                            activity.is_done = 1;
+                    console.log();
 
-                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+                    if (activity.schedule_to >= this.currentTime) {
+                        if(window.confirm("Trying to mark activity as done before scheduled time.")){
+                            this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
+                            .then (function(response) {
+                                activity.is_done = 1;
 
-                            self.$root.addFlashMessages();
-                        })
-                        .catch (function (error) {
-                        })
+                                window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                                self.$root.addFlashMessages();
+                            })
+                            .catch (function (error) {
+                            })
+                        }
+                    }
                 },
 
                 remove: function(activity) {
