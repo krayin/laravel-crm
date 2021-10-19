@@ -135,10 +135,12 @@ class LeadRepository extends Repository
             ]));
         }
 
+        $stage = $this->stageRepository->find($data['lead_pipeline_stage_id']);
+
         $lead = parent::create(array_merge([
-            'person_id'        => $person->id,
-            'lead_pipeline_id' => 1,
-            'lead_pipeline_stage_id'    => $data['lead_pipeline_stage_id'] ?? 1,
+            'person_id'              => $person->id,
+            'lead_pipeline_id'       => 1,
+            'lead_pipeline_stage_id' => 1,
         ], $data));
 
         $this->attributeValueRepository->save($data, $lead->id);
@@ -230,34 +232,18 @@ class LeadRepository extends Repository
     public function getLeadsCount($leadStage, $startDate, $endDate)
     {
         $query = $this
-                ->whereBetween('leads.created_at', [$startDate, $endDate])
-                ->where(function ($query) {
-                    if (($currentUser = auth()->guard('user')->user())->view_permission == "individual") {
-                        $query->where('leads.user_id', $currentUser->id);
-                    }
-                });
+            ->whereBetween('leads.created_at', [$startDate, $endDate])
+            ->where(function ($query) {
+                if (($currentUser = auth()->guard('user')->user())->view_permission == "individual") {
+                    $query->where('leads.user_id', $currentUser->id);
+                }
+            });
 
         if ($leadStage != "all") {
-            $query
-                ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
+            $query->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
                 ->where('lead_pipeline_stages.name', $leadStage);
         }
 
-        return $query
-                ->get()
-                ->count();
-    }
-
-    /**
-     * Retrieves user details by lead id
-     *
-     * @return \Webkul\Lead\Contracts\Lead
-     */
-    public function getUserByLeadId($leadId)
-    {
-        return $this->select('users.id', 'users.email', 'users.name')
-                ->where('leads.id', $leadId)
-                ->leftJoin('users', 'leads.user_id', 'users.id')
-                ->first();
+        return $query->get()->count();
     }
 }

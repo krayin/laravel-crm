@@ -50,8 +50,8 @@
 
                     <span class="pull-right">
 
-                        @if (in_array($lead->stage->code, ['won', 'lost']))
-
+                        @if ($lead->closed_at && in_array($lead->stage->code, ['won', 'lost']))
+                            
                             <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.closed-date:') }}</label>
                             <span>{{ $lead->closed_at->diffForHumans() }}</span>
