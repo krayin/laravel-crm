@@ -182,15 +182,17 @@ class TagController extends Controller
      */
     public function massDestroy()
     {
-        $data = request()->all();
+        foreach (request('rows') as $tagId) {
+            Event::dispatch('settings.tag.delete.before', $tagId);
 
-        $this->tagRepository
-            ->whereIn('id', $data['rows'])
-            ->delete();
+            $this->tagRepository->delete($tagId);
+
+            Event::dispatch('settings.tag.delete.after', $tagId);
+        }
 
         return response()->json([
-            'status'    => true,
-            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.tags.title')]),
+            'status'  => true,
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.tags.title')]),
         ]);
     }
 }

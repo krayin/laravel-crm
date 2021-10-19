@@ -384,7 +384,7 @@ return [
     ], [
         'key'   => 'settings.other_settings.tags.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => 'admin.settings.tags.delete',
+        'route' => ['admin.settings.tags.delete', 'admin.settings.tags.mass_delete'],
         'sort'  => 2,
     ], [
         'key'   => 'configuration',
