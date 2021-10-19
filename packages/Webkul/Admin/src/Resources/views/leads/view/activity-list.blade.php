@@ -218,14 +218,14 @@
             inject: ['$validator'],
 
             props: {
-            currentTime: {
-                type: [Array, String, Object],
-                required: false,
-                default: (function() {
-                    return [];
-                })
+                currentTime: {
+                    type: [Array, String, Object],
+                    required: false,
+                    default: (function() {
+                        return [];
+                    })
+                },
             },
-        },
 
             data: function () {
                 return {
@@ -251,12 +251,6 @@
 
                     quotes: @json($lead->quotes()->with(['person', 'user'])->get())
                 }
-            },
-
-            mounted() {
-
-                var currentTime = this.currentTime;
-                
             },
 
             computed: {
@@ -300,8 +294,6 @@
 
                 markAsDone: function(activity) {
                     var self = this;
-
-                    console.log();
 
                     if (activity.schedule_to >= this.currentTime) {
                         if(window.confirm("Trying to mark activity as done before scheduled time.")){
