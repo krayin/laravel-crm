@@ -77,6 +77,18 @@
                     }
                 },
 
+                watch: { 
+                    data: function(newVal, oldVal) {
+                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                            this.search_term = newVal ? newVal['name'] : '';
+
+                            this.entity_id = newVal ? newVal['id'] : '';
+
+                            this.state = newVal ? 'old' : '';
+                        }
+                    }
+                },
+
                 methods: {
                     search: debounce(function () {
                         this.state = '';
