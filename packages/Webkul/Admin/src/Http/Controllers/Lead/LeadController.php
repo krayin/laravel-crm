@@ -144,12 +144,18 @@ class LeadController extends Controller
         } else {
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
-            $data['lead_pipeline_stage_id'] = $pipeline->stages()->first()->id;
+            $stage = $pipeline->stages()->first();
+
+            $data['lead_pipeline_id'] = $pipeline->id;
+
+            $data['lead_pipeline_stage_id'] = $stage->id;
+        }
+
+        if (in_array($stage->code, ['won', 'lost'])) {
+            $data['closed_at'] = Carbon::now();
         }
 
         $lead = $this->leadRepository->create($data);
-
-        $this->leadRepository->getUserByLeadId($lead->id);
 
         Event::dispatch('lead.create.after', $lead);
 
