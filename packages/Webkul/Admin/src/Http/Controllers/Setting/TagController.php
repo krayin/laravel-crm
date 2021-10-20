@@ -156,8 +156,8 @@ class TagController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.tags.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.tags.delete-failed'),
         ], 400);
     }
 

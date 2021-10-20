@@ -138,8 +138,8 @@ class GroupController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.groups.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.groups.delete-failed'),
         ], 400);
     }
 }

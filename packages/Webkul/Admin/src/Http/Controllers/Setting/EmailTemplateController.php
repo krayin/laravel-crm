@@ -159,8 +159,8 @@ class EmailTemplateController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.email-templates.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.email-templates.delete-failed'),
         ], 400);
     }
 }

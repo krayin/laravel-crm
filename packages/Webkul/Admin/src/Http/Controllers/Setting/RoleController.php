@@ -167,9 +167,9 @@ class RoleController extends Controller
                     $message = trans('admin::app.settings.roles.delete-success');
 
                     $response = [
-                        'status'        => true,
-                        'responseCode'  => 200,
-                        'message'       => $message,
+                        'status'       => true,
+                        'responseCode' => 200,
+                        'message'      => $message,
                     ];
 
                     session()->flash('success', $message);

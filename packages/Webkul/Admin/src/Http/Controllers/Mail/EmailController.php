@@ -271,8 +271,8 @@ class EmailController extends Controller
 
             if (request()->ajax()) {
                 return response()->json([
-                    'status'    => true,
-                    'message'   => trans('admin::app.mail.delete-success'),
+                    'status'  => true,
+                    'message' => trans('admin::app.mail.delete-success'),
                 ], 200);
             } else {
                 session()->flash('success', trans('admin::app.mail.delete-success'));

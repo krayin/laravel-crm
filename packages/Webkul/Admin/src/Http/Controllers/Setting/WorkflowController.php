@@ -137,8 +137,8 @@ class WorkflowController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.workflows.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.workflows.delete-failed'),
         ], 400);
     }
 }
