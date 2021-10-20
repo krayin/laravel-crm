@@ -125,4 +125,36 @@ trait ProvideDropdownOptions
             ],
         ];
     }
+
+    /**
+     * Get activity type dropdown options.
+     *
+     * @return array
+     */
+    public function getActivityTypeOptions(): array
+    {
+        return [
+            [
+                'label'    => trans('admin::app.common.select-type'),
+                'value'    => 'call',
+                'disabled' => false,
+                'selected' => false,
+            ], [
+                'label'    => trans('admin::app.common.select-call'),
+                'value'    => 'call',
+                'disabled' => false,
+                'selected' => false,
+            ], [
+                'label'    => trans('admin::app.common.select-meeting'),
+                'value'    => 'meeting',
+                'disabled' => false,
+                'selected' => false,
+            ], [
+                'label'    => trans('admin::app.common.select-lunch'),
+                'value'    => 'lunch',
+                'disabled' => false,
+                'selected' => false,
+            ],
+        ];
+    }
 }

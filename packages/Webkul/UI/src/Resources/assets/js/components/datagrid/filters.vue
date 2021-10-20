@@ -709,13 +709,29 @@ export default {
         },
 
         onSubmit: function(event) {
+            this.toggleButtonDisable(true);
+
             if (! this.massActionValue.action) {
-                alert(this.__("ui.datagrid.mandatory_mass_action"));
+                this.toggleButtonDisable(false);
+                
+                this.addFlashMessages({
+                    type: "error",
+                    message: this.__("ui.datagrid.mandatory_mass_action")
+                });
 
                 return;
             }
 
-            this.toggleButtonDisable(true);
+            if (this.massActionOptionValue === 'NA') {
+                this.toggleButtonDisable(false);
+
+                this.addFlashMessages({
+                    type: "error",
+                    message: this.__("ui.datagrid.mandatory_mass_action")
+                });
+
+                return;
+            }
 
             if (! confirm(this.__("ui.datagrid.massaction.delete"))) {
                 this.toggleButtonDisable(false);
