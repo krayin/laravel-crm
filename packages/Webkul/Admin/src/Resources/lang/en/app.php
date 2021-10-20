@@ -788,7 +788,11 @@
             'add-as'              => 'Add as new',
             'no-records-found'    => 'No Records Found',
             'start-typing'        => 'Start typing to search records',
-            'confirmation'        => 'Do you really want to perform this action?'
+            'select-type'         => 'Select Type',
+            'select-call'         => 'Call',
+            'select-meeting'      => 'Meeting',
+            'select-lunch'        => 'Lunch',
+            'confirmation'        => 'Do you really want to perform this action?',
         ],
 
         'user' => [

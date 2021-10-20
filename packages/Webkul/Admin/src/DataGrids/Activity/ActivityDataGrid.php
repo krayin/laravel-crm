@@ -134,7 +134,8 @@ class ActivityDataGrid extends DataGrid
         $this->addColumn([
             'index'      => 'type',
             'label'      => trans('admin::app.datagrid.type'),
-            'type'       => 'boolean',
+            'type'       => 'dropdown',
+            'dropdown_options' => $this->getActivityTypeOptions(),
             'searchable' => false,
         ]);
 
@@ -142,7 +143,7 @@ class ActivityDataGrid extends DataGrid
             'index'            => 'is_done',
             'label'            => trans('admin::app.datagrid.is_done'),
             'type'             => 'dropdown',
-            'dropdown_options' => $this->getBooleanDropdownOptions(),
+            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
             'searchable'       => false,
             'closure'          => function ($row) {
                 if ($row->is_done) {
