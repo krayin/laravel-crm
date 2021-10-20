@@ -190,7 +190,7 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if (auth()->guard('user')->user()->id) {
+        if (auth()->guard('user')->user()->id == $id) {
             return response()->json([
                 'message' => trans('admin::app.settings.users.delete-failed'),
             ], 400);
@@ -207,7 +207,7 @@ class UserController extends Controller
                 Event::dispatch('settings.user.delete.after', $id);
 
                 return response()->json([
-                    'message' => $message,
+                    'message' => trans('admin::app.settings.users.delete-success'),
                 ]);
             } catch (\Exception $exception) {
                 return response()->json([
