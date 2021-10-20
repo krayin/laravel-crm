@@ -242,10 +242,16 @@
 
                     <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
                         @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'customAttributes'  => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'leads',
                             ]),
-                            'entity'           => $lead,
+                            'customValidations' => [
+                                'expected_close_date' => [
+                                    'date_format:yyyy-MM-dd',
+                                    'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                ],
+                            ],
+                            'entity'            => $lead,
                         ])
                     </tab>
 
