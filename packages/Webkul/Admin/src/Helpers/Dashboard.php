@@ -191,16 +191,16 @@ class Dashboard
         if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
             $cardData = [
                 "data" => [
-                    "labels"    => $labels,
-                    "datasets"  => [
+                    "labels"   => $labels,
+                    "datasets" => [
                         [
-                            "data"              => $wonLeadsCount,
-                            "label"             => "Won",
-                            "backgroundColor"   => "#4BC0C0",
+                            "data"            => $wonLeadsCount,
+                            "label"           => "Won",
+                            "backgroundColor" => "#4BC0C0",
                         ], [
-                            "backgroundColor"   => "#FF4D50",
-                            "data"              => $lostLeadsCount,
-                            "label"             => "Lost",
+                            "backgroundColor" => "#FF4D50",
+                            "data"            => $lostLeadsCount,
+                            "label"           => "Lost",
                         ]
                     ]
                 ]

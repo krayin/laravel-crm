@@ -143,7 +143,7 @@ class ActivityDataGrid extends DataGrid
             'index'            => 'is_done',
             'label'            => trans('admin::app.datagrid.is_done'),
             'type'             => 'dropdown',
-            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
+            'dropdown_options' => $this->getBooleanDropdownOptions('no_yes'),
             'searchable'       => false,
             'closure'          => function ($row) {
                 if ($row->is_done) {
