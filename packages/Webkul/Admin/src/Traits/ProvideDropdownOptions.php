@@ -15,15 +15,14 @@ trait ProvideDropdownOptions
      */
     public function getBooleanDropdownOptions($choice = 'active_inactive'): array
     {
-        if ($choice === 'active_inactive') {
+        if ($choice == 'active_inactive') {
             return [
                 [
-                   'label'    => trans('admin::app.datagrid.active'),
+                    'label'    => trans('admin::app.datagrid.active'),
                     'value'    => 1,
                     'disabled' => false,
                     'selected' => false,
-                ],
-                [
+                ], [
                     'label'    => trans('admin::app.datagrid.inactive'),
                     'value'    => 0,
                     'disabled' => false,
@@ -38,8 +37,7 @@ trait ProvideDropdownOptions
                 'label'    => __('admin::app.common.no'),
                 'disabled' => false,
                 'selected' => false,
-            ],
-            [
+            ], [
                 'value'    => 1,
                 'label'    => __('admin::app.common.yes'),
                 'disabled' => false,
