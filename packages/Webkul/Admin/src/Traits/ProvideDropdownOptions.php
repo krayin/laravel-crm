@@ -18,13 +18,19 @@ trait ProvideDropdownOptions
         if ($choice === 'active_inactive') {
             return [
                 [
-                   'label'    => trans('admin::app.datagrid.active'),
+                    'label'    => __('admin::app.common.select-option'),
+                    'value'    => '',
+                    'disabled' => true,
+                    'selected' => true,
+                ],
+                [
+                   'label'    => trans('admin::app.common.yes'),
                     'value'    => 1,
                     'disabled' => false,
                     'selected' => false,
                 ],
                 [
-                    'label'    => trans('admin::app.datagrid.inactive'),
+                    'label'    => trans('admin::app.common.no'),
                     'value'    => 0,
                     'disabled' => false,
                     'selected' => false,

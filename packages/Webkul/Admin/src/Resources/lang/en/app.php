@@ -791,6 +791,7 @@
             'select-call'         => 'Call',
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
+            'select-option'       =>  'Select Option',
         ],
 
         'user' => [
