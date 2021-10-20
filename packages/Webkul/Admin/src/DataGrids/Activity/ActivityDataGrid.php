@@ -134,7 +134,8 @@ class ActivityDataGrid extends DataGrid
         $this->addColumn([
             'index'      => 'type',
             'label'      => trans('admin::app.datagrid.type'),
-            'type'       => 'boolean',
+            'type'       => 'dropdown',
+            'dropdown_options' => $this->getActivityTypeOptions(),
             'searchable' => false,
         ]);
 

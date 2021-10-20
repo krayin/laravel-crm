@@ -69,7 +69,7 @@
                             {!! view_render_event('admin.leads.create.form_controls.contact_person.after') !!}
 
 
-                            {!! view_render_event('admin.leads.create.form_controls.products.before') !!}
+                            {!! view_render_event('admin.leads.create.form_controls.products.before') !!} 
 
                             <tab name="{{ __('admin::app.leads.products') }}">
                                 @include('admin::leads.common.products')
