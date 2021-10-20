@@ -190,32 +190,31 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        if ($this->userRepository->count() == 1) {
-            $status = false;
-            $responseCode = 400;
-            $message = trans('admin::app.settings.users.last-delete-error');
+        if (auth()->guard('user')->user()->id) {
+            return response()->json([
+                'message' => trans('admin::app.settings.users.delete-failed'),
+            ], 400);
+        } else if ($this->userRepository->count() == 1) {
+            return response()->json([
+                'message' => trans('admin::app.settings.users.last-delete-error'),
+            ], 400);
         } else {
             Event::dispatch('settings.user.delete.before', $id);
 
             try {
                 $this->userRepository->delete($id);
 
-                $status = true;
-                $responseCode = 200;
-                $message = trans('admin::app.settings.users.delete-success');
-
                 Event::dispatch('settings.user.delete.after', $id);
+
+                return response()->json([
+                    'message' => $message,
+                ]);
             } catch (\Exception $exception) {
-                $status = false;
-                $responseCode = 400;
-                $message = $exception->getMessage();
+                return response()->json([
+                    'message' => $exception->getMessage(),
+                ], 400);
             }
         }
-
-        return response()->json([
-            'status'  => $status,
-            'message' => $message
-        ], $responseCode);
     }
 
     /**
@@ -229,8 +228,9 @@ class UserController extends Controller
 
         foreach ($data['rows'] as $userId) {
             if (($userId != auth()->guard('user')->user()->id) || ($data['value'] == 1)) {
-                $user = $this->userRepository->find($userId);
-                $user->update(['status' => $data['value']]);
+                $this->userRepository->update([
+                    'status' => $data['value'],
+                ], $userId);
             }
         }
 
