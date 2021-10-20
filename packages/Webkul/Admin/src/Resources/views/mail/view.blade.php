@@ -554,7 +554,7 @@
                             <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
     
                             <email-tags-component
-                                control-name="email-form.reply_to[]"
+                                control-name="reply_to[]"
                                 control-label="{{ __('admin::app.leads.to') }}"
                                 :validations="'required'"
                                 :data="reply_to"
