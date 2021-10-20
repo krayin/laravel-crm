@@ -29,7 +29,7 @@
                             <span v-if="activity.type == 'note'">
                                 {{ __('admin::app.leads.note-added') }}
                             </span>
-                            
+
                             <span v-else-if="activity.type == 'call'">
                                 @{{ '{!! __('admin::app.leads.call-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
@@ -45,7 +45,7 @@
                             <span v-else-if="activity.type == 'email'">
                                 @{{ '{!! __('admin::app.leads.email-scheduled') !!}'.replace(':from', formatDate(activity.schedule_from)).replace(':to', formatDate(activity.schedule_to)) }}
                             </span>
-                            
+
                             <span v-else-if="activity.type == 'file'">
                                 {{ __('admin::app.leads.file-added') }}
                             </span>
@@ -96,7 +96,7 @@
 
                             <a :href="'{{ route('admin.settings.users.edit') }}/' + activity.user.id" target="_blank">
                                 @{{ activity.user.name }}
-                            </a> 
+                            </a>
                         </div>
                     </div>
 
@@ -105,7 +105,7 @@
 
                         <span v-else>{{ __('admin::app.leads.empty-done-activities') }}</span>
                     </div>
-                    
+
                 </div>
             </tab>
 
@@ -152,13 +152,13 @@
                                 <th class="actions" style="width: 40px;"></th>
                             </tr>
                         </thead>
-                        
+
                         <tbody>
                             <tr v-for="quote in quotes">
                                 <td class="quote-subject">@{{ quote.subject }}</td>
 
                                 <td class="expired-at">@{{ quote.expired_at }}</td>
-                                
+
                                 <td class="sub-total">@{{ quote.sub_total }}</td>
 
                                 <td class="discount">@{{ quote.discount_amount }}</td>
@@ -180,7 +180,7 @@
                                                         {{ __('admin::app.leads.edit') }}
                                                     </a>
                                                 </li>
-                                                
+
                                                 <li>
                                                     <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
                                                         {{ __('admin::app.leads.export-to-pdf') }}
@@ -214,7 +214,7 @@
         Vue.component('activity-list-component', {
 
             template: '#activity-list-component-template',
-    
+
             inject: ['$validator'],
 
             props: {
@@ -239,7 +239,7 @@
                         'note': "{{ __('admin::app.leads.notes') }}",
 
                         'call': "{{ __('admin::app.leads.calls') }}",
-                        
+
                         'meeting': "{{ __('admin::app.leads.meetings') }}",
 
                         'lunch': "{{ __('admin::app.leads.lunches') }}",
@@ -251,12 +251,6 @@
 
                     quotes: @json($lead->quotes()->with(['person', 'user'])->get())
                 }
-            },
-
-            mounted() {
-
-                var currentTime = this.currentTime;
-                
             },
 
             computed: {
@@ -301,10 +295,8 @@
                 markAsDone: function(activity) {
                     var self = this;
 
-                    console.log();
-
                     if (activity.schedule_to >= this.currentTime) {
-                        if(window.confirm("Trying to mark activity as done before scheduled time.")){
+                        if (window.confirm('{{ __('admin::app.leads.before-schedule-warning') }}')) {
                             this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
                             .then (function(response) {
                                 activity.is_done = 1;
@@ -320,7 +312,7 @@
                 },
 
                 remove: function(activity) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.common.confirmation') }}')) {
                         return;
                     }
 
@@ -331,7 +323,7 @@
                             const index = self.activities.indexOf(activity);
 
                             Vue.delete(self.activities, index);
-                            
+
                             window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 
                             self.$root.addFlashMessages();
@@ -341,10 +333,10 @@
                 },
 
                 removeQuote: function(quote) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.common.confirmation') }}')) {
                         return;
                     }
-                    
+
                     var self = this;
 
                     this.$http.delete("{{ route('admin.leads.quotes.delete', $lead->id) }}/" + quote['id'])
@@ -352,7 +344,7 @@
                             const index = self.quotes.indexOf(quote);
 
                             Vue.delete(self.quotes, index);
-                            
+
                             window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 
                             self.$root.addFlashMessages();
