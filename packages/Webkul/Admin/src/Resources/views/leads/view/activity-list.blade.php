@@ -218,14 +218,14 @@
             inject: ['$validator'],
 
             props: {
-            currentTime: {
-                type: [Array, String, Object],
-                required: false,
-                default: (function() {
-                    return [];
-                })
+                currentTime: {
+                    type: [Array, String, Object],
+                    required: false,
+                    default: (function() {
+                        return [];
+                    })
+                },
             },
-        },
 
             data: function () {
                 return {
