@@ -19,7 +19,7 @@ return [
     ], [
         'key'   => 'leads.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => ['admin.leads.edit', 'admin.leads.update'],
+        'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
         'sort'  => 2,
     ], [
         'key'   => 'leads.delete',

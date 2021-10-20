@@ -209,7 +209,11 @@
 
                             this.addFlashMessages({message : response.data.message });
                         })
-                        .catch(error => {});
+                        .catch(error => {
+                            window.flashMessages = [{'type': 'error', 'message': error.response.data.message}];
+
+                            this.$root.addFlashMessages();
+                        });
                 },
 
                 search: function (searchedKeyword) {
