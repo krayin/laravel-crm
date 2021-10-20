@@ -127,8 +127,8 @@ class TypeController extends Controller
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.types.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.types.delete-failed'),
         ], 400);
     }
 }

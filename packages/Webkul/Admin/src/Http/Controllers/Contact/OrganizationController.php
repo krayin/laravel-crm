@@ -125,13 +125,13 @@ class OrganizationController extends Controller
             Event::dispatch('contact.organization.delete.after', $id);
 
             return response()->json([
-                'status'    => true,
-                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.organization')]),
+                'status'  => true,
+                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'    => false,
-                'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.organizations.organization')]),
+                'status'  => false,
+                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 400);
         }
     }
@@ -143,13 +143,17 @@ class OrganizationController extends Controller
      */
     public function massDestroy()
     {
-        $data = request()->all();
+        foreach (request('rows') as $organizationId) {
+            Event::dispatch('contact.organization.delete.before', $organizationId);
 
-        $this->organizationRepository->destroy($data['rows']);
+            $this->organizationRepository->delete($organizationId);
+
+            Event::dispatch('contact.organization.delete.after', $organizationId);
+        }
 
         return response()->json([
-            'status'    => true,
-            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.title')])
+            'status'  => true,
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.title')])
         ]);
     }
 }

@@ -163,20 +163,20 @@ class QuoteController extends Controller
         $this->quoteRepository->findOrFail($id);
 
         try {
-            Event::dispatch('settings.quotes.delete.before', $id);
+            Event::dispatch('quote.delete.before', $id);
 
             $this->quoteRepository->delete($id);
 
-            Event::dispatch('settings.quotes.delete.after', $id);
+            Event::dispatch('quote.delete.after', $id);
 
             return response()->json([
-                'status'    => true,
-                'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
+                'status'  => true,
+                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'    => false,
-                'message'   => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
+                'status'  => false,
+                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
             ], 400);
         }
     }
@@ -188,9 +188,13 @@ class QuoteController extends Controller
      */
     public function massDestroy()
     {
-        $data = request()->all();
+        foreach (request('rows') as $quoteId) {
+            Event::dispatch('quote.delete.before', $quoteId);
 
-        $this->quoteRepository->destroy($data['rows']);
+            $this->quoteRepository->delete($quoteId);
+
+            Event::dispatch('quote.delete.after', $quoteId);
+        }
 
         return response()->json([
             'status'  => true,
@@ -207,8 +211,6 @@ class QuoteController extends Controller
     public function print($id)
     {
         $quote = $this->quoteRepository->findOrFail($id);
-
-        return view('admin::quotes.pdf', compact('quote'));
 
         return PDF::loadHTML(view('admin::quotes.pdf', compact('quote'))->render())
             ->setPaper('a4')

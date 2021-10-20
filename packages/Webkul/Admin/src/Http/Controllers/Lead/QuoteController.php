@@ -60,8 +60,8 @@ class QuoteController extends Controller
         Event::dispatch('leads.quote.create.after', $lead);
         
         return response()->json([
-            'status'    => true,
-            'message'   => trans('admin::app.leads.quote-create-success'),
+            'status'  => true,
+            'message' => trans('admin::app.leads.quote-create-success'),
         ], 200);
     }
 
@@ -83,8 +83,8 @@ class QuoteController extends Controller
         Event::dispatch('leads.quote.delete.after', $lead);
         
         return response()->json([
-            'status'    => true,
-            'message'   => trans('admin::app.leads.quote-destroy-success'),
+            'status'  => true,
+            'message' => trans('admin::app.leads.quote-destroy-success'),
         ], 200);
     }
 }

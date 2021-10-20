@@ -137,20 +137,20 @@ class AttributeController extends Controller
                 Event::dispatch('settings.attribute.delete.after', $id);
 
                 return response()->json([
-                    'status'    => true,
-                    'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
+                    'status'  => true,
+                    'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
                 ], 200);
             } catch(\Exception $exception) {
                 return response()->json([
-                    'status'    => false,
-                    'message'   => trans('admin::app.settings.attributes.delete-failed'),
+                    'status'  => false,
+                    'message' => trans('admin::app.settings.attributes.delete-failed'),
                 ], 400);
             }
         }
 
         return response()->json([
-            'status'    => false,
-            'message'   => trans('admin::app.settings.attributes.delete-failed'),
+            'status'  => false,
+            'message' => trans('admin::app.settings.attributes.delete-failed'),
         ], 400);
     }
 
@@ -174,16 +174,23 @@ class AttributeController extends Controller
      */
     public function massDestroy()
     {
-        $data = request()->all();
+        foreach (request('rows') as $attributeId) {
+            $attribute = $this->attributeRepository->find($attributeId);
 
-        $this->attributeRepository
-            ->where('is_user_defined', 1)
-            ->whereIn('id', $data['rows'])
-            ->delete();
+            if (! $attribute->is_user_defined) {
+                continue;
+            }
+
+            Event::dispatch('settings.attribute.delete.before', $attributeId);
+
+            $this->attributeRepository->delete($attributeId);
+
+            Event::dispatch('settings.attribute.delete.after', $attributeId);
+        }
 
         return response()->json([
-            'status'    => true,
-            'message'   => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.title')]),
+            'status'  => true,
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.title')]),
         ]);
     }
 
