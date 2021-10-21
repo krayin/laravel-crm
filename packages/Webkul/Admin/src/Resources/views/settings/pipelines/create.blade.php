@@ -224,8 +224,8 @@
                 }
             },
 
-            watch: {
-                ...stagesComponentWatchers,
+            created: function () {
+                this.extendValidator();
             },
 
             methods: {

@@ -14,6 +14,8 @@
                 const index = this.stages.indexOf(stage);
 
                 Vue.delete(this.stages, index);
+
+                this.removeUniqueNameErrors();
             },
 
             isDragable: function (stage) {
@@ -41,21 +43,24 @@
                     .trim();
             },
 
-            checkDuplicateNames: function ({ target }) {
-                let filteredStages = this.stages.filter((stage) => {
-                    return stage.name == target.value;
+            extendValidator: function () {
+                this.$validator.extend('unique_name', {
+                    getMessage: (field) => '{!! __('admin::app.settings.pipelines.duplicate-name') !!}',
+
+                    validate: (value) => {
+                        let filteredStages = this.stages.filter((stage) => {
+                            return stage.name == value;
+                        });
+
+                        if (filteredStages.length > 1) {
+                            return false;
+                        }
+
+                        this.removeUniqueNameErrors();
+
+                        return true;
+                    }
                 });
-
-                if (filteredStages.length > 1) {
-                    this.errors.add({
-                        field: target.name,
-                        msg: '{!! __('admin::app.settings.pipelines.duplicate-name') !!}',
-                    });
-
-                    this.$root.toggleButtonDisable(true);
-                } else {
-                    this.$root.toggleButtonDisable(false);
-                }
             },
 
             isDuplicateStageNameExists: function () {
@@ -63,12 +68,16 @@
 
                 return stageNames.some((name, index) => stageNames.indexOf(name) != index);
             },
-        };
 
-        let stagesComponentWatchers = {
-            stages: function (stages) {
+            removeUniqueNameErrors: function () {
                 if (! this.isDuplicateStageNameExists()) {
-                    this.$root.toggleButtonDisable(false);
+                    this.errors
+                        .items
+                        .filter(error => error.rule === 'unique_name')
+                        .map(error => error.id)
+                        .forEach((id) => {
+                            this.errors.removeById(id);
+                        });
                 }
             }
         };
