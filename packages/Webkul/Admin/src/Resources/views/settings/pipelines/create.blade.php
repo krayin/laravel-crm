@@ -141,10 +141,9 @@
                                     :name="'stages[' + stage.id + '][name]'"
                                     class="control"
                                     v-model="stage['name']"
-                                    v-validate="'required'"
+                                    v-validate="'required|unique_name'"
                                     data-vv-as="&quot;{{ __('admin::app.settings.pipelines.name') }}&quot;"
                                     :readonly="! isDragable(stage)"
-                                    @keyup="checkDuplicateNames($event)"
                                 />
 
                                 <input
