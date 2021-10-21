@@ -713,7 +713,7 @@ export default {
 
             if (! this.massActionValue.action) {
                 this.toggleButtonDisable(false);
-                
+
                 this.addFlashMessages({
                     type: "error",
                     message: this.__("ui.datagrid.mandatory_mass_action")
@@ -722,7 +722,7 @@ export default {
                 return;
             }
 
-            if (this.massActionOptionValue === 'NA') {
+            if (this.massActionValue.type !== 'delete' && this.massActionOptionValue === 'NA') {
                 this.toggleButtonDisable(false);
 
                 this.addFlashMessages({
