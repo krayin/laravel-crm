@@ -62,7 +62,7 @@ class PipelineDataGrid extends DataGrid
             'index'            => 'is_default',
             'label'            => trans('admin::app.datagrid.is-default'),
             'type'             => 'dropdown',
-            'dropdown_options' => $this->getBooleanDropdownOptions(),
+            'dropdown_options' => $this->getBooleanDropdownOptions('no_yes'),
             'sortable'         => false,
             'closure'          => function ($row) {
                 return (bool) $row->is_default
