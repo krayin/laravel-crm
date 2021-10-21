@@ -32,6 +32,7 @@ trait ProvideDropdownOptions
     /**
      * Get boolean dropdown options.
      *
+     * @param  string  $choice
      * @return array
      */
     public function getBooleanDropdownOptions($choice = 'active_inactive'): array
