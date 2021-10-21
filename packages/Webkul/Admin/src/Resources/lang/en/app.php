@@ -347,6 +347,7 @@
             'update-success'      => ':type updated successfully.',
             'destroy-success'     => ':type deleted successfully.',
             'delete-failed'       => ':type can not be deleted.',
+            'typing-placeholder'  => 'Start typing name',
         ],
 
         'products' => [
