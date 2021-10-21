@@ -151,7 +151,7 @@
     <script type="text/x-template" id="multi-lookup-component-template">
         <div class="lookup-control">
             <div class="form-group" style="margin-bottom: 0">
-                <input type="text" class="control" v-model="search_term" v-on:keyup="search" autocomplete="off">
+                <input type="text" class="control" v-model="search_term" v-on:keyup="search" autocomplete="off" placeholder="{{ __('admin::app.activities.typing-placeholder') }}">
 
                 <div class="lookup-results grouped" v-if="search_term.length">
                     <label>{{ __('admin::app.leads.users') }}</label>
