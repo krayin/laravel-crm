@@ -170,12 +170,10 @@ class QuoteController extends Controller
             Event::dispatch('quote.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
             ], 400);
         }
@@ -197,7 +195,6 @@ class QuoteController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.title')]),
         ]);
     }

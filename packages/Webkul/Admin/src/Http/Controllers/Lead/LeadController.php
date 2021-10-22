@@ -210,7 +210,6 @@ class LeadController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.leads.update-success'),
             ]);
         } else {
@@ -256,12 +255,10 @@ class LeadController extends Controller
             Event::dispatch('lead.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.leads.lead')]),
             ], 400);
         }
@@ -287,7 +284,6 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')])
         ]);
     }
@@ -308,7 +304,6 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.title')]),
         ]);
     }

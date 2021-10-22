@@ -145,18 +145,15 @@ class TagController extends Controller
             Event::dispatch('settings.tag.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.settings.tags.delete-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.settings.tags.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'status'  => false,
             'message' => trans('admin::app.settings.tags.delete-failed'),
         ], 400);
     }
@@ -191,7 +188,6 @@ class TagController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.tags.title')]),
         ]);
     }

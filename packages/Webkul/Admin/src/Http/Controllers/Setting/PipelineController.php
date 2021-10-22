@@ -125,7 +125,6 @@ class PipelineController extends Controller
 
         if ($pipeline->is_default) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.settings.pipelines.default-delete-error'),
             ], 400);
         } else {
@@ -145,18 +144,15 @@ class PipelineController extends Controller
             Event::dispatch('settings.pipeline.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.settings.pipelines.delete-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.settings.pipelines.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'status'  => false,
             'message' => trans('admin::app.settings.pipelines.delete-failed'),
         ], 400);
     }

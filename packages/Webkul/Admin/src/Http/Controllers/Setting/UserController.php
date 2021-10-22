@@ -235,8 +235,7 @@ class UserController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
-            'message' => trans('admin::app.settings.users.mass-update-success')
+            'message' => trans('admin::app.settings.users.mass-update-success'),
         ]);
     }
 
@@ -247,6 +246,8 @@ class UserController extends Controller
      */
     public function massDestroy()
     {
+        $count = 0;
+
         foreach (request('rows') as $userId) {
             if (auth()->guard('user')->user()->id == $userId) {
                 continue;
@@ -257,11 +258,18 @@ class UserController extends Controller
             $this->userRepository->delete($userId);
 
             Event::dispatch('settings.user.delete.after', $userId);
+
+            $count++;
+        }
+
+        if (! $count) {
+            return response()->json([
+                'message' => trans('admin::app.settings.users.mass-delete-failed'),
+            ], 400);
         }
 
         return response()->json([
-            'status'  => true,
-            'message' => trans('admin::app.settings.users.mass-delete-success')
+            'message' => trans('admin::app.settings.users.mass-delete-success'),
         ]);
     }
 }
