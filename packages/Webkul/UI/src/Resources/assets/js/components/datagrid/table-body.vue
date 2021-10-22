@@ -4,7 +4,9 @@
             <tr
                 :key="collectionIndex"
                 v-for="(row, collectionIndex) in records"
-                :class="`${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`"
+                :class="
+                    `${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`
+                "
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
@@ -112,7 +114,7 @@ export default {
     computed: {
         ...mapState({
             tableData: state => state.tableData,
-            
+
             selectedTableRows: state => state.selectedTableRows
         }),
 
@@ -161,37 +163,20 @@ export default {
                 .then(response => {
                     event.preventDefault();
 
-                    if (response.data.status) {
-                        if (type == "download") {
-                            var dlAnchorElem = document.createElement("a");
-                            dlAnchorElem.id = "downloadAnchorElem";
+                    if (type == "download") {
+                        this.download(
+                            response.data.fileName,
+                            response.data.fileContent
+                        );
+                    } else {
+                        this.addFlashMessages({
+                            type: "success",
+                            message: response.data.message
+                        });
 
-                            document.body.appendChild(dlAnchorElem);
-
-                            var dataStr = `data:text/plain;charset=utf-8,${response.data.fileContent}`;
-                            var dlAnchorElem = document.getElementById(
-                                "downloadAnchorElem"
-                            );
-
-                            dlAnchorElem.setAttribute("href", dataStr);
-                            dlAnchorElem.setAttribute(
-                                "download",
-                                `${response.data.fileName}`
-                            );
-
-                            dlAnchorElem.click();
-
-                            dlAnchorElem.parentNode.removeChild(dlAnchorElem);
-                        } else {
-                            this.addFlashMessages({
-                                type: "success",
-                                message: response.data.message
-                            });
-
-                            EventBus.$emit("refresh_table_data", {
-                                usePrevious: true
-                            });
-                        }
+                        EventBus.$emit("refresh_table_data", {
+                            usePrevious: true
+                        });
                     }
                 })
                 .catch(error => {
@@ -202,6 +187,27 @@ export default {
                         message: error.response.data.message
                     });
                 });
+        },
+
+        download: function(fileName, fileContent) {
+            let dlAnchorElem = document.createElement("a");
+
+            dlAnchorElem.id = "downloadAnchorElem";
+
+            document.body.appendChild(dlAnchorElem);
+
+            dlAnchorElem = document.getElementById("downloadAnchorElem");
+
+            dlAnchorElem.setAttribute(
+                "href",
+                `data:text/plain;charset=utf-8,${fileContent}`
+            );
+
+            dlAnchorElem.setAttribute("download", `${fileName}`);
+
+            dlAnchorElem.click();
+
+            dlAnchorElem.parentNode.removeChild(dlAnchorElem);
         }
     }
 };
