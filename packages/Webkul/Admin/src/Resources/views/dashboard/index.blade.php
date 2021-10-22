@@ -102,11 +102,11 @@
                     <div class="bar">
                         <div
                             class="primary"
-                            :style="`width: ${data.count ? (data.count * 100) / (data.total || 10) : 0}%;`"
+                            :style="`width: ${data.count ? (data.count * 100) / (dataCollection.total || 10) : 0}%;`"
                         ></div>
                     </div>
 
-                    <span>@{{ `${data.count || 0}/${(data.total || 10)}` }}</span>
+                    <span>@{{ `${data.count || 0}/${(dataCollection.total || 10)}` }}</span>
                 </div>
             </template>
 
