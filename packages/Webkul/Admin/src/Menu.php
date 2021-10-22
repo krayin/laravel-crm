@@ -67,23 +67,30 @@ class Menu
                 }
             }
 
-            if ($index + 1 < count(config('menu.admin')) && $currentUserRole->permission_type == 'custom') {
+            if ($item['key'] != 'settings'
+                && $index + 1 < count(config('menu.admin'))
+                && $currentUserRole->permission_type == 'custom'
+            ) {
                 $permission = config('menu.admin')[$index + 1];
 
-                if (substr_count($permission['key'], '.') == 1 && substr_count($item['key'], '.') == 0) {
-
+                if (substr_count($permission['key'], '.') == 1
+                    && substr_count($item['key'], '.') == 0
+                ) {
                     foreach ($currentUserRole->permissions as $key => $value) {
-                        if ($item['key'] == $value) {
-                            $neededItem = $currentUserRole->permissions[$key + 1];
+                        if ($item['key'] != $value) {
+                            continue;
+                        }
 
-                            foreach (config('menu.admin') as $key1 => $findMatched) {
+                        $neededItem = $currentUserRole->permissions[$key + 1];
 
-                                if ($findMatched['key'] == $neededItem) {
-                                    $item['route'] = $findMatched['route'];
-
-                                    $item['url'] = route($findMatched['route'], $findMatched['params'] ?? []);
-                                }
+                        foreach (config('menu.admin') as $key1 => $findMatched) {
+                            if ($findMatched['key'] != $neededItem) {
+                                continue;
                             }
+
+                            $item['route'] = $findMatched['route'];
+
+                            $item['url'] = route($findMatched['route'], $findMatched['params'] ?? []);
                         }
                     }
                 }
