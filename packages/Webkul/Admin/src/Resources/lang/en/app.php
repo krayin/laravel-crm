@@ -221,7 +221,6 @@
             'quote-destroy-success'    => 'Quote removed successfully.',
             'tag-create-success'       => 'Tag added successfully.',
             'tag-destroy-success'      => 'Tag removed successfully.',
-            'before-schedule-warning'  => 'Trying to mark activity as done before scheduled time.'
         ],
 
         'quotes' => [
@@ -799,7 +798,6 @@
             'select-call'         => 'Call',
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
-            'confirmation'        => 'Do you really want to perform this action?',
         ],
 
         'user' => [
