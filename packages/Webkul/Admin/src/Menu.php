@@ -52,6 +52,8 @@ class Menu
 
         $adminMenus = config('menu.admin');
 
+        $currentUserRole = auth()->guard('user')->user()->role;
+
         foreach ($adminMenus as $index => $item) {
             if (! bouncer()->hasPermission($item['key'])) {
                 continue;
@@ -62,6 +64,28 @@ class Menu
 
                 if (strpos($this->current, $item['url']) !== false) {
                     $this->currentKey = $item['key'];
+                }
+            }
+
+            if ($index + 1 < count(config('menu.admin')) && $currentUserRole->permission_type == 'custom') {
+                $permission = config('menu.admin')[$index + 1];
+
+                if (substr_count($permission['key'], '.') == 1 && substr_count($item['key'], '.') == 0) {
+
+                    foreach ($currentUserRole->permissions as $key => $value) {
+                        if ($item['key'] == $value) {
+                            $neededItem = $currentUserRole->permissions[$key + 1];
+
+                            foreach (config('menu.admin') as $key1 => $findMatched) {
+
+                                if ($findMatched['key'] == $neededItem) {
+                                    $item['route'] = $findMatched['route'];
+
+                                    $item['url'] = route($findMatched['route'], $findMatched['params'] ?? []);
+                                }
+                            }
+                        }
+                    }
                 }
             }
 
