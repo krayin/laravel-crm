@@ -52,15 +52,40 @@ return [
         'route' => 'admin.mail.index',
         'sort'  => 4,
     ], [
-        'key'   => 'mail.view',
-        'name'  => 'admin::app.acl.view',
-        'route' => 'admin.mail.view',
+        'key'   => 'mail.inbox',
+        'name'  => 'admin::app.acl.inbox',
+        'route' => 'admin.mail.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'mail.draft',
+        'name'  => 'admin::app.acl.draft',
+        'route' => 'admin.mail.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'mail.outbox',
+        'name'  => 'admin::app.acl.outbox',
+        'route' => 'admin.mail.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'mail.sent',
+        'name'  => 'admin::app.acl.sent',
+        'route' => 'admin.mail.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'mail.trash',
+        'name'  => 'admin::app.acl.trash',
+        'route' => 'admin.mail.index',
         'sort'  => 1,
     ], [
         'key'   => 'mail.create',
         'name'  => 'admin::app.acl.create',
         'route' => ['admin.mail.index', 'admin.mail.store'],
         'sort'  => 2,
+    ], [
+        'key'   => 'mail.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.mail.view',
+        'sort'  => 1,
     ], [
         'key'   => 'mail.edit',
         'name'  => 'admin::app.acl.edit',
@@ -164,7 +189,7 @@ return [
     ], [
         'key'   => 'settings.user',
         'name'  => 'admin::app.acl.user',
-        'route' => 'admin.settings.groups.index',
+        'route' => ['admin.settings.groups.index', 'admin.settings.roles.index', 'admin.settings.users.index'],
         'sort'  => 1,
     ], [
         'key'   => 'settings.user.groups',
@@ -219,7 +244,7 @@ return [
     ], [
         'key'   => 'settings.user.users.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => ['admin.settings.users.edit', 'admin.settings.users.update'],
+        'route' => ['admin.settings.users.edit', 'admin.settings.users.update', 'admin.settings.users.mass_update'],
         'sort'  => 2,
     ], [
         'key'   => 'settings.user.users.delete',
@@ -229,7 +254,7 @@ return [
     ], [
         'key'   => 'settings.lead',
         'name'  => 'admin::app.acl.lead',
-        'route' => 'admin.settings.sources.index',
+        'route' => ['admin.settings.pipelines.index', 'admin.settings.sources.index', 'admin.settings.types.index'],
         'sort'  => 2,
     ], [
         'key'   => 'settings.lead.pipelines',
@@ -294,7 +319,7 @@ return [
     ], [
         'key'   => 'settings.automation',
         'name'  => 'admin::app.acl.automation',
-        'route' => 'admin.settings.attributes.index',
+        'route' => ['admin.settings.attributes.index', 'admin.settings.email_templates.index', 'admin.settings.workflows.index'],
         'sort'  => 3,
     ], [
         'key'   => 'settings.automation.attributes',
@@ -309,7 +334,7 @@ return [
     ], [
         'key'   => 'settings.automation.attributes.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => ['admin.settings.attributes.edit', 'admin.settings.attributes.update'],
+        'route' => ['admin.settings.attributes.edit', 'admin.settings.attributes.update', 'admin.settings.attributes.mass_update'],
         'sort'  => 2,
     ], [
         'key'   => 'settings.automation.attributes.delete',
