@@ -4,7 +4,9 @@
             <tr
                 :key="collectionIndex"
                 v-for="(row, collectionIndex) in records"
-                :class="`${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`"
+                :class="
+                    `${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`
+                "
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
@@ -112,7 +114,7 @@ export default {
     computed: {
         ...mapState({
             tableData: state => state.tableData,
-            
+
             selectedTableRows: state => state.selectedTableRows
         }),
 
@@ -135,6 +137,10 @@ export default {
 
     methods: {
         ...mapActions(["selectTableRow"]),
+
+        isSuccess: function(responseCode) {
+            return responseCode === 200 || responseCode === 201;
+        },
 
         doAction: function({ event, route, method, confirm_text }) {
             if (confirm_text) {
@@ -161,27 +167,12 @@ export default {
                 .then(response => {
                     event.preventDefault();
 
-                    if (response.data.status) {
+                    if (this.isSuccess(response.status)) {
                         if (type == "download") {
-                            var dlAnchorElem = document.createElement("a");
-                            dlAnchorElem.id = "downloadAnchorElem";
-
-                            document.body.appendChild(dlAnchorElem);
-
-                            var dataStr = `data:text/plain;charset=utf-8,${response.data.fileContent}`;
-                            var dlAnchorElem = document.getElementById(
-                                "downloadAnchorElem"
+                            this.download(
+                                response.data.fileName,
+                                response.data.fileContent
                             );
-
-                            dlAnchorElem.setAttribute("href", dataStr);
-                            dlAnchorElem.setAttribute(
-                                "download",
-                                `${response.data.fileName}`
-                            );
-
-                            dlAnchorElem.click();
-
-                            dlAnchorElem.parentNode.removeChild(dlAnchorElem);
                         } else {
                             this.addFlashMessages({
                                 type: "success",
@@ -202,6 +193,27 @@ export default {
                         message: error.response.data.message
                     });
                 });
+        },
+
+        download: function(fileName, fileContent) {
+            let dlAnchorElem = document.createElement("a");
+
+            dlAnchorElem.id = "downloadAnchorElem";
+
+            document.body.appendChild(dlAnchorElem);
+
+            dlAnchorElem = document.getElementById("downloadAnchorElem");
+
+            dlAnchorElem.setAttribute(
+                "href",
+                `data:text/plain;charset=utf-8,${fileContent}`
+            );
+
+            dlAnchorElem.setAttribute("download", `${fileName}`);
+
+            dlAnchorElem.click();
+
+            dlAnchorElem.parentNode.removeChild(dlAnchorElem);
         }
     }
 };
