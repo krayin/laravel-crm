@@ -3,81 +3,83 @@
 namespace Webkul\Admin\Helpers;
 
 use Carbon\Carbon;
+use Webkul\Activity\Repositories\ActivityRepository;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository as LeadProductRepository;
-use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Product\Repositories\ProductRepository;
-use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Activity\Repositories\ActivityRepository;
+use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\Email\Repositories\EmailRepository;
 
 class Dashboard
 {
     /**
-     * @var  array
+     * Cards.
+     *
+     * @var array
      */
     protected $cards;
 
     /**
-     * LeadRepository object
+     * Lead repository instance.
      *
      * @var \Webkul\Lead\Repositories\LeadRepository
      */
     protected $leadRepository;
 
     /**
-     * PipelineRepository object
+     * Pipeline repository instance.
      *
      * @var \Webkul\Lead\Repositories\PipelineRepository
      */
     protected $pipelineRepository;
 
     /**
-     * ProductRepository object
+     * Product repository instance.
      *
      * @var \Webkul\Lead\Repositories\ProductRepository
      */
     protected $leadProductRepository;
 
     /**
-     * QuoteRepository object
+     * Quote repository instance.
      *
      * @var \Webkul\Quote\Repositories\QuoteRepository
      */
     protected $quoteRepository;
 
     /**
-     * ProductRepository object
+     * Product repository instance.
      *
      * @var \Webkul\Product\Repositories\ProductRepository
      */
     protected $productRepository;
 
     /**
-     * PersonRepository object
+     * Person repository instance.
      *
      * @var \Webkul\Contact\Repositories\PersonRepository
      */
     protected $personRepository;
 
     /**
-     * ActivityRepository object
+     * Activity repository instance.
      *
      * @var \Webkul\Activity\Repositories\ActivityRepository
      */
     protected $activityRepository;
 
     /**
-     * UserRepository object
+     * User repository instance.
      *
      * @var \Webkul\User\Repositories\UserRepository
      */
     protected $userRepository;
 
     /**
-     * EmailRepository object
+     * Email repository instance.
      *
      * @var \Webkul\Email\Repositories\EmailRepository
      */
@@ -86,15 +88,15 @@ class Dashboard
     /**
      * Create a new helper instance.
      *
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
-     * @param \Webkul\Lead\Repositories\ProductRepository  $leadProductRepository
-     * @param \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
-     * @param \Webkul\Product\Repositories\ProductRepository  $productRepository
-     * @param \Webkul\Product\Repositories\PersonRepository  $personRepository
-     * @param \Webkul\Product\Repositories\ActivityRepository  $activityRepository
-     * @param \Webkul\Product\Repositories\UserRepository  $userRepository
-     * @param \Webkul\Email\Repositories\EmailRepository  $emailRepository
+     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
+     * @param  \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
+     * @param  \Webkul\Lead\Repositories\ProductRepository  $leadProductRepository
+     * @param  \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
+     * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
+     * @param  \Webkul\Product\Repositories\PersonRepository  $personRepository
+     * @param  \Webkul\Product\Repositories\ActivityRepository  $activityRepository
+     * @param  \Webkul\Product\Repositories\UserRepository  $userRepository
+     * @param  \Webkul\Email\Repositories\EmailRepository  $emailRepository
      * @return void
      */
     public function __construct(
@@ -107,8 +109,7 @@ class Dashboard
         ActivityRepository $activityRepository,
         UserRepository $userRepository,
         EmailRepository $emailRepository
-    )
-    {
+    ) {
         $this->leadRepository = $leadRepository;
 
         $this->pipelineRepository = $pipelineRepository;
@@ -130,7 +131,7 @@ class Dashboard
 
     /**
      * This will set all available cards data to be displayed on dashboard.
-     * 
+     *
      * @return void
      */
     public function setCards()
@@ -139,24 +140,24 @@ class Dashboard
             if (isset($card['label'])) {
                 $card['label'] = trans($card['label']);
             }
-            
+
             return $card;
         }, config('dashboard_cards'));
     }
 
     /**
      * This will set all available cards data to be displayed on dashboard.
-     * 
+     *
      * @return array
      */
-    public function getCards()
+    public function getCards(): array
     {
         return $this->cards;
     }
 
     /**
      * Collect leads card data.
-     * 
+     *
      * @return array|boolean
      */
     public function getLeads($startDateFilter, $endDateFilter, $totalWeeks)
@@ -183,7 +184,7 @@ class Dashboard
             }
         } else {
             $labels = [__("admin::app.dashboard.week") . "1"];
-            
+
             $wonLeadsCount = [$this->leadRepository->getLeadsCount("Won", $startDateFilter, $endDateFilter)];
             $lostLeadsCount = [$this->leadRepository->getLeadsCount("Lost", $startDateFilter, $endDateFilter)];
         }
@@ -209,10 +210,10 @@ class Dashboard
 
         return $cardData ?? false;
     }
-    
+
     /**
      * Collect leads card data.
-     * 
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -240,7 +241,7 @@ class Dashboard
             }
         } else {
             $labels = [__("admin::app.dashboard.week") . "1"];
-            
+
             $leadsStarted = [$this->leadRepository->getLeadsCount("Won", $startDateFilter, $endDateFilter)];
         }
 
@@ -267,7 +268,7 @@ class Dashboard
 
     /**
      * Collect Products card data.
-     * 
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -316,13 +317,13 @@ class Dashboard
                 ]
             ];
         }
-        
+
         return $cardData ?? false;
     }
 
     /**
-     * Collect Customers card data.
-     * 
+     * Collect customers card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -376,8 +377,8 @@ class Dashboard
     }
 
     /**
-     * Collect Activity card data.
-     * 
+     * Collect activity card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -424,8 +425,8 @@ class Dashboard
     }
 
     /**
-     * Collect TopLeads card data.
-     * 
+     * Collect top leads card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -461,43 +462,45 @@ class Dashboard
     }
 
     /**
-     * Collect Stages card data.
-     * 
+     * Collect pipelines card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
      * @return array
      */
-    public function getPipelines($startDateFilter, $endDateFilter, $totalWeeks)
+    public function getPipelines($startDateFilter, $endDateFilter, $totalWeeks): array
     {
         $leadPipelines = [];
 
-        $pipelines = $this->pipelineRepository->select('id', 'name')
-                    ->get();
+        $pipelines = $this->pipelineRepository->select('id', 'name')->get();
 
         foreach ($pipelines as $pipeline) {
-            $leadsCount = $this->leadRepository
+            $leadQuery = $this->leadRepository
                 ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
-                ->where('lead_pipelines.id', $pipeline->id)
+                ->where('lead_pipelines.id', $pipeline->id);
+
+            $totalLeadsCount = $leadQuery->count();
+
+            $totalLeadsBetweenDateCount = $leadQuery
                 ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
                 ->count();
 
-            array_push($leadPipelines, [
+            $leadPipelines[] = [
                 'label' => $pipeline->name,
-                'count' => $leadsCount,
-            ]);
+                'count' => $totalLeadsBetweenDateCount,
+                'total' => $totalLeadsCount
+            ];
         }
 
-        $cardData = [
+        return [
             "data" => $leadPipelines
         ];
-
-        return $cardData;
     }
 
     /**
-     * Collect Emails card data.
-     * 
+     * Collect emails card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -506,11 +509,11 @@ class Dashboard
     public function getEmails($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $totalEmails = $receivedEmails = $draftEmails = $outboxEmails = $sentEmails = $trashEmails = 0;
-                
+
         $emailsCollection = $this->emailRepository
             ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
             ->get();
-        
+
         foreach ($emailsCollection as $key => $email) {
             if (in_array('inbox', $email->folders) !== false) {
                 $receivedEmails++;
@@ -555,8 +558,8 @@ class Dashboard
     }
 
     /**
-     * Collect TopCustomers card data.
-     * 
+     * Collect top customers card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -583,8 +586,8 @@ class Dashboard
     }
 
     /**
-     * Collect TopProducts card data.
-     * 
+     * Collect top products card data.
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -611,7 +614,7 @@ class Dashboard
 
     /**
      * Collect quotes card data.
-     * 
+     *
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
@@ -640,7 +643,7 @@ class Dashboard
             }
         } else {
             $labels = [__("admin::app.dashboard.week") . "1"];
-            
+
             $quotes = [$this->quoteRepository->getQuotesCount("Won", $startDateFilter, $endDateFilter)];
         }
 
@@ -667,7 +670,7 @@ class Dashboard
 
     /**
      * This will return date range to be applied on dashboard data.
-     * 
+     *
      * @param  array  $data
      * @return array
      */
@@ -680,7 +683,7 @@ class Dashboard
 
         $startDateFilter = $dateRange[0] . ' ' . Carbon::parse('00:01')->format('H:i');
         $endDateFilter = $dateRange[1] . ' ' . Carbon::parse('23:59')->format('H:i');
-        
+
         $startDate = Carbon::parse($startDateFilter);
         $endDate = Carbon::parse($endDateFilter);
 
@@ -698,7 +701,7 @@ class Dashboard
 
     /**
      * Format dates of filter.
-     * 
+     *
      * @param  array  $data
      * @return array
      */
@@ -712,13 +715,13 @@ class Dashboard
         $endDate = Carbon::parse($data["end_date"]);
 
         array_push($labels, __("admin::app.dashboard.week") . (($totalWeeks + 1) - $currentIndex));
-        
+
         $startDate = $currentIndex != $totalWeeks
-                    ? $startDate->addDays((7 * ($totalWeeks - $currentIndex)) + ($totalWeeks - $currentIndex))
-                    : $startDate->addDays(7 * ($totalWeeks - $currentIndex));
+            ? $startDate->addDays((7 * ($totalWeeks - $currentIndex)) + ($totalWeeks - $currentIndex))
+            : $startDate->addDays(7 * ($totalWeeks - $currentIndex));
 
         $endDate = $currentIndex == 1 ? $endDate->addDays(1) : (clone $startDate)->addDays(7);
-        
+
         $startDate = $startDate->format('Y-m-d  00:00:01');
         $endDate = $endDate->format('Y-m-d 23:59:59');
 
@@ -726,8 +729,8 @@ class Dashboard
     }
 
     /**
-     * Collect card data based on cardId.
-     * 
+     * Collect card data based on `cardId`.
+     *
      * @param  array  $requestData
      * @return array|boolean
      */
@@ -767,12 +770,12 @@ class Dashboard
         }
 
         $cardData = $relevantFunction
-                    ? $class->{$relevantFunction}(
-                        $startDateFilter,
-                        $endDateFilter,
-                        $totalWeeks
-                    )
-                    : $cardData ?? false;
+            ? $class->{$relevantFunction}(
+                $startDateFilter,
+                $endDateFilter,
+                $totalWeeks
+            )
+            : $cardData ?? false;
 
         return $cardData;
     }
