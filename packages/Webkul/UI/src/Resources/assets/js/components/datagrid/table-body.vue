@@ -138,10 +138,6 @@ export default {
     methods: {
         ...mapActions(["selectTableRow"]),
 
-        isSuccess: function(responseCode) {
-            return responseCode === 200 || responseCode === 201;
-        },
-
         doAction: function({ event, route, method, confirm_text }) {
             if (confirm_text) {
                 if (confirm(confirm_text)) {
@@ -167,22 +163,20 @@ export default {
                 .then(response => {
                     event.preventDefault();
 
-                    if (this.isSuccess(response.status)) {
-                        if (type == "download") {
-                            this.download(
-                                response.data.fileName,
-                                response.data.fileContent
-                            );
-                        } else {
-                            this.addFlashMessages({
-                                type: "success",
-                                message: response.data.message
-                            });
+                    if (type == "download") {
+                        this.download(
+                            response.data.fileName,
+                            response.data.fileContent
+                        );
+                    } else {
+                        this.addFlashMessages({
+                            type: "success",
+                            message: response.data.message
+                        });
 
-                            EventBus.$emit("refresh_table_data", {
-                                usePrevious: true
-                            });
-                        }
+                        EventBus.$emit("refresh_table_data", {
+                            usePrevious: true
+                        });
                     }
                 })
                 .catch(error => {
