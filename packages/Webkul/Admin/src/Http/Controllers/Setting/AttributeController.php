@@ -142,14 +142,12 @@ class AttributeController extends Controller
                 ], 200);
             } catch(\Exception $exception) {
                 return response()->json([
-                    'status'  => false,
                     'message' => trans('admin::app.settings.attributes.delete-failed'),
                 ], 400);
             }
         }
 
         return response()->json([
-            'status'  => false,
             'message' => trans('admin::app.settings.attributes.delete-failed'),
         ], 400);
     }
@@ -189,7 +187,6 @@ class AttributeController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.title')]),
         ]);
     }

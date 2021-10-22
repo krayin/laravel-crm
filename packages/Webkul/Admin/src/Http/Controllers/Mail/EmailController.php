@@ -201,7 +201,6 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             $response = [
-                'status'  => true,
                 'message' => trans('admin::app.mail.update-success'),
             ];
 
@@ -271,7 +270,6 @@ class EmailController extends Controller
 
             if (request()->ajax()) {
                 return response()->json([
-                    'status'  => true,
                     'message' => trans('admin::app.mail.delete-success'),
                 ], 200);
             } else {
@@ -286,7 +284,6 @@ class EmailController extends Controller
         } catch(\Exception $exception) {
             if (request()->ajax()) {
                 return response()->json([
-                    'status'  => false,
                     'message' => trans('admin::app.mail.delete-failed'),
                 ], 400);
             } else {
@@ -313,7 +310,6 @@ class EmailController extends Controller
         }
 
         return response()->json([
-            'status'  => true,
             'message' => trans('admin::app.mail.destroy-success'),
         ]);
     }

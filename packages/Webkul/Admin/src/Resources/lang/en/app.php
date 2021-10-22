@@ -461,6 +461,7 @@
                 'user-define-error'   => 'Can not delete system user.',
                 'mass-update-success' => 'Users updated successfully.',
                 'mass-delete-success' => 'Users deleted successfully.',
+                'mass-delete-failed'  => 'Users can not be deleted.',
             ],
 
             'attributes' => [

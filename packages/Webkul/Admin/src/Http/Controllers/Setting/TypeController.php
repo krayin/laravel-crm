@@ -116,18 +116,15 @@ class TypeController extends Controller
             Event::dispatch('settings.type.delete.after', $id);
 
             return response()->json([
-                'status'  => true,
                 'message' => trans('admin::app.settings.types.delete-success'),
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'status'  => false,
                 'message' => trans('admin::app.settings.types.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'status'  => false,
             'message' => trans('admin::app.settings.types.delete-failed'),
         ], 400);
     }
