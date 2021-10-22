@@ -67,7 +67,9 @@ class EmailController extends Controller
             return redirect()->route('admin.mail.index', ['route' => 'inbox']);
         }
 
-        bouncer()->allow('mail.' . request('route'));
+        if (! bouncer()->hasPermission('mail.' . request('route'))) {
+            abort(401, 'This action is unauthorized');
+        }
 
         switch (request('route')) {
             case 'compose':
