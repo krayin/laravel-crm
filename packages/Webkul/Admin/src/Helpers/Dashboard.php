@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Helpers;
 
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Email\Repositories\EmailRepository;
@@ -386,21 +387,21 @@ class Dashboard
      */
     public function getActivities($startDateFilter, $endDateFilter, $totalWeeks)
     {
-        $totalCount = 0;
+        $activityTypes = ['call', 'meeting', 'lunch'];
 
         $activities = $this->activityRepository
-            ->select(\DB::raw("(COUNT(*)) as count"), 'type as label')
+            ->select(DB::raw("(COUNT(*)) as count"), 'type as label')
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->groupBy('type')
             ->orderBy('count', 'desc')
-            ->whereIn('type', ['call', 'meeting', 'lunch'])
+            ->whereIn('type', $activityTypes)
             ->whereBetween('created_at', [$startDateFilter, $endDateFilter])
             ->where(function ($query) {
                 $currentUser = auth()->guard('user')->user();
 
                 if ($currentUser->view_permission != 'global') {
                     if ($currentUser->view_permission == 'group') {
-                        $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+                        $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
 
                         $query->whereIn('activities.user_id', $userIds)
                             ->orWhereIn('activity_participants.user_id', $userIds);
@@ -410,18 +411,25 @@ class Dashboard
                     }
                 }
             })
-            ->get()
-            ->toArray();
+            ->get();
 
-        foreach ($activities as $activity) {
-            $totalCount += $activity['count'];
-        }
+        $typesWithZeroCount = collect($activityTypes)
+            ->filter(function ($type) use ($activities) {
+                return ! in_array($type, $activities->pluck('label')->toArray());
+            })
+            ->map(function ($type) {
+                return [
+                    'count' => 0,
+                    'label' => $type
+                ];
+            });
 
-        $cardData = [
-            "data" => $activities,
+        $activities->push(...$typesWithZeroCount);
+
+        return [
+            'data' => $activities->toArray(),
+            'total' => $activities->pluck('count')->sum()
         ];
-
-        return $cardData;
     }
 
     /**
@@ -471,30 +479,30 @@ class Dashboard
      */
     public function getPipelines($startDateFilter, $endDateFilter, $totalWeeks): array
     {
-        $leadPipelines = [];
+        $totalLeadsBetweenDateCount = $this->leadRepository
+            ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
+            ->count();
 
-        $pipelines = $this->pipelineRepository->select('id', 'name')->get();
+        $leadPipelines = $this->pipelineRepository
+            ->select('id', 'name')
+            ->get()
+            ->map(function ($pipeline) use ($startDateFilter, $endDateFilter) {
+                $individualLeads = $this->leadRepository
+                    ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
+                    ->where('lead_pipelines.id', $pipeline->id)
+                    ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
+                    ->count();
 
-        foreach ($pipelines as $pipeline) {
-            $leadQuery = $this->leadRepository
-                ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
-                ->where('lead_pipelines.id', $pipeline->id);
-
-            $totalLeadsCount = $leadQuery->count();
-
-            $totalLeadsBetweenDateCount = $leadQuery
-                ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
-                ->count();
-
-            $leadPipelines[] = [
-                'label' => $pipeline->name,
-                'count' => $totalLeadsBetweenDateCount,
-                'total' => $totalLeadsCount
-            ];
-        }
+                return [
+                    'label' => $pipeline->name,
+                    'count' => $individualLeads,
+                ];
+            })
+            ->toArray();
 
         return [
-            "data" => $leadPipelines
+            'data' => $leadPipelines,
+            'total' => $totalLeadsBetweenDateCount
         ];
     }
 
@@ -568,7 +576,7 @@ class Dashboard
     public function getTopCustomers($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topCustomers = $this->leadRepository
-            ->select('persons.id as personId', 'persons.name as label', \DB::raw("(COUNT(*)) as count"))
+            ->select('persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->groupBy('person_id')
@@ -596,7 +604,7 @@ class Dashboard
     public function getTopProducts($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topProducts = $this->leadProductRepository
-            ->select('lead_products.*', 'products.name as label', \DB::raw("(COUNT(*)) as count"))
+            ->select('lead_products.*', 'products.name as label', DB::raw("(COUNT(*)) as count"))
             ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
             ->leftJoin('products', 'lead_products.product_id', '=', 'products.id')
             ->groupBy('lead_products.product_id')
