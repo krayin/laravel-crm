@@ -27,7 +27,7 @@ return [
         'sort'       => 4,
         'icon-class' => 'emails-icon',
     ], [
-        'key'        => 'mail.create',
+        'key'        => 'mail.compose',
         'name'       => 'admin::app.layouts.mail.compose',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'compose'],
