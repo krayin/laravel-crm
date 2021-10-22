@@ -50,13 +50,10 @@ class Menu
             $configurations[$index]['params'] = str_replace(".", "/", $configuration['key']);
         }
 
-        // $adminMenus = array_merge(config('menu.admin'), $configurations);
         $adminMenus = config('menu.admin');
 
-        $acl = app('acl');
-
         foreach ($adminMenus as $index => $item) {
-            if (! isset($item['route']) || ! bouncer()->hasPermission($acl->roles[$item['route']])) {
+            if (! bouncer()->hasPermission($item['key'])) {
                 continue;
             }
 
@@ -70,6 +67,7 @@ class Menu
 
             $tree->add($item, 'menu');
         }
+
 
         $tree->items = core()->sortItems($tree->items);
 
