@@ -71,6 +71,7 @@ class QuoteDataGrid extends DataGrid
         $this->addFilter('user', 'quotes.user_id');
         $this->addFilter('user_name', 'quotes.user_id');
         $this->addFilter('person_name', 'persons.name');
+        $this->addFilter('expired_at', 'quotes.expired_at');
         $this->addFilter('created_at', 'quotes.created_at');
 
         $this->setQueryBuilder($queryBuilder);
@@ -162,6 +163,17 @@ class QuoteDataGrid extends DataGrid
             'sortable' => true,
             'closure'  => function ($row) {
                 return core()->formatBasePrice($row->grand_total, 2);
+            },
+        ]);
+
+        $this->addColumn([
+            'index'      => 'expired_at',
+            'label'      => trans('admin::app.leads.expired-at'),
+            'type'       => 'date_range',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
+                return core()->formatDate($row->expired_at);
             },
         ]);
 
