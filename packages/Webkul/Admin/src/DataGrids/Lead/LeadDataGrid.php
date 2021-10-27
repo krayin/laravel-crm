@@ -118,6 +118,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
+        $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
 
         $this->setQueryBuilder($queryBuilder);
