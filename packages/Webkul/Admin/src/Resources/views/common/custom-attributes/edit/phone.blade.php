@@ -22,7 +22,7 @@
                         :name="attribute['code'] + '[' + index + '][value]'"
                         class="control"
                         v-model="contactNumber['value']"
-                        v-validate="validations"
+                        v-validate="validations + '|unique_contact_number'"
                         :data-vv-as="attribute['name']"
                     />
 
@@ -72,6 +72,8 @@
                 },
 
                 created: function() {
+                    this.extendValidator();
+
                     if (! this.contactNumbers || ! this.contactNumbers.length) {
                         this.contactNumbers = [{
                             'value': '',
@@ -92,6 +94,44 @@
                         const index = this.contactNumbers.indexOf(contactNumber);
 
                         Vue.delete(this.contactNumbers, index);
+                    },
+
+                    extendValidator: function () {
+                        this.$validator.extend('unique_contact_number', {
+                            getMessage: (field) => '{!! __('admin::app.common.duplicate-value') !!}',
+
+                            validate: (value) => {
+                                let filteredContactNumbers = this.contactNumbers.filter((contactNumber) => {
+                                    return contactNumber.value == value;
+                                });
+
+                                if (filteredContactNumbers.length > 1) {
+                                    return false;
+                                }
+
+                                this.removeUniqueErrors();
+
+                                return true;
+                            }
+                        });
+                    },
+
+                    isDuplicateExists: function () {
+                        let contactNumbers = this.contactNumbers.map((contactNumber) => contactNumber.value);
+
+                        return contactNumbers.some((contactNumber, index) => contactNumbers.indexOf(contactNumber) != index);
+                    },
+
+                    removeUniqueErrors: function () {
+                        if (! this.isDuplicateExists()) {
+                            this.errors
+                                .items
+                                .filter(error => error.rule === 'unique')
+                                .map(error => error.id)
+                                .forEach((id) => {
+                                    this.errors.removeById(id);
+                                });
+                        }
                     }
                 }
             });
