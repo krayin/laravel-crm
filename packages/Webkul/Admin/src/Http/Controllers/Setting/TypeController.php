@@ -48,7 +48,7 @@ class TypeController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:lead_types,name',
         ]);
 
         Event::dispatch('settings.type.create.before');
@@ -84,7 +84,7 @@ class TypeController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'name' => 'required',
+            'name' => 'required|unique:lead_types,name,' . $id,
         ]);
 
         Event::dispatch('settings.type.update.before', $id);
