@@ -176,21 +176,25 @@
                                         <div class="dropdown-list">
                                             <div class="dropdown-container">
                                                 <ul>
-                                                    <li>
-                                                        <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
-                                                            {{ __('admin::app.leads.edit') }}
-                                                        </a>
-                                                    </li>
-                                                    
+                                                    @if (bouncer()->hasPermission('quotes.edit'))
+                                                        <li>
+                                                            <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
+                                                                {{ __('admin::app.leads.edit') }}
+                                                            </a>
+                                                        </li>
+                                                    @endif
+
                                                     <li>
                                                         <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
                                                             {{ __('admin::app.leads.export-to-pdf') }}
                                                         </a>
                                                     </li>
-
-                                                    <li @click="removeQuote(quote)">
-                                                        {{ __('admin::app.leads.remove') }}
-                                                    </li>
+                                                    
+                                                    @if (bouncer()->hasPermission('quotes.delete'))
+                                                        <li @click="removeQuote(quote)">
+                                                            {{ __('admin::app.leads.remove') }}
+                                                        </li>
+                                                    @endif
                                                 </ul>
                                             </div>
                                         </div>
