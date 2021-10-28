@@ -172,6 +172,8 @@ class AttributeController extends Controller
      */
     public function massDestroy()
     {
+        $count = 0;
+
         foreach (request('rows') as $attributeId) {
             $attribute = $this->attributeRepository->find($attributeId);
 
@@ -184,6 +186,14 @@ class AttributeController extends Controller
             $this->attributeRepository->delete($attributeId);
 
             Event::dispatch('settings.attribute.delete.after', $attributeId);
+
+            $count++;
+        }
+
+        if (! $count) {
+            return response()->json([
+                'message' => trans('admin::app.settings.attributes.mass-delete-failed'),
+            ], 400);
         }
 
         return response()->json([
