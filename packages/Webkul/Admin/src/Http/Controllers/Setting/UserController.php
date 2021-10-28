@@ -224,14 +224,30 @@ class UserController extends Controller
      */
     public function massUpdate()
     {
+        $count = 0;
+
         $data = request()->all();
 
-        foreach ($data['rows'] as $userId) {
-            if (($userId != auth()->guard('user')->user()->id) || ($data['value'] == 1)) {
-                $this->userRepository->update([
-                    'status' => $data['value'],
-                ], $userId);
+        foreach (request('rows') as $userId) {
+            if (auth()->guard('user')->user()->id == $userId) {
+                continue;
             }
+
+            Event::dispatch('settings.user.update.before', $userId);
+
+            $this->userRepository->update([
+                'status' => request('value'),
+            ], $userId);
+
+            Event::dispatch('settings.user.update.after', $userId);
+
+            $count++;
+        }
+
+        if (! $count) {
+            return response()->json([
+                'message' => trans('admin::app.settings.users.mass-update-failed'),
+            ], 400);
         }
 
         return response()->json([
