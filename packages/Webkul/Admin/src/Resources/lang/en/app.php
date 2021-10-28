@@ -800,6 +800,7 @@
             'select-call'         => 'Call',
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
+            'duplicate-value'     => 'The value cannot be duplicate'
         ],
 
         'user' => [

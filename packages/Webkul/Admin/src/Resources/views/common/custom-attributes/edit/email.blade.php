@@ -21,7 +21,7 @@
                         :name="attribute['code'] + '[' + index + '][value]'"
                         class="control"
                         v-model="email['value']"
-                        v-validate="validations"
+                        v-validate="validations + '|unique_email'"
                         :data-vv-as="attribute['name']"
                     >
 
@@ -67,6 +67,8 @@
                 },
     
                 created: function() {
+                    this.extendValidator();
+
                     if (! this.emails || ! this.emails.length) {
                         this.emails = [{
                             'value': '',
@@ -87,6 +89,44 @@
                         const index = this.emails.indexOf(email);
     
                         Vue.delete(this.emails, index);
+                    },
+
+                    extendValidator: function () {
+                        this.$validator.extend('unique_email', {
+                            getMessage: (field) => '{!! __('admin::app.common.duplicate-value') !!}',
+
+                            validate: (value) => {
+                                let filteredEmails = this.emails.filter((email) => {
+                                    return email.value == value;
+                                });
+
+                                if (filteredEmails.length > 1) {
+                                    return false;
+                                }
+
+                                this.removeUniqueErrors();
+
+                                return true;
+                            }
+                        });
+                    },
+
+                    isDuplicateExists: function () {
+                        let emails = this.emails.map((email) => email.value);
+
+                        return emails.some((email, index) => emails.indexOf(email) != index);
+                    },
+
+                    removeUniqueErrors: function () {
+                        if (! this.isDuplicateExists()) {
+                            this.errors
+                                .items
+                                .filter(error => error.rule === 'unique')
+                                .map(error => error.id)
+                                .forEach((id) => {
+                                    this.errors.removeById(id);
+                                });
+                        }
                     }
                 }
             });
