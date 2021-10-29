@@ -175,7 +175,7 @@
                                         {{ __('admin::app.quotes.quantity') }}
                                     </label>
                                 <div>
-                                </th>
+                            </th>
 
                             <th class="price">
                                 <div class="form-group">
@@ -188,10 +188,10 @@
 
                             <th class="amount">
                                 <div class="form-group">                                    
-                                         {{ __('admin::app.quotes.amount') }}                               
-                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                 </div>
-                             </th>
+                                    {{ __('admin::app.quotes.amount') }}                               
+                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                </div>
+                            </th>
 
                             <th class="discount">
                                 <div class="form-group">
@@ -340,7 +340,7 @@
                         v-validate="'required'"
                         data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;"
                         v-on:keyup="search"
-                        placeholder="search.."
+                        placeholder="{{ __('admin::app.quotes.search') }}"
                         
                     />
 

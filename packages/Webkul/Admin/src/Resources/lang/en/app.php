@@ -265,7 +265,8 @@
             'sub-total'           => 'Sub Total',
             'tax'                 => 'Tax',
             'adjustment'          => 'Adjustment',
-            'grand-total'         => 'Grand Total'
+            'grand-total'         => 'Grand Total',
+            'search'              => 'Search..'
         ],
 
         'mail' => [
