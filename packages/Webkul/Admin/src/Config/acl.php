@@ -17,15 +17,20 @@ return [
         'route' => ['admin.leads.create', 'admin.leads.store'],
         'sort'  => 1,
     ], [
+        'key'   => 'leads.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.leads.view',
+        'sort'  => 2,
+    ], [
         'key'   => 'leads.edit',
         'name'  => 'admin::app.acl.edit',
         'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
-        'sort'  => 2,
+        'sort'  => 3,
     ], [
         'key'   => 'leads.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.leads.delete', 'admin.leads.mass_delete'],
-        'sort'  => 3,
+        'sort'  => 4,
     ],  [
         'key'   => 'quotes',
         'name'  => 'admin::app.acl.quotes',

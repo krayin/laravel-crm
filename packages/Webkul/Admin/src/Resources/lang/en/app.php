@@ -459,6 +459,7 @@
                 'last-delete-error'   => 'At least one user is required.',
                 'user-define-error'   => 'Can not delete system user.',
                 'mass-update-success' => 'Users updated successfully.',
+                'mass-update-failed'  => 'Users can not be updated.',
                 'mass-delete-success' => 'Users deleted successfully.',
                 'mass-delete-failed'  => 'Users can not be deleted.',
             ],
@@ -509,7 +510,8 @@
                 'update-error'          => 'Unable to update attribute.',
                 'delete-success'        => 'Attribute deleted successfully.',
                 'delete-failed'         => 'Attribute can not be deleted.',
-                'user-define-error'     => 'Can not delete system attribute.'
+                'user-define-error'     => 'Can not delete system attribute.',
+                'mass-delete-failed'    => 'Attributes can not be deleted.',
             ],
 
             'pipelines' => [
@@ -798,6 +800,7 @@
             'select-call'         => 'Call',
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
+            'duplicate-value'     => 'The value cannot be duplicate'
         ],
 
         'user' => [

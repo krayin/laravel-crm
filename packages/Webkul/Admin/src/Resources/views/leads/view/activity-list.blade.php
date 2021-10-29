@@ -114,97 +114,103 @@
 
             {!! view_render_event('admin.leads.view.informations.activity_list.quotes.before', ['lead' => $lead]) !!}
 
-            <tab name="Quotes">
-                <div class="table lead-quote-list" style="padding: 5px">
+            @if (bouncer()->hasPermission('quotes'))
+                <tab name="Quotes">
+                    <div class="table lead-quote-list" style="padding: 5px">
 
-                    <table>
-                        <thead>
-                            <tr>
-                                <th class="quote-subject">{{ __('admin::app.leads.subject') }}</th>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th class="quote-subject">{{ __('admin::app.leads.subject') }}</th>
 
-                                <th class="expired-at">{{ __('admin::app.leads.expired-at') }}</th>
+                                    <th class="expired-at">{{ __('admin::app.leads.expired-at') }}</th>
 
-                                <th class="sub-total">
-                                    {{ __('admin::app.leads.sub-total') }}
-                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                </th>
+                                    <th class="sub-total">
+                                        {{ __('admin::app.leads.sub-total') }}
+                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                    </th>
 
-                                <th class="discount">
-                                    {{ __('admin::app.leads.discount') }}
-                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                </th>
+                                    <th class="discount">
+                                        {{ __('admin::app.leads.discount') }}
+                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                    </th>
 
-                                <th class="tax">
-                                    {{ __('admin::app.leads.tax') }}
-                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                </th>
+                                    <th class="tax">
+                                        {{ __('admin::app.leads.tax') }}
+                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                    </th>
 
-                                <th class="adjustment">
-                                    {{ __('admin::app.leads.adjustment') }}
-                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                </th>
+                                    <th class="adjustment">
+                                        {{ __('admin::app.leads.adjustment') }}
+                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                    </th>
 
-                                <th class="grand-total">
-                                    {{ __('admin::app.leads.grand-total') }}
-                                    <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                </th>
+                                    <th class="grand-total">
+                                        {{ __('admin::app.leads.grand-total') }}
+                                        <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
+                                    </th>
 
-                                <th class="actions" style="width: 40px;"></th>
-                            </tr>
-                        </thead>
-                        
-                        <tbody>
-                            <tr v-for="quote in quotes">
-                                <td class="quote-subject">@{{ quote.subject }}</td>
+                                    <th class="actions" style="width: 40px;"></th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr v-for="quote in quotes">
+                                    <td class="quote-subject">@{{ quote.subject }}</td>
 
-                                <td class="expired-at">@{{ quote.expired_at }}</td>
-                                
-                                <td class="sub-total">@{{ quote.sub_total }}</td>
+                                    <td class="expired-at">@{{ quote.expired_at }}</td>
+                                    
+                                    <td class="sub-total">@{{ quote.sub_total }}</td>
 
-                                <td class="discount">@{{ quote.discount_amount }}</td>
+                                    <td class="discount">@{{ quote.discount_amount }}</td>
 
-                                <td class="tax">@{{ quote.tax_amount }}</td>
+                                    <td class="tax">@{{ quote.tax_amount }}</td>
 
-                                <td class="adjustment">@{{ quote.adjustment_amount }}</td>
+                                    <td class="adjustment">@{{ quote.adjustment_amount }}</td>
 
-                                <td class="grand-total">@{{ quote.grand_total }}</td>
+                                    <td class="grand-total">@{{ quote.grand_total }}</td>
 
-                                <td class="actions">
-                                    <span class="icon ellipsis-icon dropdown-toggle"></span>
+                                    <td class="actions">
+                                        <span class="icon ellipsis-icon dropdown-toggle"></span>
 
-                                    <div class="dropdown-list">
-                                        <div class="dropdown-container">
-                                            <ul>
-                                                <li>
-                                                    <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
-                                                        {{ __('admin::app.leads.edit') }}
-                                                    </a>
-                                                </li>
-                                                
-                                                <li>
-                                                    <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
-                                                        {{ __('admin::app.leads.export-to-pdf') }}
-                                                    </a>
-                                                </li>
+                                        <div class="dropdown-list">
+                                            <div class="dropdown-container">
+                                                <ul>
+                                                    @if (bouncer()->hasPermission('quotes.edit'))
+                                                        <li>
+                                                            <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
+                                                                {{ __('admin::app.leads.edit') }}
+                                                            </a>
+                                                        </li>
+                                                    @endif
 
-                                                <li @click="removeQuote(quote)">
-                                                    {{ __('admin::app.leads.remove') }}
-                                                </li>
-                                            </ul>
+                                                    <li>
+                                                        <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
+                                                            {{ __('admin::app.leads.export-to-pdf') }}
+                                                        </a>
+                                                    </li>
+                                                    
+                                                    @if (bouncer()->hasPermission('quotes.delete'))
+                                                        <li @click="removeQuote(quote)">
+                                                            {{ __('admin::app.leads.remove') }}
+                                                        </li>
+                                                    @endif
+                                                </ul>
+                                            </div>
                                         </div>
-                                    </div>
-                                </td>
-                            </tr>
+                                    </td>
+                                </tr>
 
-                            <tr v-if="! quotes.length">
-                                <td colspan="10">
-                                    <p style="text-align: center;">{{ __('admin::app.common.no-records-found') }}</p>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </tab>
+                                <tr v-if="! quotes.length">
+                                    <td colspan="10">
+                                        <p style="text-align: center;">{{ __('admin::app.common.no-records-found') }}</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </tab>
+            @endif
 
             {!! view_render_event('admin.leads.view.informations.activity_list.quotes.after', ['lead' => $lead]) !!}
         </tabs>

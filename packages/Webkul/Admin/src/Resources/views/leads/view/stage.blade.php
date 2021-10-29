@@ -45,7 +45,7 @@
                     <span class="pull-left">
                         <i class="icon calendar-icon"></i>
                         <label>{{ __('admin::app.leads.created-date:') }}</label>
-                        <span>{{ $lead->created_at->diffForHumans() }}</span>
+                        <span title="{{ core()->formatDate($lead->created_at) }}">{{ $lead->created_at->diffForHumans() }}</span>
                     </span>
 
                     <span class="pull-right">
@@ -54,13 +54,13 @@
                             
                             <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.closed-date:') }}</label>
-                            <span>{{ $lead->closed_at->diffForHumans() }}</span>
+                            <span title="{{ core()->formatDate($lead->closed_at) }}">{{ $lead->closed_at->diffForHumans() }}</span>
 
                         @elseif ($lead->expected_close_date)
 
                              <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.expected-close-date:') }}</label>
-                            <span>{{ $lead->expected_close_date->diffForHumans() }}</span>
+                            <span title="{{ core()->formatDate($lead->expected_close_date) }}">{{ $lead->expected_close_date->diffForHumans() }}</span>
 
                         @endif
                     </span>
