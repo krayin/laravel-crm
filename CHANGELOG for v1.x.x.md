@@ -1,3 +1,265 @@
+## **v1.2.0 (1st of November 2021)**
+
+* [feature] Pipeline feature implemented
+
+* [feature] Quick create option implemented
+
+* [feature] Brand new setting page implemented
+
+
+* #138 [fixed] - fix column spacing in quotes inside the respective leads
+
+* #170 [fixed] - If admin Inactive any user who is logged in on CRM then the user should automatically logged out
+
+* #171 [fixed] - When admin/user logged in to their panel then the name of logged in user should be mention to the top right corner
+
+* #192 [fixed] - When we appying the filters to search leads . then the end date input should not take the date which is less then start date.
+
+* #196 [fixed] - When we creating Attributes after choosing select from type dropdown and options from options dropdown . Then Input Validation field should be disabled.
+
+* #204 [fixed] - When we creating activity and selecting date in 'To' input box which is less then 'From' date. Inside schedule label. then it should give an error.
+
+* #255 [fixed] - When the user trying to create/edit Activity. then there should be a suggestion in placeholder of Participants input field for search Participants.
+
+* #265 [fixed] - The user or person should not be add into participants which is already added as a participants.
+
+* #277 [fixed] - When we trying to delete any lead. then There should be a confirm box before delete lead.
+
+* #280 [fixed] - Filters should be visible to filter the leads.
+
+* #281 [fixed] - When we are creating Note. Then ' Note created successfully ' should be show in message box.
+
+* #282 [fixed] - There should be a scrollbar to scroll the leads inside lead tab.
+
+* #283 [fixed] - The date filter should work properly in leads section
+
+* #285 [fixed] - When we are deleting any Note. then there should be a confirm box before delete Note
+
+* #286 [fixed] - When we are removing the search keyword from the search box inside lead. then there should be visible all leads
+
+* #287 [fixed] - When we are adding a person, then there should be a suggestion in organization input field
+
+* #288 [fixed] - When we are trying to delete multiple persons at a time, then there should be a confirm box before delete person
+
+* #289 [fixed] - When we are trying to delete multiple Leads at a time, then there should be a confirm box before delete the Lead.
+
+* #296 [fixed] - When we are deleting any Note. Then ' Note deleted successfully ' should be show in message box
+
+* #297 [fixed] - Search box should be work properly. when we are searching any attribute
+
+* #298 [fixed] - The status is not updating of login user and showing 'User updated successfully'.
+
+* #299 [fixed] - Search box should be work properly. when we are searching any user
+
+* #300 [fixed] - When we are creating the lead then The color should be change of the tab after filled all the required fields
+
+* #301 [fixed] - Search box should be work properly. when we are searching any Quote
+
+* #305 [fixed] - The Warning message should be show, if the user adding same product again and again in quote items.
+
+* #306 [fixed] - There should be a option to select date in created at' input field, if user want to filter activities.
+
+* #309 [fixed] - When we applying filters to search activities . then filters should be work properly to search activities
+
+* #313 [fixed] - There should be a option to delete multiple activites at a time
+
+* #318 [fixed] - There should be a option to select date in created date input field, if user want to filter the inbox mails.
+
+* #319 [fixed] - There should be a warning message, if user creating activities for less then current schedule time
+
+* #321 [fixed] - The filter should be work properly, when user filter activity by lead name.
+
+* #324 [fixed] - Popup box should not show until we select any action
+
+* #325 [fixed] - The inbox mail detail should be visible, if we want to view any inbox mail.
+
+* #334 [fixed] - Page should be redirect to inbox. after delete mail with success message.
+
+* #337 [fixed] - Page should be redirect to inbox. after send mail
+
+* #338 [fixed] - HTML code should not be visible in attachment place.
+
+* #341 [fixed] - Search box should be work properly. when we are searching any Lead
+
+* #351 [fixed] - Fix column spacing in Inbox inside the mail tab
+
+* #352 [fixed] - There should not be any exception. if user want to filter inbox mail.
+
+* #354 [fixed] - The date filter should be work properly in Activity tab.
+
+* #361 [fixed] - There should be a submit button if we want to filter dashboard data using date
+
+* #363 [fixed] - Search box should be work properly. when we are searching any Organizations
+
+* #364 [fixed] - There should not be any error if we are adding new organization.
+
+* #367 [fixed] - The filter should be work properly, when user trying to filter Attributes by type
+
+* #368 [fixed] - There should be a option to edit the tag
+
+* #369 [fixed] - The filters should be work properly, if user trying to filter tags.
+
+* #372 [fixed] - There should be a option to delete the multiple tags at a time.
+
+* #377 [fixed] - Date input fields should be cleared, after click on cross icon.
+
+* #378 [fixed] - The details of contact person should be fill automatically.
+
+* #380 [fixed] - The person should be received mail , after delete person. if we have create a workflow for the same.
+
+* #381 [fixed] - The Created by field should be visible only one time in activity table.
+
+* #384 [fixed] - The default image should be show in product section.
+
+* #386 [fixed] - There should be asterisk icon in Quote item.
+
+* #396 [fixed] - The contact number field should not take the blank value.
+
+* #397 [fixed] - The input fields should be shown to add product
+
+* #398 [fixed] - Filters should be work properly in quote.
+
+* #399 [fixed] - There should not be an exception when we are trying to view inbox mail.
+
+* #400 [fixed] - The mails should be deleted when the user trying to delete multiple emails at a time.
+
+* #402 [fixed] - The user should have the option to compose mail.
+
+* #403 [fixed] - The person attributes should be shown inside the placeholder.
+
+* #404 [fixed] - The filters should be work properly in the activity section.
+
+* #407 [fixed] - The filters should work properly in the activity section.
+
+* #410 [fixed] - Filters should be work properly in the activity section
+
+* #411 [fixed] - There should not be an exception when the user trying to edit any role.
+
+* #412 [fixed] - The page should not be asked to choose file when we are trying to view draft mails
+
+* #413 [fixed] - There should not be an exception when user trying to create a lead.
+
+* #415 [fixed] - There should not be a blank option in the activity type dropdown when the user is trying to create an activity.
+
+* #416 [fixed] - There should be a dropdown instead of an input box when the user trying to filter activities by type.
+
+* #419 [fixed] - There should be a suggestion for users to search for products.
+
+* #420 [fixed] - There should be a warning message if the user trying to delete the leads when the user has no permission to delete the leads.
+
+* #422 [fixed] - There should be an option to create tags if the user has permission to create a tag.
+
+* #426 [fixed] - The mails should be visible in the inbox.
+
+* #427 [fixed] - The ' To ' field should not take a blank value when the user trying to compose a mail.
+
+* #432 [fixed] - The search box should not take the blank value.
+
+* #433 [fixed] - There should be a dropdown instead of the input box when the user trying to filter the pipeline by " is Default" .
+
+* #434 [fixed] - The person id should be visible in the person table.
+
+* #436 [fixed] - Filters should work properly in the Attributes section.
+
+* #441 [fixed] - The calculation should be correct when the user trying to create the quote.
+
+* #447 [fixed] - The delete icon should not be visible when the user is adding only one product in the quote item.
+
+* #448 [fixed] - The Leads should be visible in the lead's table.
+
+* #452 [fixed] - There should be a field of created date in the quote table.
+
+* #459 [fixed] - At least one pipeline should be the default pipeline.
+
+* #460 [fixed] - When we are trying to create a new user, then it should not give a warning message.
+
+* #465 [fixed] - There should be ' Select user ' instead of 'User' in the Leads filter.
+
+* #471 [fixed] - There should be an error if the user trying to create multiple sources with the same name.
+
+* #479 [fixed] - There should a warning message when the user trying to enter the character in the quantity input field
+
+* #481 [fixed] - There should a warning message when the user trying to enter the character in the Price and discount input field.
+
+* #482 [fixed] - Date inputs should be blank when the user is removing the date filters.
+
+* #484 [fixed] - When the user trying to see **Leads Over Time** leads from the dashboard, then only **Leads Over Time** leads should be visible on the leads table.
+
+* #485 [fixed] - When the user trying to add multiple-stage with the same name in the pipeline, then there should a warning message instead of an exception.
+
+* #488 [fixed] - When the user trying to click on submit button without selecting any action, then there should be a warning for select any action to perform.
+
+* #489 [fixed] - There should be a warning message if the user trying to add the same tag multiple times in a lead.
+
+* #492 [fixed] - There should be a warning message if the user trying to edit leads [by drag and drop] without permission.
+
+* #495 [fixed] - The user should not be able to edit leads without permission.
+
+* #498 [fixed] - There should be a success message after reply on mail.
+
+* #499 [fixed] - There should be an option to give permissions-related quotes to a role.
+
+* #500 [fixed] - The user should log out automatically if the user has no permission for any tab.
+
+* #504 [fixed] - There should be a warning message if the user is adding the same email and contact number multiple time
+
+* #505 [fixed] - The user should be redirected to the login page after deleting the self account.
+
+* #512 [fixed] - There should not be any exception when the user trying to view the lead.
+
+* #514 [fixed] - The user should not be able to select the date greater than today in the created date input field.
+
+* #530 [fixed] - The user should not be able to delete tags if the user has no permission for the same.
+
+* #531 [fixed] - The Add stage and Save as pipeline buttons should not be disabled when the user removing the duplicate stage
+
+* #534 [fixed] - The user should not be able to add a tag on a lead if the user has no permission for edit the lead.
+
+* #541 [fixed] - 'Expected Close Date' should not be less than Created date
+
+* #542 [fixed] - There should not be any exception when the user tries to filter quotes by created date.
+
+* #543 [fixed] - The numerator should not be greater than the denominator in the dashboard.
+
+* #544 [fixed] - There should be Yes or No' in 'Is Done dropdown' when the user trying to filter activity by 'is done' filter.
+
+* #545 [fixed] - There should be an option to select date instead of input type text.
+
+* #568 [fixed] - When the admin trying to delete self account the message should be correct
+
+* #569 [fixed] - There should be a success message, When the admin tries to delete any other user.
+
+* #571 [fixed] - The user should not be able to edit another user without permission.
+
+* #577 [fixed] - The user should not be able to access the 'sent, trash, inbox' pages without permission.
+
+* #585 [fixed] - The Setting option should be visible if the user has permission for the same.
+
+* #586 [fixed] - There should not be any exception when the user is trying to compose mail.
+
+* #589 [fixed] - When the user is trying to delete default attributes, then the message should be correct.
+
+* #590 [fixed] - The user should not be able to view the quotes if the user has no permission for the same.
+
+* #592 [fixed] - The user should not be able to view the leads if the user has no permission for the same.
+
+* #599 [fixed] - There should be an option to filter quotes 'by is expired'
+
+* #600 [fixed] - The date filter should work properly when the user is trying to filter the leads.
+
+* #601 [fixed] - The rotting date should be correct when the user is trying to view any lead.
+
+* #606 [fixed] - Filters should work properly. when the user is trying to filter the activity.
+
+* #607 [fixed] - There should a warning message if the user is trying to add the same stage multiple times.
+
+* #619 [fixed] - The user should not be able to view the admin's data if the user has group permission.
+
+* #620 [fixed] - The Link Lead option should work properly on mail section.
+
+
+
+
 ## **v1.1.3 (23rd of September 2021)**
 
 * [feature] Refactored data grid code
