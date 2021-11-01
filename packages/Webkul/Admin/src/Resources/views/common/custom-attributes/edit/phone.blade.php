@@ -22,7 +22,7 @@
                         :name="attribute['code'] + '[' + index + '][value]'"
                         class="control"
                         v-model="contactNumber['value']"
-                        v-validate="validations + '|unique_contact_number'"
+                        v-validate="validations ? validations + '|unique_contact_number' : 'unique_contact_number'"
                         :data-vv-as="attribute['name']"
                     />
 
