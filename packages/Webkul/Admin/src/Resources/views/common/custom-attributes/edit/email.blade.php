@@ -21,7 +21,7 @@
                         :name="attribute['code'] + '[' + index + '][value]'"
                         class="control"
                         v-model="email['value']"
-                        v-validate="validations + '|unique_email'"
+                        v-validate="validations ? validations + '|unique_email' : 'unique_email'"
                         :data-vv-as="attribute['name']"
                     >
 
