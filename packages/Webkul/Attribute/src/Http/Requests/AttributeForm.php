@@ -74,6 +74,8 @@ class AttributeForm extends FormRequest
         })->get();
 
         foreach ($attributes as $attribute) {
+            $validations = [];
+
             if ($attribute->type == 'boolean') {
                 continue;
             } else if ($attribute->type == 'address') {
@@ -81,34 +83,30 @@ class AttributeForm extends FormRequest
                     continue;
                 }
 
-                $this->rules = array_merge($this->rules, [
+                $validations = [
                     $attribute->code . '.address'  => 'required',
                     $attribute->code . '.country'  => 'required',
                     $attribute->code . '.state'    => 'required',
                     $attribute->code . '.city'     => 'required',
                     $attribute->code . '.postcode' => 'required',
-                ]);
+                ];
             } else if ($attribute->type == 'email') {
-                $this->rules = array_merge($this->rules, [
-                    $attribute->code               => $attribute->is_required ? 'required' : 'nullable',
-                    $attribute->code . '.*.value'  => [$attribute->is_required ? 'required' : 'nullable', 'email'],
-                    $attribute->code . '.*.label'  => $attribute->is_required ? 'required' : 'nullable',
-                ]);         
+                $validations = [
+                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code . '.*.value' => [$attribute->is_required ? 'required' : 'nullable', 'email'],
+                    $attribute->code . '.*.label' => $attribute->is_required ? 'required' : 'nullable',
+                ];
             } else if ($attribute->type == 'phone') {
-                if (! $attribute->is_required) {
-                    continue;
-                }
-
-                $this->rules = array_merge($this->rules, [
-                    $attribute->code               => 'required',
-                    $attribute->code . '.*.value'  => 'required',
-                    $attribute->code . '.*.label'  => 'required',
-                ]);         
+                $validations = [
+                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code . '.*.value' => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code . '.*.label' => $attribute->is_required ? 'required' : 'nullable',
+                ];
             } else {
-                $validations = [$attribute->is_required ? 'required' : 'nullable'];
+                $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];
 
                 if ($attribute->type == 'text' && $attribute->validation) {
-                    array_push($validations,
+                    array_push($validations[$attribute->code],
                         $attribute->validation == 'decimal'
                         ? new Decimal
                         : $attribute->validation
@@ -116,19 +114,22 @@ class AttributeForm extends FormRequest
                 }
 
                 if ($attribute->type == 'price') {
-                    array_push($validations, new Decimal);
+                    array_push($validations[$attribute->code], new Decimal);
                 }
-
-                if ($attribute->is_unique) {
-                    array_push($validations, function ($field, $value, $fail) use ($attribute) {
-                        if (! $this->attributeValueRepository->isValueUnique($this->id, request('entity_type'), $attribute, request($attribute->code))) {
-                            $fail('The :attribute has already been taken.');
-                        }
-                    });
-                }
-
-                $this->rules[$attribute->code] = $validations;
             }
+
+            if ($attribute->is_unique) {
+                array_push($validations[in_array($attribute->type, ['email', 'phone'])
+                    ? $attribute->code . '.*.value'
+                    : $attribute->code
+                ], function ($field, $value, $fail) use ($attribute) {
+                    if (! $this->attributeValueRepository->isValueUnique($this->id, request('entity_type'), $attribute, request($field))) {
+                        $fail('The value has already been taken.');
+                    }
+                });
+            }
+
+            $this->rules = array_merge($this->rules, $validations);
         }
 
         return $this->rules;
