@@ -63,54 +63,60 @@ class LeadController extends Controller
      */
     public function index()
     {
-        if (request()->ajax()) {
-            if (request('view_type')) {
-                return app(\Webkul\Admin\DataGrids\Lead\LeadDataGrid::class)->toJson();
-            } else {
-                $createdAt = request('created_at') ?? null;
-
-                if ($createdAt && isset($createdAt["bw"])) {
-                    $createdAt = explode(",", $createdAt["bw"]);
-
-                    $createdAt[0] .= ' 00:01';
-
-                    $createdAt[1] = $createdAt[1]
-                        ? $createdAt[1] . ' 23:59'
-                        : Carbon::now()->format('Y-m-d 23:59');
-                } else {
-                    $createdAt = null;
-                }
-
-                if (request('pipeline_id')) {
-                    $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
-                } else {
-                    $pipeline = $this->pipelineRepository->getDefaultPipeline();
-                }
-
-                $leads = $this->leadRepository->getLeads($pipeline->id, request('search') ?? '', $createdAt)->toArray();
-
-                $totalCount = [];
-
-                foreach ($leads as $key => $lead) {
-                    $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
-
-                    $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
-                }
-
-                $totalCount = array_map(function ($count) {
-                    return core()->formatBasePrice($count);
-                }, $totalCount);
-
-                return response()->json([
-                    'blocks'      => $leads,
-                    'stage_names' => $pipeline->stages->pluck('name'),
-                    'stages'      => $pipeline->stages->toArray(),
-                    'total_count' => $totalCount,
-                ]);
-            }
-        }
-
         return view('admin::leads.index');
+    }
+
+    /**
+     * Returns a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function get()
+    {
+        if (request('view_type')) {
+            return app(\Webkul\Admin\DataGrids\Lead\LeadDataGrid::class)->toJson();
+        } else {
+            $createdAt = request('created_at') ?? null;
+
+            if ($createdAt && isset($createdAt["bw"])) {
+                $createdAt = explode(",", $createdAt["bw"]);
+
+                $createdAt[0] .= ' 00:01';
+
+                $createdAt[1] = $createdAt[1]
+                    ? $createdAt[1] . ' 23:59'
+                    : Carbon::now()->format('Y-m-d 23:59');
+            } else {
+                $createdAt = null;
+            }
+
+            if (request('pipeline_id')) {
+                $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
+            } else {
+                $pipeline = $this->pipelineRepository->getDefaultPipeline();
+            }
+
+            $leads = $this->leadRepository->getLeads($pipeline->id, request('search') ?? '', $createdAt)->toArray();
+
+            $totalCount = [];
+
+            foreach ($leads as $key => $lead) {
+                $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
+
+                $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
+            }
+
+            $totalCount = array_map(function ($count) {
+                return core()->formatBasePrice($count);
+            }, $totalCount);
+
+            return response()->json([
+                'blocks'      => $leads,
+                'stage_names' => $pipeline->stages->pluck('name'),
+                'stages'      => $pipeline->stages->toArray(),
+                'total_count' => $totalCount,
+            ]);
+        }
     }
 
     /**

@@ -14,7 +14,7 @@
                     if ($viewType = request('view_type')) {
                         $url = route('admin.leads.index', [
                             'pipeline_id' => $pipeline->id,
-                            'view_type' => $viewType
+                            'view_type'   => $viewType
                         ]);
                     } else {
                         $url = route('admin.leads.index', ['pipeline_id' => $pipeline->id]);

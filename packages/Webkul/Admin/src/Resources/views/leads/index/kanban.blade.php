@@ -179,7 +179,7 @@
                 getLeads: function (searchedKeyword, filterValues) {
                     this.$root.pageLoaded = false;
 
-                    this.$http.get("{{ route('admin.leads.index', request('pipeline_id')) }}" + `${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
+                    this.$http.get("{{ route('admin.leads.get', request('pipeline_id')) }}" + `${searchedKeyword ? `?search=${searchedKeyword}` : ''}${filterValues || ''}`)
                         .then(response => {
                             this.$root.pageLoaded = true;
 
