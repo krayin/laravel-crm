@@ -924,13 +924,26 @@
             mounted: function() {
                 tinymce.remove('#reply');
 
+                var self = this;
+
                 tinymce.init({
                     selector: 'textarea#reply',
+
                     height: 200,
+
                     width: "100%",
+                    
                     plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
+
                     toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
-                    image_advtab: true
+
+                    image_advtab: true,
+
+                    setup: function(editor) {
+                        editor.on('keyUp', function() {
+                            self.$validator.validate('email-form.reply', this.getContent());
+                        });
+                    }
                 });
             },
 
