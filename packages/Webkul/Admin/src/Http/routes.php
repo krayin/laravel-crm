@@ -84,6 +84,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{lead_id}/{tag_id?}', 'TagController@delete')->name('admin.leads.tags.delete');
 
+                Route::get('get/{pipeline_id?}', 'LeadController@get')->name('admin.leads.get');
+
                 Route::get('{pipeline_id?}', 'LeadController@index')->name('admin.leads.index');
 
                 Route::group([
