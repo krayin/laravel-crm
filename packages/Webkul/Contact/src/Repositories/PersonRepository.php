@@ -71,7 +71,7 @@ class PersonRepository extends Repository
     }
 
     /**
-     * Retreives customers count based on date
+     * Retrieves customers count based on date
      *
      * @return number
      */

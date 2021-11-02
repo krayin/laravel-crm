@@ -127,13 +127,18 @@ class AttributeValueRepository extends Repository
      */
     public function isValueUnique($entityId, $entityType, $attribute, $value)
     {
-        $result = $this->resetScope()->model
-            ->where($this->model::$attributeTypeFields[$attribute->type], $value)
+        $query = $this->resetScope()->model
             ->where('attribute_id', $attribute->id)
             ->where('entity_type', $entityType)
-            ->where('entity_id', '!=', $entityId)->get();
+            ->where('entity_id', '!=', $entityId);
 
-        return $result->count() ? false : true;
+        if (in_array($attribute->type, ['email', 'phone'])) {
+            $query->where($this->model::$attributeTypeFields[$attribute->type], 'like', "%{$value}%");
+        } else {
+            $query->where($this->model::$attributeTypeFields[$attribute->type], $value);
+        }
+
+        return $query->get()->count() ? false : true;
     }
 
     /**

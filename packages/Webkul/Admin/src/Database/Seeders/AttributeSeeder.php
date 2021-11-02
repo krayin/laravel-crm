@@ -160,7 +160,7 @@ class AttributeSeeder extends Seeder
                 'validation'      => 'numeric',
                 'sort_order'      => '3',
                 'is_required'     => '0',
-                'is_unique'       => '0',
+                'is_unique'       => '1',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
                 'created_at'      => $now,
