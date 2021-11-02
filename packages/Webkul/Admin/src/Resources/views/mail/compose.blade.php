@@ -192,6 +192,8 @@
             },
 
             mounted: function() {
+                var self = this;
+
                 tinymce.init({
                     selector: 'textarea#reply',
                     
@@ -203,7 +205,13 @@
 
                     toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
                     
-                    image_advtab: true
+                    image_advtab: true,
+
+                    setup: function(editor) {
+                        editor.on('keyUp', function() {
+                            self.$validator.validate('reply', this.getContent());
+                        });
+                    }
                 });
             },
 
