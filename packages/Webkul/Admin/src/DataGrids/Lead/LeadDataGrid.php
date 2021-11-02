@@ -90,6 +90,7 @@ class LeadDataGrid extends DataGrid
                 'persons.name as person_name',
                 'lead_pipeline_stages.name as stage'
             )
+            ->addSelect(\DB::raw('IF(lead_pipeline_stages.code = "won" OR lead_pipeline_stages.code = "lost", 0, DATEDIFF(now(), leads.created_at + INTERVAL lead_pipelines.rotten_days DAY)) as rotten_days'))
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')

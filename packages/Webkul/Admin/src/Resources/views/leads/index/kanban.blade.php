@@ -89,7 +89,14 @@
                 @endif
             </div>
 
-            <div v-for="block in blocks" :slot="block.id" :key="`block-${block.id}`">
+            <div
+                v-for="block in blocks"
+                :slot="block.id"
+                :key="`block-${block.id}`"
+                class="lead-block"
+                :class="{ 'rotten': block.rotten_days }"
+            >
+
                 <div class="lead-title">@{{ block.title }}</div>
 
                 <div class="icons">
