@@ -122,7 +122,6 @@ ul.drag-inner-list {
 
 .drag-item {
     margin: 0px;
-    padding: 10px;
     box-shadow: none;
     line-height: 30px;
     background: $white;
@@ -132,44 +131,49 @@ ul.drag-inner-list {
     border-bottom: 1px solid rgba(193, 194, 195, .5);
 
 
-    > div {
+    .lead-block {
         position: relative;
-    }
+        padding: 10px;
 
-    &:hover {
-        .icons {
-            display: inline-block;
+        &:hover {
+            .icons {
+                display: inline-block;
+            }
         }
-    }
 
-    .lead-title {
-        font-size: 16px;
-        font-weight: 500;
-        color: $font-color;
-        line-break: anywhere;
-        display: inline-block;
-        width: calc(100% - 45px);
-    }
+        &.rotten {
+            background: #ffd0d6;
+        }
 
-    .icons {
-        top: 5px;
-        right: 0;
-        display: none;
-        cursor: pointer;
-        position: absolute;
-    }
-
-    .lead-cost {
-        color: $font-color;
-    }
-
-    .lead-person,
-    .lead-cost {
-        font-size: 14px;
-
-        .icon {
-            margin-right: 5px;
-            vertical-align: middle;
+        .lead-title {
+            font-size: 16px;
+            font-weight: 500;
+            color: $font-color;
+            line-break: anywhere;
+            display: inline-block;
+            width: calc(100% - 45px);
+        }
+    
+        .icons {
+            top: 5px;
+            right: 5px;
+            display: none;
+            cursor: pointer;
+            position: absolute;
+        }
+    
+        .lead-cost {
+            color: $font-color;
+        }
+    
+        .lead-person,
+        .lead-cost {
+            font-size: 14px;
+    
+            .icon {
+                margin-right: 5px;
+                vertical-align: middle;
+            }
         }
     }
 }
