@@ -70,6 +70,25 @@ class LeadDataGrid extends DataGrid
     }
 
     /**
+     * Place your datagrid extra settings here.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->setRowProperties([
+            'backgroundColor' => '#ffd0d6',
+            'condition' => function ($row) {
+                if ($row->rotten_days > 0) {
+                    return true;
+                }
+
+                return false;
+            }
+        ]);
+    }
+
+    /**
      * Prepare query builder.
      *
      * @return void
@@ -111,12 +130,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
-
-        /**
-         * Linked should be `leads.user_id` but displaying should be `user_name`.
-         */
         $this->addFilter('user_name', 'leads.user_id');
-
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
