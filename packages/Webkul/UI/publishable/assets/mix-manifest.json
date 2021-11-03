@@ -1,7 +1,8 @@
 {
-    "/js/ui.js": "/js/ui.js?id=39b16bcaa3c7cb4789b7",
+    "/js/ui.js": "/js/ui.js?id=abbfc43d92a7a554a359",
     "/css/ui.css": "/css/ui.css?id=305ba87cbd5ce07c772d",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
+    "/images/alert-danger-icon.svg": "/images/alert-danger-icon.svg?id=d77f6a8646ed23b5c3b7",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
     "/images/arrow-down-icon.svg": "/images/arrow-down-icon.svg?id=7b5c03f96be72c9a0bef",
     "/images/arrow-down-s-icon.svg": "/images/arrow-down-s-icon.svg?id=50f6d9e50739caf9e868",
@@ -62,6 +63,5 @@
     "/fonts/Roboto-MediumItalic.ttf": "/fonts/Roboto-MediumItalic.ttf?id=cc69ce1bcb64e3479da0",
     "/fonts/Roboto-Regular.ttf": "/fonts/Roboto-Regular.ttf?id=487357337a180effe639",
     "/fonts/Roboto-Thin.ttf": "/fonts/Roboto-Thin.ttf?id=4621c139182c23270ef6",
-    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d",
-    "/images/alert-danger-icon.svg": "/images/alert-danger-icon.svg?id=d77f6a8646ed23b5c3b7"
+    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d"
 }
