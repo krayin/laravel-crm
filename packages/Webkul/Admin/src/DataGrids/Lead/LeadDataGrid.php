@@ -79,7 +79,7 @@ class LeadDataGrid extends DataGrid
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
             'condition' => function ($row) {
-                if ($row->rotten_days) {
+                if ($row->rotten_days > 0) {
                     return true;
                 }
 
