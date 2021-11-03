@@ -5,19 +5,21 @@
 @stop
 
 @section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.activities.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.activities.index.header.before') !!}
+    @php
+        $viewType = request()->view_type ?? "table";
+    @endphp
 
-                    {{ Breadcrumbs::render('activities') }}
+    @if ($viewType == "table")
+        {!! view_render_event('admin.activities.index.table.before') !!}
 
-                    {{ __('admin::app.activities.title') }}
+        @include('admin::activities.index.table')
 
-                    {!! view_render_event('admin.activities.index.header.before') !!}
-                </h1>
-            </template>
-        <table-component>
-    </div>
+        {!! view_render_event('admin.activities.index.table.after') !!}
+    @else
+        {!! view_render_event('admin.activities.index.calendar.before') !!}
+
+        @include('admin::activities.index.calendar')
+
+        {!! view_render_event('admin.activities.index.calendar.after') !!}
+    @endif
 @stop

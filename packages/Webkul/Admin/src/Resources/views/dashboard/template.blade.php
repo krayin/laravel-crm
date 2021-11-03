@@ -18,11 +18,11 @@
         <div class="page-content">
             <div class="panel">
                 <div class="panel-header">
-                    Stages
+                    Calendar
                 </div>
 
                 <div class="panel-body">
-                    
+                    <vue-cal :time-step="30" hide-view-selector :disable-views="['years', 'year', 'month', 'day']" style="height: 250px" />
                 </div>
             </div>
 

@@ -123,6 +123,8 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::get('', 'ActivityController@index')->name('admin.activities.index');
 
+                Route::get('get', 'ActivityController@get')->name('admin.activities.get');
+
                 Route::post('create', 'ActivityController@store')->name('admin.activities.store');
 
                 Route::get('edit/{id?}', 'ActivityController@edit')->name('admin.activities.edit');

@@ -4,6 +4,9 @@ import draggable from 'vuedraggable';
 import VueTimeago from 'vue-timeago';
 import VeeValidate from 'vee-validate';
 import VueKanban from 'vue-kanban';
+import VueCal from 'vue-cal'
+
+import 'vue-cal/dist/vuecal.css'
 
 import './bootstrap';
 window.moment = require('moment');
@@ -23,6 +26,8 @@ Vue.use(VueKanban);
 Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
 
 Vue.component('draggable', draggable);
+
+Vue.component('vue-cal', VueCal);
 
 $(function() {
     var app = new Vue({
