@@ -26,6 +26,7 @@
     "dependencies": {
         "moment": "^2.29.1",
         "vee-validate": "^2.2.15",
+        "vue-cal": "^3.10.1",
         "vue-kanban": "^1.8.0",
         "vue-timeago": "^5.1.3",
         "vuedraggable": "^2.24.3"
