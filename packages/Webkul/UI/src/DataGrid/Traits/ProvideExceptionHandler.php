@@ -5,6 +5,13 @@ namespace Webkul\UI\DataGrid\Traits;
 trait ProvideExceptionHandler
 {
     /**
+     * Required row properties keys.
+     *
+     * @var array
+     */
+    protected $requiredRowPropertiesKeys = ['condition'];
+
+    /**
      * Required column keys.
      *
      * @var array
@@ -17,6 +24,21 @@ trait ProvideExceptionHandler
      * @var array
      */
     protected $requiredActionKeys = ['title', 'method', 'route', 'icon'];
+
+    /**
+     * This will check the keys which are needed for row properties.
+     *
+     * @param  array  $column
+     * @return void|\Webkul\UI\Exceptions\ConditionKeyException
+     */
+    public function checkRequiredRowPropertiesKeys($rowProperty)
+    {
+        $this->checkRequiredKeys($this->requiredRowPropertiesKeys, $rowProperty, function ($missingKeys) {
+            $message = 'Missing Keys: ' . implode(', ', $missingKeys);
+
+            throw new \Webkul\UI\Exceptions\ConditionKeyException($message);
+        });
+    }
 
     /**
      * This will check the keys which are needed for column.

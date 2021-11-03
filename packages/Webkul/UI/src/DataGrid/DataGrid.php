@@ -50,6 +50,13 @@ abstract class DataGrid
     protected $filterMap = [];
 
     /**
+     * Row properties.
+     *
+     * @var array
+     */
+    protected $rowProperties = [];
+
+    /**
      * Array to hold all the columns which will be displayed on frontend.
      *
      * @var array
@@ -211,6 +218,15 @@ abstract class DataGrid
     }
 
     /**
+     * Initial stage. Add your extra settings here.
+     *
+     * @return void
+     */
+    public function init()
+    {
+    }
+
+    /**
      * Abstract method. Required method.
      *
      * @return void
@@ -261,6 +277,18 @@ abstract class DataGrid
 
             Event::dispatch($eventName, $this->invoker);
         }
+    }
+
+    /**
+     * Prepare row.
+     *
+     * @return void
+     */
+    public function setRowProperties(array $rowProperties)
+    {
+        $this->checkRequiredRowPropertiesKeys($rowProperties);
+
+        $this->rowProperties = $rowProperties;
     }
 
     /**
@@ -399,6 +427,8 @@ abstract class DataGrid
      */
     public function toJson()
     {
+        $this->init();
+
         $this->addColumns();
 
         $this->prepareTabFilters();

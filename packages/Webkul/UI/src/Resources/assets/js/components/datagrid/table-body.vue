@@ -7,6 +7,7 @@
                 :class="
                     `${selectedTableRows.indexOf(row.id) > -1 ? 'active' : ''}`
                 "
+                :style="row.rowProperties"
             >
                 <td v-if="massActions.length > 0" class="checkbox">
                     <span>
