@@ -74,6 +74,7 @@ class OrganizationDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
+            'filterable' => false,
             'closure'    => function ($row) {
                 $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
 
