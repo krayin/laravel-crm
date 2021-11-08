@@ -92,7 +92,7 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-                ->with(['emails', 'attachments', 'lead', 'person'])
+                ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
                 ->findOrFail(request('id'));
 
         if (request('route') == 'draft') {
