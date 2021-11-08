@@ -131,6 +131,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
         $this->addFilter('user_name', 'leads.user_id');
+        $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
