@@ -381,8 +381,8 @@
                 <email-item-component
                     v-for='(email, index) in email.emails'
                     :email="email"
-                    :key="0"
-                    :index="0"
+                    :key="index + 1"
+                    :index="index + 1"
                     @onEmailAction="emailAction($event)"
                 ></email-item-component>
             </div>
@@ -546,7 +546,8 @@
 
                         @csrf()
 
-                        <input type="hidden" name="parent_id" :value="action.email.id"/>
+                        <!--<input type="hidden" name="parent_id" :value="action.email.id"/>-->
+                        <input type="hidden" name="parent_id" value="{{ request('id') }}"/>
 
                         @include ('admin::common.custom-attributes.edit.email-tags')
 
