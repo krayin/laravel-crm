@@ -117,9 +117,10 @@
                     <span>@{{ data.amount | toFixed }}</span>
                     <span>@{{ data.created_at | formatDate }}</span>
                     <span>
-                        <span class="badge badge-round badge-primary" v-if="data.status == 1"></span>
-                        <span class="badge badge-round badge-warning" v-else-if="data.status == 2"></span>
-                        <span class="badge badge-round badge-success" v-else-if="data.status == 3"></span>
+                        <span
+                            class="badge badge-round badge-primary"
+                            :class="{'badge-warning': data.statusLabel == 'Lost', 'badge-success': data.statusLabel == 'Won'}"
+                        ></span>
 
                         @{{ data.statusLabel }}
                     </span>
