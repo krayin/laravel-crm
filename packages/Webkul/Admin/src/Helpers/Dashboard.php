@@ -390,7 +390,7 @@ class Dashboard
         $activityTypes = ['call', 'meeting', 'lunch'];
 
         $activities = $this->activityRepository
-            ->select(DB::raw("(COUNT(*)) as count"), 'type as label')
+            ->select(DB::raw("(COUNT(DISTINCT activities.id)) as count"), 'type as label')
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->groupBy('type')
             ->orderBy('count', 'desc')
