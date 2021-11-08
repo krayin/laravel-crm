@@ -50,7 +50,7 @@ class QuoteDataGrid extends DataGrid
                 'quotes.grand_total',
                 'quotes.created_at',
                 'users.id as user_id',
-                'users.name as user_name',
+                'users.name as sales_person',
                 'persons.id as person_id',
                 'persons.name as person_name'
             )
@@ -69,7 +69,7 @@ class QuoteDataGrid extends DataGrid
 
         $this->addFilter('id', 'quotes.id');
         $this->addFilter('user', 'quotes.user_id');
-        $this->addFilter('user_name', 'quotes.user_id');
+        $this->addFilter('sales_person', 'quotes.user_id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('expired_at', 'quotes.expired_at');
         $this->addFilter('created_at', 'quotes.created_at');
@@ -92,7 +92,7 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'user_name',
+            'index'            => 'sales_person',
             'label'            => trans('admin::app.datagrid.sales-person'),
             'type'             => 'dropdown',
             'dropdown_options' => $this->getUserDropdownOptions(),
@@ -100,7 +100,7 @@ class QuoteDataGrid extends DataGrid
             'closure'          => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
-                return "<a href='" . $route . "'>" . $row->user_name . "</a>";
+                return "<a href='" . $route . "'>" . $row->sales_person . "</a>";
             },
         ]);
 
