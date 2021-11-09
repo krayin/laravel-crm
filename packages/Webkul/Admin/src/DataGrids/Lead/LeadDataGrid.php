@@ -104,7 +104,7 @@ class LeadDataGrid extends DataGrid
                 'leads.expected_close_date',
                 'leads.created_at',
                 'users.id as user_id',
-                'users.name as user_name',
+                'users.name as sales_person',
                 'persons.id as person_id',
                 'persons.name as person_name',
                 'lead_pipeline_stages.name as stage'
@@ -130,7 +130,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
-        $this->addFilter('user_name', 'leads.user_id');
+        $this->addFilter('sales_person', 'leads.user_id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
@@ -155,7 +155,7 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'user_name',
+            'index'            => 'sales_person',
             'label'            => trans('admin::app.datagrid.sales-person'),
             'type'             => 'dropdown',
             'dropdown_options' => $this->getUserDropdownOptions(),
