@@ -111,7 +111,7 @@
             </template>
 
             <div class="lead" v-else-if="cardType == 'top_card'" v-for="(data, index) in dataCollection.data">
-                <label>@{{ data.title }}</label>
+                <a :href="'{{ route('admin.leads.view') }}/' + data.id">@{{ data.title }}</a>
 
                 <div class="details">
                     <span>@{{ data.amount | toFixed }}</span>
