@@ -2183,6 +2183,7 @@ body {
 .vuecal__event {
     background-color: $primary-color !important;
     color: #FFFFFF !important;
+    cursor: pointer;
 
     &.done {
         background-color: $success-color !important;
