@@ -12,6 +12,7 @@
                     id="person[name]"
                     v-model="person.name"
                     autocomplete="off"
+                    placeholder="{{ __('admin::app.common.start-typing') }}"
                     v-validate="'required'"
                     data-vv-as="&quot;{{ __('admin::app.leads.name') }}&quot;"
                     v-on:keyup="search"
