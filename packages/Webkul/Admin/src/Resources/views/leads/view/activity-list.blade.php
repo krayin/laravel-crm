@@ -291,10 +291,14 @@
                 },
 
                 markAsDone: function(activity) {
+                    this.$root.pageLoaded = false;
+
                     var self = this;
 
                     this.$http.put("{{ route('admin.activities.update') }}/" + activity['id'], {'is_done': 1})
                         .then (function(response) {
+                            self.$root.pageLoaded = true;
+
                             activity.is_done = 1;
 
                             window.flashMessages = [{'type': 'success', 'message': response.data.message}];
@@ -302,6 +306,7 @@
                             self.$root.addFlashMessages();
                         })
                         .catch (function (error) {
+                            self.$root.pageLoaded = true;
                         })
                 },
 
