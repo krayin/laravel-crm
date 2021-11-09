@@ -60,7 +60,7 @@
 
                              <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.expected-close-date:') }}</label>
-                            <span title="{{ core()->formatDate($lead->expected_close_date) }}">
+                            <span title="{{ core()->formatDate($lead->expected_close_date, 'd M Y') }}">
                                 {{
                                     $lead->expected_close_date->format('d-M-Y') == \Carbon\Carbon::now()->format('d-M-Y')
                                     ? 'Today'
