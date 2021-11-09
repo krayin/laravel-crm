@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Lead\Repositories\TypeRepository;
 
@@ -47,9 +48,15 @@ class TypeController extends Controller
      */
     public function store()
     {
-        $this->validate(request(), [
-            'name' => 'required|unique:lead_types,name',
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:lead_types,name'
         ]);
+        
+        if ($validator->fails()) {
+            session()->flash('error', trans('admin::app.settings.types.name-exists'));
+
+            return redirect()->back();
+        }
 
         Event::dispatch('settings.type.create.before');
 

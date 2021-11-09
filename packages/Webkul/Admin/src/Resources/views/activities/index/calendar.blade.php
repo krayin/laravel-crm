@@ -40,11 +40,14 @@
 
             <vue-cal
                 hide-view-selector
+                :watchRealTime="true"
+                :twelveHour="true"
                 :disable-views="['years', 'year', 'month', 'day']"
                 style="height: calc(100vh - 240px);"
                 :events="events"
                 @ready="getActivities"
                 @view-change="getActivities"
+                :on-event-click="onEventClick"
             />
 
         </div>
@@ -78,6 +81,10 @@
                         .catch(error => {
                             this.$root.pageLoaded = true;
                         });
+                },
+
+                onEventClick : function (event) {
+                    window.location.href = "{{ route('admin.activities.edit') }}/" + event.id
                 }
             }
         });

@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Lead\Repositories\SourceRepository;
 
@@ -47,9 +48,15 @@ class SourceController extends Controller
      */
     public function store()
     {
-        $this->validate(request(), [
-            'name' => 'required|unique:lead_sources,name',
+        $validator = Validator::make(request()->all(), [
+            'name' => 'required|unique:lead_sources,name'
         ]);
+        
+        if ($validator->fails()) {
+            session()->flash('error', trans('admin::app.settings.sources.name-exists'));
+
+            return redirect()->back();
+        }
 
         Event::dispatch('settings.source.create.before');
 
