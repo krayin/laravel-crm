@@ -119,7 +119,7 @@
                     <span>
                         <span
                             class="badge badge-round badge-primary"
-                            :class="{'badge-warning': data.statusLabel == 'Lost', 'badge-success': data.statusLabel == 'Won'}"
+                            :class="{'badge-danger': data.statusLabel == 'Lost', 'badge-success': data.statusLabel == 'Won'}"
                         ></span>
 
                         @{{ data.statusLabel }}
