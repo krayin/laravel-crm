@@ -139,6 +139,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
 
+                Route::put('mass-update', 'ActivityController@massUpdate')->name('admin.activities.mass_update');
+
                 Route::put('mass-destroy', 'ActivityController@massDestroy')->name('admin.activities.mass_delete');
             });
 

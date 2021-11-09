@@ -44,6 +44,7 @@
             "mandatory_mass_action" => "Please select an action to perform.",
             'multiple_sort_keys'    => 'Fatal Error! Multiple Sort keys Found, Please Resolve the URL Manually',
             'multiple_search_keys'  => 'Multiple Search keys Found, Please Resolve the URL Manually',
+            'is-done'               => 'Is Done',
             'filter'                => [
                 'remove_all'    => 'Remove All',
                 'title'         => 'Filter',

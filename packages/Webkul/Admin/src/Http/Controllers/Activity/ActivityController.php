@@ -233,6 +233,40 @@ class ActivityController extends Controller
     }
 
     /**
+     * Mass Update the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massUpdate()
+    {
+        $count = 0;
+
+        $data = request()->all();
+
+        foreach (request('rows') as $activityId) {
+            Event::dispatch('activity.update.before', $activityId);
+
+            $activity = $this->activityRepository->update([
+                'is_done' => request('value'),
+            ], $activityId);
+
+            Event::dispatch('activity.update.after', $activity);
+
+            $count++;
+        }
+
+        if (! $count) {
+            return response()->json([
+                'message' => trans('admin::app.activities.mass-update-failed'),
+            ], 400);
+        }
+
+        return response()->json([
+            'message' => trans('admin::app.activities.mass-update-success'),
+        ]);
+    }
+
+    /**
      * Search participants results
      *
      * @return \Illuminate\Http\Response

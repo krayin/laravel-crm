@@ -285,6 +285,17 @@ class ActivityDataGrid extends DataGrid
     public function prepareMassActions()
     {
         $this->addMassAction([
+            'type'    => 'update',
+            'label'   => trans('ui::app.datagrid.is-done'),
+            'action'  => route('admin.activities.mass_update'),
+            'method'  => 'PUT',
+            'options' => [
+                trans('admin::app.datagrid.yes') => 1,
+                trans('admin::app.datagrid.no')  => 0,
+            ],
+        ]);
+
+        $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
             'action' => route('admin.activities.mass_delete'),
