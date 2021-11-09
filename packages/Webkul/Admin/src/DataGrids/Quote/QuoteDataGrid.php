@@ -32,6 +32,25 @@ class QuoteDataGrid extends DataGrid
     }
 
     /**
+     * Place your datagrid extra settings here.
+     *
+     * @return void
+     */
+    public function init()
+    {
+        $this->setRowProperties([
+            'backgroundColor' => '#ffd0d6',
+            'condition' => function ($row) {
+                if ($row->expired_at < \Carbon\Carbon::now()) {
+                    return true;
+                }
+
+                return false;
+            }
+        ]);
+    }
+
+    /**
      * Prepare query builder.
      *
      * @return void
