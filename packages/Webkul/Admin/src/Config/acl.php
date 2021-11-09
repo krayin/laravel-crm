@@ -47,10 +47,15 @@ return [
         'route' => ['admin.quotes.edit', 'admin.quotes.update'],
         'sort'  => 2,
     ], [
+        'key'   => 'quotes.print',
+        'name'  => 'admin::app.acl.print',
+        'route' => 'admin.quotes.print',
+        'sort'  => 3,
+    ], [
         'key'   => 'quotes.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.quotes.delete', 'admin.quotes.mass_delete'],
-        'sort'  => 3,
+        'sort'  => 4,
     ],  [
         'key'   => 'mail',
         'name'  => 'admin::app.acl.mail',

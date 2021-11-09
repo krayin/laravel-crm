@@ -184,11 +184,13 @@
                                                         </li>
                                                     @endif
 
-                                                    <li>
-                                                        <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
-                                                            {{ __('admin::app.leads.export-to-pdf') }}
-                                                        </a>
-                                                    </li>
+                                                    @if (bouncer()->hasPermission('quotes.print'))
+                                                        <li>
+                                                            <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
+                                                                {{ __('admin::app.leads.export-to-pdf') }}
+                                                            </a>
+                                                        </li>
+                                                    @endif
                                                     
                                                     @if (bouncer()->hasPermission('quotes.delete'))
                                                         <li @click="removeQuote(quote)">

@@ -770,6 +770,7 @@
             'create'          => 'Create',
             'edit'            => 'Edit',
             'view'            => 'View',
+            'print'           => 'Print',
             'delete'          => 'Delete',
             'mass-delete'     => 'Mass Delete',
         ],
