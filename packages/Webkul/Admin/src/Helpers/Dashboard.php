@@ -443,7 +443,7 @@ class Dashboard
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topLeads = $this->leadRepository
-            ->select('title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
+            ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
