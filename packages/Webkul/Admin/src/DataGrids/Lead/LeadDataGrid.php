@@ -199,6 +199,7 @@ class LeadDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
+            'filterable' => false,
             'closure'    => function ($row) {
                 if ($row->stage == 'Won') {
                     $badge = 'success';
