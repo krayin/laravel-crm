@@ -51,6 +51,12 @@ trait ProvideDropdownOptions
     {
         return [
             [
+                'value'    => '',
+                'label'    => __('admin::app.common.select-options'),
+                'disabled' => true,
+                'selected' => true,
+            ],
+            [
                 'label'    => trans('admin::app.datagrid.active'),
                 'value'    => 1,
                 'disabled' => false,
@@ -72,6 +78,12 @@ trait ProvideDropdownOptions
     public function getYesNoDropdownOptions(): array
     {
         return [
+            [
+                'value'    => '',
+                'label'    => __('admin::app.common.select-options'),
+                'disabled' => true,
+                'selected' => true,
+            ],
             [
                 'value'    => 0,
                 'label'    => __('admin::app.common.no'),
@@ -176,9 +188,9 @@ trait ProvideDropdownOptions
         return [
             [
                 'label'    => trans('admin::app.common.select-type'),
-                'value'    => 'call',
-                'disabled' => false,
-                'selected' => false,
+                'value'    => '',
+                'disabled' => true,
+                'selected' => true,
             ], [
                 'label'    => trans('admin::app.common.select-call'),
                 'value'    => 'call',

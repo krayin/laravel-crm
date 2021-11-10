@@ -137,6 +137,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'dropdown',
             'dropdown_options' => $this->getActivityTypeDropdownOptions(),
             'searchable' => false,
+            'filterable' => false,
         ]);
 
         $this->addColumn([
@@ -192,6 +193,7 @@ class ActivityDataGrid extends DataGrid
     public function prepareTabFilters()
     {
         $this->addTabFilter([
+            'index'     => 'type',
             'type'      => 'pill',
             'key'       => 'type',
             'condition' => 'eq',
