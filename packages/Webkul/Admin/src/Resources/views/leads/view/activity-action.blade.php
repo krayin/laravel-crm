@@ -58,7 +58,7 @@
                         action="{{ route('admin.activities.store') }}"
                         method="post"
                         data-vv-scope="activity-form"
-                        @submit.prevent="onSubmit($event, 'activity-form')"
+                        @submit.prevent="checkIfOverlapping($event, 'activity-form')"
                     >
 
                         <input type="hidden" name="lead_id" value="{{ $lead->id }}">
@@ -115,6 +115,7 @@
                                         type="text"
                                         name="schedule_from"
                                         class="control"
+                                        v-model="schedule_from"
                                         ref="schedule_from"
                                         placeholder="{{ __('admin::app.leads.from') }}"
                                         v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:{{\Carbon\Carbon::now()->format('Y-m-d H:i:s')}}'"
@@ -131,6 +132,7 @@
                                         type="text"
                                         name="schedule_to"
                                         class="control"
+                                        v-model="schedule_to"
                                         ref="schedule_to"
                                         placeholder="{{ __('admin::app.leads.to') }}"
                                         v-validate="'required|date_format:yyyy-MM-dd HH:mm:ss|after:schedule_from'"
@@ -415,6 +417,10 @@
 
                     show_bcc: false,
 
+                    schedule_from: null,
+
+                    schedule_to: null,
+
                     search_term: '',
 
                     is_searching: false,
@@ -520,6 +526,29 @@
                     const index = this.participants[type].indexOf(participant);
 
                     Vue.delete(this.participants[type], index);
+                },
+
+                checkIfOverlapping: function(e, formScope) {
+                    var self = this;
+
+                    this.$validator.validateAll(formScope).then(function (result) {
+                        if (result) {
+                            self.$http.post(`{{ route('admin.activities.check_overlapping') }}`, {
+                                schedule_from: self.schedule_from,
+                                schedule_to: self.schedule_to,
+                                participants: self.participants,
+                            }).then(response => {
+                                if (! response.data.overlapping) {
+                                    self.$root.onSubmit(e, formScope);
+                                } else {
+                                    if (confirm("{{ __('admin::app.activities.duration-overlapping') }}")) {
+                                        self.$root.onSubmit(e, formScope);
+                                    }
+                                }
+                            })
+                            .catch(error => {});
+                        }
+                    });
                 }
             }
         });

@@ -54,4 +54,46 @@ class ActivityRepository extends Repository
             ->distinct()
             ->get();
     }
+
+    /**
+     * @param  string  $startFrom
+     * @param  string  $endFrom
+     * @param  array  $participants
+     * @param  integer  $id
+     * @return boolean
+     */
+    public function isDurationOverlapping($startFrom, $endFrom, $participants = [], $id)
+    {
+        $queryBuilder = $this->model
+            ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
+            ->where(function ($query) use ($startFrom, $endFrom) {
+                $query->where([
+                    ['activities.schedule_from', '<=', $startFrom],
+                    ['activities.schedule_to', '>=', $startFrom],
+                ])->orWhere([
+                    ['activities.schedule_from', '>=', $startFrom],
+                    ['activities.schedule_from', '<=', $endFrom],
+                ]);
+            })
+            ->where(function ($query) use ($participants) {
+                if (is_null($participants)) {
+                    return;
+                }
+
+                if (isset($participants['users'])) {
+                    $query->orWhereIn('activity_participants.user_id', $participants['users']);
+                }
+
+                if (isset($participants['persons'])) {
+                    $query->orWhereIn('activity_participants.person_id', $participants['persons']);
+                }
+            })
+            ->groupBy('activities.id');
+
+        if (! is_null($id)) {
+            $queryBuilder->where('activities.id', '!=', $id);
+        }
+
+        return $queryBuilder->count() ? true : false;
+    }
 }

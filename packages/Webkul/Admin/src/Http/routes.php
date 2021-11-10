@@ -125,6 +125,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::get('get', 'ActivityController@get')->name('admin.activities.get');
 
+                Route::post('is-overlapping', 'ActivityController@checkIfOverlapping')->name('admin.activities.check_overlapping');
+
                 Route::post('create', 'ActivityController@store')->name('admin.activities.store');
 
                 Route::get('edit/{id?}', 'ActivityController@edit')->name('admin.activities.edit');
