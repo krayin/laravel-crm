@@ -270,8 +270,8 @@ class LeadDataGrid extends DataGrid
             ->toArray();
 
         $this->addTabFilter([
-            'type'       => 'pill',
             'key'        => 'type',
+            'type'       => 'pill',
             'condition'  => 'eq',
             'value_type' => 'lookup',
             'values'     => $values,

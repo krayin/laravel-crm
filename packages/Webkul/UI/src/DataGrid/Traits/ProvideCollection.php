@@ -385,7 +385,7 @@ trait ProvideCollection
                 /**
                  * If tab filter is activated then filterable should be done.
                  */
-                if (collect($this->tabFilters)->contains('index', $columnName)) {
+                if (collect($this->tabFilters)->contains('key', $columnName)) {
                     return false;
                 }
 

@@ -193,9 +193,8 @@ class ActivityDataGrid extends DataGrid
     public function prepareTabFilters()
     {
         $this->addTabFilter([
-            'index'     => 'type',
-            'type'      => 'pill',
             'key'       => 'type',
+            'type'      => 'pill',
             'condition' => 'eq',
             'values'    => [
                 [
@@ -219,8 +218,8 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addTabFilter([
-            'type'      => 'group',
             'key'       => 'scheduled',
+            'type'      => 'group',
             'condition' => 'eq',
             'values'    => [
                 [
