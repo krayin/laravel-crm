@@ -9,8 +9,8 @@
                 "
                 :style="row.rowProperties"
             >
-                <td v-if="massActions.length > 0" class="checkbox">
-                    <span>
+                <td v-if="massActions.length > 0">
+                    <span class="checkbox">
                         <template
                             v-if="
                                 selectedTableRows.filter(
