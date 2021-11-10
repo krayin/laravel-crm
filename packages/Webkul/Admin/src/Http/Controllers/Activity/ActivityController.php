@@ -115,6 +115,25 @@ class ActivityController extends Controller
     }
 
     /**
+     * Check if activity duration is overlapping with another activity duration.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function checkIfOverlapping()
+    {
+        $isOverlapping = $this->activityRepository->isDurationOverlapping(
+            request('schedule_from'),
+            request('schedule_to'),
+            request('participants'),
+            request('id')
+        );
+
+        return response()->json([
+            'overlapping' => $isOverlapping,
+        ]);
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @return \Illuminate\Http\Response
