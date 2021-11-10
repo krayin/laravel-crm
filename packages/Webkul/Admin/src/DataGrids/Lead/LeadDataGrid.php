@@ -103,11 +103,13 @@ class LeadDataGrid extends DataGrid
                 'leads.lead_value',
                 'leads.expected_close_date',
                 'leads.created_at',
+                'lead_pipeline_stages.name as stage',
+                'lead_tags.tag_id as tag_id',
                 'users.id as user_id',
                 'users.name as sales_person',
                 'persons.id as person_id',
                 'persons.name as person_name',
-                'lead_pipeline_stages.name as stage'
+                'tags.name as tag_name'
             )
             ->addSelect(\DB::raw('IF(lead_pipeline_stages.code = "won" OR lead_pipeline_stages.code = "lost", 0, DATEDIFF(now(), leads.created_at + INTERVAL lead_pipelines.rotten_days DAY)) as rotten_days'))
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
@@ -116,6 +118,8 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->leftJoin('lead_sources', 'leads.lead_source_id', '=', 'lead_sources.id')
             ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
+            ->leftJoin('lead_tags', 'leads.id', '=', 'lead_tags.lead_id')
+            ->leftJoin('tags', 'tags.id', '=', 'lead_tags.tag_id')
             ->where('leads.lead_pipeline_id', $this->pipeline->id);
 
         $currentUser = auth()->guard('user')->user();
@@ -134,6 +138,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
+        $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
 
@@ -167,6 +172,13 @@ class LeadDataGrid extends DataGrid
             'index'    => 'title',
             'label'    => trans('admin::app.datagrid.subject'),
             'type'     => 'string',
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'    => 'tag_name',
+            'label'    => trans('admin::app.datagrid.tags'),
+            'type'     => 'hidden',
             'sortable' => true,
         ]);
 

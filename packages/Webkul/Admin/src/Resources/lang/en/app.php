@@ -671,7 +671,7 @@
         ],
 
         'datagrid' => [
-            'id'                  => 'Id',
+            'id'                  => 'ID',
             'name'                => 'Name',
             'code'                => 'Code',
             'sku'                 => 'SKU',
@@ -683,6 +683,7 @@
             'lead'                => 'Lead',
             'title'               => 'Title',
             'subject'             => 'Subject',
+            'tags'                => 'Tags',
             'emails'              => 'Emails',
             'stage'               => 'Stage',
             'status'              => 'Status',
