@@ -21,6 +21,12 @@
 
 @push('scripts')
     <script>
+        /**
+         * Update status for `is_done`.
+         *
+         * @param {!object} event
+         * @param {!string} href
+         */
         function updateStatus({ target }, href) {
             const isDone = parseInt(target.value);
 
