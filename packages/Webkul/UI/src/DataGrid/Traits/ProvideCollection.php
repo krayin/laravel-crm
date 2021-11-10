@@ -381,8 +381,21 @@ trait ProvideCollection
     private function exceptionCheckInColumns($columnName)
     {
         foreach ($this->completeColumnDetails as $column) {
-            if ($column['index'] === $columnName && (isset($column['filterable']) && ! $column['filterable'])) {
-                return true;
+            if ($column['index'] === $columnName) {
+                /**
+                 * If tab filter is activated then filterable should be done.
+                 */
+                if (collect($this->tabFilters)->contains('key', $columnName)) {
+                    return false;
+                }
+
+                /**
+                 * After passing from tab filter, it will check for the filerable
+                 * properties in column.
+                 */
+                if (isset($column['filterable']) && ! $column['filterable']) {
+                    return true;
+                }
             }
         }
 
