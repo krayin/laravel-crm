@@ -18,3 +18,30 @@
         </template>
     <table-component>
 </div>
+
+@push('scripts')
+    <script>
+        function updateStatus({ target }, href) {
+            const isDone = parseInt(target.value);
+
+            window.app.pageLoaded = false;
+
+            axios
+                .post(href, {
+                    _token: '{{ csrf_token() }}',
+                    _method: 'PUT',
+                    is_done: isDone,
+                })
+                .then(response => {
+                    target.value = isDone ? '0' : '1';
+
+                    window.app.pageLoaded = true;
+
+                    window.addFlashMessages({
+                        type: "success",
+                        message : response.data.message
+                    });
+                });
+        }
+    </script>
+@endpush
