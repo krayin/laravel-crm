@@ -192,7 +192,7 @@ class QuoteDataGrid extends DataGrid
             'searchable' => false,
             'sortable'   => true,
             'closure'    => function ($row) {
-                return core()->formatDate($row->expired_at);
+                return core()->formatDate($row->expired_at, 'd M Y');
             },
         ]);
 
