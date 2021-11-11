@@ -102,6 +102,10 @@ class PipelineRepository extends Repository
             $this->stageRepository->delete($stageId);
         }
 
+        $pipeline->leads()->update([
+            'lead_pipeline_stage_id' => $pipeline->stages()->first()->id,
+        ]);
+
         return $pipeline;
     }
 
