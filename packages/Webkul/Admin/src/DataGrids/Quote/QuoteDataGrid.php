@@ -3,6 +3,7 @@
 namespace Webkul\Admin\DataGrids\Quote;
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
@@ -41,7 +42,7 @@ class QuoteDataGrid extends DataGrid
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
             'condition' => function ($row) {
-                if ($row->expired_at < \Carbon\Carbon::now()) {
+                if (Carbon::createFromFormat('Y-m-d H:i:s',  $row->expired_at)->endOfDay() < Carbon::now()) {
                     return true;
                 }
 
