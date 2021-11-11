@@ -167,6 +167,11 @@ class LeadDataGrid extends DataGrid
             'dropdown_options' => $this->getUserDropdownOptions(),
             'searchable'       => false,
             'sortable'         => true,
+            'closure'          => function ($row) {
+                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
+
+                return "<a href='" . $route . "'>" . $row->sales_person . "</a>";
+            },
         ]);
 
         $this->addColumn([
