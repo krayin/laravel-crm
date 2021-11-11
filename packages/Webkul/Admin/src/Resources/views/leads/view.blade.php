@@ -216,76 +216,122 @@
         {!! view_render_event('admin.leads.view.informations.after', ['lead' => $lead]) !!}
     </div>
 
-    <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
-        <modal id="updateLeadModal" :is-open="modalIds.updateLeadModal">
-            <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
-
-            <div slot="header-actions">
-                {!! view_render_event('admin.leads.view.edit.form_buttons.before', ['lead' => $lead]) !!}
-
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('updateLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
-
-                <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
-
-                {!! view_render_event('admin.leads.view.edit.form_buttons.after', ['lead' => $lead]) !!}
-            </div>
-
-            <div slot="body">
-                {!! view_render_event('admin.leads.view.edit.form_controls.before', ['lead' => $lead]) !!}
-
-                @csrf()
-
-                <input name="_method" type="hidden" value="PUT">
-
-                <tabs>
-                    {!! view_render_event('admin.leads.view.edit.form_controls.details.before', ['lead' => $lead]) !!}
-
-                    <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes'  => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'leads',
-                            ]),
-                            'customValidations' => [
-                                'expected_close_date' => [
-                                    'date_format:yyyy-MM-dd',
-                                    'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                ],
-                            ],
-                            'entity'            => $lead,
-                        ])
-                    </tab>
-
-                    {!! view_render_event('admin.leads.view.edit.form_controls.details.after', ['lead' => $lead]) !!}
-
-
-                    {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.before', ['lead' => $lead]) !!}
-
-                    <tab name="{{ __('admin::app.leads.contact-person') }}">
-                        @include('admin::leads.common.contact')
-
-                        <contact-component :data='@json($lead->person)'></contact-component>
-                    </tab>
-
-                    {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.after', ['lead' => $lead]) !!}
-
-
-                    {!! view_render_event('admin.leads.view.edit.form_controls.products.before', ['lead' => $lead]) !!}
-
-                    <tab name="{{ __('admin::app.leads.products') }}">
-                        @include('admin::leads.common.products')
-
-                        <product-list :data='@json($lead->products)'></product-list>
-                    </tab>
-
-                    {!! view_render_event('admin.leads.view.edit.form_controls.products.after', ['lead' => $lead]) !!}
-                </tabs>
-
-                {!! view_render_event('admin.leads.view.edit.form_controls.after', ['lead' => $lead]) !!}
-            </div>
-        </modal>
-    </form>
+    <edit-lead-form></edit-lead-form>
 @stop
 
 @push('scripts')
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+
+    <script type="text/x-template" id="edit-lead-form-template">
+        <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
+            <modal id="updateLeadModal" :is-open="$root.modalIds.updateLeadModal">
+                <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
+
+                <div slot="header-actions">
+                    {!! view_render_event('admin.leads.view.edit.form_buttons.before', ['lead' => $lead]) !!}
+
+                    <button class="btn btn-sm btn-secondary-outline" @click="$root.closeModal('updateLeadModal')">{{ __('admin::app.leads.cancel') }}</button>
+
+                    <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
+
+                    {!! view_render_event('admin.leads.view.edit.form_buttons.after', ['lead' => $lead]) !!}
+                </div>
+
+                <div slot="body">
+                    {!! view_render_event('admin.leads.view.edit.form_controls.before', ['lead' => $lead]) !!}
+
+                    @csrf()
+
+                    <input name="_method" type="hidden" value="PUT">
+
+                    <tabs>
+                        {!! view_render_event('admin.leads.view.edit.form_controls.details.before', ['lead' => $lead]) !!}
+
+                        <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
+                            @include('admin::common.custom-attributes.edit', [
+                                'customAttributes'  => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    'entity_type' => 'leads',
+                                ]),
+                                'customValidations' => [
+                                    'expected_close_date' => [
+                                        'date_format:yyyy-MM-dd',
+                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                    ],
+                                ],
+                                'entity'            => $lead,
+                            ])
+                        </tab>
+
+                        {!! view_render_event('admin.leads.view.edit.form_controls.details.after', ['lead' => $lead]) !!}
+
+
+                        {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.before', ['lead' => $lead]) !!}
+
+                        <tab name="{{ __('admin::app.leads.contact-person') }}">
+                            @include('admin::leads.common.contact')
+
+                            <contact-component :data='@json(old('person') ?: $lead->person)'></contact-component>
+                        </tab>
+
+                        {!! view_render_event('admin.leads.view.edit.form_controls.contact_person.after', ['lead' => $lead]) !!}
+
+
+                        {!! view_render_event('admin.leads.view.edit.form_controls.products.before', ['lead' => $lead]) !!}
+
+                        <tab name="{{ __('admin::app.leads.products') }}">
+                            @include('admin::leads.common.products')
+
+                            <product-list :data='@json(old('products') ?: $lead->products)'></product-list>
+                        </tab>
+
+                        {!! view_render_event('admin.leads.view.edit.form_controls.products.after', ['lead' => $lead]) !!}
+                    </tabs>
+
+                    {!! view_render_event('admin.leads.view.edit.form_controls.after', ['lead' => $lead]) !!}
+                </div>
+            </modal>
+        </form>
+    </script>
+
+    <script>
+        Vue.component('edit-lead-form', {
+
+            template: '#edit-lead-form-template',
+
+            inject: ['$validator'],
+
+            mounted: function() {
+                if (! Array.isArray(window.serverErrors)) {
+                    this.$root.openModal('updateLeadModal');
+
+                    var self = this;
+
+                    setTimeout(() => {
+                        self.$root.addServerErrors();
+                    });
+                }
+            },
+
+            methods: {
+                onSubmit: function(e) {
+                    this.$root.onSubmit(e);
+
+                    return;
+                    var self = this;
+
+                    this.$http.put("{{ route('admin.leads.update', $lead->id) }}", {
+
+                        })
+                        .then (function(response) {
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            self.$root.addFlashMessages();
+
+                            window.location.reload();
+                        })
+                        .catch (function (error) {})
+                }
+            }
+        });
+    </script>
 @endpush

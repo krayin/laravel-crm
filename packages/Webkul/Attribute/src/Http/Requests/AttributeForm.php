@@ -123,7 +123,7 @@ class AttributeForm extends FormRequest
                     ? $attribute->code . '.*.value'
                     : $attribute->code
                 ], function ($field, $value, $fail) use ($attribute) {
-                    if (! $this->attributeValueRepository->isValueUnique($this->id, request('entity_type'), $attribute, request($field))) {
+                    if (! $this->attributeValueRepository->isValueUnique($this->id, $attribute->entity_type, $attribute, request($field))) {
                         $fail('The value has already been taken.');
                     }
                 });

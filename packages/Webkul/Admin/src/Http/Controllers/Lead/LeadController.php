@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Admin\Http\Requests\LeadForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -132,10 +132,10 @@ class LeadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param \Webkul\Admin\Http\Requests\LeadForm $request
      * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(LeadForm $request)
     {
         Event::dispatch('lead.create.before');
 
@@ -202,11 +202,11 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param \Webkul\Admin\Http\Requests\LeadForm $request
      * @param int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, $id)
+    public function update(LeadForm $request, $id)
     {
         Event::dispatch('lead.update.before');
 
