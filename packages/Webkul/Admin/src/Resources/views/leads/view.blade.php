@@ -315,21 +315,6 @@
             methods: {
                 onSubmit: function(e) {
                     this.$root.onSubmit(e);
-
-                    return;
-                    var self = this;
-
-                    this.$http.put("{{ route('admin.leads.update', $lead->id) }}", {
-
-                        })
-                        .then (function(response) {
-                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
-
-                            self.$root.addFlashMessages();
-
-                            window.location.reload();
-                        })
-                        .catch (function (error) {})
                 }
             }
         });
