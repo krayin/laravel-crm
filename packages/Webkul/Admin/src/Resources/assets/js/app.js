@@ -92,6 +92,7 @@ $(function() {
             addServerErrors(scope = null) {
                 for (var key in serverErrors) {
                     var inputNames = [];
+                    
                     key.split('.').forEach(function(chunk, index) {
                         if(index) {
                             inputNames.push('[' + chunk + ']')

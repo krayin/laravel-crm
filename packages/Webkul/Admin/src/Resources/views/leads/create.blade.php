@@ -69,7 +69,7 @@
                             <tab name="{{ __('admin::app.leads.contact-person') }}">
                                 @include('admin::leads.common.contact')
 
-                                <contact-component></contact-component>
+                                <contact-component :data='@json(old('person'))'></contact-component>
                             </tab>
 
                             {!! view_render_event('admin.leads.create.form_controls.contact_person.after') !!}
@@ -80,7 +80,7 @@
                             <tab name="{{ __('admin::app.leads.products') }}">
                                 @include('admin::leads.common.products')
 
-                                <product-list></product-list>
+                                <product-list :data='@json(old('products'))'></product-list>
                             </tab>
 
                             {!! view_render_event('admin.leads.create.form_controls.products.after') !!}
