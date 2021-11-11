@@ -99,12 +99,12 @@ class PipelineRepository extends Repository
         }
 
         foreach ($previousStageIds as $stageId) {
+            $pipeline->leads()->where('lead_pipeline_stage_id', 16)->update([
+                'lead_pipeline_stage_id' => $pipeline->stages()->first()->id,
+            ]);
+
             $this->stageRepository->delete($stageId);
         }
-
-        $pipeline->leads()->update([
-            'lead_pipeline_stage_id' => $pipeline->stages()->first()->id,
-        ]);
 
         return $pipeline;
     }

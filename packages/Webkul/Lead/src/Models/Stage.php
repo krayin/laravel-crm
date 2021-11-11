@@ -31,4 +31,12 @@ class Stage extends Model implements StageContract
     {
         return $this->belongsTo(PipelineProxy::modelClass(), 'lead_pipeline_id');
     }
+
+    /**
+     * Get the leads.
+     */
+    public function leads()
+    {
+        return $this->hasMany(LeadProxy::modelClass(), 'lead_pipeline_stage_id');
+    }
 }
