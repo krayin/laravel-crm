@@ -203,7 +203,7 @@ class Activity extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (intval($entity)) {
+        if (! $entity instanceof \Webkul\Activity\Contracts\Activity) {
             $entity = $this->activityRepository->find($entity);
         }
 

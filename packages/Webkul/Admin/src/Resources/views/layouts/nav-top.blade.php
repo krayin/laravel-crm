@@ -123,9 +123,15 @@
 
         <div class="profile-info">
             <div class="dropdown-toggle">
-                <div class="avatar">
-                    <span class="icon avatar-icon"></span>
-                </div>
+                @if (auth()->guard('user')->user()->image)
+                    <div class="avatar">
+                        <img src="{{ auth()->guard('user')->user()->image_url }}"/>
+                    </div>
+                @else
+                    <div class="avatar">
+                        <span class="icon avatar-icon"></span>
+                    </div>
+                @endif
 
                 <div class="info">
                     <span class="howdy">{{ __('admin::app.layouts.howdy') }}</span>

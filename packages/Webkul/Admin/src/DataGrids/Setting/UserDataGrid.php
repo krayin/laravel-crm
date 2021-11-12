@@ -3,6 +3,7 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 
@@ -22,6 +23,7 @@ class UserDataGrid extends DataGrid
                 'users.id',
                 'users.name',
                 'users.email',
+                'users.image',
                 'users.status',
                 'users.created_at'
             );
@@ -50,6 +52,13 @@ class UserDataGrid extends DataGrid
             'label'    => trans('admin::app.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
+            'closure'  => function ($row) {
+                if ($row->image) {
+                    return '<div class="avatar"><img src="' . Storage::url($row->image) . '"></div>' . $row->name;
+                } else {
+                    return '<div class="avatar"><span class="icon avatar-icon"></span></div>' . $row->name;
+                }
+            },
         ]);
 
         $this->addColumn([

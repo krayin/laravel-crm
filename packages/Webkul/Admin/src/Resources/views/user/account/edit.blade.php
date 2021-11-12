@@ -17,7 +17,7 @@
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
 
-        <form method="POST" action="{{ route('admin.user.account.update') }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.user.account.update') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
             <div class="page-content">
                 <div class="form-container">
 
@@ -40,6 +40,8 @@
                             @csrf()
 
                             <input name="_method" type="hidden" value="PUT">
+
+                            <upload-profile-image></upload-profile-image>
                 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">
@@ -146,3 +148,64 @@
         </form>
     </div>
 @stop
+
+
+@push('scripts')
+    <script type="text/x-template" id="upload-profile-image-template">
+        <div class="form-group">
+            <div class="image-upload-brick">
+                <input
+                    type="file"
+                    name="image"
+                    id="upload-profile"
+                    ref="imageInput"
+                    @change="addImageView($event)"
+                >
+
+                <i class="icon upload-icon"></i>
+
+                <img class="preview" :src="imageData" v-if="imageData.length > 0">
+            </div>
+
+            <div class="image-info-brick">
+                <span class="field-info">
+                    Upload a Profile Image (100px x 100px)<br> in PNG or JPG Format
+                </span>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        Vue.component('upload-profile-image', {
+            template: '#upload-profile-image-template',
+
+            data: function() {
+                return {
+                    imageData: "{{ $user->image_url }}",
+                }
+            },
+
+            methods: {
+                addImageView () {
+                    var imageInput = this.$refs.imageInput;
+
+                    if (imageInput.files && imageInput.files[0]) {
+                        if (imageInput.files[0].type.includes('image/')) {
+                            var reader = new FileReader();
+
+                            reader.onload = (e) => {
+                                this.imageData = e.target.result;
+                            }
+
+                            reader.readAsDataURL(imageInput.files[0]);
+                        } else {
+                            imageInput.value = '';
+
+                            alert('Only images (.jpeg, .jpg, .png, ..) are allowed.');
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+@endpush
