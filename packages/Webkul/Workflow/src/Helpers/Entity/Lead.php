@@ -94,6 +94,21 @@ class Lead extends AbstractEntity
     }
 
     /**
+     * Returns entity
+     * 
+     * @param  \Webkul\Lead\Contracts\Lead|integer  $entity
+     * @return \Webkul\Lead\Contracts\Lead
+     */
+    public function getEntity($entity)
+    {
+        if (intval($entity)) {
+            $entity = $this->leadRepository->find($entity);
+        }
+
+        return $entity;
+    }
+
+    /**
      * Returns workflow actions
      * 
      * @return array

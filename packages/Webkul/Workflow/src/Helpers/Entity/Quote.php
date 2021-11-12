@@ -82,6 +82,21 @@ class Quote extends AbstractEntity
     }
 
     /**
+     * Returns entity
+     * 
+     * @param  \Webkul\Quote\Contracts\Quote|integer  $entity
+     * @return \Webkul\Quote\Contracts\Quote
+     */
+    public function getEntity($entity)
+    {
+        if (intval($entity)) {
+            $entity = $this->quoteRepository->find($entity);
+        }
+
+        return $entity;
+    }
+
+    /**
      * Returns workflow actions
      * 
      * @return array

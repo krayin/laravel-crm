@@ -208,7 +208,7 @@ class LeadController extends Controller
      */
     public function update(LeadForm $request, $id)
     {
-        Event::dispatch('lead.update.before');
+        Event::dispatch('lead.update.before', $id);
 
         $lead = $this->leadRepository->update(request()->all(), $id);
 
@@ -282,7 +282,7 @@ class LeadController extends Controller
         foreach ($data['rows'] as $leadId) {
             $lead = $this->leadRepository->find($leadId);
 
-            Event::dispatch('lead.update.before');
+            Event::dispatch('lead.update.before', $leadId);
 
             $lead->update(['lead_pipeline_stage_id' => $data['value']]);
 

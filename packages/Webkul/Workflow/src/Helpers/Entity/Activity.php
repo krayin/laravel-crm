@@ -196,6 +196,21 @@ class Activity extends AbstractEntity
     }
 
     /**
+     * Returns entity
+     * 
+     * @param  \Webkul\Activity\Contracts\Activity|integer  $entity
+     * @return \Webkul\Activity\Contracts\Activity
+     */
+    public function getEntity($entity)
+    {
+        if (intval($entity)) {
+            $entity = $this->activityRepository->find($entity);
+        }
+
+        return $entity;
+    }
+
+    /**
      * Returns workflow actions
      * 
      * @return array

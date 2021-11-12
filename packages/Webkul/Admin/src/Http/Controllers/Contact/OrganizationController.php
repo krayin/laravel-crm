@@ -67,7 +67,7 @@ class OrganizationController extends Controller
 
         $organization = $this->organizationRepository->create(request()->all());
 
-        Event::dispatch('contacts.organization.create.after', 1);
+        Event::dispatch('contacts.organization.create.after', $organization);
 
         session()->flash('success', trans('admin::app.contacts.organizations.create-success'));
 
@@ -96,7 +96,7 @@ class OrganizationController extends Controller
      */
     public function update(AttributeForm $request, $id)
     {
-        Event::dispatch('contacts.organization.update.before');
+        Event::dispatch('contacts.organization.update.before', $id);
 
         $organization = $this->organizationRepository->update(request()->all(), $id);
 

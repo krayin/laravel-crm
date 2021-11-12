@@ -206,7 +206,7 @@ class ActivityController extends Controller
      */
     public function update($id)
     {
-        Event::dispatch('activity.update.before');
+        Event::dispatch('activity.update.before', $id);
 
         $activity = $this->activityRepository->update(request()->all(), $id);
 
