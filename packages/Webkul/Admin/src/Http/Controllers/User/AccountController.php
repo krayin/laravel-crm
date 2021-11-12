@@ -56,7 +56,12 @@ class AccountController extends Controller
             unset($data['password']);
         } else {
             $isPasswordChanged = true;
+
             $data['password'] = bcrypt($data['password']);
+        }
+
+        if (request()->hasFile('image')) {
+            $data['image'] = request()->file('image')->store('users/' . $user->id);
         }
 
         $user->update($data);

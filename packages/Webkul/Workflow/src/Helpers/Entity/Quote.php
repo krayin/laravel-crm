@@ -89,7 +89,7 @@ class Quote extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (intval($entity)) {
+        if (! $entity instanceof \Webkul\Quote\Contracts\Quote) {
             $entity = $this->quoteRepository->find($entity);
         }
 

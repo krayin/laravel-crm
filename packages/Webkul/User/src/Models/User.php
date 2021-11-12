@@ -4,6 +4,7 @@ namespace Webkul\User\Models;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\Storage;
 use Webkul\User\Contracts\User as UserContract;
 
 class User extends Authenticatable implements UserContract
@@ -18,6 +19,7 @@ class User extends Authenticatable implements UserContract
     protected $fillable = [
         'name',
         'email',
+        'image',
         'password',
         'api_token',
         'role_id',
@@ -34,6 +36,38 @@ class User extends Authenticatable implements UserContract
         'api_token',
         'remember_token',
     ];
+
+    /**
+     * Get image url for the product image.
+     */
+    public function image_url()
+    {
+        if (! $this->image) {
+            return;
+        }
+
+        return Storage::url($this->image);
+    }
+
+    /**
+     * Get image url for the product image.
+     */
+    public function getImageUrlAttribute()
+    {
+        return $this->image_url();
+    }
+
+    /**
+     * @return array
+     */
+    public function toArray()
+    {
+        $array = parent::toArray();
+
+        $array['image_url'] = $this->image_url;
+
+        return $array;
+    }
 
     /**
      * Get the role that owns the user.

@@ -101,7 +101,7 @@ class Lead extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (intval($entity)) {
+        if (! $entity instanceof \Webkul\Lead\Contracts\Lead) {
             $entity = $this->leadRepository->find($entity);
         }
 

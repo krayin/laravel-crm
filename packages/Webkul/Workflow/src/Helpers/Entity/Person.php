@@ -77,7 +77,7 @@ class Person extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (intval($entity)) {
+        if (! $entity instanceof \Webkul\Contact\Contracts\Person) {
             $entity = $this->personRepository->find($entity);
         }
 
