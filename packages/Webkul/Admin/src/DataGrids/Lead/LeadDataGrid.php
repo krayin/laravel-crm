@@ -120,6 +120,7 @@ class LeadDataGrid extends DataGrid
             ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
             ->leftJoin('lead_tags', 'leads.id', '=', 'lead_tags.lead_id')
             ->leftJoin('tags', 'tags.id', '=', 'lead_tags.tag_id')
+            ->groupBy('leads.id')
             ->where('leads.lead_pipeline_id', $this->pipeline->id);
 
         $currentUser = auth()->guard('user')->user();
@@ -274,8 +275,8 @@ class LeadDataGrid extends DataGrid
             ->toArray();
 
         $this->addTabFilter([
-            'type'       => 'pill',
             'key'        => 'type',
+            'type'       => 'pill',
             'condition'  => 'eq',
             'value_type' => 'lookup',
             'values'     => $values,

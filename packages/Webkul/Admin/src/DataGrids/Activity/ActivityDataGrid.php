@@ -137,6 +137,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'dropdown',
             'dropdown_options' => $this->getActivityTypeDropdownOptions(),
             'searchable' => false,
+            'filterable' => false,
         ]);
 
         $this->addColumn([
@@ -146,11 +147,7 @@ class ActivityDataGrid extends DataGrid
             'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
             'searchable'       => false,
             'closure'          => function ($row) {
-                if ($row->is_done) {
-                    return '<span class="badge badge-round badge-success"></span>' . __('admin::app.common.yes');
-                } else {
-                    return '<span class="badge badge-round badge-danger"></span>' . __('admin::app.common.no');
-                }
+                return view('admin::activities.datagrid.is-done', compact('row'))->render();
             },
         ]);
 
@@ -196,8 +193,8 @@ class ActivityDataGrid extends DataGrid
     public function prepareTabFilters()
     {
         $this->addTabFilter([
-            'type'      => 'pill',
             'key'       => 'type',
+            'type'      => 'pill',
             'condition' => 'eq',
             'values'    => [
                 [
@@ -221,8 +218,8 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addTabFilter([
-            'type'      => 'group',
             'key'       => 'scheduled',
+            'type'      => 'group',
             'condition' => 'eq',
             'values'    => [
                 [

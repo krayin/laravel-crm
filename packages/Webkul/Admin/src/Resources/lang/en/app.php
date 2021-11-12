@@ -799,6 +799,7 @@
             'no-result-found'     => 'Records not found with same name.',
             'add-as'              => 'Add as new',
             'not-available'       => 'Not Available',
+            'select-options'      => 'Select Options',
             'yes'                 => 'Yes',
             'no'                  => 'No',
             'delete'              => 'Delete',
