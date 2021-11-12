@@ -196,6 +196,8 @@ abstract class AbstractEntity
         return $content;
     }
 
+    abstract public function getEntity($entity);
+
     abstract public function getActions();
 
     abstract public function executeActions($workflow, $entity);

@@ -70,6 +70,21 @@ class Person extends AbstractEntity
     }
 
     /**
+     * Returns entity
+     * 
+     * @param  \Webkul\Contact\Contracts\Person|integer  $entity
+     * @return \Webkul\Contact\Contracts\Person
+     */
+    public function getEntity($entity)
+    {
+        if (intval($entity)) {
+            $entity = $this->personRepository->find($entity);
+        }
+
+        return $entity;
+    }
+
+    /**
      * Returns workflow actions
      * 
      * @return array

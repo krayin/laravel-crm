@@ -119,7 +119,7 @@ class QuoteController extends Controller
      */
     public function update(AttributeForm $request, $id)
     {
-        Event::dispatch('quote.update.before');
+        Event::dispatch('quote.update.before', $id);
 
         $quote = $this->quoteRepository->update(request()->all(), $id);
 

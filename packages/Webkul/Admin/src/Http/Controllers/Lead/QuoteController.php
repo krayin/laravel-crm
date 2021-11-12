@@ -73,7 +73,7 @@ class QuoteController extends Controller
      */
     public function delete($leadId)
     {
-        Event::dispatch('leads.quote.delete.before');
+        Event::dispatch('leads.quote.delete.before', $leadId);
 
         $lead = $this->leadRepository->find($leadId);
 

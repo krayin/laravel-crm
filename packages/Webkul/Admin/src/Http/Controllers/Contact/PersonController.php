@@ -95,7 +95,7 @@ class PersonController extends Controller
      */
     public function update(AttributeForm $request, $id)
     {
-        Event::dispatch('contacts.person.update.before');
+        Event::dispatch('contacts.person.update.before', $id);
 
         $person = $this->personRepository->update($this->sanitizeRequestedPersonData(), $id);
 
@@ -131,7 +131,7 @@ class PersonController extends Controller
         $person = $this->personRepository->findOrFail($id);
 
         try {
-            Event::dispatch('contacts.person.delete.before', $person);
+            Event::dispatch('contacts.person.delete.before', $id);
 
             $this->personRepository->delete($id);
 

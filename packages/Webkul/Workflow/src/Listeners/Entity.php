@@ -48,11 +48,13 @@ class Entity
         $workflows = $this->workflowRepository->findByField('event', $eventName);
 
         foreach ($workflows as $workflow) {
+            $workflowEntity = app(config('workflows.trigger_entities.' . $workflow->entity_type . '.class'));
+
+            $entity = $workflowEntity->getEntity($entity);
+
             if (! $this->validator->validate($workflow, $entity)) {
                 continue;
             }
-
-            $workflowEntity = app(config('workflows.trigger_entities.' . $workflow->entity_type . '.class'));
 
             try {
                 $workflowEntity->executeActions($workflow, $entity);

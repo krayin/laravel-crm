@@ -169,7 +169,7 @@ class EmailController extends Controller
      */
     public function update($id)
     {
-        Event::dispatch('email.update.before');
+        Event::dispatch('email.update.before', $id);
 
         $data = request()->all();
 

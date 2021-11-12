@@ -35,7 +35,7 @@ class TagController extends Controller
      */
     public function store($id)
     {
-        Event::dispatch('leads.tag.create.before');
+        Event::dispatch('leads.tag.create.before', $id);
 
         $lead = $this->leadRepository->find($id);
 
@@ -60,7 +60,7 @@ class TagController extends Controller
      */
     public function delete($leadId)
     {
-        Event::dispatch('leads.tag.delete.before');
+        Event::dispatch('leads.tag.delete.before', $leadId);
 
         $lead = $this->leadRepository->find($leadId);
 
