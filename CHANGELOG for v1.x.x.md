@@ -1,3 +1,79 @@
+## **v1.2.1 (12st of November 2021)**
+
+* [feature] Calendar view added for activities
+
+* [feature] Admin profile picture feature implemented
+
+
+* #308 [fixed] - There should be a warning message if the user creating multiple persons with the same details. 
+
+* #315 [fixed] - The participants should not be added to multiple activities at the same time.
+
+* #323 [fixed] - There should be an option to upload user profile picture
+
+* #343 [fixed] - There should be an option to view lead on dashboard.
+
+* #373 [fixed] - The color of quote should be red which is expired.
+
+* #453 [fixed] - The warning message should be removed after fill data in the Reply section.
+
+* #463 [fixed] - When SKU was made not compulsory, and when we add the product, it shows a junk code in the screen
+
+* #496 [fixed] - There should be a dropdown according to the default pipeline instead of an input box when the user trying to filter leads by stage.
+
+* #501 [fixed] - There should be an option to change activity status in activity table.
+
+* #504 [fixed] - There should be a warning message if the user is adding the same email and contact number multiple time
+
+* #511 [fixed] - There should not be print the JSON data when the user clicking on the back arrow.
+
+* #535 [fixed] - There should be an option of created date, when user trying to view the lead.
+
+* #572 [fixed] - There should be an option for searching the "Tag" in global search bar and in Filter also.
+
+* #582 [fixed] - There should be a loader before the success message When the user trying to mark as done any activity.
+
+* #596 [fixed] - There should be an option to give permission to download a quote
+
+* #634 [fixed] - The color of Won lead should be green in the dashboard.
+
+* #635 [fixed] - The filters should work properly when the user is trying to filter the lead by the contact person.
+
+* #636 [fixed] - The number of activities should be correct in the dashboard.
+
+* #637 [fixed] - There should not be any warning message when the user is trying to filter organization by Person count
+
+* #638 [fixed] - The attached file should be visible in the reply section if any.
+
+* #639 [fixed] - The name of the filter should be correct. 
+
+* #647 [fixed] - The Expected close date should be correct when the user is selecting the current date for the expected closed date.
+
+* #648 [fixed] - The name of the leads filter should be correct.
+
+* #653 [fixed] - There should be a warning message when the user is trying to add multiple "Types" with the same name.
+
+* #661 [fixed] - There should be a loader before the success message When the user trying to update activity status.
+
+* #668 [fixed] - The name of the filter should be correct when the user is trying to filter activity by the type.
+
+* #671 [fixed] - There should be one more option of 'select status' when the user is trying to filter activity by 'Is Done' filter.
+
+* #672 [fixed] - The 'Expired At' time should be correct when the user is selecting the current date for 'Expired At'.
+
+* #679 [fixed] - When the user is clicking on 'Sales Person', then the page should be redirected to the person's page.
+
+* #678 [fixed] - The stage we are deleting from the pipeline, the leads of that stage should not be deleted.
+
+* #685 [fixed] - There should not be any warning when the user is trying to delete that lead for which the workflow was created
+
+* #692 [fixed] - The page should be redirected to the leads of the same pipeline for which the user is creating the lead.
+
+* #691 [fixed] - There should not be an exception when the user is trying to create a new lead.
+
+
+
+
 ## **v1.2.0 (1st of November 2021)**
 
 * [feature] Pipeline feature implemented
