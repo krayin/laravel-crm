@@ -94,6 +94,17 @@ class ActivityDataGrid extends DataGrid
     public function addColumns()
     {
         $this->addColumn([
+            'index'            => 'is_done',
+            'label'            => trans('admin::app.datagrid.is_done'),
+            'type'             => 'dropdown',
+            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
+            'searchable'       => false,
+            'closure'          => function ($row) {
+                return view('admin::activities.datagrid.is-done', compact('row'))->render();
+            },
+        ]);
+
+        $this->addColumn([
             'index' => 'title',
             'label' => trans('admin::app.datagrid.title'),
             'type'  => 'string',
@@ -138,17 +149,6 @@ class ActivityDataGrid extends DataGrid
             'dropdown_options' => $this->getActivityTypeDropdownOptions(),
             'searchable' => false,
             'filterable' => false,
-        ]);
-
-        $this->addColumn([
-            'index'            => 'is_done',
-            'label'            => trans('admin::app.datagrid.is_done'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
-            'searchable'       => false,
-            'closure'          => function ($row) {
-                return view('admin::activities.datagrid.is-done', compact('row'))->render();
-            },
         ]);
 
         $this->addColumn([
