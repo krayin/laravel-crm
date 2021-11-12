@@ -166,12 +166,10 @@ class LeadController extends Controller
         Event::dispatch('lead.create.after', $lead);
 
         session()->flash('success', trans('admin::app.leads.create-success'));
-        if($data['lead_pipeline_id'])
-        {
+        if($data['lead_pipeline_id']) {
             return redirect()->route('admin.leads.index',$data['lead_pipeline_id']);
         }
-        else
-        {
+        else {
             return redirect()->route('admin.leads.index');
         }  
     }
