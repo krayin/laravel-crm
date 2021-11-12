@@ -20,6 +20,12 @@
                     <label for="email" class="required">{{ __('admin::app.leads.item') }}</label>
 
                     <input
+                        type="hidden"
+                        :name="[inputName + '[name]']"
+                        v-model="product['name']"
+                    />
+
+                    <input
                         type="text"
                         :name="[inputName + '[product_id]']"
                         class="control"
