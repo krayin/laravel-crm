@@ -167,7 +167,7 @@ class LeadController extends Controller
 
         session()->flash('success', trans('admin::app.leads.create-success'));
 
-        return redirect()->route('admin.leads.index');
+        return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
     }
 
     /**
