@@ -3,6 +3,7 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -79,7 +80,13 @@ class LeadDataGrid extends DataGrid
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
             'condition' => function ($row) {
-                if ($row->rotten_days > 0) {
+                if (in_array($row->stage_code, ['won', 'lost'])) {
+                    return false;
+                }
+
+                $rottenDate = Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->addDays($row->pipeline_rotten_days);
+
+                if ($rottenDate->diffInDays(Carbon::now(), false) > 0) {
                     return true;
                 }
 
@@ -109,9 +116,10 @@ class LeadDataGrid extends DataGrid
                 'users.name as sales_person',
                 'persons.id as person_id',
                 'persons.name as person_name',
-                'tags.name as tag_name'
+                'tags.name as tag_name',
+                'lead_pipelines.rotten_days as pipeline_rotten_days',
+                'lead_pipeline_stages.code as stage_code',
             )
-            ->addSelect(\DB::raw('IF(lead_pipeline_stages.code = "won" OR lead_pipeline_stages.code = "lost", 0, DATEDIFF(now(), leads.created_at + INTERVAL lead_pipelines.rotten_days DAY)) as rotten_days'))
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->leftJoin('lead_types', 'leads.lead_type_id', '=', 'lead_types.id')
