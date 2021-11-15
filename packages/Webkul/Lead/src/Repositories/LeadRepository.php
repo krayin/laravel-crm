@@ -96,6 +96,7 @@ class LeadRepository extends Repository
                     'lead_pipeline_stages.name as status',
                     'lead_pipeline_stages.id as lead_pipeline_stage_id'
                 )
+                ->addSelect(\DB::raw('DATEDIFF(leads.created_at + INTERVAL lead_pipelines.rotten_days DAY, now()) as rotten_days'))
                 ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                 ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
                 ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')

@@ -443,7 +443,7 @@ class Dashboard
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topLeads = $this->leadRepository
-            ->select('leads.*', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
+            ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
@@ -574,7 +574,7 @@ class Dashboard
     public function getTopCustomers($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topCustomers = $this->leadRepository
-            ->select('leads.*', 'persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
+            ->select('persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->groupBy('person_id')

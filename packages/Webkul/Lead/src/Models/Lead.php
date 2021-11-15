@@ -144,16 +144,4 @@ class Lead extends Model implements LeadContract
 
         return $rottenDate->diffInDays(Carbon::now(), false);
     }
-
-    /**
-     * @return array
-     */
-    public function toArray()
-    {
-        $array = parent::toArray();
-
-        $array['rotten_days'] = $this->rotten_days;
-
-        return $array;
-    }
 }
