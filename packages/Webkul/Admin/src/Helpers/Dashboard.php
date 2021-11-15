@@ -427,7 +427,7 @@ class Dashboard
         $activities->push(...$typesWithZeroCount);
 
         return [
-            'data' => $activities->toArray(),
+            'data'  => $activities,
             'total' => $activities->pluck('count')->sum()
         ];
     }
@@ -443,7 +443,7 @@ class Dashboard
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topLeads = $this->leadRepository
-            ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
+            ->select('leads.*', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
@@ -459,8 +459,7 @@ class Dashboard
                 }
             })
             ->limit(3)
-            ->get()
-            ->toArray();
+            ->get();
 
         $cardData = [
             "data" => $topLeads
@@ -497,8 +496,7 @@ class Dashboard
                     'label' => $pipeline->name,
                     'count' => $individualLeads,
                 ];
-            })
-            ->toArray();
+            });
 
         return [
             'data' => $leadPipelines,
@@ -576,15 +574,14 @@ class Dashboard
     public function getTopCustomers($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topCustomers = $this->leadRepository
-            ->select('persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
+            ->select('leads.*', 'persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->groupBy('person_id')
             ->orderBy('lead_value', 'desc')
             ->limit(6)
             ->orderBy('count', 'desc')
-            ->get()
-            ->toArray();
+            ->get();
 
         $cardData = [
             "data" => $topCustomers
@@ -610,8 +607,7 @@ class Dashboard
             ->groupBy('lead_products.product_id')
             ->whereBetween('lead_products.created_at', [$startDateFilter, $endDateFilter])
             ->limit(6)
-            ->get()
-            ->toArray();
+            ->get();
 
         $cardData = [
             "data" => $topProducts
