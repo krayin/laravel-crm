@@ -170,7 +170,7 @@
                     <tab name="{{ __('admin::app.leads.contact-person') }}">
                         @include('admin::leads.common.contact', ['formScope' => 'lead-form.'])
 
-                        <contact-component></contact-component>
+                        <contact-component :data='@json(old('person'))'></contact-component>
                     </tab>
 
                     {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.contact_person.after', ['email' => $email]) !!}
@@ -181,7 +181,7 @@
                     <tab name="{{ __('admin::app.leads.products') }}">
                         @include('admin::leads.common.products', ['formScope' => 'lead-form.'])
 
-                        <product-list></product-list>
+                        <product-list :data='@json(old('products'))'></product-list>
                     </tab>
 
                     {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.products.after', ['email' => $email]) !!}
@@ -717,6 +717,26 @@
                 @if ($email->person)
                     this.email.person = @json($email->person);
                 @endif
+            },
+
+            mounted: function() {
+                if (! Array.isArray(window.serverErrors)) {
+                    var self = this;
+
+                    if (("{{ old('lead_pipeline_stage_id') }}")) {
+                        this.$root.openModal('addLeadModal');
+
+                        setTimeout(() => {
+                            self.$root.addServerErrors('lead-form');
+                        });
+                    } else {
+                        this.$root.openModal('addPersonModal');
+
+                        setTimeout(() => {
+                            self.$root.addServerErrors('person-form');
+                        });
+                    }
+                }
             },
 
             methods: {
