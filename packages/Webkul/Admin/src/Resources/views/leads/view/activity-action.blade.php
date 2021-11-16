@@ -505,8 +505,6 @@
                         })
                         .catch (error => {
                             this.is_searching = false;
-
-                            console.log(error)
                         })
                 }, 500),
 

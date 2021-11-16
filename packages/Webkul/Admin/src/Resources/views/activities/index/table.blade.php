@@ -47,6 +47,16 @@
                         type: "success",
                         message : response.data.message
                     });
+                })
+                .catch(error => {
+                    $(target).prop("checked", ! isDone);
+
+                    window.app.pageLoaded = true;
+
+                    window.addFlashMessages({
+                        type: "error",
+                        message : error.response.data.message
+                    });
                 });
         }
     </script>
