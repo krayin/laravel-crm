@@ -119,7 +119,7 @@ return [
     ], [
         'key'   => 'activities.edit',
         'name'  => 'admin::app.acl.edit',
-        'route' => ['admin.activities.edit', 'admin.activities.update'],
+        'route' => ['admin.activities.edit', 'admin.activities.update', 'admin.activities.mass_update'],
         'sort'  => 2,
     ], [
         'key'   => 'activities.delete',
