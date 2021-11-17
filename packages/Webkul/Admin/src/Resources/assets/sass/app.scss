@@ -779,7 +779,7 @@ body {
             }
 
             &:not(.draggable) {
-                .control {
+                .control[readonly=readonly] {
                     background-color: #f0f0f0;;
                 }
             }
