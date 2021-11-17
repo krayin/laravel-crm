@@ -173,7 +173,7 @@
                                     v-model="stage['probability']"
                                     v-validate="'required|numeric|min_value:0|max_value:100'"
                                     data-vv-as="&quot;{{ __('admin::app.settings.pipelines.probability') }}&quot;"
-                                    :readonly="! isDragable(stage)"
+                                    :readonly="stage.code != 'new' && ! isDragable(stage)"
                                 />
 
                                 <span class="control-error" v-if="errors.has('stages[' + stage.id + '][probability]')">
