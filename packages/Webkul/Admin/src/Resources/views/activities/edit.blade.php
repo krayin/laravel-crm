@@ -120,6 +120,12 @@
                                     </datetime>
                                 </div>
                             </div>
+
+                            <div class="form-group">
+                                <label for="location">{{ __('admin::app.activities.location') }}</label>
+
+                                <input name="location" class="control" value="{{ old('location') ?: $activity->location }}"/>
+                            </div>
         
                             <div class="form-group">
                                 <label for="comment">{{ __('admin::app.activities.description') }}</label>

@@ -141,6 +141,12 @@
                         </div>
 
                         <div class="form-group">
+                            <label for="location">{{ __('admin::app.leads.location') }}</label>
+
+                            <input name="location" class="control"/>
+                        </div>
+
+                        <div class="form-group">
                             <label for="comment">{{ __('admin::app.leads.description') }}</label>
 
                             <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
