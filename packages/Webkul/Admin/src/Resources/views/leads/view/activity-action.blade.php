@@ -100,12 +100,6 @@
                             </span>
                         </div>
 
-                        <div class="form-group">
-                            <label for="comment">{{ __('admin::app.leads.description') }}</label>
-
-                            <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
-                        </div>
-
                         <div class="form-group date" :class="[errors.has('activity-form.schedule_from') || errors.has('activity-form.schedule_to') ? 'has-error' : '']">
                             <label for="schedule_from" class="required">{{ __('admin::app.leads.schedule') }}</label>
 
@@ -144,6 +138,12 @@
                                     </span>
                                 </datetime>
                             </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="comment">{{ __('admin::app.leads.description') }}</label>
+
+                            <textarea class="control" id="activity-comment" name="comment">{{ old('comment') }}</textarea>
                         </div>
 
                         <div class="form-group">
