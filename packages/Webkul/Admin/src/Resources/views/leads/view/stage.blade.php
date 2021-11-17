@@ -148,6 +148,10 @@
 
             methods: {
                 changeStage: function(stage) {
+                    if (this.currentStage.code == stage.code) {
+                        return;
+                    }
+
                     var self = this;
 
                     this.$http.put("{{ route('admin.leads.update', $lead->id) }}", {'lead_pipeline_stage_id': stage.id})
