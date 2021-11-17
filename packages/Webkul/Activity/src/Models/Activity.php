@@ -25,6 +25,7 @@ class Activity extends Model implements ActivityContract
     protected $fillable = [
         'title',
         'type',
+        'location',
         'comment',
         'additional',
         'schedule_from',

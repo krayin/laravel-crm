@@ -87,11 +87,6 @@
                                 <span class="control-error" v-if="errors.has('type')">@{{ errors.first('type') }}</span>
                             </div>
         
-                            <div class="form-group">
-                                <label for="comment">{{ __('admin::app.activities.description') }}</label>
-                                <textarea class="control" id="activity-comment" name="comment">{{ old('comment') ?: $activity->comment }}</textarea>
-                            </div>
-        
                             <div class="form-group date" :class="[errors.has('schedule_from') || errors.has('schedule_to') ? 'has-error' : '']">
                                 <label for="schedule_from" class="required">{{ __('admin::app.activities.schedule') }}</label>
         
@@ -124,6 +119,11 @@
                                         <span class="control-error" v-if="errors.has('schedule_to')">@{{ errors.first('schedule_to') }}</span>
                                     </datetime>
                                 </div>
+                            </div>
+        
+                            <div class="form-group">
+                                <label for="comment">{{ __('admin::app.activities.description') }}</label>
+                                <textarea class="control" id="activity-comment" name="comment">{{ old('comment') ?: $activity->comment }}</textarea>
                             </div>
         
                             <div class="form-group">
