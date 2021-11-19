@@ -127,29 +127,27 @@ class AttributeController extends Controller
         $attribute = $this->attributeRepository->findOrFail($id);
 
         if (! $attribute->is_user_defined) {
-            session()->flash('error', trans('admin::app.settings.attributes.user-define-error'));
-        } else {
-            try {
-                Event::dispatch('settings.attribute.delete.before', $id);
-
-                $this->attributeRepository->delete($id);
-
-                Event::dispatch('settings.attribute.delete.after', $id);
-
-                return response()->json([
-                    'status'  => true,
-                    'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
-                ], 200);
-            } catch(\Exception $exception) {
-                return response()->json([
-                    'message' => trans('admin::app.settings.attributes.delete-failed'),
-                ], 400);
-            }
+            return response()->json([
+                'message' => trans('admin::app.settings.attributes.user-define-error'),
+            ], 400);
         }
 
-        return response()->json([
-            'message' => trans('admin::app.settings.attributes.delete-failed'),
-        ], 400);
+        try {
+            Event::dispatch('settings.attribute.delete.before', $id);
+
+            $this->attributeRepository->delete($id);
+
+            Event::dispatch('settings.attribute.delete.after', $id);
+
+            return response()->json([
+                'status'  => true,
+                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
+            ], 200);
+        } catch(\Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.settings.attributes.delete-failed'),
+            ], 400);
+        }
     }
 
     /**
