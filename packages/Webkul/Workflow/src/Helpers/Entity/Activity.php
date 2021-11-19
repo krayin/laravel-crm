@@ -121,6 +121,12 @@ class Activity extends AbstractEntity
                     ],
                 ]),
             ], [
+                'id'          => 'location',
+                'type'        => 'text',
+                'name'        => 'Location',
+                'lookup_type' => null,
+                'options'     => collect([]),
+            ], [
                 'id'          => 'comment',
                 'type'        => 'textarea',
                 'name'        => 'Comment',

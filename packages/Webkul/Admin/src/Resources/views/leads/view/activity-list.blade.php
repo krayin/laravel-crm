@@ -85,8 +85,7 @@
                             </a>
                         </div>
 
-                        <div class="comment" v-if="activity.comment">
-                            @{{ activity.comment }}
+                        <div class="comment" v-if="activity.comment" v-html="activity.comment">
                         </div>
 
                         <div class="info">

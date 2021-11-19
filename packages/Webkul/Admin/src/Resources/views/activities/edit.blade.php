@@ -126,6 +126,9 @@
 
                                 <input name="location" class="control" value="{{ old('location') ?: $activity->location }}"/>
                             </div>
+
+                            <div class="form-group video-conference">
+                            </div>
         
                             <div class="form-group">
                                 <label for="comment">{{ __('admin::app.activities.description') }}</label>
