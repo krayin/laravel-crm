@@ -24,7 +24,7 @@
         ],
 
         'layouts' => [
-            'app-version'          => 'إصدار : :إصدار',
+            'app-version'          => 'إصدار : :version',
             'dashboard'            => 'لوحة القيادة',
             'leads'                => 'يؤدي',
             'quotes'               => 'يقتبس',
@@ -130,7 +130,7 @@
             'cancel'                   => 'يلغي',
             'no-lead'                  => 'لا يؤدي',
             'details'                  => 'تفاصيل',
-            'rotten-info'              => 'الرصاص قد تعفن ل :أيام يوم (أيام)',
+            'rotten-info'              => 'الرصاص قد تعفن ل :days day(s)',
             'stage'                    => 'المسرح',
             'new'                      => 'جديد',
             'won-lost'                 => 'فاز / خسر',
@@ -214,10 +214,10 @@
             'empty-planned-activities' => 'ليس لديك أنشطة مخطط لها.',
             'empty-done-activities'    => 'لم تقم بأي أنشطة.',
             'note-added'               => 'تمت إضافة الملاحظة',
-            'call-scheduled'           => 'تمت جدولة المكالمة في :من عند - :إلى',
-            'meeting-scheduled'        => 'الاجتماع المقرر في: من -: إلى',
-            'lunch-scheduled'          => 'موعد الغداء في: من -: إلى',
-            'email-scheduled'          => 'تمت جدولة البريد الإلكتروني على: من -: إلى',
+            'call-scheduled'           => 'Call scheduled at :from - :to',
+            'meeting-scheduled'        => 'الاجتماع المقرر في :from - :to',
+            'lunch-scheduled'          => 'الغداء المقرر في :from - :to',
+            'email-scheduled'          => 'تمت جدولة البريد الإلكتروني في :from - :to',
             'file-added'               => 'تمت إضافة الملف',
             'quote-destroy-success'    => 'تمت إزالة الاقتباس بنجاح.',
             'tag-create-success'       => 'تمت إضافة العلامة بنجاح.',
@@ -270,7 +270,7 @@
         ],
 
         'mail' => [
-            'title'                   => 'بريد- :نوع',
+            'title'                   => 'بريد - :type',
             'compose'                 => 'مؤلف موسيقى',
             'inbox'                   => 'صندوق الوارد',
             'draft'                   => 'مشروع',
@@ -311,7 +311,7 @@
 
             'forget-password' => [
                 'subject'           => 'إعادة تعيين كلمة مرور العميل',
-                'dear'              => 'عزيزي :اسم',
+                'dear'              => 'عزيزي :name',
                 'reset-password'    => 'إعادة تعيين كلمة المرور',
                 'info'              => 'أنت تتلقى هذا البريد الإلكتروني لأننا تلقينا طلب إعادة تعيين كلمة المرور لحسابك',
                 'final-summary'     => 'إذا لم تطلب إعادة تعيين كلمة المرور ، فلا داعي لاتخاذ أي إجراء آخر',
@@ -345,12 +345,12 @@
             'duration-overlapping' => 'المشاركون لديهم اجتماع آخر في هذا الوقت. هل تريد الاستمرار?',
             'file-upload-success'  => 'تم تحميل الملف (الملفات) بنجاح.',
             'file-upload-error'    => 'لا يمكن تحميل الملف (الملفات).',
-            'create-success'       => ':تم إنشاء النوع بنجاح.',
-            'update-success'       => ':اكتب محدث بنجاح.',
+            'create-success'       => ':type created successfully.',
+            'update-success'       => ':type updated successfully.',
             'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
             'mass-update-failed'   => 'لا يمكن تحديث الأنشطة.',
-            'destroy-success'      => ':اكتب تم حذفه بنجاح.',
-            'delete-failed'        => ':لا يمكن حذف النوع.',
+            'destroy-success'      =>':type deleted successfully.',
+            'delete-failed'        => ':type can not be deleted.',
             'typing-placeholder'   => 'ابدأ في كتابة الاسم',
         ],
 
@@ -724,9 +724,9 @@
             'rotten-days'         => 'أيام فاسدة',
             'yes'                 => 'نعم',
             'no'                  => 'لا',
-            'update-success'      => ':تم تحديث المورد بنجاح.',
-            'destroy-success'     => ':تم حذف المورد بنجاح.',
-            'destroy-failed'      => ':لا يمكن حذف المورد.',
+            'update-success'      => ':resource updated successfully.',
+            'destroy-success'     => ':resource deleted successfully.',
+            'destroy-failed'      => ':resource can not be deleted.',
             'filters'             => [
                 'yesterday'       => 'في الامس',
                 'today'           => 'اليوم',
@@ -738,10 +738,10 @@
         ],
 
         'response' => [
-            'create-success' => ':تم إنشاء الاسم بنجاح.',
-            'update-success' => ':تم تحديث الاسم بنجاح.',
-            'destroy-success'=> ':تم حذف الاسم بنجاح.',
-            'destroy-failed' => ':لا يمكن حذف الاسم.',
+            'create-success' => ':name created successfully.',
+            'update-success' => ':name updated successfully.',
+            'destroy-success'=> ':name deleted successfully.',
+            'destroy-failed' => ':name can not be deleted.',
         ],
 
         'acl' => [
@@ -832,9 +832,13 @@
 
         'emails' => [
             'common' => [
-                'dear'   => 'عزيزي :اسم',
-                'cheers' => 'هتافات,فريق </br> :اسم التطبيق'
+                'dear'   => 'عزيزي :name',
+                'cheers' => 'في صحتك ، فريق </br> app_name'
             ],
         ]
     ];
+    
+    
+    
+    
 ?>
