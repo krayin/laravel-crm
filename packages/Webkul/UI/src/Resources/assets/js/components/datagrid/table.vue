@@ -10,7 +10,7 @@
                     href="javascript:void(0);"
                     class="btn btn-md btn-primary"
                     @click="openModal"
-                    >Export</a
+                    >{{ __("ui.datagrid.export") }}</a
                 >
             </div>
         </div>
@@ -18,7 +18,7 @@
         <sidebar-filter></sidebar-filter>
 
         <div class="table-body" v-if="Object.keys(tableData).length > 0">
-            <spinner-meter :full-page="true" v-if="!pageLoaded"></spinner-meter>
+            <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
             <filter-component>
                 <template v-slot:extra-filters>
@@ -48,14 +48,14 @@
         </div>
 
         <modal id="export" :is-open="isOpen">
-            <h3 slot="header-title">Download</h3>
+            <h3 slot="header-title">{{ __("ui.datagrid.download") }}</h3>
 
             <div slot="header-actions">
                 <button
                     class="btn btn-sm btn-secondary-outline"
                     @click="closeModal"
                 >
-                    Cancel
+                    {{ __("ui.datagrid.cancel") }}
                 </button>
             </div>
 
@@ -63,7 +63,7 @@
                 <form method="POST" :action="`${baseURL}/export`">
                     <div class="form-group">
                         <label for="format" class="required">
-                            Select Format
+                            {{ __("ui.datagrid.select-format") }}
                         </label>
 
                         <input
@@ -91,7 +91,7 @@
                             type="submit"
                             class="btn btn-sm btn-primary float-right mb-5"
                         >
-                            Export
+                            {{ __("ui.datagrid.export") }}
                         </button>
                     </div>
                 </form>
@@ -186,7 +186,7 @@ export default {
                     .catch(error => {
                         const actualFilters = self.$store.state.filters.filter(
                             filter =>
-                                !(
+                                ! (
                                     filter.column == "view_type" &&
                                     filter.val == "table"
                                 )
