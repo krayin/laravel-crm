@@ -404,6 +404,7 @@ abstract class DataGrid
     {
         return [
             'index'             => $this->index,
+            'className'         => get_called_class(),
             'records'           => $this->collection,
             'columns'           => $this->completeColumnDetails,
             'tabFilters'        => $this->tabFilters,
@@ -444,5 +445,27 @@ abstract class DataGrid
         $this->formatCollection();
 
         return response()->json($this->prepareData());
+    }
+
+    /**
+     * Export data.
+     *
+     * @return object
+     */
+    public function export()
+    {
+        $this->init();
+
+        $this->addColumns();
+
+        $this->prepareTabFilters();
+
+        $this->prepareActions();
+
+        $this->prepareMassActions();
+
+        $this->prepareQueryBuilder();
+
+        return $this->getCollection();
     }
 }

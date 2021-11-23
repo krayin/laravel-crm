@@ -5,13 +5,20 @@
 
             <div class="table-action">
                 <slot name="table-action"></slot>
+
+                <a
+                    href="javascript:void(0);"
+                    class="btn btn-md btn-primary"
+                    @click="openModal"
+                    >Export</a
+                >
             </div>
         </div>
 
         <sidebar-filter></sidebar-filter>
 
         <div class="table-body" v-if="Object.keys(tableData).length > 0">
-            <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
+            <spinner-meter :full-page="true" v-if="!pageLoaded"></spinner-meter>
 
             <filter-component>
                 <template v-slot:extra-filters>
@@ -29,14 +36,75 @@
 
             <div class="empty-table" v-else>
                 <div>
-                    <img :src="`${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`"/>
+                    <img
+                        :src="
+                            `${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`
+                        "
+                    />
 
                     <span>{{ __("ui.datagrid.no-records") }}</span>
                 </div>
             </div>
         </div>
+
+        <modal id="export" :is-open="isOpen">
+            <h3 slot="header-title">Download</h3>
+
+            <div slot="header-actions">
+                <button
+                    class="btn btn-sm btn-secondary-outline"
+                    @click="closeModal"
+                >
+                    Cancel
+                </button>
+            </div>
+
+            <div slot="body">
+                <form method="POST" :action="`${baseURL}/export`">
+                    <div class="form-group">
+                        <label for="format" class="required">
+                            Select Format
+                        </label>
+
+                        <input
+                            type="hidden"
+                            name="_token"
+                            :value="csrfToken"
+                        />
+
+                        <input
+                            type="hidden"
+                            name="gridClassName"
+                            :value="tableData.className"
+                        />
+
+                        <select
+                            name="format"
+                            class="control"
+                            v-validate="'required'"
+                        >
+                            <option value="xls">XLS</option>
+                            <option value="csv">CSV</option>
+                        </select>
+
+                        <button
+                            type="submit"
+                            class="btn btn-sm btn-primary float-right mb-5"
+                        >
+                            Export
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </modal>
     </div>
 </template>
+
+<style scoped>
+.mb-5 {
+    margin-bottom: 5px;
+}
+</style>
 
 <script>
 import { mapState, mapActions } from "vuex";
@@ -46,6 +114,10 @@ export default {
 
     data: function() {
         return {
+            csrfToken: $('meta[name="csrf-token"]').attr("content"),
+
+            isOpen: false,
+
             pageLoaded: false,
 
             previousURL: null,
@@ -64,7 +136,7 @@ export default {
 
     mounted: function() {
         let search = window.location.search;
-        
+
         const initialIndex = search.indexOf("?");
 
         if (initialIndex > -1) {
@@ -114,7 +186,7 @@ export default {
                     .catch(error => {
                         const actualFilters = self.$store.state.filters.filter(
                             filter =>
-                                ! (
+                                !(
                                     filter.column == "view_type" &&
                                     filter.val == "table"
                                 )
@@ -149,6 +221,24 @@ export default {
                 `${params != "" ? "?" + params : ""}`;
 
             window.history.pushState({ path: newURL }, "", newURL);
+        },
+
+        serializeArrayToJson: function(serializedArray) {
+            let json = {};
+
+            serializedArray.forEach(value => {
+                json[value["name"]] = value["value"];
+            });
+
+            return json;
+        },
+
+        openModal: function() {
+            this.isOpen = true;
+        },
+
+        closeModal: function() {
+            this.isOpen = false;
         }
     }
 };
