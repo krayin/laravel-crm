@@ -13,11 +13,15 @@ class UIServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'ui');
+
+        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'ui');
+
         $this->publishes([
             __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/ui/assets'),
         ], 'public');
-
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'ui');
     }
 
     /**
