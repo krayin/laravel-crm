@@ -214,7 +214,7 @@
             'empty-planned-activities' => 'ليس لديك أنشطة مخطط لها.',
             'empty-done-activities'    => 'لم تقم بأي أنشطة.',
             'note-added'               => 'تمت إضافة الملاحظة',
-            'call-scheduled'           => 'Call scheduled at :from - :to',
+            'call-scheduled'           => 'تمت جدولة المكالمة في :from - :to',
             'meeting-scheduled'        => 'الاجتماع المقرر في :from - :to',
             'lunch-scheduled'          => 'الغداء المقرر في :from - :to',
             'email-scheduled'          => 'تمت جدولة البريد الإلكتروني في :from - :to',
@@ -724,9 +724,9 @@
             'rotten-days'         => 'أيام فاسدة',
             'yes'                 => 'نعم',
             'no'                  => 'لا',
-            'update-success'      => ':resource updated successfully.',
-            'destroy-success'     => ':resource deleted successfully.',
-            'destroy-failed'      => ':resource can not be deleted.',
+            'update-success'      => ':تم تحديث المورد بنجاح.',
+            'destroy-success'     => ':تم حذف المورد بنجاح.',
+            'destroy-failed'      => ':لا يمكن حذف المورد.',
             'filters'             => [
                 'yesterday'       => 'في الامس',
                 'today'           => 'اليوم',
@@ -738,10 +738,10 @@
         ],
 
         'response' => [
-            'create-success' => ':name created successfully.',
-            'update-success' => ':name updated successfully.',
-            'destroy-success'=> ':name deleted successfully.',
-            'destroy-failed' => ':name can not be deleted.',
+            'create-success' => ':تم إنشاء الاسم بنجاح.',
+            'update-success' => ':تم تحديث الاسم بنجاح.',
+            'destroy-success'=> ':تم حذف الاسم بنجاح.',
+            'destroy-failed' => ':لا يمكن حذف الاسم.',
         ],
 
         'acl' => [
@@ -833,7 +833,7 @@
         'emails' => [
             'common' => [
                 'dear'   => 'عزيزي :name',
-                'cheers' => 'في صحتك ، فريق </br> app_name'
+                'cheers' => 'في صحتك ، فريق </br> :app_name'
             ],
         ]
     ];
