@@ -1,3 +1,0 @@
-"id","title","type","comment","additional","schedule_from","schedule_to","is_done","user_id","created_at","updated_at","location","lead_id","lead_title","created_by_id","created_by"
-"5","Meetingwithclient","meeting","Dwarka","","2021-11-18120000","2021-11-25120000","0","1","2021-11-10132712","2021-11-22183838","","18","HallTicketsLeads","1","ExampleAdmin"
-"6","Test","lunch","Test","","2021-11-23120000","2021-11-26120000","0","1","2021-11-10150208","2021-11-22183837","","18","HallTicketsLeads","1","ExampleAdmin"
