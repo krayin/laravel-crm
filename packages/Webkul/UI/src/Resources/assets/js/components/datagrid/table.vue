@@ -223,16 +223,6 @@ export default {
             window.history.pushState({ path: newURL }, "", newURL);
         },
 
-        serializeArrayToJson: function(serializedArray) {
-            let json = {};
-
-            serializedArray.forEach(value => {
-                json[value["name"]] = value["value"];
-            });
-
-            return json;
-        },
-
         openModal: function() {
             this.isOpen = true;
         },
