@@ -1889,106 +1889,138 @@ body {
     }
 }
 
-.pipeline-stage-container {
-    position: relative;
+.pipeline-stage-controls-wrapper {
     margin-bottom: 40px;
 
-    .pipeline-stages {
-        width: 100%;
-        display: flex;
+    .pipeline-stage-container {
         overflow: hidden;
-        border-radius: 4px;
-        align-items: center;
-        flex-flow: row nowrap;
+        position: relative;
+        display: flex;
+        width: 100%;
+        
 
-        &::-webkit-scrollbar {
-            display: none;
-        }
-
-        .stage {
-            background: $gray-color;
-            color: $font-color;
-            font-weight: $font-weight-medium;
+        .pipeline-stages {
             width: 100%;
-            font-size: $font-size-md;
-            min-width: 100px;
-            color: $font-color;
-            text-align: center;
-            background: $gray-color;
-            font-weight: $font-weight-medium;
+            display: flex;
+            overflow: hidden;
+            border-radius: 4px;
+            align-items: center;
+            flex-flow: row nowrap;
 
-            span {
-                display: block;
-                cursor: pointer;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                padding: 7px 5px 7px 22px;
+            &::-webkit-scrollbar {
+                display: none;
+            }
 
-                .icon {
-                    float: right;
+            .stage {
+                background: $gray-color;
+                color: $font-color;
+                font-weight: $font-weight-medium;
+                width: 100%;
+                font-size: $font-size-md;
+                min-width: 200px;
+                color: $font-color;
+                text-align: center;
+                background: $gray-color;
+                font-weight: $font-weight-medium;
+
+                span {
+                    display: block;
+                    cursor: pointer;
+                    overflow: hidden;
+                    white-space: nowrap;
+                    text-overflow: ellipsis;
+                    padding: 7px 5px 7px 22px;
+
+                    .icon {
+                        float: right;
+                    }
+                }
+
+                &:not(:last-child) {
+                    position: relative;
+
+                    &::before {
+                        background: $gray-color;
+                        box-shadow: 1px -1px 0 1px #fff, 1px -1px 0 1px #fff;
+                        content: '';
+                        position: absolute;
+                        top: 50%;
+                        right: -12px;
+                        width: 25px;
+                        height: 25px;
+                        z-index: 1;
+                        border-radius: 0 0 0 25px;
+                        transform: translateY(-50%) rotate(45deg);
+                    }
+                }
+
+                &.active {
+                    background-color: $primary-color;
+                    color: $white;
+
+                    &::before {
+                        background: $primary-color;
+                    }
+                }
+
+                .dropdown-list {
+                    right: 0px;
+                    font-weight: $font-weight-regular;
+
+                    ul li {
+                        color: $secondary-font-color;
+
+                        &:hover {
+                            color: $white;
+                        }
+                    }
                 }
             }
 
-            &:not(:last-child) {
-                position: relative;
+            &.won {
+                .stage {
+                    background-color: $success-color;
+                    color: $white;
 
-                &::before {
-                    background: $gray-color;
-                    box-shadow: 1px -1px 0 1px #fff, 1px -1px 0 1px #fff;
-                    content: '';
-                    position: absolute;
-                    top: 50%;
-                    right: -12px;
-                    width: 28px;
-                    height: 28px;
-                    z-index: 1;
-                    border-radius: 0 0 0 25px;
-                    transform: translateY(-50%) rotate(45deg);
+                    &::before {
+                        background: $success-color;
+                    }
                 }
             }
 
-            &.active {
-                background-color: $primary-color;
-                color: $white;
+            &.lost {
+                .stage {
+                    background-color: $danger-color;
+                    color: $white;
 
-                &::before {
-                    background: $primary-color;
-                }
-            }
-
-            .dropdown-list {
-                right: 0px;
-                font-weight: $font-weight-regular;
-
-                ul li {
-                    color: $secondary-font-color;
-
-                    &:hover {
-                        color: $white;
+                    &::before {
+                        background: $danger-color;
                     }
                 }
             }
         }
 
-        &.won {
-            .stage {
-                background-color: $success-color;
-                color: $white;
+        .pipeline-stage-controls {
+            display: flex;
+            align-items: center;
+            margin-left: 10px;
+            width: 72px;
 
-                &::before {
-                    background: $success-color;
+            .btn {
+                border: 1px solid;
+                border-radius: 4px;
+                height: 36px;
+                padding: 7px;
+
+                &:first-child {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
                 }
-            }
-        }
 
-        &.lost {
-            .stage {
-                background-color: $danger-color;
-                color: $white;
-
-                &::before {
-                    background: $danger-color;
+                &:last-child {
+                    margin-left: -1px;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
                 }
             }
         }
