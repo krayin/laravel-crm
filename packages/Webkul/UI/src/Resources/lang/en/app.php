@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'errors' => [
+        'no-records'           => 'No records found!',
+        'something-went-wrong' => 'Something went wrong!',
+    ],
+
     'datagrid' => [
         'title'         => 'DataGrid',
         'actions'       => 'Actions',

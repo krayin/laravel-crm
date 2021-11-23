@@ -29,10 +29,10 @@ class ExportController extends Controller
         if ($gridInstance instanceof \Webkul\UI\DataGrid\DataGrid) {
             $records = $gridInstance->export();
 
-            if (!count($records)) {
-                return response()->json([
-                    'message' => trans('admin::app.export.no-records')
-                ]);
+            if (! count($records)) {
+                session()->flash('warning', trans('ui::app.errors.no-records'));
+
+                return redirect()->back();
             }
 
             if ($format == 'csv') {
@@ -45,8 +45,10 @@ class ExportController extends Controller
         }
 
         /**
-         * If instance not matched that means datagrid is manipulated and should be aborted.
+         * If instance or options not matched that means datagrid is manipulated.
          */
-        abort(404);
+        session()->flash('error', trans('ui::app.errors.something-went-wrong'));
+
+        return redirect()->back();
     }
 }
