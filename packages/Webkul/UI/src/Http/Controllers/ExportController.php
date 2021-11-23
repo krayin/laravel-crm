@@ -2,6 +2,7 @@
 
 namespace Webkul\UI\Http\Controllers;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 use Maatwebsite\Excel\Facades\Excel;
 use Webkul\UI\DataGrid\Exports\DataGridExport;
@@ -21,7 +22,9 @@ class ExportController extends Controller
         ]);
 
         $format = $requestedInfo['format'];
-        $gridInstance = app($requestedInfo['gridClassName']);
+        $gridClassName = Crypt::decryptString($requestedInfo['gridClassName']);
+
+        $gridInstance = app($gridClassName);
 
         if ($gridInstance instanceof \Webkul\UI\DataGrid\DataGrid) {
             $records = $gridInstance->export();
@@ -41,6 +44,9 @@ class ExportController extends Controller
             }
         }
 
+        /**
+         * If instance not matched that means datagrid is manipulated and should be aborted.
+         */
         abort(404);
     }
 }

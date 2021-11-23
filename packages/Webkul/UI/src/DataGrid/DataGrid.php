@@ -2,6 +2,7 @@
 
 namespace Webkul\UI\DataGrid;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Str;
 use Webkul\UI\DataGrid\Traits\ProvideBouncer;
@@ -404,7 +405,7 @@ abstract class DataGrid
     {
         return [
             'index'             => $this->index,
-            'className'         => get_called_class(),
+            'className'         => Crypt::encryptString(get_called_class()),
             'records'           => $this->collection,
             'columns'           => $this->completeColumnDetails,
             'tabFilters'        => $this->tabFilters,
