@@ -19,11 +19,21 @@ class Common extends Mailable
      */
     public function build()
     {
-        return $this
-                ->to($this->data['to'])
-                ->subject($this->data['subject'])
-                ->view('admin::emails.common', [
-                    'body' => $this->data['body'],
+        $message = $this
+            ->to($this->data['to'])
+            ->subject($this->data['subject'])
+            ->view('admin::emails.common', [
+                'body' => $this->data['body'],
+            ]);
+
+        if (isset($this->data['attachments'])) {
+            foreach ($this->data['attachments'] as $attachment) {
+                $message->attachData($attachment['content'], $attachment['name'], [
+                    'mime' => $attachment['mime'],
                 ]);
+            }
+        }
+
+        return $message;
     }
 }
