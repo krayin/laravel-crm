@@ -10,7 +10,7 @@
                     href="javascript:void(0);"
                     class="btn btn-md btn-primary"
                     @click="openModal"
-                    >{{ __("ui.datagrid.export") }}</a
+                    v-if="tableData.export">{{ __("ui.datagrid.export") }}</a
                 >
             </div>
         </div>

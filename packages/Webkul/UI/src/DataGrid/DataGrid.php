@@ -209,6 +209,13 @@ abstract class DataGrid
     ];
 
     /**
+     * Export option.
+     *
+     * @var boolean
+     */
+    protected $export = false;
+
+    /**
      * Create datagrid instance.
      *
      * @return void
@@ -405,6 +412,7 @@ abstract class DataGrid
     {
         return [
             'index'             => $this->index,
+            'export'            => $this->export,
             'className'         => Crypt::encryptString(get_called_class()),
             'records'           => $this->collection,
             'columns'           => $this->completeColumnDetails,
@@ -455,18 +463,22 @@ abstract class DataGrid
      */
     public function export()
     {
-        $this->init();
+        if ($this->export) {
+            $this->init();
 
-        $this->addColumns();
+            $this->addColumns();
 
-        $this->prepareTabFilters();
+            $this->prepareTabFilters();
 
-        $this->prepareActions();
+            $this->prepareActions();
 
-        $this->prepareMassActions();
+            $this->prepareMassActions();
 
-        $this->prepareQueryBuilder();
+            $this->prepareQueryBuilder();
 
-        return $this->getCollection();
+            return $this->getCollection();
+        }
+
+        return [];
     }
 }
