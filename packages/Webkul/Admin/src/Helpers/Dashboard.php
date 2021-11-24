@@ -480,6 +480,17 @@ class Dashboard
     {
         $totalLeadsBetweenDateCount = $this->leadRepository
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
+            ->where(function ($query) {
+                $currentUser = auth()->guard('user')->user();
+
+                if ($currentUser->view_permission != 'global') {
+                    if ($currentUser->view_permission == 'group') {
+                        $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                    } else {
+                        $query->where('leads.user_id', $currentUser->id);
+                    }
+                }
+            })
             ->count();
 
         $leadPipelines = $this->pipelineRepository
@@ -488,8 +499,19 @@ class Dashboard
             ->map(function ($pipeline) use ($startDateFilter, $endDateFilter) {
                 $individualLeads = $this->leadRepository
                     ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
-                    ->where('lead_pipelines.id', $pipeline->id)
                     ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
+                    ->where('lead_pipelines.id', $pipeline->id)
+                    ->where(function ($query) {
+                        $currentUser = auth()->guard('user')->user();
+        
+                        if ($currentUser->view_permission != 'global') {
+                            if ($currentUser->view_permission == 'group') {
+                                $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                            } else {
+                                $query->where('leads.user_id', $currentUser->id);
+                            }
+                        }
+                    })
                     ->count();
 
                 return [
@@ -499,7 +521,7 @@ class Dashboard
             });
 
         return [
-            'data' => $leadPipelines,
+            'data'  => $leadPipelines,
             'total' => $totalLeadsBetweenDateCount
         ];
     }
