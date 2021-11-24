@@ -448,6 +448,7 @@ h5 {
                     color: $dark-color;
                     border-bottom: none;
                     background-color: rgba(255,255,255,.5);
+                    word-break: break-all;
 
                     &.empty {
                         text-align: center;
