@@ -125,9 +125,12 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index' => 'comment',
-            'label' => trans('admin::app.datagrid.comment'),
-            'type'  => 'string',
+            'index'   => 'comment',
+            'label'   => trans('admin::app.datagrid.comment'),
+            'type'    => 'string',
+            'closure' => function ($row) {
+                return $row->comment;
+            },
         ]);
 
         $this->addColumn([
