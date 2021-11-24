@@ -267,7 +267,7 @@
                         <td>-</td>
 
                         <td>
-                            <div class="form-group">
+                            <div class="form-group" :class="[errors.has('adjustment_amount') ? 'has-error' : '']">
                                 <input
                                     type="text"
                                     name="adjustment_amount"
@@ -275,7 +275,11 @@
                                     v-model="adjustmentAmount"
                                     v-validate="'decimal:4'"
                                     data-vv-as="&quot;{{ __('admin::app.quotes.adjustment') }}&quot;"
-                                    @keyup="validateAmount">
+                                />
+
+                                <span class="control-error" v-if="errors.has('adjustment_amount')">
+                                    @{{ errors.first('adjustment_amount') }}
+                                </span>
                             </div>
                         </td>
                     </tr>
@@ -537,10 +541,6 @@
 
                         Vue.delete(this.products, index);
                     }
-                },
-
-                validateAmount: function () {
-                    this.adjustmentAmount = this.adjustmentAmount.replace(/[^0-9.]/g, '');
                 }
             }
         });
