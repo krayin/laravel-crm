@@ -214,31 +214,33 @@
                                 <input type="hidden" name="is_unique" value="{{ $attribute->is_unique }}"/>
                             </div>
 
-                            <div class="form-group">
-                                <?php $selectedValidation = old('validation') ?: $attribute->validation ?>
+                            @if ($attribute->type == 'text')
+                                <div class="form-group">
+                                    <?php $selectedValidation = old('validation') ?: $attribute->validation ?>
 
-                                <label for="validation">{{ __('admin::app.settings.attributes.input_validation') }}</label>
+                                    <label for="validation">{{ __('admin::app.settings.attributes.input_validation') }}</label>
 
-                                <select class="control" id="validation" name="validation">
-                                    <option value=""></option>
+                                    <select class="control" id="validation" name="validation">
+                                        <option value=""></option>
 
-                                    <option value="numeric" {{ $selectedValidation == 'numeric' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.number') }}
-                                    </option>
+                                        <option value="numeric" {{ $selectedValidation == 'numeric' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.attributes.number') }}
+                                        </option>
 
-                                    <option value="decimal" {{ $selectedValidation == 'decimal' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.decimal') }}
-                                    </option>
+                                        <option value="decimal" {{ $selectedValidation == 'decimal' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.attributes.decimal') }}
+                                        </option>
 
-                                    <option value="email" {{ $selectedValidation == 'email' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.email') }}
-                                    </option>
+                                        <option value="email" {{ $selectedValidation == 'email' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.attributes.email') }}
+                                        </option>
 
-                                    <option value="url" {{ $selectedValidation == 'url' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.url') }}
-                                    </option>
-                                </select>
-                            </div>
+                                        <option value="url" {{ $selectedValidation == 'url' ? 'selected' : '' }}>
+                                            {{ __('admin::app.settings.attributes.url') }}
+                                        </option>
+                                    </select>
+                                </div>
+                            @endif
 
                             {!! view_render_event('admin.settings.attributes.edit.form_controls.after', ['attribute' => $attribute]) !!}
                         </div>

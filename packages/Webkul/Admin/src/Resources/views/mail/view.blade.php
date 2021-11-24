@@ -211,7 +211,7 @@
                     <h1>
                         <span>{{ __('admin::app.mail.link-mail') }}</span>
 
-                        <div class="float-right">
+                        <div class="right">
                             <i class="icon close-icon" @click="show_filter = ! show_filter"></i>
                         </div>
                     </h1>
