@@ -307,6 +307,22 @@ h5 {
             // display: block;
             text-align: right;
 
+            .export-import {
+                margin-right: 20px;
+                cursor: pointer;
+
+                .icon {
+                    width: 24px;
+                    height: 24px;
+                    margin-bottom: 2px;
+                    vertical-align: middle;
+                }
+
+                span {
+                    color: $secondary-font-color;
+                }
+            }
+
             button {
                 max-height: 40px;
                 padding: 8px 14px;

@@ -1,6 +1,6 @@
 {
-    "/js/ui.js": "/js/ui.js?id=e6357e2e8e2e114944d8",
-    "/css/ui.css": "/css/ui.css?id=4f89eb56fd8171fb5712",
+    "/js/ui.js": "/js/ui.js?id=061c5ac04c0b83e65993",
+    "/css/ui.css": "/css/ui.css?id=d6207eb8f3bfe6791645",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981",
     "/images/alert-danger-icon.svg": "/images/alert-danger-icon.svg?id=d77f6a8646ed23b5c3b7",
     "/images/align-justify-icon.svg": "/images/align-justify-icon.svg?id=ee8d48e636b80417a884",
@@ -64,5 +64,6 @@
     "/fonts/Roboto-Regular.ttf": "/fonts/Roboto-Regular.ttf?id=487357337a180effe639",
     "/fonts/Roboto-Thin.ttf": "/fonts/Roboto-Thin.ttf?id=4621c139182c23270ef6",
     "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d",
-    "/images/upload-icon.svg": "/images/upload-icon.svg?id=eae90d6654734ea30c06"
+    "/images/upload-icon.svg": "/images/upload-icon.svg?id=eae90d6654734ea30c06",
+    "/images/export-icon.svg": "/images/export-icon.svg?id=061ce9bd2880d4da6c7b"
 }

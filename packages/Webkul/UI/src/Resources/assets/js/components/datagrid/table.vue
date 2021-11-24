@@ -4,14 +4,17 @@
             <slot name="table-header"></slot>
 
             <div class="table-action">
-                <slot name="table-action"></slot>
-
-                <a
-                    href="javascript:void(0);"
-                    class="btn btn-md btn-primary"
-                    @click="openModal"
-                    v-if="tableData.export">{{ __("ui.datagrid.export") }}</a
+                <span
+                    class="export-import"
+                    @click="isOpen = true"
+                    v-if="tableData.export"
                 >
+                    <i class="icon export-icon"></i>
+
+                    <span>{{ __("ui.datagrid.export") }}</span>
+                </span>
+
+                <slot name="table-action"></slot>
             </div>
         </div>
 
@@ -47,20 +50,27 @@
             </div>
         </div>
 
-        <modal id="export" :is-open="isOpen">
-            <h3 slot="header-title">{{ __("ui.datagrid.download") }}</h3>
+        <form method="POST" :action="`${baseURL}/export`">
+            <modal id="export" :is-open="isOpen">
+                <h3 slot="header-title">{{ __("ui.datagrid.download") }}</h3>
 
-            <div slot="header-actions">
-                <button
-                    class="btn btn-sm btn-secondary-outline"
-                    @click="closeModal"
-                >
-                    {{ __("ui.datagrid.cancel") }}
-                </button>
-            </div>
+                <div slot="header-actions">
+                    <button
+                        class="btn btn-sm btn-secondary-outline"
+                        @click="isOpen = false"
+                    >
+                        {{ __("ui.datagrid.cancel") }}
+                    </button>
 
-            <div slot="body">
-                <form method="POST" :action="`${baseURL}/export`">
+                    <button
+                        type="submit"
+                        class="btn btn-sm btn-primary"
+                    >
+                        {{ __("ui.datagrid.export") }}
+                    </button>
+                </div>
+
+                <div slot="body">
                     <div class="form-group">
                         <label for="format" class="required">
                             {{ __("ui.datagrid.select-format") }}
@@ -86,17 +96,10 @@
                             <option value="xls">XLS</option>
                             <option value="csv">CSV</option>
                         </select>
-
-                        <button
-                            type="submit"
-                            class="btn btn-sm btn-primary float-right mb-5"
-                        >
-                            {{ __("ui.datagrid.export") }}
-                        </button>
                     </div>
-                </form>
-            </div>
-        </modal>
+                </div>
+            </modal>
+        </form>
     </div>
 </template>
 
