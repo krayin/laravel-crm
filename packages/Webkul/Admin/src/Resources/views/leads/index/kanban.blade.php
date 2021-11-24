@@ -105,7 +105,10 @@
                 </div>
 
                 <div class="lead-person">
-                    <i class="icon avatar-dark-icon"></i>@{{ block.person_name }}
+                    <i class="icon avatar-dark-icon"></i>
+                        <a :href="`${personIndexUrl}?id[eq]=${block.person_id}`">
+                            @{{ block.person_name }}
+                        </a>
                 </div>
 
                 <div class="lead-cost">
@@ -161,6 +164,7 @@
                     debounce: null,
 
                     totalCounts: [],
+                    personIndexUrl: "{{ route('admin.contacts.persons.index') }}",
                 }
             },
 

@@ -25,4 +25,5 @@ package-lock.json
 /public/vendor
 /storage/*.key
 /storage/dcc-data/
+/stubs
 /vendor
