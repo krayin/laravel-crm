@@ -50,7 +50,7 @@
             </div>
         </div>
 
-        <form method="POST" :action="`${baseURL}/export`">
+        <form method="POST" :action="`${baseURL}/export`" ref="exportForm" @submit="exportData">
             <modal id="export" :is-open="isOpen">
                 <h3 slot="header-title">{{ __("ui.datagrid.download") }}</h3>
 
@@ -226,12 +226,14 @@ export default {
             window.history.pushState({ path: newURL }, "", newURL);
         },
 
-        openModal: function() {
-            this.isOpen = true;
-        },
+        exportData: function() {
+            this.$refs.exportForm.submit();
 
-        closeModal: function() {
-            this.isOpen = false;
+            var self = this;
+
+            setTimeout(() => {
+                self.isOpen = false;
+            }, 0)
         }
     }
 };
