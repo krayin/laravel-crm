@@ -74,6 +74,13 @@
                                 ]),
                                 'entity'           => $lead,
                             ])
+
+                            @if ($lead->stage->code == 'lost')
+                                <div class="attribute-value-row">
+                                    <div class="label">{{ __('admin::app.leads.lost-reason') }}</div>
+                                    <div class="value">{{ $lead->lost_reason }}</div>
+                                </div>
+                            @endif
                         </div>
 
                     </div>
