@@ -141,6 +141,30 @@
                                 <multi-lookup-component :data='@json($activity->participants)'></multi-lookup-component>
                             </div>
 
+                            <div class="form-group">
+                                <label for="validation">{{ __('admin::app.activities.lead') }}</label>
+
+                                @include('admin::common.custom-attributes.edit.lookup')
+
+                                @php
+                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')
+                                        ->getLookUpEntity(
+                                            'leads',
+                                            old('lead_id')
+                                                ?: (
+                                                    ($lead = $activity->leads()->first())
+                                                    ? $lead->id
+                                                    : null
+                                                )
+                                            );
+                                @endphp
+
+                                <lookup-component
+                                    :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                    :data='@json($lookUpEntityData)'
+                                ></lookup-component>
+                            </div>
+
                             {!! view_render_event('admin.activities.edit.form_controls.after', ['activity' => $activity]) !!}
 
                         </div>
