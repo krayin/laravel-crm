@@ -343,6 +343,7 @@
             'to'                   => 'To',
             'location'             => 'Location',
             'participants'         => 'Participants',
+            'lead'                 => 'Lead',
             'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
             'file-upload-success'  => 'File(s) uploaded successfully.',
             'file-upload-error'    => 'File(s) can not be uploaded.',
