@@ -63,6 +63,11 @@ class AccountController extends Controller
         if (request()->hasFile('image')) {
             $data['image'] = request()->file('image')->store('users/' . $user->id);
         }
+        
+        if(isset($data['removeImage']) && ($data['removeImage']<>'')){
+            unset($data['image']);
+            $data['image'] = null;
+        }
 
         $user->update($data);
 

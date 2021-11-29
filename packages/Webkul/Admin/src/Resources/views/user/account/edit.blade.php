@@ -42,6 +42,13 @@
                             <input name="_method" type="hidden" value="PUT">
 
                             <upload-profile-image></upload-profile-image>
+                            <input 
+                                type="checkbox"
+                                name="removeImage"
+                            />
+			    <label for="remove" class="">
+                              Remove image
+                            </label>
                 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">
