@@ -44,7 +44,7 @@
                             <upload-profile-image></upload-profile-image>
                             <input 
                                 type="checkbox"
-                                name="removeImage"
+                                name="remove_image"
                             />
 			                <label for="remove" class="">
                                 {{ __('admin::app.user.account.remove-image') }}
