@@ -828,7 +828,8 @@
                 'confirm_password'  => 'Confirm password',
                 'password-match'    => 'Current password does not match.',
                 'account-save'      => 'Account changes saved successfully.',
-                'permission-denied' => 'Permission Denied'
+                'permission-denied' => 'Permission Denied',
+                'remove-image'      => 'Remove Image'
             ]
         ],
 

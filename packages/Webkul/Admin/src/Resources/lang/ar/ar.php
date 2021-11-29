@@ -827,7 +827,8 @@
                 'confirm_password'  => 'تأكيد كلمة المرور',
                 'password-match'    => 'كلمة المرور الحالية غير متطابقة.',
                 'account-save'      => 'تم حفظ تغييرات الحساب بنجاح.',
-                'permission-denied' => 'تم رفض الإذن'
+                'permission-denied' => 'تم رفض الإذن',
+                'remove-image'      => 'إزالة الصورة'
             ]
         ],
 
