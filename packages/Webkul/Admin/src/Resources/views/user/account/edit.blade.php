@@ -46,8 +46,8 @@
                                 type="checkbox"
                                 name="removeImage"
                             />
-			    <label for="remove" class="">
-                              Remove image
+			                <label for="remove" class="">
+                                {{ __('admin::app.user.account.remove-image') }}
                             </label>
                 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
