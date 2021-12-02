@@ -3,6 +3,7 @@
 namespace Webkul\Lead\Repositories;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
 use Webkul\Core\Eloquent\Repository;
@@ -246,5 +247,48 @@ class LeadRepository extends Repository
         }
 
         return $query->get()->count();
+    }
+
+    /**
+     * Retrieves all lead's activities
+     *
+     * @param  integer  $id
+     * @return mixed
+     */
+    public function getAllActivities($id)
+    {
+        $lead = $this->find($id);
+
+        return array_values($lead->activities->concat($this->getFlattenEmails($id)->map(function ($item) {
+            $item->is_done = 1;
+
+            $item->type = 'email';
+
+            $item->from =  Str::replaceFirst('"', '', Str::replaceLast('"', '', $item->from));
+
+            $item->reply_to =  json_decode($item->reply_to);
+
+            $item->folders =  json_decode($item->folders);
+
+            $item->type = 'email';
+            
+            return $item;
+        }))->sortBy('created_at')->toArray());
+    }
+
+    /**
+     * Retrieves all lead's activities
+     *
+     * @param  integer  $leadId
+     * @return mixed
+     */
+    public function getFlattenEmails($leadId)
+    {
+        return DB::table('emails as child')
+            ->select('child.*')
+            ->join('emails as parent', 'child.parent_id', '=', 'parent.id')
+            ->where('parent.lead_id', $leadId)
+            ->union(DB::table('emails as parent')->where('parent.lead_id', $leadId))
+            ->get();
     }
 }

@@ -1067,10 +1067,16 @@ body {
 }
 
 .activity-list {
+    .tabs-content {
+        background: none;
+        box-shadow: none;
+    }
+
     .planned-activities {
-        margin-bottom: 50px;
+        margin-bottom: 30px;
 
         &.note,
+        &.email,
         &.file {
             display: none;
         }
@@ -1087,7 +1093,7 @@ body {
             font-weight: $font-weight-medium;
             position: absolute;
             top: -11px;
-            background: #fff;
+            background: #F7F8F9;
             padding-right: 10px;
         }
 
@@ -1098,77 +1104,103 @@ body {
     }
     
     .activity-item {
+        background: #fff;
+        padding: 20px;
+        margin-bottom: 20px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
         margin-bottom: 20px;
         text-align: left;
         position: relative;
         border-bottom: 1px solid #d3d3d3;
-        padding-bottom: 20px;
 
         &:last-child {
             margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: 0;
         }
 
-        .title {
-            color: $secondary-font-color;
-            font-size: $font-size-md;
-            margin-bottom: 5px;
+        &.activity {
+            .title {
+                color: $secondary-font-color;
+                font-size: $font-size-md;
+                margin-bottom: 5px;
 
-            h4 {
-                margin: 0 0 5px 0;
-            }
-
-            .icon {
-                cursor: pointer;
-                float: right;
-                text-align: center;
-                border-radius: 4px;
-
-                &:hover {
-                    background-color: rgba(38, 41, 44, 0.05)
+                h4 {
+                    margin: 0 0 5px 0;
                 }
             }
 
-            .dropdown-list {
-                right: 0;
-            }
-        }
-
-        .attachment {
-            font-size: 16px;
-            margin-bottom: 10px;
-            margin-top: 5px;
-            display: inline-block;
-
-            .icon {
-                margin-left: -3px;
-                margin-right: 5px;
-            }
-        }
-
-        .comment {
-            font-size: $font-size-md;
-            padding: 15px;
-            margin-bottom: 5px;
-            background-color: #FFF9C4;
-            position: relative;
-            border: solid 1px #FDD835;
-            border-radius: 4px;
-        }
-
-        .info {
-            color: #747678;
-            font-size: $font-size-sm;
-
-            .seperator {
-                margin: 0 5px;
-                width: 8px;
+            .attachment {
+                font-size: 16px;
+                margin-bottom: 10px;
+                margin-top: 5px;
                 display: inline-block;
-                cursor: default;
-                text-align: center;
-                font-weight: 700;
+
+                .icon {
+                    margin-left: -3px;
+                    margin-right: 5px;
+                }
             }
+
+            .comment {
+                font-size: $font-size-md;
+                padding: 15px;
+                margin-bottom: 5px;
+                background-color: #FFF9C4;
+                position: relative;
+                border: solid 1px #FDD835;
+                border-radius: 4px;
+            }
+
+            .info {
+                color: #747678;
+                font-size: $font-size-sm;
+
+                .seperator {
+                    margin: 0 5px;
+                    width: 8px;
+                    display: inline-block;
+                    cursor: default;
+                    text-align: center;
+                    font-weight: 700;
+                }
+            }
+        }
+
+        &.email {
+            position: relative;
+
+            .subject {
+                h5 {
+                    margin: 0 0 5px 0;
+                }
+
+                span {
+                    color: #546E7A;
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+            }
+
+            .content {
+                
+            }
+        }
+
+        .icon.ellipsis-icon {
+            cursor: pointer;
+            border-radius: 4px;
+            position: absolute;
+            top: 10px;
+            right: 10px;
+
+            &:hover {
+                background-color: rgba(38, 41, 44, 0.05)
+            }
+        }
+
+        .dropdown-list {
+            top: 40px;
+            right: 0;
+            font-weight: 400;
         }
     }
 
