@@ -42,6 +42,13 @@
                             <input name="_method" type="hidden" value="PUT">
 
                             <upload-profile-image></upload-profile-image>
+                            <input 
+                                type="checkbox"
+                                name="remove_image"
+                            />
+			                <label for="remove" class="">
+                                {{ __('admin::app.user.account.remove-image') }}
+                            </label>
                 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">
