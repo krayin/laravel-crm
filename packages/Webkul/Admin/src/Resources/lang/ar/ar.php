@@ -779,6 +779,7 @@
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
+            'export'          => 'Export',
             'mass-delete'     => 'حذف جماعي',
         ],
 

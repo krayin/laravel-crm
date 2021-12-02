@@ -782,6 +782,7 @@
             'view'            => 'View',
             'print'           => 'Print',
             'delete'          => 'Delete',
+            'export'          => 'Export',
             'mass-delete'     => 'Mass Delete',
         ],
 
