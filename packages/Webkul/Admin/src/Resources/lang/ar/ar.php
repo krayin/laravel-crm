@@ -217,7 +217,6 @@
             'call-scheduled'           => 'تمت جدولة المكالمة في :from - :to',
             'meeting-scheduled'        => 'الاجتماع المقرر في :from - :to',
             'lunch-scheduled'          => 'الغداء المقرر في :from - :to',
-            'email-scheduled'          => 'تمت جدولة البريد الإلكتروني في :from - :to',
             'file-added'               => 'تمت إضافة الملف',
             'quote-destroy-success'    => 'تمت إزالة الاقتباس بنجاح.',
             'tag-create-success'       => 'تمت إضافة العلامة بنجاح.',
@@ -780,6 +779,7 @@
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
+            'export'          => 'Export',
             'mass-delete'     => 'حذف جماعي',
         ],
 

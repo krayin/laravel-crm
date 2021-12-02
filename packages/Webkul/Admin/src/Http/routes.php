@@ -152,7 +152,7 @@ Route::group(['middleware' => ['web']], function () {
             ], function () {
                 Route::post('create', 'EmailController@store')->name('admin.mail.store');
 
-                Route::put('edit/{id}', 'EmailController@update')->name('admin.mail.update');
+                Route::put('edit/{id?}', 'EmailController@update')->name('admin.mail.update');
 
                 Route::get('attachment-download/{id?}', 'EmailController@download')->name('admin.mail.attachment_download');
 

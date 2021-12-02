@@ -44,6 +44,7 @@ class ActivityDataGrid extends DataGrid
                 'activities.*',
                 'leads.id as lead_id',
                 'leads.title as lead_title',
+                'leads.lead_pipeline_id',
                 'users.id as created_by_id',
                 'users.name as created_by',
             )
@@ -139,7 +140,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'closure'    => function ($row) {
-                $route = urldecode(route('admin.leads.index', ['view_type' => 'table', 'id[eq]' => $row->lead_id]));
+                $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
                 return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
             },

@@ -15,7 +15,19 @@ class PersonDataGrid extends DataGrid
      *
      * @var boolean
      */
-    protected $export = true;
+    protected $export;
+
+    /**
+     * Create datagrid instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->export = bouncer()->hasPermission('contacts.persons.export') ? true : false;
+    }
 
     /**
      * Prepare query builder.
