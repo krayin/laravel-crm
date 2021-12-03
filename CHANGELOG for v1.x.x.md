@@ -1,3 +1,61 @@
+## **v1.2.2 (3rd of December 2021)**
+
+* #435 [fixed] - There should be an option for a "move to trash" when a customer trying to delete the inbox mail.
+
+* #692 [fixed] - The page should be redirected to the leads of the same pipeline for which the user is creating/editing the lead.
+
+* #698 [fixed] - There should be an option to remove the profile picture.
+
+* #699 [fixed] - The color of rotten leads should be the same on the kanban view and list view.
+
+* #700 [fixed] - There should be an option for lead id on the leads table.
+
+* #701 [fixed] - There should be a warning message if the user is trying to create a new person with the same details.
+
+* #704 [fixed] - The top leads and the top customers should be visible in the dashboard.
+
+* #709 [fixed] - The user should not be able to update activity without permission.
+
+* #710 [fixed] - There is no option for the lead when the user is trying to edit any activity. 
+
+* #712 [fixed] - The success message is showing repeatedly.
+
+* #714 [fixed] - The probability of new stage should not disabled for any pipeline
+
+* #719 [fixed] - Dashboard data is not showing according to login use
+
+* #720 [fixed] - Option for location is not present inside Activity placeholder 
+
+* #722 [fixed] - There should be a warning message if the user is typing the wrong number format.
+
+* #723 [fixed] - The warning message should not be visible if the user is trying to edit the attribute.
+
+* #724 [fixed] - There is no option to view the lost reason for the lost lead
+
+* #727 [fixed] - Sales pipeline not showing properly
+
+* #735 [fixed] - Input validation's dropdown should be according to attribute type. 
+
+* #737 [fixed] - The UI design of the contact person. the section should be correct.
+
+* #741 [fixed] - The format of the Activity table should be correct.
+
+* #742 [fixed] - The model box should be closed automatically after exporting the data.
+
+* #748 [fixed] - The format of a person's data should be correct after exporting to excel
+
+* #761 [fixed] - There should not be an error if the user is trying to edit the attributes.
+
+* #762 [fixed] - There is no option to give permission to download data 
+
+* #763 [fixed] - The page should be redirected to the leads when the user is clicking on any lead
+
+* #721 [fixed] - Link mails are not showing inside the mail tab.
+
+* #755 [fixed] - There is no option to apply validation for image attributes
+
+
+
 ## **v1.2.1 (12st of November 2021)**
 
 * [feature] Calendar view added for activities
