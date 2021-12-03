@@ -3,7 +3,19 @@
 <div class="navbar-left" v-bind:class="{'open': isMenuOpen}">
     <ul class="menubar">
         @foreach ($menu->items as $menuItem)
-            <li class="menu-item {{ Menu::getActive($menuItem) }}" title="{{ $menuItem['name'] }}">
+            <li
+                class="menu-item {{ Menu::getActive($menuItem) }}"
+                title="{{ $menuItem['name'] }}"
+                @if (! count($menuItem['children'])
+                    && $menuItem['key'] != 'configuration'
+                )
+                    v-tooltip.right="{
+                        content: '{{ $menuItem['name'] }}',
+                        classes: [isMenuOpen ? 'hide' : 'show']
+                    }"
+                @endif
+            >
+
                 <a href="{{ $menuItem['url'] }}">
                     <i class="icon sprite {{ $menuItem['icon-class'] }}"></i>
                     
