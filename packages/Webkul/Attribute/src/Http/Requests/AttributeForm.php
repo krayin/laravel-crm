@@ -116,6 +116,10 @@ class AttributeForm extends FormRequest
                 if ($attribute->type == 'price') {
                     array_push($validations[$attribute->code], new Decimal);
                 }
+
+                if ($attribute->type == 'image') {
+                    array_push($validations[$attribute->code], 'mimes:bmp,jpeg,jpg,png,webp');
+                }
             }
 
             if ($attribute->is_unique) {
