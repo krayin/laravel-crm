@@ -310,6 +310,7 @@
             'saved-to-draft'          => 'Email saved to draft.',
             'delete-success'          => 'Email deleted successfully.',
             'delete-failed'           => 'Email can not be deleted.',
+            'mass-update-success'     => 'Emails updated successfully.',
 
             'forget-password' => [
                 'subject'           => 'Customer Reset Password',
@@ -727,6 +728,7 @@
             'rotten-days'         => 'Rotten Days',
             'yes'                 => 'Yes',
             'no'                  => 'No',
+            'move-to-inbox'       => 'Move to Inbox',
             'update-success'      => ':resource updated successfully.',
             'destroy-success'     => ':resource deleted successfully.',
             'destroy-failed'      => ':resource can not be deleted.',

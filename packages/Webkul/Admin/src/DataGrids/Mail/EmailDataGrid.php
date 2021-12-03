@@ -108,6 +108,11 @@ class EmailDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.mail.delete',
+            'params'       => [
+                                'type' => request('route') == 'trash'
+                                    ? 'delete'
+                                    : 'trash'
+                            ],
             'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'email']),
             'icon'         => 'trash-icon',
         ]);
@@ -120,10 +125,25 @@ class EmailDataGrid extends DataGrid
      */
     public function prepareMassActions()
     {
+        if (request('route') == 'trash') {
+            $this->addMassAction([
+                'type'   => 'delete',
+                'label'  => trans('admin::app.datagrid.move-to-inbox'),
+                'action' => route('admin.mail.mass_update', [
+                                'folders' => ['inbox'],
+                            ]),
+                'method' => 'PUT',
+            ]);
+        }
+
         $this->addMassAction([
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.mail.mass_delete'),
+            'action' => route('admin.mail.mass_delete', [
+                            'type' => request('route') == 'trash'
+                                ? 'delete'
+                                : 'trash',
+                        ]),
             'method' => 'PUT',
         ]);
     }

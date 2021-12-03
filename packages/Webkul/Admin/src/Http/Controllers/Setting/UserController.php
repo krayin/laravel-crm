@@ -226,8 +226,6 @@ class UserController extends Controller
     {
         $count = 0;
 
-        $data = request()->all();
-
         foreach (request('rows') as $userId) {
             if (auth()->guard('user')->user()->id == $userId) {
                 continue;
