@@ -253,6 +253,28 @@ class EmailController extends Controller
         return Storage::download($attachment->path);
     }
 
+    /**
+     * Mass Update the specified resources.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function massUpdate()
+    {
+        foreach (request('rows') as $emailId) {
+            Event::dispatch('email.update.before', $emailId);
+
+            $this->emailRepository->update([
+                'folders' => request('folders'),
+            ], $emailId);
+
+            Event::dispatch('email.update.after', $emailId);
+        }
+
+        return response()->json([
+            'message' => trans('admin::app.mail.mass-update-success'),
+        ]);
+    }
+
     /*
      * Remove the specified resource from storage.
      *
@@ -264,13 +286,19 @@ class EmailController extends Controller
         $email = $this->emailRepository->findOrFail($id);
 
         try {
-            Event::dispatch('email.delete.before', $id);
+            Event::dispatch('email.' . request('type') . '.before', $id);
 
             $parentId = $email->parent_id;
 
-            $this->emailRepository->delete($id);
+            if (request('type') == 'trash') {
+                $this->emailRepository->update([
+                    'folders' => ['trash'],
+                ], $id);
+            } else {
+                $this->emailRepository->delete($id);
+            }
 
-            Event::dispatch('email.delete.after', $id);
+            Event::dispatch('email.' . request('type') . '.after', $id);
 
             if (request()->ajax()) {
                 return response()->json([
@@ -306,11 +334,17 @@ class EmailController extends Controller
     public function massDestroy()
     {
         foreach (request('rows') as $emailId) {
-            Event::dispatch('email.delete.before', $emailId);
+            Event::dispatch('email.' . request('type') . '.before', $emailId);
 
-            $this->emailRepository->delete($emailId);
+            if (request('type') == 'trash') {
+                $this->emailRepository->update([
+                    'folders' => ['trash'],
+                ], $emailId);
+            } else {
+                $this->emailRepository->delete($emailId);
+            }
 
-            Event::dispatch('email.delete.after', $emailId);
+            Event::dispatch('email.' . request('type') . '.after', $emailId);
         }
 
         return response()->json([

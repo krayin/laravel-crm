@@ -162,6 +162,8 @@ Route::group(['middleware' => ['web']], function () {
 
                 Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
 
+                Route::put('mass-update', 'EmailController@massUpdate')->name('admin.mail.mass_update');
+
                 Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass_delete');
             });
 
