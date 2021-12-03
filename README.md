@@ -89,8 +89,10 @@ Open the specified entry point in your hosts file in your browser or make an ent
 ##### On local:
 
 ```
+php artisan route:clear
 php artisan serve
 ```
+
 
 **How to log in as admin:**
 
