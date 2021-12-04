@@ -40,15 +40,13 @@ expect()->extend('toBeOne', function () {
  */
 
 /**
- * Logged in as admin.
+ * Get default admin which is created on fresh instance.
  *
  * @return \Webkul\User\Models\User
  */
-function loggedInAsAdmin()
+function getDefaultAdmin()
 {
     $admin = \Webkul\User\Models\User::find(1);
-
-    auth()->login($admin);
 
     return $admin;
 }

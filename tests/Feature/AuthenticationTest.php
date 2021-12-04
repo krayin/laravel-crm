@@ -7,7 +7,7 @@ test('check main admin login page', function () {
 });
 
 test('check dashboard page after login', function () {
-    $admin = loggedInAsAdmin();
+    $admin = getDefaultAdmin();
 
     test()->actingAs($admin)
         ->get(route('admin.dashboard.index'))
