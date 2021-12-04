@@ -2,19 +2,18 @@
 
 namespace Tests\Feature;
 
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExampleTest extends TestCase
+class AuthenticationTest extends TestCase
 {
     /**
      * A basic test example.
      *
      * @return void
      */
-    public function testBasicTest()
+    public function testAdminLoginPage()
     {
-        $response = $this->get('/');
+        $response = $this->get(route('admin.session.create'));
 
         $response->assertStatus(200);
     }
