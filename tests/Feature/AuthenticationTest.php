@@ -1,20 +1,7 @@
 <?php
 
-namespace Tests\Feature;
+test('check main admin login page', function () {
+    $response = $this->get(route('admin.session.create'));
 
-use Tests\TestCase;
-
-class AuthenticationTest extends TestCase
-{
-    /**
-     * A basic test example.
-     *
-     * @return void
-     */
-    public function testAdminLoginPage()
-    {
-        $response = $this->get(route('admin.session.create'));
-
-        $response->assertStatus(200);
-    }
-}
+    $response->assertStatus(200);
+});

@@ -1,18 +1,7 @@
 <?php
 
-namespace Tests\Unit;
+test('check basic unit test', function () {
+    $this->assertTrue(true);
 
-use PHPUnit\Framework\TestCase;
-
-class AuthenticationTest extends TestCase
-{
-    /**
-     * A basic sample test.
-     *
-     * @return void
-     */
-    public function testBasicTest()
-    {
-        $this->assertTrue(true);
-    }
-}
+    expect(true)->toBeTrue();
+});
