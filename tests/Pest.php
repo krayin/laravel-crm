@@ -40,7 +40,7 @@ expect()->extend('toBeOne', function () {
  */
 
 /**
- * Get admin.
+ * Logged in as admin.
  *
  * @return \Webkul\User\Models\User
  */
