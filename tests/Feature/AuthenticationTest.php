@@ -1,9 +1,8 @@
 <?php
 
 test('check main admin login page', function () {
-    $response = $this->get(route('admin.session.create'));
-
-    $response->assertOK();
+    test()->get(route('admin.session.create'))
+        ->assertOK();
 });
 
 test('check dashboard page after login', function () {
@@ -21,7 +20,9 @@ test('check for admin logout', function () {
     $admin = getDefaultAdmin();
 
     test()->actingAs($admin)
-        ->delete(route('admin.session.destroy'))
+        ->delete(route('admin.session.destroy'), [
+            '_token' => csrf_token()
+        ])
         ->assertStatus(302);
 
     expect(auth()->guard('user')->user())->toBeNull();
