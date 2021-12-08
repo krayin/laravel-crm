@@ -34,16 +34,6 @@
                             @endforeach
                         </ul>
                     @endif
-                @else
-                    <ul class="sub-menubar">
-                        @foreach (app('core_config')->items as $key => $item)
-                            <li class="sub-menu-item {{ $item['key'] == request()->route('slug') ? 'active' : '' }}">
-                                <a href="{{ route('admin.configuration.index', $item['key']) }}">
-                                    {{ isset($item['name']) ? trans($item['name']) : '' }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
                 @endif
             </li>
         @endforeach

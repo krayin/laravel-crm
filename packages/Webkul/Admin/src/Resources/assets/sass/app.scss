@@ -666,7 +666,31 @@ body {
 
         .nav-aside {
             width: 190px;
+            padding-right: 20px;
             float: left;
+
+            ul {
+                margin-top: 98px;
+
+                li {
+                    a {
+                        border-radius: 4px;
+                        padding: 10px;
+                        display: block;
+                        text-align: right;
+                        font-weight: 400;
+                        color: $secondary-color;
+                    }
+
+                    &.active {
+                        a {
+                            background: $primary-color;
+                            color: $white;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
         }
 
         .panel {

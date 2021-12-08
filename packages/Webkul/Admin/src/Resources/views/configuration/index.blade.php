@@ -22,7 +22,19 @@
             <div class="page-content">
                 <div class="form-container">
 
-                    <div class="panel">
+                    <div class="nav-aside">
+                        <ul class="sub-menubar">
+                            @foreach (app('core_config')->items as $key => $item)
+                                <li class="sub-menu-item {{ $item['key'] == request()->route('slug') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.configuration.index', $item['key']) }}">
+                                        {{ isset($item['name']) ? trans($item['name']) : '' }}
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                    </div>
+
+                    <div class="panel" style="overflow: hidden">
                         <div class="panel-header">
                             <button type="submit" class="btn btn-md btn-primary">
                                 {{ __('admin::app.configuration.save-btn-title') }}
