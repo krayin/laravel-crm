@@ -117,7 +117,7 @@ class AttributeForm extends FormRequest
                     array_push($validations[$attribute->code], new Decimal);
                 }
 
-                if ($attribute->type == 'image') {
+                if ($attribute->type == 'image' && ! request($attribute->code . '.delete')) {
                     array_push($validations[$attribute->code], 'mimes:bmp,jpeg,jpg,png,webp');
                 }
             }
