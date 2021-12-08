@@ -12,7 +12,9 @@
 
             <tab v-for="type in types" :name="typeLabels[type]" :key="type" :selected="type == 'all'">
 
-                <div v-for="subType in ['planned', 'done']" :class="subType + '-activities ' + type">
+                <div v-for="subType in ['planned', 'done']" class="activities" :class="subType + '-activities ' + type">
+
+                    <div class="timeline-bar"></div>
 
                     <div class="section-tag" v-if="type != 'note' && type != 'file' && type != 'email'">
                         <span v-if="subType == 'planned'">{{ __('admin::app.leads.planned') }}</span>
@@ -27,6 +29,8 @@
                         v-for="activity in getActivities(type, subType)"
                         :class="[activity.type == 'email' ? 'email' : 'activity']"
                     >
+
+                        <i :class="'icon timeline-bar-icon ' + activity.type"></i>
 
                         <template v-if="activity.type != 'email'">
                             <div class="title">

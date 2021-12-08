@@ -1067,25 +1067,11 @@ body {
 }
 
 .activity-list {
-    .tabs-content {
-        background: none;
-        box-shadow: none;
-    }
-
-    .planned-activities {
-        margin-bottom: 30px;
-
-        &.note,
-        &.email,
-        &.file {
-            display: none;
-        }
-    }
-
     .section-tag {
         position: relative;
         display: inline-block;
         width: 100%;
+        margin-left: 50px;
         margin-bottom: 20px;
 
         span {
@@ -1093,7 +1079,7 @@ body {
             font-weight: $font-weight-medium;
             position: absolute;
             top: -11px;
-            background: #F7F8F9;
+            background: $white;
             padding-right: 10px;
         }
 
@@ -1102,105 +1088,200 @@ body {
             border-top: 1px solid $border-color;
         }
     }
-    
-    .activity-item {
-        background: #fff;
-        padding: 20px;
-        margin-bottom: 20px;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-        margin-bottom: 20px;
-        text-align: left;
+
+    .timeline-bar {
+        position: absolute;
+        left: 18px;
+        top: 38px;
+        bottom: 0;
+    }
+
+    .activities {
         position: relative;
-        border-bottom: 1px solid #d3d3d3;
 
-        &:last-child {
-            margin-bottom: 0;
-        }
+        &.planned-activities {
+            margin-bottom: 30px;
 
-        &.activity {
-            .title {
-                color: $secondary-font-color;
-                font-size: $font-size-md;
-                margin-bottom: 5px;
-
-                h4 {
-                    margin: 0 0 5px 0;
-                }
+            .timeline-bar {
+                bottom: -67px;
+                border-left: 2px dashed #546E7A;
             }
-
-            .attachment {
-                font-size: 16px;
-                margin-bottom: 10px;
-                margin-top: 5px;
-                display: inline-block;
-
-                .icon {
-                    margin-left: -3px;
-                    margin-right: 5px;
-                }
-            }
-
-            .comment {
-                font-size: $font-size-md;
-                padding: 15px;
-                margin-bottom: 5px;
-                background-color: #FFF9C4;
-                position: relative;
-                border: solid 1px #FDD835;
-                border-radius: 4px;
-            }
-
-            .info {
-                color: #747678;
-                font-size: $font-size-sm;
-
-                .seperator {
-                    margin: 0 5px;
-                    width: 8px;
-                    display: inline-block;
-                    cursor: default;
-                    text-align: center;
-                    font-weight: 700;
-                }
+    
+            &.note,
+            &.email,
+            &.file {
+                display: none;
             }
         }
 
-        &.email {
+        &.done-activities {
+            .timeline-bar {
+                border-left: 2px solid #546E7A;
+            }
+        }
+
+        .activity-item {
+            background: #fff;
+            padding: 15px;
+            margin-left: 50px;
+            margin-bottom: 20px;
+            border: 1px solid #F7F8F9;
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            text-align: left;
             position: relative;
 
-            .subject {
-                h5 {
-                    margin: 0 0 5px 0;
-                }
+            &:before {
+                content: " ";
+                display: inline-block;
+                position: absolute;
+                width: 36px;
+                height: 36px;
+                top: 0;
+                left: -51px;
+                border: 1px solid #546E7A;
+                background-color: #fff;
+                background-repeat: no-repeat;
+                background-position: 50%;
+                border-radius: 50%;
+            }
 
-                span {
-                    color: #546E7A;
-                    font-size: 16px;
+            &:last-child {
+                margin-bottom: 0;
+            }
+
+            &.activity {
+                .title {
+                    color: $secondary-font-color;
+                    font-size: $font-size-md;
                     margin-bottom: 5px;
+
+                    h4 {
+                        margin: 0 0 5px 0;
+                    }
+                }
+
+                .attachment {
+                    font-size: 16px;
+                    margin-bottom: 10px;
+                    margin-top: 5px;
+                    display: inline-block;
+
+                    .icon {
+                        margin-left: -3px;
+                        margin-right: 5px;
+                    }
+                }
+
+                .comment {
+                    font-size: $font-size-md;
+                    padding: 15px;
+                    margin-bottom: 5px;
+                    background-color: #FFF9C4;
+                    position: relative;
+                    border: solid 1px #FDD835;
+                    border-radius: 4px;
+                }
+
+                .info {
+                    color: #747678;
+                    font-size: $font-size-sm;
+
+                    .seperator {
+                        margin: 0 5px;
+                        width: 8px;
+                        display: inline-block;
+                        cursor: default;
+                        text-align: center;
+                        font-weight: 700;
+                    }
                 }
             }
 
-            .content {
-                
+            &.email {
+                position: relative;
+
+                .subject {
+                    h5 {
+                        margin: 0 0 5px 0;
+                    }
+
+                    span {
+                        color: #546E7A;
+                        font-size: 16px;
+                        margin-bottom: 5px;
+                    }
+                }
+
+                .content {
+                    
+                }
             }
-        }
 
-        .icon.ellipsis-icon {
-            cursor: pointer;
-            border-radius: 4px;
-            position: absolute;
-            top: 10px;
-            right: 10px;
+            .icon.ellipsis-icon {
+                cursor: pointer;
+                border-radius: 4px;
+                position: absolute;
+                top: 10px;
+                right: 10px;
 
-            &:hover {
-                background-color: rgba(38, 41, 44, 0.05)
+                &:hover {
+                    background-color: rgba(38, 41, 44, 0.05)
+                }
             }
-        }
 
-        .dropdown-list {
-            top: 40px;
-            right: 0;
-            font-weight: 400;
+            .dropdown-list {
+                top: 40px;
+                right: 0;
+                font-weight: 400;
+            }
+
+            .timeline-bar-icon {
+                position: absolute;
+                width: 18px;
+                height: 18px;
+                top: 11px;
+                left: -40px;
+                bottom: 77px;
+
+                &.note {
+                    background-image: url("../images/note-icon.svg");
+                    width: 16px;
+                    height: 20px;
+                    top: 8px;
+                }
+
+                &.call {
+                    background-image: url("../images/call-icon.svg");
+                    top: 9px;
+                }
+
+                &.meeting {
+                    background-image: url("../images/meeting-icon.svg");
+                    top: 9px;
+                }
+
+                &.lunch {
+                    background-image: url("../images/lunch-icon.svg");
+                    width: 17px;
+                    height: 17px;
+                    top: 10px;
+                    left: -40px;
+                }
+
+                &.file {
+                    background-image: url("../images/file-icon.svg");
+                    width: 16px;
+                    top: 10px;
+                }
+
+                &.email {
+                    background-image: url("../images/email-icon.svg");
+                    width: 18px;
+                    height: 16px;
+                    left: -41px;
+                }
+            }
         }
     }
 

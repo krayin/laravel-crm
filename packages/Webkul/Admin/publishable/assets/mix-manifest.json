@@ -1,6 +1,6 @@
 {
     "/js/admin.js": "/js/admin.js?id=f87e5bcab5a55789589f",
-    "/css/admin.css": "/css/admin.css?id=a61adc3df5459d48ff4f",
+    "/css/admin.css": "/css/admin.css?id=30fd31f5f249dad1a440",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ce",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f",
     "/images/attribute-icon.svg": "/images/attribute-icon.svg?id=8f9f3e0e90496263403f",
@@ -52,5 +52,11 @@
     "/images/user-icon.svg": "/images/user-icon.svg?id=5504788e912ea441b4ae",
     "/images/workflow-icon.svg": "/images/workflow-icon.svg?id=0a8721c15a54790d1e85",
     "/images/calendar-line-active-icon.svg": "/images/calendar-line-active-icon.svg?id=2c665135111440da3553",
-    "/images/calendar-line-icon.svg": "/images/calendar-line-icon.svg?id=ebf1eaf60f02673fc24b"
+    "/images/calendar-line-icon.svg": "/images/calendar-line-icon.svg?id=ebf1eaf60f02673fc24b",
+    "/images/call-icon.svg": "/images/call-icon.svg?id=3bfb9a429c605d79b612",
+    "/images/email-icon.svg": "/images/email-icon.svg?id=ba0843a23c8387d8ebd4",
+    "/images/file-icon.svg": "/images/file-icon.svg?id=ce9341ea3d95f3a7f99a",
+    "/images/lunch-icon.svg": "/images/lunch-icon.svg?id=8328ad2a0e61611c3299",
+    "/images/meeting-icon.svg": "/images/meeting-icon.svg?id=759c879b98af503fdf9d",
+    "/images/note-icon.svg": "/images/note-icon.svg?id=0f16697f4c4fcc140f8a"
 }
