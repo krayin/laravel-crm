@@ -670,9 +670,11 @@ body {
             float: left;
 
             ul {
-                margin-top: 98px;
+                margin-top: 118px;
 
                 li {
+                    margin-bottom: 5px;
+                    
                     a {
                         border-radius: 4px;
                         padding: 10px;
@@ -680,6 +682,12 @@ body {
                         text-align: right;
                         font-weight: 400;
                         color: $secondary-color;
+                    }
+
+                    &:hover {
+                        a {
+                            background-color: rgba(38, 41, 44, 0.08);
+                        }
                     }
 
                     &.active {
