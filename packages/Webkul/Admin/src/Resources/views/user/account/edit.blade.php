@@ -42,19 +42,20 @@
                             <input name="_method" type="hidden" value="PUT">
 
                             <upload-profile-image></upload-profile-image>
-                            <input 
-                                type="checkbox"
-                                name="remove_image"
-                            />
-			                <label for="remove" class="">
-                                {{ __('admin::app.user.account.remove-image') }}
-                            </label>
-                
-                            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label for="name" class="required">
-                                    {{ __('admin::app.user.account.name') }}
+                            @if( isset($user->image_url) && $user->image_url != NULL)
+                                <input 
+                                    type="checkbox"
+                                    name="remove_image"
+                                />
+                                <label for="remove" class="">
+                                    {{ __('admin::app.user.account.remove-image') }}
                                 </label>
                     
+                                <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
+                                    <label for="name" class="required">
+                                        {{ __('admin::app.user.account.name') }}
+                                </label>                    
+                            @endif  
                                 <input
                                     type="text"
                                     name="name"
