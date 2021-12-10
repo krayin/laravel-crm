@@ -165,6 +165,11 @@ class UserController extends Controller
             $data['status'] = isset($data['status']) ? 1 : 0;
         }
 
+        if (request()->hasFile('image')) {
+            $data['image'] = request()->file('image')->store('users/' .$id);
+            
+        }
+        
         Event::dispatch('settings.user.update.before', $id);
 
         $admin = $this->userRepository->update($data, $id);

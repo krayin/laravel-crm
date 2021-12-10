@@ -449,6 +449,7 @@
                 'permission'          => 'Permission',
                 'name'                => 'Name',
                 'email'               => 'Email',
+                'image'               => 'Image',
                 'back'                => 'Back',
                 'password'            => 'Password',
                 'groups'              => 'Groups',

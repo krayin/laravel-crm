@@ -19,7 +19,7 @@
 
         {!! view_render_event('admin.settings.users.edit.header.after', ['admin' => $admin]) !!}
 
-        <form method="POST" action="{{ route('admin.settings.users.update', ['id' => $admin->id]) }}" @submit.prevent="onSubmit">
+        <form method="POST" action="{{ route('admin.settings.users.update', ['id' => $admin->id]) }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
             <div class="page-content">
                 <div class="form-container">
                     <div class="panel">
@@ -143,6 +143,20 @@
                                         @{{ errors.first('confirm_password') }}
                                     </span>
                                 </div>
+
+                                @if ($admin->id == auth()->guard('user')->user()->id)
+                                    <div class="form-group" :class="[errors.has('image') ? 'has-error' : '']">
+                                        <label>
+                                        {{ __('admin::app.settings.users.image') }}
+                                        </label>
+
+                                        <input
+                                            type="file"
+                                            name="image"
+                                            class="control"                                               
+                                        />
+                                    </div>
+                                @endif
 
                                 {!! view_render_event('admin.settings.users.edit.form_controls.general.after', ['admin' => $admin]) !!}
                             </tab>
