@@ -115,12 +115,22 @@
                             <input type="text" name="lead_value" class="control" value="{{ $lead->lead_value }}" />
                         </div>
 
-                        <div class="form-group date">
+                        <div class="form-group date" :class="[errors.has('change-stage-form.closed_at') ? 'has-error' : '']">
                             <label>{{ __('admin::app.leads.closed-date') }}</label>
 
                             <date>
-                                <input type="text" name="closed_at" class="control" />
+                                <input
+                                    type="text"
+                                    name="closed_at"
+                                    class="control"
+                                    v-validate="'date_format:yyyy-MM-dd|after:{{$lead->created_at->subDays(1)->format('Y-m-d')}}'"
+                                    data-vv-as="&quot;{{ __('admin::app.leads.closed-date') }}&quot;"
+                                />
                             </date>
+
+                            <span class="control-error" v-if="errors.has('change-stage-form.closed_at')">
+                                @{{ errors.first('change-stage-form.closed_at') }}
+                            </span>
                         </div>
                     </div>
                 </modal>
