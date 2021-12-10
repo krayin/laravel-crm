@@ -67,7 +67,7 @@
                             
                             <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.closed-date:') }}</label>
-                            <span title="{{ core()->formatDate($lead->closed_at) }}">{{ $lead->closed_at->diffForHumans() }}</span>
+                            <span title="{{ core()->formatDate($lead->closed_at, 'd M Y') }}">{{ $lead->closed_at->diffForHumans() }}</span>
 
                         @elseif ($lead->expected_close_date)
 
