@@ -7,7 +7,7 @@
                 class="menu-item {{ Menu::getActive($menuItem) }}"
                 title="{{ $menuItem['name'] }}"
                 @if (! count($menuItem['children'])
-                    && $menuItem['key'] != 'configuration'
+                    || $menuItem['key'] == 'settings'
                 )
                     v-tooltip.right="{
                         content: '{{ $menuItem['name'] }}',
