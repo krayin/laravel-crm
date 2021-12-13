@@ -18,12 +18,83 @@
         }
     }
 
-    .dropdown-filters {
-        display: inline-block;
+    .table {
+        .table-header {
+            .table-action {
+                text-align: left;
+                
+                .export-import {
+                    margin-right: 0;
+                    margin-left: 20px;
+                }
+            }
+        }
+
+        .sidebar-filter {
+            right: unset;
+            left: -420px;
+
+            header {
+                h1 {
+                    .right {
+                        text-align: left;
+                    }
+                }
+            }
+
+            &.show {
+                right: unset;
+                left: 0;
+            }
+
+            .field-container {
+                padding-right: 0;
+                padding-left: 25px;
+
+                i.close-icon {
+                    right: unset;
+                    left: 0;
+                }
+            }
+        }
+
+        .datagrid-filters {
+            display: inline-block;
         
-        &.per-page {
-            margin-left: 10px;
-            margin-right: 10px;
+            &.per-page {
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+
+            .filter-right {
+                text-align: left;
+            }
+        }
+
+        table {
+            tbody {
+                tr {
+                    td.action {
+                        text-align: left;
+                    }
+                }
+            }
+
+            thead {
+                th.actions {
+                    text-align: left;
+                }
+            }
+        }
+    }
+    
+    .sidebar-filter {
+        header {
+            h1 {
+                .right {
+                    text-align: left;
+                }
+            }
         }
     }
 
@@ -43,5 +114,94 @@
     
     .float-right {
         float: left;
+    }
+
+    .form-group,
+    .field-container {
+        label {
+            &.required::after {
+                padding-left: 0;
+                padding-right: 4px;
+            }
+        }
+        
+        &.date,
+        &.datetime,
+        &.time {
+            .control {
+                padding-right: 40px;
+            }
+
+            .date-container,
+            .datetime-container,
+            .time-container {
+                &::after {
+                    margin-right: -34px;
+                    margin-left: unset;
+                    right: unset;
+                    left: 10px;
+                }
+            }
+        }
+    }
+
+    .form-group,
+    .field-container {
+        .input-group {
+            .input-group-prepend {
+                .control,
+                .btn {
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                    border-top-right-radius: 3px;
+                    border-bottom-right-radius: 3px;
+                }
+            }
+        
+            .input-group-append {
+                margin-right: -1px;
+
+                .control,
+                .btn {
+                    border-top-right-radius: 0;
+                    border-bottom-right-radius: 0;
+                    border-top-left-radius: 3px;
+                    border-bottom-left-radius: 3px;
+                }
+            }
+
+            .trash-icon {
+                margin-top: 21px;
+                margin-left: 0;
+                margin-right: 7px;
+                cursor: pointer;
+            }
+        }
+    }
+
+    .settings-container {
+        .panel {
+            .setting-link-container {
+                .setting-link-item {
+                    a {
+                        .setting-info {
+                            margin-left: 0;
+                            margin-right: 25px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .tree-wrapper {
+        .tree-container {
+            .tree-item.active {
+                > .tree-item {
+                    padding-left: 0;
+                    padding-right: 30px;
+                }
+            }
+        }
     }
 }
