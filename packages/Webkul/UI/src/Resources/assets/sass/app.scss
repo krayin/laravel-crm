@@ -3,6 +3,7 @@
 @import "variables";
 @import "mixins";
 @import "animations";
+@import "rtl";
 
 * {
     box-sizing: border-box;
@@ -1848,17 +1849,17 @@ modal {
     }
 
     .tree-container {
-        >.tree-item {
+        > .tree-item {
             padding: 0;
         }
 
         .tree-item {
-            >.tree-item {
+            > .tree-item {
                 display: none;
             }
 
             &.active {
-                >.tree-item {
+                > .tree-item {
                     display: block;
                 }
             }
