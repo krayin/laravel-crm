@@ -33,7 +33,7 @@
         {!! view_render_event('admin.anonymous-layout.head') !!}
     </head>
     
-    <body>        
+    <body @if (app()->getLocale() == 'ar') class="rtl" @endif>        
         <div id="app" class="anonymous-layout-container">
             <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
