@@ -147,7 +147,7 @@
                                 @if ($admin->id == auth()->guard('user')->user()->id)
                                     <div class="form-group" :class="[errors.has('image') ? 'has-error' : '']">
                                         <label>
-                                        {{ __('admin::app.settings.users.image') }}
+                                        {{ __('admin::app.settings.attributes.image') }}
                                         </label>
 
                                         <input
