@@ -9,7 +9,7 @@
     name="{{ $attribute->code }}"
     class="control"
     id="{{ $attribute->code }}"
-    value="{{ old($attribute->code) ?: $value }}"
+    value="{{ $value }}"
     v-validate="'{{$validations}}'"
     data-vv-as="&quot;{{ $attribute->name }}&quot;"
     style="padding-top: 5px;"
