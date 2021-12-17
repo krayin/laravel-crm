@@ -53,6 +53,7 @@
                                     value="{{ old('title') ?: $activity->title }}"
                                     v-validate="'required'"
                                     data-vv-as="&quot;{{ __('admin::app.activities.title-control') }}&quot;"
+                                    v-pre
                                 />
         
                                 <span class="control-error" v-if="errors.has('title')">@{{ errors.first('title') }}</span>
@@ -132,7 +133,7 @@
         
                             <div class="form-group">
                                 <label for="comment">{{ __('admin::app.activities.description') }}</label>
-                                <textarea class="control" id="activity-comment" name="comment">{{ old('comment') ?: $activity->comment }}</textarea>
+                                <textarea class="control" id="activity-comment" name="comment" v-pre>{{ old('comment') ?: $activity->comment }}</textarea>
                             </div>
         
                             <div class="form-group">
