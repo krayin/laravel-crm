@@ -5,7 +5,7 @@
         <div class="attribute-value-row">
             <div class="label">{{ $attribute->name }}</div>
 
-            <div class="value">
+            <div class="value" v-pre>
                 @include ($typeView, ['value' => isset($entity) ? $entity[$attribute->code] : null])
             </div>
         </div>
