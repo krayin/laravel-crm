@@ -180,7 +180,7 @@
 
             <div class="image-info-brick">
                 <span class="field-info">
-                {!! __('admin::app.user.account.upload_image') !!}
+                    Upload a Profile Image (100px x 100px)<br> in PNG or JPG Format
                 </span>
             </div>
         </div>

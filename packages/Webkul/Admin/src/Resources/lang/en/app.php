@@ -833,8 +833,7 @@
                 'password-match'    => 'Current password does not match.',
                 'account-save'      => 'Account changes saved successfully.',
                 'permission-denied' => 'Permission Denied',
-                'remove-image'      => 'Remove Image',
-                'upload_image'      => 'Upload a Profile Image (100px x 100px) <br> in PNG or JPG Format'
+                'remove-image'      => 'Remove Image'
             ]
         ],
 
