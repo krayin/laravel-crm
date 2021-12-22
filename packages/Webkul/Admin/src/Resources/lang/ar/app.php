@@ -830,7 +830,8 @@
                 'password-match'    => 'كلمة المرور الحالية غير متطابقة.',
                 'account-save'      => 'تم حفظ تغييرات الحساب بنجاح.',
                 'permission-denied' => 'تم رفض الإذن',
-                'remove-image'      => 'إزالة الصورة'
+                'remove-image'      => 'إزالة الصورة',
+                'upload_image'      => 'የመገለጫ ምስል (100 ፒክስል x 100 ፒክስል) <br> በPNG ወይም JPG ቅርጸት ይስቀሉ'
             ]
         ],
 
