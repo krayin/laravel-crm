@@ -180,7 +180,8 @@
 
             <div class="image-info-brick">
                 <span class="field-info">
-                {!! __('admin::app.user.account.upload_image') !!}t
+                {{ __('admin::app.user.account.upload_image_pix') }} <br>
+                {{ __('admin::app.user.account.upload_image_format') }}
                 </span>
             </div>
         </div>
