@@ -78,7 +78,7 @@
                             @if ($lead->stage->code == 'lost')
                                 <div class="attribute-value-row">
                                     <div class="label">{{ __('admin::app.leads.lost-reason') }}</div>
-                                    <div class="value">{{ $lead->lost_reason }}</div>
+                                    <div class="value" v-pre>{{ $lead->lost_reason }}</div>
                                 </div>
                             @endif
                         </div>
@@ -250,7 +250,7 @@
                     @csrf()
 
                     <input name="_method" type="hidden" value="PUT">
-
+                    <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ $lead->lead_pipeline_stage_id }}" />
                     <tabs>
                         {!! view_render_event('admin.leads.view.edit.form_controls.details.before', ['lead' => $lead]) !!}
 

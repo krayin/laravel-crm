@@ -42,7 +42,8 @@ class PersonDataGrid extends DataGrid
                 'persons.name as person_name',
                 'persons.emails',
                 'persons.contact_numbers',
-                'organizations.name as organization'
+                'organizations.name as organization',
+                'organizations.id as organization_id'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
@@ -108,6 +109,9 @@ class PersonDataGrid extends DataGrid
             'type'             => 'dropdown',
             'dropdown_options' => $this->getOrganizationDropdownOptions(),
             'sortable'         => false,
+            'closure'  => function ($row) {
+                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank'>" . $row->organization . "</a>";
+            },
         ]);
     }
 

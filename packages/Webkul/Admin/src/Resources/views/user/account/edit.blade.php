@@ -42,19 +42,23 @@
                             <input name="_method" type="hidden" value="PUT">
 
                             <upload-profile-image></upload-profile-image>
-                            <input 
-                                type="checkbox"
-                                name="remove_image"
-                            />
-			                <label for="remove" class="">
-                                {{ __('admin::app.user.account.remove-image') }}
-                            </label>
-                
+
+                            @if(isset($user->image_url) && $user->image_url != NULL)
+                                <input 
+                                    type="checkbox"
+                                    name="remove_image"
+                                />
+
+                                <label for="remove" class="">
+                                    {{ __('admin::app.user.account.remove-image') }}
+                                </label>                  
+                            @endif  
+
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">
                                     {{ __('admin::app.user.account.name') }}
                                 </label>
-                    
+
                                 <input
                                     type="text"
                                     name="name"
@@ -176,7 +180,8 @@
 
             <div class="image-info-brick">
                 <span class="field-info">
-                    Upload a Profile Image (100px x 100px)<br> in PNG or JPG Format
+                {{ __('admin::app.user.account.upload_image_pix') }} <br>
+                {{ __('admin::app.user.account.upload_image_format') }}
                 </span>
             </div>
         </div>

@@ -27,7 +27,7 @@ Route::group(['middleware' => ['web']], function () {
 
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
-            Route::get('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
+            Route::delete('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
 
             // Dashboard Route
             Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
