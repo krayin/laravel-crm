@@ -28,6 +28,7 @@
         "axios": "^0.21.1",
         "chart.js": "^2.9.4",
         "debounce": "^1.2.1",
+        "vue-color": "^2.8.1",
         "vue-moment": "^4.1.0",
         "vue2-daterange-picker": "^0.6.5",
         "vuex": "^3.6.2"

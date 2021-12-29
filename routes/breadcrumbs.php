@@ -320,6 +320,25 @@ Breadcrumbs::for('settings.tags.edit', function (BreadcrumbTrail $trail, $tag) {
 });
 
 
+// Settings > Web Form
+Breadcrumbs::for('settings.web_forms', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('web_form::app.title'), route('admin.settings.web_forms.index'));
+});
+
+// Dashboard > Web Form > Create Web Form
+Breadcrumbs::for('settings.web_forms.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.web_forms');
+    $trail->push(trans('web_form::app.create-title'), route('admin.settings.web_forms.create'));
+});
+
+// Dashboard > Web Form > Edit Web Form
+Breadcrumbs::for('settings.web_forms.edit', function (BreadcrumbTrail $trail, $webForm) {
+    $trail->parent('settings.web_forms');
+    $trail->push(trans('web_form::app.edit-title'), route('admin.settings.web_forms.edit', $webForm->id));
+});
+
+
 // Configuration
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');

@@ -69,10 +69,10 @@ class PipelineRepository extends Repository
      *
      * @param  array  $data
      * @param  int  $id
-     * @param  string  $pipeline
+     * @param  string  $attribute
      * @return \Webkul\Lead\Contracts\Pipeline
      */
-    public function update(array $data, $id, $pipeline = "id")
+    public function update(array $data, $id, $attribute = "id")
     {
         $pipeline = $this->find($id);
 

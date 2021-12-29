@@ -657,7 +657,7 @@
                 'update-success' => 'Tag updated successfully.',
                 'delete-success' => 'Tag deleted successfully.',
                 'delete-failed'  => 'Tag can not be deleted.',
-            ]
+            ],
         ],
 
         'configuration' => [

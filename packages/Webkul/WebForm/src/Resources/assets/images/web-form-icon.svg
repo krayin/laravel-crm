@@ -1,0 +1,17 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M23 35V6H25.75H34V35H23Z" fill="#D4EDFB"/>
+<path d="M6 7C6 5.89543 6.89543 5 8 5H26.7582H31C32.6569 5 34 6.34315 34 8V11.1429V33C34 34.1046 33.1046 35 32 35H8C6.89543 35 6 34.1046 6 33V7Z" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+<mask id="path-3-inside-1_2521_13660" fill="white">
+<rect x="31" y="9" width="2" height="22" rx="1" transform="rotate(90 31 9)"/>
+</mask>
+<rect x="31" y="9" width="2" height="22" rx="1" transform="rotate(90 31 9)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-3-inside-1_2521_13660)"/>
+<mask id="path-4-inside-2_2521_13660" fill="white">
+<rect x="31" y="14" width="2" height="22" rx="1" transform="rotate(90 31 14)"/>
+</mask>
+<rect x="31" y="14" width="2" height="22" rx="1" transform="rotate(90 31 14)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-4-inside-2_2521_13660)"/>
+<mask id="path-5-inside-3_2521_13660" fill="white">
+<rect x="31" y="19" width="2" height="22" rx="1" transform="rotate(90 31 19)"/>
+</mask>
+<rect x="31" y="19" width="2" height="22" rx="1" transform="rotate(90 31 19)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-5-inside-3_2521_13660)"/>
+<rect x="27" y="27" width="3" height="14" rx="1.5" transform="rotate(90 27 27)" fill="#D4EDFB" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+</svg>
