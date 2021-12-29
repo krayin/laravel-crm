@@ -546,6 +546,7 @@ body {
         .page-content {
             width: 100%;
             display: inline-block;
+            padding-bottom: 20px;
         }
     }
 }
@@ -2351,13 +2352,15 @@ body {
     }
 }
 
-.workflow-container {
+.workflow-container,
+.web-form-container {
     .panel-separator {
         border-bottom: solid 1px #D3D3D3;
         margin: 25px 0px;
     }
 
-    .workflow-panel {
+    .workflow-panel,
+    .web-form-panel {
         .header {
             label {
                 color: $secondary-color;
@@ -2382,6 +2385,60 @@ body {
                         .icon {
                             margin-top: 20px;
                             cursor: pointer;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.web-form-panel {
+    .dropdown-list {
+        .dropdown-container {
+            ul {
+                li {
+                    color: #263238;
+                    font-weight: 500;
+                    cursor: default;
+
+                    &:hover {
+                        background: none;
+                    }
+
+                    ul {
+                        li {
+                            font-weight: 400;
+                            color: #546E7A;
+                            cursor: pointer;
+
+                            &:hover {
+                                background: #0E90D9;
+                                color: #FFFFFF;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .dragable-container {
+        table {
+            tr {
+                td {
+                    vertical-align: bottom;
+
+                    &.dragable-icon,
+                    &.delete-icon {
+                        .icon {
+                            margin-bottom: 10px;
+                        }
+                    }
+
+                    .form-group {
+                        .control {
+                            margin-top: 10px;
                         }
                     }
                 }

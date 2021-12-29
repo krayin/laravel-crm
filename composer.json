@@ -20,7 +20,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "maatwebsite/excel": "^3.1",
-        "prettus/l5-repository": "^2.7",
+        "prettus/l5-repository": "^2.7.9",
         "webklex/php-imap": "^2.2.5"
     },
     "require-dev": {
@@ -63,6 +63,7 @@
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
             "Webkul\\UI\\": "packages/Webkul/UI/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
         }
     },

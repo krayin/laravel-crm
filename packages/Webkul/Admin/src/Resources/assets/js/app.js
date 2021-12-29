@@ -3,7 +3,7 @@ import draggable from 'vuedraggable';
 import VueTimeago from 'vue-timeago';
 import VeeValidate from 'vee-validate';
 import VueKanban from 'vue-kanban';
-import VueCal from 'vue-cal'
+import VueCal from 'vue-cal';
 
 import 'vue-cal/dist/vuecal.css'
 

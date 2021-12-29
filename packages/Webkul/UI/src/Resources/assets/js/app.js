@@ -1,6 +1,7 @@
 import store from './store';
 import VTooltip from 'v-tooltip';
 import DateRangePicker from 'vue2-daterange-picker';
+import { Chrome } from 'vue-color';
 import 'vue2-daterange-picker/dist/vue2-daterange-picker.css';
 
 Vue.use(DateRangePicker);
@@ -84,6 +85,8 @@ Vue.component('tree-radio', require('./components/tree-view/tree-radio').default
 Vue.component('date-range-basic', require('./components/date-range-basic').default);
 Vue.component('date-range', require('./components/date-range').default);
 Vue.component('spinner-meter', require('./components/spinner-meter').default);
+Vue.component('color-picker', require('./components/color-picker').default);
+Vue.component('chrome-picker', Chrome);
 
 Vue.mixin(require('./components/trans'));
 

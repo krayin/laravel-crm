@@ -21,6 +21,26 @@ class LeadSourceSeeder extends Seeder
                 'name'       => 'Email',
                 'created_at' => $now,
                 'updated_at' => $now,
+            ], [
+                'id'         => 2,
+                'name'       => 'Web',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], [
+                'id'         => 3,
+                'name'       => 'Web Form',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], [
+                'id'         => 4,
+                'name'       => 'Phone',
+                'created_at' => $now,
+                'updated_at' => $now,
+            ], [
+                'id'         => 5,
+                'name'       => 'Direct',
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         ]);
     }

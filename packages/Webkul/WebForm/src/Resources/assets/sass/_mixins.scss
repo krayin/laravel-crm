@@ -1,0 +1,21 @@
+// Mixins
+@mixin box-shadow($shadows...) {
+    -webkit-box-shadow: $shadows;
+    -moz-box-shadow: $shadows;
+    box-shadow: $shadows;
+}
+
+@mixin border-radius($radius) {
+    -webkit-border-radius: $radius;
+    -moz-border-radius: $radius;
+    -ms-border-radius: $radius;
+    border-radius: $radius;
+}
+@mixin user-select($value) {
+    -webkit-touch-callout: $value; /* iOS Safari */
+    -webkit-user-select: $value; /* Safari */
+    -khtml-user-select: $value; /* Konqueror HTML */
+    -moz-user-select: $value; /* Old versions of Firefox */
+    -ms-user-select: $value; /* Internet Explorer/Edge */
+    user-select: $value; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}

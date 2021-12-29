@@ -83,7 +83,6 @@ class LeadForm extends FormRequest
                     $attribute->code = 'person.' . $attribute->code;
                 }
 
-
                 $validations = [];
 
                 if ($attribute->type == 'boolean') {

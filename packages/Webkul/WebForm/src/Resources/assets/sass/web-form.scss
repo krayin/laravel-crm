@@ -1,0 +1,246 @@
+@import "variables";
+@import "mixins";
+
+@font-face {
+    font-display: swap;
+    font-style: normal;
+    font-weight: 500;
+    font-family: 'Roboto';
+    src: url('../fonts/Roboto-Medium.ttf');
+}
+
+@font-face {
+    font-display: swap;
+    font-family: 'Roboto';
+    font-weight: 400;
+    font-style: normal;
+    src: url('../fonts/Roboto-Regular.ttf');
+}
+
+.icon {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    background-size: cover;
+}
+
+.close-white-icon {
+    background-image: url("../images/close-white-icon.svg");
+}
+
+.anonymous-layout-container {
+    text-align: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: table;
+    z-index: 1;
+    background: #F7F8F9;
+
+    .center-box {
+        display: table-cell;
+        vertical-align: middle;
+
+        .adjacent-center {
+            width: 476px;
+            display: inline-block;
+            text-align: left;
+
+            .title-box {
+                text-align: center;
+                margin-bottom: 40px;
+
+                h1 {
+                    font-size: 24px;
+                    font-weight: 500;
+                    color: #263238;
+                    margin-bottom: 30px;
+                }
+
+                p {
+                    font-size: 20px;
+                    color: #546E7A;
+                    margin: 0;
+                }
+            }
+
+            .panel {
+                .panel-body {
+                    border: none;
+                    padding: 16px;
+                    border-radius: 3px;
+                    background-color: #FFFFFF;
+                    box-shadow: rgb(0 0 0 / 10%) 0px 4px 6px -1px, rgb(0 0 0 / 6%) 0px 2px 4px -1px;
+
+                    .alert-wrapper {
+                        width: 100%;
+                        position: relative;
+                    
+                        .alert {
+                            margin-bottom: 10px;
+                            padding: 15px 44px 15px 44px;
+                            @include border-radius(3px);
+                            display: block;
+                            @include box-shadow(
+                                0px 4px 15.36px 0.64px rgba(0, 0, 0, 0.1),
+                                0px 2px 6px 0px rgba(0, 0, 0, 0.12)
+                            );
+                            animation: jelly 0.5s ease-in-out;
+                            transform-origin: center top;
+                            z-index: $font-weight-medium;
+                            text-align: left;
+                    
+                            &.success {
+                                background: $success-color;
+                            }
+                    
+                            .icon {
+                                position: absolute;
+                    
+                                &:first-child {
+                                    left: 10px;
+                                    top: 15px;
+                                }
+                    
+                                &:last-child {
+                                    right: 10px;
+                                    top: 10px;
+                                    cursor: pointer;
+                                }
+                            }
+                    
+                            p {
+                                color: $white;
+                                margin: 0px;
+                                font-size: $font-size-md;
+                            }
+                        }
+                    }
+
+                    .form-group {
+                        display: block;
+                        margin-bottom: 20px;
+                        font-size: $font-size-lg;
+                        color: $secondary-font-color;
+                        width: 100%;
+                        position: relative;
+
+                        label {
+                            display: block;
+                            font-size: $font-size-md;
+
+                            &.required::after {
+                                content: "*";
+                                font-weight: 700;
+                                padding-left: 4px;
+                                color: $danger-color;
+                                display: inline-block;
+                            }
+                        }
+
+                        textarea.control {
+                            height: 100px;
+                            padding: 10px;
+                        }
+
+                        .control {
+                            width: 100%;
+                            padding: 10px;
+                            margin-top: 10px;
+                            margin-bottom: 5px;
+                            background: $white;
+                            display: inline-block;
+                            vertical-align: middle;
+                            font-size: $font-size-lg;
+                            @include border-radius(3px);
+                            color: $secondary-font-color;
+                            border: 1px solid $border-color;
+                            transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+                            &:focus {
+                                border-color: $primary-color;
+                            }
+
+                            &.error {
+                                border-color: $danger-color;
+                            }
+
+                            &[multiple] {
+                                height: 100px;
+                            }
+                        }
+
+                        &.date,
+                        &.datetime,
+                        &.time {
+                            .control {
+                                padding-right: 40px;
+                            }
+
+                            .date-container,
+                            .datetime-container {
+                                position: relative;
+                                
+                                &::after {
+                                    background-image: url("../images/calendar-icon.svg");
+                                    width: 24px;
+                                    height: 24px;
+                                    content: "";
+                                    margin-left: -34px;
+                                    pointer-events: none;
+                                    position: absolute;
+                                    right: 10px;
+                                    top: 29px;
+                                    margin-top: -9px;
+                                }
+                            }
+                        }
+
+                        label.error {
+                            display: none;
+                            color: $danger-color;
+                            margin-top: 5px;
+                        }
+
+                        .address-left {
+                            width: 50%;
+                            padding-right: 5px;
+                            float: left;
+
+                            .control {
+                                height: 204px;
+                                margin-bottom: 0;
+                            }
+                        }
+
+                        .address-right {
+                            width: 50%;
+                            padding-left: 5px;
+                            display: inline-block;
+
+                            .control {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+
+                    .btn {
+                        width: 100%;
+                        font-size: 24px;
+                        border-radius: 4px;
+                        border: none;
+                        background: #0E90D9;
+                        color: #FFFFFF;
+                        cursor: pointer;
+                        transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+                        font: inherit;
+                        font-weight: 500;
+                        display: inline-block;
+                        border: 2px solid transparent;
+                        padding: 10px 14px;
+                    }
+                }
+            }
+        }
+    }
+}
