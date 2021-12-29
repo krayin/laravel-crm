@@ -820,17 +820,19 @@
 
         'user' => [
             'account' => [
-                'name'              => 'اسم',
-                'email'             => 'بريد الالكتروني',
-                'password'          => 'كلمه السر',
-                'my_account'        => 'حسابي',
-                'update_details'    => 'تحديث التفاصيل',
-                'current_password'  => 'كلمة المرور الحالي',
-                'confirm_password'  => 'تأكيد كلمة المرور',
-                'password-match'    => 'كلمة المرور الحالية غير متطابقة.',
-                'account-save'      => 'تم حفظ تغييرات الحساب بنجاح.',
-                'permission-denied' => 'تم رفض الإذن',
-                'remove-image'      => 'إزالة الصورة'
+                'name'                  => 'اسم',
+                'email'                 => 'بريد الالكتروني',
+                'password'              => 'كلمه السر',
+                'my_account'            => 'حسابي',
+                'update_details'        => 'تحديث التفاصيل',
+                'current_password'      => 'كلمة المرور الحالي',
+                'confirm_password'      => 'تأكيد كلمة المرور',
+                'password-match'        => 'كلمة المرور الحالية غير متطابقة.',
+                'account-save'          => 'تم حفظ تغييرات الحساب بنجاح.',
+                'permission-denied'     => 'تم رفض الإذن',
+                'remove-image'          => 'إزالة الصورة',
+                'upload_image_pix'      => 'تحميل صورة الملف الشخصي (100 بكسل × 100 بكسل)',
+                'upload_image_format'   =>'بتنسيق PNG أو JPG'
             ]
         ],
 

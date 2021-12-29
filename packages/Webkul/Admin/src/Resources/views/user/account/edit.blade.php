@@ -180,7 +180,8 @@
 
             <div class="image-info-brick">
                 <span class="field-info">
-                    Upload a Profile Image (100px x 100px)<br> in PNG or JPG Format
+                {{ __('admin::app.user.account.upload_image_pix') }} <br>
+                {{ __('admin::app.user.account.upload_image_format') }}
                 </span>
             </div>
         </div>
