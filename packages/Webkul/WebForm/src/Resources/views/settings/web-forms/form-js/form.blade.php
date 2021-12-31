@@ -1,4 +1,4 @@
-<link rel="stylesheet" href="http://localhost/laravel/bagisto-crm/vendor/webkul/admin/assets/css/web-form.css">
+<link rel="stylesheet" href="{{ asset('vendor/webkul/web-form/assets/css/web-form.css') }}">
 
 <div class="anonymous-layout-container">
     <div class="center-box">
