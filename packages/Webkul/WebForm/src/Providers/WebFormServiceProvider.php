@@ -19,7 +19,7 @@ class WebFormServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'web_form');
 
         $this->publishes([
-            __DIR__ . '/../../publishable/assets' => public_path('vendor/web-form/assets'),
+            __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/web-form/assets'),
         ], 'public');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'web_form');
