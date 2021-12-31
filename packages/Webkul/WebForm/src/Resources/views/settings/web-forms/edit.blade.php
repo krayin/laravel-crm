@@ -102,7 +102,7 @@
                 </label>
 
                 <div class="pre">
-                    {{ "<script src=" . route('admin.settings.web_forms.preview', $webForm->form_id) . " crossorigin=\"anonymous\"></script>" }}
+                    {{ "<script src=" . route('admin.settings.web_forms.form_js', $webForm->form_id) . " crossorigin=\"anonymous\"></script>" }}
                 </div>
             </div>
             

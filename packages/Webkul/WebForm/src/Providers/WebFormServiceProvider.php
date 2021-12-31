@@ -3,6 +3,7 @@
 namespace Webkul\WebForm\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 
 class WebFormServiceProvider extends ServiceProvider
@@ -12,7 +13,7 @@ class WebFormServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(Router $router)
     {
         $this->loadRoutesFrom(__DIR__ . '/../Http/routes.php');
 
@@ -25,7 +26,7 @@ class WebFormServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'web_form');
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
-        
+
         Event::listen('admin.layout.head', function($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('web_form::layouts.style');
         });
