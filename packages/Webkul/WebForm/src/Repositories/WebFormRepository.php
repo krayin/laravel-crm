@@ -49,7 +49,9 @@ class WebFormRepository extends Repository
      */
     public function create(array $data)
     {
-        $webForm = $this->model->create($data);
+        $webForm = $this->model->create(array_mere($data, [
+            'form_id' => Str::random(50),
+        ]));
 
         foreach ($data['attributes'] as $attributeData) {
             $this->webFormAttributeRepository->create(array_merge([

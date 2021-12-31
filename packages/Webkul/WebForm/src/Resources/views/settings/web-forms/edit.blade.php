@@ -13,6 +13,7 @@
             border: 1px solid #cfd7df;
             width: 100%;
             display: block;
+            word-break: break-all;
         }
     </style>
 @endpush
@@ -48,7 +49,7 @@
                                 {{ __('web_form::app.embed') }}
                             </a>
 
-                            <a href="{{ route('admin.settings.web_forms.preview', $webForm->id) }}" target="_blank">
+                            <a href="{{ route('admin.settings.web_forms.preview', $webForm->form_id) }}" target="_blank">
                                 {{ __('web_form::app.preview') }}
                             </a>
 
@@ -91,7 +92,7 @@
                 </label>
 
                 <div class="pre">
-                    {{ route('admin.settings.web_forms.preview', $webForm->id) }}
+                    {{ route('admin.settings.web_forms.preview', $webForm->form_id) }}
                 </div>
             </div>
             
@@ -101,7 +102,7 @@
                 </label>
 
                 <div class="pre">
-                    {{ "<script src=" . route('admin.settings.web_forms.preview', $webForm->id) . " crossorigin=\"anonymous\"></script>" }}
+                    {{ "<script src=" . route('admin.settings.web_forms.preview', $webForm->form_id) . " crossorigin=\"anonymous\"></script>" }}
                 </div>
             </div>
             

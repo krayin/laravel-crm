@@ -253,12 +253,12 @@ class WebFormController extends Controller
     /**
      * Remove the specified email template from storage.
      *
-     * @param  int  $id
+     * @param  string  $id
      * @return \Illuminate\Http\Response
      */
     public function formJS($id)
     {
-        $webForm = $this->webFormRepository->findOrFail($id);
+        $webForm = $this->webFormRepository->findOneByField('form_id', $id);
 
         return response()
             ->view('web_form::settings.web-forms.form-js', compact('webForm'))

@@ -15,7 +15,7 @@
 
     var script = document.createElement('script');
 
-    script.src = 'http://localhost/laravel/bagisto-crm/vendor/webkul/admin/assets/js/web-form.js';
+    script.src = '{{ asset('vendor/webkul/web-form/assets/js/web-form.js') }}';
 
     script.onload = function() {
         flatpickr(".form-group.date input", {
