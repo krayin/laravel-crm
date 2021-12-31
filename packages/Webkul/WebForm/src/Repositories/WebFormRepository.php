@@ -49,7 +49,7 @@ class WebFormRepository extends Repository
      */
     public function create(array $data)
     {
-        $webForm = $this->model->create(array_mere($data, [
+        $webForm = $this->model->create(array_merge($data, [
             'form_id' => Str::random(50),
         ]));
 
