@@ -658,6 +658,12 @@
                 'delete-success' => 'Tag deleted successfully.',
                 'delete-failed'  => 'Tag can not be deleted.',
             ],
+
+            'web-forms' => [
+                
+                'create-success' => 'Web Form Updated Successfully',
+                'update-success' => 'Web Form Updated Successfully'
+            ],
         ],
 
         'configuration' => [

@@ -654,7 +654,13 @@
                 'update-success' => 'تم تحديث العلامة بنجاح.',
                 'delete-success' => 'تم حذف العلامة بنجاح.',
                 'delete-failed'  => 'لا يمكن حذف العلامة.',
-            ]
+            ],
+
+            'web-forms' => [
+                'create-success' => 'تم تحديث نموذج الويب بنجاح',
+                'update-success' => 'تم تحديث نموذج الويب بنجاح'
+               
+            ],
         ],
 
         'configuration' => [
