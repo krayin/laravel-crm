@@ -4,6 +4,7 @@
     <div class="center-box">
         <div class="adjacent-center">
             <div class="title-box">
+            <img src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}" alt="krayin">
                 <h1>{{ $webForm->title }}</h1>
                 <p>{{ $webForm->description }}</p>
             </div>
