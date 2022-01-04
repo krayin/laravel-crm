@@ -661,8 +661,9 @@
 
             'web-forms' => [
                 
-                'create-success' => 'Web Form Updated Successfully',
-                'update-success' => 'Web Form Updated Successfully'
+                'create-success' => 'Web form created successfully',
+                'update-success' => 'Web form Updated successfully',
+                'delete-success' => 'Web form deleted successfully'
             ],
         ],
 
