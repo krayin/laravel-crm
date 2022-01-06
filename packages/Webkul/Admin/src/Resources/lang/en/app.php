@@ -223,6 +223,7 @@
             'quote-destroy-success'    => 'Quote removed successfully.',
             'tag-create-success'       => 'Tag added successfully.',
             'tag-destroy-success'      => 'Tag removed successfully.',
+            'edit'                     => 'Edit',
         ],
 
         'quotes' => [
