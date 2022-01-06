@@ -660,7 +660,7 @@
             ],
 
             'web-forms' => [
-                
+
                 'create-success' => 'Web form created successfully',
                 'update-success' => 'Web form Updated successfully',
                 'delete-success' => 'Web form deleted successfully'
@@ -851,6 +851,10 @@
                 'dear'   => 'Dear :name',
                 'cheers' => 'Cheers,</br>Team :app_name'
             ],
+        ],
+
+        'errors' => [
+            '401' => 'You are not authorized to access this page'
         ]
     ];
 ?>
