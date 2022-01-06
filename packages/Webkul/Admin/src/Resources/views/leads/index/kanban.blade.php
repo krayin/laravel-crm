@@ -218,7 +218,9 @@
                         .then(response => {
                             this.getLeads();
 
-                            this.addFlashMessages({message : response.data.message });
+                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+
+                            this.$root.addFlashMessages();
                         })
                         .catch(error => {
                             window.flashMessages = [{'type': 'error', 'message': error.response.data.message}];
