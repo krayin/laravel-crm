@@ -842,7 +842,8 @@
                 'permission-denied'     => 'Permission Denied',
                 'remove-image'          => 'Remove Image',
                 'upload_image_pix'      => 'Upload a Profile Image (100px x 100px)',
-                'upload_image_format'   =>'in PNG or JPG Format'
+                'upload_image_format'   =>'in PNG or JPG Format',
+                'image_upload_message'  => 'Only images (.jpeg, .jpg, .png, ..) are allowed.'
             ]
         ],
 
