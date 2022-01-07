@@ -254,6 +254,7 @@
             'update-success'      => 'Quote updated successfully.',
             'delete-success'      => 'Quote deleted successfully.',
             'delete-failed'       => 'Quote can not be deleted.',
+            'delete-confirm'       => 'Do you really want to perform this action?',
             'quote-id'            => 'Quote Id',
             'quote-date'          => 'Quote Date',
             'valid-until'         => 'Valid Until',

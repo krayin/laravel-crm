@@ -361,7 +361,7 @@
                 },
 
                 remove: function(activity) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
                         return;
                     }
 
@@ -387,7 +387,7 @@
                 },
 
                 removeQuote: function(quote) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
                         return;
                     }
 
@@ -417,7 +417,7 @@
                 },
 
                 unlinkEmail: function(activity) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
                         return;
                     }
 
