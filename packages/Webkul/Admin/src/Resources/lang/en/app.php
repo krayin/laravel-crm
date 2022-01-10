@@ -129,6 +129,7 @@
             'back'                     => 'Back',
             'cancel'                   => 'Cancel',
             'no-lead'                  => 'No Lead',
+            'lead-source-name'         => 'Lead source',
             'details'                  => 'Details',
             'rotten-info'              => 'Lead has been rotten for :days day(s)',
             'stage'                    => 'Stage',
