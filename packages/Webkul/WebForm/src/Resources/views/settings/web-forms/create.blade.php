@@ -9,7 +9,7 @@
         {!! view_render_event('admin.settings.web_forms.create.header.before') !!}
 
         <div class="page-header">
-            
+
             {{ Breadcrumbs::render('settings.web_forms.create') }}
 
             <div class="page-title">
@@ -309,8 +309,8 @@
                                             type="text"
                                             :name="'attributes[' + attribute.id + '][placeholder]'"
                                             class="control"
-                                            :value="getPlaceholderValue(attribute)"
-                                            placeholder="{{ __('web_form::app.placeholder-value') }}"
+                                            value=""
+                                            :placeholder="getPlaceholderValue(attribute)"
                                         />
                                     </div>
                                 </td>
@@ -324,7 +324,7 @@
                                             :checked="attribute.is_required"
                                             :disabled="attribute.is_required"
                                         />
-                                        
+
                                         <label :for="'is_required_' + attribute.id" class="checkbox-view"></label>
 
                                         {{ __('web_form::app.required') }}
@@ -409,7 +409,7 @@
                     this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'leads');
                 }
             },
-            
+
             methods: {
                 addAttribute: function (attribute) {
                     this.addedAttributes.push({
