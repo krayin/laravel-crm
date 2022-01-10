@@ -43,6 +43,18 @@
         }
     }
 
+    table {
+        tr {
+            .avatar {
+                margin-left: 10px;
+            }
+
+            .badge {
+                margin-left: 5px;
+            }
+        }
+    }
+
     .navbar-left {
         left: unset;
         right: -1px;
@@ -219,7 +231,6 @@
                 .stage {
                     &:not(:last-child) {
                         &::after {
-
                         }
                     }
 
@@ -263,11 +274,11 @@
                     &.meeting {
                         right: -42px;
                     }
-                    
+
                     &.lunch {
                         left: -40px;
                     }
-    
+
                     &.email {
                         left: unset;
                         right: -41px;
