@@ -58,7 +58,7 @@
                                     @case('text')
                                         <input
                                         type="text"
-                                        name="{{ $fieldName }}[0][value]"
+                                        name="{{ $fieldName }}"
                                         class="control"
                                         placeholder="{{ $attribute->placeholder }}"
                                         id="{{ $fieldName }}"
@@ -66,6 +66,7 @@
                                         />
 
                                         @break;
+
                                     @case('date')
                                     @case('datetime')
                                         <input
