@@ -51,7 +51,7 @@ jobs:
       - name: Key Generate
         run: set -e && php artisan key:generate --env=testing
 
-      - name: Comlplete Testing Env File
+      - name: Complete Testing Env File
         run: |
           printf "The complete `.env.testing` ... \n\n"
           cat .env.testing
@@ -66,7 +66,7 @@ jobs:
         run: set -e && php artisan vendor:publish --all --force --env=testing
 
       - name: Optimize Stuffs
-        run: set -e && php artisan optimize --env=testing
+        run: set -e && php artisan optimize:clear --env=testing
 
       - name: Run Tests
         run: set -e && vendor/bin/pest
