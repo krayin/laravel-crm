@@ -2,7 +2,7 @@
 
 <style>
     button.btn {
-        background-color:<?= $webForm->form_submit_button_color ?>;
+        background-color:<?= $webForm->form_submit_button_color ?> !important;
     }
 
     h1.web-form-title {
