@@ -30,6 +30,11 @@
             }
         }
 
+        .table-body {
+            .custom-design-container {
+                right: unset;
+            }
+        }
         .sidebar-filter {
             right: unset;
             left: -420px;
