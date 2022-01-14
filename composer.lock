@@ -1774,12 +1774,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/krayin/rest-api.git",
-                "reference": "a53c796bf379daff4ae4dae8fe5be5909b567f1a"
+                "reference": "88f8af0076917c346d33a6ce0ac44f2d35e109e2"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/krayin/rest-api/zipball/a53c796bf379daff4ae4dae8fe5be5909b567f1a",
-                "reference": "a53c796bf379daff4ae4dae8fe5be5909b567f1a",
+                "url": "https://api.github.com/repos/krayin/rest-api/zipball/88f8af0076917c346d33a6ce0ac44f2d35e109e2",
+                "reference": "88f8af0076917c346d33a6ce0ac44f2d35e109e2",
                 "shasum": ""
             },
             "default-branch": true,
@@ -1810,7 +1810,7 @@
                 "issues": "https://github.com/krayin/rest-api/issues",
                 "source": "https://github.com/krayin/rest-api/tree/master"
             },
-            "time": "2022-01-14T06:52:25+00:00"
+            "time": "2022-01-14T08:38:21+00:00"
         },
         {
             "name": "laravel/framework",
