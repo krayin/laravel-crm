@@ -108,7 +108,7 @@ class LeadRepository extends Repository
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
                 ->where(function ($query) {
-                    $currentUser = auth()->guard('user')->user();
+                    $currentUser = auth()->guard()->user();
 
                     if ($currentUser->view_permission != 'global') {
                         if ($currentUser->view_permission == 'group') {
@@ -271,7 +271,7 @@ class LeadRepository extends Repository
             $item->folders =  json_decode($item->folders);
 
             $item->type = 'email';
-            
+
             return $item;
         }))->sortBy('created_at')->toArray());
     }

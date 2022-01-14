@@ -37,7 +37,7 @@ class ActivityRepository extends Repository
             ->whereIn('type', ['call', 'meeting', 'lunch'])
             ->whereBetween('activities.schedule_from', $dateRange)
             ->where(function ($query) {
-                $currentUser = auth()->guard('user')->user();
+                $currentUser = auth()->guard()->user();
 
                 if ($currentUser->view_permission != 'global') {
                     if ($currentUser->view_permission == 'group') {
