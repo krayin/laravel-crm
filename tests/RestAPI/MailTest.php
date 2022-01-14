@@ -1,9 +1,9 @@
 <?php
 
 it('has all mails', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/mails'));
+    $response = test()->getJson(test()->versionRoute('mails'));
 
     $response
         ->assertOK()

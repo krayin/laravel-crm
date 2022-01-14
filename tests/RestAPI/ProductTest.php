@@ -1,9 +1,9 @@
 <?php
 
 it('has all products', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/products'));
+    $response = test()->getJson(test()->versionRoute('products'));
 
     $response
         ->assertOK()

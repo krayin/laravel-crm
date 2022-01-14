@@ -1,9 +1,9 @@
 <?php
 
 it('has all leads', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/leads'));
+    $response = test()->getJson(test()->versionRoute('leads'));
 
     $response
         ->assertOK()

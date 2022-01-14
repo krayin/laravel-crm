@@ -3,7 +3,7 @@
 test('check main admin login and grab token', function () {
     $admin = getDefaultAdmin();
 
-    $response = test()->postJson(url('api/v1/login'), [
+    $response = test()->postJson(test()->versionRoute('login'), [
         'email'       => 'admin@example.com',
         'password'    => 'admin123',
         'device_name' => 'Samsung A70s',
@@ -21,9 +21,9 @@ test('check main admin login and grab token', function () {
 });
 
 test('check current logged in user details', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/get'));
+    $response = test()->getJson(test()->versionRoute('get'));
 
     $response
         ->assertOK()
@@ -36,9 +36,9 @@ test('check current logged in user details', function () {
 });
 
 test('check for admin logout and destroy token', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->deleteJson(url('api/v1/logout'));
+    $response = test()->deleteJson(test()->versionRoute('logout'));
 
     $response
         ->assertOK()

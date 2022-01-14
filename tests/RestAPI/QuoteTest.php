@@ -1,9 +1,9 @@
 <?php
 
 it('has all quotes', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/quotes'));
+    $response = test()->getJson(test()->versionRoute('quotes'));
 
     $response
         ->assertOK()

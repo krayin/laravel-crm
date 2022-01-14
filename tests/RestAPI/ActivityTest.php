@@ -1,9 +1,9 @@
 <?php
 
 it('has all activities', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/activities'));
+    $response = test()->getJson(test()->versionRoute('activities'));
 
     $response
         ->assertOK()

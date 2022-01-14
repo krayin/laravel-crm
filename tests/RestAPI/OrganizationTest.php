@@ -1,9 +1,9 @@
 <?php
 
 it('has all organizations', function () {
-    $admin = getSanctumAuthenticatedAdmin();
+    $admin = actingAsSanctumAuthenticatedAdmin();
 
-    $response = test()->getJson(url('api/v1/contacts/organizations'));
+    $response = test()->getJson(test()->versionRoute('contacts/organizations'));
 
     $response
         ->assertOK()
