@@ -217,7 +217,7 @@
             'empty-done-activities'    => 'Yaptığınız hiçbir Etkinlik yok.',
             'note-added'               => 'Not eklendi',
             'call-scheduled'           => 'Çağrı şu saatte planlandı :from - :to',
-            'meeting-scheduled'        => 'Toplantı :from - :to\'da planlandı',
+            'meeting-scheduled'        => 'Toplantı :from - :to da planlandı',
             'lunch-scheduled'          => 'Öğle yemeği :from - :to saatinde planlanmıştır',
             'file-added'               => 'Dosya eklendi',
             'quote-destroy-success'    => 'Alıntı başarıyla kaldırıldı.',
