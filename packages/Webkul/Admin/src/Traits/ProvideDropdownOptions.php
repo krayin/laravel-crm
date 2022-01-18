@@ -128,6 +128,35 @@ trait ProvideDropdownOptions
     }
 
     /**
+     * Get lead source options.
+     *
+     * @return array
+     */
+    public function getleadSourcesOptions(): array
+    {
+        $options = app(\Webkul\Lead\Repositories\SourceRepository::class)
+            ->get(['id as value', 'name as label'])
+            ->map(function ($item, $key) {
+                $item->disabled = false;
+
+                $item->selected = false;
+
+                return $item;
+            })
+            ->toArray();
+
+        return [
+            [
+                'label'    => __('admin::app.common.select-users'),
+                'value'    => '',
+                'disabled' => true,
+                'selected' => true,
+            ],
+            ...$options
+        ];
+    }
+
+    /**
      * Get organization dropdown options.
      *
      * @return array

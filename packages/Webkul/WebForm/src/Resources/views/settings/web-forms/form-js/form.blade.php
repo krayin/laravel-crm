@@ -2,7 +2,7 @@
 
 <style>
     button.btn {
-        background-color:<?= $webForm->form_submit_button_color ?>;
+        background-color:<?= $webForm->form_submit_button_color ?> !important;
     }
 
     h1.web-form-title {
@@ -50,7 +50,7 @@
                             @endphp
 
                             <div class="form-group {{ $parentAttribute->type }}">
-                                <label class="attribute-label" for="{{ $attribute->code }}" {{ $attribute->is_required ? 'class=required' : '' }}>
+                                <label class="attribute-label {{ $attribute->is_required ? 'required' : '' }}" for="{{ $attribute->code }}" >
                                     {{ $attribute->name ?? $parentAttribute->name }}
                                 </label>
 
