@@ -142,6 +142,14 @@
         }
     }
 
+    .table {
+        .tabs-container {
+            .tabs-right-container {
+                text-align: left;
+            }
+        }
+    }
+
     .drag-item {
         .lead-block .icons {
             right: unset;
@@ -323,6 +331,16 @@
                         }
                     }
                 }
+            }
+        }
+    }
+
+    .switch-view-container {
+        margin-left: unset;
+
+        .icon-container {
+            &.active {
+                margin-left: -9px;
             }
         }
     }
