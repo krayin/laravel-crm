@@ -299,7 +299,6 @@ class WebFormController extends Controller
 
             $data['status'] = 1;
 
-            $data['user_id'] = auth()->guard('user')->user()->id;
 
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
