@@ -200,7 +200,7 @@
                     stages: [{
                         'id': 'stage_1',
                         'code': 'new', 
-                        'name': "{{ __('admin::app.pipelines.new-stage') }}",
+                        'name': "{{ __('admin::app.settings.pipelines.new-stage') }}",
                         'probability': 100
                     }, {
                         'id': 'stage_2',
@@ -210,12 +210,12 @@
                     }, {
                         'id': 'stage_99',
                         'code': 'won',
-                        'name': "{{ __('admin::app.pipelines.won-stage') }}",
+                        'name': "{{ __('admin::app.settings.pipelines.won-stage') }}",
                         'probability': 100
                     }, {
                         'id': 'stage_100',
                         'code': 'lost',
-                        'name': "{{ __('admin::app.pipelines.lost-stage') }}",
+                        'name': "{{ __('admin::app.settings.pipelines.lost-stage') }}",
                         'probability': 0
                     }],
 
