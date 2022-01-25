@@ -255,6 +255,7 @@
             'delete-failed'       => 'Teklif silinemez.',
             'quote-id'            => 'Teklif Id',
             'quote-date'          => 'Teklif Tarihi',
+            'delete-confirm'       => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
             'valid-until'         => 'Geçerlilik Tarihi',
             'sales-person'        => 'Satış Elemanı',
             'bill-to'             => 'Fatura Edilen',

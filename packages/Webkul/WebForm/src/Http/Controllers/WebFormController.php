@@ -299,7 +299,6 @@ class WebFormController extends Controller
 
             $data['status'] = 1;
 
-            $data['user_id'] = auth()->guard('user')->user()->id;
 
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
@@ -365,6 +364,25 @@ class WebFormController extends Controller
     public function preview($id)
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $id);
+
+        if (is_null($webForm)) {
+            abort(404);
+        }
+
+        return view('web_form::settings.web-forms.preview');
+    }
+
+    /**
+     * Preview the web form from datagrid.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function view($id)
+    {
+        $webForm = $this->webFormRepository->findOneByField('id', $id);
+
+        request()->merge(['id' => $webForm->form_id]);
 
         if (is_null($webForm)) {
             abort(404);
