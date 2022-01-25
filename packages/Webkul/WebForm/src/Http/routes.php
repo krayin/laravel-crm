@@ -10,8 +10,10 @@ Route::group([
 
     Route::get('forms/{id}/form.html', 'WebFormController@preview')->name('admin.settings.web_forms.preview');
 
+    Route::get('form/{id}/form.html', 'WebFormController@view')->name('admin.settings.web_forms.view');
+
     Route::post('forms/{id}', 'WebFormController@formStore')->name('admin.settings.web_forms.form_store');
-    
+
     Route::group(['middleware' => ['user']], function () {
         Route::get('', 'WebFormController@index')->name('admin.settings.web_forms.index');
 

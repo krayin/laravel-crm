@@ -371,4 +371,23 @@ class WebFormController extends Controller
 
         return view('web_form::settings.web-forms.preview');
     }
+
+    /**
+     * Preview the web form from datagrid.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function view($id)
+    {
+        $webForm = $this->webFormRepository->findOneByField('id', $id);
+
+        request()->merge(['id' => $webForm->form_id]);
+
+        if (is_null($webForm)) {
+            abort(404);
+        }
+
+        return view('web_form::settings.web-forms.preview');
+    }
 }
