@@ -819,7 +819,12 @@
             'select-call'         => 'Arama Yap',
             'select-meeting'      => 'Toplantı',
             'select-lunch'        => 'Öğle Yemeği',
-            'duplicate-value'     => 'Değer yinelenemez'
+            'duplicate-value'     => 'Değer yinelenemez',
+            'unauthenticated'     => 'Kimliği doğrulanmamış',
+            'resource-not-found'  => 'Kaynak bulunamadı',
+            'forbidden-error'     => '403 yasak hatası',
+            'internal-server-error' => '500 Dahili Sunucu Hatası',
+            'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.'
         ],
 
         'user' => [
