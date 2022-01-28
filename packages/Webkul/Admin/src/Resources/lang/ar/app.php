@@ -824,7 +824,11 @@
             'select-call'         => 'مكالمة',
             'select-meeting'      => 'لقاء',
             'select-lunch'        => 'غداء',
-            'duplicate-value'     => 'لا يمكن أن تكون القيمة مكررة'
+            'duplicate-value'     => 'لا يمكن أن تكون القيمة مكررة',
+            'Unauthenticated'     => 'غير مصدق',
+            'Resource-not-found'  => 'الموارد غير موجود',
+            'forbidden-Error' => 'ممنوع الخطأ',
+            'Internal-Server Error' => 'خطأ في الخادم الداخلي'
         ],
 
         'user' => [

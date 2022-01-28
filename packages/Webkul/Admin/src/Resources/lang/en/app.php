@@ -828,7 +828,11 @@
             'select-call'         => 'Call',
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
-            'duplicate-value'     => 'The value cannot be duplicate'
+            'duplicate-value'     => 'The value cannot be duplicate',
+            'Unauthenticated'     => 'Unauthenticated',
+            'Resource-not-found'  => 'Resource not found',
+            'forbidden-Error'     => '403 forbidden Error',
+            'Internal-Server Error' => '500 Internal Server Error'
         ],
 
         'user' => [
