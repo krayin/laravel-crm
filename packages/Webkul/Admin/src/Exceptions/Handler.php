@@ -12,6 +12,13 @@ use App\Exceptions\Handler as AppExceptionHandler;
 
 class Handler extends AppExceptionHandler
 {
+    protected $jsonErrorMessages = [];
+
+    /**
+    * Json error.
+    *
+    * @var array
+    */
     public function __construct()
     {
         $this->jsonErrorMessages = [
@@ -21,6 +28,7 @@ class Handler extends AppExceptionHandler
             '500' => trans('admin::app.common.Internal-Server Error')
         ];
     }
+
     /**
      * Render an exception into an HTTP response.
      *
