@@ -832,7 +832,8 @@
             'Unauthenticated'     => 'Unauthenticated',
             'Resource-not-found'  => 'Resource not found',
             'forbidden-Error'     => '403 forbidden Error',
-            'Internal-Server Error' => '500 Internal Server Error'
+            'Internal-Server Error' => '500 Internal Server Error',
+            'something-went-wrong'  => 'Something went wrong, please try again later.'
         ],
 
         'user' => [

@@ -103,7 +103,7 @@ class Handler extends AppExceptionHandler
             return response()->json([
                 'message' => isset($this->jsonErrorMessages[$statusCode])
                     ? $this->jsonErrorMessages[$statusCode]
-                    : 'Something went wrong, please try again later.'
+                    : trans('admin::app.common.something-went-wrong')
             ], $statusCode);
         }
 

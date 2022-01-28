@@ -822,8 +822,9 @@
             'duplicate-value'     => 'Değer yinelenemez',
             'Unauthenticated'     => 'Kimliği doğrulanmamış',
             'Resource-not-found'  => 'Kaynak bulunamadı',
-            'forbidden-Error' => '403 yasak hatası',
-            'Internal-Server Error' => '500 Dahili Sunucu Hatası'
+            'forbidden-Error'     => '403 yasak hatası',
+            'Internal-Server Error' => '500 Dahili Sunucu Hatası',
+            'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.'
         ],
 
         'user' => [
