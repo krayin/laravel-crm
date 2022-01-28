@@ -310,7 +310,7 @@
             'saved-to-draft'          => 'تم حفظ البريد الإلكتروني في المسودة.',
             'delete-success'          => 'تم حذف البريد الإلكتروني بنجاح.',
             'delete-failed'           => 'لا يمكن حذف البريد الإلكتروني.',
-            'mass-update-success'     => 'Emails updated successfully.',
+            'mass-update-success'     => 'تم تحديث رسائل البريد الإلكتروني بنجاح.',
 
             'forget-password' => [
                 'subject'           => 'إعادة تعيين كلمة مرور العميل',
@@ -734,7 +734,7 @@
             'rotten-days'         => 'أيام فاسدة',
             'yes'                 => 'نعم',
             'no'                  => 'لا',
-            'move-to-inbox'       => 'Move to Inbox',
+            'move-to-inbox'       => 'الانتقال إلى البريد الوارد',
             'update-success'      => ':تم تحديث المورد بنجاح.',
             'destroy-success'     => ':تم حذف المورد بنجاح.',
             'destroy-failed'      => ':لا يمكن حذف المورد.',
