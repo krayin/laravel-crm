@@ -12,13 +12,18 @@ use App\Exceptions\Handler as AppExceptionHandler;
 
 class Handler extends AppExceptionHandler
 {
+    /**
+     * Json error messages.
+     *
+     * @var array
+     */
     protected $jsonErrorMessages = [];
 
     /**
-    * Json error.
-    *
-    * @var array
-    */
+     * Create handler instance.
+     *
+     * @return void
+     */
     public function __construct()
     {
         $this->jsonErrorMessages = [
@@ -97,8 +102,8 @@ class Handler extends AppExceptionHandler
         if (request()->expectsJson()) {
             return response()->json([
                 'message' => isset($this->jsonErrorMessages[$statusCode])
-                           ? $this->jsonErrorMessages[$statusCode]
-                           : 'Something went wrong, please try again later.'
+                    ? $this->jsonErrorMessages[$statusCode]
+                    : 'Something went wrong, please try again later.'
             ], $statusCode);
         }
 
