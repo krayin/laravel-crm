@@ -829,10 +829,10 @@
             'select-meeting'      => 'Meeting',
             'select-lunch'        => 'Lunch',
             'duplicate-value'     => 'The value cannot be duplicate',
-            'Unauthenticated'     => 'Unauthenticated',
-            'Resource-not-found'  => 'Resource not found',
-            'forbidden-Error'     => '403 forbidden Error',
-            'Internal-Server Error' => '500 Internal Server Error',
+            'unauthenticated'     => 'Unauthenticated',
+            'resource-not-found'  => 'Resource not found',
+            'forbidden-error'     => '403 forbidden Error',
+            'internal-server-error' => '500 Internal Server Error',
             'something-went-wrong'  => 'Something went wrong, please try again later.'
         ],
 

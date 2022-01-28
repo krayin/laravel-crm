@@ -27,10 +27,10 @@ class Handler extends AppExceptionHandler
     public function __construct()
     {
         $this->jsonErrorMessages = [
-            '404' => trans('admin::app.common.Resource-not-found'),
-            '403' => trans('admin::app.common.forbidden-Error'),
-            '401' => trans('admin::app.common.Unauthenticated'),
-            '500' => trans('admin::app.common.Internal-Server Error')
+            '404' => trans('admin::app.common.resource-not-found'),
+            '403' => trans('admin::app.common.forbidden-error'),
+            '401' => trans('admin::app.common.unauthenticated'),
+            '500' => trans('admin::app.common.internal-server-error')
         ];
     }
 

@@ -825,10 +825,10 @@
             'select-meeting'      => 'لقاء',
             'select-lunch'        => 'غداء',
             'duplicate-value'     => 'لا يمكن أن تكون القيمة مكررة',
-            'Unauthenticated'     => 'غير مصدق',
-            'Resource-not-found'  => 'الموارد غير موجود',
-            'forbidden-Error'     => 'ممنوع الخطأ',
-            'Internal-Server Error' => 'خطأ في الخادم الداخلي',
+            'unauthenticated'     => 'غير مصدق',
+            'resource-not-found'  => 'الموارد غير موجود',
+            'forbidden-error'     => 'ممنوع الخطأ',
+            'internal-server-error' => 'خطأ في الخادم الداخلي',
             'something-went-wrong'  => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق.'
         ],
 

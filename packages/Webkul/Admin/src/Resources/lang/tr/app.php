@@ -820,10 +820,10 @@
             'select-meeting'      => 'Toplantı',
             'select-lunch'        => 'Öğle Yemeği',
             'duplicate-value'     => 'Değer yinelenemez',
-            'Unauthenticated'     => 'Kimliği doğrulanmamış',
-            'Resource-not-found'  => 'Kaynak bulunamadı',
-            'forbidden-Error'     => '403 yasak hatası',
-            'Internal-Server Error' => '500 Dahili Sunucu Hatası',
+            'unauthenticated'     => 'Kimliği doğrulanmamış',
+            'resource-not-found'  => 'Kaynak bulunamadı',
+            'forbidden-error'     => '403 yasak hatası',
+            'internal-server-error' => '500 Dahili Sunucu Hatası',
             'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.'
         ],
 
