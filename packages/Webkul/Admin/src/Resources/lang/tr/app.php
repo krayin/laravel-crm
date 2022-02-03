@@ -537,6 +537,9 @@
                 'is-default'           => 'Varsayılan olarak işaretle',
                 'probability'          => 'Olasılık (%)',
                 'add-stage-btn-title'  => 'Aşama Ekle',
+                'new-stage'            => 'yeni',
+                'won-stage'            => 'kazanmak',
+                'lost-stage'           => 'kayıp',
                 'duplicate-name'       => '"Ad" alanı yinelenemez',
                 'create-success'       => 'İşlem hattı başarıyla oluşturuldu.',
                 'update-success'       => 'İşlem hattı başarıyla güncellendi.',
@@ -819,7 +822,12 @@
             'select-call'         => 'Arama Yap',
             'select-meeting'      => 'Toplantı',
             'select-lunch'        => 'Öğle Yemeği',
-            'duplicate-value'     => 'Değer yinelenemez'
+            'duplicate-value'     => 'Değer yinelenemez',
+            'unauthenticated'     => 'Kimliği doğrulanmamış',
+            'resource-not-found'  => 'Kaynak bulunamadı',
+            'forbidden-error'     => '403 yasak hatası',
+            'internal-server-error' => '500 Dahili Sunucu Hatası',
+            'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.'
         ],
 
         'user' => [
