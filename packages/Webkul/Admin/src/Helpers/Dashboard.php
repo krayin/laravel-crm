@@ -202,7 +202,7 @@ class Dashboard
                         ], [
                             "backgroundColor" => "#FF4D50",
                             "data"            => $lostLeadsCount,
-                            "label"           => __("admin::app.settings.pipelines.won-stage"),
+                            "label"           => __("admin::app.settings.pipelines.lost-stage"),
                         ]
                     ]
                 ]
