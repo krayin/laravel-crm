@@ -295,7 +295,7 @@
             'add-new-lead'            => 'Yeni Müşteri Adayı Ekle',
             'send'                    => 'Gönder',
             'back'                    => 'Geri',
-            'discard'                 => 'At',
+            'discard'                 => 'atmak',
             'from-'                   => 'İtibaren - ',
             'to-'                     => 'İle - ',
             'cc-'                     => 'Bilgi - ',
