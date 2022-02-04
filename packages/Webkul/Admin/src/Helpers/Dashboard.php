@@ -197,12 +197,12 @@ class Dashboard
                     "datasets" => [
                         [
                             "data"            => $wonLeadsCount,
-                            "label"           => "Won",
+                            "label"           => __("admin::app.settings.pipelines.won-stage"),
                             "backgroundColor" => "#4BC0C0",
                         ], [
                             "backgroundColor" => "#FF4D50",
                             "data"            => $lostLeadsCount,
-                            "label"           => "Lost",
+                            "label"           => __("admin::app.settings.pipelines.lost-stage"),
                         ]
                     ]
                 ]
