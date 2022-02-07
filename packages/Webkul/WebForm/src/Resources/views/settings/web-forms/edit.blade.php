@@ -366,7 +366,7 @@
                                             type="text"
                                             :name="'attributes[' + attribute.id + '][placeholder]'"
                                             class="control"
-                                            value=""
+                                            :value="attribute.placeholder"
                                             :placeholder="getPlaceholderValue(attribute)"
                                         />
                                     </div>
