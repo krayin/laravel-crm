@@ -83,7 +83,7 @@
             'sign-out'             => 'خروج',
             'back'                 => 'خلف',
             'name'                 => 'اسم',
-            'configuration'        => 'إعدادات',
+            'configuration'        => 'ترتيب',
             'activities'           => 'أنشطة',
             'howdy'                => 'مرحبا!',
         ],
@@ -670,7 +670,7 @@
         ],
 
         'configuration' => [
-            'title'             => 'إعدادات',
+            'title'             => 'ترتيب',
             'save-btn-title'    => 'يحفظ',
             'general'           => 'عام',
             'locale-settings'   => 'إعدادات اللغة',
@@ -787,13 +787,13 @@
             'workflows'       => 'سير العمل',
             'other-settings'  => 'اعدادات اخرى',
             'tags'            => 'العلامات',
-            'configuration'   => 'إعدادات',
+            'configuration'   => 'ترتيب',
             'create'          => 'إنشاء',
             'edit'            => 'يحرر',
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
-            'export'          => 'Export',
+            'export'          => 'يصدر',
             'mass-delete'     => 'حذف جماعي',
         ],
 
