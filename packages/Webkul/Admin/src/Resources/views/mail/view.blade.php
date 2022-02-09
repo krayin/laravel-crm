@@ -882,7 +882,7 @@
                     if (type != 'delete') {
                         this.$emit('onEmailAction', {'type': type, 'email': this.email});
                     } else {
-                        if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
+                        if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                             return;
                         }
                         
