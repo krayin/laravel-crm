@@ -255,7 +255,6 @@
             'update-success'      => 'Quote updated successfully.',
             'delete-success'      => 'Quote deleted successfully.',
             'delete-failed'       => 'Quote can not be deleted.',
-            'delete-confirm'       => 'Do you really want to perform this action?',
             'quote-id'            => 'Quote Id',
             'quote-date'          => 'Quote Date',
             'valid-until'         => 'Valid Until',
@@ -836,7 +835,9 @@
             'resource-not-found'  => 'Resource not found',
             'forbidden-error'     => '403 forbidden Error',
             'internal-server-error' => '500 Internal Server Error',
-            'something-went-wrong'  => 'Something went wrong, please try again later.'
+            'something-went-wrong'  => 'Something went wrong, please try again later.',
+            'delete-confirm'       => 'Do you really want to perform this action?'
+            
         ],
 
         'user' => [

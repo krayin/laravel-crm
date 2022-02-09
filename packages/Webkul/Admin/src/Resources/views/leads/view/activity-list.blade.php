@@ -361,7 +361,7 @@
                 },
 
                 remove: function(activity) {
-                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 
@@ -387,7 +387,7 @@
                 },
 
                 removeQuote: function(quote) {
-                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 
@@ -417,7 +417,7 @@
                 },
 
                 unlinkEmail: function(activity) {
-                    if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 

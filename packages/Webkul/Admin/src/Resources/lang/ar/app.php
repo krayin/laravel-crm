@@ -252,7 +252,6 @@
             'update-success'      => 'تم تحديث الاقتباس بنجاح.',
             'delete-success'      => 'تم حذف الاقتباس بنجاح.',
             'delete-failed'       => 'لا يمكن حذف الاقتباس.',
-            'delete-confirm'       => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
             'quote-id'            => 'معرف الاقتباس',
             'quote-date'          => 'تاريخ الاقتباس',
             'valid-until'         => 'صالح حتى',
@@ -832,7 +831,8 @@
             'resource-not-found'  => 'الموارد غير موجود',
             'forbidden-error'     => 'ممنوع الخطأ',
             'internal-server-error' => 'خطأ في الخادم الداخلي',
-            'something-went-wrong'  => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق.'
+            'something-went-wrong'  => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق.',
+            'delete-confirm'       => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
         ],
 
         'user' => [
