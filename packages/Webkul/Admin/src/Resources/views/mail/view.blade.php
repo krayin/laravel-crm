@@ -876,13 +876,13 @@
                     hovering: '',
                 }
             },
-
+  
             methods: {
                 emailAction: function(type) {
                     if (type != 'delete') {
                         this.$emit('onEmailAction', {'type': type, 'email': this.email});
                     } else {
-                        if (! confirm('Do you really want to perform this action?')) {
+                        if (! confirm('{{ __('admin::app.quotes.delete-confirm') }}')) {
                             return;
                         }
                         
