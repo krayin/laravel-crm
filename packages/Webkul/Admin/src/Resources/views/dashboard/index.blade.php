@@ -97,10 +97,7 @@
                 </h3>
 
                 <div class="activity bar-data" v-for="(data, index) in dataCollection.data">
-                    <span v-if="data.label == 'call'">{{ __('admin::app.activities.call') }}</span>
-                    <span v-else-if="data.label == 'meeting'">{{ __('admin::app.activities.meeting') }}</span>
-                    <span v-else-if="data.label == 'lunch'">{{ __('admin::app.activities.lunch') }}</span>   
-                    <span v-else>@{{ data.label }}</span>
+                    <span>@{{ data.label }}</span>
 
                     <div class="bar">
                         <div
