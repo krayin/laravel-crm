@@ -121,9 +121,21 @@
             <table>
                 <thead class="thead-dark">
                     <tr>
-                        <th></th>
-                        <th>{{ __('admin::app.settings.pipelines.name') }}</th>
-                        <th>{{ __('admin::app.settings.pipelines.probability') }}</th>
+                        <th></th> 
+                        <th>
+                            <div class="form-group">
+                                <label class="required">
+                                 {{ __('admin::app.settings.pipelines.name') }}
+                                 </label>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="form-group">
+                                <label class="required">
+                                    {{ __('admin::app.settings.pipelines.probability') }} 
+                                    </label>
+                            </div>                        
+                        </th>
                         <th></th>
                     </tr>
                 </thead>
