@@ -17,13 +17,14 @@
                     @csrf
 
                     <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                        <label for="email">{{ __('admin::app.sessions.login.email') }}</label>
+                        <label for="email">{{ __('admin::app.sessions.login.email') }} (admin@example.com)</label>
 
                         <input
                             type="text"
                             name="email"
                             class="control"
                             id="email"
+                            value="admin@example.com"
                             v-validate.disable="'required|email'"
                             data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;"
                             />
@@ -34,13 +35,14 @@
                     </div>
 
                     <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
-                        <label for="password">{{ __('admin::app.sessions.login.password') }}</label>
+                        <label for="password">{{ __('admin::app.sessions.login.password') }} (admin123)</label>
 
                         <input
                             type="password"
                             name="password"
                             class="control"
                             id="password"
+                            value="admin123"
                             v-validate.disable="'required|min:6'"
                             data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;"
                         />
