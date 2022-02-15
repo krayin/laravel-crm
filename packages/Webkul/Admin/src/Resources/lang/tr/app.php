@@ -255,7 +255,6 @@
             'delete-failed'       => 'Teklif silinemez.',
             'quote-id'            => 'Teklif Id',
             'quote-date'          => 'Teklif Tarihi',
-            'delete-confirm'       => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
             'valid-until'         => 'Geçerlilik Tarihi',
             'sales-person'        => 'Satış Elemanı',
             'bill-to'             => 'Fatura Edilen',
@@ -295,7 +294,7 @@
             'add-new-lead'            => 'Yeni Müşteri Adayı Ekle',
             'send'                    => 'Gönder',
             'back'                    => 'Geri',
-            'discard'                 => 'At',
+            'discard'                 => 'atmak',
             'from-'                   => 'İtibaren - ',
             'to-'                     => 'İle - ',
             'cc-'                     => 'Bilgi - ',
@@ -827,7 +826,8 @@
             'resource-not-found'  => 'Kaynak bulunamadı',
             'forbidden-error'     => '403 yasak hatası',
             'internal-server-error' => '500 Dahili Sunucu Hatası',
-            'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.'
+            'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.',
+            'delete-confirm'       => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
         ],
 
         'user' => [
