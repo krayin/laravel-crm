@@ -832,17 +832,20 @@
 
         'user' => [
             'account' => [
-                'name'              => 'İsim',
-                'email'             => 'E-posta',
-                'password'          => 'Şifre',
-                'my_account'        => 'Hesabım',
-                'update_details'    => 'Detayları Güncelle',
-                'current_password'  => 'Mevcut Şifre',
-                'confirm_password'  => 'Şifreyi Onayla',
-                'password-match'    => 'Mevcut şifre eşleşmiyor.',
-                'account-save'      => 'Hesap değişiklikleri başarıyla kaydedildi.',
-                'permission-denied' => 'İzin Reddedildi',
-                'remove-image'      => 'Görüntüyü Kaldır'
+                'name'                  => 'İsim',
+                'email'                 => 'E-posta',
+                'password'              => 'Şifre',
+                'my_account'            => 'Hesabım',
+                'update_details'        => 'Detayları Güncelle',
+                'current_password'      => 'Mevcut Şifre',
+                'confirm_password'      => 'Şifreyi Onayla',
+                'password-match'        => 'Mevcut şifre eşleşmiyor.',
+                'account-save'          => 'Hesap değişiklikleri başarıyla kaydedildi.',
+                'permission-denied'     => 'İzin Reddedildi',
+                'remove-image'          => 'Görüntüyü Kaldır',
+                'upload_image_pix'      => 'Bir Profil Resmi Yükleyin (100px x 100px)',
+                'upload_image_format'   =>'PNG veya JPG Formatında',
+                'image_upload_message'  => 'Yalnızca resimlere (.jpeg, .jpg, .png, ..) izin verilir.'
             ]
         ],
 
