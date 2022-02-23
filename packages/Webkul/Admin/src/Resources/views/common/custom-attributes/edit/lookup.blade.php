@@ -89,6 +89,12 @@
                     }
                 },
 
+                mounted: function () {
+                    if (this.data && typeof this.data == 'string') {
+                        this.getLookUpEntity();
+                    }
+                },
+
                 methods: {
                     search: debounce(function () {
                         this.state = '';
@@ -130,6 +136,17 @@
                         this.state = 'new';
 
                         this.entity_id = null;
+                    },
+
+                    getLookUpEntity: function() {
+                        this.$http.get("{{ route('admin.settings.attributes.lookup_entity') }}/" + this.attribute.lookup_type, {params: {query: this.data}})
+                            .then (response => {
+                                this.entity_id = response.data['id']
+
+                                this.search_term = response.data['name']
+                            })
+                            .catch (error => {
+                            })
                     }
                 }
             });
