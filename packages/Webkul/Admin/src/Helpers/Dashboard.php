@@ -417,10 +417,10 @@ class Dashboard
             ->filter(function ($type) use ($activities) {
                 return ! in_array($type, $activities->pluck('label')->toArray());
             })
-            ->map(function ($type) {
+            ->map(function ($type) { 
                 return [
                     'count' => 0,
-                    'label' => $type
+                    'label' => __("admin::app.activities.$type")
                 ];
             });
 
