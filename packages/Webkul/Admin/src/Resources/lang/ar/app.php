@@ -83,7 +83,7 @@
             'sign-out'             => 'خروج',
             'back'                 => 'خلف',
             'name'                 => 'اسم',
-            'configuration'        => 'إعدادات',
+            'configuration'        => 'إعدادات', 
             'activities'           => 'أنشطة',
             'howdy'                => 'مرحبا!',
         ],
@@ -669,7 +669,7 @@
         ],
 
         'configuration' => [
-            'title'             => 'إعدادات',
+            'title'             => 'لقب',
             'save-btn-title'    => 'يحفظ',
             'general'           => 'عام',
             'locale-settings'   => 'إعدادات اللغة',
@@ -792,7 +792,7 @@
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
-            'export'          => 'Export',
+            'export'          => 'يصدر',
             'mass-delete'     => 'حذف جماعي',
         ],
 
