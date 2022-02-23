@@ -164,6 +164,19 @@ class AttributeController extends Controller
     }
 
     /**
+     * Search attribute lookup results
+     *
+     * @param  string  $lookup
+     * @return \Illuminate\Http\Response
+     */
+    public function lookupEntity($lookup)
+    {
+        $result = $this->attributeRepository->getLookUpEntity($lookup, request()->input('query'));
+
+        return response()->json($result);
+    }
+
+    /**
      * Mass Delete the specified resources.
      *
      * @return \Illuminate\Http\Response
