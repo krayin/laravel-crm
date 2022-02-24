@@ -670,7 +670,7 @@
         ],
 
         'configuration' => [
-            'title'             => 'إعدادات',
+            'title'             => 'لقب',
             'save-btn-title'    => 'يحفظ',
             'general'           => 'عام',
             'locale-settings'   => 'إعدادات اللغة',
@@ -793,7 +793,7 @@
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
-            'export'          => 'Export',
+            'export'          => 'يصدر',
             'mass-delete'     => 'حذف جماعي',
         ],
 
