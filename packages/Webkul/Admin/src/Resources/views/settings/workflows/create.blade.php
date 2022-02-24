@@ -51,6 +51,8 @@
             </div>
         </form>
     </div>
+
+    @include('admin::common.custom-attributes.edit.lookup')
 @stop
 
 @push('scripts')
@@ -236,11 +238,17 @@
                     </div>
 
                     <div class="form-group" v-if="matchedAttribute.type == 'select' || matchedAttribute.type == 'radio' || matchedAttribute.type == 'lookup'">
-                        <select :name="['conditions[' + index + '][value]']" class="control" v-model="condition.value">
+                        <select :name="['conditions[' + index + '][value]']" class="control" v-model="condition.value" v-if="! matchedAttribute.lookup_type">
                             <option v-for='option in matchedAttribute.options' :value="option.id">
                                 @{{ option.name }}
                             </option>
                         </select>
+
+                        <lookup-component
+                            :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
+                            validations="required|email"
+                            v-else
+                        ></lookup-component>
                     </div>
 
                     <div class="form-group" v-if="matchedAttribute.type == 'multiselect' || matchedAttribute.type == 'checkbox'">

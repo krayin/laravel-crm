@@ -27,8 +27,22 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-        $this->app->setLocale(core()->getConfigData('general.locale_settings.locale') ?: config('app.fallback_locale'));
-        
+        $locale = request()->get('admin_locale');
+
+        if ($locale) {
+            app()->setLocale($locale);
+
+            session()->put('admin_locale', $locale);
+        } else {
+            if ($locale = session()->get('admin_locale')) {
+                app()->setLocale($locale);
+            } else {
+                app()->setLocale(app()->getLocale());
+            }
+        }
+
+        unset($request['admin_locale']);
+
         return $next($request);
     }
 }

@@ -52,7 +52,7 @@
 
                 <td class="action">
                     <template v-for="(action, index) in actions">
-                        <a
+                        <a target="_blank"
                             :key="index"
                             :href="row[`${action.key}_url`]"
                             :title="action.title"

@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web']], function () {
+Route::group(['middleware' => ['web', 'admin_locale']], function () {
     Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin')->name('krayin.home');
 
     Route::prefix(config('app.admin_path'))->group(function () {
@@ -301,6 +301,8 @@ Route::group(['middleware' => ['web']], function () {
                     Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
 
                     Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
+
+                    Route::get('lookup-entity/{lookup?}', 'AttributeController@lookupEntity')->name('admin.settings.attributes.lookup_entity');
 
                     Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
 

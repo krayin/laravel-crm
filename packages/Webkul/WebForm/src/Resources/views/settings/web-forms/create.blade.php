@@ -322,7 +322,6 @@
                                             :name="'attributes[' + attribute.id + '][is_required]'"
                                             :id="'is_required_' + attribute.id"
                                             :checked="attribute.is_required"
-                                            :disabled="attribute.is_required"
                                         />
 
                                         <label :for="'is_required_' + attribute.id" class="checkbox-view"></label>
