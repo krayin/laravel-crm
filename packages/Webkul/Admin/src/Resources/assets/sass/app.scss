@@ -31,7 +31,7 @@ body {
     height: 60px;
     background-color: $white;
     font-size: 0;
-    @include box-shadow(inset 0px -1px 0px #CDCECF);
+    @include box-shadow(inset 0px -1px 0px #cdcecf);
     position: fixed;
     left: 0;
     right: 0;
@@ -153,7 +153,7 @@ body {
                     margin-top: 8px;
                 }
             }
-            
+
             .info {
                 display: inline-block;
                 vertical-align: middle;
@@ -162,7 +162,7 @@ body {
                 line-height: 20px;
 
                 .howdy {
-                    color: #9E9E9E;
+                    color: #9e9e9e;
                 }
 
                 .user {
@@ -180,7 +180,7 @@ body {
                 top: 50px;
                 right: 0;
                 bottom: unset;
-    
+
                 .app-version {
                     padding: 8px 12px;
                     display: block;
@@ -203,7 +203,7 @@ body {
     height: auto;
     position: fixed;
     background-color: $dark-color;
-    box-shadow: inset -1px 0px 0px #CDCECF;
+    box-shadow: inset -1px 0px 0px #cdcecf;
     // transition: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
 
     ul.menubar {
@@ -241,11 +241,11 @@ body {
                 top: 0;
                 left: 48px;
                 background-color: $white;
-                box-shadow: 2px 1px 3px #CDCECF;
+                box-shadow: 2px 1px 3px #cdcecf;
                 border: 1px solid #eee;
                 border-left: 0;
                 border-radius: 0 3px 3px 0;
-                
+
                 li.sub-menu-item {
                     a {
                         display: block;
@@ -254,7 +254,8 @@ body {
                         font-size: $font-size-sm;
                     }
 
-                    &.active, &:hover {
+                    &.active,
+                    &:hover {
                         a {
                             color: $primary-color;
                         }
@@ -262,7 +263,8 @@ body {
                 }
             }
 
-            &.active, &:hover {
+            &.active,
+            &:hover {
                 box-shadow: inset 4px 0px 0px $primary-color;
             }
 
@@ -277,7 +279,8 @@ body {
                             color: $secondary-color;
                         }
 
-                        &:hover, &.active {
+                        &:hover,
+                        &.active {
                             .menu-label {
                                 color: $primary-color;
                             }
@@ -290,6 +293,7 @@ body {
 
     &.open {
         width: 160px;
+        overflow-x: auto;
 
         ul.menubar {
             li.menu-item {
@@ -298,7 +302,7 @@ body {
                         font-size: 16px;
                         font-weight: 200;
                         display: inline-block;
-                        color: #B0BEC5;
+                        color: #b0bec5;
                     }
                 }
 
@@ -309,7 +313,7 @@ body {
                     border-radius: 0;
                     box-shadow: unset;
                     border: 0;
-                
+
                     li.sub-menu-item {
                         a {
                             padding-left: 45px;
@@ -330,10 +334,11 @@ body {
 
                         .sub-menu-item {
                             .menu-label {
-                                color: #B0BEC5;
+                                color: #b0bec5;
                             }
 
-                            &.active, &:hover {
+                            &.active,
+                            &:hover {
                                 .menu-label {
                                     color: $primary-color !important;
                                 }
@@ -352,7 +357,6 @@ body {
     }
 
     .menubar-bottom {
-        bottom: 0;
         padding: 12px;
         cursor: pointer;
         position: absolute;
@@ -418,9 +422,9 @@ body {
                 }
 
                 &:hover {
-                    background-color: #F7F8F9;
+                    background-color: #f7f8f9;
                     border-radius: 8px;
-    
+
                     .setting-info {
                         p {
                             display: block;
@@ -485,7 +489,7 @@ body {
     .content-wrapper {
         padding: 25px 25px 25px 15px;
         margin-left: 280px;
-        margin-top:1px;
+        margin-top: 1px;
         background-color: $white;
     }
 
@@ -609,7 +613,7 @@ body {
                 img {
                     width: 280px;
                     height: 50px;
-                    transform: translateY(-8px)
+                    transform: translateY(-8px);
                 }
 
                 p {
@@ -676,7 +680,7 @@ body {
 
                 li {
                     margin-bottom: 5px;
-                    
+
                     a {
                         border-radius: 4px;
                         padding: 10px;
@@ -715,7 +719,7 @@ body {
                     }
                 }
 
-                input[type=submit] {
+                input[type="submit"] {
                     color: $secondary-font-color;
                     background: transparent;
                     font-size: 18px;
@@ -781,7 +785,7 @@ body {
 
     table {
         box-shadow: none;
-        
+
         tr {
             th {
                 &:first-child {
@@ -813,8 +817,8 @@ body {
             }
 
             &:not(.draggable) {
-                .control[readonly=readonly] {
-                    background-color: #f0f0f0;;
+                .control[readonly="readonly"] {
+                    background-color: #f0f0f0;
                 }
             }
         }
@@ -882,8 +886,10 @@ body {
 }
 
 .modal-container {
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
-    
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px,
+        rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px,
+        rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+
     .tabs-content {
         border: 0;
         border-top: 1px solid $border-color;
@@ -951,7 +957,7 @@ body {
                 float: right;
                 font-weight: 400;
                 font-size: 14px;
-                color: #FF4D50;
+                color: #ff4d50;
                 background: #ffd0d6;
                 padding: 2px 12px;
                 border-radius: 4px;
@@ -981,14 +987,14 @@ body {
     .attribute-value-row {
         width: 100%;
         padding: 6px;
-        font-size: 16px;  
+        font-size: 16px;
         position: relative;
         padding-right: 30px;
         display: inline-block;
 
         &:nth-child(even) {
             padding: 10px 6px;
-            background-color: rgba(255,255,255,1);
+            background-color: rgba(255, 255, 255, 1);
         }
 
         &:last-child {
@@ -1009,7 +1015,7 @@ body {
             span.multi-value {
                 border-radius: 30px;
                 padding: 4px 8px;
-                background: #EFF0F5;
+                background: #eff0f5;
                 margin-bottom: 5px;
                 display: inline-block;
                 word-break: break-all;
@@ -1138,9 +1144,9 @@ body {
 
             .timeline-bar {
                 bottom: -67px;
-                border-left: 2px dashed #546E7A;
+                border-left: 2px dashed #546e7a;
             }
-    
+
             &.note,
             &.email,
             &.file {
@@ -1150,7 +1156,7 @@ body {
 
         &.done-activities {
             .timeline-bar {
-                border-left: 2px solid #546E7A;
+                border-left: 2px solid #546e7a;
             }
         }
 
@@ -1159,7 +1165,7 @@ body {
             padding: 15px;
             margin-left: 50px;
             margin-bottom: 20px;
-            border: 1px solid #F7F8F9;
+            border: 1px solid #f7f8f9;
             box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.1);
             margin-bottom: 10px;
             text-align: left;
@@ -1173,7 +1179,7 @@ body {
                 height: 36px;
                 top: 0;
                 left: -51px;
-                border: 1px solid #546E7A;
+                border: 1px solid #546e7a;
                 background-color: #fff;
                 background-repeat: no-repeat;
                 background-position: 50%;
@@ -1211,9 +1217,9 @@ body {
                     font-size: $font-size-md;
                     padding: 15px;
                     margin-bottom: 5px;
-                    background-color: #FFF9C4;
+                    background-color: #fff9c4;
                     position: relative;
-                    border: solid 1px #FDD835;
+                    border: solid 1px #fdd835;
                     border-radius: 4px;
                 }
 
@@ -1241,14 +1247,13 @@ body {
                     }
 
                     span {
-                        color: #546E7A;
+                        color: #546e7a;
                         font-size: 16px;
                         margin-bottom: 5px;
                     }
                 }
 
                 .content {
-                    
                 }
             }
 
@@ -1260,7 +1265,7 @@ body {
                 right: 10px;
 
                 &:hover {
-                    background-color: rgba(38, 41, 44, 0.05)
+                    background-color: rgba(38, 41, 44, 0.05);
                 }
             }
 
@@ -1322,7 +1327,7 @@ body {
     .empty-activities {
         text-align: center;
         font-size: 16px;
-        color: #546E7A;
+        color: #546e7a;
     }
 }
 
@@ -1430,37 +1435,38 @@ body {
     .row-grid-3 {
         padding: 10px 0;
         align-items: start;
-        
+
         .card {
             height: 100%;
             min-height: 300px;
             border-radius: 3px;
             background-color: $white;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-    
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+                rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
             label {
                 height: 100%;
                 padding: 20px;
                 display: block;
                 font-weight: 500;
                 color: $font-color;
-                border-bottom: 1px solid rgba(193,194,195,.5);
-    
+                border-bottom: 1px solid rgba(193, 194, 195, 0.5);
+
                 .card-filter-container {
                     cursor: pointer;
                     margin-left: 5px;
                     display: inline-block;
                     color: $secondary-color;
-    
+
                     .dropdown-toggle {
                         margin-bottom: 5px;
                     }
                 }
-    
+
                 .icon-container {
                     float: right;
                     display: none;
-                    
+
                     .icon {
                         cursor: pointer;
                     }
@@ -1471,16 +1477,17 @@ body {
                 height: 65px;
                 text-transform: capitalize;
             }
-            
-            .db-wg-spinner, .card-data {
+
+            .db-wg-spinner,
+            .card-data {
                 height: calc(100% - 65px);
             }
-    
+
             .card-data {
                 padding: 20px;
                 position: relative;
                 overflow-y: scroll;
-    
+
                 &::-webkit-scrollbar {
                     display: none;
                 }
@@ -1509,7 +1516,7 @@ body {
                         }
                     }
                 }
-        
+
                 .lead {
                     margin-top: 20px;
                     color: $secondary-font-color;
@@ -1517,7 +1524,7 @@ body {
                     &:nth-child(1) {
                         margin: 0px;
                     }
-        
+
                     label {
                         padding: 0;
                         border: 0px;
@@ -1525,16 +1532,16 @@ body {
                         font-size: 18px;
                         height: max-content;
                     }
-        
+
                     .details {
                         display: grid;
                         padding: 5px 0;
                         font-size: 16px;
                         grid-template-columns: auto auto auto;
-                        border-bottom: 1px solid rgba(193,194,195,.5);
+                        border-bottom: 1px solid rgba(193, 194, 195, 0.5);
                     }
                 }
-        
+
                 .column-container {
                     width: 100%;
                     margin-top: 10px;
@@ -1548,37 +1555,37 @@ body {
 
                     &:nth-child(1),
                     &:nth-child(2) {
-                       margin-top: 0;
+                        margin-top: 0;
                     }
-        
+
                     span {
                         display: block;
                         text-align: left;
                         color: $secondary-font-color;
-        
+
                         &:first-child {
                             font-weight: 500;
                             font-size: 36px;
                             margin-bottom: 10px;
                         }
-        
+
                         &:last-child {
                             font-size: 16px;
                         }
                     }
                 }
-        
+
                 .custom-card {
                     text-align: center;
                     position: absolute;
                     top: calc(50% - 62px);
                     left: calc(50% - 62px);
                     color: $secondary-color;
-    
+
                     span {
                         display: block;
                     }
-    
+
                     i.icon {
                         width: 96px;
                         height: 96px;
@@ -1589,11 +1596,11 @@ body {
                     align-items: start;
                 }
             }
-    
+
             &.dashed {
                 border-style: dashed;
             }
-    
+
             &:hover {
                 label {
                     .icon-container {
@@ -1607,7 +1614,8 @@ body {
 
 .table {
     tr {
-        td, th {
+        td,
+        th {
             &.subject {
                 width: 100%;
                 overflow: hidden;
@@ -1616,7 +1624,7 @@ body {
                 .subject-wrapper {
                     display: flex;
                     align-items: center;
-                    
+
                     .subject-content {
                         max-width: 100%;
                         flex: 0 0 auto;
@@ -1719,7 +1727,7 @@ body {
         .content-container {
             top: 50px;
         }
-        
+
         .navbar-left {
             top: 110px;
         }
@@ -1786,7 +1794,7 @@ body {
                     width: 100%;
                     font-size: $font-size-lg;
                     margin-bottom: 10px;
-                    
+
                     &:last-child {
                         margin-bottom: 0;
                     }
@@ -1871,7 +1879,8 @@ body {
             color: $secondary-font-color;
             padding: 30px;
             background-color: $white;
-            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+            box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+                rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
             .attachment-list {
                 margin-top: 30px;
@@ -1913,7 +1922,7 @@ body {
         .panel {
             .panel-bottom {
                 margin-top: 25px;
-                
+
                 button.btn {
                     margin-right: 30px;
                 }
@@ -1970,7 +1979,7 @@ body {
         margin-bottom: 20px;
         border: 1px solid #f0f0f0;
         box-shadow: 0 2px 5px 0 rgba(39, 49, 58, 0.15);
-        background-color: #FFFFFF;
+        background-color: #ffffff;
         position: absolute;
         z-index: 10;
         text-align: left;
@@ -1999,7 +2008,6 @@ body {
         .form-container {
             padding: 5px 0;
 
-
             .form-group {
                 .control {
                     margin-top: 10px;
@@ -2018,11 +2026,12 @@ body {
                     border-radius: 50%;
                     cursor: pointer;
                     display: inline-block;
-                    box-shadow: 0px 4px 15.36px 0.75px rgba(0, 0, 0, 0.1), 0px 2px 6px 0px rgba(0, 0, 0, 0.15);
+                    box-shadow: 0px 4px 15.36px 0.75px rgba(0, 0, 0, 0.1),
+                        0px 2px 6px 0px rgba(0, 0, 0, 0.15);
                     transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 
                     &.active {
-                        border: solid 3px #FFFFFF;
+                        border: solid 3px #ffffff;
                     }
                 }
             }
@@ -2031,7 +2040,6 @@ body {
                 border-top: 1px solid $border-color;
                 padding-top: 10px;
                 display: inline-block;
-            
             }
         }
     }
@@ -2044,7 +2052,6 @@ body {
         position: relative;
         display: flex;
         width: 100%;
-        
 
         .pipeline-stages {
             width: 100%;
@@ -2089,7 +2096,7 @@ body {
                     &::before {
                         background: $gray-color;
                         box-shadow: 1px -1px 0 1px #fff, 1px -1px 0 1px #fff;
-                        content: '';
+                        content: "";
                         position: absolute;
                         top: 50%;
                         right: -12px;
@@ -2214,7 +2221,7 @@ body {
     .control {
         margin: 0;
         height: 40px;
-        border: 1px solid #C1C2C3;
+        border: 1px solid #c1c2c3;
     }
 }
 
@@ -2230,23 +2237,23 @@ body {
         display: inline-block;
         padding: 6px 10px 10px 8px;
         border: 1px solid $border-color;
-    
+
         &:first-child {
             left: 5px;
             position: relative;
             border-radius: 3px 0px 0px 3px;
         }
-    
+
         &:last-child {
             border-radius: 0px 3px 3px 0px;
         }
-    
+
         &.active {
             cursor: not-allowed;
             border-color: $secondary-color;
             background-color: $secondary-color;
         }
-    
+
         .icon {
             vertical-align: middle;
             width: 24px;
@@ -2355,7 +2362,7 @@ body {
 .workflow-container,
 .web-form-container {
     .panel-separator {
-        border-bottom: solid 1px #D3D3D3;
+        border-bottom: solid 1px #d3d3d3;
         margin: 25px 0px;
     }
 
@@ -2371,7 +2378,7 @@ body {
             p {
                 font-style: italic;
                 font-size: 16px;
-                color: #6F6F6F;
+                color: #6f6f6f;
                 margin: 5px 0px 20px 0px;
             }
         }
@@ -2409,12 +2416,12 @@ body {
                     ul {
                         li {
                             font-weight: 400;
-                            color: #546E7A;
+                            color: #546e7a;
                             cursor: pointer;
 
                             &:hover {
-                                background: #0E90D9;
-                                color: #FFFFFF;
+                                background: #0e90d9;
+                                color: #ffffff;
                             }
                         }
                     }
@@ -2449,7 +2456,7 @@ body {
 
 .vuecal__event {
     background-color: $primary-color !important;
-    color: #FFFFFF !important;
+    color: #ffffff !important;
     cursor: pointer;
 
     &.done {

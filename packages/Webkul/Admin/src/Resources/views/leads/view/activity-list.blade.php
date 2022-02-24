@@ -165,7 +165,7 @@
             {!! view_render_event('admin.leads.view.informations.activity_list.quotes.before', ['lead' => $lead]) !!}
 
             @if (bouncer()->hasPermission('quotes'))
-                <tab name="Quotes">
+                <tab name="{{ __('admin::app.leads.quote') }}">
                     <div class="table lead-quote-list" style="padding: 5px">
 
                         <table>
@@ -361,7 +361,7 @@
                 },
 
                 remove: function(activity) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 
@@ -387,7 +387,7 @@
                 },
 
                 removeQuote: function(quote) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 
@@ -417,7 +417,7 @@
                 },
 
                 unlinkEmail: function(activity) {
-                    if (! confirm('Do you really want to perform this action?')) {
+                    if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                         return;
                     }
 

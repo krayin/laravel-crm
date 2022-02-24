@@ -199,8 +199,8 @@
                 return {
                     stages: [{
                         'id': 'stage_1',
-                        'code': 'new',
-                        'name': 'New',
+                        'code': 'new', 
+                        'name': "{{ __('admin::app.settings.pipelines.new-stage') }}",
                         'probability': 100
                     }, {
                         'id': 'stage_2',
@@ -210,12 +210,12 @@
                     }, {
                         'id': 'stage_99',
                         'code': 'won',
-                        'name': 'Won',
+                        'name': "{{ __('admin::app.settings.pipelines.won-stage') }}",
                         'probability': 100
                     }, {
                         'id': 'stage_100',
                         'code': 'lost',
-                        'name': 'Lost',
+                        'name': "{{ __('admin::app.settings.pipelines.lost-stage') }}",
                         'probability': 0
                     }],
 

@@ -197,12 +197,12 @@ class Dashboard
                     "datasets" => [
                         [
                             "data"            => $wonLeadsCount,
-                            "label"           => "Won",
+                            "label"           => __("admin::app.settings.pipelines.won-stage"),
                             "backgroundColor" => "#4BC0C0",
                         ], [
                             "backgroundColor" => "#FF4D50",
                             "data"            => $lostLeadsCount,
-                            "label"           => "Lost",
+                            "label"           => __("admin::app.settings.pipelines.lost-stage"),
                         ]
                     ]
                 ]
@@ -417,10 +417,10 @@ class Dashboard
             ->filter(function ($type) use ($activities) {
                 return ! in_array($type, $activities->pluck('label')->toArray());
             })
-            ->map(function ($type) {
+            ->map(function ($type) { 
                 return [
                     'count' => 0,
-                    'label' => $type
+                    'label' => __("admin::app.activities.$type")
                 ];
             });
 

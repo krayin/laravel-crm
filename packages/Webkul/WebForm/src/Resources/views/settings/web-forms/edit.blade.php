@@ -24,7 +24,7 @@
         {!! view_render_event('admin.settings.web_forms.edit.header.before', ['webForm' => $webForm]) !!}
 
         <div class="page-header">
-            
+
             {{ Breadcrumbs::render('settings.web_forms.edit', $webForm) }}
 
             <div class="page-title">
@@ -85,7 +85,7 @@
         </div>
 
         <div slot="body">
-            
+
             <div class="form-group">
                 <label>
                     {{ __('web_form::app.public-url') }}
@@ -95,7 +95,7 @@
                     {{ route('admin.settings.web_forms.preview', $webForm->form_id) }}
                 </div>
             </div>
-            
+
             <div class="form-group">
                 <label>
                     {{ __('web_form::app.code-snippet') }}
@@ -105,7 +105,7 @@
                     {{ "<script src=" . route('admin.settings.web_forms.form_js', $webForm->form_id) . " crossorigin=\"anonymous\"></script>" }}
                 </div>
             </div>
-            
+
         </div>
     </modal>
 @stop
@@ -232,7 +232,7 @@
 
                     <color-picker
                         name="background_color"
-                        value="{{ old('background_color') ?? '#F7F8F9' }}"
+                        value="{{ old('background_color') ?? $webForm->background_color }}"
                     ></color-picker>
                 </div>
 
@@ -243,7 +243,7 @@
 
                     <color-picker
                         name="form_background_color"
-                        value="{{ old('form_background_color') ?? '#FFFFFF' }}"
+                        value="{{ old('form_background_color') ?? $webForm->form_background_color }}"
                     ></color-picker>
                 </div>
 
@@ -254,18 +254,18 @@
 
                     <color-picker
                         name="form_title_color"
-                        value="{{ old('form_title_color') ?? '#263238' }}"
+                        value="{{ old('form_title_color') ?? $webForm->form_title_color }}"
                     ></color-picker>
                 </div>
 
                 <div class="form-group">
                     <label>
-                        {{ __('web_form::app.form-submit-button-color') }}
+                      {{ old('form_submit_button_color') }}  {{ __('web_form::app.form-submit-button-color') }}
                     </label>
 
                     <color-picker
                         name="form_submit_button_color"
-                        value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
+                        value="{{ old('form_submit_button_color') ?? $webForm->form_submit_button_color }}"
                     ></color-picker>
                 </div>
 
@@ -276,7 +276,7 @@
 
                     <color-picker
                         name="attribute_label_color"
-                        value="{{ old('attribute_label_color') ?? '#546E7A' }}"
+                        value="{{ old('attribute_label_color') ?? $webForm->attribute_label_color }}"
                     ></color-picker>
                 </div>
             </div>
@@ -366,8 +366,8 @@
                                             type="text"
                                             :name="'attributes[' + attribute.id + '][placeholder]'"
                                             class="control"
-                                            :value="getPlaceholderValue(attribute)"
-                                            placeholder="{{ __('web_form::app.placeholder-value') }}"
+                                            v-model="attribute['placeholder']"
+                                            :placeholder="getPlaceholderValue(attribute)"
                                         />
                                     </div>
                                 </td>
@@ -381,7 +381,7 @@
                                             :checked="attribute.is_required"
                                             :disabled="attribute.is_required"
                                         />
-                                        
+
                                         <label :for="'is_required_' + attribute.id" class="checkbox-view"></label>
 
                                         {{ __('web_form::app.required') }}
@@ -455,7 +455,7 @@
                     this.addedAttributes = this.addedAttributes.filter(attribute => attribute.attribute.entity_type != 'leads');
                 }
             },
-            
+
             methods: {
                 addAttribute: function (attribute) {
                     this.addedAttributes.push({

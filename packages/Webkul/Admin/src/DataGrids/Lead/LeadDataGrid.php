@@ -109,6 +109,7 @@ class LeadDataGrid extends DataGrid
                 'leads.status',
                 'leads.lead_value',
                 'leads.expected_close_date',
+                'lead_sources.name as lead_source_name',
                 'leads.created_at',
                 'lead_pipeline_stages.name as stage',
                 'lead_tags.tag_id as tag_id',
@@ -144,6 +145,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
         $this->addFilter('sales_person', 'leads.user_id');
+        $this->addFilter('lead_source_name', 'lead_sources.id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.name');
@@ -194,6 +196,15 @@ class LeadDataGrid extends DataGrid
             'label'    => trans('admin::app.datagrid.tags'),
             'type'     => 'hidden',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'            => 'lead_source_name',
+            'label'            => trans('admin::app.leads.lead-source-name'),
+            'type'             => 'dropdown',
+            'dropdown_options' => $this->getleadSourcesOptions(),
+            'searchable'       => false,
+            'sortable'         => true,
         ]);
 
         $this->addColumn([

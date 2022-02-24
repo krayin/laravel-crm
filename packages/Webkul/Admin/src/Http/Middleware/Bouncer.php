@@ -27,6 +27,8 @@ class Bouncer
         if (! (bool) auth()->guard($guard)->user()->status) {
             auth()->guard($guard)->logout();
 
+            session()->flash('error', __('admin::app.errors.401'));
+
             return redirect()->route('admin.session.create');
         }
 

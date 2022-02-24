@@ -273,6 +273,11 @@ class WebFormController extends Controller
      */
     public function formStore($id)
     {
+        $validate = $this->validate(request(), [
+            'emails'          => 'required|unique:persons,emails',
+            'contact_numbers' => 'required|unique:persons,contact_numbers',
+        ]);
+
         $person = $this->personRepository
             ->getModel()
             ->where('emails', 'like', "%" . request('persons.emails.0.value') . "%")
@@ -296,9 +301,10 @@ class WebFormController extends Controller
             $data['entity_type'] = 'leads';
 
             $data['person'] = request('persons');
-    
+
             $data['status'] = 1;
-            
+
+
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 
             $stage = $pipeline->stages()->first();
@@ -317,17 +323,16 @@ class WebFormController extends Controller
                 if (! $source) {
                     $source = $this->sourceRepository->first();
                 }
-    
+
                 $data['lead_source_id'] = $source->id;
             }
 
             $data['lead_type_id'] = request('leads.lead_type_id') ?: $this->typeRepository->first()->id;
-    
+
             $lead = $this->leadRepository->create($data);
-    
+
             Event::dispatch('lead.create.after', $lead);
         } else {
-
             if (! $person) {
                 Event::dispatch('contacts.person.create.before');
 
@@ -362,6 +367,31 @@ class WebFormController extends Controller
      */
     public function preview($id)
     {
+        $webForm = $this->webFormRepository->findOneByField('form_id', $id);
+
+        if (is_null($webForm)) {
+            abort(404);
+        }
+
+        return view('web_form::settings.web-forms.preview');
+    }
+
+    /**
+     * Preview the web form from datagrid.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function view($id)
+    {
+        $webForm = $this->webFormRepository->findOneByField('id', $id);
+
+        request()->merge(['id' => $webForm->form_id]);
+
+        if (is_null($webForm)) {
+            abort(404);
+        }
+
         return view('web_form::settings.web-forms.preview');
     }
 }

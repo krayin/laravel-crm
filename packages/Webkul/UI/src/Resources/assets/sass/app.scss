@@ -136,7 +136,7 @@ h5 {
         padding: 12px 18px;
         font-size: $font-size-xxl;
     }
-    
+
     &.btn-xl {
         padding: 14px 22px;
         font-size: $font-size-xxl;
@@ -227,7 +227,7 @@ h5 {
     width: 215px;
     margin-bottom: 20px;
     border: 1px solid #f0f0f0;
-    box-shadow: 0 2px 5px 0 rgba(39 ,49, 58, .15);
+    box-shadow: 0 2px 5px 0 rgba(39, 49, 58, 0.15);
     background-color: $white;
     position: absolute;
     display: none;
@@ -384,7 +384,7 @@ h5 {
                 img {
                     width: 150px;
                 }
-    
+
                 span {
                     display: block;
                     margin-top: 20px;
@@ -404,10 +404,12 @@ h5 {
         table-layout: fixed;
         font-size: $font-size-md;
         border-collapse: collapse;
-        
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 
-        th, td {
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+            rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+
+        th,
+        td {
             width: 100%;
             padding: 10px;
             vertical-align: top;
@@ -424,7 +426,7 @@ h5 {
                 cursor: not-allowed;
                 text-transform: capitalize;
                 font-weight: $font-weight-medium;
-                border-bottom: 1px solid rgba(193,194,195,.5);
+                border-bottom: 1px solid rgba(193, 194, 195, 0.5);
 
                 &.master-checkbox {
                     width: 41px;
@@ -457,14 +459,14 @@ h5 {
 
                 &.active {
                     background-color: $table-active-cell-color;
-                    border-bottom: 1px solid rgba(14, 144, 217,.35);
+                    border-bottom: 1px solid rgba(14, 144, 217, 0.35);
                 }
 
                 td {
                     border-right: 0px;
                     color: $dark-color;
                     border-bottom: none;
-                    background-color: rgba(255,255,255,.5);
+                    background-color: rgba(255, 255, 255, 0.5);
                     word-break: break-all;
 
                     &.empty {
@@ -483,7 +485,7 @@ h5 {
 
                     &.action {
                         text-align: right;
-                        
+
                         a {
                             cursor: pointer;
                             margin-right: 5px;
@@ -506,7 +508,7 @@ h5 {
                 &.active,
                 &:hover {
                     td {
-                        background-color: rgba(193,194,195,.1);
+                        background-color: rgba(193, 194, 195, 0.1);
                     }
                 }
 
@@ -520,7 +522,7 @@ h5 {
     .form-group {
         width: 100%;
         margin-bottom: 0;
-        min-width: 140px;
+        // min-width: 140px;
 
         .control {
             width: 100%;
@@ -528,8 +530,8 @@ h5 {
 
         &.datagrid-filters {
             margin-bottom: 20px;
-            
-            input[type=search].control {
+
+            input[type="search"].control {
                 margin: 0px;
                 width: 280px;
                 height: 40px;
@@ -552,14 +554,14 @@ h5 {
                 background-color: $white;
                 width: 100%;
                 margin-top: 10px;
-                
+
                 li {
                     .form-group {
                         margin-bottom: 15px;
                     }
                 }
             }
-        
+
             .apply-filter {
                 padding: 10px;
                 width: 100%;
@@ -577,18 +579,18 @@ h5 {
             text-transform: capitalize;
             @include display-grid(repeat(2, auto));
             display: inline-grid;
-    
+
             .wrapper {
                 font-size: 14px;
                 grid-gap: 10px;
                 color: #000311;
                 line-height: 40px;
                 padding: 0px 10px;
-                background: #E7E7E7;
+                background: #e7e7e7;
                 @include border-radius(2px);
                 @include display-grid(auto 20px);
                 display: inline-grid;
-                
+
                 .icon.close-icon {
                     top: -2px;
                     cursor: pointer;
@@ -609,8 +611,8 @@ h5 {
             top: 10px;
             z-index: 1;
             position: absolute;
-    
-            ~ input[type=search] {
+
+            ~ input[type="search"] {
                 padding-left: 30px;
             }
         }
@@ -679,7 +681,7 @@ h5 {
                     justify-content: space-between;
                     font-weight: $font-weight-medium;
                     border: 1px solid $secondary-font-color;
-                
+
                     .arrow-icon-down {
                         float: right;
                     }
@@ -690,7 +692,7 @@ h5 {
         .dropdown-filters {
             margin-right: 6px;
             display: inline-block;
-            
+
             &.per-page {
                 .form-group {
                     grid-gap: 10px;
@@ -720,11 +722,11 @@ h5 {
 
         .tabs-right-container {
             text-align: right;
-    
+
             section {
                 display: inline-block;
             }
-    
+
             .covered {
                 border: 1px solid;
                 padding: 7px ​10px;
@@ -757,7 +759,7 @@ h5 {
 
 .pagination {
     margin-top: 20px;
-    
+
     .page-item {
         height: 100%;
         margin-right: 5px;
@@ -793,7 +795,7 @@ h5 {
             vertical-align: middle;
         }
     }
-    
+
     &.tab-view {
         height: 34px;
         margin-top: 0;
@@ -814,7 +816,8 @@ h5 {
         margin-top: 120px;
     }
 
-    i, a {
+    i,
+    a {
         font-weight: 700;
         font-size: 16px !important;
     }
@@ -882,6 +885,7 @@ h5 {
         margin-bottom: 5px;
         @include border-radius(3px);
         border: 1px solid $border-color;
+        word-break: break-all;
     }
 
     &.date,
@@ -895,7 +899,7 @@ h5 {
         .datetime-container,
         .time-container {
             position: relative;
-            
+
             &::after {
                 background-image: url("../images/calendar-icon.svg");
                 width: 24px;
@@ -931,7 +935,7 @@ h5 {
     }
 
     &.has-error {
-        .control:not([aria-invalid='false']) {
+        .control:not([aria-invalid="false"]) {
             border-color: $danger-color;
         }
 
@@ -950,7 +954,6 @@ h5 {
             }
         }
     }
-
 
     .address-left {
         width: 50%;
@@ -1003,12 +1006,12 @@ h5 {
             -ms-flex: 1 1 auto;
             flex: 1 1 auto;
             width: 1% !important;
-    
+
             &:not(:first-child) {
                 border-top-left-radius: 0;
                 border-bottom-left-radius: 0;
             }
-        
+
             &:not(:last-child) {
                 border-top-right-radius: 0;
                 border-bottom-right-radius: 0;
@@ -1019,7 +1022,7 @@ h5 {
             &:not(:first-child) {
                 margin-left: 10px;
             }
-        
+
             &:not(:last-child) {
                 margin-right: 10px;
             }
@@ -1034,7 +1037,7 @@ h5 {
                 border-bottom-right-radius: 0;
             }
         }
-    
+
         .input-group-append {
             margin-left: -1px;
 
@@ -1147,8 +1150,8 @@ h5 {
             right: 0;
             bottom: 0;
             background-color: $gray-color;
-            -webkit-transition: .2s;
-            transition: .2s;
+            -webkit-transition: 0.2s;
+            transition: 0.2s;
 
             &:before {
                 position: absolute;
@@ -1158,8 +1161,8 @@ h5 {
                 left: 4px;
                 bottom: 4px;
                 background-color: $white;
-                -webkit-transition: .2s;
-                transition: .2s;
+                -webkit-transition: 0.2s;
+                transition: 0.2s;
             }
 
             &.round {
@@ -1290,7 +1293,8 @@ h5 {
     border: none;
     padding: 30px;
     background: $white;
-    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+        rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .pill {
@@ -1338,7 +1342,7 @@ h5 {
                 &:not(:last-child) {
                     border-right: 0px;
                 }
-    
+
                 &.active {
                     background: $primary-color;
                     border-radius: 0 !important;
@@ -1347,7 +1351,7 @@ h5 {
                         color: $white;
                     }
                 }
-    
+
                 a {
                     padding: 5px 10px;
                 }
@@ -1423,7 +1427,8 @@ accordian,
         padding: 16px;
         border-radius: 3px;
         background-color: $white;
-        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+        box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px,
+            rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     }
 }
 
@@ -1531,7 +1536,7 @@ modal {
     &.badge-lg {
         padding: 6px 12px;
     }
-    
+
     &.badge-xl {
         padding: 8px 14px;
     }
@@ -1749,7 +1754,7 @@ modal {
                     display: inline-block;
                     font-size: $font-size-lg;
                 }
-                
+
                 i.close-icon {
                     vertical-align: middle;
                 }
@@ -1878,7 +1883,7 @@ ol.breadcrumb {
     li.breadcrumb-item {
         display: inline-block;
 
-        &+.breadcrumb-item::before {
+        & + .breadcrumb-item::before {
             display: inline-block;
             padding-right: 5px;
             padding-left: 5px;
@@ -1936,7 +1941,7 @@ ol.breadcrumb {
 
                 input {
                     width: 100%;
-                    color: #546E7A;
+                    color: #546e7a;
                     font-size: $font-size-lg;
                     padding: 6px 10px;
                     outline: 0;
@@ -1955,7 +1960,7 @@ ol.breadcrumb {
             display: inline-block;
             padding: 8px 5px;
             border: 2px solid $secondary-color;
-            
+
             input {
                 display: none;
             }
@@ -1991,15 +1996,15 @@ ol.breadcrumb {
         &.primary {
             background-color: $primary-color;
         }
-    
+
         &.warning {
             background-color: $warning-color;
         }
-    
+
         &.success {
             background-color: $success-color;
         }
-    
+
         &.danger {
             background-color: $danger-color;
         }
@@ -2011,7 +2016,7 @@ ol.breadcrumb {
     text-align: center;
     position: relative;
     top: calc(50% - 24px);
-    
+
     .meter {
         width: 48px;
         height: 48px;
@@ -2019,8 +2024,8 @@ ol.breadcrumb {
         display: inline-block;
         box-sizing: border-box;
         border: solid 6px $primary-color;
-        
-        &:before{
+
+        &:before {
             top: 5px;
             width: 6px;
             height: 20px;

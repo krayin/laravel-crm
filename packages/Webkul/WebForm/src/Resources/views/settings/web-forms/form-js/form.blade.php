@@ -1,13 +1,37 @@
 <link rel="stylesheet" href="{{ asset('vendor/webkul/web-form/assets/css/web-form.css') }}">
 
+<style>
+    button.btn {
+        background-color:<?= $webForm->form_submit_button_color ?> !important;
+    }
+
+    h1.web-form-title {
+        color: <?= $webForm->form_title_color ?> !important;
+    }
+
+    .attribute-label {
+        color: <?= $webForm->attribute_label_color ?> !important;
+    }
+
+    form#krayinWebForm {
+        background-color:<?= $webForm->form_background_color ?>;
+    }
+
+    .anonymous-layout-container {
+        background-color:<?= $webForm->background_color ?>;
+    }
+</style>
+
+
 <div class="anonymous-layout-container">
     <div class="center-box">
         <div class="adjacent-center">
             <div class="title-box">
-                <h1>{{ $webForm->title }}</h1>
+            <img src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}" alt="krayin">
+                <h1 class="web-form-title">{{ $webForm->title }}</h1>
                 <p>{{ $webForm->description }}</p>
             </div>
-            
+
             <div class="panel">
                 <div class="panel-body">
                     <div class="alert-wrapper" style="display: none">
@@ -18,7 +42,6 @@
                     </div>
 
                     <form id="krayinWebForm" method="post">
-
                         @foreach ($webForm->attributes as $attribute)
                             @php
                                 $parentAttribute = $attribute->attribute;
@@ -27,30 +50,41 @@
                             @endphp
 
                             <div class="form-group {{ $parentAttribute->type }}">
-                                <label for="{{ $attribute->code }}" {{ $attribute->is_required ? 'class=required' : '' }}>
+                                <label class="attribute-label {{ $attribute->is_required ? 'required' : '' }}" for="{{ $attribute->code }}" >
                                     {{ $attribute->name ?? $parentAttribute->name }}
                                 </label>
 
                                 @switch($parentAttribute->type)
                                     @case('text')
+                                        <input
+                                        type="text"
+                                        name="{{ $fieldName }}"
+                                        class="control"
+                                        placeholder="{{ $attribute->placeholder }}"
+                                        id="{{ $fieldName }}"
+                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        />
+
+                                        @break;
+
                                     @case('date')
                                     @case('datetime')
                                         <input
-                                            type="text"
-                                            name="{{ $fieldName }}"
-                                            class="control"
-                                            id="{{ $fieldName }}"
-                                            {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        type="text"
+                                        name="{{ $fieldName }}"
+                                        class="control"
+                                        id="{{ $fieldName }}"
+                                        {{ $parentAttribute->is_required ? 'required' : '' }}
                                         />
 
                                         @break;
 
                                     @case('textarea')
                                         <textarea
-                                            name="{{ $fieldName }}"
-                                            class="control"
-                                            id="{{ $fieldName }}"
-                                            {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        name="{{ $fieldName }}"
+                                        class="control"
+                                        id="{{ $fieldName }}"
+                                        {{ $parentAttribute->is_required ? 'required' : '' }}
                                         ></textarea>
 
                                         @break;
@@ -60,26 +94,28 @@
                                             type="email"
                                             name="{{ $fieldName }}[0][value]"
                                             class="control"
+                                            placeholder="{{ $attribute->placeholder }}"
                                             id="{{ $fieldName }}"
                                             {{ $parentAttribute->is_required ? 'required' : '' }}
                                         />
 
                                         <input
-                                            type="hidden"
-                                            name="{{ $fieldName }}[0][label]"
-                                            class="control"
-                                            value="work"
+                                        type="hidden"
+                                        name="{{ $fieldName }}[0][label]"
+                                        class="control"
+                                        value="work"
                                         />
 
                                         @break;
 
                                     @case('phone')
                                         <input
-                                            type="text"
-                                            name="{{ $fieldName }}[0][value]"
-                                            class="control"
-                                            id="{{ $fieldName }}"
-                                            {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        type="text"
+                                        name="{{ $fieldName }}[0][value]"
+                                        class="control"
+                                        placeholder="{{ $attribute->placeholder }}"
+                                        id="{{ $fieldName }}"
+                                        {{ $parentAttribute->is_required ? 'required' : '' }}
                                         />
 
                                         <input
@@ -87,17 +123,17 @@
                                             name="{{ $fieldName }}[0][label]"
                                             class="control"
                                             value="work"
-                                        />
+                                            />
 
                                         @break;
-                                    
+
                                     @case('select')
                                     @case('lookup')
                                         <select
-                                            class="control"
-                                            id="{{ $fieldName }}"
-                                            name="{{ $fieldName }}"
-                                            {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        class="control"
+                                        id="{{ $fieldName }}"
+                                        name="{{ $fieldName }}"
+                                        {{ $parentAttribute->is_required ? 'required' : '' }}
                                         >
                                             @php
                                                 $options = $parentAttribute->lookup_type
@@ -116,7 +152,7 @@
                                         </select>
 
                                         @break;
-                                    
+
                                     @case('multiselect')
                                         <select class="control" id="{{ $fieldName }}" name="{{ $fieldName }}[]" multiple>
 
@@ -139,12 +175,12 @@
                                     @case('file')
                                     @case('image')
                                         <input
-                                            type="file"
-                                            name="{{ $fieldName }}"
+                                        type="file"
+                                        name="{{ $fieldName }}"
                                             class="control"
                                             id="{{ $fieldName }}"
                                             style="padding-top: 5px;"
-                                        />
+                                            />
 
                                         @break;
 
@@ -164,9 +200,11 @@
                         @endforeach
 
                         <div class="button-group">
-                            <button type="submit" class="btn btn-xl btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-xl btn-primary">
+                                {{ $webForm->submit_button_label }}
+                            </button>
                         </div>
-                        
+
                     </form>
                 </div>
             </div>
