@@ -63,7 +63,13 @@ class LeadController extends Controller
      */
     public function index()
     {
-        return view('admin::leads.index');
+        if (request('pipeline_id')) {
+            $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
+        } else {
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+        }
+
+        return view('admin::leads.index', compact('pipeline'));
     }
 
     /**
@@ -96,26 +102,53 @@ class LeadController extends Controller
                 $pipeline = $this->pipelineRepository->getDefaultPipeline();
             }
 
-            $leads = $this->leadRepository->getLeads($pipeline->id, request('search') ?? '', $createdAt)->toArray();
+            $data = [];
 
-            $totalCount = [];
+            if ($stageId = request('pipeline_stage_id')) {
+                $query = $this->leadRepository->getLeadsQuery($pipeline->id, $stageId, request('search') ?? '', $createdAt);
 
-            foreach ($leads as $key => $lead) {
-                $totalCount[$lead['status']] = ($totalCount[$lead['status']] ?? 0) + (float) $lead['lead_value'];
+                $paginator = $query->paginate(10);
 
-                $leads[$key]['lead_value'] = core()->formatBasePrice($lead['lead_value']);
+                $data[$stageId] = [
+                    'leads' => [],
+                    'pagination' => [
+                        'current' => $current = $paginator->currentPage(),
+                        'last' => $last = $paginator->lastPage(),
+                        'next' => $current < $last ? $current + 1 : null,
+                    ],
+                    'total' => core()->formatBasePrice($query->paginate(request('page') ? request('page') * 10 : 10, ['*'], 'page', 1)->sum('lead_value')),
+                ];
+
+                foreach ($paginator as $lead) {
+                    $data[$stageId]['leads'][] =  array_merge($lead->toArray(), [
+                        'lead_value' => core()->formatBasePrice($lead->lead_value),
+                    ]);
+                }
+            } else {
+                foreach ($pipeline->stages as $stage) {
+                    $query = $this->leadRepository->getLeadsQuery($pipeline->id, $stage->id, request('search') ?? '', $createdAt);
+
+                    $paginator = $query->paginate(10);
+
+                    $data[$stage->id] = [
+                        'leads' => [],
+                        'pagination' => [
+                            'current' => $current = $paginator->currentPage(),
+                            'last' => $last = $paginator->lastPage(),
+                            'next' => $current < $last ? $current + 1 : null,
+                        ],
+                        'total' => core()->formatBasePrice($query->paginate(10)->sum('lead_value')),
+                    ];
+
+                    foreach ($paginator as $lead) {
+                        $data[$stage->id]['leads'][] =  array_merge($lead->toArray(), [
+                            'lead_value' => core()->formatBasePrice($lead->lead_value),
+                        ]);
+                    }
+                }
             }
 
-            $totalCount = array_map(function ($count) {
-                return core()->formatBasePrice($count);
-            }, $totalCount);
-
-            return response()->json([
-                'blocks'      => $leads,
-                'stage_names' => $pipeline->stages->pluck('name'),
-                'stages'      => $pipeline->stages->toArray(),
-                'total_count' => $totalCount,
-            ]);
+            return response()->json($data);
         }
     }
 
