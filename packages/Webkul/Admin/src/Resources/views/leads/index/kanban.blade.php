@@ -75,11 +75,11 @@
     </script>
 
     <script type="text/x-template" id="kanban-component-tempalte">
-        <kanban-board :stages="stage_names" :blocks="blocks" @update-block="updateLeadStage">
+        <kanban-board :stages="stage_names" :blocks="leads" @update-block="updateLeadStage">
             <div v-for="(stage, index) in stage_names" :slot="stage" :key="`stage-${stage}`">
                 <h2>
                     @{{ stage }}
-                    <span class="float-right">@{{ totalCounts[stage] || 0 }}</span>
+                    <span class="float-right">@{{ totalCounts[stage] }}</span>
                 </h2>
 
                 @if (bouncer()->hasPermission('leads.create'))
@@ -90,29 +90,29 @@
             </div>
 
             <div
-                v-for="block in blocks"
-                :slot="block.id"
-                :key="`block-${block.id}`"
+                v-for="lead in leads"
+                :slot="lead.id"
+                :key="`block-${lead.id}`"
                 class="lead-block"
-                :class="{ 'rotten': block.rotten_days > 0 ? true : false }"
+                :class="{ 'rotten': lead.rotten_days > 0 ? true : false }"
             >
 
-                <div class="lead-title">@{{ block.title }}</div>
+                <div class="lead-title">@{{ lead.title }}</div>
 
                 <div class="icons">
-                    <a :href="'{{ route('admin.leads.view') }}/' + block.id" class="icon eye-icon"></a>
+                    <a :href="'{{ route('admin.leads.view') }}/' + lead.id" class="icon eye-icon"></a>
                     <i class="icon drag-icon"></i>
                 </div>
 
                 <div class="lead-person">
                     <i class="icon avatar-dark-icon"></i>
-                        <a :href="`${personIndexUrl}?id[eq]=${block.person_id}`">
-                            @{{ block.person_name }}
+                        <a :href="`${personIndexUrl}?id[eq]=${lead.person_id}`">
+                            @{{ lead.person_name }}
                         </a>
                 </div>
 
                 <div class="lead-cost">
-                    <i class="icon dollar-circle-icon"></i>@{{ block.lead_value }}
+                    <i class="icon dollar-circle-icon"></i>@{{ lead.lead_value }}
                 </div>
             </div>
         </kanban-board>
@@ -155,16 +155,27 @@
 
             data: function () {
                 return {
-                    stage_names: [],
+                    stages: @json($pipeline->stages->toArray()),
 
-                    stages: [],
+                    stage_pagination: {},
 
-                    blocks: [],
+                    leads: [],
 
                     debounce: null,
 
-                    totalCounts: [],
+                    totalCounts: {},
+
                     personIndexUrl: "{{ route('admin.contacts.persons.index') }}",
+                }
+            },
+
+            computed: {
+                stage_names: function() {
+                    return this.stages.map(stage => stage.name)
+                },
+
+                blocks: function() {
+                    return this.leads;
                 }
             },
 
@@ -184,6 +195,22 @@
 
             mounted: function () {
                 EventBus.$on('updateKanbanFilter', this.updateFilter);
+
+                var self = this;
+
+                $('.drag-inner-list').on('scroll', function() {
+                    if ($(this).scrollTop() + $(this).innerHeight() >= $(this)[0].scrollHeight) {
+                        var stage = self.getStageByName($(this).attr('data-status'));
+
+                        var pagination = self.stage_pagination[stage.id];
+
+                        if (! pagination.next) {
+                            return;
+                        }
+
+                        self.getLeads(false, '?page=' + pagination.next + '&pipeline_stage_id=' + stage.id);
+                    }
+                });
             },
 
             methods: {
@@ -194,13 +221,25 @@
                         .then(response => {
                             this.$root.pageLoaded = true;
 
-                            this.blocks = response.data.blocks;
+                            this.$root.pageLoaded = true;
 
-                            this.totalCounts = response.data.total_count;
+                            var totalCounts = {};
 
-                            this.stage_names = Object.values(response.data.stage_names);
+                            var self = this;
 
-                            this.stages = response.data.stages;
+                            this.stages.forEach(function(stage) {
+                                if (response.data[stage.id] !== undefined) {
+                                    totalCounts[stage.name] = response.data[stage.id]['total'];
+
+                                    self.leads = self.leads.concat(response.data[stage.id]['leads'])
+
+                                    self.stage_pagination[stage.id] = response.data[stage.id]['pagination'];
+                                } else {
+                                    totalCounts[stage.name] = self.totalCounts[stage.name];
+                                }
+                            })
+
+                            this.totalCounts = totalCounts;
 
                             setTimeout(() => {
                                 this.toggleEmptyStateIcon();
@@ -211,13 +250,17 @@
                         });
                 },
 
+                getStageByName: function (stageName) {
+                    var stages = this.stages.filter(stage => stageName === stage.name)
+
+                    return stages[0];
+                },
+
                 updateLeadStage: function (id, stageName) {
                     var stage = this.stages.filter(stage => stage.name === stageName);
 
                     this.$http.put("{{ route('admin.leads.update') }}/" + id, {'lead_pipeline_stage_id': stage[0].id})
                         .then(response => {
-                            this.getLeads();
-
                             window.flashMessages = [{'type': 'success', 'message': response.data.message}];
 
                             this.$root.addFlashMessages();
@@ -231,16 +274,6 @@
 
                 search: function (searchedKeyword) {
                     this.getLeads(searchedKeyword);
-                },
-
-                getStageId: function (stage) {
-                    for (let stageId in this.stages) {
-                        if (this.stages[stageId] == stage) {
-                            return stageId;
-                        }
-                    }
-
-                    return 0;
                 },
 
                 updateFilter: function (data) {
