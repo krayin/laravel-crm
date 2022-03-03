@@ -71,6 +71,10 @@
                                     data-vv-as="&quot;{{ __('admin::app.activities.type') }}&quot;"
                                 >
                                     <option value=""></option>
+                                   
+                                   <option value="note" {{ $selectedOption == 'note' ? 'selected' : '' }}>
+                                        {{ __('admin::app.activities.note') }}
+                                    </option>
 
                                     <option value="call" {{ $selectedOption == 'call' ? 'selected' : '' }}>
                                         {{ __('admin::app.activities.call') }}
