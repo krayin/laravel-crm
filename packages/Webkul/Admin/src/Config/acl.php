@@ -27,10 +27,14 @@ return [
         'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
         'sort'  => 3,
     ], [
-        'key'   => 'leads.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.leads.delete', 'admin.leads.mass_delete'],
         'sort'  => 4,
+    ], [
+        'key'   => 'leads.persons.export',
+        'name'  => 'admin::app.acl.export',
+        'route' => 'ui.datagrid.export',
+        'sort'  => 5,
     ],  [
         'key'   => 'quotes',
         'name'  => 'admin::app.acl.quotes',
