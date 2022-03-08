@@ -11,8 +11,8 @@
         <div class="profile-info">
             <div class="dropdown-toggle">
                 <div class="info">
-                    <span class="howdy">Locale</span>
-                    <span class="user">{{ app()->getLocale() }}</span>
+                    <span class="howdy">{{ __('admin::app.common.locale') }}</span> 
+                    <span class="user">{{ __('admin::app.common.'.app()->getLocale()) }}</span>
                 </div>
 
                 <i class="icon ellipsis-icon"></i>

@@ -68,6 +68,8 @@ class LeadDataGrid extends DataGrid
         $this->userRepository = $userRepository;
 
         parent::__construct();
+
+        $this->export = bouncer()->hasPermission('leads.persons.export') ? true : false;
     }
 
     /**
