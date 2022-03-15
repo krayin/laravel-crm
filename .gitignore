@@ -1,4 +1,5 @@
 .env
+.env.testing
 .env.backup
 .DS_Store
 .phpunit.result.cache

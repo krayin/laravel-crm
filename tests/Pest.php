@@ -11,7 +11,9 @@
 |
  */
 
-uses(Tests\TestCase::class)->in('Feature');
+uses(\Tests\TestCase::class)->in('Feature');
+
+uses(\Tests\RestAPI\RestAPITestCase::class)->in('RestAPI');
 
 /*
 |--------------------------------------------------------------------------
@@ -49,6 +51,19 @@ function getDefaultAdmin()
     $admin = \Webkul\User\Models\User::find(1);
 
     return $admin;
+}
+
+/**
+ * Sanctum authenticated admin.
+ *
+ * @return \Webkul\User\Models\User
+ */
+function actingAsSanctumAuthenticatedAdmin()
+{
+    return \Laravel\Sanctum\Sanctum::actingAs(
+        getDefaultAdmin(),
+        ['*']
+    );
 }
 
 /**

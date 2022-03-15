@@ -8,7 +8,7 @@ use Webkul\Core\Eloquent\Repository;
 class FileRepository extends Repository
 {
     /**
-     * ActivityRepository object
+     * Activity repository instance.
      *
      * @var \Webkul\Activity\Repositories\ActivityRepository
      */
@@ -23,25 +23,26 @@ class FileRepository extends Repository
     public function __construct(
         ActivityRepository $activityRepository,
         Container $container
-    )
-    {
+    ) {
         $this->activityRepository = $activityRepository;
 
         parent::__construct($container);
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
-        return 'Webkul\Activity\Contracts\File';
+        return \Webkul\Activity\Contracts\File::class;
     }
 
     /**
-     * @param array  $data
+     * Upload files.
+     *
+     * @param  array  $data
      * @return mixed|void
      */
     public function upload(array $data)
@@ -49,12 +50,12 @@ class FileRepository extends Repository
         if (! request()->hasFile('file')) {
             return;
         }
-        
+
         $leadActivity = $this->activityRepository->create([
             'is_done' => 1,
             'type'    => 'file',
             'comment' => $data['comment'],
-            'user_id' => auth()->guard('user')->user()->id,
+            'user_id' => auth()->guard()->user()->id,
         ]);
 
         return parent::create([
