@@ -670,7 +670,7 @@
         ],
 
         'configuration' => [
-            'title'             => 'إعدادات',
+            'title'             => 'لقب',
             'save-btn-title'    => 'يحفظ',
             'general'           => 'عام',
             'locale-settings'   => 'إعدادات اللغة',
@@ -793,7 +793,7 @@
             'view'            => 'رأي',
             'print'           => 'مطبعة',
             'delete'          => 'حذف',
-            'export'          => 'Export',
+            'export'          => 'يصدر',
             'mass-delete'     => 'حذف جماعي',
         ],
 
@@ -820,6 +820,10 @@
             'no'                  => 'لا',
             'delete'              => 'حذف',
             'save'                => 'يحفظ',
+            'locale'              => 'لغة',
+            'en'                  => 'إنجليزي',
+            'tr'                  => 'Turkçe',
+            'ar'                  => 'عربي', 
             'add-as'              => 'أضف كالجديد',
             'no-records-found'    => 'لا توجد سجلات',
             'start-typing'        => 'ابدأ الكتابة للبحث في السجلات',

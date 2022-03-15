@@ -41,7 +41,7 @@ abstract class AbstractEntity
             }
 
             if ($attribute->lookup_type) {
-                $options = $this->attributeRepository->getLookUpOptions($attribute->lookup_type);
+                $options = [];//$this->attributeRepository->getLookUpOptions($attribute->lookup_type);
             } else {
                 $options = $attribute->options;
             }

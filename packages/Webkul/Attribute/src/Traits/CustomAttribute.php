@@ -6,7 +6,6 @@ use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
  
 trait CustomAttribute {
-
     /**
      * @var array
      */

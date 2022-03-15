@@ -80,11 +80,12 @@ class LeadRepository extends Repository
 
     /**
      * @param  integer  $pipelineId
+     * @param  integer  $pipelineStageId
      * @param  string  $term
      * @param  string  $createdAtRange
-     * @return \Webkul\Lead\Contracts\Lead
+     * @return mixed
      */
-    public function getLeads($pipelineId, $term, $createdAtRange)
+    public function getLeadsQuery($pipelineId, $pipelineStageId, $term, $createdAtRange)
     {
         return $this
                 ->select(
@@ -104,6 +105,7 @@ class LeadRepository extends Repository
                 ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
                 ->where("title", 'like', "%$term%")
                 ->where("leads.lead_pipeline_id", $pipelineId)
+                ->where("leads.lead_pipeline_stage_id", $pipelineStageId)
                 ->when($createdAtRange, function($query) use ($createdAtRange) {
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
@@ -117,8 +119,7 @@ class LeadRepository extends Repository
                             $query->where('leads.user_id', $currentUser->id);
                         }
                     }
-                })
-                ->get();
+                });
     }
 
     /**

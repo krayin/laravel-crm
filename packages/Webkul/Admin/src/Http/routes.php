@@ -302,6 +302,8 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
 
+                    Route::get('lookup-entity/{lookup?}', 'AttributeController@lookupEntity')->name('admin.settings.attributes.lookup_entity');
+
                     Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
 
                     Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass_update');
