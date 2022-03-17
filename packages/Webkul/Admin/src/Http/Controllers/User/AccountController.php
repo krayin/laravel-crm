@@ -31,11 +31,12 @@ class AccountController extends Controller
 
         $user = auth()->guard('user')->user();
 
-        $this->validate(request(), [
-            'name'             => 'required',
-            'email'            => 'email|unique:users,email,' . $user->id,
-            'password'         => 'nullable|min:6|confirmed',
-            'current_password' => 'nullable|required|min:6',
+        $validator = $this->validate(request(), [
+            'name'                  => 'required',
+            'email'                 => 'email|unique:users,email,' . $user->id,
+            'current_password'      => 'nullable|required|min:6',
+            'password'              => 'nullable|min:6',
+            'password_confirmation' => 'nullable|required_with:password|same:password'
         ]);
 
         $data = request()->input();
@@ -63,7 +64,7 @@ class AccountController extends Controller
         if (request()->hasFile('image')) {
             $data['image'] = request()->file('image')->store('users/' . $user->id);
         }
-        
+
         if (isset($data['remove_image']) && $data['remove_image'] !== '') {
             $data['image'] = null;
         }
