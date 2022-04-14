@@ -33,7 +33,7 @@
 
                             {!! view_render_event('admin.user_profile.edit.form_buttons.after', ['user' => $user]) !!}
                         </div>
-        
+
                         <div class="panel-body">
                             {!! view_render_event('admin.user_profile.edit.form_controls.before', ['user' => $user]) !!}
 
@@ -44,15 +44,15 @@
                             <upload-profile-image></upload-profile-image>
 
                             @if(isset($user->image_url) && $user->image_url != NULL)
-                                <input 
+                                <input
                                     type="checkbox"
                                     name="remove_image"
                                 />
 
                                 <label for="remove" class="">
                                     {{ __('admin::app.user.account.remove-image') }}
-                                </label>                  
-                            @endif  
+                                </label>
+                            @endif
 
                             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                                 <label for="name" class="required">
@@ -78,7 +78,7 @@
                                 <label for="email" class="required">
                                     {{ __('admin::app.user.account.email') }}
                                 </label>
-                    
+
                                 <input
                                     type="text"
                                     name="email"
@@ -98,7 +98,7 @@
                                 <label for="current_password" class="required">
                                     {{ __('admin::app.user.account.current_password') }}
                                 </label>
-                    
+
                                 <input
                                     type="password"
                                     name="current_password"
@@ -117,7 +117,7 @@
                                 <label for="password">
                                     {{ __('admin::app.user.account.password') }}
                                 </label>
-                    
+
                                 <input
                                     type="password"
                                     name="password"
@@ -136,7 +136,7 @@
                                 <label for="confirm_password">
                                     {{ __('admin::app.user.account.confirm_password') }}
                                 </label>
-                    
+
                                 <input
                                     type="password"
                                     name="password_confirmation"
@@ -170,6 +170,8 @@
                     name="image"
                     id="upload-profile"
                     ref="imageInput"
+                    v-validate="'ext:jpeg,jpg,png'"
+                    accept="image/*"
                     @change="addImageView($event)"
                 >
 

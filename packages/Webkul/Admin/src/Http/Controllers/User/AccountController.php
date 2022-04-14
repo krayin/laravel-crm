@@ -36,6 +36,7 @@ class AccountController extends Controller
             'email'            => 'email|unique:users,email,' . $user->id,
             'password'         => 'nullable|min:6|confirmed',
             'current_password' => 'nullable|required|min:6',
+            'image'            => 'mimes:jpeg,jpg,png,gif'
         ]);
 
         $data = request()->input();
@@ -63,7 +64,7 @@ class AccountController extends Controller
         if (request()->hasFile('image')) {
             $data['image'] = request()->file('image')->store('users/' . $user->id);
         }
-        
+
         if (isset($data['remove_image']) && $data['remove_image'] !== '') {
             $data['image'] = null;
         }
