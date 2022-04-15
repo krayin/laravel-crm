@@ -1197,10 +1197,13 @@ h5 {
 }
 
 .alert-wrapper {
-    width: 100%;
-    bottom: 10px;
-    right: 10px;
     position: fixed;
+    width: 500px;
+    height: 200px;
+    top: 100%;
+    left: 52%;
+    margin-top: -100px; /* Negative half of height. */
+    margin-left: -250px; /* Negative half of width. */
     z-index: 100;
 
     .alert {
