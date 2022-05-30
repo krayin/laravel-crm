@@ -73,6 +73,13 @@ composer create-project krayin/laravel-crm
 php artisan krayin-crm:install
 ```
 
+**To install laravel sanctum**:
+
+
+```
+composer require laravel/sanctum
+```
+
 **To execute Krayin**:
 
 ##### On server:
