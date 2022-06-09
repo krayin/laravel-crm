@@ -14,6 +14,7 @@ import './bootstrap';
  */
  import ar from 'vee-validate/dist/locale/ar';
  import de from 'vee-validate/dist/locale/de';
+ import es from 'vee-validate/dist/locale/es';
  import fa from 'vee-validate/dist/locale/fa';
  import fr from 'vee-validate/dist/locale/fr';
  import nl from 'vee-validate/dist/locale/nl';
@@ -31,6 +32,7 @@ Vue.use(VeeValidate, {
     dictionary: {
         ar: ar,
         de: de,
+        es: es,
         fa: fa,
         fr: fr,
         nl: nl,
