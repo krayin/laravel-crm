@@ -27,15 +27,11 @@ return [
         'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
         'sort'  => 3,
     ], [
+        'key' => 'leads.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.leads.delete', 'admin.leads.mass_delete'],
         'sort'  => 4,
     ], [
-        'key'   => 'leads.persons.export',
-        'name'  => 'admin::app.acl.export',
-        'route' => 'ui.datagrid.export',
-        'sort'  => 5,
-    ],  [
         'key'   => 'quotes',
         'name'  => 'admin::app.acl.quotes',
         'route' => 'admin.quotes.index',
@@ -155,7 +151,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.contacts.persons.delete', 'admin.contacts.persons.mass_delete'],
         'sort'  => 4,
-    ], [
+    ],[
         'key'   => 'contacts.persons.export',
         'name'  => 'admin::app.acl.export',
         'route' => 'ui.datagrid.export',
@@ -415,7 +411,7 @@ return [
         'name'  => 'admin::app.acl.create',
         'route' => ['admin.settings.tags.create', 'admin.settings.tags.store', 'admin.leads.tags.store'],
         'sort'  => 1,
-    ], [
+    ], [ 
         'key'   => 'settings.other_settings.tags.edit',
         'name'  => 'admin::app.acl.edit',
         'route' => ['admin.settings.tags.edit', 'admin.settings.tags.update'],
