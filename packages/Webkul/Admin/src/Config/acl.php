@@ -6,7 +6,7 @@ return [
         'name'  => 'admin::app.layouts.dashboard',
         'route' => 'admin.dashboard.index',
         'sort'  => 1,
-    ],  [        
+    ],  [
         'key'   => 'leads',
         'name'  => 'admin::app.acl.leads',
         'route' => 'admin.leads.index',
