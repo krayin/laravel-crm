@@ -15,7 +15,7 @@
             <input
                 type="checkbox"
                 name="{{ $attribute->code }}[]"
-                v-validate="'{{$validations}}'"
+                v-validate="'{{ $validations }}'"
                 value="{{ $option->id }}"
                 data-vv-as="&quot;{{ $attribute->name }}&quot;"
                 {{ in_array($option->id, explode(',', $selectedOption)) ? 'checked' : ''}}

@@ -32,13 +32,15 @@
                 $validations .= "regex: /^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/ }";
             }
         }
+
+        $attributeTypeInArray = in_array($attribute->type,['multiselect','checkbox']);
     @endphp
 
     @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
 
         <div
             class="form-group {{ $attribute->type }}"
-            @if (in_array($attribute->type,['multiselect','checkbox'])) :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
+            @if ($attributeTypeInArray) :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
             @else :class="[errors.has('{{ $formScope . $attribute->code }}') ? 'has-error' : '']" @endif
         >
 
@@ -55,11 +57,11 @@
 
             <span
                 class="control-error"
-                @if (in_array($attribute->type,['multiselect','checkbox'])) v-if="errors.has('{{ $formScope . $attribute->code }}[]')"
+                @if ($attributeTypeInArray) v-if="errors.has('{{ $formScope . $attribute->code }}[]')"
                 @else  v-if="errors.has('{{ $formScope . $attribute->code }}')"  @endif
             >
                 
-                @if (in_array($attribute->type,['multiselect','checkbox']))
+                @if ($attributeTypeInArray)
                     @{{ errors.first('{!! $formScope . $attribute->code !!}[]') }}
                 @else
                     @{{ errors.first('{!! $formScope . $attribute->code !!}') }}
