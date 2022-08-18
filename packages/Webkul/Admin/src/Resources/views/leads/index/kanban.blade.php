@@ -1,7 +1,7 @@
 @push('css')
     <style>
         .content-container {
-           overflow: hidden;
+                overflow: hidden;
         }
 
         .drag-container {
