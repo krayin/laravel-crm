@@ -38,7 +38,7 @@
 
         <div
             class="form-group {{ $attribute->type }}"
-            @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
+            @if (in_array($attribute->type,['multiselect','checkbox'])) :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
             @else :class="[errors.has('{{ $formScope . $attribute->code }}') ? 'has-error' : '']" @endif
         >
 
@@ -55,11 +55,11 @@
 
             <span
                 class="control-error"
-                @if ($attribute->type == 'multiselect') v-if="errors.has('{{ $formScope . $attribute->code }}[]')"
+                @if (in_array($attribute->type,['multiselect','checkbox'])) v-if="errors.has('{{ $formScope . $attribute->code }}[]')"
                 @else  v-if="errors.has('{{ $formScope . $attribute->code }}')"  @endif
             >
                 
-                @if ($attribute->type == 'multiselect')
+                @if (in_array($attribute->type,['multiselect','checkbox']))
                     @{{ errors.first('{!! $formScope . $attribute->code !!}[]') }}
                 @else
                     @{{ errors.first('{!! $formScope . $attribute->code !!}') }}
