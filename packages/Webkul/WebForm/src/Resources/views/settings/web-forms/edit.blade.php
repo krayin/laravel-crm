@@ -15,7 +15,7 @@
             display: block;
             word-break: break-all;
         }
-        
+
         .copy-input{
             display:flex;
             align-items:center;
@@ -101,12 +101,12 @@
                     {{ __('web_form::app.public-url') }}
                 </label>
 
-                <div class="pre copy-input"  ref="sharedLink">
+                <div class="pre copy-input">
                     <input
                         type="text"
                         class="control"
                         v-on:focus="$event.target.select()" 
-                        id="sharedLink"
+                        id="publicUrl"
                         value="{{ route('admin.settings.web_forms.preview', $webForm->form_id) }}"
                     />
 
@@ -116,7 +116,7 @@
                             type="button"
                             id="publicUrlBtn"
                             title="{{ __('shop::app.customer.account.wishlist.copy-link') }}"
-                            onclick="copyToClipboard('#sharedLink','#publicUrlBtn')"
+                            onclick="copyToClipboard('#publicUrl','#publicUrlBtn')"
                         >
                         {{ __('web_form::app.copy') }}
                         </button>
@@ -129,13 +129,13 @@
                     {{ __('web_form::app.code-snippet') }}
                 </label>
 
-                <div class="pre copy-input"  ref="codeSnippet">
+                <div class="pre copy-input">
                    
                    <input
                        type="text"
                        class="control"
                        v-on:focus="$event.target.select()" 
-                       id="codeSnippt"
+                       id="codeSnippet"
                        value='{{ "<script src=" . route('admin.settings.web_forms.form_js', $webForm->form_id) . " crossorigin=\"anonymous\"></script>" }}'
                    />
    
