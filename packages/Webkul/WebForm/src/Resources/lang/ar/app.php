@@ -14,6 +14,7 @@ return [
     'public-url'                => 'عنوان Url العام',
     'code-snippet'              => 'مقتطف الرمز',
     'title-control'             => 'عنوان',
+    'copy'                      => 'ينسخ',
     'description'               => 'وصف',
     'submit-button-label'       => 'إرسال تسمية الزر',
     'submit-success-action'     => 'إرسال إجراء ناجح',

@@ -14,6 +14,7 @@ return [
     'public-url'                => 'Genel URL',
     'code-snippet'              => 'Kod Parçacığı',
     'title-control'             => 'Başlık',
+    'copy'                      => 'kopyalamak',
     'description'               => 'Açıklama',
     'submit-button-label'       => 'Düğme Etiketini Gönder',
     'submit-success-action'     => 'Başarılı İşlemi Gönder',
