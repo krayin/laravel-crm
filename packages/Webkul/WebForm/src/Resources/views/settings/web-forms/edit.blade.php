@@ -15,6 +15,7 @@
             display: block;
             word-break: break-all;
         }
+        
         .copy-input{
             display:flex;
             align-items:center;
@@ -548,8 +549,7 @@
         function copyToClipboard(ref,btn){
             $(ref).focus();
             document.execCommand('copy');
-            $(btn).text("copied!");
-          
+            $(btn).text("copied!");          
         }
     </script>
 @endpush
