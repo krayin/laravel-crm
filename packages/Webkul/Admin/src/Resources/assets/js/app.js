@@ -8,13 +8,39 @@ import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css'
 
 import './bootstrap';
+
+/**
+ * Lang imports.
+ */
+ import ar from 'vee-validate/dist/locale/ar';
+ import de from 'vee-validate/dist/locale/de';
+ import es from 'vee-validate/dist/locale/es';
+ import fa from 'vee-validate/dist/locale/fa';
+ import fr from 'vee-validate/dist/locale/fr';
+ import nl from 'vee-validate/dist/locale/nl';
+ import tr from 'vee-validate/dist/locale/tr';
+ import hi_IN from 'vee-validate/dist/locale/hi';
+ import zh_CN from 'vee-validate/dist/locale/zh_CN';
+ 
+
 window.moment = require('moment');
 
 window.Vue = Vue;
 window.VeeValidate = VeeValidate;
 
 Vue.use(VeeValidate, {
-    events: 'input|change|blur',
+    dictionary: {
+        ar: ar,
+        de: de,
+        es: es,
+        fa: fa,
+        fr: fr,
+        nl: nl,
+        tr: tr,
+        hi_IN: hi_IN,
+        zh_CN: zh_CN
+    },
+    events: 'input|change|blur'
 });
 
 Vue.prototype.$http = axios;
@@ -43,6 +69,7 @@ $(function() {
         },
 
         mounted() {
+            this.$validator.localize(document.documentElement.lang);
             setTimeout(() => {
                 this.pageLoaded = true;
 
