@@ -442,7 +442,8 @@ class Dashboard
      */
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
-        $topLeads = $this->leadRepository
+        if (bouncer()->hasPermission('leads.view')) {
+            $topLeads = $this->leadRepository
             ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
@@ -461,11 +462,13 @@ class Dashboard
             ->limit(3)
             ->get();
 
-        $cardData = [
-            "data" => $topLeads
-        ];
+            $cardData = [
+                "data" => $topLeads,
+            ];
 
-        return $cardData;
+            return $cardData;
+        }
+        
     }
 
     /**
