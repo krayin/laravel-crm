@@ -95,8 +95,28 @@ class EmailController extends Controller
                 ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
                 ->findOrFail(request('id'));
 
-        if (! bouncer()->hasPermission('leads.view')) {
-            unset($email->lead_id);
+        if (bouncer()->hasPermission('leads.view')) {
+            $currentUser = auth()->guard('user')->user();
+            
+            if ($currentUser->view_permission == 'individual') {            
+                $results = $this->leadRepository->findWhere([
+                    ['id', '=', $email->lead_id],
+                    ['user_id', '=', $currentUser->id],
+                ]);
+            } elseif ($currentUser->view_permission == 'group') {
+                $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+
+                $results = $this->leadRepository->findWhere([
+                    ['id', '=', $email->lead_id],
+                    ['user_id', '=', $currentUser->id],
+                ]);
+            }
+           
+            if (empty($results->item)) {
+                unset($email->lead_id);
+            }
+        } else {
+           unset($email->lead_id); 
         }
 
         if (request('route') == 'draft') {
