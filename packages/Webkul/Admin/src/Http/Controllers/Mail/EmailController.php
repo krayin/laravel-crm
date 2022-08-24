@@ -95,7 +95,7 @@ class EmailController extends Controller
                 ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
                 ->findOrFail(request('id'));
 
-        if (bouncer()->hasPermission('leads.view')) {
+        if (! bouncer()->hasPermission('leads.view')) {
             unset($email->lead_id);
         }
 
