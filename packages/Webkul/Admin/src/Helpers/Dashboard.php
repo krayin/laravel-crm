@@ -467,6 +467,8 @@ class Dashboard
             ];
 
             return $cardData;
+        } else {
+            return 0;
         }
         
     }
