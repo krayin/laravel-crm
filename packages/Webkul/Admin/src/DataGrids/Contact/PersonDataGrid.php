@@ -110,7 +110,7 @@ class PersonDataGrid extends DataGrid
             'dropdown_options' => $this->getOrganizationDropdownOptions(),
             'sortable'         => false,
             'closure'  => function ($row) {
-                return $row->organization;
+                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank'>" . $row->organization . "</a>";
             },
         ]);
     }
