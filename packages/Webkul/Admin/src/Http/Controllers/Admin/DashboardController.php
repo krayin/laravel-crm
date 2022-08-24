@@ -34,7 +34,8 @@ class DashboardController extends Controller
      * @return \Illuminate\View\View
      */
     public function index()
-    {$cards = $this->dashboardHelper->getCards();
+    {
+        $cards = $this->dashboardHelper->getCards();
 
         if ($dateRange = request('date-range')) {
             $dateRange = explode(",", $dateRange);
