@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" data-vv-scope="change-stage-form">
+            <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" data-vv-scope="change-stage-form" @submit.prevent="$root.onSubmit($event, 'change-stage-form')">
                 <modal id="updateLeadStageModal" :is-open="$root.modalIds.updateLeadStageModal">
                     <h3 slot="header-title">{{ __('admin::app.leads.change-stage') }}</h3>
                     
