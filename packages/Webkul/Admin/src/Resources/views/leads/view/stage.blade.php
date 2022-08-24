@@ -86,7 +86,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" data-vv-scope="change-stage-form" @submit.prevent="onSubmit" ref="form">
+            <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" data-vv-scope="change-stage-form" @submit.prevent="$root.onSubmit($event, 'change-stage-form')">
                 <modal id="updateLeadStageModal" :is-open="$root.modalIds.updateLeadStageModal">
                     <h3 slot="header-title">{{ __('admin::app.leads.change-stage') }}</h3>
                     
@@ -180,14 +180,6 @@
             },
 
             methods: {
-                onSubmit: function(e) {
-                    if (this.errors.first('change-stage-form.closed_at')) {
-                        return;
-                    }
-
-                    this.$refs.form.submit(e);
-                },
-                
                 changeStage: function(stage) {
                     if (this.currentStage.code == stage.code) {
                         return;
