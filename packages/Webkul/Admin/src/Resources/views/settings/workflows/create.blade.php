@@ -715,7 +715,7 @@
                                 'label': 'work',
                                 'value': ''
                             }];
-                    }else if (matchedAttribute[0]['type'] == 'text') {
+                    } else if (matchedAttribute[0]['type'] == 'text') {
                         this.action.value = '';
                     }
 
