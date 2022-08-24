@@ -31,7 +31,7 @@
 
         methods: {
             remove: function() {
-                this.$emit('onRemoveFlash', this.flash)
+                this.$el.remove();
             }
         }
     }
