@@ -92,8 +92,8 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-                ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
-                ->findOrFail(request('id'));
+            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
+            ->findOrFail(request('id'));
 
         if (bouncer()->hasPermission('leads.view')) {
             $currentUser = auth()->guard('user')->user();
