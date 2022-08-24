@@ -95,6 +95,10 @@ class EmailController extends Controller
                 ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
                 ->findOrFail(request('id'));
 
+        if (bouncer()->hasPermission('leads.view')) {
+            unset($email->lead_id);
+        }
+
         if (request('route') == 'draft') {
             return view('admin::mail.compose', compact('email'));
         } else {
