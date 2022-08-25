@@ -11,8 +11,7 @@ class Locale
     public function __construct(
         Application $app,
         Request $request
-    )
-    {
+    ) {
         $this->app = $app;
 
         $this->request = $request;
@@ -27,13 +26,11 @@ class Locale
      */
     public function handle($request, Closure $next)
     {
-        app()
-            ->setLocale(
-                request()->input('general.locale_settings.locale')
-                    ?: (core()->getConfigData('general.locale_settings.locale')
-                        ?: app()->getLocale())
-            );
-            
+        app()->setLocale(
+            core()->getConfigData('general.locale_settings.locale')
+                ?: app()->getLocale()
+        );
+
         return $next($request);
     }
 }
