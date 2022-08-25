@@ -436,7 +436,7 @@
                     </span>
 
                     <span class="time">
-                        <timeago :datetime="email.created_at" :auto-update="60"></timeago>
+                        <timeago :datetime="email.created_at" :auto-update="60" locale="{{ app()->getLocale() }}"></timeago>
 
                         <span class="icon ellipsis-icon dropdown-toggle"></span>
 
