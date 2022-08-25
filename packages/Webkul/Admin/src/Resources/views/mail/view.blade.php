@@ -69,7 +69,6 @@
         method="post"
         data-vv-scope="person-form"
         @submit.prevent="onSubmit($event, 'person-form')"
-        enctype="multipart/form-data"
     >
 
         <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
@@ -201,7 +200,7 @@
 
     <script type="text/x-template" id="email-action-component-template">
         <div class="email-action-container">
-            @if (bouncer()->hasPermission('contacts.person') && bouncer()->hasPermission('leads'))
+            @if (bouncer()->hasPermission('contacts.persons.create') || bouncer()->hasPermission('leads.create') || bouncer()->hasPermission('leads.view') || bouncer()->hasPermission('contacts.persons.edit'))
                 <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
                     <i class="icon link-icon"></i>
 
@@ -223,20 +222,22 @@
                 <div class="email-action-content">
                     {!! view_render_event('admin.mail.view.actions.link_person.before', ['email' => $email]) !!}
                     
-                    @if (bouncer()->hasPermission('contacts.person'))
+                    @if (bouncer()->hasPermission('contacts.persons.create') || bouncer()->hasPermission('contacts.persons.edit'))
                         <div class="panel">
                             <div class="link-lead" v-if="! email.person_id">
                                 <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
                                 <div class="btn-group">
-                                    <button
-                                        class="btn btn-sm btn-primary-outline"
-                                        @click="enabled_search.person = true"
-                                        v-if="! enabled_search.person"
-                                    >
-                                        {{ __('admin::app.mail.add-to-existing-contact') }}
-                                    </button>
-
+                                    @if (bouncer()->hasPermission('contacts.persons.edit')) 
+                                        <button
+                                            class="btn btn-sm btn-primary-outline"
+                                            @click="enabled_search.person = true"
+                                            v-if="! enabled_search.person"
+                                        >
+                                            {{ __('admin::app.mail.add-to-existing-contact') }}
+                                        </button>
+                                    @endif
+                                  
                                     <div class="form-group" v-else>
                                         <input
                                             class="control"
@@ -262,9 +263,12 @@
                                         <i class="icon loader-active-icon" v-if="is_searching.person"></i>
                                     </div>
 
-                                    <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
-                                        {{ __('admin::app.mail.create-new-contact') }}
-                                    </button>
+                                    @if (bouncer()->hasPermission('contacts.persons.create')) 
+                                        <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
+                                            {{ __('admin::app.mail.create-new-contact') }}
+                                        </button>
+                                    @endif
+
                                 </div>
                             </div>
 
@@ -297,19 +301,21 @@
 
 
                     {!! view_render_event('admin.mail.view.actions.link_lead.before', ['email' => $email]) !!}
-                    @if (bouncer()->hasPermission('leads.view'))
+                    @if (bouncer()->hasPermission('leads.view') || bouncer()->hasPermission('leads.create'))
                         <div class="panel">
                             <div class="link-lead" v-if="! email.lead_id">
                                 <h3>{{ __('admin::app.mail.link-lead') }}</h3>
 
                                 <div class="btn-group">
-                                    <button
-                                        class="btn btn-sm btn-primary-outline"
-                                        @click="enabled_search.lead = true"
-                                        v-if="! enabled_search.lead"
-                                    >
-                                        {{ __('admin::app.mail.link-to-existing-lead') }}
-                                    </button>
+                                    @if (bouncer()->hasPermission('leads.view'))
+                                        <button
+                                            class="btn btn-sm btn-primary-outline"
+                                            @click="enabled_search.lead = true"
+                                            v-if="! enabled_search.lead"
+                                        >
+                                            {{ __('admin::app.mail.link-to-existing-lead') }}
+                                        </button>
+                                    @endif
 
                                     <div class="form-group" v-else>
                                         <input
@@ -340,9 +346,11 @@
                                         <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                                     </div>
 
-                                    <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
-                                        {{ __('admin::app.mail.add-new-lead') }}
-                                    </button>
+                                    @if (bouncer()->hasPermission('leads.create'))
+                                        <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
+                                            {{ __('admin::app.mail.add-new-lead') }}
+                                        </button>
+                                    @endif
                                 </div>
                             </div>
 
