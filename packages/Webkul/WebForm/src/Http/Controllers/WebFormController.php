@@ -273,11 +273,6 @@ class WebFormController extends Controller
      */
     public function formStore($id)
     {
-        $validate = $this->validate(request(), [
-            'emails'          => 'required|unique:persons,emails',
-            'contact_numbers' => 'required|unique:persons,contact_numbers',
-        ]);
-
         $person = $this->personRepository
             ->getModel()
             ->where('emails', 'like', "%" . request('persons.emails.0.value') . "%")
