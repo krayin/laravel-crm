@@ -136,10 +136,6 @@
 
 * #841  [fixed] -The Sales Person should be shown in the leads table.
 
-* #842  [fixed] -There should be a 404 error page if the user is trying to open the deleted web form.
-
-* #841  [fixed] -The Sales Person should be shown in the leads table. 
-
 * #840  [fixed] -There is no option if the admin is trying to filter the leads from the web form.
 
 * #834  [fixed] -The webform page should also be translated according to the selected language.
