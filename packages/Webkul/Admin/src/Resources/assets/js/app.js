@@ -21,6 +21,9 @@ import './bootstrap';
  import tr from 'vee-validate/dist/locale/tr';
  import hi_IN from 'vee-validate/dist/locale/hi';
  import zh_CN from 'vee-validate/dist/locale/zh_CN';
+
+ import 'vue-cal/dist/i18n/ar.js';
+ import 'vue-cal/dist/i18n/tr.js';
  
 
 window.moment = require('moment');

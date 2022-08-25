@@ -18,6 +18,14 @@
         }
     }
 
+    .alert-wrapper {
+        .alert {
+            left: unset;
+            right: 50%;
+            margin-right: -324px;
+        }
+    }
+    
     .table {
         .table-header {
             .table-action {
