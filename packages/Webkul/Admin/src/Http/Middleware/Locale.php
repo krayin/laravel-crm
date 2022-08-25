@@ -11,7 +11,8 @@ class Locale
     public function __construct(
         Application $app,
         Request $request
-    ) {
+    )
+    {
         $this->app = $app;
 
         $this->request = $request;
