@@ -65,6 +65,13 @@ return [
             'date_range'    => 'Date Range',
             'start_date'    => 'Start Date',
             'end_date'      => 'End Date',
+            'today'         => 'Today',
+            'yesterday'     => 'Yesterday',
+            'this_month'    => 'This Month',
+            'this_year'     => 'This Year',
+            'last_month'    => 'Last Month',
+            'apply'         => 'Apply',
+            'cancel'        => 'Cancel',
         ],
     ],
 

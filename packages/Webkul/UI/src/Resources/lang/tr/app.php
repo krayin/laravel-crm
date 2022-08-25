@@ -65,6 +65,13 @@ return [
             'date_range'    => 'Tarih aralığı',
             'start_date'    => 'Başlangıç Tarihi',
             'end_date'      => 'Bitiş Tarihi',
+            'today'         => 'Bugün',
+            'yesterday'     => 'Dün',
+            'this_month'    => 'Bu Ay',
+            'this_year'     => 'Bu yıl',
+            'last_month'    => 'Geçen ay',
+            'apply'         => 'Uygulamak',
+            'cancel'        => 'İptal',
         ],
     ],
 
