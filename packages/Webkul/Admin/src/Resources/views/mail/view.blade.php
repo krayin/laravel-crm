@@ -292,75 +292,75 @@
 
 
                     {!! view_render_event('admin.mail.view.actions.link_lead.before', ['email' => $email]) !!}
+                    @if (bouncer()->hasPermission('leads.view'))
+                        <div class="panel">
+                            <div class="link-lead" v-if="! email.lead_id">
+                                <h3>{{ __('admin::app.mail.link-lead') }}</h3>
 
-                    <div class="panel">
-                        <div class="link-lead" v-if="! email.lead_id">
-                            <h3>{{ __('admin::app.mail.link-lead') }}</h3>
+                                <div class="btn-group">
+                                    <button
+                                        class="btn btn-sm btn-primary-outline"
+                                        @click="enabled_search.lead = true"
+                                        v-if="! enabled_search.lead"
+                                    >
+                                        {{ __('admin::app.mail.link-to-existing-lead') }}
+                                    </button>
 
-                            <div class="btn-group">
-                                <button
-                                    class="btn btn-sm btn-primary-outline"
-                                    @click="enabled_search.lead = true"
-                                    v-if="! enabled_search.lead"
-                                >
-                                    {{ __('admin::app.mail.link-to-existing-lead') }}
-                                </button>
+                                    <div class="form-group" v-else>
+                                        <input
+                                            class="control"
+                                            v-model="search_term.lead"
+                                            placeholder="{{ __('admin::app.mail.search-lead') }}"
+                                            v-on:keyup="search('lead')"
+                                        />
 
-                                <div class="form-group" v-else>
-                                    <input
-                                        class="control"
-                                        v-model="search_term.lead"
-                                        placeholder="{{ __('admin::app.mail.search-lead') }}"
-                                        v-on:keyup="search('lead')"
-                                    />
+                                        <div class="lookup-results" v-if="search_term.lead.length">
+                                            <ul>
+                                                <li v-for='(result, index) in search_results.lead' @click="link('lead', result)">
+                                                    <span>@{{ result.title }}</span>
+                                                </li>
+                    
+                                                <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
+                                                    <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                                    <div class="lookup-results" v-if="search_term.lead.length">
-                                        <ul>
-                                            <li v-for='(result, index) in search_results.lead' @click="link('lead', result)">
-                                                <span>@{{ result.title }}</span>
-                                            </li>
-                
-                                            <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
-                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                            </li>
-                                        </ul>
+                                        <i
+                                            class="icon close-icon"
+                                            v-if="! is_searching.lead"
+                                            @click="enabled_search.lead = false; reset('lead')"
+                                        ></i>
+
+                                        <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
                                     </div>
 
-                                    <i
-                                        class="icon close-icon"
-                                        v-if="! is_searching.lead"
-                                        @click="enabled_search.lead = false; reset('lead')"
-                                    ></i>
+                                    <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
+                                        {{ __('admin::app.mail.add-new-lead') }}
+                                    </button>
+                                </div>
+                            </div>
 
-                                    <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
+                            <div v-else>
+                                <div class="panel-header">
+                                    {{ __('admin::app.mail.linked-lead') }}
+
+                                    <span class="links">
+                                        <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
+                                            <i class="icon external-link-icon"></i>
+                                        </a>
+
+                                        <i class="icon close-icon" @click="unlink('lead')"></i>
+                                    </span>
                                 </div>
 
-                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
-                                    {{ __('admin::app.mail.add-new-lead') }}
-                                </button>
-                            </div>
-                        </div>
-
-                        <div v-else>
-                            <div class="panel-header">
-                                {{ __('admin::app.mail.linked-lead') }}
-
-                                <span class="links">
-                                    <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
-                                        <i class="icon external-link-icon"></i>
-                                    </a>
-
-                                    <i class="icon close-icon" @click="unlink('lead')"></i>
-                                </span>
-                            </div>
-
-                            <div class="panel-body">
-                                <div class="custom-attribute-view" v-html="html">
+                                <div class="panel-body">
+                                    <div class="custom-attribute-view" v-html="html">
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-
+                    @endif
                     {!! view_render_event('admin.mail.view.actions.link_lead.after', ['email' => $email]) !!}
                 </div>
             </div>
