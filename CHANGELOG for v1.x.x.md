@@ -54,8 +54,6 @@
 
 * #965  [fixed] -There is a translation issue when the user is trying to delete the mail.
 
-* #951  [fixed] -The Web form should be open in the next tab.
-
 * #943  [fixed] -There is a UI issue on side bar.
 
 * #942  [fixed] -There should be an option of give permission for view web form.
@@ -67,8 +65,6 @@
 * #928  [fixed] -Translation is missing for Web form package 
 
 * #926  [fixed] -sidebar must be scrollable 
-
-* #924  [fixed] -by default the cursor should remain on the email textbox 
 
 * #919  [fixed] -There is a translation issue if user is trying to delete any quote from lead.
 
