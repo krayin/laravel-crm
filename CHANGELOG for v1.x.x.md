@@ -126,13 +126,7 @@
 
 * #841  [fixed] -The Sales Person should be shown in the leads table.
 
-* #840  [fixed] -There is no option if the admin is trying to filter the leads from the web form.
-
 * #834  [fixed] -The webform page should also be translated according to the selected language.
-
-* #830  [fixed] -There should be the logo of krayin CRM in the web form
-
-* #826  [fixed] -There should be a logo for the webform
 
 * #825  [fixed] -The checkbox should not be disabled for the custom attributes
 
