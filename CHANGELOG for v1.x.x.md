@@ -1,3 +1,188 @@
+## **v1.2.3 (25th of August 2022)** - *Release*
+
+* #991[feature] -  Export option for Leads Table
+
+* #[feature] - Webform Feature Added
+
+* #951[enhancement] - The Web form should be open in the next tab
+
+* #924[enhancement] - by default the cursor should remain on the email textbox
+
+* #895[enhancement] - There should be a dropdown instead of inputbox in the lead source filter. 
+
+* #893[enhancement] - There should be an option to view the web form in the webform table.
+
+* #840[enhancement] - There is no option if the admin is trying to filter the leads from the web form.
+
+* #830[enhancement] - There should be the logo of krayin CRM in the web form
+
+* #826[enhancement] -  There should be a logo for the webform
+
+* #799[enhancement] - The page should be redirected to the organization page if the user is clicking on the organization name.
+
+* #950  [fixed] - WebForm check unique email and phone number from users instead of contacts.
+
+* #900  [fixed] - There is a translation issue on the compose section inside the mails.
+
+* #885  [fixed] - There should not be any translation issue on the person table
+
+* #950  [fixed] - WebForm check unique email and phone number from users instead of contacts.
+
+* #867  [fixed] -There should not be any translation issue on the mails.
+
+* #852  [fixed] -There should not be any translation issue in the dashboard 
+
+* #801  [fixed] -The user should not be able to view the leads in the dashboard without permisson.
+
+* #732  [fixed] -The user should not be able to view the admin's leads if the user has individual permission.
+
+* #1055 [fixed] -The admin should be able to change the app locale from the configuration.
+
+* #1036 [fixed] -The required functionality is not working if the admin is creating an attribute with required property 
+
+* #1032 [fixed] -Issue with action attribute input field in workflow form
+
+* #1021 [fixed] -The admin is not able to create and edit any role.
+
+* #1020 [fixed] -Intermittent 500 error when admin is adding an activity
+
+* #1014  [fixed] -Problems with Spanish translation of the calendar and form alerts.
+
+* #1008  [fixed] -The admin is not able to send the email by using the compose option.
+
+* #984  [fixed] -There is a translation issue in the header section.
+
+* #979  [fixed] -There is an exception. if the admin is trying to edit the user's account.
+
+* #965  [fixed] -There is a translation issue when the user is trying to delete the mail.
+
+* #951  [fixed] -The Web form should be open in the next tab.
+
+* #943  [fixed] -There is a UI issue on side bar.
+
+* #942  [fixed] -There should be an option of give permission for view web form.
+
+* #936  [fixed] -The warning message also should should be translate.
+
+* #931  [fixed] -If a user is changing the locale of his panel, then the locale is being changed for all the users.
+
+* #928  [fixed] -Translation is missing for Web form package 
+
+* #926  [fixed] -sidebar must be scrollable 
+
+* #924  [fixed] -by default the cursor should remain on the email textbox 
+
+* #919  [fixed] -There is a translation issue if user is trying to delete any quote from lead.
+
+* #918  [fixed] -The placeholder value is not showing, when the user is trying to edit the web form. 
+
+* #916  [fixed] -There should not translation issue in the pipeline.
+
+* #911  [fixed] -The user should not be able to update the lead if there is any warning in input field
+
+* #910  [fixed] -There should be a asterisk icon for required field in web form. 
+
+* #909  [fixed] -All lead related tabs are missing inside lead view page.
+
+* #908  [fixed] -There should not translation issue in the leads section.
+
+* #899  [fixed] -The downloaded data is not in a proper format if the user is trying to download the persons table
+
+* #896  [fixed] -There is an UI issue in the Activity table 
+
+* #895  [fixed] -There should be a dropdown instead of inputbox in the lead source filter. Please find the screenshot 
+
+* #893  [fixed] -There should be an option to view the web form in the webform table.
+
+* #887  [fixed] -There is a translation issue on the Attributes table.
+
+* #884  [fixed] -There is a translation issue on the leads filter
+
+* #883  [fixed] -There should not any UI issue on Users list
+
+* #878  [fixed] -There should not be any Translation issue on quotes
+
+* #877  [fixed] -There is a UI issue inside the quote
+
+* #874  [fixed] -The user should be able to update the Customize Web Form.
+
+* #868  [fixed] -The warning message should be correct in the web form.
+
+* #866  [fixed] -There should not be any translation issue on the leads page.
+
+* #865  [fixed] -There should not be any UI issue on the leads page.
+
+* #859  [fixed] -The warning message should be in the correct format
+
+* #858  [fixed] -There is a translation issue in the user profile section.
+
+* #856  [fixed] -There should not be any translation issue in the leads
+
+* #855  [fixed] -There is a UI issue on the leads table.
+
+* #853  [fixed] -here should not be any translation issue in the webform.
+
+* #848  [fixed] -There should be a placeholder in the web form if the placeholder is provided by the admin.
+
+* #846  [fixed] -Translation issue on Dashboard
+
+* #845  [fixed] -Translation issue on activity
+
+* #844  [fixed] -There is a UI issue on the leads table
+
+* #843  [fixed] -UI issue on the activity table
+
+* #842  [fixed] -There should be a 404 error page if the user is trying to open the deleted web form.
+
+* #841  [fixed] -The Sales Person should be shown in the leads table.
+
+* #842  [fixed] -There should be a 404 error page if the user is trying to open the deleted web form.
+
+* #841  [fixed] -The Sales Person should be shown in the leads table. 
+
+* #840  [fixed] -There is no option if the admin is trying to filter the leads from the web form.
+
+* #834  [fixed] -The webform page should also be translated according to the selected language.
+
+* #830  [fixed] -There should be the logo of krayin CRM in the web form
+
+* #826  [fixed] -There should be a logo for the webform
+
+* #825  [fixed] -The checkbox should not be disabled for the custom attributes
+
+* #824  [fixed] -The success message is not correct if the user is updating the webform
+
+* #823  [fixed] -There is not a good UI if the user is trying to preview the webform.
+
+* #822  [fixed] -There is an exception when the user is trying to create a new webform
+
+* #817  [fixed] -missing translation for Image upload section
+
+* #815  [fixed] -The Person image should be uploaded.
+
+* #810  [fixed] -There is not proper translation on the contact tab.
+
+* #809  [fixed] -There is no success/warning message on any operation when the user changing locale into Arabic
+fixedpage should be redirected to the organization page if the user is clicking on the organization name.
+
+* #797  [fixed] -There should not any exception when the user is creating a new person.
+
+* #794  [fixed] -There should not be an exception when the user is trying to edit the person.
+
+* #788  [fixed] -The Expected Close Date can not be less than the created date.
+
+* #787  [fixed] -The success and warning message should be clickable.
+
+* #785  [fixed] -The user should be able to edit the Activity.
+
+* #777  [fixed] -The page should not be crash. if the user is trying to enter the blade value into the input field.
+
+* #774  [fixed] -There should not be an exception If the user is trying to delete the person's image.
+
+* #732  [fixed] -The user should not be able to view the admin's leads if the user has individual permission.
+
+* #170  [fixed] -If admin Inactive any user who is logged in on CRM then the user should automatically logged out
+
 ## **v1.2.2 (3rd of December 2021)**
 
 * #435 [fixed] - There should be an option for a "move to trash" when a customer trying to delete the inbox mail.
@@ -202,15 +387,7 @@
 * #319 [fixed] - There should be a warning message, if user creating activities for less then current schedule time
 
 * #321 [fixed] - The filter should be work properly, when user filter activity by lead name.
-
-* #324 [fixed] - Popup box should not show until we select any action
-
-* #325 [fixed] - The inbox mail detail should be visible, if we want to view any inbox mail.
-
-* #334 [fixed] - Page should be redirect to inbox. after delete mail with success message.
-
-* #337 [fixed] - Page should be redirect to inbox. after send mail
-
+67
 * #338 [fixed] - HTML code should not be visible in attachment place.
 
 * #341 [fixed] - Search box should be work properly. when we are searching any Lead
