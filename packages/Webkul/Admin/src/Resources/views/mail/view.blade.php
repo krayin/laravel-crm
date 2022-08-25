@@ -200,11 +200,13 @@
 
     <script type="text/x-template" id="email-action-component-template">
         <div class="email-action-container">
-            <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
-                <i class="icon link-icon"></i>
+            @if (bouncer()->hasPermission('contacts.person') || bouncer()->hasPermission('leads'))
+                <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
+                    <i class="icon link-icon"></i>
 
-                <span>{{ __('admin::app.mail.link-mail') }}</span>
-            </button>
+                    <span>{{ __('admin::app.mail.link-mail') }}</span>
+                </button>
+            @endif
 
             <div class="sidebar-filter" :class="{show: show_filter}">
                 <header>
@@ -219,74 +221,76 @@
 
                 <div class="email-action-content">
                     {!! view_render_event('admin.mail.view.actions.link_person.before', ['email' => $email]) !!}
+                    
+                    @if (bouncer()->hasPermission('contacts.person'))
+                        <div class="panel">
+                            <div class="link-lead" v-if="! email.person_id">
+                                <h3>{{ __('admin::app.mail.link-mail') }}</h3>
 
-                    <div class="panel">
-                        <div class="link-lead" v-if="! email.person_id">
-                            <h3>{{ __('admin::app.mail.link-mail') }}</h3>
+                                <div class="btn-group">
+                                    <button
+                                        class="btn btn-sm btn-primary-outline"
+                                        @click="enabled_search.person = true"
+                                        v-if="! enabled_search.person"
+                                    >
+                                        {{ __('admin::app.mail.add-to-existing-contact') }}
+                                    </button>
 
-                            <div class="btn-group">
-                                <button
-                                    class="btn btn-sm btn-primary-outline"
-                                    @click="enabled_search.person = true"
-                                    v-if="! enabled_search.person"
-                                >
-                                    {{ __('admin::app.mail.add-to-existing-contact') }}
-                                </button>
+                                    <div class="form-group" v-else>
+                                        <input
+                                            class="control"
+                                            v-model="search_term.person"
+                                            placeholder="{{ __('admin::app.mail.search-contact') }}"
+                                            v-on:keyup="search('person')"
+                                        />
 
-                                <div class="form-group" v-else>
-                                    <input
-                                        class="control"
-                                        v-model="search_term.person"
-                                        placeholder="{{ __('admin::app.mail.search-contact') }}"
-                                        v-on:keyup="search('person')"
-                                    />
+                                        <div class="lookup-results" v-if="search_term.person.length">
+                                            <ul>
+                                                <li v-for='(result, index) in search_results.person' @click="link('person', result)">
+                                                    <span>@{{ result.name }}</span>
+                                                </li>
+                    
+                                                <li v-if='! search_results.person.length && search_term.person.length && ! is_searching.person'>
+                                                    <span>{{ __('admin::app.common.no-result-found') }}</span>
+                                                </li>
+                                            </ul>
+                                        </div>
 
-                                    <div class="lookup-results" v-if="search_term.person.length">
-                                        <ul>
-                                            <li v-for='(result, index) in search_results.person' @click="link('person', result)">
-                                                <span>@{{ result.name }}</span>
-                                            </li>
-                
-                                            <li v-if='! search_results.person.length && search_term.person.length && ! is_searching.person'>
-                                                <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                            </li>
-                                        </ul>
+                                        <i class="icon close-icon"  v-if="! is_searching.person" @click="enabled_search.person = false; reset('person')"></i>
+
+                                        <i class="icon loader-active-icon" v-if="is_searching.person"></i>
                                     </div>
 
-                                    <i class="icon close-icon"  v-if="! is_searching.person" @click="enabled_search.person = false; reset('person')"></i>
+                                    <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
+                                        {{ __('admin::app.mail.create-new-contact') }}
+                                    </button>
+                                </div>
+                            </div>
 
-                                    <i class="icon loader-active-icon" v-if="is_searching.person"></i>
+                            <div v-else>
+                                <div class="panel-header">
+                                    {{ __('admin::app.mail.linked-contact') }}
+
+                                    <span class="links">
+                                        <a :href="'{{ route('admin.contacts.persons.edit') }}/' + email.person_id" target="_blank">
+                                            <i class="icon external-link-icon"></i>
+                                        </a>
+
+                                        <i class="icon close-icon" @click="unlink('person')"></i>
+                                    </span>
                                 </div>
 
-                                <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
-                                    {{ __('admin::app.mail.create-new-contact') }}
-                                </button>
-                            </div>
-                        </div>
+                                <div class="contact-details">
+                                    <div class="name">@{{ email.person.name }}</div>
 
-                        <div v-else>
-                            <div class="panel-header">
-                                {{ __('admin::app.mail.linked-contact') }}
-
-                                <span class="links">
-                                    <a :href="'{{ route('admin.contacts.persons.edit') }}/' + email.person_id" target="_blank">
-                                        <i class="icon external-link-icon"></i>
-                                    </a>
-
-                                    <i class="icon close-icon" @click="unlink('person')"></i>
-                                </span>
-                            </div>
-
-                            <div class="contact-details">
-                                <div class="name">@{{ email.person.name }}</div>
-
-                                <div class="email">
-                                    <i class="icon emails-icon"></i>
-                                    @{{ email.person.name }}
+                                    <div class="email">
+                                        <i class="icon emails-icon"></i>
+                                        @{{ email.person.name }}
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    @endif
 
                     {!! view_render_event('admin.mail.view.actions.link_person.after', ['email' => $email]) !!}
 
