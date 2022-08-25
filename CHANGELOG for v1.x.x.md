@@ -20,15 +20,13 @@
 
 * #799[enhancement] - The page should be redirected to the organization page if the user is clicking on the organization name.
 
-* #950  [fixed] - WebForm check unique email and phone number from users instead of contacts.
-
 * #900  [fixed] - There is a translation issue on the compose section inside the mails.
 
 * #885  [fixed] - There should not be any translation issue on the person table
 
-* #950  [fixed] - WebForm check unique email and phone number from users instead of contacts.
-
 * #867  [fixed] -There should not be any translation issue on the mails.
+
+* #950  [fixed] - WebForm check unique email and phone number from users instead of contacts.
 
 * #852  [fixed] -There should not be any translation issue in the dashboard 
 
@@ -174,8 +172,6 @@ fixedpage should be redirected to the organization page if the user is clicking 
 * #777  [fixed] -The page should not be crash. if the user is trying to enter the blade value into the input field.
 
 * #774  [fixed] -There should not be an exception If the user is trying to delete the person's image.
-
-* #732  [fixed] -The user should not be able to view the admin's leads if the user has individual permission.
 
 * #170  [fixed] -If admin Inactive any user who is logged in on CRM then the user should automatically logged out
 
