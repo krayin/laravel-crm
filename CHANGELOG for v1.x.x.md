@@ -84,10 +84,6 @@
 
 * #896  [fixed] -There is an UI issue in the Activity table 
 
-* #895  [fixed] -There should be a dropdown instead of inputbox in the lead source filter. Please find the screenshot 
-
-* #893  [fixed] -There should be an option to view the web form in the webform table.
-
 * #887  [fixed] -There is a translation issue on the Attributes table.
 
 * #884  [fixed] -There is a translation issue on the leads filter
