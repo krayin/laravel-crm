@@ -51,7 +51,15 @@ Vue.prototype.$http = axios;
 window.eventBus = new Vue();
 
 Vue.use(VueKanban);
-Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
+
+Vue.use(VueTimeago, {
+    name: 'Timeago',
+    locale: 'en',
+    locales: {
+        'ar': require('date-fns/locale/ar'),
+        'tr': require('date-fns/locale/tr')
+    }
+})
 
 Vue.component('draggable', draggable);
 
