@@ -200,7 +200,7 @@
 
     <script type="text/x-template" id="email-action-component-template">
         <div class="email-action-container">
-            @if (bouncer()->hasPermission('contacts.person') || bouncer()->hasPermission('leads'))
+            @if (bouncer()->hasPermission('contacts.person') && bouncer()->hasPermission('leads'))
                 <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
                     <i class="icon link-icon"></i>
 
