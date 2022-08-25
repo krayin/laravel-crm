@@ -4,6 +4,10 @@
             overflow: hidden;
         }
 
+        .drag-container {
+            overflow: inherit;
+        }
+
         .table {
             height: 100%;
             width: 100%;
