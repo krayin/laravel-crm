@@ -109,7 +109,7 @@ trait CustomAttribute {
             return;
         }
 
-        $attributeValue = $this->attribute_values()->where('attribute_id', $attribute->id)->first();
+        $attributeValue = $this->attribute_values->where('attribute_id', $attribute->id)->first();
 
         return $attributeValue[self::$attributeTypeFields[$attribute->type]] ?? null;
     }
