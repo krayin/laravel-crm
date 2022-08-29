@@ -92,9 +92,33 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-                ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
-                ->findOrFail(request('id'));
+            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
+            ->findOrFail(request('id'));
 
+        $currentUser = auth()->guard('user')->user();
+        
+        if ($currentUser->view_permission == 'individual') {            
+            $results = $this->leadRepository->findWhere([
+                ['id', '=', $email->lead_id],
+                ['user_id', '=', $currentUser->id],
+            ]);
+        } elseif ($currentUser->view_permission == 'group') {
+            $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+
+            $results = $this->leadRepository->findWhere([
+                ['id', '=', $email->lead_id],
+                ['user_id', 'IN', $userIds],
+            ]);
+        } elseif ($currentUser->view_permission == 'global') {
+            $results = $this->leadRepository->findWhere([
+                ['id', '=', $email->lead_id],
+            ]);
+        }
+           
+        if (empty($results->toArray())) {
+            unset($email->lead_id);
+        }
+        
         if (request('route') == 'draft') {
             return view('admin::mail.compose', compact('email'));
         } else {
