@@ -117,7 +117,7 @@ class LeadController extends Controller
                             'last' => $last = $paginator->lastPage(),
                             'next' => $current < $last ? $current + 1 : null,
                         ],
-                        'total' => core()->formatBasePrice($query->paginate(request('page') ? request('page') * 10 : 10, ['*'], 'page', 1)->sum('lead_value')),
+                        'total' => core()->formatBasePrice($query->getModel()->paginate(request('page') ? request('page') * 10 : 10, ['lead_value'], 'page', 1)->sum('lead_value')),
                     ];
 
                     foreach ($paginator as $lead) {
