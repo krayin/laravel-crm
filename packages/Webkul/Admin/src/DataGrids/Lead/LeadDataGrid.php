@@ -153,7 +153,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
-        $this->addFilter('rotten_lead',  DB::raw('DATEDIFF(NOW(),' . DB::getTablePrefix() . 'leads.created_at) >= ' . DB::getTablePrefix() . 'lead_pipelines.rotten_days'));
+        $this->addFilter('rotten_lead',  DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'leads.created_at) >= ' . DB::getTablePrefix() . 'lead_pipelines.rotten_days'));
 
         $this->setQueryBuilder($queryBuilder);
     }
