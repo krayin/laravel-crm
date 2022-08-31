@@ -138,18 +138,12 @@ trait ProvideDropdownOptions
             [
                 'label'    => __('admin::app.common.select_rotten_leads'),
                 'value'    => '',
-                'disabled' => true,
+                'disabled' => false,
                 'selected' => true,
             ],
             [
                 'label'    => __('admin::app.common.yes'),
                 'value'    => '1',
-                'disabled' => false,
-                'selected' => false,
-            ],
-            [
-                'label'    => __('admin::app.common.no'),
-                'value'    => '0',
                 'disabled' => false,
                 'selected' => false,
             ]

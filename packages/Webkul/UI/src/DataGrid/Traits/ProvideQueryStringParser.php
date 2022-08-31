@@ -19,10 +19,7 @@ trait ProvideQueryStringParser
 
         $this->itemsPerPage = isset($parsedQueryStrings['perPage']) ? $parsedQueryStrings['perPage']['eq'] : $this->itemsPerPage;
 
-        unset(
-            $parsedQueryStrings['perPage'],
-            $parsedQueryStrings['rotten_lead']
-        );
+        unset($parsedQueryStrings['perPage']);
 
         return $this->updateQueryStrings($parsedQueryStrings);
     }
