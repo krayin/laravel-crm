@@ -82,17 +82,11 @@ class LeadDataGrid extends DataGrid
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
             'condition' => function ($row) {
-                if (in_array($row->stage_code, ['won', 'lost'])) {
+                if (in_array($row->stage_code, ['won', 'lost']) || ! $row->rotten_lead) {
                     return false;
-                }
-
-                $rottenDate = Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->addDays($row->pipeline_rotten_days);
-
-                if ($rottenDate->diffInDays(Carbon::now(), false) > 0) {
+                } else {
                     return true;
                 }
-
-                return false;
             }
         ]);
     }
@@ -122,6 +116,7 @@ class LeadDataGrid extends DataGrid
                 'tags.name as tag_name',
                 'lead_pipelines.rotten_days as pipeline_rotten_days',
                 'lead_pipeline_stages.code as stage_code',
+                DB::raw('CASE WHEN DATEDIFF(NOW(), leads.created_at) >= lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
@@ -142,6 +137,10 @@ class LeadDataGrid extends DataGrid
             } else {
                 $queryBuilder->where('leads.user_id', $currentUser->id);
             }
+        }
+
+        if (! is_null(request()->input('rotten_lead.in'))) {
+            $queryBuilder->havingRaw('rotten_lead = ' . request()->input('rotten_lead.in'));
         }
 
         $this->addFilter('id', 'leads.id');
@@ -250,6 +249,18 @@ class LeadDataGrid extends DataGrid
 
                 return "<span class='badge badge-round badge-{$badge}'></span>" . $row->stage;
             },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'rotten_lead',
+            'label'             => trans('admin::app.datagrid.rotten_lead'),
+            'type'              => 'dropdown',
+            'dropdown_options'  => $this->getRootenLeadDropdownOptions(),
+            'sortable'          => true,
+            'searchable'        => false,
+            'closure'           => function ($row) {
+                return $row->rotten_lead ? trans('admin::app.common.yes') : trans('admin::app.common.no');
+            }
         ]);
 
         $this->addColumn([

@@ -128,6 +128,35 @@ trait ProvideDropdownOptions
     }
 
     /**
+     * Get Rooten lead dropdown options
+     *
+     * @return array
+     */
+    public function getRootenLeadDropdownOptions(): array
+    {
+        return [
+            [
+                'label'    => __('admin::app.common.select_rotten_leads'),
+                'value'    => '',
+                'disabled' => true,
+                'selected' => true,
+            ],
+            [
+                'label'    => __('admin::app.common.yes'),
+                'value'    => '1',
+                'disabled' => false,
+                'selected' => false,
+            ],
+            [
+                'label'    => __('admin::app.common.no'),
+                'value'    => '0',
+                'disabled' => false,
+                'selected' => false,
+            ]
+        ];
+    }
+
+    /**
      * Get lead source options.
      *
      * @return array
