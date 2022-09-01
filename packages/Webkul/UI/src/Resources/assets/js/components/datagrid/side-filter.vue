@@ -55,41 +55,7 @@
                     </template>
 
                     <template
-                        v-else-if="data.filterable && data.type == 'dropdown'"
-                    >
-                        <select
-                            class="control"
-                            @change="pushFieldValue(key, $event, data.index)"
-                        >
-                            <option
-                                :value="option.value"
-                                :key="index"
-                                v-for="(option, index) in data.dropdown_options"
-                                :selected="option.selected"
-                                :disabled="option.disabled"
-                            >
-                                {{ option.label }}
-                            </option>
-                        </select>
-
-                        <div class="selected-options">
-                            <span
-                                :key="index"
-                                v-for="(value, index) in data.values"
-                                class="badge badge-md badge-pill badge-secondary"
-                            >
-                                {{ getFilteredValue(value, data) }}
-
-                                <i
-                                    class="icon close-icon ml-10"
-                                    @click="removeFieldValue(key, index, data.index)"
-                                ></i>
-                            </span>
-                        </div>
-                    </template>
-
-                    <template
-                        v-else-if="data.filterable && data.type == 'single_dropdown'"
+                        v-else-if="data.filterable && (data.type == 'dropdown' || data.type == 'single_dropdown')"
                     >
                         <select
                             class="control"
@@ -115,8 +81,8 @@
                                 {{ getFilteredValue(value, data) }}
 
                                 <i
-                                class="icon close-icon ml-10"
-                                @click="removeFieldValue(key, index, data.index)"
+                                    class="icon close-icon ml-10"
+                                    @click="removeFieldValue(key, index, data.index)"
                                 ></i>
                             </span>
                         </div>
