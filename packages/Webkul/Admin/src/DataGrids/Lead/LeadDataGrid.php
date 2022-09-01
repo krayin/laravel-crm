@@ -116,7 +116,7 @@ class LeadDataGrid extends DataGrid
                 'tags.name as tag_name',
                 'lead_pipelines.rotten_days as pipeline_rotten_days',
                 'lead_pipeline_stages.code as stage_code',
-                DB::raw('CASE WHEN DATEDIFF(NOW(), leads.created_at) >= lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
+                DB::raw('CASE WHEN DATEDIFF(NOW(),' . DB::getTablePrefix() . 'leads.created_at) >=' . DB::getTablePrefix() . 'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
@@ -140,7 +140,7 @@ class LeadDataGrid extends DataGrid
         }
 
         if (! is_null(request()->input('rotten_lead.in'))) {
-            $queryBuilder->havingRaw('rotten_lead = ' . request()->input('rotten_lead.in'));
+            $queryBuilder->havingRaw(DB::getTablePrefix() . 'rotten_lead = ' . request()->input('rotten_lead.in'));
         }
 
         $this->addFilter('id', 'leads.id');
@@ -256,7 +256,7 @@ class LeadDataGrid extends DataGrid
             'index'             => 'rotten_lead',
             'label'             => trans('admin::app.datagrid.rotten_lead'),
             'type'              => 'dropdown',
-            'dropdown_options'  => $this->getRootenLeadDropdownOptions(),
+            'dropdown_options'  => $this->getYesNoDropdownOptions(),
             'sortable'          => true,
             'searchable'        => false,
             'closure'           => function ($row) {

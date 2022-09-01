@@ -88,6 +88,40 @@
                         </div>
                     </template>
 
+                    <template
+                        v-else-if="data.filterable && data.type == 'single_dropdown'"
+                    >
+                        <select
+                            class="control"
+                            @change="pushFieldValue(key, $event, data.index, data.type)"
+                        >
+                            <option
+                                :value="option.value"
+                                :key="index"
+                                v-for="(option, index) in data.dropdown_options"
+                                :selected="option.selected"
+                                :disabled="option.disabled"
+                            >
+                                {{ option.label }}
+                            </option>
+                        </select>
+
+                        <div class="selected-options">
+                            <span
+                                :key="index"
+                                v-for="(value, index) in data.values"
+                                class="badge badge-md badge-pill badge-secondary"
+                            >
+                                {{ getFilteredValue(value, data) }}
+
+                                <i
+                                class="icon close-icon ml-10"
+                                @click="removeFieldValue(key, index, data.index)"
+                                ></i>
+                            </span>
+                        </div>
+                    </template>
+
                     <template v-else>
                         <template v-if="data.filterable">
                             <span
@@ -185,7 +219,7 @@ export default {
             });
         },
 
-        pushFieldValue: function(key, { target }, indexKey) {
+        pushFieldValue: function(key, { target }, indexKey, indexType) {
             let targetValue = target.value.trim();
 
             this.addField[indexKey] = false;
@@ -193,6 +227,10 @@ export default {
             let values = (this.columns || this.tableData.columns)[key].values || [];
 
             if (values.indexOf(targetValue) == -1) {
+                if (indexType == "single_dropdown" && values.length) {
+                    values = [];
+                }
+
                 values.push(targetValue);
 
                 this.updateFilterValues({
@@ -262,7 +300,7 @@ export default {
         },
 
         getFilteredValue: function(value, data) {
-            if (data.type == "dropdown" && data.dropdown_options) {
+            if ((data.type == "dropdown" || data.type == "single_dropdown") && data.dropdown_options) {
                 let dropdown_option = data.dropdown_options.filter(
                     option => option.value == value
                 );
