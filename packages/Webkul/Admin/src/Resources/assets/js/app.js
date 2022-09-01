@@ -8,13 +8,42 @@ import VueCal from 'vue-cal';
 import 'vue-cal/dist/vuecal.css'
 
 import './bootstrap';
+
+/**
+ * Lang imports.
+ */
+ import ar from 'vee-validate/dist/locale/ar';
+ import de from 'vee-validate/dist/locale/de';
+ import es from 'vee-validate/dist/locale/es';
+ import fa from 'vee-validate/dist/locale/fa';
+ import fr from 'vee-validate/dist/locale/fr';
+ import nl from 'vee-validate/dist/locale/nl';
+ import tr from 'vee-validate/dist/locale/tr';
+ import hi_IN from 'vee-validate/dist/locale/hi';
+ import zh_CN from 'vee-validate/dist/locale/zh_CN';
+
+ import 'vue-cal/dist/i18n/ar.js';
+ import 'vue-cal/dist/i18n/tr.js';
+ 
+
 window.moment = require('moment');
 
 window.Vue = Vue;
 window.VeeValidate = VeeValidate;
 
 Vue.use(VeeValidate, {
-    events: 'input|change|blur',
+    dictionary: {
+        ar: ar,
+        de: de,
+        es: es,
+        fa: fa,
+        fr: fr,
+        nl: nl,
+        tr: tr,
+        hi_IN: hi_IN,
+        zh_CN: zh_CN
+    },
+    events: 'input|change|blur'
 });
 
 Vue.prototype.$http = axios;
@@ -22,7 +51,15 @@ Vue.prototype.$http = axios;
 window.eventBus = new Vue();
 
 Vue.use(VueKanban);
-Vue.use(VueTimeago, {name: 'Timeago', locale: 'en'})
+
+Vue.use(VueTimeago, {
+    name: 'Timeago',
+    locale: 'en',
+    locales: {
+        'ar': require('date-fns/locale/ar'),
+        'tr': require('date-fns/locale/tr')
+    }
+})
 
 Vue.component('draggable', draggable);
 
@@ -43,6 +80,7 @@ $(function() {
         },
 
         mounted() {
+            this.$validator.localize(document.documentElement.lang);
             setTimeout(() => {
                 this.pageLoaded = true;
 
