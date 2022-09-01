@@ -111,11 +111,34 @@ $(function() {
                         if (result) {
                             e.target.submit();
                         } else {
+                            this.activateAutoScroll();
                             this.toggleButtonDisable(false);
 
                             eventBus.$emit('onFormError')
                         }
                     });
+            },
+
+            activateAutoScroll: function(event) {
+                    
+                /**
+                 * This is normal Element
+                 */
+                const normalElement = document.querySelector(
+                    '.control-error:first-of-type'
+                );
+                /**
+                 * Scroll Config
+                 */
+                const scrollConfig = {
+                    behavior: 'smooth',
+                    block: 'end',
+                    inline: 'nearest',
+                }
+                if (normalElement) {
+                    normalElement.scrollIntoView(scrollConfig);
+                    return;
+                }
             },
 
             toggleButtonDisable (value) {
