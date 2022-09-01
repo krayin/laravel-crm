@@ -65,11 +65,13 @@ class AttributeDataGrid extends DataGrid
                 'attributes.code',
                 'attributes.name',
                 'attributes.type',
-                'attributes.entity_type'
+                'attributes.entity_type',
+                'attributes.is_user_defined as attribute_type'
             );
 
         $this->addFilter('id', 'attributes.id');
         $this->addFilter('type', 'attributes.type');
+        $this->addFilter('attribute_type', 'attributes.is_user_defined');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -117,6 +119,17 @@ class AttributeDataGrid extends DataGrid
             'label'    => trans('admin::app.datagrid.type'),
             'type'     => 'string',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'             => 'attribute_type',
+            'label'             => trans('admin::app.datagrid.attribute_type'),
+            'type'              => 'dropdown',
+            'dropdown_options'  => $this->getAttributeTypeDropdownOptions(),
+            'sortable'          => true,
+            'closure'           => function ($row) {
+                return $row->attribute_type ? trans('admin::app.common.custom_attribute') : trans('admin::app.common.system_attribute');
+            },
         ]);
     }
 
