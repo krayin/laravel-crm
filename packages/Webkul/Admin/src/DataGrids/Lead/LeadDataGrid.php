@@ -84,9 +84,9 @@ class LeadDataGrid extends DataGrid
             'condition' => function ($row) {
                 if (in_array($row->stage_code, ['won', 'lost']) || ! $row->rotten_lead) {
                     return false;
-                } else {
-                    return true;
                 }
+
+                return true;
             }
         ]);
     }
