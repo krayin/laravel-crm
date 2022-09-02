@@ -2517,3 +2517,164 @@ body {
         font-size: $font-size-md;
     }
 }
+
+@media only screen and (max-width: 768px) {
+    .row-grid-3 {
+        width: 100%;
+        display: inline-block;
+    }
+
+    .row-grid-3 .card {
+        width: 100%;
+    }
+
+    .dashboard>h1~.card-filter-container {
+        float: left;
+    }
+
+    .navbar-top .navbar-top-left {
+        width: 35%;
+    }
+
+    .navbar-top .navbar-top-right {
+        width: 65%;
+    }
+
+    .drag-container {
+        height: 100%;
+    }
+
+    .drag-list {
+        grid-auto-columns: unset;
+        width: 100%;
+    }
+
+    .drag-column {
+        width: 100%;
+        height: 70%;
+    }
+
+    .table .datagrid-filters {
+        display: block;
+    }
+
+    .table .search-filter {
+        width: 100%;
+    }
+
+    .switch-pipeline-container {
+        width: 100%;
+        margin-bottom: 8px;
+        margin-top: 8px;
+    }
+
+    .switch-view-container {
+        margin-bottom: 8px;
+        float: left;
+    }
+
+    .table .datagrid-filters .filter-right .filter-btn {
+        margin-bottom: 8px;
+        float: left;
+    }
+
+    .table .datagrid-filters .filter-right .filter-btn .grid-dropdown-header {
+        float: left;
+    }
+
+    .table {
+        overflow: unset !important;
+        height: inherit;
+    }
+
+    .table .datagrid-filters .dropdown-filters {
+        float: left;
+    }
+
+    .table .tabs-container {
+        display: block;
+    }
+
+    .table-body {
+        height: inherit;
+    }
+
+    .group .tabs ul li {
+        float: left;
+        border-color: transparent;
+    }
+
+    .content-container .content.full-page {
+        height: inherit;
+    }
+
+    .content-container {
+        height: 100%;
+    }
+
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+    }
+
+    .table table {
+        width: auto;
+    }
+
+    .table .table-body .empty-table div {
+        top: unset;
+    }
+
+    .group {
+        height: unset;
+    }
+
+    .table .table-header {
+        display: block;
+    }
+
+    .table .table-header .table-action {
+        text-align: unset;
+        margin-top: 8px;
+    }
+
+    .content-container .content .page-content {
+        width: 100% !important;
+    }
+
+    input[name="reply_to[]"]::placeholder {
+        width: 60%;
+    }
+
+    .content-container .content .page-header {
+        width: 100% !important;
+    }
+
+    .tabs ul li {
+        width: 100%;
+    }
+
+    .quote-item-list {
+        overflow-x: auto;
+    }
+
+    .quote-item-list .quote-summary table {
+        float: unset;
+    }
+
+    .sidebar-filter.show {
+        width: 100%;
+    }
+
+    .sidebar-filter .field-container .date-container {
+        display: block;
+    }
+
+    .date-container input {
+        width: 100% !important;
+    }
+
+    button.btn.btn-md.btn-primary {
+        margin-bottom: 8px;
+    }
+}
