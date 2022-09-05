@@ -1,75 +1,166 @@
 <template>
-    <div class="attachment-wrapper">
-        <attachment-item
-            v-for="attachment in attachments"
-            :key="attachment.id"
-            :attachment="attachment"
-            :input-name="inputName"
-            @onRemoveAttachment="removeAttachment($event)"
-        ></attachment-item>
+  <div class="attachment-wrapper">
+    <div
+      @dragcenter.prevent="toggleActive"
+      @dragleave.prevent="toggleActive"
+      @dragover.prevent
+      @drop.prevent="drop"
+      :class="{ 'active-dropzone': active }"
+      class="dropzone"
+    >
+      <span>Drag or drop files</span>
+      <span>OR</span>
+      
+      <attachment-item
+        v-for="attachment in attachments"
+        :key="attachment.id"
+        :attachment="attachment"
+        :input-name="inputName"
+        @onRemoveAttachment="removeAttachment($event)"
+      ></attachment-item>
 
-        <label class="add-attachment-link" @click="addAttachment">
-            <i class="icon attachment-icon"></i>
-            {{ __('ui.add-attachment') }}
-        </label>
+      <label class="add-attachment-link" @click="addAttachment">
+        <i class="icon attachment-icon"></i>
+        {{ __("ui.add-attachment") }}
+      </label>
     </div>
+        
+  
+  </div>
+   
 </template>
 
 <script>
 export default {
-    props: {
-        data: {
-            type: Array | String,
+  props: {
+    data: {
+      type: Array | String,
 
-            required: false,
+      required: false,
 
-            default: () => []
-        },
-
-        inputName: {
-            type: String,
-
-            required: false,
-
-            default: "attachments[]"
-        }
+      default: () => [],
     },
 
-    data: function() {
-        return {
-            attachmentCount: 0,
+    inputName: {
+      type: String,
 
-            attachments: []
-        };
+      required: false,
+
+      default: "attachments[]",
+    },
+  },
+
+  data: function () {
+    return {
+       active: false,
+
+      attachmentCount: 0,
+
+      attachments: [],
+
+      dropzoneFile : [],
+
+
+    };
+  },
+
+  created() {
+    let self = this;
+
+    this.data.forEach(function (attachment) {
+      attachment.isNew = false;
+      
+      self.attachments.push(attachment);
+      
+      self.attachmentCount++;
+    });
+
+    console.log(self.attachments)
+
+  },
+
+  methods: {
+    addAttachment() {
+      this.attachmentCount++;
+
+      this.attachments.push({
+        id: "attachment_" + this.attachmentCount,
+        isNew: true,
+      });
+
     },
 
-    created() {
-        let self = this;
+    drop:function(event){
+      // alert("sd");
+      let data = new DataTransfer();
 
-        this.data.forEach(function(attachment) {
-            attachment.isNew = false;
+      // drop zone
+      data.items.add(event.dataTransfer.files[0]);
 
-            self.attachments.push(attachment);
-
-            self.attachmentCount++;
-        });
+      let selector = document.getElementsByClassName('attachment');
+      
+      selector.forEach((item) => {
+        data.items.add(item.files[0]);
+      });
+      
+      selector[0].files = data.files;
+      
     },
 
-    methods: {
-        addAttachment() {
-            this.attachmentCount++;
+    toggleActive(){
+      this.active = !this.active;
+    },
+    removeAttachment(attachment) {
+      let index = this.attachments.indexOf(attachment);
 
-            this.attachments.push({
-                id: "attachment_" + this.attachmentCount,
-                isNew: true
-            });
-        },
+      Vue.delete(this.attachments, index);
+    },
 
-        removeAttachment(attachment) {
-            let index = this.attachments.indexOf(attachment);
-
-            Vue.delete(this.attachments, index);
-        }
-    }
+   
+  },
 };
 </script>
+
+<style>
+.dropzone {
+  width: 400px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 16px;
+  border: 2px dashed solid #41b883;
+  background-color: #fff;
+  transition: 0.3s ease all;
+
+  
+}
+
+.dropzone label {
+    padding: 8px 12px;
+    color: #fff;
+    background-color: #41b883;
+    transition: 0.3s ease all;
+  }
+
+
+.active-dropzone {
+  color: #fff;
+  border-color: #fff;
+  background-color: #41b883;
+
+}
+
+.active-dropzone  label {
+    background-color: #fff;
+    color: #41b883;
+  }
+
+ .active-dropzone input {
+    display: none;
+  }
+
+</style>
+
+
