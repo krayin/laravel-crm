@@ -153,6 +153,10 @@ class Dashboard
      */
     public function getCards(): array
     {
+        if(! $this->cards) {
+            $this->setCards();
+        }
+
         return $this->cards;
     }
 
@@ -441,28 +445,32 @@ class Dashboard
      * @return array
      */
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
-    {
+    {   
+        if (! bouncer()->hasPermission('leads.view')) {
+            return 0;
+        }
+       
         $topLeads = $this->leadRepository
             ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->where(function ($query) {
-                $currentUser = auth()->guard('user')->user();
+            $currentUser = auth()->guard('user')->user();
 
-                if ($currentUser->view_permission != 'global') {
-                    if ($currentUser->view_permission == 'group') {
-                        $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
-                    } else {
-                        $query->where('leads.user_id', $currentUser->id);
-                    }
+            if ($currentUser->view_permission != 'global') {
+                if ($currentUser->view_permission == 'group') {
+                    $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                } else {
+                    $query->where('leads.user_id', $currentUser->id);
                 }
-            })
-            ->limit(3)
-            ->get();
+            }
+        })
+        ->limit(3)
+        ->get();
 
         $cardData = [
-            "data" => $topLeads
+            "data" => $topLeads,
         ];
 
         return $cardData;
@@ -773,7 +781,7 @@ class Dashboard
             'startDateFilter' => $startDateFilter,
         ) = $this->getDateRangeDetails($requestData);
 
-        foreach ($this->cards as $card) {
+        foreach ($this->getCards() as $card) {
             if (isset($card['card_id']) && $card['card_id'] == $cardId) {
                 if (isset($card['class_name'])) {
                     $class = app($card['class_name']);

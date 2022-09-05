@@ -11,6 +11,7 @@
         :showWeekNumbers="showWeekNumbers"
         :showDropdowns="showDropdowns"
         :autoApply="autoApply"
+        :localeData="{applyLabel:__('ui.datagrid.filter.apply'), cancelLabel:__('ui.datagrid.filter.cancel')}"
         :ranges="show_ranges ? undefined : false"
         :linkedCalendars="linkedCalendars"
         :dateFormat="dateFormat"
@@ -48,7 +49,7 @@ export default {
                 startDate: this.startDate
             },
             single_range_picker: true,
-            show_ranges: true,
+            ranges: {},
             singleDatePicker: false,
             timePicker: false,
             timePicker24Hour: true,
@@ -62,7 +63,52 @@ export default {
         };
     },
 
+    mounted() {
+        this.setRange();
+    },
+
     methods: {
+        setRange() {
+            let today = new Date();
+            today.setHours(0, 0, 0, 0);
+            let todayEnd = new Date();
+            todayEnd.setHours(11, 59, 59, 999);
+            let yesterdayStart = new Date();
+            yesterdayStart.setDate(today.getDate() - 1);
+            yesterdayStart.setHours(0, 0, 0, 0);
+            let yesterdayEnd = new Date();
+            yesterdayEnd.setDate(today.getDate() - 1);
+            yesterdayEnd.setHours(11, 59, 59, 999);
+            let thisMonthStart = new Date(today.getFullYear(), today.getMonth(), 1);
+            let thisMonthEnd = new Date(
+                today.getFullYear(),
+                today.getMonth() + 1,
+                0,
+                11,
+                59,
+                59,
+                999
+            );
+
+            this.ranges[this.__("ui.datagrid.filter.today")] = [today, todayEnd];
+            this.ranges[this.__("ui.datagrid.filter.yesterday")] = [
+                yesterdayStart,
+                yesterdayEnd,
+            ];
+            this.ranges[this.__("ui.datagrid.filter.this-month")] = [
+                thisMonthStart,
+                thisMonthEnd,
+            ];
+            this.ranges[this.__("ui.datagrid.filter.this-year")] = [
+                new Date(today.getFullYear(), 0, 1),
+                new Date(today.getFullYear(), 11, 31, 11, 59, 59, 999),
+            ];
+            this.ranges[this.__("ui.datagrid.filter.last-month")] = [
+                new Date(today.getFullYear(), today.getMonth() - 1, 1),
+                new Date(today.getFullYear(), today.getMonth(), 0, 11, 59, 59, 999),
+            ];
+        },
+        
         updateValues: function(values) {
             this.dateRange.startDate = values.startDate;
 

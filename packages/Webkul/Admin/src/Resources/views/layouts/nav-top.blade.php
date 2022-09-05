@@ -8,31 +8,6 @@
     </div>
 
     <div class="navbar-top-right">
-        <div class="profile-info">
-            <div class="dropdown-toggle">
-                <div class="info">
-                    <span class="howdy">{{ __('admin::app.common.locale') }}</span> 
-                    <span class="user">{{ __('admin::app.common.'.app()->getLocale()) }}</span>
-                </div>
-
-                <i class="icon ellipsis-icon"></i>
-            </div>
-
-            <div class="dropdown-list bottom-right">
-                <div class="dropdown-container">
-                    <ul>
-                        @foreach (config('app.available_locales') as $code => $name)
-                            <li>
-                                <a href="{{ url()->current() . '?' . http_build_query(array_merge(request()->all(), ['admin_locale' => $code])) }}">
-                                    {{ $name }}
-                                </a>
-                            </li>
-                        @endforeach
-                    </ul>
-                </div>
-            </div>
-        </div>
-
         @if (bouncer()->hasPermission('leads.create')
             || bouncer()->hasPermission('quotes.create')
             || bouncer()->hasPermission('mail.create')

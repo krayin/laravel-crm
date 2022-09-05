@@ -202,7 +202,7 @@
                     class="filter-tag"
                     v-if="ignoreDisplayFilter.indexOf(filter.column) == -1"
                 >
-                    <span v-text="filter.prettyColumn || filter.column"></span>
+                    <span>{{ __("ui.datagrid.filter." + filter.column) }}</span>
 
                     <span class="wrapper">
                         {{

@@ -48,6 +48,7 @@
                 @ready="getActivities"
                 @view-change="getActivities"
                 :on-event-click="onEventClick"
+                locale="{{ app()->getLocale() }}"
             />
 
         </div>
