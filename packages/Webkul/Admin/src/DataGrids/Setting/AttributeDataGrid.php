@@ -4,9 +4,12 @@ namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 
 class AttributeDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+    
     /**
      * Create datagrid instance.
      *

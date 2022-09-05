@@ -741,6 +741,7 @@
             'update-success'      => ':تم تحديث المورد بنجاح.',
             'destroy-success'     => ':تم حذف المورد بنجاح.',
             'destroy-failed'      => ':لا يمكن حذف المورد.',
+            'attribute_type'      => 'نوع السمة',
             'filters'             => [
                 'yesterday'       => 'في الامس',
                 'today'           => 'اليوم',

@@ -735,6 +735,7 @@
             'update-success'      => ':resource başarıyla güncellendi.',
             'destroy-success'     => ':resource başarıyla silindi',
             'destroy-failed'      => ':resource silinemez',
+            'attribute_type'      => 'Özellik Türü',
             'filters'             => [
                 'yesterday'       => 'Dün',
                 'today'           => 'Bugün',

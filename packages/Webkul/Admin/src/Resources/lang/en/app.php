@@ -744,6 +744,7 @@
             'update-success'      => ':resource updated successfully.',
             'destroy-success'     => ':resource deleted successfully.',
             'destroy-failed'      => ':resource can not be deleted.',
+            'attribute_type'      => 'Attribute Type',
             'filters'             => [
                 'yesterday'       => 'Yesterday',
                 'today'           => 'Today',
