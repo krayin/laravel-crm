@@ -2530,6 +2530,7 @@ body {
 
     .dashboard>h1~.card-filter-container {
         float: left;
+        width: 100%;
     }
 
     .navbar-top .navbar-top-left {
@@ -2610,6 +2611,7 @@ body {
 
     .content-container {
         height: 100%;
+        overflow: auto !important;
     }
 
     .table-responsive {
@@ -2676,5 +2678,96 @@ body {
 
     button.btn.btn-md.btn-primary {
         margin-bottom: 8px;
+    }
+
+    .lead-content-left {
+        width: unset !important;
+    }
+
+    .page-content.lead-view .lead-content-right {
+        width: 100%;
+    }
+
+    .activity-list .section-tag {
+        margin-left: 0px;
+    }
+
+    .activity-list .timeline-bar {
+        left: 0px;
+    }
+
+    .activity-list .tabs-content>* {
+        overflow-x: auto;
+    }
+
+    .activity-item {
+        word-break: break-word;
+    }
+
+    .modal-container .modal-header .header-actions {
+        margin-top: 8px;
+        text-align: left;
+    }
+
+    .modal-container .modal-header {
+        display: block;
+    }
+
+    .modal-container {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-left: 0px;
+        width: 80%;
+        animation: none;
+    }
+
+    .alert-wrapper {
+        right: 0px;
+    }
+
+    .alert-wrapper .alert {
+        left: 0;
+        margin-left: 0px;
+        width: 100%;
+    }
+
+    .rtl .alert-wrapper .alert {
+        right: 0;
+        width: 100%;
+        margin-right: 0px;
+    }
+
+    .dropdown-list {
+        width: 100%;
+        left: 0;
+    }
+
+    .pipeline-stage-controls-wrapper .date-panel .pull-right {
+        float: left;
+    }
+
+    .adjacent-center .page-content .nav-aside {
+        width: 100%;
+    }
+
+    .panel {
+        overflow: unset !important;
+    }
+
+    .adjacent-center .page-content .nav-aside ul li a {
+        text-align: center;
+    }
+
+    .table .search-filter .control {
+        width: 100% !important;
+    }
+
+    .form-group label, .field-container label {
+        width: max-content;
+    }
+
+    .navbar-top .navbar-top-right .quick-create .dropdown-list {
+        transform: translateX(-50%);
     }
 }
