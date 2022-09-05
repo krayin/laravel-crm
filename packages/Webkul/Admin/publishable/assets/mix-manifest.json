@@ -1,4 +1,6 @@
 {
+    "/js/admin.js": "/js/admin.js?id=3c4defd408f78d21e1521536191d577a",
+    "/css/admin.css": "/css/admin.css?id=c7cff1e87e449d47d6e666bfdf594489",
     "/images/activities-active-icon.svg": "/images/activities-active-icon.svg?id=f7887e3fdcddf68567ceca8facc1e40e",
     "/images/activities-icon.svg": "/images/activities-icon.svg?id=0755224d86e0281d031f938b2aa1d610",
     "/images/attribute-icon.svg": "/images/attribute-icon.svg?id=8f9f3e0e90496263403fc26efef8614d",
@@ -83,7 +85,5 @@
     "/images/tools-icon.svg": "/images/tools-icon.svg?id=71f0d3b8f0b6381b3b64fd7a1a069762",
     "/images/type-icon.svg": "/images/type-icon.svg?id=625cb6dfa3b39d72b65b172f09b16b2a",
     "/images/user-icon.svg": "/images/user-icon.svg?id=5504788e912ea441b4ae0cb23d145341",
-    "/images/workflow-icon.svg": "/images/workflow-icon.svg?id=0a8721c15a54790d1e85f288b9c79981",
-    "/js/admin.js": "/js/admin.js?id=25d50adc593a4be0c39fa97d2f222c62",
-    "/css/admin.css": "/css/admin.css?id=c7cff1e87e449d47d6e666bfdf594489"
+    "/images/workflow-icon.svg": "/images/workflow-icon.svg?id=0a8721c15a54790d1e85f288b9c79981"
 }

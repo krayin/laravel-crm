@@ -48,7 +48,7 @@
             </div>
         </div>
 
-        <form method="POST" :action="`${baseURL}/export`" ref="exportForm" @submit="exportData">
+        <form method="POST" :action="`${baseURL}/export${queryParams}`" ref="exportForm" @submit="exportData">
             <modal id="export" :is-open="isOpen">
                 <h3 slot="header-title">{{ __("ui.datagrid.download") }}</h3>
 
@@ -125,7 +125,9 @@ export default {
 
             resultLoaded: true,
 
-            baseURL: window.baseURL
+            baseURL: window.baseURL,
+
+            queryParams: ""
         };
     },
 
@@ -222,6 +224,10 @@ export default {
                 `${params != "" ? "?" + params : ""}`;
 
             window.history.pushState({ path: newURL }, "", newURL);
+
+            if(this.tableData.export) {
+                this.queryParams = location.search;
+            }
         },
 
         exportData: function() {
