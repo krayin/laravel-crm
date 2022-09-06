@@ -255,10 +255,11 @@ class LeadDataGrid extends DataGrid
         $this->addColumn([
             'index'             => 'rotten_lead',
             'label'             => trans('admin::app.datagrid.rotten_lead'),
-            'type'              => 'dropdown',
+            'type'              => 'single_dropdown',
             'dropdown_options'  => $this->getYesNoDropdownOptions(),
             'sortable'          => true,
             'searchable'        => false,
+            'condition'         => 'eq',
             'closure'           => function ($row) {
                 return ! $row->rotten_lead || in_array($row->stage_code, ['won', 'lost']) ? trans('admin::app.common.no') : trans('admin::app.common.yes');
             }

@@ -59,7 +59,7 @@
                     >
                         <select
                             class="control"
-                            @change="pushFieldValue(key, $event, data.index, data.type)"
+                            @change="pushFieldValue(key, $event, data.index, data.type, data.condition)"
                         >
                             <option
                                 :value="option.value"
@@ -185,7 +185,7 @@ export default {
             });
         },
 
-        pushFieldValue: function(key, { target }, indexKey, indexType) {
+        pushFieldValue: function(key, { target }, indexKey, indexType = '', condition = 'in') {
             let targetValue = target.value.trim();
 
             this.addField[indexKey] = false;
@@ -201,7 +201,8 @@ export default {
 
                 this.updateFilterValues({
                     key: indexKey,
-                    values
+                    values,
+                    condition
                 });
 
                 target.value = '';
