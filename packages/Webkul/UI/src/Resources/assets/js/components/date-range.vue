@@ -12,7 +12,7 @@
         :showDropdowns="showDropdowns"
         :autoApply="autoApply"
         :localeData="{applyLabel:__('ui.datagrid.filter.apply'), cancelLabel:__('ui.datagrid.filter.cancel')}"
-        :ranges="show_ranges ? undefined : false"
+        :ranges="ranges"
         :linkedCalendars="linkedCalendars"
         :dateFormat="dateFormat"
         :always-show-calendars="false"
@@ -95,15 +95,15 @@ export default {
                 yesterdayStart,
                 yesterdayEnd,
             ];
-            this.ranges[this.__("ui.datagrid.filter.this-month")] = [
+            this.ranges[this.__("ui.datagrid.filter.this_month")] = [
                 thisMonthStart,
                 thisMonthEnd,
             ];
-            this.ranges[this.__("ui.datagrid.filter.this-year")] = [
+            this.ranges[this.__("ui.datagrid.filter.this_year")] = [
                 new Date(today.getFullYear(), 0, 1),
                 new Date(today.getFullYear(), 11, 31, 11, 59, 59, 999),
             ];
-            this.ranges[this.__("ui.datagrid.filter.last-month")] = [
+            this.ranges[this.__("ui.datagrid.filter.last_month")] = [
                 new Date(today.getFullYear(), today.getMonth() - 1, 1),
                 new Date(today.getFullYear(), today.getMonth(), 0, 11, 59, 59, 999),
             ];
