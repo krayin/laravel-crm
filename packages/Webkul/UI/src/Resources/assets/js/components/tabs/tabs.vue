@@ -70,10 +70,25 @@
             },
 
             selectTab: function (selectedTab) {
-                this.tabs.forEach(tab => {
-                    tab.isActive = (tab.name == selectedTab.name);
-                });
-
+                if(this.$children.length > 0) {
+                   this.tabs.forEach((tab) => {
+                        tab.isActive = (selectedTab.name == tab.name)
+                   }); 
+                } else {
+                    this.tabs.forEach((tab) => {
+                        if (tab.isActive) {
+                            this.$parent.filters.forEach((filter, index) => {
+                                if (
+                                filter.val == tab.key ||
+                                (selectedTab.key != "custom" && filter.column == "duration")
+                                ) {
+                                    delete this.$parent.filters[index];
+                                }
+                            });
+                        }
+                    });
+                }
+                                
                 if (! this.eventKey) {
                     return;
                 }
