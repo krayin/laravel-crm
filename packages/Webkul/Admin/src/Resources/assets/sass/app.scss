@@ -2518,7 +2518,7 @@ body {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 1057px) {
     .row-grid-3 {
         width: 100%;
         display: inline-block;
@@ -2769,5 +2769,23 @@ body {
 
     .navbar-top .navbar-top-right .quick-create .dropdown-list {
         transform: translateX(-50%);
+    }
+
+    .custom-attribute-view .attribute-value-row .label{
+        width: 50%;
+        float: left;
+    }
+
+    .custom-attribute-view .attribute-value-row .value{
+        width: 50%;
+        float: left;
+    }
+
+    .custom-attribute-view .attribute-value-row:nth-child(even) {
+        padding: unset;
+    }
+
+    .custom-attribute-view .attribute-value-row{
+        padding: 6px !important;
     }
 }

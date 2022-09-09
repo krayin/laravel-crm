@@ -81,7 +81,7 @@
                             </div>
 
                             <div class="form-group" :class="[errors.has('permission_type') ? 'has-error' : '']">
-                                <label>
+                                <label class="required">
                                     {{ __('admin::app.settings.roles.permission_type') }}
                                 </label>
 
