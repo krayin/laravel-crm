@@ -745,6 +745,7 @@
             'update-success'      => ':resource updated successfully.',
             'destroy-success'     => ':resource deleted successfully.',
             'destroy-failed'      => ':resource can not be deleted.',
+            'attribute_type'      => 'Attribute Type',
             'filters'             => [
                 'yesterday'       => 'Yesterday',
                 'today'           => 'Today',
@@ -842,8 +843,9 @@
             'forbidden-error'     => '403 forbidden Error',
             'internal-server-error' => '500 Internal Server Error',
             'something-went-wrong'  => 'Something went wrong, please try again later.',
-            'delete-confirm'       => 'Do you really want to perform this action?'
-            
+            'delete-confirm'        => 'Do you really want to perform this action?',
+            'system_attribute'      => 'System', 
+            'custom_attribute'      => 'Custom', 
         ],
 
         'user' => [

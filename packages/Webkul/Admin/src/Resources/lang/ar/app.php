@@ -742,6 +742,7 @@
             'update-success'      => ':تم تحديث المورد بنجاح.',
             'destroy-success'     => ':تم حذف المورد بنجاح.',
             'destroy-failed'      => ':لا يمكن حذف المورد.',
+            'attribute_type'      => 'نوع السمة',
             'filters'             => [
                 'yesterday'       => 'في الامس',
                 'today'           => 'اليوم',
@@ -839,7 +840,9 @@
             'forbidden-error'     => 'ممنوع الخطأ',
             'internal-server-error' => 'خطأ في الخادم الداخلي',
             'something-went-wrong'  => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق.',
-            'delete-confirm'       => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
+            'delete-confirm'        => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
+            'system_attribute'      => 'نظام', 
+            'custom_attribute'      => 'العادة', 
         ],
 
         'user' => [

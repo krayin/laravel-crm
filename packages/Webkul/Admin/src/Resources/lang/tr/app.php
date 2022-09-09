@@ -736,6 +736,7 @@
             'update-success'      => ':resource başarıyla güncellendi.',
             'destroy-success'     => ':resource başarıyla silindi',
             'destroy-failed'      => ':resource silinemez',
+            'attribute_type'      => 'Özellik Türü',
             'filters'             => [
                 'yesterday'       => 'Dün',
                 'today'           => 'Bugün',
@@ -833,7 +834,9 @@
             'forbidden-error'     => '403 yasak hatası',
             'internal-server-error' => '500 Dahili Sunucu Hatası',
             'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.',
-            'delete-confirm'       => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
+            'delete-confirm'        => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
+            'system_attribute'      => 'sistem', 
+            'custom_attribute'      => 'Gelenek', 
         ],
 
         'user' => [

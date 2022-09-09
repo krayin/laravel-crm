@@ -238,4 +238,33 @@ trait ProvideDropdownOptions
             ],
         ];
     }
+
+    /**
+     * Get attribute type dropdown options.
+     *
+     * @return array
+     */
+    public function getAttributeTypeDropdownOptions(): array
+    {
+        return [
+            [
+                'label'    => trans('admin::app.common.select-options'),
+                'value'    => '',
+                'disabled' => true,
+                'selected' => true,
+            ], 
+            [
+                'label'    => trans('admin::app.common.system_attribute'),
+                'value'    => '0',
+                'disabled' => false,
+                'selected' => false,
+            ], 
+            [
+                'label'    => trans('admin::app.common.custom_attribute'),
+                'value'    => '1',
+                'disabled' => false,
+                'selected' => false,
+            ],
+        ];
+    }
 }
