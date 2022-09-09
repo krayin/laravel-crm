@@ -231,8 +231,8 @@
 
                     <div class="form-group" v-if="matchedAttribute.type == 'boolean'">
                         <select :name="['conditions[' + index + '][value]']" class="control" v-model="condition.value">
-                            <option value="1">{{ __('admin::app.settings.workflows.yes') }}</option>
-                            <option value="0">{{ __('admin::app.settings.workflows.no') }}</option>
+                            <option value="1">{{ __('admin::app.common.yes') }}</option>
+                            <option value="0">{{ __('admin::app.common.no') }}</option>
                         </select>
                     </div>
 
@@ -322,8 +322,8 @@
 
                     <div class="form-group" v-if="matchedAttribute.type == 'boolean'">
                         <select :name="['actions[' + index + '][value]']" class="control" v-model="action.value">
-                            <option value="1">{{ __('admin::app.settings.workflows.yes') }}</option>
-                            <option value="0">{{ __('admin::app.settings.workflows.no') }}</option>
+                            <option value="1">{{ __('admin::app.common.yes') }}</option>
+                            <option value="0">{{ __('admin::app.common.no') }}</option>
                         </select>
                     </div>
 
