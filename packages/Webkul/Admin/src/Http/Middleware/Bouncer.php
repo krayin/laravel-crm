@@ -39,6 +39,8 @@ class Bouncer
         if ($this->isPermissionsEmpty()) {
             auth()->guard($guard)->logout();
 
+            session()->flash('error', __('admin::app.errors.401'));
+            
             return redirect()->route('admin.session.create');
         }
 
