@@ -13,6 +13,7 @@ return [
     'embed'                     => 'Embed',
     'public-url'                => 'Public Url',
     'code-snippet'              => 'Code Snippet',
+    'copy'                      =>  'Copy',
     'title-control'             => 'Title',
     'description'               => 'Description',
     'submit-button-label'       => 'Submit Button Label',
