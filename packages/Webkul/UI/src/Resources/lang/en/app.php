@@ -16,6 +16,9 @@ return [
         'cancel'        => 'Cancel',
         'download'      => 'Download',
         'export'        => 'Export',
+        'import'        => 'Import',
+        'upload_csv'    => 'Upload .csv File',
+        'upload'        => 'Upload File',
         'select-format' => 'Select Format',
 
         'massaction' => [

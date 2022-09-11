@@ -1,9 +1,19 @@
 <template>
-    <div class="table">
+    <div class="table">     
         <div class="table-header">
             <slot name="table-header"></slot>
 
             <div class="table-action">
+                <span
+                    class="export-import"
+                    @click="isOpenImport = true"
+                    v-if="tableData.export"
+                >
+                    <i class="icon export-icon"></i>
+
+                    <span>{{ __("ui.datagrid.import") }}</span>
+                </span>
+
                 <span
                     class="export-import"
                     @click="isOpen = true"
@@ -49,6 +59,46 @@
                 </div>
             </div>
         </div>
+
+        <form method="POST" :action="`${baseURL}/import${queryParams}`" ref="importForm" @submit="importData">
+            <modal id="import" :is-open="isOpenImport">
+                <h3 slot="header-title">{{ __("ui.datagrid.upload") }}</h3>
+
+                <div slot="header-actions">
+                    <button
+                        class="btn btn-sm btn-secondary-outline"
+                        @click="isOpenImport = false"
+                    >
+                        {{ __("ui.datagrid.cancel") }}
+                    </button>
+
+                    <button
+                        type="submit"
+                        class="btn btn-sm btn-primary"
+                    >
+                        {{ __("ui.datagrid.import") }}
+                    </button>
+                </div>
+
+                <div slot="body">
+                    <div class="form-group">
+                        <label for="format" class="required">
+                            {{ __("ui.datagrid.upload_csv") }}
+                        </label>
+
+                        <input
+                            type="hidden"
+                            name="_token"
+                            :value="csrfToken"
+                        />
+                        
+                        <input type="file" name="file[]" class="form-control">
+                        
+                    </div>
+                </div>
+            </modal>
+        </form>
+
 
         <form method="POST" :action="`${baseURL}/export${queryParams}`" ref="exportForm" @submit="exportData">
             <modal id="export" :is-open="isOpen">
@@ -120,6 +170,8 @@ export default {
             csrfToken: $('meta[name="csrf-token"]').attr("content"),
 
             isOpen: false,
+
+            isOpenImport: false,
 
             pageLoaded: false,
 
@@ -234,6 +286,16 @@ export default {
 
         exportData: function() {
             this.$refs.exportForm.submit();
+
+            var self = this;
+
+            setTimeout(() => {
+                self.isOpen = false;
+            }, 0)
+        },
+
+        importData: function() {
+            this.$refs.importForm.submit();
 
             var self = this;
 

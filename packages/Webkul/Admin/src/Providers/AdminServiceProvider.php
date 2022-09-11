@@ -28,7 +28,7 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'admin');
 
-        $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
+        // $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
         $router->aliasMiddleware('user', \Webkul\Admin\Http\Middleware\Bouncer::class);
         $router->aliasMiddleware('admin_locale', Locale::class);

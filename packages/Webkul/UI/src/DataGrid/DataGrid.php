@@ -9,10 +9,11 @@ use Webkul\UI\DataGrid\Traits\ProvideBouncer;
 use Webkul\UI\DataGrid\Traits\ProvideCollection;
 use Webkul\UI\DataGrid\Traits\ProvideExceptionHandler;
 use Webkul\UI\DataGrid\Traits\ProvideExport;
+use Webkul\UI\DataGrid\Traits\ProvideImport;
 
 abstract class DataGrid
 {
-    use ProvideBouncer, ProvideCollection, ProvideExceptionHandler, ProvideExport;
+    use ProvideBouncer, ProvideCollection, ProvideExceptionHandler, ProvideExport, ProvideImport;
 
     /**
      * Set index columns, ex: id. Default index is `id`.
@@ -215,6 +216,13 @@ abstract class DataGrid
      * @var boolean
      */
     protected $export = false;
+
+    /**
+     * Export option.
+     *
+     * @var boolean
+     */
+    protected $import = false;
 
     /**
      * Create datagrid instance.
