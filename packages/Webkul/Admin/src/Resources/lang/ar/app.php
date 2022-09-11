@@ -735,12 +735,14 @@
             'organization_name'   => 'اسم المنظمة',
             'is-default'          => 'افتراضي',
             'rotten-days'         => 'أيام فاسدة',
+            'rotten_lead'         => 'الرصاص الفاسد',
             'yes'                 => 'نعم',
             'no'                  => 'لا',
             'move-to-inbox'       => 'الانتقال إلى البريد الوارد',
             'update-success'      => ':تم تحديث المورد بنجاح.',
             'destroy-success'     => ':تم حذف المورد بنجاح.',
             'destroy-failed'      => ':لا يمكن حذف المورد.',
+            'attribute_type'      => 'نوع السمة',
             'filters'             => [
                 'yesterday'       => 'في الامس',
                 'today'           => 'اليوم',
@@ -804,6 +806,7 @@
             'add_more'            => 'أضف المزيد',
             'select-country'      => 'الرجاء تحديد الدولة',
             'select-users'        => 'حدد المستخدمون',
+            'select_rotten_leads' => 'حدد العروض الفاسدة',
             'select-organization' => 'حدد المنظمات',
             'state'               => 'ولاية',
             'select-state'        => 'الرجاء تحديد الولاية',
@@ -837,7 +840,9 @@
             'forbidden-error'     => 'ممنوع الخطأ',
             'internal-server-error' => 'خطأ في الخادم الداخلي',
             'something-went-wrong'  => 'هناك شئ خاطئ، يرجى المحاولة فى وقت لاحق.',
-            'delete-confirm'       => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
+            'delete-confirm'        => 'هل تريد حقًا تنفيذ هذا الإجراء؟',
+            'system_attribute'      => 'نظام', 
+            'custom_attribute'      => 'العادة', 
         ],
 
         'user' => [

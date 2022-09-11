@@ -42,14 +42,6 @@ class Menu
 
         $userRole = auth()->guard('user')->user()->role;
 
-        $configurations = config('core_config');
-
-        foreach ($configurations as $index => $configuration) {
-            $configurations[$index]['key'] = "configuration." . $configuration['key'];
-            $configurations[$index]['route'] = 'admin.configuration.index';
-            $configurations[$index]['params'] = str_replace(".", "/", $configuration['key']);
-        }
-
         $adminMenus = config('menu.admin');
 
         $currentUserRole = auth()->guard('user')->user()->role;
