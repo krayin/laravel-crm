@@ -1,5 +1,5 @@
 {
-    "/js/ui.js": "/js/ui.js?id=e000e82299610d48596fb143988f98fd",
+    "/js/ui.js": "/js/ui.js?id=2e29f10ee247d35aedb7c87cb5021b88",
     "/css/ui.css": "/css/ui.css?id=b7b8ad024fa08b9a5d21cff37b6a59c3",
     "/images/add-icon.svg": "/images/add-icon.svg?id=9135b4e0e1c239c36981c849a44a80e1",
     "/images/alert-danger-icon.svg": "/images/alert-danger-icon.svg?id=d77f6a8646ed23b5c3b7721e9e236299",
@@ -23,6 +23,7 @@
     "/images/close-white-icon.svg": "/images/close-white-icon.svg?id=eca0bd1d80ac3d7c9f9a20ab812d4aa1",
     "/images/download-icon.svg": "/images/download-icon.svg?id=a8ddc459c3a5659d8a8be90a9b1bad6e",
     "/images/ellipsis-icon.svg": "/images/ellipsis-icon.svg?id=78aa3112be42d9cef6d2338fd58021d9",
+    "/images/export-icon.svg": "/images/export-icon.svg?id=061ce9bd2880d4da6c7b70a66fb4aa40",
     "/images/external-link-icon.svg": "/images/external-link-icon.svg?id=b2beda2403e83f5aacfdcfc575216bb7",
     "/images/eye-icon.svg": "/images/eye-icon.svg?id=b29def27b6a18899d6f75f20b911715d",
     "/images/folder-icon.svg": "/images/folder-icon.svg?id=c7d8760e1cc9ebaf31ea3ff012555141",
@@ -52,6 +53,7 @@
     "/images/time-icon.svg": "/images/time-icon.svg?id=57cfdb5c9d4c46e2ec1c84de98b1e326",
     "/images/trash-icon.svg": "/images/trash-icon.svg?id=985e370d9ceea2f05b82e739da7a0767",
     "/images/trash-white-icon.svg": "/images/trash-white-icon.svg?id=458b1d90fc1fdfe2581e7b87d6e2ed78",
+    "/images/upload-icon.svg": "/images/upload-icon.svg?id=eae90d6654734ea30c06cea72a3a8149",
     "/fonts/Roboto-Black.ttf": "/fonts/Roboto-Black.ttf?id=f61f849b9d6e2452c74654b2e9f909b7",
     "/fonts/Roboto-BlackItalic.ttf": "/fonts/Roboto-BlackItalic.ttf?id=b8f36dd08c12103a9d26c2b22608fbba",
     "/fonts/Roboto-Bold.ttf": "/fonts/Roboto-Bold.ttf?id=59c0ccb5974ccfa21a2a0f4b477acb05",
@@ -63,9 +65,5 @@
     "/fonts/Roboto-MediumItalic.ttf": "/fonts/Roboto-MediumItalic.ttf?id=cc69ce1bcb64e3479da047696f76d277",
     "/fonts/Roboto-Regular.ttf": "/fonts/Roboto-Regular.ttf?id=487357337a180effe639a1b3b8c6cdd9",
     "/fonts/Roboto-Thin.ttf": "/fonts/Roboto-Thin.ttf?id=4621c139182c23270ef63b851972f5a6",
-    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d88fca0289256",
-    "/images/upload-icon.svg": "/images/upload-icon.svg?id=eae90d6654734ea30c06cea72a3a8149",
-    "/images/export-icon.svg": "/images/export-icon.svg?id=061ce9bd2880d4da6c7b70a66fb4aa40",
-    "/images/controls.svg": "/images/controls.svg?id=64ce374f9c70735c70200fd2bf33ebde",
-    "/images/favicon.ico": "/images/favicon.ico?id=dd35a873003e9508df7903ebe10a805e"
+    "/fonts/Roboto-ThinItalic.ttf": "/fonts/Roboto-ThinItalic.ttf?id=6319a0bdfe3827cb061d88fca0289256"
 }

@@ -729,12 +729,14 @@
             'organization_name'   => 'Kuruluş Adı',
             'is-default'          => 'Varsayılan',
             'rotten-days'         => 'Çürük Günler',
+            'rotten_lead'         => 'çürük kurşun',
             'yes'                 => 'Evet',
             'no'                  => 'Hayır',
             'move-to-inbox'       => 'Gelen Kutusuna Taşı',
             'update-success'      => ':resource başarıyla güncellendi.',
             'destroy-success'     => ':resource başarıyla silindi',
             'destroy-failed'      => ':resource silinemez',
+            'attribute_type'      => 'Özellik Türü',
             'filters'             => [
                 'yesterday'       => 'Dün',
                 'today'           => 'Bugün',
@@ -798,6 +800,7 @@
             'add_more'            => 'Daha Fazla Ekle',
             'select-country'      => 'Lütfen ülke seçin',
             'select-users'        => 'Kullanıcıları Seçin',
+            'select_rotten_leads' => 'Rotten Leadsi seçin',
             'select-organization' => 'Kuruluşları Seçin',
             'state'               => 'İlçe',
             'select-state'        => 'Lütfen ilçe seçin',
@@ -831,7 +834,9 @@
             'forbidden-error'     => '403 yasak hatası',
             'internal-server-error' => '500 Dahili Sunucu Hatası',
             'something-went-wrong'  => 'Bir ÅŸeyler yanlÄ±ÅŸ oldu. LÃ¼tfen sonra tekrar deneyiniz.',
-            'delete-confirm'       => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
+            'delete-confirm'        => 'Bu eylemi gerçekten yapmak istiyor musunuz?',
+            'system_attribute'      => 'sistem', 
+            'custom_attribute'      => 'Gelenek', 
         ],
 
         'user' => [

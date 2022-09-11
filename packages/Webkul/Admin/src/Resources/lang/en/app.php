@@ -738,12 +738,14 @@
             'organization_name'   => 'Organization Name',
             'is-default'          => 'Is Default',
             'rotten-days'         => 'Rotten Days',
+            'rotten_lead'         => 'Rotten Lead',
             'yes'                 => 'Yes',
             'no'                  => 'No',
             'move-to-inbox'       => 'Move to Inbox',
             'update-success'      => ':resource updated successfully.',
             'destroy-success'     => ':resource deleted successfully.',
             'destroy-failed'      => ':resource can not be deleted.',
+            'attribute_type'      => 'Attribute Type',
             'filters'             => [
                 'yesterday'       => 'Yesterday',
                 'today'           => 'Today',
@@ -807,6 +809,7 @@
             'add_more'            => 'Add More',
             'select-country'      => 'Please select country',
             'select-users'        => 'Select Users',
+            'select_rotten_leads' => 'Select Rotten Leads',
             'select-organization' => 'Select Organizations',
             'state'               => 'State',
             'select-state'        => 'Please select state',
@@ -840,8 +843,9 @@
             'forbidden-error'     => '403 forbidden Error',
             'internal-server-error' => '500 Internal Server Error',
             'something-went-wrong'  => 'Something went wrong, please try again later.',
-            'delete-confirm'       => 'Do you really want to perform this action?'
-            
+            'delete-confirm'        => 'Do you really want to perform this action?',
+            'system_attribute'      => 'System', 
+            'custom_attribute'      => 'Custom', 
         ],
 
         'user' => [
