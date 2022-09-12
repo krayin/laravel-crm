@@ -150,10 +150,13 @@ trait ProvideTabFilters
         foreach ($this->tabFilters as $filterIndex => $filter) {
             if (in_array($key, $this->customTabFilters)) {
                 foreach ($filter['values'] as $filterValueIndex => $filterValue) {
-                    if (array_keys($info)[0] == 'bw' && $filterValue['key'] == 'custom') {
+                    if (
+                        (array_keys($info)[0] == 'bw' && $filterValue['key'] == 'custom') ||
+                        $filterValue['key'] == array_values($info)[0]
+                    ) {
                         $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                    } else {
-                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = ($filterValue['key'] == array_values($info)[0]);
+                    } else if ($filterValue['key'] == 'all') {
+                        $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = false;
                     }
                 }
 
