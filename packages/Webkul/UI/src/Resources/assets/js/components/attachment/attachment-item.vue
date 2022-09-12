@@ -25,56 +25,58 @@ export default {
 
             required: false,
 
-            default: null
+            default: null,
         },
 
         inputName: {
             type: String,
 
-            required: false
-        }
+            required: false,
+        },
     },
 
-    data: function() {
+    data: function () {
         return {
             show: false,
 
-            name: ""
+            name: "",
         };
     },
 
-    mounted: function() {
+    mounted: function () {
         this.activate();
     },
 
     methods: {
-        activate: function() {
+        activate: function () {
             if (this.attachment.isNew) {
                 this.openFileBrowser();
             } else {
                 if (this.attachment?.type) {
                     this.addDropZoneFile();
 
-                    return;   
+                    return;
                 }
 
                 this.showExistingAttachment();
             }
         },
 
-        openFileBrowser: function() {
+        openFileBrowser: function () {
             this.$refs.attachment.click();
         },
 
         addDropZoneFile() {
             let data = new DataTransfer();
-            
-            data.items.add(this.attachment.file)
+
+            data.items.add(this.attachment.file);
 
             this.$refs.attachment.files = data.files;
+
+            this.attachmentSelected();
         },
 
-        attachmentSelected: function() {
+        attachmentSelected: function () {
             let attachment = this.$refs.attachment;
 
             if (attachment.files && attachment.files[0]) {
@@ -84,15 +86,15 @@ export default {
             }
         },
 
-        showExistingAttachment: function() {
+        showExistingAttachment: function () {
             this.show = true;
 
             this.name = this.attachment.name;
         },
 
-        removeAttachment: function() {
+        removeAttachment: function () {
             this.$emit("onRemoveAttachment", this.attachment);
-        }
-    }
+        },
+    },
 };
 </script>
