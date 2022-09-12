@@ -2,6 +2,7 @@
     <div class="attachment-item" v-show="show">
         <span>
             <input
+                :id="attachment.id ?? ''"
                 class="attachment"
                 type="file"
                 name="attachment[]"
@@ -51,12 +52,26 @@ export default {
             if (this.attachment.isNew) {
                 this.openFileBrowser();
             } else {
+                if (this.attachment?.type) {
+                    this.addDropZoneFile();
+
+                    return;   
+                }
+
                 this.showExistingAttachment();
             }
         },
 
         openFileBrowser: function() {
             this.$refs.attachment.click();
+        },
+
+        addDropZoneFile() {
+            let data = new DataTransfer();
+            
+            data.items.add(this.attachment.file)
+
+            this.$refs.attachment.files = data.files;
         },
 
         attachmentSelected: function() {

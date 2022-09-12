@@ -92,18 +92,31 @@ export default {
 
     drop:function(event){
       // alert("sd");
-      let data = new DataTransfer();
+      
+
+      this.attachmentCount++;
+
+      const id = "attachment_" + this.attachmentCount;
+
+      this.attachments.push({
+        id,
+        isNew: false,
+        type: 'dropzone',
+        file: event.dataTransfer.files[0]
+      });
 
       // drop zone
-      data.items.add(event.dataTransfer.files[0]);
+      // data.items.add(event.dataTransfer.files[0]);
 
-      let selector = document.getElementsByClassName('attachment');
+      // let selector = document.getElementById(id);
       
-      selector.forEach((item) => {
-        data.items.add(item.files[0]);
-      });
+      // selector.forEach((item) => {
+      //   data.items.add(item.files[0]);
+      // });
+
+      // console.log(this.$refs);
       
-      selector[0].files = data.files;
+      // selector[0].files = data.files;
       
     },
 

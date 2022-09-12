@@ -133,6 +133,8 @@ class EmailController extends Controller
      */
     public function store()
     {
+        dd(request()->all());
+        
         $this->validate(request(), [
             'reply_to' => 'required|array|min:1',
             'reply'    => 'required',
