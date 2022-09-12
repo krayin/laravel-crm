@@ -14,7 +14,7 @@ class DataGridImport implements ToModel{
      */
     public function model(array $row)
     {
-        dd($row);
+        // dd($row);
         return new Person([
             'name'            => $row[0],
             'emails'          => $row[1],
