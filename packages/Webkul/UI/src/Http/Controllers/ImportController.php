@@ -18,12 +18,12 @@ class ImportController extends Controller
         $requestedInfo = request()->validate([
             //'format' => 'required',
         ]);
-        
-        $path = request()->file;
 
-    //    dd($path);
+        $file = request()->file('file');
+
+       //dd($file);
     
-        Excel::Import(new DataGridImport, $path);
+        Excel::Import(new DataGridImport, $file);
 
        // Session::flash('success', 'Leave Records Imported Successfully');
 

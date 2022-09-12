@@ -60,7 +60,7 @@
             </div>
         </div>
 
-        <form method="POST" :action="`${baseURL}/import${queryParams}`" ref="importForm" @submit="importData">
+        <form method="POST" :action="`${baseURL}/import${queryParams}`" ref="importForm" @submit="importData" enctype="multipart/form-data">
             <modal id="import" :is-open="isOpenImport">
                 <h3 slot="header-title">{{ __("ui.datagrid.upload") }}</h3>
 
@@ -92,7 +92,7 @@
                             :value="csrfToken"
                         />
                         
-                        <input type="file" name="file[]" class="form-control">
+                        <input type="file" name="file" class="form-control">
                         
                     </div>
                 </div>
