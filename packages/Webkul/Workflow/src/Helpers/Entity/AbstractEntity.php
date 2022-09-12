@@ -41,7 +41,19 @@ abstract class AbstractEntity
             }
 
             if ($attribute->lookup_type) {
-                $options = $this->attributeRepository->getLookUpOptions($attribute->lookup_type);
+                if (isset($this->attributesToBeSorted) && array_key_exists($attribute->lookup_type, $this->attributesToBeSorted)) {
+                    $columns = [
+                        'id',
+                        'name',
+                        $this->attributesToBeSorted[$attribute->lookup_type],
+                    ];
+                    
+                    $options = $this->attributeRepository->getLookUpOptions($attribute->lookup_type, '', $columns)->sortBy([
+                        [$this->attributesToBeSorted[$attribute->lookup_type], 'asc']
+                    ]);
+                } else {
+                    $options = $this->attributeRepository->getLookUpOptions($attribute->lookup_type);
+                }
             } else {
                 $options = $attribute->options;
             }
