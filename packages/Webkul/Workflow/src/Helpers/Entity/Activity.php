@@ -55,8 +55,8 @@ class Activity extends AbstractEntity
 
     /**
      * Attributes to be sorted
+     * 
      * @var array  $attributesToBeSorted
-     * param
      */
     protected $attributesToBeSorted = ['lead_pipeline_stages' => 'sort_order'];
 
