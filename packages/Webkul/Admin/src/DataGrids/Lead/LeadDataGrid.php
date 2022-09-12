@@ -82,17 +82,11 @@ class LeadDataGrid extends DataGrid
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
             'condition' => function ($row) {
-                if (in_array($row->stage_code, ['won', 'lost'])) {
+                if (in_array($row->stage_code, ['won', 'lost']) || ! $row->rotten_lead) {
                     return false;
                 }
 
-                $rottenDate = Carbon::createFromFormat('Y-m-d H:i:s', $row->created_at)->addDays($row->pipeline_rotten_days);
-
-                if ($rottenDate->diffInDays(Carbon::now(), false) > 0) {
-                    return true;
-                }
-
-                return false;
+                return true;
             }
         ]);
     }
@@ -122,6 +116,7 @@ class LeadDataGrid extends DataGrid
                 'tags.name as tag_name',
                 'lead_pipelines.rotten_days as pipeline_rotten_days',
                 'lead_pipeline_stages.code as stage_code',
+                DB::raw('CASE WHEN DATEDIFF(NOW(),' . DB::getTablePrefix() . 'leads.created_at) >=' . DB::getTablePrefix() . 'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
@@ -144,6 +139,10 @@ class LeadDataGrid extends DataGrid
             }
         }
 
+        if (! is_null(request()->input('rotten_lead.in'))) {
+            $queryBuilder->havingRaw(DB::getTablePrefix() . 'rotten_lead = ' . request()->input('rotten_lead.in'));
+        }
+
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
         $this->addFilter('sales_person', 'leads.user_id');
@@ -154,6 +153,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
+        $this->addFilter('rotten_lead',  DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'leads.created_at) >= ' . DB::getTablePrefix() . 'lead_pipelines.rotten_days'));
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -250,6 +250,19 @@ class LeadDataGrid extends DataGrid
 
                 return "<span class='badge badge-round badge-{$badge}'></span>" . $row->stage;
             },
+        ]);
+
+        $this->addColumn([
+            'index'             => 'rotten_lead',
+            'label'             => trans('admin::app.datagrid.rotten_lead'),
+            'type'              => 'single_dropdown',
+            'dropdown_options'  => $this->getYesNoDropdownOptions(),
+            'sortable'          => true,
+            'searchable'        => false,
+            'condition'         => 'eq',
+            'closure'           => function ($row) {
+                return ! $row->rotten_lead || in_array($row->stage_code, ['won', 'lost']) ? trans('admin::app.common.no') : trans('admin::app.common.yes');
+            }
         ]);
 
         $this->addColumn([
