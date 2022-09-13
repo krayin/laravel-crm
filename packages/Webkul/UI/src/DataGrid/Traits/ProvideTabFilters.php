@@ -55,6 +55,9 @@ trait ProvideTabFilters
     public function resolveCustomTabFiltersColumn($key)
     {
         switch ($key) {
+            case 'duration':
+                return ['schedule_from', 'schedule_to'];
+
             case 'scheduled':
                 return $this->filterMap['schedule_from'] ?? 'schedule_from';
 
@@ -122,9 +125,9 @@ trait ProvideTabFilters
                                 $dates[1] = Carbon::today()->format('Y-m-d');
                             }
 
-                            $collection->whereDate('schedule_from', '>=', $dates[0]);
+                            $collection->whereDate($column[0], '>=', $dates[0]);
 
-                            $collection->whereDate('schedule_to', '<=', $dates[1]);
+                            $collection->whereDate($column[1], '<=', $dates[1]);
                         }
                     } else {
                         $collection->where($column, $value);
