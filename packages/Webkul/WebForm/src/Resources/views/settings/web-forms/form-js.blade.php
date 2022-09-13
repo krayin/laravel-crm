@@ -41,6 +41,11 @@
 
             $("#krayinWebForm").validate({
                 submitHandler: function(form) {
+
+                    document.querySelector('#loaderDiv').classList.add('loaderDiv');
+
+                    document.querySelector('#imgSpinner').classList.add('imgSpinner');
+
                     $.ajax({
                         url: "{{ route('admin.settings.web_forms.form_store', $webForm->id) }}",
                         type: 'post',
@@ -50,6 +55,11 @@
                         },
                         dataType: 'json',
                         success: function (data) {
+
+                            document.querySelector('#loaderDiv').classList.remove('loaderDiv');
+
+                            document.querySelector('#imgSpinner').classList.remove('imgSpinner');
+
                             var validator = $("#krayinWebForm").validate();
 
                             if (data.message) {
@@ -64,6 +74,11 @@
                         },
 
                         error: function (data) {
+
+                            document.querySelector('#loaderDiv').classList.remove('loaderDiv');
+
+                            document.querySelector('#imgSpinner').classList.remove('imgSpinner');
+                            
                             var validator = $("#krayinWebForm").validate();
 
                             for (var key in data.responseJSON.errors) {
