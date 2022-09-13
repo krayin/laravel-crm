@@ -167,6 +167,10 @@ class Dashboard
      */
     public function getLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
+        if (! bouncer()->hasPermission('leads')) {
+            return 0;
+        }
+
         $labels = $wonLeadsCount = $lostLeadsCount = [];
 
         if ($totalWeeks) {
@@ -226,6 +230,10 @@ class Dashboard
      */
     public function getLeadsStarted($startDateFilter, $endDateFilter, $totalWeeks)
     {
+        if (! bouncer()->hasPermission('leads')) {
+            return 0;
+        }
+        
         $labels = $leadsStarted = [];
 
         if ($totalWeeks) {
@@ -446,7 +454,7 @@ class Dashboard
      */
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {   
-        if (! bouncer()->hasPermission('leads.view')) {
+        if (! bouncer()->hasPermission('leads')) {
             return 0;
         }
        
