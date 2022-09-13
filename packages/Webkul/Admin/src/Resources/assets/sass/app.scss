@@ -2548,6 +2548,7 @@ body {
     .drag-list {
         grid-auto-columns: unset;
         width: 100%;
+        display: block;
     }
 
     .drag-column {
@@ -2621,6 +2622,11 @@ body {
 
     .table table {
         width: auto;
+        min-width: 100%;
+    }
+
+    .table table td, .table table th {
+        width: unset;        
     }
 
     .table .table-body .empty-table div {
@@ -2629,6 +2635,7 @@ body {
 
     .group {
         height: unset;
+        width: 100%;
     }
 
     .table .table-header {
@@ -2787,5 +2794,29 @@ body {
 
     .custom-attribute-view .attribute-value-row{
         padding: 6px !important;
+    }
+
+    .pill {
+        width: 100%;
+    }
+
+    .dashboard .row-grid-3 .card .card-data .custom-card{
+        position: unset;
+        display: block;
+    }
+
+    span.drp-selected {
+        text-align: center;
+        display: block !important;
+    }
+
+    button.cancelBtn, button.applyBtn {
+        width: 100%;
+        margin-top: 8px;
+        margin-left: 0px !important;
+    }
+
+    .table table tbody tr td {
+        word-break: unset;
     }
 }
