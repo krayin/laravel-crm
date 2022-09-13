@@ -118,30 +118,24 @@ export default {
     justify-content: center;
     align-items: center;
     row-gap: 16px;
-    border: 2px dashed solid #41b883;
-    background-color: #fff;
     transition: 0.3s ease all;
 }
 
 .dropzone label {
     padding: 8px 12px;
-    color: #fff;
-    background-color: #41b883;
     transition: 0.3s ease all;
 }
 
 .active-dropzone {
-    color: #fff;
-    border-color: #fff;
-    background-color: #41b883;
-}
-
-.active-dropzone label {
-    background-color: #fff;
-    color: #41b883;
+    border-style: dashed;
+    border-color: darkgrey;
 }
 
 .active-dropzone input {
     display: none;
+}
+
+.attachment-wrapper .attachment-item span {
+    word-break: break-all;
 }
 </style>
