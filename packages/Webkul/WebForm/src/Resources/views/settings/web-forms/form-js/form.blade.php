@@ -20,11 +20,41 @@
     .anonymous-layout-container {
         background-color:<?= $webForm->background_color ?>;
     }
+
+    .loaderDiv {
+        z-index: 20;
+        position: absolute;
+        top: 0;
+        left:-5px;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.4);
+    }
+
+    .imgSpinner {
+        position: absolute;
+        border: 16px solid #f3f3f3; /* Light grey */
+        border-top: 16px solid #3498db; /* Blue */
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        top: 40%;
+        left:45%;
+        animation: spin 2s linear infinite;
+	}
+	
+	@keyframes spin {
+		0% { transform: rotate(0deg); }
+		100% { transform: rotate(360deg); }
+	}
 </style>
 
 
 <div class="anonymous-layout-container">
     <div class="center-box">
+        <section id="loaderDiv">
+            <div id="imgSpinner"></div>
+        </section>
         <div class="adjacent-center">
             <div class="title-box">
             <img src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}" alt="krayin">
