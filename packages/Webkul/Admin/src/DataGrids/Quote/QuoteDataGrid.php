@@ -98,7 +98,7 @@ class QuoteDataGrid extends DataGrid
         if (request()->input('expired_quotes.in') == 1) {
             $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) >= ' . DB::getTablePrefix() . 'NOW()'));
         } else {
-            $this->addFilter('expired_quotes', 'quotes.expired_at');
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) < ' . DB::getTablePrefix() . 'NOW()'));
         }
 
         $this->setQueryBuilder($queryBuilder);
