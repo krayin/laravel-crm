@@ -13,6 +13,10 @@
         .lead-form .modal-container .modal-body {
             padding: 0;
         }
+
+        .width_button{
+            width:100%;
+        }
     </style>
 @stop
 
@@ -355,22 +359,29 @@
                             </div>
 
                             <div v-else>
-                                <div class="panel-header">
-                                    {{ __('admin::app.mail.linked-lead') }}
+                                @if (bouncer()->hasPermission('leads.view'))
+                                    <div class="panel-header">
+                                        {{ __('admin::app.mail.linked-lead') }}
 
-                                    <span class="links">
-                                        <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
-                                            <i class="icon external-link-icon"></i>
-                                        </a>
+                                        <span class="links">
+                                            <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
+                                                <i class="icon external-link-icon"></i>
+                                            </a>
 
-                                        <i class="icon close-icon" @click="unlink('lead')"></i>
-                                    </span>
-                                </div>
-
-                                <div class="panel-body">
-                                    <div class="custom-attribute-view" v-html="html">
+                                            <i class="icon close-icon" @click="unlink('lead')"></i>
+                                        </span>
                                     </div>
-                                </div>
+
+                                    <div class="panel-body">
+                                        <div class="custom-attribute-view" v-html="html">
+                                        </div>
+                                    </div>
+                                @elseif (bouncer()->hasPermission('leads.create'))
+                                    <h3>{{ __('admin::app.mail.link-lead') }}</h3>
+                                    <button class="btn btn-sm btn-primary width_button" @click="$root.openModal('addLeadModal')">
+                                        {{ __('admin::app.mail.add-new-lead') }}
+                                    </button>
+                                @endif
                             </div>
                         </div>
                     @endif
