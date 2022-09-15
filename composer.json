@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "barryvdh/laravel-dompdf": "^2.0.0",
+        "barryvdh/laravel-dompdf": "^1.0",
         "diglactic/laravel-breadcrumbs": "^7.0",
         "doctrine/dbal": "^3.1",
         "fruitcake/laravel-cors": "^2.0",
@@ -21,8 +21,7 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
         "maatwebsite/excel": "^3.1",
-        "prettus/l5-repository": "^2.7.9",
-        "webklex/php-imap": "^2.2.5"
+        "prettus/l5-repository": "^2.7.9"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.6",
@@ -39,7 +38,10 @@
     "config": {
         "optimize-autoloader": true,
         "preferred-install": "dist",
-        "sort-packages": true
+        "sort-packages": true,
+        "allow-plugins": {
+            "pestphp/pest-plugin": true
+        }
     },
     "extra": {
         "laravel": {

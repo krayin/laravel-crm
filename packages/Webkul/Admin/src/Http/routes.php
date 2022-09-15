@@ -23,7 +23,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
         Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
 
-        Route::get('mail/inbound-parse', 'Webkul\Admin\Http\Controllers\Mail\EmailController@inboundParse')->name('admin.mail.inbound_parse');
+        Route::post('mail/inbound-parse', 'Webkul\Admin\Http\Controllers\Mail\EmailController@inboundParse')->name('admin.mail.inbound_parse');
 
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
