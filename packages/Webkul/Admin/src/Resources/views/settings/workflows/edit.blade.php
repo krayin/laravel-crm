@@ -328,11 +328,18 @@
                     </div>
 
                     <div class="form-group" v-if="matchedAttribute.type == 'select' || matchedAttribute.type == 'radio' || matchedAttribute.type == 'lookup'">
-                        <select :name="['actions[' + index + '][value]']" class="control" v-model="action.value">
+                        <select :name="['actions[' + index + '][value]']" class="control" v-model="action.value" v-if="! matchedAttribute.lookup_type">
                             <option v-for='option in matchedAttribute.options' :value="option.id">
                                 @{{ option.name }}
                             </option>
                         </select>
+
+                        <lookup-component
+                            :attribute="{'code': 'actions[' + index + '][value]', 'name': matchedAttribute.name, 'lookup_type': matchedAttribute.lookup_type}"
+                            validations="required"
+                            :data="action.value"
+                            v-else
+                        ></lookup-component>
                     </div>
 
                     <div class="form-group" v-if="matchedAttribute.type == 'multiselect' || matchedAttribute.type == 'checkbox'">
