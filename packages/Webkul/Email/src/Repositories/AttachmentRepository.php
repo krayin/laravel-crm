@@ -45,7 +45,7 @@ class AttachmentRepository extends Repository
         if (! isset($data['source'])) {
             return;
         }
-
+        
         if ($data['source'] == 'email') {
             foreach ($this->emailParser->getAttachments() as $attachment) {
                 Storage::put($path = 'emails/' . $email->id . '/' . $attachment->getFilename(), $attachment->getContent());
@@ -63,7 +63,7 @@ class AttachmentRepository extends Repository
             if (! isset($data['attachments'])) {
                 return;
             }
-
+            
             foreach ($data['attachments'] as $index => $attachment) {
                 $this->create([
                     'path'         => $path = request()->file('attachments.' . $index)->store('emails/' . $email->id),
