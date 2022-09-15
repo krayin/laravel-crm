@@ -3,7 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Quote;
 
 use Illuminate\Support\Facades\Event;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
