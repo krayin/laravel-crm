@@ -1,3 +1,51 @@
+## **v1.2.4 (15th of September 2022)** - *Release*
+
+* #816[feature] -  There should be an option to filter the expired quotes 
+
+* #374[feature] -  Add Drag and Drop functionality to attach files.
+
+* #1073[enhancement] - The section should be removed from the dashboard for which the user has no permission. 
+
+* #1013[enhancement] - Add support to php 8.1
+
+* #974[enhancement] - There should be an option for copy the Embed in web form
+
+* #947[enhancement] - There is no option for update leads stages using workflow
+
+* #847[enhancement] - There should be a loader before success message when the user is trying to submit the web-form 
+
+* #821[enhancement] - There is no option to filter the system/custom attributes..
+
+* #802[enhancement] - Only the filtered data should be exported if the user is trying to export data after applying the filter.
+
+* #791[enhancement] - Should have a responsive design on mobile
+
+* #764[enhancement] - There should be an option to filter all rotten leads
+
+* #663[enhancement] - There should be an option to print quotes in the quote table if the user is trying to print multiple quotes at a time.
+
+* #435[enhancement] - There should be an option for a "move to trash" when a customer trying to delete the inbox mail. 
+
+* #1091[fixed] - The date filter is not working if the admin is selecting the same date on from and to fields. 
+
+* #1088[fixed] - The user should not be able to view the leads by link leads option, if the user has no permission, to view leads.
+
+* #1087[fixed] - The filter label should be visible if the admin is trying to filter the attributes.
+
+* #1085[fixed] - There should be a astricts icon for the required field when the admin is creating the roles.
+
+* #1071[fixed] - The user should be login with a message screen if the user has no permission to access any tab
+
+* #1063[fixed] - The date filter's should be on the left side of the calendar. if the admin is trying to filter the dashboard data.
+
+* #1008[fixed] - The admin is not able to send the email by using the compose option.
+
+* #885[fixed] - There should not be any translation issue on the person table.
+
+* #792[fixed] - The custom tab should be active when the user is trying to filter activity by custom date.
+
+
+
 ## **v1.2.3 (25th of August 2022)** - *Release*
 
 * #991[feature] -  Export option for Leads Table
