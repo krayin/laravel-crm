@@ -38,7 +38,6 @@ class Email extends Mailable
     {
         $this->from($this->email->from)
             ->to($this->email->reply_to)
-            ->replyTo($this->email->parent_id ? $this->email->parent->unique_id : $this->email->unique_id)
             ->cc($this->email->cc ?? [])
             ->bcc($this->email->bcc ?? [])
             ->subject($this->email->parent_id ? $this->email->parent->subject : $this->email->subject)
