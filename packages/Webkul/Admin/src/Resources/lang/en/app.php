@@ -716,6 +716,7 @@
             'all'                 => 'All',
             'user'                => 'User',
             'sales-person'        => 'Sales Person',
+            'expired_quotes'      => 'Expired Quotes',
             'person'              => 'Person',
             'sub-total'           => 'Sub Total',
             'discount'            => 'Discount',
