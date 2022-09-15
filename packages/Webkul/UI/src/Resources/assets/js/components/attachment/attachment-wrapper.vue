@@ -91,8 +91,7 @@ export default {
                 id,
                 isNew: false,
                 type: "dropzone",
-                file: event.dataTransfer.files[0],
-                name: "dfdsfdf",
+                file: event.dataTransfer.files[0]
             });
         },
 

@@ -2,10 +2,8 @@
     <div class="attachment-item" v-show="show">
         <span>
             <input
-                :id="attachment.id ?? ''"
-                class="attachment"
                 type="file"
-                name="attachment[]"
+                :name="inputName"
                 @change="attachmentSelected($event)"
                 ref="attachment"
             />
