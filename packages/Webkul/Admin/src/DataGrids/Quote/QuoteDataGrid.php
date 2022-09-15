@@ -224,6 +224,13 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addAction([
+            'title'  => trans('ui::app.datagrid.print'),
+            'method' => 'GET',
+            'route'  => 'admin.quotes.print',
+            'icon'   => 'sprite quotes-icon',
+        ]);
+
+        $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.quotes.delete',

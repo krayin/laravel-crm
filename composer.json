@@ -9,7 +9,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
-        "barryvdh/laravel-dompdf": "^2.0.0",
+        "barryvdh/laravel-dompdf": "^1.0",
         "diglactic/laravel-breadcrumbs": "^7.0",
         "doctrine/dbal": "^3.1",
         "fruitcake/laravel-cors": "^2.0",
