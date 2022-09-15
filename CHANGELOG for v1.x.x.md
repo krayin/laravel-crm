@@ -18,8 +18,6 @@
 
 * #802[enhancement] - Only the filtered data should be exported if the user is trying to export data after applying the filter.
 
-* #791[enhancement] - Should have a responsive design on mobile
-
 * #764[enhancement] - There should be an option to filter all rotten leads
 
 * #663[enhancement] - There should be an option to print quotes in the quote table if the user is trying to print multiple quotes at a time.
