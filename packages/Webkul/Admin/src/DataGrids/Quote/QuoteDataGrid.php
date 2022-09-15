@@ -72,7 +72,8 @@ class QuoteDataGrid extends DataGrid
                 'users.id as user_id',
                 'users.name as sales_person',
                 'persons.id as person_id',
-                'persons.name as person_name'
+                'persons.name as person_name',
+                'quotes.expired_at as expired_quotes'
             )
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');
@@ -93,6 +94,12 @@ class QuoteDataGrid extends DataGrid
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('expired_at', 'quotes.expired_at');
         $this->addFilter('created_at', 'quotes.created_at');
+
+        if (request()->input('expired_quotes.in') == 1) {
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) >= ' . DB::getTablePrefix() . 'NOW()'));
+        } else {
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) < ' . DB::getTablePrefix() . 'NOW()'));
+        }
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -122,6 +129,14 @@ class QuoteDataGrid extends DataGrid
 
                 return "<a href='" . $route . "'>" . $row->sales_person . "</a>";
             },
+        ]);
+
+        $this->addColumn([
+            'index'            => 'expired_quotes',
+            'label'            => trans('admin::app.datagrid.expired_quotes'),
+            'type'             => 'single_dropdown',
+            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
+            'searchable'       => false,
         ]);
 
         $this->addColumn([

@@ -707,6 +707,7 @@
             'all'                 => 'Tümü',
             'user'                => 'Kullanıcı',
             'sales-person'        => 'Satış Elemanı',
+            'expired_quotes'      => 'Süresi Dolmuş Alıntılar',
             'person'              => 'Kişi',
             'sub-total'           => 'Ara Toplam',
             'discount'            => 'İndirim',
