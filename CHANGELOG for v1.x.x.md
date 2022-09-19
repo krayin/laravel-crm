@@ -1,4 +1,4 @@
-## **v1.2.4 (15th of September 2022)** - *Release*
+## **v1.2.4 (19th of September 2022)** - *Release*
 
 * #816[feature] -  There should be an option to filter the expired quotes 
 
