@@ -5,7 +5,7 @@ namespace Webkul\Admin\Exceptions;
 use Throwable;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Auth\AuthenticationException;
-use Doctrine\DBAL\Driver\PDOException;
+use Doctrine\DBAL\Driver\PDO\Exception as PDOException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Exceptions\Handler as AppExceptionHandler;
@@ -51,6 +51,17 @@ class Handler extends AppExceptionHandler
     }
 
     /**
+     * Report the exception.
+     *
+     * @param  \Throwable   $exception
+     * @return void
+     */
+    public function report(Throwable $exception)
+    {
+        //
+    }
+
+    /**
      * Convert an authentication exception into a response.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -92,7 +103,7 @@ class Handler extends AppExceptionHandler
             return $this->response($path, $statusCode);
         } elseif ($exception instanceof ModelNotFoundException) {
             return $this->response($path, 404);
-        } elseif ($exception instanceof PDOException) {
+        } elseif ($exception instanceof PDOException || $exception instanceof \ParseError) {
             return $this->response($path, 500);
         }
     }
