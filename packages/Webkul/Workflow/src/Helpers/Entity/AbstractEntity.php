@@ -30,7 +30,11 @@ abstract class AbstractEntity
                 continue;
             }
 
-            $attributeType = $attribute->type;
+            if (in_array($attribute->type, $skipAttributes)) {
+                continue;
+            }
+
+            $attributeType = $attribute->;
 
             if ($attribute->validation == 'decimal') {
                 $attributeType = 'decimal';
