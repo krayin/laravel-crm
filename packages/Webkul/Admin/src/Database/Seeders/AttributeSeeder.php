@@ -28,6 +28,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -43,6 +44,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -58,6 +60,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -73,6 +76,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -88,6 +92,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -103,6 +108,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -118,6 +124,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -133,6 +140,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -148,6 +156,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '1',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -163,6 +172,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '1',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -178,6 +188,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -193,6 +204,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '1',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -208,6 +220,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -223,6 +236,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -238,6 +252,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -253,6 +268,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '1',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -268,6 +284,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -283,6 +300,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -298,6 +316,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -313,6 +332,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -328,6 +348,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -343,6 +364,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -358,6 +380,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -373,6 +396,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -388,6 +412,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -403,6 +428,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -418,6 +444,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -433,6 +460,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -448,6 +476,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -463,6 +492,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ], [
@@ -478,6 +508,7 @@ class AttributeSeeder extends Seeder
                 'is_unique'       => '0',
                 'quick_add'       => '1',
                 'is_user_defined' => '0',
+                'is_visible'      => '1',
                 'created_at'      => $now,
                 'updated_at'      => $now,
             ]
