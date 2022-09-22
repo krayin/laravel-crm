@@ -26,15 +26,10 @@ abstract class AbstractEntity
         $attributes = [];
 
         foreach ($this->attributeRepository->findByField('entity_type', $entityType) as $attribute) {
-            if (in_array($attribute->type, $skipAttributes)) {
+            
+            if (in_array($attribute->type, $skipAttributes) || $attribute->is_visible == 0) {
                 continue;
             }
-
-            if (in_array($attribute->type, $skipAttributes)) {
-                continue;
-            }
-
-            $attributeType = $attribute->;
 
             if ($attribute->validation == 'decimal') {
                 $attributeType = 'decimal';
