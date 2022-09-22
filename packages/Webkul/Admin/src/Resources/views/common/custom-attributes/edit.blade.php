@@ -37,7 +37,7 @@
     @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
 
         <div
-            class="form-group {{ $attribute->type }}"
+            class="form-group {{ $attribute->type }} {{ $attribute->class }}"
             @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
             @else :class="[errors.has('{{ $formScope . $attribute->code }}') ? 'has-error' : '']" @endif
         >
