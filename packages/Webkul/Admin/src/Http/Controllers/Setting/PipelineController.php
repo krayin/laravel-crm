@@ -66,7 +66,7 @@ class PipelineController extends Controller
 
         Event::dispatch('settings.pipeline.create.before');
 
-        $pipeline = $this->pipelineRepository->create($request->all());
+        $pipeline = $this->pipelineRepository->create($request->validated());
 
         Event::dispatch('settings.pipeline.create.after', $pipeline);
 
@@ -104,7 +104,7 @@ class PipelineController extends Controller
 
         Event::dispatch('settings.pipeline.update.before', $id);
 
-        $pipeline = $this->pipelineRepository->update($request->all(), $id);
+        $pipeline = $this->pipelineRepository->update($request->validated(), $id);
 
         Event::dispatch('settings.pipeline.update.after', $pipeline);
 
