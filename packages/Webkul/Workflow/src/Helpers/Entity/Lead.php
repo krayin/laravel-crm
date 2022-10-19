@@ -163,7 +163,23 @@ class Lead extends AbstractEntity
             ], [
                 'id'   => 'add_note_as_activity',
                 'name' => __('admin::app.settings.workflows.add-note-as-activity'),
-            ],
+            ], [
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'request_methods' => [
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
+                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                ],
+                'encodings' => [
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
+                    'xml'        => __('admin::app.settings.workflows.encoding_xml'),
+                    'url_encode' => __('admin::app.settings.workflows.encoding_url_encode'),
+                    'form_data'  => __('admin::app.settings.workflows.encoding_form')
+                ]
+            ]
         ];
     }
 

@@ -648,6 +648,22 @@
                 'update-success'             => 'Workflow updated successfully.',
                 'delete-success'             => 'Workflow deleted successfully.',
                 'delete-failed'              => 'Workflow can not be deleted.',
+                'add-webhook'                => 'Trigger webhook',
+                'webhook_heading'            => 'Webhook settings',
+                'webhook_url'                => 'Enter URL',
+                'webhook_request_method'     => 'Request method',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'Select Encoding',
+                'encoding_json'              => 'Raw json',
+                'encoding_xml'               => 'Raw xml',
+                'encoding_url_encode'        => 'X-www-form-urlencoded',
+                'encoding_form'              => 'Form data',
+                'encoding_form'              => 'Form data',
+                'request_body'               => 'Request body'
             ],
 
             'tags' => [
