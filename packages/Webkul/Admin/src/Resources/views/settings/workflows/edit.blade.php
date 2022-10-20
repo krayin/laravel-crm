@@ -365,33 +365,9 @@
             </td>
 
             <td class="option" v-if="matchedAction && matchedAction.request_methods">
-            <label>{{ __('admin::app.settings.workflows.webhook_heading') }}</label>
-            <hr>
-                <div class="form-group">
-                    <label>{{ __('admin::app.settings.workflows.webhook_request_method') }}</label>
-                    <select :name="['actions[' + index + '][hook][method]']" class="control" v-model="action.value">  
-                        <option v-for='(text, method) in matchedAction.request_methods' :value="method">
-                            @{{ text }}
-                        </option>
-                    </select>
-                </div>
+                @include('admin::settings.workflows.webhook.index')
 
-                <div class="form-group">
-                    <label>{{ __('admin::app.settings.workflows.webhook_url') }}</label>
-                    <textarea id="description" type="text" :name="['actions[' + index + '][hook][url]']" class="control"></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label>{{ __('admin::app.settings.workflows.webhook_encoding') }}</label>
-                    <span style="float:left" v-for='(text, encoding) in matchedAction.encodings'>
-                        <input type="radio" :name="['actions[' + index + '][hook][encoding]']" :value="encoding" class="control">
-                        @{{ text }}
-                    </span>
-                </div>
-
-                <div class="form-group">
-                    <label>{{ __('admin::app.settings.workflows.request_body') }}</
-                </div>
+                <webhook-component/></webhook-component>
             </td>
 
             <td class="option" v-if="matchedAction && ! matchedAction.attributes && ! matchedAction.options && ! matchedAction.request_methods">

@@ -663,7 +663,12 @@
                 'encoding_url_encode'        => 'X-www-form-urlencoded',
                 'encoding_form'              => 'Form data',
                 'encoding_form'              => 'Form data',
-                'request_body'               => 'Request body'
+                'request_body'               => 'Request body',
+                'simple_body'                => 'Simple',
+                'custom_body'                => 'Custom',
+                'lead'                       => 'Lead',
+                'person'                     => 'Person',
+                'quote'                      => 'Quote',
             ],
 
             'tags' => [
