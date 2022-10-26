@@ -176,8 +176,7 @@ class Lead extends AbstractEntity
                 'encodings' => [
                     'json'       => __('admin::app.settings.workflows.encoding_json'),
                     'xml'        => __('admin::app.settings.workflows.encoding_xml'),
-                    'url_encode' => __('admin::app.settings.workflows.encoding_url_encode'),
-                    'form_data'  => __('admin::app.settings.workflows.encoding_form')
+                    'url_encode' => __('admin::app.settings.workflows.encoding_url_encode')
                 ]
             ]
         ];
@@ -279,7 +278,65 @@ class Lead extends AbstractEntity
                     $lead->activities()->attach($activity->id);
                     
                     break;
+
+                case 'trigger_webhook':
+                    if ($action['hook']['method'] == 'post') {
+                        Http::withHeaders(
+                            $this->formatHeaders($action['hook']['headers'])
+                        )->post(
+                            $action['hook']['url'],
+                            $this->getRequestBody($action['hook'], $lead)
+                        );
+                    }
+                    break; 
             }    
+        }
+    }
+
+    /**
+     * format headers
+     * 
+     * @param  $headers
+     * @return array
+     */
+    protected function formatHeaders($headers)
+    {
+        array_walk($headers, function (&$arr, $key) use (&$results) {
+            $results[$arr['key']] = $arr['value'];
+        });
+
+        return $results;
+    }
+
+    /**
+     * format request body
+     * 
+     * @param  $hook
+     * @param  $lead
+     * @return array
+     */
+    protected function getRequestBody($hook, $lead)
+    {
+        $hook['simple'] = str_replace(['lead_', 'person_', 'quote_'], '', $hook['simple']);
+
+        if ($hook['simple']) {
+            $results = $this->leadRepository->find($lead->id)->get($hook['simple'])->first()->toArray();
+        }
+
+        if ($hook['custom']) {
+            $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+
+            array_walk($custom_unformatted, function (&$raw, $key) use (&$custom_results) {
+                $arr = explode('=', $raw);
+
+                $custom_results[$arr[0]] = $arr[1];
+            });
+        }
+
+        $results = array_merge($results, $custom_results);
+
+        if ($hook['encoding'] == 'json') {
+            return json_encode($results);
         }
     }
 }
