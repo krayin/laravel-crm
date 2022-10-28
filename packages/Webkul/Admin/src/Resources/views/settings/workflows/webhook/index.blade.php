@@ -1,7 +1,7 @@
 @push('scripts')
     <script type="text/x-template" id="webhook-component-template">
             <div>
-                <label>{{ __('admin::app.settings.workflows.webhook_heading') }}</label>
+                 <label>{{ __('admin::app.settings.workflows.webhook_heading') }}</label>
                 <hr>
                 <div class="form-group">
                     <label>{{ __('admin::app.settings.workflows.webhook_request_method') }}</label>
@@ -53,23 +53,30 @@
                     <tabs>
                     <tab name="{{ __('admin::app.settings.workflows.simple_body') }}" :selected="true">
                         <div>
-                        <label>{{ __('admin::app.settings.workflows.lead') }}</label>
-                        <div v-for="lead in leads">
-                            <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'lead_'+lead.id" v-model="action.hook.simple" />
-                            @{{ lead.name }}
+                            <div if="entityType == 'leads'">
+                                <label>{{ __('admin::app.settings.workflows.lead') }}</label>
+                                <div v-for="lead in leads">
+                                    <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'lead_'+lead.id" v-model="action.hook.simple" />
+                                    @{{ lead.name }}
+                                </div>
                         </div>
 
-                        <label>{{ __('admin::app.settings.workflows.person') }}</label>
-                        <div v-for="person in persons">
-                            <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'person_'+person.id" v-model="action.hook.simple" />
-                            @{{ person.name }}
+                        <div if="entityType == 'leads' or entityType == 'persons'">
+                            <label>{{ __('admin::app.settings.workflows.person') }}</label>
+                            <div v-for="person in persons">
+                                <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'person_'+person.id" v-model="action.hook.simple" />
+                                @{{ person.name }}
+                            </div>
                         </div>
 
-                        <label>{{ __('admin::app.settings.workflows.quote') }}</label>
-                        <div v-for="quote in quotes">
-                            <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'quote_'+quote.id" v-model="action.hook.simple" />
-                            @{{ quote.name }}
+                        <div if="entityType == 'leads' or entityType == 'quotes'">
+                            <label>{{ __('admin::app.settings.workflows.quote') }}</label>
+                            <div v-for="quote in quotes">
+                                <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'quote_'+quote.id" v-model="action.hook.simple" />
+                                @{{ quote.name }}
+                            </div>
                         </div>
+
                         </div>
                     </tab>
                     <tab name="{{ __('admin::app.settings.workflows.custom_body') }}">
@@ -92,17 +99,42 @@
                 return {
                     index: this.$parent.index,
                     matchedAction: this.$parent.matchedAction,
-                    action: this.$parent.action,
-                    headers: this.$parent.action.hook.headers ? this.$parent.action.hook.headers : [],
+                    action: {
+                        hook: {
+                            method: [],
+                            url: '',
+                            encoding: '',
+                            simple: [],
+                            custom: ''
+                        }
+                    },
+                    headers : [],
+                    entityType: this.$parent.entityType,
                     'leads': @json(app('\Webkul\Workflow\Helpers\Entity\Lead')->getAttributes('leads', [])),
                     'persons': @json(app('\Webkul\Workflow\Helpers\Entity\Person')->getAttributes('persons', [])),
                     'quotes': @json(app('\Webkul\Workflow\Helpers\Entity\Quote')->getAttributes('quotes', [])),
                 }
             },
 
+            mounted() {
+                this.setAction();
+            },
+
+            watch: {
+                entityType(newEntity, oldEntity) {
+                    this.entityType = newEntity;
+                }
+            },
+
             methods: {
+                setAction() {
+                    console.log(this.entityType);
+                    if(this.$parent.action.hook) {
+                        this.action.hook = this.$parent.action.hook;
+                        this.headers = this.$parent.action.hook.headers;
+                    }
+                },
                 addHeader: function() {
-                    console.log(this.headers);
                     this.headers.push({
                         'key': '',
                         'value': ''

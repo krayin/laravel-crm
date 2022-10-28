@@ -167,18 +167,17 @@ class Lead extends AbstractEntity
                 'id'   => 'trigger_webhook',
                 'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
-                    'get'    => __('admin::app.settings.workflows.get_method'),
-                    'post'   => __('admin::app.settings.workflows.post_method'),
-                    'put'    => __('admin::app.settings.workflows.put_method'),
-                    'patch'  => __('admin::app.settings.workflows.patch_method'),
+                    'get' => __('admin::app.settings.workflows.get_method'),
+                    'post' => __('admin::app.settings.workflows.post_method'),
+                    'put' => __('admin::app.settings.workflows.put_method'),
+                    'patch' => __('admin::app.settings.workflows.patch_method'),
                     'delete' => __('admin::app.settings.workflows.delete_method'),
                 ],
                 'encodings' => [
-                    'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'xml'        => __('admin::app.settings.workflows.encoding_xml'),
-                    'url_encode' => __('admin::app.settings.workflows.encoding_url_encode')
+                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
                 ]
-            ]
+            ],
         ];
     }
 
@@ -294,12 +293,132 @@ class Lead extends AbstractEntity
     }
 
     /**
+     * Execute workflow actions
+     * 
+     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
+     * @param  \Webkul\Lead\Contracts\Lead  $lead
+     * @return array
+     */
+    public function executeActions($workflow, $lead)
+    {
+        foreach ($workflow->actions as $action) {
+            switch ($action['id']) {
+                case 'update_lead':
+                    $this->leadRepository->update([
+                        'entity_type'        => 'leads',
+                        $action['attribute'] => $action['value'],
+                    ], $lead->id);
+
+                    break;
+
+                case 'update_person':
+                    $this->personRepository->update([
+                        'entity_type'        => 'persons',
+                        $action['attribute'] => $action['value'],
+                    ], $lead->person_id);
+
+                    break;
+
+                case 'send_email_to_person':
+                    $emailTemplate = $this->emailTemplateRepository->find($action['value']);
+
+                    if (!$emailTemplate) {
+                        break;
+                    }
+
+                    try {
+                        Mail::queue(new Common([
+                            'to'      => data_get($lead->person->emails, '*.value'),
+                            'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
+                            'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
+                        ]));
+                    } catch (\Exception $e) {
+                    }
+
+                    break;
+
+                case 'send_email_to_sales_owner':
+                    $emailTemplate = $this->emailTemplateRepository->find($action['value']);
+
+                    if (!$emailTemplate) {
+                        break;
+                    }
+
+                    try {
+                        Mail::queue(new Common([
+                            'to'      => $lead->user->email,
+                            'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
+                            'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
+                        ]));
+                    } catch (\Exception $e) {
+                    }
+
+                    break;
+
+                case 'add_tag':
+                    $colors = [
+                        '#337CFF',
+                        '#FEBF00',
+                        '#E5549F',
+                        '#27B6BB',
+                        '#FB8A3F',
+                        '#43AF52'
+                    ];
+
+                    if (!$tag = $this->tagRepository->findOneByField('name', $action['value'])) {
+                        $tag = $this->tagRepository->create([
+                            'name'    => $action['value'],
+                            'color'   => $colors[rand(0, 5)],
+                            'user_id' => auth()->guard('user')->user()->id,
+                        ]);
+                    }
+
+                    if (!$lead->tags->contains($tag->id)) {
+                        $lead->tags()->attach($tag->id);
+                    }
+
+                    break;
+
+                case 'add_note_as_activity':
+                    $activity = $this->activityRepository->create([
+                        'type'    => 'note',
+                        'comment' => $action['value'],
+                        'is_done' => 1,
+                        'user_id' => $userId = auth()->guard('user')->user()->id,
+                    ]);
+
+                    $lead->activities()->attach($activity->id);
+
+                    break;
+
+                case 'trigger_webhook':
+                    if (in_array($action['hook']['method'], ['get', 'delete'])) {
+                        Http::withHeaders(
+                            $this->formatHeaders($action['hook']['headers'])
+                        )->{$action['hook']['method']}(
+                            $action['hook']['url']
+                        );
+                    } else {
+                        Http::withHeaders(
+                            $this->formatHeaders($action['hook']['headers'])
+                        )->{$action['hook']['method']}(
+                            $action['hook']['url'],
+                            $this->getRequestBody($action['hook'], $lead)
+                        );
+                    }
+
+                    break;
+            }
+        }
+    }
+
+    /**
      * format headers
      * 
      * @param  $headers
      * @return array
      */
-    protected function formatHeaders($headers)
+    private function formatHeaders($headers)
     {
         array_walk($headers, function (&$arr, $key) use (&$results) {
             $results[$arr['key']] = $arr['value'];
@@ -315,12 +434,27 @@ class Lead extends AbstractEntity
      * @param  $lead
      * @return array
      */
-    protected function getRequestBody($hook, $lead)
+    private function getRequestBody($hook, $lead)
     {
-        $hook['simple'] = str_replace(['lead_', 'person_', 'quote_'], '', $hook['simple']);
-
+        array_walk($hook['simple'], function (&$field, $key) use (&$simple_formatted) {
+            if (strpos($field, 'lead_') === 0) {
+                $simple_formatted['lead'][] = substr_replace($field, '', 0, 5);
+            } else if (strpos($field, 'person_') === 0) {
+                $simple_formatted['person'][] = substr_replace($field, '', 0, 7);
+            } else if (strpos($field, 'quote_') === 0) {
+                $simple_formatted['quote'][] = substr_replace($field, '', 0, 6);
+            }
+        });
         if ($hook['simple']) {
-            $results = $this->leadRepository->find($lead->id)->get($hook['simple'])->first()->toArray();
+            foreach ($simple_formatted as $entity => $fields) {
+                if ($entity == 'lead') {
+                    $lead_result = $this->leadRepository->find($lead->id)->get($fields)->first()->toArray();
+                } else if ($entity == 'person') {
+                    $person_result = $this->personRepository->find($lead->person_id)->get($fields)->first()->toArray();
+                } else if ($entity == 'quote') {
+                    $quote_result = $lead->quotes()->where('lead_id', $lead->id)->get($fields)->toArray();
+                }
+            }
         }
 
         if ($hook['custom']) {
@@ -333,10 +467,17 @@ class Lead extends AbstractEntity
             });
         }
 
-        $results = array_merge($results, $custom_results);
+        $results = array_merge(
+            $lead_result,
+            $person_result,
+            ['quotes' => $quote_result],
+            $custom_results
+        );
 
         if ($hook['encoding'] == 'json') {
             return json_encode($results);
+        } else if ($hook['encoding'] == 'http_query') {
+            return Arr::query($results);
         }
     }
 }
