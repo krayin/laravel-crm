@@ -3,6 +3,8 @@
 namespace Webkul\Workflow\Helpers\Entity;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
@@ -78,8 +80,7 @@ class Lead extends AbstractEntity
         ActivityRepository $activityRepository,
         PersonRepository $personRepository,
         TagRepository $tagRepository
-    )
-    {
+    ) {
         $this->attributeRepository = $attributeRepository;
 
         $this->emailTemplateRepository = $emailTemplateRepository;
@@ -101,7 +102,7 @@ class Lead extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (! $entity instanceof \Webkul\Lead\Contracts\Lead) {
+        if (!$entity instanceof \Webkul\Lead\Contracts\Lead) {
             $entity = $this->leadRepository->find($entity);
         }
 
@@ -179,117 +180,6 @@ class Lead extends AbstractEntity
                 ]
             ],
         ];
-    }
-
-    /**
-     * Execute workflow actions
-     * 
-     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
-     * @param  \Webkul\Lead\Contracts\Lead  $lead
-     * @return array
-     */
-    public function executeActions($workflow, $lead)
-    {
-        foreach ($workflow->actions as $action) {
-            switch ($action['id']) {
-                case 'update_lead':
-                    $this->leadRepository->update([
-                        'entity_type'        => 'leads',
-                        $action['attribute'] => $action['value'],
-                    ], $lead->id);
-
-                    break;
-
-                case 'update_person':
-                    $this->personRepository->update([
-                        'entity_type'        => 'persons',
-                        $action['attribute'] => $action['value'],
-                    ], $lead->person_id);
-
-                    break;
-                    
-                case 'send_email_to_person':
-                    $emailTemplate = $this->emailTemplateRepository->find($action['value']);
-
-                    if (! $emailTemplate) {
-                        break;
-                    }
-
-                    try {
-                        Mail::queue(new Common([
-                            'to'      => data_get($lead->person->emails, '*.value'),
-                            'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
-                            'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
-                        ]));
-                    } catch (\Exception $e) {}
-
-                    break;
-                    
-                case 'send_email_to_sales_owner':
-                    $emailTemplate = $this->emailTemplateRepository->find($action['value']);
-
-                    if (! $emailTemplate) {
-                        break;
-                    }
-
-                    try {
-                        Mail::queue(new Common([
-                            'to'      => $lead->user->email,
-                            'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
-                            'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
-                        ]));
-                    } catch (\Exception $e) {}
-
-                    break;
-            
-                case 'add_tag':
-                    $colors = [
-                        '#337CFF',
-                        '#FEBF00',
-                        '#E5549F',
-                        '#27B6BB',
-                        '#FB8A3F',
-                        '#43AF52'
-                    ];
-
-                    if (! $tag = $this->tagRepository->findOneByField('name', $action['value'])) {
-                        $tag = $this->tagRepository->create([
-                            'name'    => $action['value'],
-                            'color'   => $colors[rand(0, 5)],
-                            'user_id' => auth()->guard('user')->user()->id,
-                        ]);
-                    }
-
-                    if (! $lead->tags->contains($tag->id)) {
-                        $lead->tags()->attach($tag->id);
-                    }
-
-                    break;
-            
-                case 'add_note_as_activity':
-                    $activity = $this->activityRepository->create([
-                        'type'    => 'note',
-                        'comment' => $action['value'],
-                        'is_done' => 1,
-                        'user_id' => $userId = auth()->guard('user')->user()->id,
-                    ]);
-
-                    $lead->activities()->attach($activity->id);
-                    
-                    break;
-
-                case 'trigger_webhook':
-                    if ($action['hook']['method'] == 'post') {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->post(
-                            $action['hook']['url'],
-                            $this->getRequestBody($action['hook'], $lead)
-                        );
-                    }
-                    break; 
-            }    
-        }
     }
 
     /**
@@ -443,8 +333,11 @@ class Lead extends AbstractEntity
                 $simple_formatted['person'][] = substr_replace($field, '', 0, 7);
             } else if (strpos($field, 'quote_') === 0) {
                 $simple_formatted['quote'][] = substr_replace($field, '', 0, 6);
+            } else if (strpos($field, 'activity_') === 0) {
+                $simple_formatted['activity'][] = substr_replace($field, '', 0, 9);
             }
         });
+
         if ($hook['simple']) {
             foreach ($simple_formatted as $entity => $fields) {
                 if ($entity == 'lead') {
@@ -453,6 +346,8 @@ class Lead extends AbstractEntity
                     $person_result = $this->personRepository->find($lead->person_id)->get($fields)->first()->toArray();
                 } else if ($entity == 'quote') {
                     $quote_result = $lead->quotes()->where('lead_id', $lead->id)->get($fields)->toArray();
+                } else if ($entity == 'activity') {
+                    $activity_result = $lead->activities()->where('lead_id', $lead->id)->get($fields)->toArray();
                 }
             }
         }
@@ -471,6 +366,7 @@ class Lead extends AbstractEntity
             $lead_result,
             $person_result,
             ['quotes' => $quote_result],
+            ['activities' => $activity_result],
             $custom_results
         );
 

@@ -53,7 +53,7 @@
                     <tabs>
                     <tab name="{{ __('admin::app.settings.workflows.simple_body') }}" :selected="true">
                         <div>
-                            <div if="entityType == 'leads'">
+                            <div v-if="entityType == 'leads'">
                                 <label>{{ __('admin::app.settings.workflows.lead') }}</label>
                                 <div v-for="lead in leads">
                                     <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'lead_'+lead.id" v-model="action.hook.simple" />
@@ -61,7 +61,7 @@
                                 </div>
                         </div>
 
-                        <div if="entityType == 'leads' or entityType == 'persons'">
+                        <div v-if="entityType == 'leads' || entityType == 'persons'" :value="entityType">
                             <label>{{ __('admin::app.settings.workflows.person') }}</label>
                             <div v-for="person in persons">
                                 <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'person_'+person.id" v-model="action.hook.simple" />
@@ -69,11 +69,19 @@
                             </div>
                         </div>
 
-                        <div if="entityType == 'leads' or entityType == 'quotes'">
+                        <div v-if="entityType == 'leads' || entityType == 'quotes'">
                             <label>{{ __('admin::app.settings.workflows.quote') }}</label>
                             <div v-for="quote in quotes">
                                 <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'quote_'+quote.id" v-model="action.hook.simple" />
                                 @{{ quote.name }}
+                            </div>
+                        </div>
+
+                        <div v-if="entityType == 'leads' || entityType == 'activities'">
+                            <label>{{ __('admin::app.settings.workflows.activity') }}</label>
+                            <div v-for="activity in activities">
+                                <input type="checkbox" :name="['actions[' + index + '][hook][simple][]']" :value="'activity_'+activity.id" v-model="action.hook.simple" />
+                                @{{ activity.name }}
                             </div>
                         </div>
 
@@ -84,7 +92,7 @@
                         <textarea id="description" :name="['actions[' + index + '][hook][custom]']" v-model="action.hook.custom" class="control"></textarea>
                     </tab>
                     </tabs>
-                </div>
+                </div> 
             </div>
     </script>
 
@@ -95,10 +103,10 @@
 
             inject: ['$validator'],
 
+            props: ["entityType", "index", "matchedAction"],
+
             data: function () {
                 return {
-                    index: this.$parent.index,
-                    matchedAction: this.$parent.matchedAction,
                     action: {
                         hook: {
                             method: [],
@@ -109,10 +117,10 @@
                         }
                     },
                     headers : [],
-                    entityType: this.$parent.entityType,
                     'leads': @json(app('\Webkul\Workflow\Helpers\Entity\Lead')->getAttributes('leads', [])),
                     'persons': @json(app('\Webkul\Workflow\Helpers\Entity\Person')->getAttributes('persons', [])),
                     'quotes': @json(app('\Webkul\Workflow\Helpers\Entity\Quote')->getAttributes('quotes', [])),
+                    'activities': @json(app('\Webkul\Workflow\Helpers\Entity\Activity')->getAttributes('activities', [])),
                 }
             },
 
@@ -120,18 +128,10 @@
                 this.setAction();
             },
 
-            watch: {
-                entityType(newEntity, oldEntity) {
-                    this.entityType = newEntity;
-                }
-            },
-
             methods: {
                 setAction() {
-                    console.log(this.entityType);
                     if(this.$parent.action.hook) {
                         this.action.hook = this.$parent.action.hook;
-                        this.headers = this.$parent.action.hook.headers;
                     }
                 },
                 addHeader: function() {

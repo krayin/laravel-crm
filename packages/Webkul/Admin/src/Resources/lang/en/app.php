@@ -666,6 +666,7 @@
                 'lead'                       => 'Lead',
                 'person'                     => 'Person',
                 'quote'                      => 'Quote',
+                'activity'                   => 'Activity',
                 'add_header'                 => 'Add header',
                 'header_key'                 => 'Key',
                 'header_value'               => 'Value',

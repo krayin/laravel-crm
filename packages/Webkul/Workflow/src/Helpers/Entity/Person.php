@@ -3,6 +3,8 @@
 namespace Webkul\Workflow\Helpers\Entity;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
@@ -106,6 +108,20 @@ class Person extends AbstractEntity
                 'id'      => 'send_email_to_person',
                 'name'    => __('admin::app.settings.workflows.send-email-to-person'),
                 'options' => $emailTemplates,
+            ], [
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'request_methods' => [
+                    'get' => __('admin::app.settings.workflows.get_method'),
+                    'post' => __('admin::app.settings.workflows.post_method'),
+                    'put' => __('admin::app.settings.workflows.put_method'),
+                    'patch' => __('admin::app.settings.workflows.patch_method'),
+                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                ],
+                'encodings' => [
+                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ]
             ],
         ];
     }
@@ -198,14 +214,14 @@ class Person extends AbstractEntity
      * format request body
      * 
      * @param  $hook
-     * @param  $lead
+     * @param  $person
      * @return array
      */
     private function getRequestBody($hook, $person)
     {
         $hook['simple'] = str_replace('person_', '', $hook['simple']);
 
-        $person_result = $this->personRepository->find($person->id)->get($fields)->first()->toArray();
+        $results = $this->personRepository->find($person->id)->get($hook['simple'])->first()->toArray();
 
         if ($hook['custom']) {
             $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
@@ -215,12 +231,12 @@ class Person extends AbstractEntity
 
                 $custom_results[$arr[0]] = $arr[1];
             });
-        }
 
-        $results = array_merge(
-            $person_result,
-            $custom_results
-        );
+            $results = array_merge(
+                $results,
+                $custom_results
+            );
+        }
 
         if ($hook['encoding'] == 'json') {
             return json_encode($results);

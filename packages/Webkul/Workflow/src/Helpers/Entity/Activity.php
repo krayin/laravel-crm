@@ -239,6 +239,20 @@ class Activity extends AbstractEntity
                 'id'      => 'send_email_to_participants',
                 'name'    => __('admin::app.settings.workflows.send-email-to-participants'),
                 'options' => $emailTemplates,
+            ], [
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'request_methods' => [
+                    'get' => __('admin::app.settings.workflows.get_method'),
+                    'post' => __('admin::app.settings.workflows.post_method'),
+                    'put' => __('admin::app.settings.workflows.put_method'),
+                    'patch' => __('admin::app.settings.workflows.patch_method'),
+                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                ],
+                'encodings' => [
+                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ]
             ],
         ];
     }
@@ -322,7 +336,75 @@ class Activity extends AbstractEntity
                     } catch (\Exception $e) {}
 
                     break;
+
+                case 'trigger_webhook':
+                    if (in_array($action['hook']['method'], ['get', 'delete'])) {
+                        Http::withHeaders(
+                            $this->formatHeaders($action['hook']['headers'])
+                        )->{$action['hook']['method']}(
+                            $action['hook']['url']
+                        );
+                    } else {
+                        Http::withHeaders(
+                            $this->formatHeaders($action['hook']['headers'])
+                        )->{$action['hook']['method']}(
+                            $action['hook']['url'],
+                            $this->getRequestBody($action['hook'], $activity)
+                        );
+                    }
+
+                    break;
             }
+        }
+    }
+
+    /**
+     * format headers
+     * 
+     * @param  $headers
+     * @return array
+     */
+    private function formatHeaders($headers)
+    {
+        array_walk($headers, function (&$arr, $key) use (&$results) {
+            $results[$arr['key']] = $arr['value'];
+        });
+
+        return $results;
+    }
+
+    /**
+     * format request body
+     * 
+     * @param  $hook
+     * @param  $quote
+     * @return array
+     */
+    private function getRequestBody($hook, $activity)
+    {
+        $hook['simple'] = str_replace('activity_', '', $hook['simple']);
+
+        $results = $this->quoteRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
+
+        if (isset($hook['custom'])) {
+            $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+
+            array_walk($custom_unformatted, function (&$raw, $key) use (&$custom_results) {
+                $arr = explode('=', $raw);
+
+                $custom_results[$arr[0]] = $arr[1];
+            });
+
+            $results = array_merge(
+                $activity_result,
+                $custom_results
+            );
+        }
+
+        if ($hook['encoding'] == 'json') {
+            return json_encode($results);
+        } else if ($hook['encoding'] == 'http_query') {
+            return Arr::query($results);
         }
     }
 
