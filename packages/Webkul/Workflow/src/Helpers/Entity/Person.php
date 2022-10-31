@@ -60,8 +60,7 @@ class Person extends AbstractEntity
         EmailTemplateRepository $emailTemplateRepository,
         LeadRepository $leadRepository,
         PersonRepository $personRepository
-    )
-    {
+    ) {
         $this->attributeRepository = $attributeRepository;
 
         $this->emailTemplateRepository = $emailTemplateRepository;
@@ -170,24 +169,20 @@ class Person extends AbstractEntity
                             'subject' => $this->replacePlaceholders($person, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
                 case 'trigger_webhook':
-                    if (in_array($action['hook']['method'], ['get', 'delete'])) {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url']
-                        );
-                    } else {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url'],
-                            $this->getRequestBody($action['hook'], $person)
-                        );
+                    if (isset($action['hook'])) {
+                        try {
+                            $this->triggerWebhook(
+                                $action['hook'],
+                                $person
+                            );
+                        } catch (\Exception $e) {
+                        }
                     }
 
                     break;
@@ -196,41 +191,92 @@ class Person extends AbstractEntity
     }
 
     /**
+     * trigger webhook
+     * 
+     * @param  $hook
+     * @param  $person
+     * @return void
+     */
+    private function triggerWebhook($hook, $person)
+    {
+        if (in_array($hook['method'], ['get', 'delete'])) {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url']
+            );
+        } else {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url'],
+                $this->getRequestBody($hook, $person)
+            );
+        }
+    }
+
+    /**
      * format headers
      * 
-     * @param  $headers
+     * @param  $hook
      * @return array
      */
-    private function formatHeaders($headers)
+    private function formatHeaders($hook)
     {
-        array_walk($headers, function (&$arr, $key) use (&$results) {
-            $results[$arr['key']] = $arr['value'];
-        });
+        $results = ($hook['encoding'] == 'json')
+            ? array('Content-Type: application/json')
+            : array('Content-Type: application/x-www-form-urlencoded');
+
+        if (isset($hook['headers'])) {
+            array_walk(
+                $hook['headers'],
+                function (&$arr, $key) use (&$results) {
+                    $results[$arr['key']] = $arr['value'];
+                }
+            );
+        }
 
         return $results;
     }
 
     /**
-     * format request body
+     * prepare request body
      * 
      * @param  $hook
      * @param  $person
      * @return array
      */
-    private function getRequestBody($hook, $person)
-    {
-        $hook['simple'] = str_replace('person_', '', $hook['simple']);
+    private function getRequestBody(
+        $hook,
+        $person
+    ) {
+        $hook['simple'] = str_replace(
+            'person_',
+            '',
+            $hook['simple']
+        );
 
-        $results = $this->personRepository->find($person->id)->get($hook['simple'])->first()->toArray();
+        $results = $this
+            ->personRepository
+            ->find($person->id)
+            ->get($hook['simple'])
+            ->first()
+            ->toArray();
 
-        if ($hook['custom']) {
-            $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+        if (isset($hook['custom'])) {
+            $custom_unformatted = preg_split(
+                "/[\r\n,]+/",
+                $hook['custom']
+            );
 
-            array_walk($custom_unformatted, function (&$raw, $key) use (&$custom_results) {
-                $arr = explode('=', $raw);
+            array_walk(
+                $custom_unformatted,
+                function (&$raw, $key) use (&$custom_results) {
+                    $arr = explode('=', $raw);
 
-                $custom_results[$arr[0]] = $arr[1];
-            });
+                    $custom_results[$arr[0]] = $arr[1];
+                }
+            );
 
             $results = array_merge(
                 $results,
@@ -238,10 +284,8 @@ class Person extends AbstractEntity
             );
         }
 
-        if ($hook['encoding'] == 'json') {
-            return json_encode($results);
-        } else if ($hook['encoding'] == 'http_query') {
-            return Arr::query($results);
-        }
+        return ($hook['encoding'] == 'http_query')
+            ? Arr::query($results)
+            : json_encode($results);
     }
 }

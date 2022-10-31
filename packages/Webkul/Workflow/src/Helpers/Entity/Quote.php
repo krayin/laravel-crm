@@ -70,8 +70,7 @@ class Quote extends AbstractEntity
         QuoteRepository $quoteRepository,
         LeadRepository $leadRepository,
         PersonRepository $personRepository
-    )
-    {
+    ) {
         $this->attributeRepository = $attributeRepository;
 
         $this->emailTemplateRepository = $emailTemplateRepository;
@@ -164,7 +163,7 @@ class Quote extends AbstractEntity
                     ], $quote->id);
 
                     break;
-                
+
                 case 'update_person':
                     $this->personRepository->update([
                         'entity_type'        => 'persons',
@@ -172,7 +171,7 @@ class Quote extends AbstractEntity
                     ], $quote->person_id);
 
                     break;
-                
+
                 case 'update_related_leads':
                     foreach ($quote->leads as $lead) {
                         $this->leadRepository->update([
@@ -182,7 +181,7 @@ class Quote extends AbstractEntity
                     }
 
                     break;
-            
+
                 case 'send_email_to_person':
                     $emailTemplate = $this->emailTemplateRepository->find($action['value']);
 
@@ -196,10 +195,11 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
-            
+
                 case 'send_email_to_sales_owner':
                     $emailTemplate = $this->emailTemplateRepository->find($action['value']);
 
@@ -213,24 +213,20 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
                 case 'trigger_webhook':
-                    if (in_array($action['hook']['method'], ['get', 'delete'])) {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url']
-                        );
-                    } else {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url'],
-                            $this->getRequestBody($action['hook'], $quote)
-                        );
+                    if (isset($action['hook'])) {
+                        try {
+                            $this->triggerWebhook(
+                                $action['hook'],
+                                $quote
+                            );
+                        } catch (\Exception $e) {
+                        }
                     }
 
                     break;
@@ -239,22 +235,56 @@ class Quote extends AbstractEntity
     }
 
     /**
+     * trigger webhook
+     * 
+     * @param  $hook
+     * @param  $quote
+     * @return void
+     */
+    private function triggerWebhook($hook, $quote)
+    {
+        if (in_array($hook['method'], ['get', 'delete'])) {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url']
+            );
+        } else {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url'],
+                $this->getRequestBody($hook, $quote)
+            );
+        }
+    }
+
+    /**
      * format headers
      * 
-     * @param  $headers
+     * @param  $hook
      * @return array
      */
-    private function formatHeaders($headers)
+    private function formatHeaders($hook)
     {
-        array_walk($headers, function (&$arr, $key) use (&$results) {
-            $results[$arr['key']] = $arr['value'];
-        });
+        $results = ($hook['encoding'] == 'json')
+            ? array('Content-Type: application/json')
+            : array('Content-Type: application/x-www-form-urlencoded');
+
+        if (isset($hook['headers'])) {
+            array_walk(
+                $hook['headers'],
+                function (&$arr, $key) use (&$results) {
+                    $results[$arr['key']] = $arr['value'];
+                }
+            );
+        }
 
         return $results;
     }
 
     /**
-     * format request body
+     * prepare request body
      * 
      * @param  $hook
      * @param  $quote
@@ -262,29 +292,42 @@ class Quote extends AbstractEntity
      */
     private function getRequestBody($hook, $quote)
     {
-        $hook['simple'] = str_replace('quote_', '', $hook['simple']);
+        $hook['simple'] = str_replace(
+            'quote_',
+            '',
+            $hook['simple']
+        );
 
-        $results = $this->quoteRepository->find($quote->id)->get($hook['simple'])->first()->toArray();
+        $results = $this
+            ->quoteRepository
+            ->find($quote->id)
+            ->get($hook['simple'])
+            ->first()
+            ->toArray();
 
         if (isset($hook['custom'])) {
-            $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+            $custom_unformatted = preg_split(
+                "/[\r\n,]+/",
+                $hook['custom']
+            );
 
-            array_walk($custom_unformatted, function (&$raw, $key) use (&$custom_results) {
-                $arr = explode('=', $raw);
+            array_walk(
+                $custom_unformatted,
+                function (&$raw, $key) use (&$custom_results) {
+                    $arr = explode('=', $raw);
 
-                $custom_results[$arr[0]] = $arr[1];
-            });
+                    $custom_results[$arr[0]] = $arr[1];
+                }
+            );
 
             $results = array_merge(
-                $quote_result,
+                $results,
                 $custom_results
             );
         }
 
-        if ($hook['encoding'] == 'json') {
-            return json_encode($results);
-        } else if ($hook['encoding'] == 'http_query') {
-            return Arr::query($results);
-        }
+        return ($hook['encoding'] == 'http_query')
+            ? Arr::query($results)
+            : json_encode($results);
     }
 }

@@ -48,7 +48,7 @@
                     </label>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" v-if="action.hook.method != 'get' && action.hook.method != 'delete'">
                     <label>{{ __('admin::app.settings.workflows.request_body') }}</label>
                     <tabs>
                     <tab name="{{ __('admin::app.settings.workflows.simple_body') }}" :selected="true">

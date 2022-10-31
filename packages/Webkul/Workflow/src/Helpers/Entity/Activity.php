@@ -3,6 +3,8 @@
 namespace Webkul\Workflow\Helpers\Entity;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -69,8 +71,7 @@ class Activity extends AbstractEntity
         LeadRepository $leadRepository,
         PersonRepository $personRepository,
         ActivityRepository $activityRepository
-    )
-    {
+    ) {
         $this->attributeRepository = $attributeRepository;
 
         $this->emailTemplateRepository = $emailTemplateRepository;
@@ -139,7 +140,7 @@ class Activity extends AbstractEntity
                 'name'        => 'Schedule From',
                 'lookup_type' => null,
                 'options'     => collect([]),
-            ], [ 
+            ], [
                 'id'          => 'schedule_to',
                 'type'        => 'datetime',
                 'name'        => 'Schedule To',
@@ -305,7 +306,8 @@ class Activity extends AbstractEntity
                                 ],
                             ],
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
@@ -320,8 +322,8 @@ class Activity extends AbstractEntity
                         foreach ($activity->participants as $participant) {
                             Mail::queue(new Common([
                                 'to'          => $participant->user
-                                                ? $participant->user->email
-                                                : data_get($participant->person->emails, '*.value'),
+                                    ? $participant->user->email
+                                    : data_get($participant->person->emails, '*.value'),
                                 'subject'     => $this->replacePlaceholders($activity, $emailTemplate->subject),
                                 'body'        => $this->replacePlaceholders($activity, $emailTemplate->content),
                                 'attachments' => [
@@ -333,24 +335,20 @@ class Activity extends AbstractEntity
                                 ],
                             ]));
                         }
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
                 case 'trigger_webhook':
-                    if (in_array($action['hook']['method'], ['get', 'delete'])) {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url']
-                        );
-                    } else {
-                        Http::withHeaders(
-                            $this->formatHeaders($action['hook']['headers'])
-                        )->{$action['hook']['method']}(
-                            $action['hook']['url'],
-                            $this->getRequestBody($action['hook'], $activity)
-                        );
+                    if (isset($action['hook'])) {
+                        try {
+                            $this->triggerWebhook(
+                                $action['hook'],
+                                $activity
+                            );
+                        } catch (\Exception $e) {
+                        }
                     }
 
                     break;
@@ -359,22 +357,56 @@ class Activity extends AbstractEntity
     }
 
     /**
+     * trigger webhook
+     * 
+     * @param  $hook
+     * @param  $activity
+     * @return void
+     */
+    private function triggerWebhook($hook, $activity)
+    {
+        if (in_array($hook['method'], ['get', 'delete'])) {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url']
+            );
+        } else {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url'],
+                $this->getRequestBody($hook, $activity)
+            );
+        }
+    }
+
+    /**
      * format headers
      * 
-     * @param  $headers
+     * @param  $hook
      * @return array
      */
-    private function formatHeaders($headers)
+    private function formatHeaders($hook)
     {
-        array_walk($headers, function (&$arr, $key) use (&$results) {
-            $results[$arr['key']] = $arr['value'];
-        });
+        $results = ($hook['encoding'] == 'json')
+            ? array('Content-Type: application/json')
+            : array('Content-Type: application/x-www-form-urlencoded');
+
+        if (isset($hook['headers'])) {
+            array_walk(
+                $hook['headers'],
+                function (&$arr, $key) use (&$results) {
+                    $results[$arr['key']] = $arr['value'];
+                }
+            );
+        }
 
         return $results;
     }
 
     /**
-     * format request body
+     * prepare request body
      * 
      * @param  $hook
      * @param  $quote
@@ -382,30 +414,43 @@ class Activity extends AbstractEntity
      */
     private function getRequestBody($hook, $activity)
     {
-        $hook['simple'] = str_replace('activity_', '', $hook['simple']);
+        $hook['simple'] = str_replace(
+            'activity_',
+            '',
+            $hook['simple']
+        );
 
-        $results = $this->quoteRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
+        $results = $this
+            ->quoteRepository
+            ->find($activity->id)
+            ->get($hook['simple'])
+            ->first()
+            ->toArray();
 
         if (isset($hook['custom'])) {
-            $custom_unformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+            $custom_unformatted = preg_split(
+                "/[\r\n,]+/",
+                $hook['custom']
+            );
 
-            array_walk($custom_unformatted, function (&$raw, $key) use (&$custom_results) {
-                $arr = explode('=', $raw);
+            array_walk(
+                $custom_unformatted,
+                function (&$raw, $key) use (&$custom_results) {
+                    $arr = explode('=', $raw);
 
-                $custom_results[$arr[0]] = $arr[1];
-            });
+                    $custom_results[$arr[0]] = $arr[1];
+                }
+            );
 
             $results = array_merge(
-                $activity_result,
+                $results,
                 $custom_results
             );
         }
 
-        if ($hook['encoding'] == 'json') {
-            return json_encode($results);
-        } else if ($hook['encoding'] == 'http_query') {
-            return Arr::query($results);
-        }
+        return ($hook['encoding'] == 'http_query')
+            ? Arr::query($results)
+            : json_encode($results);
     }
 
     /**
