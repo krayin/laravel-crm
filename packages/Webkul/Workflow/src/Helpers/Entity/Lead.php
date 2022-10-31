@@ -222,8 +222,7 @@ class Lead extends AbstractEntity
                             'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -240,8 +239,7 @@ class Lead extends AbstractEntity
                             'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -288,8 +286,7 @@ class Lead extends AbstractEntity
                                 $action['hook'],
                                 $lead
                             );
-                        } catch (\Exception $e) {
-                        }
+                        } catch (\Exception $e) {}
                     }
 
                     break;

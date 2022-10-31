@@ -195,8 +195,7 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -213,8 +212,7 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -225,8 +223,7 @@ class Quote extends AbstractEntity
                                 $action['hook'],
                                 $quote
                             );
-                        } catch (\Exception $e) {
-                        }
+                        } catch (\Exception $e) {}
                     }
 
                     break;

@@ -306,8 +306,7 @@ class Activity extends AbstractEntity
                                 ],
                             ],
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -335,8 +334,7 @@ class Activity extends AbstractEntity
                                 ],
                             ]));
                         }
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -347,8 +345,7 @@ class Activity extends AbstractEntity
                                 $action['hook'],
                                 $activity
                             );
-                        } catch (\Exception $e) {
-                        }
+                        } catch (\Exception $e) {}
                     }
 
                     break;

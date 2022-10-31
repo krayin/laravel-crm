@@ -169,8 +169,7 @@ class Person extends AbstractEntity
                             'subject' => $this->replacePlaceholders($person, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -181,8 +180,7 @@ class Person extends AbstractEntity
                                 $action['hook'],
                                 $person
                             );
-                        } catch (\Exception $e) {
-                        }
+                        } catch (\Exception $e) {}
                     }
 
                     break;
