@@ -380,7 +380,7 @@
                 </div>
             </td>
 
-            <td class="actions" v-if="matchedAction && ! matchedAction.request_methods">
+            <td class="actions" v-if="matchedAction">
                 <i class="icon trash-icon" @click="removeAction"></i>
             </td>
         </tr>
