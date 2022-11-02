@@ -9,6 +9,7 @@ use Doctrine\DBAL\Driver\PDOException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Exceptions\Handler as AppExceptionHandler;
+use Illuminate\Contracts\Container\Container;
 
 class Handler extends AppExceptionHandler
 {
@@ -24,8 +25,9 @@ class Handler extends AppExceptionHandler
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(Container $container)
     {
+		parent::__construct($container);
         $this->jsonErrorMessages = [
             '404' => trans('admin::app.common.resource-not-found'),
             '403' => trans('admin::app.common.forbidden-error'),
