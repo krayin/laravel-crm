@@ -124,6 +124,7 @@
                                     class="control"
                                     id="password"
                                     ref="password"
+                                    v-validate="'min:6'"
                                     data-vv-as="{{ __('admin::app.user.account.password') }}"
                                 />
 
@@ -132,7 +133,7 @@
                                 </span>
                             </div>
 
-                            <div class="form-group" :class="[errors.has('confirm_password') ? 'has-error' : '']">
+                            <div class="form-group" :class="[errors.has('password_confirmation') ? 'has-error' : '']">
                                 <label for="confirm_password">
                                     {{ __('admin::app.user.account.confirm_password') }}
                                 </label>
@@ -142,12 +143,12 @@
                                     name="password_confirmation"
                                     class="control"
                                     id="confirm_password"
-                                    v-validate="'confirmed:password'"
+                                    v-validate="'min:6|confirmed:password'"
                                     data-vv-as="{{ __('admin::app.user.account.confirm_password') }}"
                                 />
 
-                                <span class="control-error" v-if="errors.has('confirm_password')">
-                                    @{{ errors.first('confirm_password') }}
+                                <span class="control-error" v-if="errors.has('password_confirmation')">
+                                    @{{ errors.first('password_confirmation') }}
                                 </span>
                             </div>
 
