@@ -45,7 +45,7 @@ class Email extends Mailable
             ->html($this->email->reply);
 
         $this->withSymfonyMessage(function (MimeEmail $message) {
-            $message->getHeaders()->addIdHeader('Message-ID', $this->email->message_id);
+            $message->getHeaders()->get('Message-ID')->setId($this->email->message_id);
 
             $message->getHeaders()->addTextHeader('References', $this->email->parent_id
                 ? implode(' ', $this->email->parent->reference_ids)
