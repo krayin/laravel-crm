@@ -196,7 +196,7 @@
             'lunches'                  => 'Almuerzos',
             'emails'                   => 'Emails',
             'files'                    => 'Archivos',
-            'sales-owner'              => 'Encargado Ventas',
+            'sales-owner'              => 'Encargado Venta',
             'person'                   => 'Persona',
             'subject'                  => 'Asunto',
             'expired-at'               => 'Expirado en',
