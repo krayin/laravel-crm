@@ -278,12 +278,13 @@
                 },
 
                 search: function (searchedKeyword) {
+                    this.leads = [];
                     this.getLeads(searchedKeyword);
                 },
 
                 updateFilter: function (data) {
+                    this.leads = [];
                     let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
-
                     this.getLeads(false, href);
                 },
 
