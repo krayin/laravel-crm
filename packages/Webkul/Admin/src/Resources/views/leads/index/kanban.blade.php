@@ -230,13 +230,13 @@
                             var totalCounts = {};
 
                             var self = this;
-                            self.leads = [];
 
                             this.stages.forEach(function(stage) {
                                 if (response.data[stage.id] !== undefined) {
                                     totalCounts[stage.name] = response.data[stage.id]['total'];
 
-                                    self.leads = self.leads.concat(response.data[stage.id]['leads'])
+                                    let resLeads = response.data[stage.id]['leads']
+                                    self.leads = self.leads.concat(resLeads.filter(resLeads => self.leads.findIndex(lead => lead.id == resLeads.id) == -1))
 
                                     self.stage_pagination[stage.id] = response.data[stage.id]['pagination'];
                                 } else {
