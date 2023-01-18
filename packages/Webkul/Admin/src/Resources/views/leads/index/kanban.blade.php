@@ -230,6 +230,7 @@
                             var totalCounts = {};
 
                             var self = this;
+                            self.leads = [];
 
                             this.stages.forEach(function(stage) {
                                 if (response.data[stage.id] !== undefined) {
