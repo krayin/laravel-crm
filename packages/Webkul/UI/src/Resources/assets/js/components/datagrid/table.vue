@@ -29,23 +29,21 @@
                 </template>
             </filter-component>
 
-            <table v-if="tableData.records.total">
-                <thead-component></thead-component>
+            <div class="table-responsive">
+                <table v-if="tableData.records.total">
+                    <thead-component></thead-component>
 
-                <tbody-component
-                    :result-loaded="resultLoaded"
-                ></tbody-component>
-            </table>
+                    <tbody-component :result-loaded="resultLoaded"></tbody-component>
+                </table>
 
-            <div class="empty-table" v-else>
-                <div>
-                    <img
-                        :src="
-                            `${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`
-                        "
-                    />
+                <div class="empty-table" v-else>
+                    <div>
+                        <img
+                        :src="`${baseURL}/vendor/webkul/admin/assets/images/empty-table-icon.svg`"
+                        />
 
-                    <span>{{ __("ui.datagrid.no-records") }}</span>
+                        <span>{{ __("ui.datagrid.no-records") }}</span>
+                    </div>
                 </div>
             </div>
         </div>
