@@ -111,6 +111,7 @@ return [
 
     'available_locales' => [
         'en' => 'English',
+        'fa' => 'فارسی',
         'tr' => 'Türkçe',
         'ar' => 'Arabic',
     ],
