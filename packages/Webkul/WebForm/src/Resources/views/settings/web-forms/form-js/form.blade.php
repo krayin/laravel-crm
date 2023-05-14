@@ -42,7 +42,7 @@
         left:45%;
         animation: spin 2s linear infinite;
 	}
-	
+
 	@keyframes spin {
 		0% { transform: rotate(0deg); }
 		100% { transform: rotate(360deg); }
@@ -57,7 +57,7 @@
         </section>
         <div class="adjacent-center">
             <div class="title-box">
-            <img src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}" alt="krayin">
+            <img src="{{ url('logo/ocoda_logo.png') }}" alt="krayin">
                 <h1 class="web-form-title">{{ $webForm->title }}</h1>
                 <p>{{ $webForm->description }}</p>
             </div>

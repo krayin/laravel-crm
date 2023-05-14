@@ -1,7 +1,7 @@
 @component('admin::emails.layouts.master')
     <div style="text-align: center;">
         <a href="{{ config('app.url') }}">
-            <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
+            <img src="{{ asset('logo/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
         </a>
     </div>
 

@@ -2,7 +2,7 @@
     <div class="navbar-top-left">
         <div class="brand-logo" style="width:150px">
             <a href="{{ route('admin.dashboard.index') }}">
-                <img style="width: 100%" src="{{ asset('vendor/webkul/admin/assets/images/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
+                <img style="width: 100%" src="{{ asset('logo/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
             </a>
         </div>
     </div>

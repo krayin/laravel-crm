@@ -32,8 +32,8 @@
 
         {!! view_render_event('admin.anonymous-layout.head') !!}
     </head>
-    
-    <body @if (app()->getLocale() == 'ar') class="rtl" @endif>        
+
+    <body @if (app()->getLocale() == 'ar') class="rtl" @endif>
         <div id="app" class="anonymous-layout-container">
             <spinner-meter :full-page="true" v-if="! pageLoaded"></spinner-meter>
 
@@ -44,7 +44,7 @@
                 <div class="adjacent-center">
 
                     <div class="brand-logo">
-                        <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
+                        <img src="{{ asset('logo/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
 
                         <p>Consumers interaction goes smoothly and efficiently</p>
                     </div>
@@ -74,7 +74,7 @@
 
 
             window.serverErrors = [];
-            
+
             @if (isset($errors) && count($errors))
                 window.serverErrors = @json($errors->getMessages());
             @endif

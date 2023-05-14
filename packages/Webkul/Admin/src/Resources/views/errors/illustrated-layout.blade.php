@@ -140,7 +140,7 @@
                 <div class="adjacent-center">
 
                     <div class="brand-logo">
-                        <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
+                        <img src="{{ asset('logo/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
                     </div>
 
                     <label>{{ __('Oops!') }}</label>
