@@ -44,7 +44,7 @@
                 <div class="adjacent-center">
 
                     <div class="brand-logo">
-                        <img src="{{ asset('logo/ocoda_logo.png') }}" alt="{{ config('app.name') }}"/>
+                        <img src="{{ asset('logo/ocoda_logo.png') }}" style="width: 170px;" alt="{{ config('app.name') }}"/>
 
                         <p>Consumers interaction goes smoothly and efficiently</p>
                     </div>
