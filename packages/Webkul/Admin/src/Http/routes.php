@@ -186,7 +186,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::get('search', 'PersonController@search')->name('admin.contacts.persons.search');
 
-                    Route::delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
+                    Route::middleware(['throttle:100,60'])->delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
 
                     Route::put('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass_delete');
                 });
