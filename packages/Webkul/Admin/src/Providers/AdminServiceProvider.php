@@ -4,6 +4,7 @@ namespace Webkul\Admin\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
 use Webkul\Admin\Http\Middleware\Locale;
+use Webkul\Admin\Http\Middleware\RequestSanitizer;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -31,7 +32,10 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
         $router->aliasMiddleware('user', \Webkul\Admin\Http\Middleware\Bouncer::class);
+
         $router->aliasMiddleware('admin_locale', Locale::class);
+
+        $router->aliasMiddleware('request_sanitizer', RequestSanitizer::class);
 
         $this->publishes([
             __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),

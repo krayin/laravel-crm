@@ -136,6 +136,7 @@ class EmailController extends Controller
         $this->validate(request(), [
             'reply_to' => 'required|array|min:1',
             'reply'    => 'required',
+            'subject'  => 'required|not_regex:/<.*>/'
         ]);
 
         Event::dispatch('email.create.before');

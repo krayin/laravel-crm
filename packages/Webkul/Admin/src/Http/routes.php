@@ -1,6 +1,6 @@
 <?php
 
-Route::group(['middleware' => ['web', 'admin_locale']], function () {
+Route::group(['middleware' => ['web', 'admin_locale', 'request_sanitizer']], function () {
     Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin')->name('krayin.home');
 
     Route::prefix(config('app.admin_path'))->group(function () {
@@ -150,9 +150,17 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 'prefix'    => 'mail',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Mail',
             ], function () {
-                Route::post('create', 'EmailController@store')->name('admin.mail.store');
+                Route::post('create', 'EmailController@store')
+                ->name('admin.mail.store')
+                ->withoutMiddleware(
+                    ['request_sanitizer']
+                );
 
-                Route::put('edit/{id?}', 'EmailController@update')->name('admin.mail.update');
+                Route::put('edit/{id?}', 'EmailController@update')
+                ->name('admin.mail.update')
+                ->withoutMiddleware(
+                    ['request_sanitizer']
+                );
 
                 Route::get('attachment-download/{id?}', 'EmailController@download')->name('admin.mail.attachment_download');
 
