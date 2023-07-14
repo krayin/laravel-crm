@@ -64,7 +64,7 @@
                                                 return $query
                                                     ->where('entity_type', 'quotes')
                                                     ->whereNotIn('code', [
-                                                          'billing_address',
+                                                        'billing_address',
                                                         'shipping_address',
                                                         'grand_total',
                                                         'sub_total',
