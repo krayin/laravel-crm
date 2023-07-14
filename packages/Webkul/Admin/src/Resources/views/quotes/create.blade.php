@@ -58,28 +58,22 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
                                 <div slot="body">
-
                                     @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
+                                    'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
                                             ->scopeQuery(function($query) {
                                                 return $query
                                                     ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'user_id',
-                                                        'subject',
-                                                        'description',
-                                                        'expired_at',
-                                                        'person_id',
+                                                    ->whereNotIn('code', [
+                                                          'billing_address',
+                                                        'shipping_address',
+                                                        'grand_total',
+                                                        'sub_total',
+                                                        'discount_amount',
+                                                        'adjustment_amount',
+                                                        'discount_percent',
+                                                        'tax_amount'
                                                     ]);
                                             })->get(),
-                                        'customValidations'      => [
-                                            'expired_at' => [
-                                               'required',
-                                               'date_format:yyyy-MM-dd',
-                                               'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                            ],
-                                        ],
-                                        'entity'                  => $quote,
                                     ])
 
                                     <div class="form-group">
@@ -89,7 +83,7 @@
 
                                         @php
                                             $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')
-                                                ->getLookUpEntity('leads', request('id'));
+                                                ->getLookUpEntity('lead', request('id'));
                                         @endphp
 
                                         <lookup-component
@@ -168,7 +162,7 @@
                                     </label>
                                 </div>
                             </th>
-                            
+
                             <th class="quantity">
                                 <div class="form-group">
                                     <label class="required">
@@ -180,22 +174,22 @@
                             <th class="price">
                                 <div class="form-group">
                                     <label class="required">
-                                        {{ __('admin::app.quotes.price') }}                                    
+                                        {{ __('admin::app.quotes.price') }}
                                       <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                     </label>
                                 </div>
                             </th>
 
                             <th class="amount">
-                                <div class="form-group">                                    
-                                    {{ __('admin::app.quotes.amount') }}                               
+                                <div class="form-group">
+                                    {{ __('admin::app.quotes.amount') }}
                                     <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                 </div>
                             </th>
 
                             <th class="discount">
                                 <div class="form-group">
-                                    <label class="required">                                         
+                                    <label class="required">
                                        {{ __('admin::app.quotes.discount') }}
                                         <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                     </label>
@@ -204,7 +198,7 @@
 
                             <th class="tax">
                                 <div class="form-group">
-                                    <label class="required">                                         
+                                    <label class="required">
                                         {{ __('admin::app.quotes.tax') }}
                                         <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                     </label>
@@ -212,7 +206,7 @@
                             </th>
 
                             <th class="total">
-                                <div class="form-group">                                
+                                <div class="form-group">
                                     {{ __('admin::app.quotes.total') }}
                                     <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                                 </div>
@@ -345,7 +339,7 @@
                         data-vv-as="&quot;{{ __('admin::app.quotes.name') }}&quot;"
                         v-on:keyup="search"
                         placeholder="{{ __('admin::app.quotes.search') }}"
-                        
+
                     />
 
                     <input
