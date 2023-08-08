@@ -109,13 +109,15 @@ class OrganizationDataGrid extends DataGrid
             'icon'   => 'pencil-icon',
         ]);
 
-        $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.contacts.organizations.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
-            'icon'         => 'trash-icon',
-        ]);
+        if(bouncer()->hasPermission('contacts.persons.delete')){
+            $this->addAction([
+                'title'        => trans('ui::app.datagrid.delete'),
+                'method'       => 'DELETE',
+                'route'        => 'admin.contacts.organizations.delete',
+                'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
+                'icon'         => 'trash-icon',
+            ]);
+        }
     }
 
     /**
@@ -125,11 +127,13 @@ class OrganizationDataGrid extends DataGrid
      */
     public function prepareMassActions()
     {
-        $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.contacts.organizations.mass_delete'),
-            'method' => 'PUT',
-        ]);
+        if(bouncer()->hasPermission('contacts.persons.delete')){
+            $this->addMassAction([
+                'type'   => 'delete',
+                'label'  => trans('ui::app.datagrid.delete'),
+                'action' => route('admin.contacts.organizations.mass_delete'),
+                'method' => 'PUT',
+            ]);
+        }
     }
 }
