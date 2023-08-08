@@ -129,13 +129,15 @@ class PersonDataGrid extends DataGrid
             'icon'   => 'pencil-icon',
         ]);
 
-        $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.contacts.persons.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
-            'icon'         => 'trash-icon',
-        ]);
+        if(bouncer()->hasPermission('contacts.persons.delete')){
+            $this->addAction([
+                'title'        => trans('ui::app.datagrid.delete'),
+                'method'       => 'DELETE',
+                'route'        => 'admin.contacts.persons.delete',
+                'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
+                'icon'         => 'trash-icon',
+            ]);
+        }
     }
 
     /**
@@ -145,11 +147,13 @@ class PersonDataGrid extends DataGrid
      */
     public function prepareMassActions()
     {
-        $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.contacts.persons.mass_delete'),
-            'method' => 'PUT',
-        ]);
+        if(bouncer()->hasPermission('contacts.persons.delete')){
+            $this->addMassAction([
+                'type'   => 'delete',
+                'label'  => trans('ui::app.datagrid.delete'),
+                'action' => route('admin.contacts.persons.mass_delete'),
+                'method' => 'PUT',
+            ]);
+        }
     }
 }
