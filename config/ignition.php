@@ -3,6 +3,10 @@
 use Spatie\Ignition\Solutions\SolutionProviders\BadMethodCallSolutionProvider;
 use Spatie\Ignition\Solutions\SolutionProviders\MergeConflictSolutionProvider;
 use Spatie\Ignition\Solutions\SolutionProviders\UndefinedPropertySolutionProvider;
+use Spatie\LaravelIgnition\Recorders\DumpRecorder\DumpRecorder;
+use Spatie\LaravelIgnition\Recorders\JobRecorder\JobRecorder;
+use Spatie\LaravelIgnition\Recorders\LogRecorder\LogRecorder;
+use Spatie\LaravelIgnition\Recorders\QueryRecorder\QueryRecorder;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\DefaultDbNameSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\GenericLaravelExceptionSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\IncorrectValetDbCredentialsSolutionProvider;
@@ -211,4 +215,20 @@ return [
 
     'settings_file_path' => '',
 
+    /*
+    |--------------------------------------------------------------------------
+    | Recorders
+    |--------------------------------------------------------------------------
+    |
+    | Ignition registers a couple of recorders when it is enabled. Below you may
+    | specify a recorders will be used to record specific events.
+    |
+    */
+
+    'recorders' => [
+        DumpRecorder::class,
+        JobRecorder::class,
+        LogRecorder::class,
+        QueryRecorder::class
+    ]
 ];

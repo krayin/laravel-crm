@@ -49,6 +49,7 @@ return [
             'include_separator_line' => false,
             'excel_compatibility'    => false,
             'output_encoding'        => '',
+            'test_auto_detect'       => true,
         ],
 
         /*
@@ -219,7 +220,7 @@ return [
         | By default PhpSpreadsheet keeps all cell values in memory, however when
         | dealing with large files, this might result into memory issues. If you
         | want to mitigate that, you can configure a cell caching driver here.
-        | When using the illuminate driver, it will store each value in a the
+        | When using the illuminate driver, it will store each value in the
         | cache store. This can slow down the process, because it needs to
         | store each value. You can use the "batch" store if you want to
         | only persist to the store when the memory limit is reached.
