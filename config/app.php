@@ -97,8 +97,7 @@ return [
     |
      */
 
-//    'locale' => env('LANG', 'zh'),//npm no use env
-    'locale' => 'zh',
+    'locale' => env('LANG', 'en'),//npm no use env
 
     /*
     |--------------------------------------------------------------------------
