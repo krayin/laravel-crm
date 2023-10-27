@@ -244,6 +244,18 @@
                                 }
                             })
 
+			// Remove duplicates from list of leads sent to kanban
+                            if (self.leads) {
+                                let uniqueLeads = self.leads.reduce((unique, obj) => {
+                                    // Check if the object id already exists in the unique array
+                                    if (!unique.some(item => item.id === obj.id)) {
+                                        unique.push(obj);
+                                    }
+                                    return unique;
+                                }, []);
+                                self.leads = uniqueLeads;
+                            }
+
                             this.totalCounts = totalCounts;
 
                             setTimeout(() => {
