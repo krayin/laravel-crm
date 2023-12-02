@@ -9,6 +9,7 @@ docker-compose.override.yml
 .vscode
 todo.txt
 .vagrant
+composer.lock
 /data
 /docker-compose-collection
 Homestead.json
