@@ -57,12 +57,26 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 -   **Node**: 8.11.3 LTS or higher.
 -   **Composer**: 1.6.5 or higher.
 
+### Installation and Configuration with Git
+
+```
+git clone https://github.com/techalgo/laravel-crm.git
+cd laravel-crm
+composer install
+```
+
 ### Installation and Configuration
 
 ##### Execute these commands below, in order
 
 ```
 composer create-project krayin/laravel-crm
+```
+
+```
+cd laravel-crm
+rm composer.lock
+composer install
 ```
 
 -   Find **.env** file in root directory and change the **APP_URL** param to your **domain**.
