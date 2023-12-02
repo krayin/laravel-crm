@@ -63,6 +63,7 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 git clone https://github.com/techalgo/laravel-crm.git
 cd laravel-crm
 composer install
+php artisan krayin-crm:install
 ```
 
 ### Installation and Configuration
