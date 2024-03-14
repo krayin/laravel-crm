@@ -69,4 +69,19 @@ class OrganizationRepository extends Repository
 
         return $organization;
     }
+
+    /**
+     * delete organization and it's persons
+     * 
+     * @param int $id
+     * @return @void
+     */
+    public function delete($id)
+    {
+        $organization = $this->model->findOrFail($id);
+
+        $organization->persons->each->delete();
+
+        $organization->delete($id);
+    }
 }
