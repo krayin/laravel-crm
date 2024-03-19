@@ -1,0 +1,19 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "mix",
+        "watch": "mix watch",
+        "watch-poll": "mix watch -- --watch-options-poll=1000",
+        "hot": "mix watch --hot",
+        "prod": "npm run production",
+        "production": "mix --production"
+    },
+    "devDependencies": {
+        "laravel-mix": "^6.0.6",
+        "laravel-mix-merge-manifest": "^2.0.0",
+        "postcss": "^8.1.14",
+        "sass": "^1.32.8",
+        "sass-loader": "^11.0.1"
+    }
+}
