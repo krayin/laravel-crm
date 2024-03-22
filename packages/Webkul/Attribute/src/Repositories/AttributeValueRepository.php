@@ -64,7 +64,8 @@ class AttributeValueRepository extends Repository
                 $data[$attribute->code] = isset($data[$attribute->code]) && $data[$attribute->code] ? 1 : 0;
             }
 
-            if (! isset($data[$attribute->code])) {
+            // Allowing null values
+            if (! array_key_exists($attribute->code, $data)) {
                 continue;
             }
 
