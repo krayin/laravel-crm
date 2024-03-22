@@ -202,6 +202,30 @@
 
                                         @break;
 
+                                    @case('checkbox')
+                                        <div class="checkbox-control">
+                                            @php
+                                                $options = $parentAttribute->lookup_type
+                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type)
+                                                    : $parentAttribute->options()->orderBy('sort_order')->get();
+                                            @endphp
+
+                                            @foreach ($options as $option)
+                                                <span class="checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="{{ $fieldName }}[]"
+                                                        value="{{ $option->id }}"
+                                                    />
+                                        
+                                                    <label class="checkbox-view" style="display: inline;"></label>
+                                                    {{ $option->name }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                        
+                                        @break;
+
                                     @case('file')
                                     @case('image')
                                         <input
