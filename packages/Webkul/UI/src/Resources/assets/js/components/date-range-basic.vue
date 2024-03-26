@@ -26,7 +26,7 @@
 import Flatpickr from "flatpickr";
 
 export default {
-    props: ["dateRangeKey", "startDate", "endDate"],
+    props: ["dateRangeKey", "startDate", "endDate", "column"],
 
     data: function() {
         return {
@@ -35,7 +35,8 @@ export default {
                 allowInput: true,
                 altFormat: "Y-m-d",
                 dateFormat: "Y-m-d",
-                weekNumbers: true
+                weekNumbers: true,
+                maxDate: this.column === 'created_at' ? 'today' : ''
             },
             startDatePicker: null,
             endDatePicker: null

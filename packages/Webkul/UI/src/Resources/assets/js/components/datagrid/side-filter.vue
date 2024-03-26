@@ -50,6 +50,7 @@
                             :date-range-key="key"
                             :start-date="data.values[0]"
                             :end-date="data.values[1]"
+                            :column="data.index"
                             @onChange="changeDateRange(key, $event)"
                         ></date-range-basic>
                     </template>
