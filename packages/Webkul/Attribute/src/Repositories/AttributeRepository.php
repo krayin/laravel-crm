@@ -141,16 +141,16 @@ class AttributeRepository extends Repository
         if (Str::contains($lookup['repository'], 'UserRepository')) {
             $userRepository = app($lookup['repository']);
             
-            $loggedUserRepository = auth()->guard('user')->user();
+            $loggedUser = auth()->guard('user')->user();
         
-            $permission = $loggedUserRepository->view_permission;
+            $permission = $loggedUser->view_permission;
         
             if ($permission === 'group') {
                 return $userRepository->rightJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
                     ->where('users.name', 'like', '%' . urldecode($query) . '%')
                     ->get();
             } elseif ($permission === 'individual') {
-                return $userRepository->findByField('users.id', $loggedUserRepository->id);
+                return $userRepository->findByField('users.id', $loggedUser->id);
             }
         }
 
