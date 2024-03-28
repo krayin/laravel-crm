@@ -137,6 +137,23 @@ class AttributeRepository extends Repository
             $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
         }
 
+        // Check user repo and restrict listing as per given permission
+        if (Str::contains($lookup['repository'], 'UserRepository')) {
+            $userRepository = app($lookup['repository']);
+            
+            $loggedUserRepository = auth()->guard('user')->user();
+        
+            $permission = $loggedUserRepository->view_permission;
+        
+            if ($permission === 'group') {
+                return $userRepository->rightJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+                    ->where('users.name', 'like', '%' . urldecode($query) . '%')
+                    ->get();
+            } elseif ($permission === 'individual') {
+                return $userRepository->findByField('users.id', $loggedUserRepository->id);
+            }
+        }
+
         return app($lookup['repository'])->findWhere([
             [$lookup['label_column'] ?? 'name', 'like', '%' . urldecode($query) . '%']
         ], $columns);
