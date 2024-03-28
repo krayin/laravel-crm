@@ -28,6 +28,22 @@ class UserDataGrid extends DataGrid
                 'users.created_at'
             );
 
+        $loggedUser = auth()
+            ->guard('user')
+            ->user();
+
+        $permission = $loggedUser->view_permission;
+
+        if ($permission == 'group') {
+            $queryBuilder
+                ->rightJoin(
+                    'user_groups', 
+                    'users.id', '=', 'user_groups.user_id'
+                );
+        } elseif ($permission == 'individual') {
+            $queryBuilder->where('users.id', $loggedUser->id);
+        }
+
         $this->addFilter('id', 'users.id');
 
         $this->setQueryBuilder($queryBuilder);
