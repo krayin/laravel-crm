@@ -35,7 +35,8 @@ export default {
                 allowInput: true,
                 altFormat: "Y-m-d",
                 dateFormat: "Y-m-d",
-                weekNumbers: true
+                weekNumbers: true,
+                defaultDate: "",
             },
             startDatePicker: null,
             endDatePicker: null
@@ -52,6 +53,10 @@ export default {
         activateStartDatePicker: function() {
             let self = this;
 
+            if (this.startDate) {
+                this.config.defaultDate = this.startDate
+            }
+
             this.startDatePicker = new Flatpickr(this.$refs.startDate, {
                 ...this.config,
                 onChange: function(selectedDates, dateStr, instance) {
@@ -66,6 +71,10 @@ export default {
 
         activateEndDatePicker: function() {
             let self = this;
+
+            if (this.endDate) {
+                this.config.defaultDate = this.endDate
+            }
 
             this.endDatePicker = new Flatpickr(this.$refs.endDate, {
                 ...this.config,
