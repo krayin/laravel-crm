@@ -140,6 +140,18 @@
                 }
             },
 
+            created: function () {
+                let search = window.location.search;
+
+                if (search) {
+                    let params = new URLSearchParams(search)
+
+                    if (params.get('created_at[bw]')) {
+                        this.columns.created_at.values = params.get('created_at[bw]').split(',')
+                    }
+                }
+            },
+
             mounted: function () {
                 EventBus.$on('updateFilter', data => {
                     EventBus.$emit('updateKanbanFilter', data);
@@ -184,7 +196,9 @@
             },
 
             created: function () {
-                this.getLeads();
+                let search = window.location.search;
+
+                this.getLeads(false, search);
 
                 queueMicrotask(() => {
                     $('#search-field').on('search keyup', ({target}) => {
@@ -230,6 +244,8 @@
                             var totalCounts = {};
 
                             var self = this;
+
+                            this.updatedURI(filterValues);
 
                             this.stages.forEach(function(stage) {
                                 if (response.data[stage.id] !== undefined) {
@@ -303,7 +319,16 @@
                             `)
                         }
                     });
-                }
+                },
+
+                updatedURI: function(params) {
+                    let newURL =
+                        window.location.origin +
+                        window.location.pathname +
+                        `${params != "" ? params : ""}`;
+
+                    window.history.pushState({ path: newURL }, "", newURL);
+                },
             }
         });
     </script>
