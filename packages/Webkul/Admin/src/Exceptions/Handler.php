@@ -4,7 +4,7 @@ namespace Webkul\Admin\Exceptions;
 
 use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
-use Doctrine\DBAL\Driver\PDO\Exception as PDOException;
+use PDOException;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
