@@ -235,7 +235,8 @@
                                 if (response.data[stage.id] !== undefined) {
                                     totalCounts[stage.name] = response.data[stage.id]['total'];
 
-                                    self.leads = self.leads.concat(response.data[stage.id]['leads'])
+                                    let resLeads = response.data[stage.id]['leads']
+                                    self.leads = self.leads.concat(resLeads.filter(resLeads => self.leads.findIndex(lead => lead.id == resLeads.id) == -1))
 
                                     self.stage_pagination[stage.id] = response.data[stage.id]['pagination'];
                                 } else {
@@ -277,12 +278,13 @@
                 },
 
                 search: function (searchedKeyword) {
+                    this.leads = [];
                     this.getLeads(searchedKeyword);
                 },
 
                 updateFilter: function (data) {
+                    this.leads = [];
                     let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
-
                     this.getLeads(false, href);
                 },
 
