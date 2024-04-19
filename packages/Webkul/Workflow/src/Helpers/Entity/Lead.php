@@ -109,6 +109,29 @@ class Lead extends AbstractEntity
     }
 
     /**
+     * Returns attributes
+     *
+     * @param  string  $entityType
+     * @param  array  $skipAttributes
+     * @return array
+     */
+    public function getAttributes($entityType, $skipAttributes = ['textarea', 'image', 'file', 'address'])
+    {
+        $attributes[] = [
+            'id'          => 'lead_pipeline_stage_id',
+            'type'        => 'select',
+            'name'        => 'Stage',
+            'lookup_type' => 'lead_pipeline_stages',
+            'options'     => collect([]),
+        ];
+
+        return array_merge(
+            parent::getAttributes($entityType, $skipAttributes),
+            $attributes
+        );
+    }
+
+    /**
      * Returns workflow actions
      * 
      * @return array
