@@ -16,7 +16,7 @@
 
                     <div class="timeline-bar"></div>
 
-                    <div class="section-tag" v-if="type != 'note' && type != 'file' && type != 'email'">
+                    <div class="section-tag" v-if="type != 'note' && type != 'file' && type != 'email' && type != 'whatsapp'">
                         <span v-if="subType == 'planned'">{{ __('admin::app.leads.planned') }}</span>
 
                         <span v-else>{{ __('admin::app.leads.done') }}</span>
@@ -58,6 +58,11 @@
                                     {{ __('admin::app.leads.file-added') }}
                                 </span>
 
+                                <span v-else-if="activity.type == 'whatsapp'">
+                                    <h4>{{ __('admin::app.leads.whatsapp-added') }}</h4>
+                                    @{{ activity.comment }}
+                                </span>
+
                                 <span class="icon ellipsis-icon dropdown-toggle"></span>
 
                                 <div class="dropdown-list">
@@ -93,7 +98,7 @@
                                 </a>
                             </div>
 
-                            <div class="comment" v-if="activity.comment" v-html="activity.comment">
+                            <div class="comment" v-if="activity.comment && activity.type=='note'" v-html="activity.comment">
                             </div>
 
                             <div class="info">
@@ -279,7 +284,7 @@
                 return {
                     activities: @json(app('\Webkul\Lead\Repositories\LeadRepository')->getAllActivities($lead->id)),
 
-                    types: ['all', 'note', 'call', 'meeting', 'lunch', 'file', 'email'],
+                    types: ['all', 'note', 'call', 'meeting', 'lunch', 'file', 'email', 'whatsapp'],
 
                     typeLabels: {
                         'all': "{{ __('admin::app.leads.all') }}",
@@ -295,6 +300,8 @@
                         'file': "{{ __('admin::app.leads.files') }}",
 
                         'email': "{{ __('admin::app.leads.emails') }}",
+
+                        'whatsapp': "{{ __('admin::app.leads.whatsapp') }}",
                     },
 
                     quotes: @json($lead->quotes()->with(['person', 'user'])->get())
@@ -328,7 +335,11 @@
 
                 file: function() {
                     return this.activities.filter(activity => activity.type == 'file');
-                }
+                },
+
+                whatsapp: function() {
+                    return this.activities.filter(activity => activity.type == 'whatsapp');
+                },
             },
 
             methods: {

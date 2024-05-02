@@ -41,6 +41,11 @@ class LeadSourceSeeder extends Seeder
                 'name'       => 'Direct',
                 'created_at' => $now,
                 'updated_at' => $now,
+            ], [
+                'id'         => 6,
+                'name'       => 'WhatsApp',
+                'created_at' => $now,
+                'updated_at' => $now,
             ]
         ]);
     }

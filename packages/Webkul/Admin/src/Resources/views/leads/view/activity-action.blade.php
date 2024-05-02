@@ -408,6 +408,47 @@
             @endif
 
             {!! view_render_event('admin.leads.view.informations.activity_actions.quote.after', ['lead' => $lead]) !!}
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.whatsapp.before', ['lead' => $lead]) !!}
+
+            <tab name="{{ __('admin::app.leads.whatsapp') }}">
+                <form
+                    action="{{ route('admin.activities.store') }}"
+                    method="post"
+                    data-vv-scope="whatsapp-form"
+                    @submit.prevent="onSubmit($event, 'whatsapp-form')"
+                >
+
+                    <input type="hidden" name="type" value="whatsapp">
+
+                    <input type="hidden" name="lead_id" value="{{ $lead->id }}">
+
+                    @csrf()
+
+                    <div class="form-group" :class="[errors.has('whatsapp-form.comment') ? 'has-error' : '']">
+                        <label for="comment" class="required">{{ __('admin::app.leads.whatsapp-comment') }}</label>
+
+                        <textarea
+                            name="comment"
+                            class="control"
+                            id="whatsapp-comment"
+                            v-validate="'required'"
+                            data-vv-as="&quot;{{ __('admin::app.leads.whatsapp-comment') }}&quot;"
+                        >{{ old('comment') }}</textarea>
+
+                        <span class="control-error" v-if="errors.has('whatsapp-form.comment')">
+                            @{{ errors.first('whatsapp-form.comment') }}
+                        </span>
+                    </div>
+
+                    <button type="submit" class="btn btn-md btn-primary">
+                        {{ __('admin::app.leads.send') }}
+                    </button>
+
+                </form>
+            </tab>
+
+            {!! view_render_event('admin.leads.view.informations.activity_actions.whatsapp.after', ['lead' => $lead]) !!}
         </tabs>
     </script>
 

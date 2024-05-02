@@ -142,15 +142,15 @@ class ActivityController extends Controller
     {
         $this->validate(request(), [
             'type'          => 'required',
-            'comment'       => 'required_if:type,note',
-            'schedule_from' => 'required_unless:type,note',
-            'schedule_to'   => 'required_unless:type,note',
+            'comment'       => 'required_if:type,note,whatsapp',
+            'schedule_from' => 'required_unless:type,note,whatsapp',
+            'schedule_to'   => 'required_unless:type,note,whatsapp',
         ]);
 
         Event::dispatch('activity.create.before');
 
         $activity = $this->activityRepository->create(array_merge(request()->all(), [
-            'is_done' => request('type') == 'note' ? 1 : 0,
+            'is_done' => request('type') == 'note' ||  request('type') == 'whatsapp' ? 1 : 0,
             'user_id' => auth()->guard('user')->user()->id,
         ]));
 
