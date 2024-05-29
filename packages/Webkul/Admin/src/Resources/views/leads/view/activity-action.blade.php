@@ -425,7 +425,32 @@
 
                     @csrf()
 
-                    <div class="form-group" :class="[errors.has('whatsapp-form.comment') ? 'has-error' : '']">
+                    <div class="form-group" :class="[errors.has('whatsapp-form.type') ? 'has-error' : '']">
+                        <label for="type" class="required">{{ __('admin::app.leads.type') }}</label>
+
+                        <select
+                            name="type"
+                            class="control"
+                            v-model="type"
+                            v-validate="'required'"
+                            data-vv-as="&quot;{{ __('admin::app.leads.type') }}&quot;"
+                        >
+                            <option value="" disabled selected>{{ __('admin::app.leads.select-type') }}</option>
+                            <option value="text">{{ __('admin::app.leads.whatsapp-type-text') }}</option>
+                            <option value="image">{{ __('admin::app.leads.whatsapp-type-image') }}</option>
+                            <option value="document">{{ __('admin::app.leads.whatsapp-type-document') }}</option>
+                        </select>
+
+                        <span class="control-error" v-if="errors.has('whatsapp-form.type')">
+                            @{{ errors.first('whatsapp-form.type') }}
+                        </span>
+                    </div>
+
+                    <div 
+                        class="form-group" 
+                        v-if="type == 'text'" 
+                        :class="[errors.has('whatsapp-form.comment') ? 'has-error' : '']"
+                    >
                         <label for="comment" class="required">{{ __('admin::app.leads.whatsapp-comment') }}</label>
 
                         <textarea
@@ -438,6 +463,49 @@
 
                         <span class="control-error" v-if="errors.has('whatsapp-form.comment')">
                             @{{ errors.first('whatsapp-form.comment') }}
+                        </span>
+                    </div>
+
+                    <upload-profile-image v-if="type == 'image'"></upload-profile-image>
+
+                    <div 
+                        class="form-group" 
+                        v-if="type == 'document'" 
+                        :class="[errors.has('whatsapp-form.file') ? 'has-error' : '']"
+                    >
+                        <label for="file" class="required">{{ __('admin::app.leads.file') }}</label>
+
+                        <input
+                            type="file"
+                            name="file"
+                            class="control"
+                            id="file"
+                            v-validate="'required'"
+                            data-vv-as="&quot;{{ __('admin::app.leads.file') }}&quot;"
+                        >
+
+                        <span class="control-error" v-if="errors.has('whatsapp-form.file')">
+                            @{{ errors.first('whatsapp-form.file') }}
+                        </span>
+                    </div>
+
+                    <div 
+                        class="form-group" 
+                        v-if="type == 'image' || type=='document'" 
+                        :class="[errors.has('whatsapp-form.caption') ? 'has-error' : '']"
+                    >
+                        <label for="caption">{{ __('admin::app.leads.whatsapp-caption') }}</label>
+
+                        <input
+                            type="text"
+                            name="caption"
+                            class="control"
+                            id="caption"
+                            data-vv-as="&quot;{{ __('admin::app.leads.whatsapp-caption') }}&quot;"
+                        />
+
+                        <span class="control-error" v-if="errors.has('whatsapp-form.caption')">
+                            @{{ errors.first('whatsapp-form.caption') }}
                         </span>
                     </div>
 
@@ -597,6 +665,67 @@
                             .catch(error => {});
                         }
                     });
+                }
+            }
+        });
+    </script>
+
+    <script type="text/x-template" id="upload-profile-image-template">
+        <div class="form-group">
+            <div class="image-upload-brick">
+                <input
+                    type="file"
+                    name="image"
+                    id="upload-profile"
+                    ref="imageInput"
+                    v-validate="'ext:jpeg,jpg,png'"
+                    accept="image/*"
+                    @change="addImageView($event)"
+                >
+
+                <i class="icon upload-icon"></i>
+
+                <img class="preview" :src="imageData" v-if="imageData.length > 0">
+            </div>
+
+            <div class="image-info-brick">
+                <span class="field-info">
+                {{ __('admin::app.leads.whatsapp-image-info') }} <br>
+                {{ __('admin::app.leads.whatsapp-image-format') }}
+                </span>
+            </div>
+        </div>
+    </script>
+
+    <script>
+        Vue.component('upload-profile-image', {
+            template: '#upload-profile-image-template',
+
+            data: function() {
+                return {
+                    imageData: "",
+                }
+            },
+
+            methods: {
+                addImageView () {
+                    var imageInput = this.$refs.imageInput;
+
+                    if (imageInput.files && imageInput.files[0]) {
+                        if (imageInput.files[0].type.includes('image/')) {
+                            var reader = new FileReader();
+
+                            reader.onload = (e) => {
+                                this.imageData = e.target.result;
+                            }
+
+                            reader.readAsDataURL(imageInput.files[0]);
+                        } else {
+                            imageInput.value = '';
+
+                            alert('{{ __('admin::app.user.account.image_upload_message') }}');
+                        }
+                    }
                 }
             }
         });

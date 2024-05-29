@@ -169,6 +169,9 @@
             'meeting'                  => 'Meeting',
             'lunch'                    => 'Lunch',
             'file'                     => 'File',
+            'whatsapp-type-text'       => 'Text',
+            'whatsapp-type-image'      => 'Image', 
+            'whatsapp-type-document'   => 'Document',
             'quote'                    => 'Quote',
             'whatsapp'                 => 'WhatsApp',
             'whatsapp-comment'         => 'Message',
@@ -223,11 +226,15 @@
             'meeting-scheduled'        => 'Meeting scheduled at :from - :to',
             'lunch-scheduled'          => 'Lunch scheduled at :from - :to',
             'file-added'               => 'File added',
-            'whatsapp-added'           => 'WhasApp message added',
+            'whatsapp-added'           => 'WhatsApp message added',
             'quote-destroy-success'    => 'Quote removed successfully.',
             'tag-create-success'       => 'Tag added successfully.',
             'tag-destroy-success'      => 'Tag removed successfully.',
             'edit'                     => 'Edit',
+            'whatsapp-image-info'      => 'Upload images',
+            'whatsapp-image-format'    => 'in PNG or JPG Format',
+            'whatsapp-image-error'     => 'Only images (.jpeg, .jpg, .png, ..) are allowed.',
+            'whatsapp-caption'         => 'Caption'
         ],
 
         'quotes' => [

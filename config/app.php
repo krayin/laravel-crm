@@ -238,6 +238,7 @@ return [
         Webkul\User\Providers\UserServiceProvider::class,
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
         Webkul\Workflow\Providers\WorkflowServiceProvider::class,
+        Webkul\WhatsApp\Providers\WhatsAppServiceProvider::class,
     ],
 
     /*

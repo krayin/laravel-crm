@@ -1,0 +1,16 @@
+{
+    "name": "krayin/laravel-whatsapp",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Prabhat Kumar",
+            "email": "prabhatkumar.oc082@webkul.in"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Webkul\\WhatsApp\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}

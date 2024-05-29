@@ -67,7 +67,8 @@
             "Webkul\\UI\\": "packages/Webkul/UI/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
+            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src",
+            "Webkul\\WhatsApp\\": "packages/Webkul/WhatsApp/src"
         }
     },
     "autoload-dev": {
