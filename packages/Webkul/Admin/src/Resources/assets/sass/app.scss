@@ -2524,3 +2524,40 @@ body {
         font-size: $font-size-md;
     }
 }
+
+.image-container {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+
+    .image-preview-brick {
+        display: flex;
+        flex-direction: column;
+        width: 100px;
+
+        .image-preview {
+            height: 100px;
+            width: 100px;
+            border: 1px solid #c1c2c3;
+            position: relative;
+
+            img {
+                width: 100px;
+                height: 100px;
+                object-fit: contain;
+                cursor: pointer;
+            }
+
+            .image-preview-delete {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                cursor: pointer;
+            }
+        }
+
+        textarea {
+            height: auto;
+        }
+    }
+}

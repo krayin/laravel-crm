@@ -231,9 +231,9 @@
             'tag-create-success'       => 'Tag added successfully.',
             'tag-destroy-success'      => 'Tag removed successfully.',
             'edit'                     => 'Edit',
-            'whatsapp-image-info'      => 'Upload images',
-            'whatsapp-image-format'    => 'in PNG or JPG Format',
-            'whatsapp-image-error'     => 'Only images (.jpeg, .jpg, .png, ..) are allowed.',
+            'whatsapp-image-info'      => 'Upload image(s)',
+            'whatsapp-image-format'    => 'in PNG, JPG or WebP Format',
+            'whatsapp-image-error'     => 'Only images (.jpeg, .jpg, .png, .webp, ..) are allowed.',
             'whatsapp-caption'         => 'Caption'
         ],
 

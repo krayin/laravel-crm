@@ -554,6 +554,8 @@
 
                         'persons': []
                     },
+
+                    type: '',
                 }
             },
 
@@ -672,27 +674,45 @@
 
     <script type="text/x-template" id="upload-profile-image-template">
         <div class="form-group">
-            <div class="image-upload-brick">
-                <input
-                    type="file"
-                    name="image"
-                    id="upload-profile"
-                    ref="imageInput"
-                    v-validate="'ext:jpeg,jpg,png'"
-                    accept="image/*"
-                    @change="addImageView($event)"
-                >
+            <div class="image-container">
+                <div class="image-preview-brick" v-for="(image, index) in imageData">
+                    <div class="image-preview">
+                        <img v-if="imageData.length > 0" :src="image" @click="openImage(index)" />
 
-                <i class="icon upload-icon"></i>
+                        <i class="image-preview-delete icon trash-icon" @click="deleteImage(index)"></i>
+                    </div>
 
-                <img class="preview" :src="imageData" v-if="imageData.length > 0">
-            </div>
+                    <div class="form-group">
+                        <input
+                            name="caption"
+                            class="control"
+                        />
+                    </div>
+                </div>
 
-            <div class="image-info-brick">
-                <span class="field-info">
-                {{ __('admin::app.leads.whatsapp-image-info') }} <br>
-                {{ __('admin::app.leads.whatsapp-image-format') }}
-                </span>
+                <div>
+                    <div class="image-upload-brick">
+                        <input
+                            type="file"
+                            name="image"
+                            id="upload-profile"
+                            ref="imageInput"
+                            v-validate="'ext:jpeg,jpg,png,webp'"
+                            accept="image/*"
+                            multiple
+                            @change="addImageView($event)"
+                        >
+        
+                        <i class="icon upload-icon"></i>                        
+                    </div>
+        
+                    <div class="image-info-brick">
+                        <span class="field-info">
+                        {{ __('admin::app.leads.whatsapp-image-info') }} <br>
+                        {{ __('admin::app.leads.whatsapp-image-format') }}
+                        </span>
+                    </div>
+                </div>
             </div>
         </div>
     </script>
@@ -703,7 +723,7 @@
 
             data: function() {
                 return {
-                    imageData: "",
+                    imageData: [],
                 }
             },
 
@@ -711,21 +731,36 @@
                 addImageView () {
                     var imageInput = this.$refs.imageInput;
 
-                    if (imageInput.files && imageInput.files[0]) {
-                        if (imageInput.files[0].type.includes('image/')) {
-                            var reader = new FileReader();
+                    if (imageInput.files) {
+                        imageInput.files.forEach((file) => {
+                            if (file.type.includes('image/')) {
+                                var reader = new FileReader();
 
-                            reader.onload = (e) => {
-                                this.imageData = e.target.result;
+                                reader.onload = (e) => {
+                                    console.log(e.target.result);
+                                    this.imageData.push(e.target.result);
+                                }
+
+                                reader.readAsDataURL(file);
+                            } else {
+                                imageInput.value = '';
+
+                                alert('{{ __('admin::app.user.account.image_upload_message') }}');
                             }
-
-                            reader.readAsDataURL(imageInput.files[0]);
-                        } else {
-                            imageInput.value = '';
-
-                            alert('{{ __('admin::app.user.account.image_upload_message') }}');
-                        }
+                        });
                     }
+
+                    console.log(this.imageData);
+                }, 
+
+                openImage (index) {
+                    const win = window.open();
+                    win.document.write(`<img src="${this.imageData[index]}">`);
+                    win.document.close();
+                },
+
+                deleteImage (index) {
+                    this.imageData.splice(index, 1);
                 }
             }
         });
