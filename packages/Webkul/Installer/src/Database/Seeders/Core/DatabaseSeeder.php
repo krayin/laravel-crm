@@ -14,7 +14,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run($parameters = [])
     {
-        $this->call(CountrySeeder::class, false, ['parameters' => $parameters]);
-        $this->call(StateSeeder::class, false, ['parameters' => $parameters]);
+        $this->call(CountriesSeeder::class, false, ['parameters' => $parameters]);
+        $this->call(StatesSeeder::class, false, ['parameters' => $parameters]);
     }
 }
