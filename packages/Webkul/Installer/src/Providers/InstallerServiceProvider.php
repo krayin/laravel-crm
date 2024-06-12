@@ -22,6 +22,8 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'installer');
+
         Event::listen('bagisto.installed', 'Webkul\Installer\Listeners\Installer@installed');
     }
 

@@ -20,15 +20,17 @@ class TypeSeeder extends Seeder
         
         $now = Carbon::now();
 
+        $defaultLocale = $parameters['default_locale'] ?? app()->getLocale();
+
         DB::table('lead_types')->insert([
             [
                 'id'         => 1,
-                'name'       => 'New Business',
+                'name'       => trans('installer::app.seeders.lead.type.new-business', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 2,
-                'name'       => 'Existing Business',
+                'name'       => trans('installer::app.seeders.lead.type.existing-business', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]

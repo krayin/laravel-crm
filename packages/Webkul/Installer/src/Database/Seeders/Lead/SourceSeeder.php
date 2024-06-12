@@ -20,30 +20,32 @@ class SourceSeeder extends Seeder
         
         $now = Carbon::now();
 
+        $defaultLocale = $parameters['default_locale'] ?? app()->getLocale();
+
         DB::table('lead_sources')->insert([
             [
                 'id'         => 1,
-                'name'       => 'Email',
+                'name'       => trans('installer::app.seeders.lead.source.email', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 2,
-                'name'       => 'Web',
+                'name'       => trans('installer::app.seeders.lead.source.web', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 3,
-                'name'       => 'Web Form',
+                'name'       => trans('installer::app.seeders.lead.source.web-form', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 4,
-                'name'       => 'Phone',
+                'name'       => trans('installer::app.seeders.lead.source.phone', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ], [
                 'id'         => 5,
-                'name'       => 'Direct',
+                'name'       => trans('installer::app.seeders.lead.source.direct', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
             ]

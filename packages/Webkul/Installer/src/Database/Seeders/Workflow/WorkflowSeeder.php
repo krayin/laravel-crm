@@ -20,11 +20,13 @@ class WorkflowSeeder extends Seeder
         
         $now = Carbon::now();
 
+        $defaultLocale = $parameters['default_locale'] ?? app()->getLocale();
+
         DB::table('workflows')->insert([
             [
                 'id'             => 1,
-                'name'           => 'Emails to participants after activity creation',
-                'description'    => 'Emails to participants after activity creation',
+                'name'           => trans('installer::app.seeders.workflow.email-to-participants-after-activity-creation', [], $defaultLocale),
+                'description'    => trans('installer::app.seeders.workflow.email-to-participants-after-activity-creation', [], $defaultLocale),
                 'entity_type'    => 'activities',
                 'event'          => 'activity.create.after',
                 'condition_type' => 'and',
@@ -34,8 +36,8 @@ class WorkflowSeeder extends Seeder
                 'updated_at'     => $now,
             ], [
                 'id'             => 2,
-                'name'           => 'Emails to participants after activity updation',
-                'description'    => 'Emails to participants after activity updation',
+                'name'           => trans('installer::app.seeders.workflow.email-to-participants-after-activity-updation', [], $defaultLocale),
+                'description'    => trans('installer::app.seeders.workflow.email-to-participants-after-activity-updation', [], $defaultLocale),
                 'entity_type'    => 'activities',
                 'event'          => 'activity.update.after',
                 'condition_type' => 'and',
