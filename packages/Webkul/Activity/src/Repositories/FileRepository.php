@@ -8,24 +8,14 @@ use Webkul\Core\Eloquent\Repository;
 class FileRepository extends Repository
 {
     /**
-     * Activity repository instance.
-     *
-     * @var \Webkul\Activity\Repositories\ActivityRepository
-     */
-    protected $activityRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
      * @return void
      */
     public function __construct(
-        ActivityRepository $activityRepository,
+        protected ActivityRepository $activityRepository,
         Container $container
     ) {
-        $this->activityRepository = $activityRepository;
-
         parent::__construct($container);
     }
 

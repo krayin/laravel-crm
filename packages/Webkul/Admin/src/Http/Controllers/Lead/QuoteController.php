@@ -10,35 +10,15 @@ use Webkul\Admin\Http\Controllers\Controller;
 class QuoteController extends Controller
 {
     /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * QuoteRepository object
-     *
-     * @var \Webkul\Quote\Repositories\QuoteRepository
-     */
-    protected $quoteRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
      *
      * @return void
      */
     public function __construct(
-        LeadRepository $leadRepository,
-        QuoteRepository $quoteRepository
+        protected LeadRepository $leadRepository,
+        protected QuoteRepository $quoteRepository
     )
     {
-        $this->leadRepository = $leadRepository;
-
-        $this->quoteRepository = $quoteRepository;
     }
 
     /**

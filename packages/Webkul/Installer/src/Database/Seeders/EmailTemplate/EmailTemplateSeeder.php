@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Database\Seeders;
+namespace Webkul\Installer\Database\Seeders\EmailTemplate;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -8,8 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class EmailTemplateSeeder extends Seeder
 {
-
-    public function run()
+    /**
+     * Seed the application's database.
+     *
+     * @param  array  $parameters
+     * @return void
+     */
+    public function run($parameters = [])
     {
         DB::table('email_templates')->delete();
         

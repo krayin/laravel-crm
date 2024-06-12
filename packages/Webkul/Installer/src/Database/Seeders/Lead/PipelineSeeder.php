@@ -1,15 +1,20 @@
 <?php
 
-namespace Webkul\Admin\Database\Seeders;
+namespace Webkul\Installer\Database\Seeders\Lead;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class LeadPipelineSeeder extends Seeder
+class PipelineSeeder extends Seeder
 {
-
-    public function run()
+    /**
+     * Seed the application's database.
+     *
+     * @param  array  $parameters
+     * @return void
+     */
+    public function run($parameters = [])
     {
         DB::table('lead_pipelines')->delete();
 

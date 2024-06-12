@@ -15,13 +15,6 @@ class LeadDataGrid extends DataGrid
     use ProvideDropdownOptions;
 
     /**
-     * Pipeline repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\PipelineRepository
-     */
-    protected $pipelineRepository;
-
-    /**
      * Pipeline instance.
      *
      * @var \Webkul\Contract\Repositories\Pipeline
@@ -29,43 +22,20 @@ class LeadDataGrid extends DataGrid
     protected $pipeline;
 
     /**
-     * Stage repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\StageRepository
-     */
-    protected $stageRepository;
-
-    /**
-     * User repository instance.
-     *
-     * @var \Webkul\User\Repositories\UserRepository
-     */
-    protected $userRepository;
-
-    /**
      * Create data grid instance.
      *
-     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
-     * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
-     * @param \Webkul\User\Repositories\UserRepository  $userRepository
      * @return void
      */
     public function __construct(
-        PipelineRepository $pipelineRepository,
-        StageRepository $stageRepository,
-        UserRepository $userRepository
+        protected PipelineRepository $pipelineRepository,
+        protected StageRepository $stageRepository,
+        protected UserRepository $userRepository
     ) {
-        $this->pipelineRepository = $pipelineRepository;
-
         if (request('pipeline_id')) {
             $this->pipeline = $this->pipelineRepository->find(request('pipeline_id'));
         } else {
             $this->pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
-
-        $this->stageRepository = $stageRepository;
-
-        $this->userRepository = $userRepository;
 
         parent::__construct();
 

@@ -9,26 +9,14 @@ use Webkul\Core\Eloquent\Repository;
 class AttributeValueRepository extends Repository
 {
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository $attributeRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
+        protected AttributeRepository $attributeRepository,
         Container $container
-    )
-    {
-        $this->attributeRepository = $attributeRepository;
-
+    ) {
         parent::__construct($container);
     }
 

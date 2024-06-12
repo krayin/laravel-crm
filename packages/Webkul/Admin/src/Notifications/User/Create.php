@@ -11,9 +11,8 @@ class Create extends Mailable
      * @param  object  $user
      * @return void
      */
-    public function __construct($user)
+    public function __construct(public $user)
     {
-        $this->user = $user;
     }
 
     /**

@@ -12,22 +12,12 @@ class TagDataGrid extends DataGrid
     use ProvideDropdownOptions;
 
     /**
-     * User repository instance.
-     *
-     * @var \Webkul\User\Repositories\UserRepository
-     */
-    protected $userRepository;
-
-    /**
      * Create data grid instance.
      *
-     * @param \Webkul\User\Repositories\UserRepository  $userRepository
      * @return void
      */
-    public function __construct(UserRepository $userRepository)
+    public function __construct(protected UserRepository $userRepository)
     {
-        $this->userRepository = $userRepository;
-
         parent::__construct();
     }
 

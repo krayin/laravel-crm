@@ -14,7 +14,7 @@ class ViewRenderEventManager
     protected $templates = [];
 
     /**
-     * Paramters passed with event
+     * Parameters passed with event
      *
      * @var array
      */

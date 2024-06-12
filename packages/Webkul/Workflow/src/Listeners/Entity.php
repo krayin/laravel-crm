@@ -8,34 +8,14 @@ use Webkul\Workflow\Helpers\Validator;
 class Entity
 {
     /**
-     * WorkflowRepository object
-     *
-     * @var \Webkul\Workflow\Repositories\WorkflowRepository
-     */
-    protected $workflowRepository;
-
-    /**
-     * Validator object
-     *
-     * @var \Webkul\Workflow\Helpers\Validator
-     */
-    protected $validator;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Workflow\Repositories\WorkflowRepository  $workflowRepository
-     * @param  \Webkul\Workflow\Helpers\Validator  $validator
      * @return void
      */
     public function __construct(
-        WorkflowRepository $workflowRepository,
-        Validator $validator
-    )
-    {
-        $this->workflowRepository = $workflowRepository;
-
-        $this->validator = $validator;
+        protected WorkflowRepository $workflowRepository,
+        protected Validator $validator
+    ) {
     }
 
     /**

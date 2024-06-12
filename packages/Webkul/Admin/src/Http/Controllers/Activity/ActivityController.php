@@ -15,67 +15,18 @@ use Webkul\User\Repositories\UserRepository;
 class ActivityController extends Controller
 {
     /**
-     * FileRepository object
-     *
-     * @var \Webkul\Activity\Repositories\FileRepository
-     */
-    protected $fileRepository;
-
-    /**
-     * ActivityRepository object
-     *
-     * @var \Webkul\Activity\Repositories\ActivityRepository
-     */
-    protected $activityRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * UserRepository object
-     *
-     * @var \Webkul\User\Repositories\UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
-     * @param \Webkul\Activity\Repositories\FileRepository  $fileRepository
-     * @param \Webkul\Activity\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\User\Repositories\UserRepository  $userRepository
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      *
      * @return void
      */
     public function __construct(
-        ActivityRepository $activityRepository,
-        FileRepository $fileRepository,
-        LeadRepository $leadRepository,
-        UserRepository $userRepository,
-        PersonRepository $personRepository
+        protected ActivityRepository $activityRepository,
+        protected FileRepository $fileRepository,
+        protected LeadRepository $leadRepository,
+        protected UserRepository $userRepository,
+        protected PersonRepository $personRepository
     ) {
-        $this->activityRepository = $activityRepository;
-
-        $this->fileRepository = $fileRepository;
-
-        $this->leadRepository = $leadRepository;
-
-        $this->userRepository = $userRepository;
-
-        $this->personRepository = $personRepository;
     }
 
     /**

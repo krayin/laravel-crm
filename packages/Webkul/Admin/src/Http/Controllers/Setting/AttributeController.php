@@ -11,21 +11,12 @@ use Webkul\Core\Contracts\Validations\Code;
 class AttributeController extends Controller
 {
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
      * @return void
      */
-    public function __construct(AttributeRepository $attributeRepository)
+    public function __construct(protected AttributeRepository $attributeRepository)
     {
-        $this->attributeRepository = $attributeRepository;
     }
 
     /**

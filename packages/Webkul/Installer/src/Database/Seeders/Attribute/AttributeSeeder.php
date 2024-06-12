@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Database\Seeders;
+namespace Webkul\Installer\Database\Seeders\Attribute;
 
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
@@ -8,7 +8,13 @@ use Illuminate\Support\Facades\DB;
 
 class AttributeSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Seed the application's database.
+     *
+     * @param  array  $parameters
+     * @return void
+     */
+    public function run($parameters = [])
     {
         DB::table('attributes')->delete();
 

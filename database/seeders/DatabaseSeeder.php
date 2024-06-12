@@ -3,9 +3,7 @@
 namespace Database\Seeders;
 
 use Illuminate\Database\Seeder;
-use Webkul\Admin\Database\Seeders\DatabaseSeeder as AdminDatabaseSeeder;
-use Webkul\Core\Database\Seeders\DatabaseSeeder as CoreDatabaseSeeder;
-use Webkul\User\Database\Seeders\DatabaseSeeder as UserDatabaseSeeder;
+use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,8 +14,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(AdminDatabaseSeeder::class);
-        $this->call(CoreDatabaseSeeder::class);
-        $this->call(UserDatabaseSeeder::class);
+        $this->call(KrayinDatabaseSeeder::class);
     }
 }

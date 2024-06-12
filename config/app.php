@@ -230,6 +230,7 @@ return [
         Webkul\Core\Providers\CoreServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
         Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
+        Webkul\Installer\Providers\InstallerServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,
         Webkul\Quote\Providers\QuoteServiceProvider::class,

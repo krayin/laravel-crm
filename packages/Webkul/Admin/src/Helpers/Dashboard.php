@@ -24,110 +24,21 @@ class Dashboard
     protected $cards;
 
     /**
-     * Lead repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * Pipeline repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\PipelineRepository
-     */
-    protected $pipelineRepository;
-
-    /**
-     * Product repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\ProductRepository
-     */
-    protected $leadProductRepository;
-
-    /**
-     * Quote repository instance.
-     *
-     * @var \Webkul\Quote\Repositories\QuoteRepository
-     */
-    protected $quoteRepository;
-
-    /**
-     * Product repository instance.
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * Person repository instance.
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
-     * Activity repository instance.
-     *
-     * @var \Webkul\Activity\Repositories\ActivityRepository
-     */
-    protected $activityRepository;
-
-    /**
-     * User repository instance.
-     *
-     * @var \Webkul\User\Repositories\UserRepository
-     */
-    protected $userRepository;
-
-    /**
-     * Email repository instance.
-     *
-     * @var \Webkul\Email\Repositories\EmailRepository
-     */
-    protected $emailRepository;
-
-    /**
      * Create a new helper instance.
      *
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param  \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
-     * @param  \Webkul\Lead\Repositories\ProductRepository  $leadProductRepository
-     * @param  \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
-     * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
-     * @param  \Webkul\Product\Repositories\PersonRepository  $personRepository
-     * @param  \Webkul\Product\Repositories\ActivityRepository  $activityRepository
-     * @param  \Webkul\Product\Repositories\UserRepository  $userRepository
-     * @param  \Webkul\Email\Repositories\EmailRepository  $emailRepository
      * @return void
      */
     public function __construct(
-        LeadRepository $leadRepository,
-        PipelineRepository $pipelineRepository,
-        LeadProductRepository $leadProductRepository,
-        QuoteRepository $quoteRepository,
-        ProductRepository $productRepository,
-        PersonRepository $personRepository,
-        ActivityRepository $activityRepository,
-        UserRepository $userRepository,
-        EmailRepository $emailRepository
+        protected LeadRepository $leadRepository,
+        protected PipelineRepository $pipelineRepository,
+        protected LeadProductRepository $leadProductRepository,
+        protected QuoteRepository $quoteRepository,
+        protected ProductRepository $productRepository,
+        protected PersonRepository $personRepository,
+        protected ActivityRepository $activityRepository,
+        protected UserRepository $userRepository,
+        protected EmailRepository $emailRepository
     ) {
-        $this->leadRepository = $leadRepository;
-
-        $this->pipelineRepository = $pipelineRepository;
-
-        $this->leadProductRepository = $leadProductRepository;
-
-        $this->quoteRepository = $quoteRepository;
-
-        $this->productRepository = $productRepository;
-
-        $this->personRepository = $personRepository;
-
-        $this->activityRepository = $activityRepository;
-
-        $this->userRepository = $userRepository;
-
-        $this->emailRepository = $emailRepository;
     }
 
     /**

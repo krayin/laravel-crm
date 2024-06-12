@@ -1,13 +1,19 @@
 <?php
 
-namespace Webkul\Core\Database\Seeders;
+namespace Webkul\Installer\Database\Seeders\Core;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 
 class StatesSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Seed the application's database.
+     *
+     * @param  array  $parameters
+     * @return void
+     */
+    public function run($parameters = [])
     {
         DB::table('country_states')->delete();
 
