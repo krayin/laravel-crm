@@ -20,7 +20,7 @@ class EmailTemplateSeeder extends Seeder
         
         $now = Carbon::now();
 
-        $defaultLocale = $parameters['default_locale'] ?? app()->getLocale();
+        $defaultLocale = $parameters['default_locale'] ?? config('app.locale');
 
         DB::table('email_templates')->insert([
             [

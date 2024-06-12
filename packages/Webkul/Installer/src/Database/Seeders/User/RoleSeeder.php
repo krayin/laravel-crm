@@ -19,7 +19,7 @@ class RoleSeeder extends Seeder
 
         DB::table('roles')->delete();
 
-        $defaultLocale = $parameters['default_locale'] ?? app()->getLocale();
+        $defaultLocale = $parameters['default_locale'] ?? config('app.locale');
 
         DB::table('roles')->insert([
             'id'              => 1,
