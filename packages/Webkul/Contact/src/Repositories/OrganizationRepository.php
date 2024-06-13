@@ -78,9 +78,9 @@ class OrganizationRepository extends Repository
      */
     public function delete($id)
     {
-        $organization = $this->model->findOrFail($id);
+        $organization = $this->findOrFail($id);
 
-        $organization->persons->each->delete();
+        $organization->persons()->delete();
 
         $organization->delete($id);
     }
