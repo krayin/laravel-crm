@@ -1,31 +1,32 @@
 <?php
-Route::group(['middleware' => ['web', 'admin_locale']], function () {
-    Route::group([
-        'prefix'     => 'admin/web-forms',
-        'namespace'  => 'Webkul\WebForm\Http\Controllers',
-        'middleware' => ['web']
-    ], function () {
 
-        Route::get('forms/{id}/form.js', 'WebFormController@formJS')->name('admin.settings.web_forms.form_js');
+use Illuminate\Support\Facades\Route;
 
-        Route::get('forms/{id}/form.html', 'WebFormController@preview')->name('admin.settings.web_forms.preview');
+Route::group([
+    'prefix'     => 'admin/web-forms',
+    'namespace'  => 'Webkul\WebForm\Http\Controllers',
+    'middleware' => ['web', 'admin_locale']
+], function () {
 
-        Route::post('forms/{id}', 'WebFormController@formStore')->name('admin.settings.web_forms.form_store');
+    Route::get('forms/{id}/form.js', 'WebFormController@formJS')->name('admin.settings.web_forms.form_js');
 
-        Route::group(['middleware' => ['user']], function () {
-            Route::get('', 'WebFormController@index')->name('admin.settings.web_forms.index');
+    Route::get('forms/{id}/form.html', 'WebFormController@preview')->name('admin.settings.web_forms.preview');
 
-            Route::get('form/{id}/form.html', 'WebFormController@view')->name('admin.settings.web_forms.view');
+    Route::post('forms/{id}', 'WebFormController@formStore')->name('admin.settings.web_forms.form_store');
 
-            Route::get('create', 'WebFormController@create')->name('admin.settings.web_forms.create');
+    Route::group(['middleware' => ['user']], function () {
+        Route::get('', 'WebFormController@index')->name('admin.settings.web_forms.index');
 
-            Route::post('create', 'WebFormController@store')->name('admin.settings.web_forms.store');
+        Route::get('form/{id}/form.html', 'WebFormController@view')->name('admin.settings.web_forms.view');
 
-            Route::get('edit/{id?}', 'WebFormController@edit')->name('admin.settings.web_forms.edit');
+        Route::get('create', 'WebFormController@create')->name('admin.settings.web_forms.create');
 
-            Route::put('edit/{id}', 'WebFormController@update')->name('admin.settings.web_forms.update');
+        Route::post('create', 'WebFormController@store')->name('admin.settings.web_forms.store');
 
-            Route::delete('{id}', 'WebFormController@destroy')->name('admin.settings.web_forms.delete');
-        });
+        Route::get('edit/{id?}', 'WebFormController@edit')->name('admin.settings.web_forms.edit');
+
+        Route::put('edit/{id}', 'WebFormController@update')->name('admin.settings.web_forms.update');
+
+        Route::delete('{id}', 'WebFormController@destroy')->name('admin.settings.web_forms.delete');
     });
 });
