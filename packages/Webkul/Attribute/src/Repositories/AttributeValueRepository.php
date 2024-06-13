@@ -65,7 +65,6 @@ class AttributeValueRepository extends Repository
                 $data[$attribute->code] = isset($data[$attribute->code]) && $data[$attribute->code] ? 1 : 0;
             }
 
-            // Allowing null values
             if (! Arr::exists($data, $attribute->code)) {
                 continue;
             }
