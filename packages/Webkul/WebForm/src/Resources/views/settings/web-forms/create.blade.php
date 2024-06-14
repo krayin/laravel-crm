@@ -294,7 +294,7 @@
                                             class="control"
                                             v-model="attribute['name']"
                                         />
-
+                                        
                                         <input
                                             type="hidden"
                                             :value="index + 1"
@@ -304,14 +304,25 @@
                                 </td>
 
                                 <td>
-                                    <div class="form-group">
+                                    <div
+                                        class="form-group"
+                                        :class="[errors.has('attributes[' + attribute.id + '][placeholder]') ? 'has-error' : '']"
+                                    >
                                         <input
                                             type="text"
                                             :name="'attributes[' + attribute.id + '][placeholder]'"
                                             class="control"
-                                            value=""
+                                            v-validate="attribute.attribute.validation"
+                                            :data-vv-as="attribute['name']"
                                             :placeholder="getPlaceholderValue(attribute)"
                                         />
+
+                                        <span
+                                            class="control-error"
+                                            v-if="errors.has('attributes[' + attribute.id + '][placeholder]')"
+                                        >
+                                            @{{ errors.first('attributes[' + attribute.id + '][placeholder]') }}
+                                        </span>
                                     </div>
                                 </td>
 
@@ -334,15 +345,7 @@
                                     <input
                                         type="hidden"
                                         :name="'attributes[' + attribute.id + '][is_required]'"
-                                        value="1"
-                                        v-if="attribute.is_required"
-                                    />
-
-                                    <input
-                                        type="hidden"
-                                        :name="'attributes[' + attribute.id + '][is_required]'"
-                                        value="0"
-                                        v-else
+                                        :value="attribute.is_required ? 1 : 0"
                                     />
                                 </td>
 
