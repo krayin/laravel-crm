@@ -140,7 +140,7 @@
 
                                     @case('phone')
                                         <input
-                                        type="number"
+                                        type="text"
                                         name="{{ $fieldName }}[0][value]"
                                         class="control"
                                         placeholder="{{ $attribute->placeholder }}"
