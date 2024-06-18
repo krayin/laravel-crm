@@ -46,4 +46,5 @@ return [
     'delete-success'            => 'Web Form deleted successfully.',
     'delete-failed'             => 'Web Form can not be deleted.',
     'submit_button_label'       => 'Submit Button Label',
+    'invalid-phone-number'      => 'Invalid phone number',
 ];
