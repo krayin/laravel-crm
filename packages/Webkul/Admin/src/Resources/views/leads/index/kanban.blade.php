@@ -296,8 +296,6 @@
                 updateFilter: function ({ key, cond, value}) {
                     this.leads = [];
 
-                    console.log(key, cond, value);
-
                     let href = key ? `?${key}[${cond}]=${value}` : false;
 
                     this.makeURL({
