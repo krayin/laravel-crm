@@ -82,6 +82,10 @@ class OrganizationRepository extends Repository
 
         $organization->persons()->delete();
 
+        $this->attributeValueRepository->deleteWhere([
+            'entity_id' => $id,
+        ]);
+
         $organization->delete($id);
     }
 }
