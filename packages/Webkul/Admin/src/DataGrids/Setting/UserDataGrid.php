@@ -6,10 +6,29 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\User\Repositories\UserRepository;
 
 class UserDataGrid extends DataGrid
 {
     use ProvideDropdownOptions;
+
+    /**
+     * User repository instance.
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+     /**
+     * Create data grid instance.
+     * 
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+    }
 
     /**
      * Prepare query builder.
@@ -26,17 +45,17 @@ class UserDataGrid extends DataGrid
                 'users.image',
                 'users.status',
                 'users.created_at'
-            );
+            )
+            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
 
-        $loggedUser = auth()->guard('user')->user();
+        $currentUser = auth()->guard('user')->user();
 
-        $permission = $loggedUser->view_permission;
-
-        // Restrict listing as per given permission
-        if ($permission == 'group') {
-            $queryBuilder->rightJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
-        } elseif ($permission == 'individual') {
-            $queryBuilder->where('users.id', $loggedUser->id);
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
+                $queryBuilder->whereIn('users.id', $this->userRepository->getCurrentUserGroupsUserIds());
+            } else {
+                $queryBuilder->where('users.id', $currentUser->id);
+            }
         }
 
         $this->addFilter('id', 'users.id');

@@ -154,7 +154,7 @@ $(function() {
                     var inputNames = [];
                     
                     key.split('.').forEach(function(chunk, index) {
-                        if(index) {
+                        if (index) {
                             inputNames.push('[' + chunk + ']')
                         } else {
                             inputNames.push(chunk)
