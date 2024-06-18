@@ -426,7 +426,8 @@
                                             :name="'attributes[' + attribute.id + '][is_required]'"
                                             :id="'is_required_' + attribute.id"
                                             :checked="attribute.is_required"
-                                            :disabled="attribute.is_required"
+                                            :disabled="attribute.attribute.is_required ? true : false"
+                                            v-model="attribute.is_required"
                                         />
 
                                         <label :for="'is_required_' + attribute.id" class="checkbox-view"></label>
@@ -439,6 +440,13 @@
                                         :name="'attributes[' + attribute.id + '][is_required]'"
                                         value="1"
                                         v-if="attribute.is_required"
+                                    />
+
+                                    <input
+                                        type="hidden"
+                                        :name="'attributes[' + attribute.id + '][is_required]'"
+                                        value="0"
+                                        v-else
                                     />
                                 </td>
 
