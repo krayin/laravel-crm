@@ -28,6 +28,8 @@ class UserDataGrid extends DataGrid
     public function __construct(UserRepository $userRepository)
     {
         $this->userRepository = $userRepository;
+
+        parent::__construct();
     }
 
     /**
