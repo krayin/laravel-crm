@@ -71,7 +71,7 @@ class OrganizationRepository extends Repository
     }
 
     /**
-     * delete organization and it's persons
+     * Delete organization and it's persons.
      * 
      * @param int $id
      * @return @void
