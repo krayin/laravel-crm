@@ -133,7 +133,7 @@
                         'created_at': {
                             'type' : 'date_range',
                             'label' : "{{ trans('admin::app.datagrid.created_at') }}",
-                            'values' : [null, null],
+                            'values' : this.getQueryParams(),
                             'filterable' : true
                         },
                     }
@@ -150,7 +150,18 @@
                 toggleSidebarFilter: function () {
                     $('.sidebar-filter').toggleClass('show');
                 },
-            }
+
+                getQueryParams: function() {
+                    const params = new URLSearchParams(window.location.search);
+                    const createdAt = params.get('created_at[bw]');
+                    
+                    if (createdAt) {
+                        return createdAt.split(',');
+                    }
+                    
+                    return [null, null];
+                },
+            },
         });
 
         Vue.component('kanban-component', {
@@ -184,7 +195,7 @@
             },
 
             created: function () {
-                this.getLeads();
+                this.getLeads(false, window.location.search);
 
                 queueMicrotask(() => {
                     $('#search-field').on('search keyup', ({target}) => {
@@ -282,10 +293,31 @@
                     this.getLeads(searchedKeyword);
                 },
 
-                updateFilter: function (data) {
+                updateFilter: function ({ key, cond, value}) {
                     this.leads = [];
-                    let href = data.key ? `?${data.key}[${data.cond}]=${data.value}` : false;
+
+                    console.log(key, cond, value);
+
+                    let href = key ? `?${key}[${cond}]=${value}` : false;
+
+                    this.makeURL({
+                        key,
+                        cond,
+                        value,
+                    });
+                    
                     this.getLeads(false, href);
+                },
+
+                makeURL: function({ key, cond, value}) {
+                    let params = key + "[" + cond + "]" + "=" + value;
+
+                    let newURL =
+                        window.location.origin +
+                        window.location.pathname +
+                        `${params != "" ? "?" + params : ""}`;
+
+                    window.history.pushState({ path: newURL }, "", newURL);
                 },
 
                 toggleEmptyStateIcon: function () {
