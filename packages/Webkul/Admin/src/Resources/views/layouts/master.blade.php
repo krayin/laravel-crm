@@ -34,7 +34,7 @@
 
     </head>
 
-    <body style="scroll-behavior: smooth;" @if (app()->getLocale() == 'ar') class="rtl" @endif>
+    <body style="scroll-behavior: smooth;" @if (in_array(app()->getLocale(), ['fa', 'ar'])) class="rtl" @endif>
         {!! view_render_event('admin.layout.body.before') !!}
 
         <div id="app">

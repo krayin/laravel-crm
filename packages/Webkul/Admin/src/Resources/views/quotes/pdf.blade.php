@@ -205,7 +205,7 @@
 
                                     <td class="text-center">{!! core()->formatBasePrice($item->tax_amount, true) !!}</td>
                                     
-                                    <td class="text-center">{!! core()->formatBasePrice($item->total + $item->tax_amount, true) !!}</td>
+                                    <td class="text-center">{!! core()->formatBasePrice($item->total + $item->tax_amount - $item->discount_amount, true) !!}</td>
                                 </tr>
                             @endforeach
 
