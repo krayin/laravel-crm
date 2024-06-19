@@ -1,14 +1,20 @@
 <?php
 
-namespace Webkul\User\Database\Seeders;
+namespace Webkul\Installer\Database\Seeders\User;
 
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Database\Seeder;
 
-class UsersSeeder extends Seeder
+class UserSeeder extends Seeder
 {
-    public function run()
+    /**
+     * Seed the application's database.
+     *
+     * @param  array  $parameters
+     * @return void
+     */
+    public function run($parameters = [])
     {
         DB::table('users')->delete();
 

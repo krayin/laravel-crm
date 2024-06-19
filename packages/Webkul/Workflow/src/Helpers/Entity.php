@@ -8,35 +8,14 @@ use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 class Entity
 {
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * EmailTemplateRepository object
-     *
-     * @var \Webkul\EmailTemplate\Repositories\EmailTemplateRepository
-     */
-    protected $emailTemplateRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
-     * @param  \Webkul\EmailTemplate\Repositories\EmailTemplateRepository  $emailTemplateRepository
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        EmailTemplateRepository $emailTemplateRepository
-    )
-    {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->emailTemplateRepository = $emailTemplateRepository;
+        protected AttributeRepository $attributeRepository,
+        protected EmailTemplateRepository $emailTemplateRepository
+    ) {
     }
 
     /**

@@ -5,16 +5,6 @@ namespace Webkul\Email\Helpers;
 class Attachment
 {
     /**
-    * @var $filename Filename
-    */
-    public $filename;
-
-    /**
-    * @var $contentType Mime Type
-    */
-    public $contentType;
-
-    /**
     * @var $content File Content
     */
     private $content;
@@ -25,43 +15,17 @@ class Attachment
     private $extension;
 
     /**
-    * @var $contentDisposition Content-Disposition (attachment or inline)
-    */
-    public $contentDisposition;
-
-    /**
-    * @var $contentId Content-ID
-    */
-    public $contentId;
-
-    /**
-    * @var $headers An Array of the attachment headers
-    */
-    public $headers;
-
-    private $stream;
-
+     * Create an helper instance
+     */
     public function __construct(
-        $filename,
-        $contentType,
-        $stream,
-        $contentDisposition = 'attachment',
-        $contentId = '',
-        $headers = []
+        public $filename,
+        public $contentType,
+        public $stream,
+        public $contentDisposition = 'attachment',
+        public $contentId = '',
+        public $headers = []
     ) {
-        $this->filename = $filename;
-
-        $this->contentType = $contentType;
-
-        $this->stream = $stream;
-
         $this->content = null;
-
-        $this->contentDisposition = $contentDisposition;
-
-        $this->contentId = $contentId;
-
-        $this->headers = $headers;
     }
 
     /**

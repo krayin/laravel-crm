@@ -9,22 +9,13 @@ use Webkul\UI\DataGrid\DataGrid;
 class OrganizationDataGrid extends DataGrid
 {
     /**
-     * Person repository instance.
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
      * Create datagrid instance.
      *
      * @return void
      */
-    public function __construct(PersonRepository $personRepository)
+    public function __construct(protected PersonRepository $personRepository)
     {
         parent::__construct();
-
-        $this->personRepository = $personRepository;
     }
 
     /**

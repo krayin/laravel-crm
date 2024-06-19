@@ -9,26 +9,15 @@ use Webkul\Product\Repositories\ProductRepository;
 class QuoteItemRepository extends Repository
 {
     /**
-     * ProductRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Product\Repositories\ProductRepository  $productRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        ProductRepository $productRepository,
+        protected ProductRepository $productRepository,
         Container $container
     )
     {
-        $this->productRepository = $productRepository;
-
         parent::__construct($container);
     }
 

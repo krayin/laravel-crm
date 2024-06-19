@@ -7,11 +7,12 @@ use Illuminate\Mail\Mailable;
 class Common extends Mailable
 {
     /**
-     * @param  array  $data
+     * Create a new notification instance.
+     * 
+     * @return void
      */
-    public function __construct($data)
+    public function __construct(public $data)
     {
-        $this->data = $data;
     }
 
     /**

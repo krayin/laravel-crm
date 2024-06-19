@@ -10,21 +10,12 @@ use Webkul\Lead\Repositories\SourceRepository;
 class SourceController extends Controller
 {
     /**
-     * SourceRepository object
-     *
-     * @var \Webkul\User\Repositories\SourceRepository
-     */
-    protected $sourceRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Lead\Repositories\SourceRepository  $sourceRepository
      * @return void
      */
-    public function __construct(SourceRepository $sourceRepository)
+    public function __construct(protected SourceRepository $sourceRepository)
     {
-        $this->sourceRepository = $sourceRepository;
     }
 
     /**

@@ -10,26 +10,14 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 class OrganizationRepository extends Repository
 {
     /**
-     * AttributeValueRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeValueRepository
-     */
-    protected $attributeValueRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository $attributeValueRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        AttributeValueRepository $attributeValueRepository,
+        protected AttributeValueRepository $attributeValueRepository,
         Container $container
-    )
-    {
-        $this->attributeValueRepository = $attributeValueRepository;
-
+    ) {
         parent::__construct($container);
     }
     

@@ -11,48 +11,16 @@ use Webkul\Core\Eloquent\Repository;
 class EmailRepository extends Repository
 {
     /**
-     * AttachmentRepository object
-     *
-     * @var \Webkul\Email\Repositories\AttachmentRepository
-     */
-    protected $attachmentRepository;
-
-    /**
-     * Parser object
-     *
-     * @var \Webkul\Email\Helpers\Parser
-     */
-    protected $emailParser;
-
-    /**
-     * Htmlfilter object
-     *
-     * @var \Webkul\Email\Helpers\Htmlfilter
-     */
-    protected $htmlFilter;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Email\Repositories\AttachmentRepository  $attachmentRepository
-     * @param  \Webkul\Email\Helpers\Parser  $emailParser
-     * @param  \Webkul\Email\Helpers\Htmlfilter  $htmlFilter
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        AttachmentRepository $attachmentRepository,
-        Parser $emailParser,
-        Htmlfilter $htmlFilter,
+        protected AttachmentRepository $attachmentRepository,
+        protected Parser $emailParser,
+        protected Htmlfilter $htmlFilter,
         Container $container
-    )
-    {
-        $this->attachmentRepository = $attachmentRepository;
-
-        $this->emailParser = $emailParser;
-
-        $this->htmlFilter = $htmlFilter;
-
+    ) {
         parent::__construct($container);
     }
 

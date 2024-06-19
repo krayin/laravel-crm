@@ -9,25 +9,14 @@ use Webkul\Core\Eloquent\Repository;
 class WebFormRepository extends Repository
 {
     /**
-     * WebFormAttributeRepository instance.
-     *
-     * @var \Webkul\WebForm\Repositories\WebFormAttributeRepository
-     */
-    protected $webFormAttributeRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\WebForm\Repositories\WebFormAttributeRepository  $webFormAttributeRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        WebFormAttributeRepository $webFormAttributeRepository,
+        protected WebFormAttributeRepository $webFormAttributeRepository,
         Container $container
     ) {
-        $this->webFormAttributeRepository = $webFormAttributeRepository;
-
         parent::__construct($container);
     }
 

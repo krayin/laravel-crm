@@ -9,21 +9,12 @@ use Webkul\Admin\Helpers\Dashboard as DashboardHelper;
 class DashboardController extends Controller
 {
     /**
-     * Dashboard object
-     *
-     * @var \Webkul\Admin\Helpers\Dashboard
-     */
-    protected $dashboardHelper;
-
-    /**
      * Create a new controller instance.
      *
-     * @param \Webkul\Admin\Helpers\DashboardHelper  $dashboardHelper
      * @return void
      */
-    public function __construct(DashboardHelper $dashboardHelper)
+    public function __construct(protected DashboardHelper $dashboardHelper)
     {
-        $this->dashboardHelper = $dashboardHelper;
     }
 
     /**

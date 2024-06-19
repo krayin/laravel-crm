@@ -142,7 +142,16 @@
             </div>
 
             <div class="dropdown-list bottom-right">
-                <span class="app-version">{{ __('admin::app.layouts.app-version', ['version' => 'v' . config('app.version')]) }}</span>
+                <span class="app-version">
+                    <img
+                        src="{{ url('cache/logo.png') }}"
+                        width="24"
+                        style="margin-bottom: -5px;"
+                    />
+
+                    <!-- Version -->
+                    {{ __('admin::app.layouts.app-version', ['version' => 'v' . config('app.version')]) }}
+                </span>
 
                 <div class="dropdown-container">
                     <ul>

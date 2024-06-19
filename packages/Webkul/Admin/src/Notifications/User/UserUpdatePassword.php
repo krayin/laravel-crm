@@ -11,21 +11,13 @@ class UserUpdatePassword extends Mailable
     use Queueable, SerializesModels;
 
     /**
-     * The admin instance.
-     *
-     * @var  \Webkul\User\Contracts\User  $user
-     */
-    public $user;
-
-    /**
      * Create a new admin instance.
      *
      * @param  \Webkul\User\Contracts\User  $user
      * @return void
      */
-    public function __construct($user)
+    public function __construct(public $user)
     {
-        $this->user = $user;
     }
 
     /**

@@ -10,23 +10,12 @@ use Webkul\Product\Repositories\ProductRepository;
 class ProductController extends Controller
 {
     /**
-     * ProductRepository object
-     *
-     * @var \Webkul\Product\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Product\Repositories\ProductRepository  $productRepository
      *
      * @return void
      */
-    public function __construct(ProductRepository $productRepository)
+    public function __construct(protected ProductRepository $productRepository)
     {
-        $this->productRepository = $productRepository;
-
         request()->request->add(['entity_type' => 'products']);
     }
 

@@ -8,11 +8,17 @@ use Illuminate\Foundation\Application;
 
 class Locale
 {
+    /**
+     * The middleware instance.
+     * 
+     * @param  \Illuminate\Foundation\Application  $app
+     * @param  \Illuminate\Http\Request  $request
+     * @return void
+     */
     public function __construct(
         Application $app,
         Request $request
-    )
-    {
+    ) {
         $this->app = $app;
 
         $this->request = $request;

@@ -18,67 +18,17 @@ class Quote extends AbstractEntity
     protected $entityType = 'quotes';
 
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * EmailTemplateRepository object
-     *
-     * @var \Webkul\EmailTemplate\Repositories\EmailTemplateRepository
-     */
-    protected $emailTemplateRepository;
-
-    /**
-     * QuoteRepository object
-     *
-     * @var \Webkul\Quote\Repositories\QuoteRepository
-     */
-    protected $quoteRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
-     * @param  \Webkul\EmailTemplate\Repositories\EmailTemplateRepository  $emailTemplateRepository
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param  \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        EmailTemplateRepository $emailTemplateRepository,
-        QuoteRepository $quoteRepository,
-        LeadRepository $leadRepository,
-        PersonRepository $personRepository
-    )
-    {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->emailTemplateRepository = $emailTemplateRepository;
-
-        $this->quoteRepository = $quoteRepository;
-
-        $this->leadRepository = $leadRepository;
-
-        $this->personRepository = $personRepository;
+        protected AttributeRepository $attributeRepository,
+        protected EmailTemplateRepository $emailTemplateRepository,
+        protected QuoteRepository $quoteRepository,
+        protected LeadRepository $leadRepository,
+        protected PersonRepository $personRepository
+    ) {
     }
 
     /**

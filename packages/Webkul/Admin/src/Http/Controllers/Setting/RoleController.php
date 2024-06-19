@@ -9,21 +9,12 @@ use Webkul\User\Repositories\RoleRepository;
 class RoleController extends Controller
 {
     /**
-     * Role repository instance.
-     *
-     * @var \Webkul\User\Repositories\RoleRepository
-     */
-    protected $roleRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\User\Repositories\RoleRepository  $roleRepository
      * @return void
      */
-    public function __construct(RoleRepository $roleRepository)
+    public function __construct(protected RoleRepository $roleRepository)
     {
-        $this->roleRepository = $roleRepository;
     }
 
     /**

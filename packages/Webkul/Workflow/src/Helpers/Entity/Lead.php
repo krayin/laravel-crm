@@ -19,78 +19,18 @@ class Lead extends AbstractEntity
     protected $entityType = 'leads';
 
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * EmailTemplateRepository object
-     *
-     * @var \Webkul\EmailTemplate\Repositories\EmailTemplateRepository
-     */
-    protected $emailTemplateRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * ActivityRepository object
-     *
-     * @var \Webkul\Activity\Repositories\ActivityRepository
-     */
-    protected $activityRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
-     * TagRepository object
-     *
-     * @var \Webkul\Tag\Repositories\TagRepository
-     */
-    protected $tagRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
-     * @param  \Webkul\EmailTemplate\Repositories\EmailTemplateRepository  $emailTemplateRepository
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
-     * @param  \Webkul\Tag\Repositories\TagRepository  $tagRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        EmailTemplateRepository $emailTemplateRepository,
-        LeadRepository $leadRepository,
-        ActivityRepository $activityRepository,
-        PersonRepository $personRepository,
-        TagRepository $tagRepository
-    )
-    {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->emailTemplateRepository = $emailTemplateRepository;
-
-        $this->leadRepository = $leadRepository;
-
-        $this->activityRepository = $activityRepository;
-
-        $this->personRepository = $personRepository;
-
-        $this->tagRepository = $tagRepository;
+        protected AttributeRepository $attributeRepository,
+        protected EmailTemplateRepository $emailTemplateRepository,
+        protected LeadRepository $leadRepository,
+        protected ActivityRepository $activityRepository,
+        protected PersonRepository $personRepository,
+        protected TagRepository $tagRepository
+    ) {
     }
 
     /**

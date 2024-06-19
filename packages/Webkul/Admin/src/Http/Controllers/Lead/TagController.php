@@ -9,22 +9,12 @@ use Webkul\Admin\Http\Controllers\Controller;
 class TagController extends Controller
 {
     /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
      *
      * @return void
      */
-    public function __construct(LeadRepository $leadRepository)
+    public function __construct(protected LeadRepository $leadRepository)
     {
-        $this->leadRepository = $leadRepository;
     }
 
     /**
