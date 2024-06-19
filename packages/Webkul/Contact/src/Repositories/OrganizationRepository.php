@@ -81,23 +81,15 @@ class OrganizationRepository extends Repository
     {
         $organization = $this->findOrFail($id);
     
-        DB::beginTransaction();
-    
-        try {
+        DB::transaction(function() use($organization, $id) {
             $organization->persons()->delete();
     
             $this->attributeValueRepository->deleteWhere([
                 'entity_id'   => $id,
-                'entity_type' => 'organizations',
+                'entity_fadtype' => 'organizations',
             ]);
     
             $organization->delete();
-    
-            DB::commit();
-        } catch (\Exception $e) {
-            DB::rollBack();
-            
-            throw new \Exception($e->getMessage());
-        }
+        });
     }
 }
