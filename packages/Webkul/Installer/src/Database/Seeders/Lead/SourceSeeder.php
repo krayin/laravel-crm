@@ -20,7 +20,7 @@ class SourceSeeder extends Seeder
         
         $now = Carbon::now();
 
-        $defaultLocale = $parameters['default_locale'] ?? config('app.locale');
+        $defaultLocale = $parameters['locale'] ?? config('app.locale');
 
         DB::table('lead_sources')->insert([
             [

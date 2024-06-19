@@ -25,6 +25,15 @@ class InstallerServiceProvider extends ServiceProvider
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'installer');
 
         Event::listen('bagisto.installed', 'Webkul\Installer\Listeners\Installer@installed');
+
+
+        /**
+         * Route to access template applied image file
+         */
+        $this->app['router']->get('cache/{filename}', [
+            'uses' => 'Webkul\Installer\Http\Controllers\ImageCacheController@getImage',
+            'as'   => 'image_cache',
+        ])->where(['filename' => '[ \w\\.\\/\\-\\@\(\)\=]+']);
     }
 
     /**
