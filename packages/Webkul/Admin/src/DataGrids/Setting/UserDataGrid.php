@@ -40,6 +40,7 @@ class UserDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('users')
+            ->distinct()
             ->addSelect(
                 'users.id',
                 'users.name',
