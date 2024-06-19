@@ -86,7 +86,7 @@ class OrganizationRepository extends Repository
     
             $this->attributeValueRepository->deleteWhere([
                 'entity_id'   => $id,
-                'entity_fadtype' => 'organizations',
+                'entity_type' => 'organizations',
             ]);
     
             $organization->delete();
