@@ -127,8 +127,8 @@ class OrganizationController extends Controller
             ], 200);
         } catch(\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.organizations.organization')]),
-            ], 400);
+                'message' => $exception->getMessage(),
+            ], 500);
         }
     }
 
