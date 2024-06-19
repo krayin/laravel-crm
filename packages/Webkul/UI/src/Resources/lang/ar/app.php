@@ -60,6 +60,8 @@ return [
             'title'         => 'منقي',
             'apply_title'   => 'تطبيق عامل التصفية',
             'custom_filter' => 'تصفية مخصص',
+            'subject'       => 'موضوع',
+            'name'          => 'اسم',
             'done'          => 'فعله',
             'to'            => 'ل',
             'date_range'    => 'نطاق الموعد',

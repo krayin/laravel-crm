@@ -63,6 +63,8 @@ return [
             'custom_filter' => 'فیلتر سفارشی',
             'done'          => 'انجام شده',
             'to'            => 'از',
+            'subject'       => 'موضوع',
+            'name'          => 'اسم',
             'date_range'    => 'محدوده زمانی',
             'start_date'    => 'تاریخ شروع',
             'end_date'      => 'تاریخ پایان',
