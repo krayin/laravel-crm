@@ -3,6 +3,7 @@
 namespace Webkul\Contact\Repositories;
 
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\DB;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 
@@ -68,5 +69,27 @@ class OrganizationRepository extends Repository
         $this->attributeValueRepository->save($data, $id);
 
         return $organization;
+    }
+
+    /**
+     * Delete organization and it's persons.
+     * 
+     * @param int $id
+     * @return @void
+     */
+    public function delete($id)
+    {
+        $organization = $this->findOrFail($id);
+    
+        DB::transaction(function() use($organization, $id) {
+            $organization->persons()->delete();
+    
+            $this->attributeValueRepository->deleteWhere([
+                'entity_id'   => $id,
+                'entity_type' => 'organizations',
+            ]);
+    
+            $organization->delete();
+        });
     }
 }
