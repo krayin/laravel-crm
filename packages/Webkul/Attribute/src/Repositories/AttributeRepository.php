@@ -126,6 +126,20 @@ class AttributeRepository extends Repository
             $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
         }
 
+        if (Str::contains($lookup['repository'], 'UserRepository')) {
+            $userRepository = app($lookup['repository']);
+            
+            $currentUser = auth()->guard('user')->user();
+        
+            if ($currentUser->view_permission === 'group') {
+                return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+                    ->where('users.name', 'like', '%' . urldecode($query) . '%')
+                    ->get();
+            } elseif ($currentUser->view_permission === 'individual') {
+                return $userRepository->findByField('users.id', $currentUser->id);
+            }
+        }
+
         return app($lookup['repository'])->findWhere([
             [$lookup['label_column'] ?? 'name', 'like', '%' . urldecode($query) . '%']
         ], $columns);

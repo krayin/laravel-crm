@@ -22,8 +22,9 @@ import './bootstrap';
  import hi_IN from 'vee-validate/dist/locale/hi';
  import zh_CN from 'vee-validate/dist/locale/zh_CN';
 
- import 'vue-cal/dist/i18n/ar.js';
- import 'vue-cal/dist/i18n/tr.js';
+ import 'vue-cal/dist/i18n/en.es.js';
+ import 'vue-cal/dist/i18n/ar.es.js';
+ import 'vue-cal/dist/i18n/tr.es.js';
  
 
 window.moment = require('moment');
@@ -154,7 +155,7 @@ $(function() {
                     var inputNames = [];
                     
                     key.split('.').forEach(function(chunk, index) {
-                        if(index) {
+                        if (index) {
                             inputNames.push('[' + chunk + ']')
                         } else {
                             inputNames.push(chunk)

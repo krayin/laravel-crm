@@ -62,6 +62,8 @@ return [
             'apply_title'   => 'Apply Filter',
             'custom_filter' => 'Custom Filter',
             'done'          => 'Done',
+            'subject'       => 'Subject',
+            'name'          => 'Name',
             'to'            => 'to',
             'date_range'    => 'Date Range',
             'start_date'    => 'Start Date',

@@ -63,6 +63,8 @@ return [
             'custom_filter' => 'Filtro Personalizado',
             'done'          => 'Terminado',
             'to'            => 'A',
+            'subject'       => 'Sujeto',
+            'name'          => 'Nombre',
             'date_range'    => 'Rango de fecha',
             'start_date'    => 'Fecha Inicio',
             'end_date'      => 'Fecha Final',

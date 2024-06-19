@@ -104,8 +104,6 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-        $this->organizationRepository->findOrFail($id);
-
         try {
             Event::dispatch('contact.organization.delete.before', $id);
 

@@ -6,10 +6,31 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
+use Webkul\User\Repositories\UserRepository;
 
 class UserDataGrid extends DataGrid
 {
     use ProvideDropdownOptions;
+
+    /**
+     * User repository instance.
+     *
+     * @var \Webkul\User\Repositories\UserRepository
+     */
+    protected $userRepository;
+
+     /**
+     * Create data grid instance.
+     * 
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
+     * @return void
+     */
+    public function __construct(UserRepository $userRepository)
+    {
+        $this->userRepository = $userRepository;
+
+        parent::__construct();
+    }
 
     /**
      * Prepare query builder.
@@ -19,6 +40,7 @@ class UserDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('users')
+            ->distinct()
             ->addSelect(
                 'users.id',
                 'users.name',
@@ -26,7 +48,18 @@ class UserDataGrid extends DataGrid
                 'users.image',
                 'users.status',
                 'users.created_at'
-            );
+            )
+            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
+
+        $currentUser = auth()->guard('user')->user();
+
+        if ($currentUser->view_permission != 'global') {
+            if ($currentUser->view_permission == 'group') {
+                $queryBuilder->whereIn('users.id', $this->userRepository->getCurrentUserGroupsUserIds());
+            } else {
+                $queryBuilder->where('users.id', $currentUser->id);
+            }
+        }
 
         $this->addFilter('id', 'users.id');
 

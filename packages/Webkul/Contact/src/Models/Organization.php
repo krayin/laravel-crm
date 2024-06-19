@@ -23,4 +23,14 @@ class Organization extends Model implements OrganizationContract
         'name',
         'address',
     ];
+
+    /**
+     * Get persons.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function persons()
+    {
+        return $this->hasMany(PersonProxy::modelClass());
+    }
 }

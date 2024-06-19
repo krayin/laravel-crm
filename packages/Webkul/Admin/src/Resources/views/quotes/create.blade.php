@@ -64,12 +64,15 @@
                                             ->scopeQuery(function($query) {
                                                 return $query
                                                     ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'user_id',
-                                                        'subject',
-                                                        'description',
-                                                        'expired_at',
-                                                        'person_id',
+                                                    ->whereNotIn('code', [
+                                                        'billing_address',
+                                                        'shipping_address',
+                                                        'grand_total',
+                                                        'sub_total',
+                                                        'discount_amount',
+                                                        'adjustment_amount',
+                                                        'discount_percent',
+                                                        'tax_amount'
                                                     ]);
                                             })->get(),
                                         'customValidations'      => [
