@@ -138,6 +138,7 @@ class EmailRepository extends Repository
             ]));
         } else {
             $this->update([
+                'folders'       => array_unique(array_merge($email->folders, ['inbox'])),
                 'reference_ids' => array_merge($email->reference_ids ?? [], [$headers['message_id']]),
             ], $email->id);
 
