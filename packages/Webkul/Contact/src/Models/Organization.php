@@ -25,7 +25,7 @@ class Organization extends Model implements OrganizationContract
     ];
 
     /**
-     * Get persons
+     * Get persons.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
