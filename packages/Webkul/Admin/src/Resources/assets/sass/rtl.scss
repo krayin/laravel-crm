@@ -101,6 +101,14 @@
                 li.menu-item.active {
                     width: calc(100% - 0px);
                 }
+
+                ul.sub-menubar {
+                    li.sub-menu-item {
+                        a {
+                            padding-right: 40px;
+                        }
+                    }
+                }
             }
         }
     }
