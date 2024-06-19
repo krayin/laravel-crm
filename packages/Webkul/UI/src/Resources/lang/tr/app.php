@@ -62,6 +62,8 @@ return [
             'custom_filter' => 'Özel Filtre',
             'done'          => 'Tamamla',
             'to'            => 'ile',
+            'subject'       => 'موضوع',
+            'name'          => 'نام',
             'date_range'    => 'Tarih aralığı',
             'start_date'    => 'Başlangıç Tarihi',
             'end_date'      => 'Bitiş Tarihi',
