@@ -27,6 +27,13 @@ class UserController extends Controller
     protected $roleRepository;
 
     /**
+     * RoleRepository object
+     *
+     * @var \Webkul\User\Repositories\GroupRepository
+     */
+    protected $groupRepository;
+
+    /**
      * Create a new controller instance.
      *
      * @param  \Webkul\User\Repositories\UserRepository  $userRepository
