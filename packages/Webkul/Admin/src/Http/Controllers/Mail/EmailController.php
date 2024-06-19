@@ -167,7 +167,7 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['inbox', 'sent']
+                    'folders' => ['sent']
                 ], $email->id);
             } catch (\Exception $e) {}
         }
@@ -182,7 +182,7 @@ class EmailController extends Controller
 
         session()->flash('success', trans('admin::app.mail.create-success'));
 
-        return redirect()->route('admin.mail.index', ['route'   => 'inbox']);
+        return redirect()->route('admin.mail.index', ['route'   => 'sent']);
     }
 
     /**
