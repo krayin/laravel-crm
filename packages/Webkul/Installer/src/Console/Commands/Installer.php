@@ -20,7 +20,7 @@ class Installer extends Command
      *
      * @var string
      */
-    protected $signature = 'krayin:install
+    protected $signature = 'krayin-crm:install
         { --skip-env-check : Skip env check. }
         { --skip-admin-creation : Skip admin creation. }';
 
