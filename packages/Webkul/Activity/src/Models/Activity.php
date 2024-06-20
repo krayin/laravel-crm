@@ -9,13 +9,31 @@ use Webkul\Activity\Contracts\Activity as ActivityContract;
 
 class Activity extends Model implements ActivityContract
 {
+    /**
+     * Define table name of property
+     *
+     * @var string
+     */
     protected $table = 'activities';
 
-    protected $with = ['file', 'user'];
+    /**
+     * Define relationships that should be touched on save
+     *
+     * @var array
+     */
+    protected $with = [
+        'file',
+        'user',
+    ];
 
-    protected $dates= [
-        'schedule_from',
-        'schedule_to',
+    /**
+     * Cast attributes to date time
+     *
+     * @var array
+     */
+    protected $casts = [
+        'schedule_from' => 'datetime',
+        'schedule_to'   => 'datetime',
     ];
 
     /**
