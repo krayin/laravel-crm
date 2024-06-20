@@ -368,9 +368,9 @@
                 @include('admin::settings.workflows.webhook.index')
 
                 <webhook-component
-                :entity-type="entityType"
-                :index="index"
-                :matched-action="matchedAction"
+                    :entity-type="entityType"
+                    :index="index"
+                    :matched-action="matchedAction"
                 /></webhook-component>
             </td>
 
