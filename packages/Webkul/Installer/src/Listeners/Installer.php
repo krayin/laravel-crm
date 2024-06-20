@@ -24,7 +24,7 @@ class Installer
     }
 
     /**
-     * After Bagisto is successfully installed
+     * After Krayin is successfully installed
      *
      * @return void
      */
