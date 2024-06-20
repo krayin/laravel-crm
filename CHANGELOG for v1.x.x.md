@@ -1,6 +1,6 @@
 ## **v1.3.0 (20th of June 2024)** - *Release*
 
-* #1251[enhancement] Installer package and refactor.
+* #1251[upgrade] Upgraded the Laravel framework to version 10, incorporating the latest features and enhancements for improved performance, security, and developer experience and Installer package.
 
 * #1262[fixed] Fix issue while save activity. 
 
