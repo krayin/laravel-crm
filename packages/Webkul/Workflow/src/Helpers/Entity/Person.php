@@ -14,7 +14,9 @@ use Webkul\Contact\Repositories\PersonRepository;
 class Person extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string $entityType
      */
     protected $entityType = 'persons';
 
@@ -32,9 +34,9 @@ class Person extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
-     * @param  \Webkul\Contact\Contracts\Person|integer  $entity
+     * @param  \Webkul\Contact\Contracts\Person  $entity
      * @return \Webkul\Contact\Contracts\Person
      */
     public function getEntity($entity)
@@ -47,7 +49,7 @@ class Person extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -87,7 +89,7 @@ class Person extends AbstractEntity
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Contact\Contracts\Person  $person
@@ -152,10 +154,10 @@ class Person extends AbstractEntity
     }
 
     /**
-     * trigger webhook
+     * Trigger webhook.
      * 
-     * @param  $hook
-     * @param  $person
+     * @param array $hook
+     * @param \Webkul\Contact\Contracts\Person $person
      * @return void
      */
     private function triggerWebhook($hook, $person)
@@ -198,10 +200,10 @@ class Person extends AbstractEntity
     }
 
     /**
-     * prepare request body
+     * Prepare request body.
      * 
-     * @param  $hook
-     * @param  $person
+     * @param array $hook
+     * @param \Webkul\Contact\Contracts\Person $person
      * @return array
      */
     private function getRequestBody($hook, $person)

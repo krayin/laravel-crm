@@ -16,7 +16,9 @@ use Webkul\Activity\Repositories\ActivityRepository;
 class Activity extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string  $entityType
      */
     protected $entityType = 'activities';
 
@@ -39,6 +41,7 @@ class Activity extends AbstractEntity
      *
      * @param  string  $entityType
      * @param  array  $skipAttributes
+     * 
      * @return array
      */
     public function getAttributes($entityType, $skipAttributes = [])
@@ -110,7 +113,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns placeholders for email templates
+     * Returns placeholders for email templates.
      * 
      * @param  array  $entity
      * @return array
@@ -128,7 +131,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Replace placeholders with values
+     * Replace placeholders with values.
      * 
      * @param  mixed  $entity
      * @param  array  $values
@@ -155,9 +158,9 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
-     * @param  \Webkul\Activity\Contracts\Activity|integer  $entity
+     * @param  \Webkul\Activity\Contracts\Activity  $entity
      * @return \Webkul\Activity\Contracts\Activity
      */
     public function getEntity($entity)
@@ -170,7 +173,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -210,7 +213,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Activity\Contracts\Activity  $activity
@@ -307,10 +310,10 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * trigger webhook
+     * Trigger Webhook.
      * 
-     * @param  $hook
-     * @param  $activity
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
      * @return void
      */
     private function triggerWebhook($hook, $activity)
@@ -332,9 +335,9 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * format headers
+     * Formatting headers.
      * 
-     * @param  $hook
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -353,10 +356,11 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * prepare request body
+     * Prepare Request Body.
      * 
-     * @param  $hook
-     * @param  $quote
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
+     * 
      * @return array
      */
     private function getRequestBody($hook, $activity)
@@ -388,7 +392,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns .ics file for attachments
+     * Returns .ics file for attachments.
      * 
      * @param  \Webkul\Activity\Contracts\Activity  $activity
      * @return string

@@ -15,7 +15,9 @@ use Webkul\Contact\Repositories\PersonRepository;
 class Quote extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string $entityType
      */
     protected $entityType = 'quotes';
 
@@ -34,7 +36,7 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
      * @param  \Webkul\Quote\Contracts\Quote|integer  $entity
      * @return \Webkul\Quote\Contracts\Quote
@@ -49,7 +51,7 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -97,7 +99,7 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Quote\Contracts\Quote  $quote
@@ -185,10 +187,10 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * trigger webhook
+     * Trigger webhook.
      * 
-     * @param  $hook
-     * @param  $quote
+     * @param array $hook
+     * @param \Webkul\Quote\Contracts\Quote $quote
      * @return void
      */
     private function triggerWebhook($hook, $quote)
@@ -210,9 +212,9 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * format headers
+     * Format headers.
      * 
-     * @param  $hook
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -231,10 +233,10 @@ class Quote extends AbstractEntity
     }
 
     /**
-     * prepare request body
+     * Prepare request body.
      * 
-     * @param  $hook
-     * @param  $quote
+     * @param array $hook
+     * @param \Webkul\Quote\Contracts\Quote $quote
      * @return array
      */
     private function getRequestBody($hook, $quote)

@@ -16,7 +16,9 @@ use Webkul\Tag\Repositories\TagRepository;
 class Lead extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string $entityType
      */
     protected $entityType = 'leads';
 
@@ -36,9 +38,9 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
-     * @param  \Webkul\Lead\Contracts\Lead|integer  $entity
+     * @param  \Webkul\Lead\Contracts\Lead  $entity
      * @return \Webkul\Lead\Contracts\Lead
      */
     public function getEntity($entity)
@@ -51,7 +53,7 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * Returns attributes
+     * Returns attributes.
      *
      * @param  string  $entityType
      * @param  array  $skipAttributes
@@ -74,7 +76,7 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -124,7 +126,7 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Models\Workflow  $workflow
      * @param  \Webkul\Lead\Models\Lead  $lead
@@ -238,10 +240,10 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * trigger webhook
+     * Trigger webhook.
      * 
-     * @param  $hook
-     * @param  $lead
+     * @param array $hook
+     * @param \Webkul\Lead\Contracts\Lead $lead
      * @return void
      */
     private function triggerWebhook($hook, $lead)
@@ -263,9 +265,9 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * format headers
+     * Format headers.
      * 
-     * @param  $hook
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -284,10 +286,10 @@ class Lead extends AbstractEntity
     }
 
     /**
-     * prepare request body
+     * Prepare request body.
      * 
-     * @param  $hook
-     * @param  $lead
+     * @param array $hook
+     * @param \Webkul\Lead\Contracts\Lead $lead
      * @return array
      */
     private function getRequestBody($hook, $lead)
