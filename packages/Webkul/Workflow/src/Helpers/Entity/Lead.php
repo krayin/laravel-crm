@@ -43,7 +43,7 @@ class Lead extends AbstractEntity
      */
     public function getEntity($entity)
     {
-        if (!$entity instanceof \Webkul\Lead\Contracts\Lead) {
+        if (! $entity instanceof \Webkul\Lead\Contracts\Lead) {
             $entity = $this->leadRepository->find($entity);
         }
 
@@ -64,7 +64,7 @@ class Lead extends AbstractEntity
             'type'        => 'select',
             'name'        => 'Stage',
             'lookup_type' => 'lead_pipeline_stages',
-            'options'     => collect([]),
+            'options'     => collect(),
         ];
 
         return array_merge(
@@ -109,14 +109,14 @@ class Lead extends AbstractEntity
                 'id'   => 'trigger_webhook',
                 'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
-                    'get' => __('admin::app.settings.workflows.get_method'),
-                    'post' => __('admin::app.settings.workflows.post_method'),
-                    'put' => __('admin::app.settings.workflows.put_method'),
-                    'patch' => __('admin::app.settings.workflows.patch_method'),
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
                     'delete' => __('admin::app.settings.workflows.delete_method'),
                 ],
                 'encodings' => [
-                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
                     'http_query' => __('admin::app.settings.workflows.encoding_http_query')
                 ]
             ],
@@ -213,7 +213,7 @@ class Lead extends AbstractEntity
                         'type'    => 'note',
                         'comment' => $action['value'],
                         'is_done' => 1,
-                        'user_id' => $userId = auth()->guard('user')->user()->id,
+                        'user_id' => auth()->guard('user')->user()->id,
                     ]);
 
                     $lead->activities()->attach($activity->id);
@@ -270,17 +270,14 @@ class Lead extends AbstractEntity
      */
     private function formatHeaders($hook)
     {
-        $results = ($hook['encoding'] == 'json')
-            ? array('Content-Type: application/json')
-            : array('Content-Type: application/x-www-form-urlencoded');
+        $results = $hook['encoding'] == 'json'
+            ? ['Content-Type: application/json']
+            : ['Content-Type: application/x-www-form-urlencoded'];
 
         if (isset($hook['headers'])) {
-            array_walk(
-                $hook['headers'],
-                function (&$arr, $key) use (&$results) {
-                    $results[$arr['key']] = $arr['value'];
-                }
-            );
+            foreach ($hook['headers'] as $header) {
+                $results[$header['key']] = $header['value'];
+            }
         }
 
         return $results;
@@ -302,56 +299,38 @@ class Lead extends AbstractEntity
             return;
         }
 
-        $lead_result = $person_result = $quote_result = $activity_result = $custom_results = array();
+        $leadResult = $personResult = $quoteResult = $activityResult = $customResults = [];
 
         if (isset($hook['simple'])) {
-            array_walk($hook['simple'], function (&$field, $key) use (&$simple_formatted) {
+            $simpleFormatted = [];
+            
+            foreach ($hook['simple'] as $field) {
                 if (strpos($field, 'lead_') === 0) {
-                    $simple_formatted['lead'][] = substr_replace(
-                        $field,
-                        '',
-                        0,
-                        5
-                    );
+                    $simpleFormatted['lead'][] = substr($field, 5);
                 } else if (strpos($field, 'person_') === 0) {
-                    $simple_formatted['person'][] = substr_replace(
-                        $field,
-                        '',
-                        0,
-                        7
-                    );
+                    $simpleFormatted['person'][] = substr($field, 7);
                 } else if (strpos($field, 'quote_') === 0) {
-                    $simple_formatted['quote'][] = substr_replace(
-                        $field,
-                        '',
-                        0,
-                        6
-                    );
+                    $simpleFormatted['quote'][] = substr($field, 6);
                 } else if (strpos($field, 'activity_') === 0) {
-                    $simple_formatted['activity'][] = substr_replace(
-                        $field,
-                        '',
-                        0,
-                        9
-                    );
+                    $simpleFormatted['activity'][] = substr($field, 9);
                 }
-            });
+            }
 
-            foreach ($simple_formatted as $entity => $fields) {
+            foreach ($simpleFormatted as $entity => $fields) {
                 if ($entity == 'lead') {
-                    $lead_result = $this->leadRepository
+                    $leadResult = $this->leadRepository
                         ->find($lead->id)
                         ->get($fields)
                         ->first()
                         ->toArray();
                 } else if ($entity == 'person') {
-                    $person_result = $this->personRepository
+                    $personResult = $this->personRepository
                         ->find($lead->person_id)
                         ->get($fields)
                         ->first()
                         ->toArray();
                 } else if ($entity == 'quote') {
-                    $quote_result = $lead
+                    $quoteResult = $lead
                         ->quotes()
                         ->where(
                             'lead_id',
@@ -360,7 +339,7 @@ class Lead extends AbstractEntity
                         ->get($fields)
                         ->toArray();
                 } else if ($entity == 'activity') {
-                    $activity_result = $lead
+                    $activityResult = $lead
                         ->activities()
                         ->where(
                             'lead_id',
@@ -373,34 +352,26 @@ class Lead extends AbstractEntity
         }
 
         if (isset($hook['custom'])) {
-            $custom_unformatted = preg_split(
-                "/[\r\n,]+/",
-                $hook['custom']
-            );
+            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
 
-            array_walk(
-                $custom_unformatted,
-                function (&$raw, $key) use (&$custom_results) {
-                    $arr = explode('=', $raw);
+            $customResults = [];
 
-                    $custom_results[$arr[0]] = $arr[1];
-                }
-            );
+            foreach ($customUnformatted as $raw) {
+                [$key, $value] = explode('=', $raw);
+
+                $customResults[$key] = $value;
+            }
         }
 
         $results = array_merge(
-            $lead_result,
-            $person_result,
-            $quote_result
-                ? ['quotes' => $quote_result]
-                : array(),
-            $activity_result
-                ? ['activities' => $activity_result]
-                : array(),
-            $custom_results
+            $leadResult,
+            $personResult,
+            $quoteResult ? ['quotes' => $quoteResult] : [],
+            $activityResult ? ['activities' => $activityResult] : [],
+            $customResults
         );
 
-        return ($hook['encoding'] == 'http_query')
+        return $hook['encoding'] == 'http_query'
             ? Arr::query($results)
             : json_encode($results);
     }

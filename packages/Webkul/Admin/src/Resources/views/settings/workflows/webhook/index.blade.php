@@ -52,10 +52,11 @@
             <div class="form-group" id="webhook-encoding">
                 <label>{{ __('admin::app.settings.workflows.webhook_encoding') }}</label>
 
-                <label v-for='(text, encoding) in matchedAction.encodings' class="radio-inline">
-                    <input type="radio" :name="['actions[' + index + '][hook][encoding]']" :value="encoding" class="control inline-radio" v-model="action.hook.encoding" />
+                <div v-for='(text, encoding) in matchedAction.encodings' class="radio-inline">
+                    <input type="radio" :name="['actions[' + index + '][hook][encoding]']" :value="encoding" v-model="action.hook.encoding" />
+
                     @{{ text }}
-                </label>
+                </div>
             </div>
 
             <div class="form-group" v-if="action.hook.method != 'get' && action.hook.method != 'delete'">
@@ -102,8 +103,6 @@
                                 @{{ activity.name }}
                             </div>
                         </div>
-
-                        </div>
                     </tab>
 
                     <tab name="{{ __('admin::app.settings.workflows.custom_body') }}">
@@ -136,7 +135,7 @@
                             custom: ''
                         }
                     },
-                    headers : @json(collect($workflow->actions)->first()['hook']['headers'] ?? []),
+                    headers : @json(collect($workflow->actions ?? [])->first()['hook']['headers'] ?? []),
                     'leads': @json(app('\Webkul\Workflow\Helpers\Entity\Lead')->getAttributes('leads', [])),
                     'persons': @json(app('\Webkul\Workflow\Helpers\Entity\Person')->getAttributes('persons', [])),
                     'quotes': @json(app('\Webkul\Workflow\Helpers\Entity\Quote')->getAttributes('quotes', [])),

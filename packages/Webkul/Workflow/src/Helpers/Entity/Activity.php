@@ -49,7 +49,7 @@ class Activity extends AbstractEntity
                 'type'        => 'text',
                 'name'        => 'Title',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'type',
                 'type'        => 'multiselect',
@@ -78,25 +78,25 @@ class Activity extends AbstractEntity
                 'type'        => 'text',
                 'name'        => 'Location',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'comment',
                 'type'        => 'textarea',
                 'name'        => 'Comment',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'schedule_from',
                 'type'        => 'datetime',
                 'name'        => 'Schedule From',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'schedule_to',
                 'type'        => 'datetime',
                 'name'        => 'Schedule To',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'user_id',
                 'type'        => 'select',
@@ -195,14 +195,14 @@ class Activity extends AbstractEntity
                 'id'   => 'trigger_webhook',
                 'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
-                    'get' => __('admin::app.settings.workflows.get_method'),
-                    'post' => __('admin::app.settings.workflows.post_method'),
-                    'put' => __('admin::app.settings.workflows.put_method'),
-                    'patch' => __('admin::app.settings.workflows.patch_method'),
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
                     'delete' => __('admin::app.settings.workflows.delete_method'),
                 ],
                 'encodings' => [
-                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
                     'http_query' => __('admin::app.settings.workflows.encoding_http_query')
                 ]
             ],
@@ -339,17 +339,14 @@ class Activity extends AbstractEntity
      */
     private function formatHeaders($hook)
     {
-        $results = ($hook['encoding'] == 'json')
-            ? array('Content-Type: application/json')
-            : array('Content-Type: application/x-www-form-urlencoded');
+        $results = $hook['encoding'] == 'json'
+            ? ['Content-Type: application/json']
+            : ['Content-Type: application/x-www-form-urlencoded'];
 
         if (isset($hook['headers'])) {
-            array_walk(
-                $hook['headers'],
-                function (&$arr, $key) use (&$results) {
-                    $results[$arr['key']] = $arr['value'];
-                }
-            );
+            foreach ($hook['headers'] as $header) {
+                $results[$header['key']] = $header['value'];
+            }
         }
 
         return $results;
@@ -364,36 +361,28 @@ class Activity extends AbstractEntity
      */
     private function getRequestBody($hook, $activity)
     {
-        $hook['simple'] = str_replace(
-            'activity_',
-            '',
-            $hook['simple']
-        );
+        $hook['simple'] = str_replace('activity_', '', $hook['simple']);
 
         $results = $this->activityRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
 
         if (isset($hook['custom'])) {
-            $custom_unformatted = preg_split(
-                "/[\r\n,]+/",
-                $hook['custom']
-            );
+            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
 
-            array_walk(
-                $custom_unformatted,
-                function (&$raw, $key) use (&$custom_results) {
-                    $arr = explode('=', $raw);
+            $customResults = [];
 
-                    $custom_results[$arr[0]] = $arr[1];
-                }
-            );
+            foreach ($customUnformatted as $raw) {
+                [$key, $value] = explode('=', $raw);
+
+                $customResults[$key] = $value;
+            }
 
             $results = array_merge(
                 $results,
-                $custom_results
+                $customResults
             );
         }
 
-        return ($hook['encoding'] == 'http_query')
+        return $hook['encoding'] == 'http_query'
             ? Arr::query($results)
             : json_encode($results);
     }
@@ -419,10 +408,6 @@ class Activity extends AbstractEntity
         ];
 
         foreach ($activity->participants as $participant) {
-            $emails = $participant->user
-                ? [$participant->user->email]
-                : data_get($participant->person->emails, '*.value');
-
             if ($participant->user) {
                 $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN=' . $participant->user->name . ';PARTSTAT=NEEDS-ACTION:MAILTO:' . $participant->user->email;
             } else {

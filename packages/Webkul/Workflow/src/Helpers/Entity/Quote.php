@@ -82,14 +82,14 @@ class Quote extends AbstractEntity
                 'id'   => 'trigger_webhook',
                 'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
-                    'get' => __('admin::app.settings.workflows.get_method'),
-                    'post' => __('admin::app.settings.workflows.post_method'),
-                    'put' => __('admin::app.settings.workflows.put_method'),
-                    'patch' => __('admin::app.settings.workflows.patch_method'),
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
                     'delete' => __('admin::app.settings.workflows.delete_method'),
                 ],
                 'encodings' => [
-                    'json' => __('admin::app.settings.workflows.encoding_json'),
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
                     'http_query' => __('admin::app.settings.workflows.encoding_http_query')
                 ]
             ],
@@ -217,17 +217,14 @@ class Quote extends AbstractEntity
      */
     private function formatHeaders($hook)
     {
-        $results = ($hook['encoding'] == 'json')
-            ? array('Content-Type: application/json')
-            : array('Content-Type: application/x-www-form-urlencoded');
+        $results = $hook['encoding'] == 'json'
+            ? ['Content-Type: application/json']
+            : ['Content-Type: application/x-www-form-urlencoded'];
 
         if (isset($hook['headers'])) {
-            array_walk(
-                $hook['headers'],
-                function (&$arr, $key) use (&$results) {
-                    $results[$arr['key']] = $arr['value'];
-                }
-            );
+            foreach ($hook['headers'] as $header) {
+                $results[$header['key']] = $header['value'];
+            }
         }
 
         return $results;
@@ -242,41 +239,28 @@ class Quote extends AbstractEntity
      */
     private function getRequestBody($hook, $quote)
     {
-        $hook['simple'] = str_replace(
-            'quote_',
-            '',
-            $hook['simple']
-        );
+        $hook['simple'] = str_replace('quote_', '', $hook['simple']);
 
-        $results = $this
-            ->quoteRepository
-            ->find($quote->id)
-            ->get($hook['simple'])
-            ->first()
-            ->toArray();
+        $results = $this->quoteRepository->find($quote->id)->get($hook['simple'])->first()->toArray();
 
         if (isset($hook['custom'])) {
-            $custom_unformatted = preg_split(
-                "/[\r\n,]+/",
-                $hook['custom']
-            );
+            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
 
-            array_walk(
-                $custom_unformatted,
-                function (&$raw, $key) use (&$custom_results) {
-                    $arr = explode('=', $raw);
+            $customResults = [];
 
-                    $custom_results[$arr[0]] = $arr[1];
-                }
-            );
+            foreach ($customUnformatted as $raw) {
+                [$key, $value] = explode('=', $raw);
+
+                $customResults[$key] = $value;
+            }
 
             $results = array_merge(
                 $results,
-                $custom_results
+                $customResults
             );
         }
 
-        return ($hook['encoding'] == 'http_query')
+        return $hook['encoding'] == 'http_query'
             ? Arr::query($results)
             : json_encode($results);
     }
