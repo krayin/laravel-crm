@@ -115,7 +115,7 @@ class Installer extends Command
     ];
 
     /**
-     * Install and configure bagisto.
+     * Install and configure krayin.
      */
     public function handle()
     {
