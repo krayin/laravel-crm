@@ -133,8 +133,8 @@ class Activity extends AbstractEntity
     /**
      * Replace placeholders with values.
      * 
-     * @param  mixed  $entity
-     * @param  array  $values
+     * @param  \Webkul\Activity\Contracts\Activity  $entity
+     * @param  mixed $content
      * @return string
      */
     public function replacePlaceholders($entity, $content)

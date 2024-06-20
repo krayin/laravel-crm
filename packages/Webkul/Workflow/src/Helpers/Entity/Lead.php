@@ -128,8 +128,8 @@ class Lead extends AbstractEntity
     /**
      * Execute workflow actions.
      * 
-     * @param  \Webkul\Workflow\Models\Workflow  $workflow
-     * @param  \Webkul\Lead\Models\Lead  $lead
+     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
+     * @param  \Webkul\Lead\Contracts\Lead  $lead
      * @return array
      */
     public function executeActions($workflow, $lead)

@@ -179,9 +179,9 @@ class Person extends AbstractEntity
     }
 
     /**
-     * format headers
+     * Format headers.
      * 
-     * @param  $hook
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
