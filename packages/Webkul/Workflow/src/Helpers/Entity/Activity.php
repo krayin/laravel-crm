@@ -130,7 +130,7 @@ class Activity extends AbstractEntity
     /**
      * Replace placeholders with values
      * 
-     * @param  array  $entity
+     * @param  mixed  $entity
      * @param  array  $values
      * @return string
      */
@@ -296,7 +296,9 @@ class Activity extends AbstractEntity
                                 $action['hook'],
                                 $activity
                             );
-                        } catch (\Exception $e) {}
+                        } catch (\Exception $e) {
+                            report($e);
+                        }
                     }
 
                     break;
@@ -368,12 +370,7 @@ class Activity extends AbstractEntity
             $hook['simple']
         );
 
-        $results = $this
-            ->quoteRepository
-            ->find($activity->id)
-            ->get($hook['simple'])
-            ->first()
-            ->toArray();
+        $results = $this->activityRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
 
         if (isset($hook['custom'])) {
             $custom_unformatted = preg_split(

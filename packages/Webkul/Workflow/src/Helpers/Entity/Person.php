@@ -140,7 +140,9 @@ class Person extends AbstractEntity
                                 $action['hook'],
                                 $person
                             );
-                        } catch (\Exception $e) {}
+                        } catch (\Exception $e) {
+                            report($e);
+                        }
                     }
 
                     break;

@@ -174,7 +174,9 @@ class Quote extends AbstractEntity
                                 $action['hook'],
                                 $quote
                             );
-                        } catch (\Exception $e) {}
+                        } catch (\Exception $e) {
+                            report($e);
+                        }
                     }
 
                     break;
