@@ -1,3 +1,47 @@
+## **v1.3.0 (20th of June 2024)** - *Release*
+
+* #1251[enhancement] Installer package and refactor.
+
+* #1262[fixed] Fix issue while save activity. 
+
+* #1198[fixed] Sent Mail details are appearing in Inbox.
+
+* #1242[fixed] On the filter section -> In Date field filter so should be value fixed if page refresh randomly.
+
+* #1139[fixed] If the admin is trying to filter the mails then the filter labels are not translating in Arabic locale.
+
+* #1146[fixed] Text is overriding with icons in the side bar.
+
+* #1196[fixed] Delete person icon is visible for the unauthorized user roles who don't have person delete permission.
+
+* #1139[fixed] If the admin is trying to filter the mails then the filter labels are not translating in Arabic locale.
+
+* #1225[fixed] Not allow to create new person with same email id once it deleted from person or organization.
+
+* #11532[fixed] Bug: Duplicate cards on Kanban view after search.
+
+* #1113[fixed] Unable to check PHP errors, issue with exception handler.
+
+* #1220[fixed] On the filter section -> if we want to remove the filter option then it should work.
+
+* #1239[fixed] When we create a web form and create a persons from here so in contact phone no. field is not taking validation, here added with letters also .
+
+* #1222[fixed] Unable to edit the lead.
+
+* #1214[fixed] Lead generation - Sales owner must be limited only to the users of the same group.
+
+* #1190[fixed] When create custom attribute related to quotes not displayed in create form.
+
+* #1211[fixed] Notes - No newlines shown.
+
+* #1215[fixed] Composer.lock not up to date.
+
+* #1172[fixed] Checkbox not showing in webforms
+
+* #1240[fixed] When we download or print pdf of quote option then grand total field shows wrong value in showing table.
+
+* #1148[fixed] Edit button open new tab on Persons, Product, Organization.
+
 ## **v1.2.4 (15th of September 2022)** - *Release*
 
 * #816[feature] -  There should be an option to filter the expired quotes 
