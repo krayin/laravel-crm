@@ -14,7 +14,6 @@
             'custom_card'       => 'Custom Card',
             'customers'         => 'Customers',
             'top_customers'     => 'Top Customers',
-            'leads_started'     => 'Leads started',
             'products'          => 'Products',
             'top_products'      => 'Top Products',
             'leads_started'     => 'Leads started',
@@ -198,7 +197,6 @@
             'files'                    => 'Files',
             'sales-owner'              => 'Sales Owner',
             'person'                   => 'Person',
-            'subject'                  => 'Subject',
             'expired-at'               => 'Expired At',
             'sub-total'                => 'Sub Total',
             'discount'                 => 'Discount',
@@ -247,8 +245,6 @@
             'tax'                 => 'Tax',
             'total'               => 'Total',
             'sub-total'           => 'Sub Total',
-            'discount'            => 'Discount',
-            'tax'                 => 'Tax',
             'adjustment'          => 'Adjustment',
             'grand-total'         => 'Grand Total',
             'create-success'      => 'Quote created successfully.',
@@ -468,7 +464,6 @@
                 'delete-failed'       => 'User can not be deleted.',
                 'user-define-error'   => 'Can not delete system user.',
                 'last-delete-error'   => 'At least one user is required.',
-                'user-define-error'   => 'Can not delete system user.',
                 'mass-update-success' => 'Users updated successfully.',
                 'mass-update-failed'  => 'Users can not be updated.',
                 'mass-delete-success' => 'Users deleted successfully.',
@@ -687,7 +682,6 @@
             ],
 
             'web-forms' => [
-
                 'create-success' => 'Web form created successfully',
                 'update-success' => 'Web form Updated successfully',
                 'delete-success' => 'Web form deleted successfully'
@@ -853,6 +847,7 @@
             'en'                  => 'English',
             'tr'                  => 'Türkçe',
             'ar'                  => 'Arabic',          
+            'es'                  => 'Spanish',
             'add-as'              => 'Add as new',
             'no-records-found'    => 'No Records Found',
             'start-typing'        => 'Start typing to search records',
