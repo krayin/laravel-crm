@@ -5,7 +5,8 @@ namespace Webkul\Attribute\Traits;
 use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
  
-trait CustomAttribute {
+trait CustomAttribute
+{
     /**
      * @var array
      */

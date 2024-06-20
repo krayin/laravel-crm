@@ -11,43 +11,15 @@ use Webkul\Core\Repositories\CountryStateRepository;
 class Core
 {
     /**
-     * CountryRepository class
-     *
-     * @var \Webkul\Core\Repositories\CountryRepository
-     */
-    protected $countryRepository;
-
-    /**
-     * CountryStateRepository class
-     *
-     * @var \Webkul\Core\Repositories\CountryStateRepository
-     */
-    protected $countryStateRepository;
-
-    /**
-     * CoreConfigRepository class
-     *
-     * @var \Webkul\Core\Repositories\CoreConfigRepository
-     */
-    protected $coreConfigRepository;
-
-    /**
      * Create a new instance.
      *
-     * @param \Webkul\Core\Repositories\CountryRepository  $countryRepository
-     * @param \Webkul\Core\Repositories\CountryStateRepository  $countryStateRepository
      * @return void
      */
     public function __construct(
-        CountryRepository $countryRepository,
-        CoreConfigRepository $coreConfigRepository,
-        CountryStateRepository $countryStateRepository
+        protected CountryRepository $countryRepository,
+        protected CoreConfigRepository $coreConfigRepository,
+        protected CountryStateRepository $countryStateRepository
     ) {
-        $this->countryRepository = $countryRepository;
-
-        $this->countryStateRepository = $countryStateRepository;
-
-        $this->coreConfigRepository = $coreConfigRepository;
     }
 
     /**

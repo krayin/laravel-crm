@@ -97,7 +97,7 @@ return [
     |
      */
 
-    'locale' => 'en',
+    'locale' => env('APP_LOCALE', 'en'),
 
     /*
     |--------------------------------------------------------------------------
@@ -111,8 +111,10 @@ return [
 
     'available_locales' => [
         'en' => 'English',
+        'fa' => 'فارسی',
         'tr' => 'Türkçe',
         'ar' => 'Arabic',
+        'es' => 'Español',
     ],
 
     /*
@@ -230,6 +232,7 @@ return [
         Webkul\Core\Providers\CoreServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
         Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
+        Webkul\Installer\Providers\InstallerServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,
         Webkul\Quote\Providers\QuoteServiceProvider::class,

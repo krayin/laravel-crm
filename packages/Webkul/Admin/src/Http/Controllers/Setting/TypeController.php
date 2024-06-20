@@ -10,21 +10,12 @@ use Webkul\Lead\Repositories\TypeRepository;
 class TypeController extends Controller
 {
     /**
-     * TypeRepository object
-     *
-     * @var \Webkul\User\Repositories\TypeRepository
-     */
-    protected $typeRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Lead\Repositories\TypeRepository  $typeRepository
      * @return void
      */
-    public function __construct(TypeRepository $typeRepository)
+    public function __construct(protected TypeRepository $typeRepository)
     {
-        $this->typeRepository = $typeRepository;
     }
 
     /**

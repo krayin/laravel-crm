@@ -1,8 +1,11 @@
 <?php
+
+use Illuminate\Support\Facades\Route;
+
 Route::group([
     'prefix'     => 'admin/web-forms',
     'namespace'  => 'Webkul\WebForm\Http\Controllers',
-    'middleware' => ['web']
+    'middleware' => ['web', 'admin_locale']
 ], function () {
 
     Route::get('forms/{id}/form.js', 'WebFormController@formJS')->name('admin.settings.web_forms.form_js');

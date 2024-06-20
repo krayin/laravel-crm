@@ -11,21 +11,12 @@ use Webkul\Core\Repositories\CoreConfigRepository as ConfigurationRepository;
 class ConfigurationController extends Controller
 {
     /**
-     * ConfigurationRepository object
-     *
-     * @var \Webkul\Core\Repositories\CoreConfigRepository
-     */
-    protected $configurationRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Core\Repositories\CoreConfigRepository  $configurationRepository
      * @return void
      */
-    public function __construct(ConfigurationRepository $configurationRepository)
+    public function __construct(protected ConfigurationRepository $configurationRepository)
     {
-        $this->configurationRepository = $configurationRepository;
     }
 
     /**

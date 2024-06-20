@@ -17,57 +17,17 @@ class Person extends AbstractEntity
      * @var string  $code
      */
     protected $entityType = 'persons';
-
-    /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * EmailTemplateRepository object
-     *
-     * @var \Webkul\EmailTemplate\Repositories\EmailTemplateRepository
-     */
-    protected $emailTemplateRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
     /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
-     * @param  \Webkul\EmailTemplate\Repositories\EmailTemplateRepository  $emailTemplateRepository
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        EmailTemplateRepository $emailTemplateRepository,
-        LeadRepository $leadRepository,
-        PersonRepository $personRepository
+        protected AttributeRepository $attributeRepository,
+        protected EmailTemplateRepository $emailTemplateRepository,
+        protected LeadRepository $leadRepository,
+        protected PersonRepository $personRepository
     ) {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->emailTemplateRepository = $emailTemplateRepository;
-
-        $this->leadRepository = $leadRepository;
-
-        $this->personRepository = $personRepository;
     }
 
     /**

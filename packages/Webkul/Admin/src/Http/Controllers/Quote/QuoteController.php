@@ -13,36 +13,15 @@ use Webkul\Lead\Repositories\LeadRepository;
 class QuoteController extends Controller
 {
     /**
-     * QuoteRepository object
-     *
-     * @var \Webkul\Quote\Repositories\QuoteRepository
-     */
-    protected $quoteRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Quote\Repositories\QuoteRepository  $quoteRepository
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
      *
      * @return void
      */
     public function __construct(
-        QuoteRepository $quoteRepository,
-        LeadRepository $leadRepository
+        protected QuoteRepository $quoteRepository,
+        protected LeadRepository $leadRepository
     )
     {
-        $this->quoteRepository = $quoteRepository;
-
-        $this->leadRepository = $leadRepository;
-
         request()->request->add(['entity_type' => 'quotes']);
     }
 

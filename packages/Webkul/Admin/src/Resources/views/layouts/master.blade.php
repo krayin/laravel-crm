@@ -34,7 +34,7 @@
 
     </head>
 
-    <body style="scroll-behavior: smooth;" @if (app()->getLocale() == 'ar') class="rtl" @endif>
+    <body style="scroll-behavior: smooth;" @if (in_array(app()->getLocale(), ['fa', 'ar'])) class="rtl" @endif>
         {!! view_render_event('admin.layout.body.before') !!}
 
         <div id="app">
@@ -48,24 +48,24 @@
 
             {!! view_render_event('admin.layout.nav-top.after') !!}
 
+            <div class="layout-container">
+                {!! view_render_event('admin.layout.nav-left.before') !!}
 
-            {!! view_render_event('admin.layout.nav-left.before') !!}
+                @include ('admin::layouts.nav-left')
 
-            @include ('admin::layouts.nav-left')
-
-            {!! view_render_event('admin.layout.nav-left.after') !!}
+                {!! view_render_event('admin.layout.nav-left.after') !!}
 
 
-            <div class="content-container" :style="{ paddingLeft: isMenuOpen ? '160px' : ''}">
+                <div class="content-container" :style="{ paddingLeft: isMenuOpen ? '250px' : ''}">
 
-                {!! view_render_event('admin.layout.content.before') !!}
+                    {!! view_render_event('admin.layout.content.before') !!}
 
-                @yield('content-wrapper')
+                    @yield('content-wrapper')
 
-                {!! view_render_event('admin.layout.content.after') !!}
+                    {!! view_render_event('admin.layout.content.after') !!}
 
+                </div>
             </div>
-
         </div>
 
         <script type="text/javascript">

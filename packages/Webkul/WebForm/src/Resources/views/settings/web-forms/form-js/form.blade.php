@@ -92,7 +92,7 @@
                                         class="control"
                                         placeholder="{{ $attribute->placeholder }}"
                                         id="{{ $fieldName }}"
-                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        {{ $attribute->is_required ? 'required' : '' }}
                                         />
 
                                         @break;
@@ -104,7 +104,7 @@
                                         name="{{ $fieldName }}"
                                         class="control"
                                         id="{{ $fieldName }}"
-                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        {{ $attribute->is_required ? 'required' : '' }}
                                         />
 
                                         @break;
@@ -114,7 +114,7 @@
                                         name="{{ $fieldName }}"
                                         class="control"
                                         id="{{ $fieldName }}"
-                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        {{ $attribute->is_required ? 'required' : '' }}
                                         ></textarea>
 
                                         @break;
@@ -126,7 +126,7 @@
                                             class="control"
                                             placeholder="{{ $attribute->placeholder }}"
                                             id="{{ $fieldName }}"
-                                            {{ $parentAttribute->is_required ? 'required' : '' }}
+                                            {{ $attribute->is_required ? 'required' : '' }}
                                         />
 
                                         <input
@@ -145,7 +145,7 @@
                                         class="control"
                                         placeholder="{{ $attribute->placeholder }}"
                                         id="{{ $fieldName }}"
-                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        {{ $attribute->is_required ? 'required' : '' }}
                                         />
 
                                         <input
@@ -163,7 +163,7 @@
                                         class="control"
                                         id="{{ $fieldName }}"
                                         name="{{ $fieldName }}"
-                                        {{ $parentAttribute->is_required ? 'required' : '' }}
+                                        {{ $attribute->is_required ? 'required' : '' }}
                                         >
                                             @php
                                                 $options = $parentAttribute->lookup_type
@@ -200,6 +200,30 @@
 
                                         </select>
 
+                                        @break;
+
+                                    @case('checkbox')
+                                        <div class="checkbox-control">
+                                            @php
+                                                $options = $parentAttribute->lookup_type
+                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type)
+                                                    : $parentAttribute->options()->orderBy('sort_order')->get();
+                                            @endphp
+
+                                            @foreach ($options as $option)
+                                                <span class="checkbox">
+                                                    <input
+                                                        type="checkbox"
+                                                        name="{{ $fieldName }}[]"
+                                                        value="{{ $option->id }}"
+                                                    />
+                                        
+                                                    <label class="checkbox-view" style="display: inline;"></label>
+                                                    {{ $option->name }}
+                                                </span>
+                                            @endforeach
+                                        </div>
+                                        
                                         @break;
 
                                     @case('file')

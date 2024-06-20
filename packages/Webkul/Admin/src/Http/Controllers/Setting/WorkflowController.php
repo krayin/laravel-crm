@@ -9,21 +9,12 @@ use Webkul\Workflow\Repositories\WorkflowRepository;
 class WorkflowController extends Controller
 {
     /**
-     * WorkflowRepository object
-     *
-     * @var \Webkul\User\Repositories\WorkflowRepository
-     */
-    protected $workflowRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Workflow\Repositories\WorkflowRepository  $workflowRepository
      * @return void
      */
-    public function __construct(WorkflowRepository $workflowRepository)
+    public function __construct(protected WorkflowRepository $workflowRepository)
     {
-        $this->workflowRepository = $workflowRepository;
     }
 
     /**

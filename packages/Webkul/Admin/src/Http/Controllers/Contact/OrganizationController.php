@@ -10,23 +10,12 @@ use Webkul\Contact\Repositories\OrganizationRepository;
 class OrganizationController extends Controller
 {
     /**
-     * OrganizationRepository object
-     *
-     * @var \Webkul\Product\Repositories\OrganizationRepository
-     */
-    protected $organizationRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Product\Repositories\OrganizationRepository  $organizationRepository
      *
      * @return void
      */
-    public function __construct(OrganizationRepository $organizationRepository)
+    public function __construct(protected OrganizationRepository $organizationRepository)
     {
-        $this->organizationRepository = $organizationRepository;
-
         request()->request->add(['entity_type' => 'organizations']);
     }
 
@@ -115,8 +104,6 @@ class OrganizationController extends Controller
      */
     public function destroy($id)
     {
-        $this->organizationRepository->findOrFail($id);
-
         try {
             Event::dispatch('contact.organization.delete.before', $id);
 

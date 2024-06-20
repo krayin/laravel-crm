@@ -10,37 +10,15 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 class QuoteRepository extends Repository
 {
     /**
-     * AttributeValueRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeValueRepository
-     */
-    protected $attributeValueRepository;
-
-    /**
-     * QuoteItemRepository object
-     *
-     * @var \Webkul\Quote\Repositories\QuoteItemRepository
-     */
-    protected $quoteItemRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
-     * @param  \Webkul\Quote\Repositories\QuoteItemRepository  $quoteItemRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        AttributeValueRepository $attributeValueRepository,
-        QuoteItemRepository $quoteItemRepository,
+        protected AttributeValueRepository $attributeValueRepository,
+        protected QuoteItemRepository $quoteItemRepository,
         Container $container
-    )
-    {
-        $this->attributeValueRepository = $attributeValueRepository;
-
-        $this->quoteItemRepository = $quoteItemRepository;
-
+    ) {
         parent::__construct($container);
     }
 

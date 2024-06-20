@@ -9,26 +9,15 @@ use Webkul\Core\Eloquent\Repository;
 class AttributeRepository extends Repository
 {
     /**
-     * AttributeOptionRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeOptionRepository
-     */
-    protected $attributeOptionRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeOptionRepository  $attributeOptionRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        AttributeOptionRepository $attributeOptionRepository,
+        protected AttributeOptionRepository $attributeOptionRepository,
         Container $container
     )
     {
-        $this->attributeOptionRepository = $attributeOptionRepository;
-
         parent::__construct($container);
     }
 
@@ -135,6 +124,20 @@ class AttributeRepository extends Repository
 
         if (! count($columns)) {
             $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
+        }
+
+        if (Str::contains($lookup['repository'], 'UserRepository')) {
+            $userRepository = app($lookup['repository']);
+            
+            $currentUser = auth()->guard('user')->user();
+        
+            if ($currentUser->view_permission === 'group') {
+                return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+                    ->where('users.name', 'like', '%' . urldecode($query) . '%')
+                    ->get();
+            } elseif ($currentUser->view_permission === 'individual') {
+                return $userRepository->findByField('users.id', $currentUser->id);
+            }
         }
 
         return app($lookup['repository'])->findWhere([

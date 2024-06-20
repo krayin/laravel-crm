@@ -10,20 +10,6 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 class LeadForm extends FormRequest
 {
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * AttributeValueRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeValueRepository
-     */
-    protected $attributeValueRepository;
-
-    /**
      * @var array
      */
     protected $rules = [];
@@ -31,18 +17,13 @@ class LeadForm extends FormRequest
     /**
      * Create a new form request instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository $attributeRepository
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository $attributeValueRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        AttributeValueRepository $attributeValueRepository
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository
     )
     {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->attributeValueRepository = $attributeValueRepository;
     }
 
     /**

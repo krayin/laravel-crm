@@ -13,46 +13,15 @@ use Webkul\Lead\Repositories\StageRepository;
 class LeadController extends Controller
 {
     /**
-     * Lead repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * Pipeline repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\PipelineRepository
-     */
-    protected $pipelineRepository;
-
-    /**
-     * Stage repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\StageRepository
-     */
-    protected $stageRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
-     * @param \Webkul\Lead\Repositories\StageRepository  $stageRepository
      *
      * @return void
      */
     public function __construct(
-        LeadRepository $leadRepository,
-        PipelineRepository $pipelineRepository,
-        StageRepository $stageRepository
+        protected LeadRepository $leadRepository,
+        protected PipelineRepository $pipelineRepository,
+        protected StageRepository $stageRepository
     ) {
-        $this->leadRepository = $leadRepository;
-
-        $this->pipelineRepository = $pipelineRepository;
-
-        $this->stageRepository = $stageRepository;
-
         request()->request->add(['entity_type' => 'leads']);
     }
 

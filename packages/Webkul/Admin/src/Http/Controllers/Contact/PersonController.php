@@ -10,23 +10,12 @@ use Webkul\Contact\Repositories\PersonRepository;
 class PersonController extends Controller
 {
     /**
-     * Person repository instance.
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
      *
      * @return void
      */
-    public function __construct(PersonRepository $personRepository)
+    public function __construct(protected PersonRepository $personRepository)
     {
-        $this->personRepository = $personRepository;
-
         request()->request->add(['entity_type' => 'persons']);
     }
 

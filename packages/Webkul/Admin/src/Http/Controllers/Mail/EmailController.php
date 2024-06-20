@@ -14,46 +14,15 @@ use Webkul\Email\Repositories\AttachmentRepository;
 class EmailController extends Controller
 {
     /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Email\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * EmailRepository object
-     *
-     * @var \Webkul\Email\Repositories\EmailRepository
-     */
-    protected $emailRepository;
-
-    /**
-     * AttachmentRepository object
-     *
-     * @var \Webkul\Email\Repositories\AttachmentRepository
-     */
-    protected $attachmentRepository;
-
-    /**
      * Create a new controller instance.
-     *
-     * @param \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Email\Repositories\EmailRepository  $emailRepository
-     * @param \Webkul\Email\Repositories\AttachmentRepository  $attachmentRepository
      *
      * @return void
      */
     public function __construct(
-        LeadRepository $leadRepository,
-        EmailRepository $emailRepository,
-        AttachmentRepository $attachmentRepository
-    )
-    {
-        $this->leadRepository = $leadRepository;
-
-        $this->emailRepository = $emailRepository;
-
-        $this->attachmentRepository = $attachmentRepository;
+        protected LeadRepository $leadRepository,
+        protected EmailRepository $emailRepository,
+        protected AttachmentRepository $attachmentRepository
+    ) {
     }
 
     /**
@@ -167,7 +136,7 @@ class EmailController extends Controller
                 Mail::send(new Email($email));
 
                 $this->emailRepository->update([
-                    'folders' => ['inbox', 'sent']
+                    'folders' => ['sent']
                 ], $email->id);
             } catch (\Exception $e) {}
         }
@@ -182,7 +151,7 @@ class EmailController extends Controller
 
         session()->flash('success', trans('admin::app.mail.create-success'));
 
-        return redirect()->route('admin.mail.index', ['route'   => 'inbox']);
+        return redirect()->route('admin.mail.index', ['route'   => 'sent']);
     }
 
     /**

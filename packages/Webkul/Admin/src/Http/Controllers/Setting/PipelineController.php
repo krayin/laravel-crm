@@ -10,21 +10,12 @@ use Webkul\Lead\Repositories\PipelineRepository;
 class PipelineController extends Controller
 {
     /**
-     * PipelineRepository object
-     *
-     * @var \Webkul\Lead\Repositories\PipelineRepository
-     */
-    protected $pipelineRepository;
-
-    /**
      * Create a new controller instance.
      *
-     * @param  \Webkul\Lead\Repositories\PipelineRepository  $pipelineRepository
      * @return void
      */
-    public function __construct(PipelineRepository $pipelineRepository)
+    public function __construct(protected PipelineRepository $pipelineRepository)
     {
-        $this->pipelineRepository = $pipelineRepository;
     }
 
     /**

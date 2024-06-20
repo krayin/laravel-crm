@@ -5,6 +5,7 @@
                 ref="startDate"
                 type="text"
                 class="control half"
+                :value="startDate"
                 :placeholder="__('ui.datagrid.filter.start_date')"
             />
         </div>
@@ -16,6 +17,7 @@
                 ref="endDate"
                 type="text"
                 class="control half"
+                :value="endDate"
                 :placeholder="__('ui.datagrid.filter.end_date')"
             />
         </div>

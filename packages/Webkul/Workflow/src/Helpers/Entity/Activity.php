@@ -21,66 +21,17 @@ class Activity extends AbstractEntity
     protected $entityType = 'activities';
 
     /**
-     * AttributeRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeRepository
-     */
-    protected $attributeRepository;
-
-    /**
-     * EmailTemplateRepository object
-     *
-     * @var \Webkul\EmailTemplate\Repositories\EmailTemplateRepository
-     */
-    protected $emailTemplateRepository;
-
-    /**
-     * LeadRepository object
-     *
-     * @var \Webkul\Lead\Repositories\LeadRepository
-     */
-    protected $leadRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
-     * ActivityRepository object
-     *
-     * @var \Webkul\Activity\Repositories\ActivityRepository
-     */
-    protected $activityRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Attribute\Repositories\AttributeRepository  $attributeRepository
-     * @param  \Webkul\EmailTemplate\Repositories\EmailTemplateRepository  $emailTemplateRepository
-     * @param  \Webkul\Lead\Repositories\LeadRepository  $leadRepository
-     * @param \Webkul\Contact\Repositories\PersonRepository  $personRepository
-     * @param \Webkul\Activity\Repositories\ActivityRepository  $activityRepository
      * @return void
      */
     public function __construct(
-        AttributeRepository $attributeRepository,
-        EmailTemplateRepository $emailTemplateRepository,
-        LeadRepository $leadRepository,
-        PersonRepository $personRepository,
-        ActivityRepository $activityRepository
+        protected AttributeRepository $attributeRepository,
+        protected EmailTemplateRepository $emailTemplateRepository,
+        protected LeadRepository $leadRepository,
+        protected PersonRepository $personRepository,
+        protected ActivityRepository $activityRepository
     ) {
-        $this->attributeRepository = $attributeRepository;
-
-        $this->emailTemplateRepository = $emailTemplateRepository;
-
-        $this->leadRepository = $leadRepository;
-
-        $this->personRepository = $personRepository;
-
-        $this->activityRepository = $activityRepository;
     }
 
     /**

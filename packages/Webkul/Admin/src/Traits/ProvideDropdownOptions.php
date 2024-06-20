@@ -19,7 +19,7 @@ trait ProvideDropdownOptions
     ];
 
     /**
-     * Is bolean dropdown choice exists.
+     * Is boolean dropdown choice exists.
      *
      * @param  string  $choice
      * @return bool

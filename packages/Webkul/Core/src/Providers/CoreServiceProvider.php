@@ -4,7 +4,6 @@ namespace Webkul\Core\Providers;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
-use Webkul\Core\Console\Commands\Install;
 use Webkul\Core\Console\Commands\Version;
 use Webkul\Core\Core;
 use Webkul\Core\Facades\Core as CoreFacade;
@@ -72,7 +71,6 @@ class CoreServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands([
                 Version::class,
-                Install::class,
             ]);
         }
     }

@@ -253,13 +253,22 @@ export default {
         },
 
         removeFilter: function({ type, key, index }) {
-            let values = (this.columns || this.tableData.columns)[key].values;
-            values = "";
+            let values = "";
 
-            if (type === 'date_range') this.resetSpecificDateRangePicker(key);
+            if (type === 'date_range') {
+                this.resetSpecificDateRangePicker(key);
+            } else if (type === 'string') {
+                let element = document.getElementById(`enter-new-${index}`);
+
+                if (element !== null) {
+                    element.value = '';
+
+                    this.addField[index] = false;
+                }
+            }
 
             this.updateFilterValues({
-                key,
+                key: index,
                 values
             });
 

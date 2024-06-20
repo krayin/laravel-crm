@@ -13,58 +13,17 @@ use Webkul\Attribute\Repositories\AttributeValueRepository;
 class LeadRepository extends Repository
 {
     /**
-     * StageRepository object
-     *
-     * @var \Webkul\Lead\Repositories\StageRepository
-     */
-    protected $stageRepository;
-
-    /**
-     * PersonRepository object
-     *
-     * @var \Webkul\Contact\Repositories\PersonRepository
-     */
-    protected $personRepository;
-
-    /**
-     * ProductRepository object
-     *
-     * @var \Webkul\Lead\Repositories\ProductRepository
-     */
-    protected $productRepository;
-
-    /**
-     * AttributeValueRepository object
-     *
-     * @var \Webkul\Attribute\Repositories\AttributeValueRepository
-     */
-    protected $attributeValueRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Lead\Repositories\StageRepository  $stageRepository
-     * @param  \Webkul\Contact\Repositories\PersonRepository  $personRepository
-     * @param  \Webkul\Lead\Repositories\ProductRepository  $productRepository
-     * @param  \Webkul\Attribute\Repositories\AttributeValueRepository  $attributeValueRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        StageRepository $stageRepository,
-        PersonRepository $personRepository,
-        ProductRepository $productRepository,
-        AttributeValueRepository $attributeValueRepository,
+        protected StageRepository $stageRepository,
+        protected PersonRepository $personRepository,
+        protected ProductRepository $productRepository,
+        protected AttributeValueRepository $attributeValueRepository,
         Container $container
     ) {
-        $this->stageRepository = $stageRepository;
-
-        $this->personRepository = $personRepository;
-
-        $this->productRepository = $productRepository;
-
-        $this->attributeValueRepository = $attributeValueRepository;
-
         parent::__construct($container);
     }
 

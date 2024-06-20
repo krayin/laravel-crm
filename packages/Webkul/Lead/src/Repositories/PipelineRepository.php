@@ -9,25 +9,14 @@ use Webkul\Core\Eloquent\Repository;
 class PipelineRepository extends Repository
 {
     /**
-     * Stage repository instance.
-     *
-     * @var \Webkul\Lead\Repositories\StageRepository
-     */
-    protected $stageRepository;
-
-    /**
      * Create a new repository instance.
      *
-     * @param  \Webkul\Lead\Repositories\StageRepository  $stageRepository
-     * @param  \Illuminate\Container\Container  $container
      * @return void
      */
     public function __construct(
-        StageRepository $stageRepository,
+        protected StageRepository $stageRepository,
         Container $container
     ) {
-        $this->stageRepository = $stageRepository;
-
         parent::__construct($container);
     }
 
