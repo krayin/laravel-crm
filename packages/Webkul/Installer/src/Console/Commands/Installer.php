@@ -137,6 +137,10 @@ class Installer extends Command
             'currency' => $applicationDetails['currency'] ?? 'USD',
         ]));
 
+        $this->warn('Step: Publishing assets and configurations...');
+        $result = $this->call('vendor:publish', ['--all' => true, '--force' => true]);
+        $this->info($result);
+
         $this->warn('Step: Linking storage directory...');
         $this->call('storage:link');
 
