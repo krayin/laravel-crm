@@ -30,9 +30,9 @@
                 
                 <div
                     v-for="(header, idx) in headers"
-                    style="display: flex; gap: 5px; align-items: center;"
+                    class="webhook-headers"
                 >
-                    <div style="display: flex; gap: 5px;">
+                    <div class="webhook-header-items">
                         <div class="form-group">
                             <input
                                 type="text"
@@ -57,14 +57,13 @@
                     </div>
 
                     <div>
-                        <i class="icon trash-icon" @click="$delete(headers, idx)"></i>
+                        <i class="icon trash-icon remove-header" @click="$delete(headers, idx)"></i>
                     </div>
                 </div>
 
                 <button
                     type="button"
                     class="btn btn-primary"
-                    style=" margin-top: 10px; margin-bottom: 10px;"
                     @click="addHeader" 
                 >
                     {{ __('admin::app.settings.workflows.add_header') }}
@@ -91,7 +90,6 @@
 
             <div
                 class="form-group"
-                style="margin-top: 10px;"
                 v-if="action.hook.method != 'get' && action.hook.method != 'delete'"
             >
                 <label>{{ __('admin::app.settings.workflows.request_body') }}</label>
@@ -108,7 +106,7 @@
                                 <div
                                     v-for="(lead, leadIndex) in leads"
                                     :key="lead.id"
-                                    style="display: flex; gap: 10px; align-items: center;"
+                                    class="webhook-request-body"
                                 >
                                     <input
                                         type="checkbox"
@@ -129,7 +127,7 @@
                             <div
                                 v-for="(person, personIndex) in persons"
                                 :key="person.id"
-                                style="display: flex; gap: 10px; align-items: center;"
+                                class="webhook-request-body"
                             >
                                 <input
                                     type="checkbox"
@@ -148,7 +146,7 @@
                             <div
                                 v-for="(quote, quoteIndex) in quotes"
                                 :key="quote.id"
-                                style="display: flex; gap: 10px; align-items: center;"
+                                class="webhook-request-body"
                             >
                                 <input
                                     type="checkbox"
@@ -168,7 +166,7 @@
                             <div
                                 v-for="(activity, activityIndex) in activities"
                                 :key="activity.id"
-                                style="display: flex; gap: 10px; align-items: center;"
+                                class="webhook-request-body"
                             >
                                 <input
                                     type="checkbox"
