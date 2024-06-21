@@ -14,7 +14,6 @@
             'custom_card'       => 'Custom Card',
             'customers'         => 'Customers',
             'top_customers'     => 'Top Customers',
-            'leads_started'     => 'Leads started',
             'products'          => 'Products',
             'top_products'      => 'Top Products',
             'leads_started'     => 'Leads started',
@@ -198,7 +197,6 @@
             'files'                    => 'Files',
             'sales-owner'              => 'Sales Owner',
             'person'                   => 'Person',
-            'subject'                  => 'Subject',
             'expired-at'               => 'Expired At',
             'sub-total'                => 'Sub Total',
             'discount'                 => 'Discount',
@@ -247,8 +245,6 @@
             'tax'                 => 'Tax',
             'total'               => 'Total',
             'sub-total'           => 'Sub Total',
-            'discount'            => 'Discount',
-            'tax'                 => 'Tax',
             'adjustment'          => 'Adjustment',
             'grand-total'         => 'Grand Total',
             'create-success'      => 'Quote created successfully.',
@@ -468,7 +464,6 @@
                 'delete-failed'       => 'User can not be deleted.',
                 'user-define-error'   => 'Can not delete system user.',
                 'last-delete-error'   => 'At least one user is required.',
-                'user-define-error'   => 'Can not delete system user.',
                 'mass-update-success' => 'Users updated successfully.',
                 'mass-update-failed'  => 'Users can not be updated.',
                 'mass-delete-success' => 'Users deleted successfully.',
@@ -648,6 +643,28 @@
                 'update-success'             => 'Workflow updated successfully.',
                 'delete-success'             => 'Workflow deleted successfully.',
                 'delete-failed'              => 'Workflow can not be deleted.',
+                'add-webhook'                => 'Trigger webhook',
+                'webhook_heading'            => 'Webhook settings',
+                'webhook_url'                => 'Enter URL',
+                'webhook_request_method'     => 'Request method',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'Select encoding',
+                'encoding_json'              => 'JSON',
+                'encoding_http_query'        => 'X-www-form-urlencoded',
+                'request_body'               => 'Request body',
+                'simple_body'                => 'Simple',
+                'custom_body'                => 'Custom',
+                'lead'                       => 'Lead',
+                'person'                     => 'Person',
+                'quote'                      => 'Quote',
+                'activity'                   => 'Activity',
+                'add_header'                 => 'Add header',
+                'header_key'                 => 'Key',
+                'header_value'               => 'Value',
             ],
 
             'tags' => [
@@ -665,7 +682,6 @@
             ],
 
             'web-forms' => [
-
                 'create-success' => 'Web form created successfully',
                 'update-success' => 'Web form Updated successfully',
                 'delete-success' => 'Web form deleted successfully'
@@ -831,6 +847,7 @@
             'en'                  => 'English',
             'tr'                  => 'Türkçe',
             'ar'                  => 'Arabic',          
+            'es'                  => 'Spanish',
             'add-as'              => 'Add as new',
             'no-records-found'    => 'No Records Found',
             'start-typing'        => 'Start typing to search records',
@@ -879,4 +896,3 @@
             '401' => 'You are not authorized to access this page'
         ]
     ];
-?>

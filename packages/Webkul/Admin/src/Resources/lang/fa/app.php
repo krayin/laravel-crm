@@ -83,6 +83,7 @@
             'back'                 => 'بازگشت',
             'name'                 => 'نام',
             'configuration'        => 'پیکربندی',
+            'activities'           => 'فعالیت ها',
             'howdy'                => 'سلام!',
         ],
 
@@ -182,6 +183,7 @@
             'cc'                       => 'Cc',
             'bcc'                      => 'Bcc',
             'email-placeholder'        => 'برای افزودن ایمیل‌ها Enter کنید',
+            'file'                     => 'فایل',
             'subject'                  => 'موضوع',
             'reply'                    => 'پاسخ',
             'send'                     => 'ارسال',
@@ -220,6 +222,7 @@
             'quote-destroy-success'    => 'پیشنهاد قیمت با موفقیت حذف شد.',
             'tag-create-success'       => 'برچسب با موفقیت افزوده شد.',
             'tag-destroy-success'      => 'برچسب با موفقیت حذف شد.',
+            'edit'                     => 'ویرایش کنید',
         ],
 
         'quotes' => [
@@ -241,22 +244,29 @@
             'discount'            => 'تخفیف',
             'tax'                 => 'مالیات',
             'total'               => 'جمع',
-            'sub-total'           => 'جمه جزء',
+            'sub-total'           => 'جمع جزء',
             'adjustment'          => 'تنظیم',
             'grand-total'         => 'جمع کل',
             'create-success'      => 'پیشنهاد قیمت با موفقیت ایجاد شد.',
-            'update-success'      => 'پیشنهاد قیمت با موفقیت بروزرسانی شد.',
+            'update-success'      => 'پیشنهاد قیمت با موفقیت به روز رسانی شد.',
             'delete-success'      => 'پیشنهاد قیمت با موفقیت حذف شد.',
-            'delete-failed'       => 'پیشنهاد قیمت نمی‌تواند حذف شود.',
-            'quote-id'            => 'شناسه پیشنهاد فروش',
-            'quote-date'          => 'تاریخ پیشنهاد فروش',
+            'delete-failed'       => 'پیشنهاد قیمت حذف نمی‌شود.',
+            'quote-id'            => 'شناسه پیشنهاد',
+            'quote-date'          => 'تاریخ پیشنهاد',
             'valid-until'         => 'معتبر تا',
             'sales-person'        => 'فروشنده',
             'bill-to'             => 'صورتحساب به',
-            'ship-to'             => 'ارسال به',
-            'sku'                 => 'Sku',
+            'ship-to'             => 'حمل به',
+            'sku'                 => 'کد محصول',
             'product-name'        => 'نام محصول',
-            'search'              => 'جستجو..'
+            'price'               => 'قیمت',
+            'amount'              => 'مقدار',
+            'quantity'            => 'تعداد',
+            'sub-total'    => 'جمع جزء',
+            'tax'          => 'مالیات',
+            'adjustment'   => 'تنظیم',
+            'grand-total'  => 'جمع کل',
+            'search'       => 'جستجو..'
         ],
 
         'mail' => [
@@ -495,6 +505,7 @@
                 'input_validation'      => 'اعتبارسنجی input',
                 'number'                => 'عدد',
                 'decimal'               => 'اعشار',
+                'email'                 => 'پست الکترونیک',
                 'url'                   => 'Url',
                 'options-type'          => 'نوع گزینه',
                 'options'               => 'گزینه‌ها',
@@ -624,13 +635,36 @@
                 'add-note-as-activity'       => 'افزودن یادداشت به عنوان فعالیت',
                 'choose-attribute'           => 'انتخاب ویژگی',
                 'choose-option'              => 'انتخاب گزینه',
-                'update-related-leads'       => 'بروزرسانی سرنخ‌های مرتبط',
-                'update-quote'               => 'بروزرسانی پیشنهاد قیمت',
+                'update-person'              => 'به روزرسانی شخص',
+                'update-related-leads'       => 'به روزرسانی سرنخ‌های مرتبط',
+                'update-quote'               => 'به روزرسانی پیشنهاد',
                 'add-action'                 => 'افزودن عملیات',
                 'create-success'             => 'گردش کار با موفقیت ایجاد شد.',
-                'update-success'             => 'گردش کار با موفقیت بروزرسانی شد.',
+                'update-success'             => 'گردش کار با موفقیت به روزرسانی شد.',
                 'delete-success'             => 'گردش کار با موفقیت حذف شد.',
                 'delete-failed'              => 'گردش کار نمی‌تواند حذف شود.',
+                'add-webhook'                => 'فعال‌سازی وب‌هوک',
+                'webhook_heading'            => 'تنظیمات وب‌هوک',
+                'webhook_url'                => 'آدرس URL را وارد کنید',
+                'webhook_request_method'     => 'روش درخواست',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'انتخاب رمزگذاری',
+                'encoding_json'              => 'JSON',
+                'encoding_http_query'        => 'X-www-form-urlencoded',
+                'request_body'               => 'بدنه درخواست',
+                'simple_body'                => 'ساده',
+                'custom_body'                => 'سفارشی',
+                'lead'                       => 'سرنخ',
+                'person'                     => 'شخص',
+                'quote'                      => 'پیشنهاد',
+                'activity'                   => 'فعالیت',
+                'add_header'                 => 'افزودن هدر',
+                'header_key'                 => 'کلید',
+                'header_value'               => 'مقدار',
             ],
 
             'tags' => [
@@ -648,7 +682,6 @@
             ],
 
             'web-forms' => [
-
                 'create-success' => 'وبفرم با موفقیت ایجاد شد',
                 'update-success' => 'وبروز با موفقیت بروزرسانی شد',
                 'delete-success' => 'وبفرم با موفقیت حذف شد'
@@ -695,6 +728,7 @@
             'lead_value'          => 'مقدار سرنخ',
             'comment'             => 'نظر',
             'is_done'             => 'انجام شده',
+            'type'                => 'تایپ کنید',
             'all'                 => 'همه',
             'user'                => 'کاربر',
             'sales-person'        => 'فروشنده',
@@ -813,7 +847,8 @@
             'en'                  => 'English',
             'tr'                  => 'Türkçe',
             'ar'                  => 'Arabic',
-            'fa'                  => 'فارسی',
+            'es'                  => 'Spanish',
+            'add-as'              => 'به عنوان جدید اضافه کنید',
             'no-records-found'    => 'رکوردی یافت نشد',
             'start-typing'        => 'برای یافتن رکوردها شروع به تایپ کنید',
             'select-type'         => 'انتخاب نوع',
@@ -861,5 +896,3 @@
             '401' => 'شما اجازه دسترسی به این صفحه را ندارید'
         ]
     ];
-?>
-

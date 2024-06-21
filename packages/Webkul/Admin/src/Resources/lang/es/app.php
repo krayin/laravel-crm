@@ -17,7 +17,6 @@
             'leads_started'     => 'Oportunidades iniciadas',
             'products'          => 'Productos',
             'top_products'      => 'Productos Principales',
-            'leads_started'     => 'Oportunidades iniciadas',
             'leads_over_time'   => 'Oportunidades en el tiempo',
             'no_record_found'   => 'No hay registros',
             'week'              => 'Semana',
@@ -198,7 +197,6 @@
             'files'                    => 'Archivos',
             'sales-owner'              => 'Encargado Venta',
             'person'                   => 'Persona',
-            'subject'                  => 'Asunto',
             'expired-at'               => 'Expirado en',
             'sub-total'                => 'Sub-Total',
             'discount'                 => 'Descuento',
@@ -247,8 +245,6 @@
             'tax'                 => 'Impuesto',
             'total'               => 'Total',
             'sub-total'           => 'Sub-Total',
-            'discount'            => 'Descuento',
-            'tax'                 => 'Impuesto',
             'adjustment'          => 'Ajuste',
             'grand-total'         => 'Total General',
             'create-success'      => 'Presupuesto creado con éxito.',
@@ -468,7 +464,6 @@
                 'delete-failed'       => 'Usuario no pudo ser eliminado.',
                 'user-define-error'   => 'No puede eliminar Usuario del sistema.',
                 'last-delete-error'   => 'Se requiere al menos un usuario.',
-                'user-define-error'   => 'No puede eliminar Usuario del sistema.',
                 'mass-update-success' => 'Usuarios actualizados con éxito.',
                 'mass-update-failed'  => 'Usuarios no pudieron ser actualizados.',
                 'mass-delete-success' => 'Usuarios eliminados con éxito',
@@ -648,6 +643,28 @@
                 'update-success'             => 'Flujo de Trabajo actualizado con éxito.',
                 'delete-success'             => 'Flujo de Trabajo eliminado con éxito.',
                 'delete-failed'              => 'Flujo de Trabajo no pudo ser eliminado.',
+                'add-webhook'                => 'Disparar webhook',
+                'webhook_heading'            => 'Configuración del webhook',
+                'webhook_url'                => 'Ingresar URL',
+                'webhook_request_method'     => 'Método de solicitud',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'Seleccionar codificación',
+                'encoding_json'              => 'JSON',
+                'encoding_http_query'        => 'X-www-form-urlencoded',
+                'request_body'               => 'Cuerpo de la solicitud',
+                'simple_body'                => 'Simple',
+                'custom_body'                => 'Personalizado',
+                'lead'                       => 'Prospecto',
+                'person'                     => 'Persona',
+                'quote'                      => 'Cita',
+                'activity'                   => 'Actividad',
+                'add_header'                 => 'Agregar encabezado',
+                'header_key'                 => 'Clave',
+                'header_value'               => 'Valor',
             ],
 
             'tags' => [
@@ -665,7 +682,6 @@
             ],
 
             'web-forms' => [
-
                 'create-success' => 'Formulario Web creado con éxito',
                 'update-success' => 'Formulario Web actualizado con éxito',
                 'delete-success' => 'Formulario Web eliminado con éxito.'
@@ -880,4 +896,3 @@
             '401' => 'No esta autorizado a acceder a esta pagina'
         ]
     ];
-?>

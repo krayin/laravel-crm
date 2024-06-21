@@ -3,6 +3,8 @@
 namespace Webkul\Workflow\Helpers\Entity;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
@@ -12,9 +14,12 @@ use Webkul\Contact\Repositories\PersonRepository;
 class Person extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string $entityType
      */
     protected $entityType = 'persons';
+
     /**
      * Create a new repository instance.
      *
@@ -29,9 +34,9 @@ class Person extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
-     * @param  \Webkul\Contact\Contracts\Person|integer  $entity
+     * @param  \Webkul\Contact\Contracts\Person  $entity
      * @return \Webkul\Contact\Contracts\Person
      */
     public function getEntity($entity)
@@ -44,7 +49,7 @@ class Person extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -65,12 +70,26 @@ class Person extends AbstractEntity
                 'id'      => 'send_email_to_person',
                 'name'    => __('admin::app.settings.workflows.send-email-to-person'),
                 'options' => $emailTemplates,
+            ], [
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'request_methods' => [
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
+                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                ],
+                'encodings' => [
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ],
             ],
         ];
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Contact\Contracts\Person  $person
@@ -116,7 +135,102 @@ class Person extends AbstractEntity
                     } catch (\Exception $e) {}
 
                     break;
+
+                case 'trigger_webhook':
+                    if (isset($action['hook'])) {
+                        try {
+                            $this->triggerWebhook(
+                                $action['hook'],
+                                $person
+                            );
+                        } catch (\Exception $e) {
+                            report($e);
+                        }
+                    }
+
+                    break;
             }
         }
+    }
+
+    /**
+     * Trigger webhook.
+     * 
+     * @param array $hook
+     * @param \Webkul\Contact\Contracts\Person $person
+     * @return void
+     */
+    private function triggerWebhook($hook, $person)
+    {
+        if (in_array($hook['method'], ['get', 'delete'])) {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url']
+            );
+        } else {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url'],
+                $this->getRequestBody($hook, $person)
+            );
+        }
+    }
+
+    /**
+     * Format headers.
+     * 
+     * @param array $hook
+     * @return array
+     */
+    private function formatHeaders($hook)
+    {
+        $results = $hook['encoding'] == 'json'
+            ? ['Content-Type: application/json']
+            : ['Content-Type: application/x-www-form-urlencoded'];
+
+        if (isset($hook['headers'])) {
+            foreach ($hook['headers'] as $header) {
+                $results[$header['key']] = $header['value'];
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Prepare request body.
+     * 
+     * @param array $hook
+     * @param \Webkul\Contact\Contracts\Person $person
+     * @return array
+     */
+    private function getRequestBody($hook, $person)
+    {
+        $hook['simple'] = str_replace('person_', '', $hook['simple']);
+
+        $results = $this->personRepository->find($person->id)->get($hook['simple'])->first()->toArray();
+
+        if (isset($hook['custom'])) {
+            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+
+            $customResults = [];
+
+            foreach ($customUnformatted as $raw) {
+                [$key, $value] = explode('=', $raw);
+
+                $customResults[$key] = $value;
+            }
+
+            $results = array_merge(
+                $results,
+                $customResults
+            );
+        }
+
+        return $hook['encoding'] == 'http_query'
+            ? Arr::query($results)
+            : json_encode($results);
     }
 }

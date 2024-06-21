@@ -14,7 +14,6 @@
             'custom_card'       => 'Özel Kart',
             'customers'         => 'Müşteriler',
             'top_customers'     => 'En İyi Müşteriler',
-            'leads_started'     => 'Olası satışlar başladı',
             'products'          => 'Ürünler',
             'top_products'      => 'En İyi Ürünler',
             'leads_started'     => 'Olası satışlar başladı',
@@ -129,6 +128,7 @@
             'back'                     => 'Geri',
             'cancel'                   => 'İptal',
             'no-lead'                  => 'Aday Yok',
+            'lead-source-name'         => 'Öncü kaynak',
             'details'                  => 'Detaylar',
             'rotten-info'              => 'Müşteri adayı :days gün(ler)',
             'stage'                    => 'Sahne',
@@ -197,7 +197,6 @@
             'files'                    => 'Dosyalar',
             'sales-owner'              => 'Satış Sahibi',
             'person'                   => 'Kişi',
-            'subject'                  => 'Konu',
             'expired-at'               => 'Süresi Doldu',
             'sub-total'                => 'Ara Toplam',
             'discount'                 => 'İndirim',
@@ -223,6 +222,7 @@
             'quote-destroy-success'    => 'Alıntı başarıyla kaldırıldı.',
             'tag-create-success'       => 'Etiket başarıyla eklendi.',
             'tag-destroy-success'      => 'Etiket başarıyla kaldırıldı.',
+            'edit'                     => 'Düzenlemek',
         ],
 
         'quotes' => [
@@ -245,8 +245,6 @@
             'tax'                 => 'Vergi',
             'total'               => 'Toplam',
             'sub-total'           => 'Ara Toplam',
-            'discount'            => 'İndirim',
-            'tax'                 => 'Vergi',
             'adjustment'          => 'Ayarlama',
             'grand-total'         => 'Genel Toplam',
             'create-success'      => 'Teklif başarıyla oluşturuldu.',
@@ -466,7 +464,6 @@
                 'delete-failed'       => 'Kullanıcı silinemez.',
                 'user-define-error'   => 'Sistem kullanıcısı silinemez.',
                 'last-delete-error'   => 'En az bir kullanıcı gereklidir.',
-                'user-define-error'   => 'Sistem kullanıcısı silinemez.',
                 'mass-update-success' => 'Kullanıcılar başarıyla güncellendi.',
                 'mass-update-failed'  => 'Kullanıcılar güncellenemez.',
                 'mass-delete-success' => 'Kullanıcılar başarıyla silindi.',
@@ -646,6 +643,28 @@
                 'update-success'             => 'İş akışı başarıyla güncellendi.',
                 'delete-success'             => 'İş akışı başarıyla silindi.',
                 'delete-failed'              => 'İş akışı silinemez.',
+                'add-webhook'                => 'Web kancası tetikle',
+                'webhook_heading'            => 'Web kancası ayarları',
+                'webhook_url'                => 'URL girin',
+                'webhook_request_method'     => 'İstek yöntemi',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'Kodlamayı seçin',
+                'encoding_json'              => 'JSON',
+                'encoding_http_query'        => 'X-www-form-urlencoded',
+                'request_body'               => 'İstek gövdesi',
+                'simple_body'                => 'Basit',
+                'custom_body'                => 'Özel',
+                'lead'                       => 'Potansiyel müşteri',
+                'person'                     => 'Kişi',
+                'quote'                      => 'Alıntı',
+                'activity'                   => 'Etkinlik',
+                'add_header'                 => 'Başlık ekle',
+                'header_key'                 => 'Anahtar',
+                'header_value'               => 'Değer',
             ],
 
             'tags' => [
@@ -660,7 +679,13 @@
                 'update-success' => 'Etiket başarıyla güncellendi.',
                 'delete-success' => 'Etiket başarıyla silindi.',
                 'delete-failed'  => 'Etiket silinemez',
-            ]
+            ],
+
+            'web-forms' => [
+                'create-success' => 'Web form başarıyla oluşturuldu',
+                'update-success' => 'Web form başarıyla güncellendi',
+                'delete-success' => 'Web form başarıyla silindi'
+            ],
         ],
 
         'configuration' => [
@@ -822,6 +847,7 @@
             'en'                  => 'ingilizce',
             'tr'                  => 'Türkçe',
             'ar'                  => 'Arapça', 
+            'es'                  => 'Spanish',
             'add-as'              => 'Yeni olarak ekle',
             'no-records-found'    => 'Kayıt bulunamadı',
             'start-typing'        => 'Kayıtları aramak için yazmaya başlayın',
@@ -864,6 +890,9 @@
                 'dear'   => 'Sayın :name',
                 'cheers' => 'Tebrikler,</br>Takım :app_name'
             ],
+        ],
+
+        'errors' => [
+            '401' => 'Bu sayfaya erişmek için yetkiniz yok'
         ]
     ];
-?>

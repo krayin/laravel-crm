@@ -364,7 +364,17 @@
                 </div>
             </td>
 
-            <td class="option" v-if="matchedAction && ! matchedAction.attributes && ! matchedAction.options">
+            <td class="option" v-if="matchedAction && matchedAction.request_methods">
+                @include('admin::settings.workflows.webhook.index')
+
+                <webhook-component
+                    :entity-type="entityType"
+                    :index="index"
+                    :matched-action="matchedAction"
+                /></webhook-component>
+            </td>
+
+            <td class="option" v-if="matchedAction && ! matchedAction.attributes && ! matchedAction.options && ! matchedAction.request_methods">
                 <div class="form-group">
                     <input type="text" :name="['actions[' + index + '][value]']" class="control" v-model="action.value">
                 </div>

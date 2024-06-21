@@ -2522,3 +2522,34 @@ body {
         font-size: $font-size-md;
     }
 }
+
+label.radio-inline {
+    position: relative;
+    display: inline-block;
+    padding-left: 37px;
+    margin-bottom: 0;
+    font-weight: 400;
+    vertical-align: middle;
+    cursor: pointer;
+}
+
+input[type=radio] {
+    position: absolute;
+    margin-left: -23px;
+    top: -5px;
+    line-height: normal;
+    width: 20px !important;
+}
+
+.pull-right {
+    float: right;
+}
+
+#webhook-encoding {
+    clear: both;
+}
+
+.help{
+    font-style: italic;
+    font-size: 16px;
+}

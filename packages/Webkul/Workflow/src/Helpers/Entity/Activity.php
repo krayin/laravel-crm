@@ -3,6 +3,8 @@
 namespace Webkul\Workflow\Helpers\Entity;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Carbon\Carbon;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -14,7 +16,9 @@ use Webkul\Activity\Repositories\ActivityRepository;
 class Activity extends AbstractEntity
 {
     /**
-     * @var string  $code
+     * Define the entity type.
+     * 
+     * @var string  $entityType
      */
     protected $entityType = 'activities';
 
@@ -37,6 +41,7 @@ class Activity extends AbstractEntity
      *
      * @param  string  $entityType
      * @param  array  $skipAttributes
+     * 
      * @return array
      */
     public function getAttributes($entityType, $skipAttributes = [])
@@ -47,7 +52,7 @@ class Activity extends AbstractEntity
                 'type'        => 'text',
                 'name'        => 'Title',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'type',
                 'type'        => 'multiselect',
@@ -76,25 +81,25 @@ class Activity extends AbstractEntity
                 'type'        => 'text',
                 'name'        => 'Location',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'comment',
                 'type'        => 'textarea',
                 'name'        => 'Comment',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'schedule_from',
                 'type'        => 'datetime',
                 'name'        => 'Schedule From',
                 'lookup_type' => null,
-                'options'     => collect([]),
-            ], [ 
+                'options'     => collect(),
+            ], [
                 'id'          => 'schedule_to',
                 'type'        => 'datetime',
                 'name'        => 'Schedule To',
                 'lookup_type' => null,
-                'options'     => collect([]),
+                'options'     => collect(),
             ], [
                 'id'          => 'user_id',
                 'type'        => 'select',
@@ -108,7 +113,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns placeholders for email templates
+     * Returns placeholders for email templates.
      * 
      * @param  array  $entity
      * @return array
@@ -126,10 +131,10 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Replace placeholders with values
+     * Replace placeholders with values.
      * 
-     * @param  array  $entity
-     * @param  array  $values
+     * @param  \Webkul\Activity\Contracts\Activity  $entity
+     * @param  mixed $content
      * @return string
      */
     public function replacePlaceholders($entity, $content)
@@ -153,9 +158,9 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns entity
+     * Listing of the entities.
      * 
-     * @param  \Webkul\Activity\Contracts\Activity|integer  $entity
+     * @param  \Webkul\Activity\Contracts\Activity  $entity
      * @return \Webkul\Activity\Contracts\Activity
      */
     public function getEntity($entity)
@@ -168,7 +173,7 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Returns workflow actions
+     * Returns workflow actions.
      * 
      * @return array
      */
@@ -189,12 +194,26 @@ class Activity extends AbstractEntity
                 'id'      => 'send_email_to_participants',
                 'name'    => __('admin::app.settings.workflows.send-email-to-participants'),
                 'options' => $emailTemplates,
+            ], [
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'request_methods' => [
+                    'get'    => __('admin::app.settings.workflows.get_method'),
+                    'post'   => __('admin::app.settings.workflows.post_method'),
+                    'put'    => __('admin::app.settings.workflows.put_method'),
+                    'patch'  => __('admin::app.settings.workflows.patch_method'),
+                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                ],
+                'encodings' => [
+                    'json'       => __('admin::app.settings.workflows.encoding_json'),
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ]
             ],
         ];
     }
 
     /**
-     * Execute workflow actions
+     * Execute workflow actions.
      * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Activity\Contracts\Activity  $activity
@@ -256,8 +275,8 @@ class Activity extends AbstractEntity
                         foreach ($activity->participants as $participant) {
                             Mail::queue(new Common([
                                 'to'          => $participant->user
-                                                ? $participant->user->email
-                                                : data_get($participant->person->emails, '*.value'),
+                                    ? $participant->user->email
+                                    : data_get($participant->person->emails, '*.value'),
                                 'subject'     => $this->replacePlaceholders($activity, $emailTemplate->subject),
                                 'body'        => $this->replacePlaceholders($activity, $emailTemplate->content),
                                 'attachments' => [
@@ -272,12 +291,108 @@ class Activity extends AbstractEntity
                     } catch (\Exception $e) {}
 
                     break;
+
+                case 'trigger_webhook':
+                    if (isset($action['hook'])) {
+                        try {
+                            $this->triggerWebhook(
+                                $action['hook'],
+                                $activity
+                            );
+                        } catch (\Exception $e) {
+                            report($e);
+                        }
+                    }
+
+                    break;
             }
         }
     }
 
     /**
-     * Returns .ics file for attachments
+     * Trigger Webhook.
+     * 
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
+     * @return void
+     */
+    private function triggerWebhook($hook, $activity)
+    {
+        if (in_array($hook['method'], ['get', 'delete'])) {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url']
+            );
+        } else {
+            Http::withHeaders(
+                $this->formatHeaders($hook)
+            )->{$hook['method']}(
+                $hook['url'],
+                $this->getRequestBody($hook, $activity)
+            );
+        }
+    }
+
+    /**
+     * Formatting headers.
+     * 
+     * @param array $hook
+     * @return array
+     */
+    private function formatHeaders($hook)
+    {
+        $results = $hook['encoding'] == 'json'
+            ? ['Content-Type: application/json']
+            : ['Content-Type: application/x-www-form-urlencoded'];
+
+        if (isset($hook['headers'])) {
+            foreach ($hook['headers'] as $header) {
+                $results[$header['key']] = $header['value'];
+            }
+        }
+
+        return $results;
+    }
+
+    /**
+     * Prepare Request Body.
+     * 
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
+     * 
+     * @return array
+     */
+    private function getRequestBody($hook, $activity)
+    {
+        $hook['simple'] = str_replace('activity_', '', $hook['simple']);
+
+        $results = $this->activityRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
+
+        if (isset($hook['custom'])) {
+            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
+
+            $customResults = [];
+
+            foreach ($customUnformatted as $raw) {
+                [$key, $value] = explode('=', $raw);
+
+                $customResults[$key] = $value;
+            }
+
+            $results = array_merge(
+                $results,
+                $customResults
+            );
+        }
+
+        return $hook['encoding'] == 'http_query'
+            ? Arr::query($results)
+            : json_encode($results);
+    }
+
+    /**
+     * Returns .ics file for attachments.
      * 
      * @param  \Webkul\Activity\Contracts\Activity  $activity
      * @return string
@@ -297,10 +412,6 @@ class Activity extends AbstractEntity
         ];
 
         foreach ($activity->participants as $participant) {
-            $emails = $participant->user
-                ? [$participant->user->email]
-                : data_get($participant->person->emails, '*.value');
-
             if ($participant->user) {
                 $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN=' . $participant->user->name . ';PARTSTAT=NEEDS-ACTION:MAILTO:' . $participant->user->email;
             } else {

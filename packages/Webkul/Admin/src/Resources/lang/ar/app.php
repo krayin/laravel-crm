@@ -17,7 +17,6 @@
             'leads_started'     => 'بدأ العملاء المحتملون',
             'products'          => 'منتجات',
             'top_products'      => 'أهم المنتجات',
-            'leads_started'     => 'بدأ العملاء المحتملون',
             'leads_over_time'   => 'يؤدي بمرور الوقت',
             'no_record_found'   => 'لا يوجد سجلات',
             'week'              => 'أسبوع',
@@ -198,7 +197,6 @@
             'files'                    => 'الملفات',
             'sales-owner'              => 'مالك المبيعات',
             'person'                   => 'شخص',
-            'subject'                  => 'موضوعات',
             'expired-at'               => 'منتهي الصلاحية في',
             'sub-total'                => 'المجموع الفرعي',
             'discount'                 => 'خصم',
@@ -209,6 +207,8 @@
             'planned'                  => 'مخطط',
             'done'                     => 'منتهي',
             'edit'                     => 'يحرر',
+            'view'                     => 'منظر',
+            'unlink'                   => 'إلغاء الارتباط',
             'mark-as-done'             => 'اعتبره منته',
             'remove'                   => 'يزيل',
             'export-to-pdf'            => 'تصدير إلى PDF',
@@ -245,8 +245,6 @@
             'tax'                 => 'ضريبة',
             'total'               => 'المجموع',
             'sub-total'           => 'المجموع الفرعي',
-            'discount'            => 'خصم',
-            'tax'                 => 'ضريبة',
             'adjustment'          => 'تعديل',
             'grand-total'         => 'المبلغ الإجمالي',
             'create-success'      => 'تم إنشاء الاقتباس بنجاح',
@@ -345,6 +343,7 @@
             'to'                   => 'إلى',
             'location'             => 'موقع',
             'participants'         => 'مشاركون',
+            'lead'                 => 'يقود',
             'duration-overlapping' => 'المشاركون لديهم اجتماع آخر في هذا الوقت. هل تريد الاستمرار?',
             'file-upload-success'  => 'تم تحميل الملف (الملفات) بنجاح.',
             'file-upload-error'    => 'لا يمكن تحميل الملف (الملفات).',
@@ -353,8 +352,7 @@
             'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
             'mass-update-failed'   => 'لا يمكن تحديث الأنشطة.',
             'destroy-success'      =>':اكتب تم حذفه بنجاح.',
-            'delete-failed'        => ':لا يمكن حذف النوع
-.',
+            'delete-failed'        => ':لا يمكن حذف النوع.',
             'typing-placeholder'   => 'ابدأ في كتابة الاسم',
         ],
 
@@ -466,7 +464,6 @@
                 'delete-failed'       => 'لا يمكن حذف المستخدم.',
                 'user-define-error'   => 'لا يمكن حذف مستخدم النظام.',
                 'last-delete-error'   => 'مطلوب مستخدم واحد على الأقل.',
-                'user-define-error'   => 'لا يمكن حذف مستخدم النظام.',
                 'mass-update-success' => 'تم تحديث المستخدمين بنجاح.',
                 'mass-update-failed'  => 'لا يمكن تحديث المستخدمين.',
                 'mass-delete-success' => 'تم حذف المستخدمين بنجاح.',
@@ -646,6 +643,28 @@
                 'update-success'             => 'تم تحديث سير العمل بنجاح.',
                 'delete-success'             => 'تم حذف سير العمل بنجاح.',
                 'delete-failed'              => 'لا يمكن حذف سير العمل.',
+                'add-webhook'                => 'تفعيل الويب هوك',
+                'webhook_heading'            => 'إعدادات الويب هوك',
+                'webhook_url'                => 'أدخل الرابط',
+                'webhook_request_method'     => 'طريقة الطلب',
+                'get_method'                 => 'GET',
+                'post_method'                => 'POST',
+                'put_method'                 => 'PUT',
+                'patch_method'               => 'PATCH',
+                'delete_method'              => 'DELETE',
+                'webhook_encoding'           => 'اختر الترميز',
+                'encoding_json'              => 'JSON',
+                'encoding_http_query'        => 'X-www-form-urlencoded',
+                'request_body'               => 'جسم الطلب',
+                'simple_body'                => 'بسيط',
+                'custom_body'                => 'مخصص',
+                'lead'                       => 'رصيد',
+                'person'                     => 'شخص',
+                'quote'                      => 'اقتباس',
+                'activity'                   => 'نشاط',
+                'add_header'                 => 'إضافة رأس',
+                'header_key'                 => 'المفتاح',
+                'header_value'               => 'القيمة',
             ],
 
             'tags' => [
@@ -828,6 +847,7 @@
             'en'                  => 'إنجليزي',
             'tr'                  => 'Turkçe',
             'ar'                  => 'عربي', 
+            'es'                  => 'الأسبانية',
             'add-as'              => 'أضف كالجديد',
             'no-records-found'    => 'لا توجد سجلات',
             'start-typing'        => 'ابدأ الكتابة للبحث في السجلات',
@@ -870,10 +890,9 @@
                 'dear'   => 'عزيزي :name',
                 'cheers' => 'في صحتك ، فريق </br> :app_name'
             ],
+        ],
+
+        'errors' => [
+            '401' => 'أنت غير مفوض لدخول هذه الصفحة'
         ]
     ];
-
-
-
-
-?>
