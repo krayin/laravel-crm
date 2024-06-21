@@ -2549,7 +2549,28 @@ input[type=radio] {
     clear: both;
 }
 
-.help{
+.webhook-headers {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+
+    .webhook-header-items{
+        display: flex;
+        gap: 5px;
+    }
+
+    .remove-header {
+        margin-bottom: 20px;
+    }
+}
+
+.webhook-request-body {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.help {
     font-style: italic;
     font-size: 16px;
 }
