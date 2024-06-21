@@ -896,4 +896,3 @@
             '401' => 'Bu sayfaya erişmek için yetkiniz yok'
         ]
     ];
-?>

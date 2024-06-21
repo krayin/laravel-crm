@@ -896,4 +896,3 @@
             '401' => 'No esta autorizado a acceder a esta pagina'
         ]
     ];
-?>
