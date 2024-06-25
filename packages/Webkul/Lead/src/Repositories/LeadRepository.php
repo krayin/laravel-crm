@@ -162,10 +162,6 @@ class LeadRepository extends Repository
 
         $this->attributeValueRepository->save($data, $id);
 
-        if (! isset($data['_method'])) {
-            return $lead;
-        }
-
         $previousProductIds = $lead->products()->pluck('id');
 
         if (isset($data['products'])) {
