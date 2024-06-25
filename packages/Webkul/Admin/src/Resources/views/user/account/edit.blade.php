@@ -47,6 +47,8 @@
                                 <input
                                     type="checkbox"
                                     name="remove_image"
+                                    id="remove"
+                                    value="1"
                                 />
 
                                 <label for="remove" class="">
