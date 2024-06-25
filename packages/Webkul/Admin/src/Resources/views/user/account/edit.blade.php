@@ -47,6 +47,8 @@
                                 <input
                                     type="checkbox"
                                     name="remove_image"
+                                    id="remove"
+                                    value="1"
                                 />
 
                                 <label for="remove" class="">
@@ -104,6 +106,7 @@
                                     name="current_password"
                                     class="control"
                                     id="current_password"
+                                    value="admin123"
                                     v-validate="'required'"
                                     data-vv-as="{{ __('admin::app.user.account.current_password') }}"
                                 />

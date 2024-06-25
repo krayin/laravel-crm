@@ -96,7 +96,7 @@ class AccountController extends Controller
     
         if (
             isset($data['remove_image'])
-            && $data['remove_image'] !== ''
+            && $data['remove_image']
         ) {
             $data['image'] = null;
         }
