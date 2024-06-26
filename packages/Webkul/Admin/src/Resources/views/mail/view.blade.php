@@ -4,7 +4,7 @@
     {{ $email->subject }}
 @stop
 
-@section('css')
+@push('css')
     <style>
         .lead-form .modal-container .modal-header {
             border: 0;
@@ -18,7 +18,7 @@
             width:100%;
         }
     </style>
-@stop
+@endpush
 
 @section('content-wrapper')
 
