@@ -13,8 +13,6 @@
 
 uses(\Tests\TestCase::class)->in('Feature');
 
-uses(\Tests\RestAPI\RestAPITestCase::class)->in('RestAPI');
-
 /*
 |--------------------------------------------------------------------------
 | Expectations
