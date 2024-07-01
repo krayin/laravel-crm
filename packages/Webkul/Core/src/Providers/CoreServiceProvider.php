@@ -6,6 +6,8 @@ use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Console\Commands\Version;
 use Webkul\Core\Core;
+use Webkul\Core\Menu;
+use Webkul\Core\Facades\Menu as MenuFacade;
 use Webkul\Core\Facades\Core as CoreFacade;
 
 class CoreServiceProvider extends ServiceProvider
@@ -56,9 +58,11 @@ class CoreServiceProvider extends ServiceProvider
 
         $loader->alias('core', CoreFacade::class);
 
-        $this->app->singleton('core', function () {
-            return app()->make(Core::class);
-        });
+        $loader->alias('menu', MenuFacade::class);
+
+        $this->app->singleton('core', fn () => app()->make(Core::class));
+
+        $this->app->singleton('menu', fn () => app()->make(Menu::class));
     }
 
     /**

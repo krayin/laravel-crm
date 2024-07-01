@@ -19,30 +19,32 @@
         </div>
 
         <div class="page-content settings-container">
-            @php($menu = Menu::prepare())
+            @php
+                $settings = menu()->getItems('admin')->first(fn ($value) => $value->key == 'settings')->getChildren();
+            @endphp 
 
-            @foreach ($menu->items['settings']['children'] as $setting)
+            @foreach ($settings as $setting)
                 <div class="panel">
                     <div class="panel-header">
-                        <h3>{{ $setting['name'] }}</h3>
+                        <h3>{{ $setting->getName() }}</h3>
 
-                        <p>{{ __($setting['info']) }}</p>
+                        <p>{{ __($setting->getInfo()) }}</p>
                     </div>
                     
                     <div class="panel-body">
                         <div class="setting-link-container">
 
-                            @foreach ($setting['children'] as $subSetting)
+                            @foreach ($setting->getChildren() as $child)
 
                                 <div class="setting-link-item">
-                                    <a href="{{ $subSetting['url'] }}">
+                                    <a href="{{ $child->getUrl() }}">
                                         <div class="icon-container">
-                                            <i class="icon {{ $subSetting['icon-class'] ?? '' }}"></i>
+                                            <i class="icon {{ $child->getIcon() }}"></i>
                                         </div>
                                         
                                         <div class="setting-info">
-                                            <label>{{ $subSetting['name'] }}</label>
-                                            <p>{{ __($subSetting['info'] ?? '') }}</p>
+                                            <label>{{ $child->getName() }}</label>
+                                            <p>{{ $child->getInfo() }}</p>
                                         </div>
                                     </a>
                                 </div>

@@ -31,6 +31,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
         $router->aliasMiddleware('user', \Webkul\Admin\Http\Middleware\Bouncer::class);
+
         $router->aliasMiddleware('admin_locale', Locale::class);
 
         $this->publishes([
@@ -74,14 +75,9 @@ class AdminServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
 
         $loader->alias('Bouncer', \Webkul\Admin\Facades\Bouncer::class);
-        $loader->alias('Menu', \Webkul\Admin\Facades\Menu::class);
 
         $this->app->singleton('bouncer', function () {
             return new \Webkul\Admin\Bouncer();
-        });
-
-        $this->app->singleton('menu', function () {
-            return new \Webkul\Admin\Menu();
         });
     }
 
