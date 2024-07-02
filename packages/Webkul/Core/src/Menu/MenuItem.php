@@ -59,9 +59,6 @@ class MenuItem
 
     /**
      * Set icon of menu item.
-     *
-     * @param string $icon
-     * @return self
      */
     public function setIcon(string $icon): self
     {
