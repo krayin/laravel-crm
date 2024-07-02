@@ -80,11 +80,8 @@ class Bouncer
     {
         $roles = acl()->getRoles();
 
-        dd($roles);
-        $acl = app('acl');
-
-        if ($acl && isset($acl->roles[Route::currentRouteName()])) {
-            bouncer()->allow($acl->roles[Route::currentRouteName()]);
+        if (isset($roles[Route::currentRouteName()])) {
+            bouncer()->allow($roles[Route::currentRouteName()]);
         }
     }
 }
