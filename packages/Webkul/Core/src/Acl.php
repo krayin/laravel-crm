@@ -31,7 +31,8 @@ class Acl
         }
 
         return collect($this->items)
-            ->sortBy('sort');
+            ->sortBy('sort')
+            ->values();
     }
 
     /**
