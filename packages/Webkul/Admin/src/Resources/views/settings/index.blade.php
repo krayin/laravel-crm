@@ -20,7 +20,7 @@
 
         <div class="page-content settings-container">
             @php
-                $settings = menu()->getItems('admin')->first(fn ($value) => $value->key == 'settings')->getChildren();
+                $settings = menu()->getItems('admin')->first(fn ($item) => $item->getKey() == 'settings')->getChildren();
             @endphp 
 
             @foreach ($settings as $setting)
@@ -44,6 +44,7 @@
                                         
                                         <div class="setting-info">
                                             <label>{{ $child->getName() }}</label>
+
                                             <p>{{ $child->getInfo() }}</p>
                                         </div>
                                     </a>

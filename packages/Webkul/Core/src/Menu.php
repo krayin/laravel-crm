@@ -50,7 +50,12 @@ class Menu
             throw new \Exception('Area must be provided to get menu items.');
         }
 
-        $configMenu = collect(config("menu.$area"))->map(fn ($item) => Arr::except($item, ['params']));
+        $configMenu = collect(config("menu.$area"))->map(function ($item) {
+            return Arr::except([
+                ...$item,
+                'url' => route($item['route'], $item['params'] ?? []),
+            ], ['params']);
+        });
 
         switch ($area) {
             case self::ADMIN:
@@ -77,8 +82,7 @@ class Menu
             $this->prepareMenuItems();
         }
 
-        return collect($this->removeUnauthorizedMenuItem())
-            ->sortBy('sort');
+        return collect($this->items)->sortBy(fn($item) => $item->getPosition());
     }
 
     /**
@@ -103,6 +107,7 @@ class Menu
                 key: $menuItemKey,
                 name: trans($menuItem['name']),
                 route: $menuItem['route'],
+                url: $menuItem['url'],
                 sort: $menuItem['sort'],
                 icon: $menuItem['icon-class'],
                 info: trans($menuItem['info'] ?? ''),
@@ -126,6 +131,7 @@ class Menu
                     key: $subMenuItem['key'],
                     name: trans($subMenuItem['name']),
                     route: $subMenuItem['route'],
+                    url: $subMenuItem['url'],
                     sort: $subMenuItem['sort'],
                     icon: $subMenuItem['icon-class'],
                     info: trans($subMenuItem['info'] ?? ''),
@@ -164,31 +170,5 @@ class Menu
         }
 
         return null;
-    }
-
-    /**
-     * Remove unauthorized menu item.
-     */
-    private function removeUnauthorizedMenuItem(): array
-    {
-        return collect($this->items)->map(function ($item) {
-            $this->removeChildrenUnauthorizedMenuItem($item);
-
-            return $item;
-        })->toArray();
-    }
-
-    /**
-     * Remove unauthorized menuItem's children. This will handle all levels.
-     */
-    private function removeChildrenUnauthorizedMenuItem(MenuItem &$menuItem): void
-    {
-        if ($menuItem->haveChildren()) {
-            $firstChildrenItem = $menuItem->getChildren()->first();
-
-            $menuItem->route = $firstChildrenItem->getRoute();
-
-            $this->removeChildrenUnauthorizedMenuItem($firstChildrenItem);
-        }
     }
 }

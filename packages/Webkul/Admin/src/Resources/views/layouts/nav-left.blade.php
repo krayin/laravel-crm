@@ -3,7 +3,10 @@
     :class="{'open': isMenuOpen}"
 >
     <ul class="menubar">
-        @foreach (menu()->getItems('admin') as $menuItem)
+        @foreach (
+            menu()->getItems('admin') 
+            as $menuItem
+        )
             <li
                 class="menu-item {{ $menuItem->isActive() ? 'active' : 'inactive' }}"
                 title="{{ $name = $menuItem->getName() }}"
@@ -23,6 +26,21 @@
                     
                     <span class="menu-label">{{ $menuItem->getName() }}</span>
                 </a>
+
+                @if (
+                    ! in_array($menuItem->getKey(), ['settings', 'configuration'])
+                    && $menuItem->haveChildren()
+                )
+                    <ul class="sub-menubar">
+                        @foreach ($menuItem->getChildren() as $subMenuItem)
+                            <li class="sub-menu-item {{ $subMenuItem->isActive() ? 'active' : 'inactive' }}">
+                                <a href="{{ $subMenuItem->getUrl() }}">
+                                    <span class="menu-label">{{ $subMenuItem->getName() }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                @endif
             </li>
         @endforeach
     </ul>

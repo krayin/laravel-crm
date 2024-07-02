@@ -12,13 +12,14 @@ class MenuItem
      * @return void
      */
     public function __construct(
-        public string $key,
-        public string $name,
-        public string $route,
-        public int $sort,
-        public string $icon,
-        public string $info,
-        public Collection $children,
+        private string $key,
+        private string $name,
+        private string $route,
+        private string $url,
+        private int $sort,
+        private string $icon,
+        private string $info,
+        private Collection $children,
     ) {}
 
     /**
@@ -27,6 +28,13 @@ class MenuItem
     public function getName(): string
     {
         return $this->name;
+    }
+
+    /**
+     * Get position of menu item.
+     */
+    public function getPosition() {
+        return $this->sort;
     }
 
     /**
@@ -58,7 +66,7 @@ class MenuItem
      */
     public function getUrl(): string
     {
-        return route($this->getRoute());
+        return $this->url;
     }
 
     /**
