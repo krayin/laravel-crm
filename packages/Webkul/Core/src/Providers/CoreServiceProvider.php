@@ -64,11 +64,11 @@ class CoreServiceProvider extends ServiceProvider
 
         $loader->alias('menu', MenuFacade::class);
 
-        $this->app->singleton('acl', fn () => app()->make(Acl::class));
+        $this->app->singleton('acl', fn () => app(Acl::class));
 
-        $this->app->singleton('core', fn () => app()->make(Core::class));
+        $this->app->singleton('core', fn () => app(Core::class));
 
-        $this->app->singleton('menu', fn () => app()->make(Menu::class));
+        $this->app->singleton('menu', fn () => app(Menu::class));
     }
 
     /**

@@ -23,6 +23,16 @@ class MenuItem
     ) {}
 
     /**
+     * Set name of menu item.
+     */
+    public function setName(string $name): self
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * Get name of menu item.
      */
     public function getName(): string
@@ -31,10 +41,33 @@ class MenuItem
     }
 
     /**
+     * Set position of menu item.
+     */
+    public function setPosition(int $sort): self
+    {
+        $this->sort = $sort;
+
+        return $this;
+    }
+
+    /**
      * Get position of menu item.
      */
     public function getPosition() {
         return $this->sort;
+    }
+
+    /**
+     * Set icon of menu item.
+     *
+     * @param string $icon
+     * @return self
+     */
+    public function setIcon(string $icon): self
+    {
+        $this->icon = $icon;
+
+        return $this;
     }
 
     /**
@@ -46,11 +79,31 @@ class MenuItem
     }
 
     /**
+     * Set info of menu item.
+     */
+    public function setInfo(string $info): self
+    {
+        $this->info = $info;
+
+        return $this;
+    }
+
+    /**
      * Get info of menu item.
      */
     public function getInfo(): string
     {
         return $this->info;
+    }
+
+    /**
+     * Set route of menu item.
+     */
+    public function setRoute(string $route): self
+    {
+        $this->route = $route;
+
+        return $this;
     }
 
     /**
@@ -62,6 +115,16 @@ class MenuItem
     }
 
     /**
+     * Set url of menu item.
+     */
+    public function setUrl(string $url): self
+    {
+        $this->url = $url;
+
+        return $this;
+    }
+
+    /**
      * Get the url of the menu item.
      */
     public function getUrl(): string
@@ -70,11 +133,31 @@ class MenuItem
     }
 
     /**
+     * Set the key of the menu item.
+     */
+    public function setKey(string $key): self
+    {
+        $this->key = $key;
+
+        return $this;
+    }
+
+    /**
      * Get the key of the menu item.
      */
     public function getKey(): string
     {
         return $this->key;
+    }
+
+    /**
+     * Set children of menu item.
+     */
+    public function setChildren(Collection $children): self
+    {
+        $this->children = $children;
+
+        return $this;
     }
 
     /**
