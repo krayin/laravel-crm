@@ -44,10 +44,16 @@ class Menu
     /**
      * Get all menu items.
      */
-    public function getItems(?string $area = null): Collection
+    public function getItems(?string $area = null, string $key = ''): Collection
     {
         if (! $area) {
             throw new \Exception('Area must be provided to get menu items.');
+        }
+
+        static $items;
+
+        if ($items) {
+            return $items;
         }
 
         $configMenu = collect(config("menu.$area"))->map(function ($item) {
@@ -74,7 +80,23 @@ class Menu
             $this->prepareMenuItems();
         }
 
-        return collect($this->items)->sortBy(fn($item) => $item->getPosition());
+        $items = collect($this->items)->sortBy(fn($item) => $item->getPosition());
+
+        return $items;
+    }
+
+    /**
+     * Get admin menu by key or keys.
+     */
+    public function getAdminMenuByKey(array|string $keys): mixed
+    {
+        $items = $this->getItems('admin');
+
+        $keysArray = (array) $keys;
+    
+        $filteredItems = $items->filter(fn($item) => in_array($item->getKey(), $keysArray));
+    
+        return is_array($keys) ? $filteredItems : $filteredItems->first();
     }
 
     /**

@@ -20,7 +20,7 @@
 
         <div class="page-content settings-container">
             @php
-                $settings = menu()->getItems('admin')->first(fn ($item) => $item->getKey() == 'settings')->getChildren();
+                $settings = menu()->getAdminMenuByKey('settings')->getChildren();
             @endphp 
 
             @foreach ($settings as $setting)
