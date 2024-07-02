@@ -38,9 +38,7 @@ class RoleController extends Controller
      */
     public function create()
     {
-        $acl = app('acl');
-
-        return view('admin::settings.roles.create', compact('acl'));
+        return view('admin::settings.roles.create');
     }
 
     /**
@@ -84,9 +82,7 @@ class RoleController extends Controller
     {
         $role = $this->roleRepository->findOrFail($id);
 
-        $acl = app('acl');
-
-        return view('admin::settings.roles.edit', compact('role', 'acl'));
+        return view('admin::settings.roles.edit', compact('role'));
     }
 
     /**

@@ -107,7 +107,7 @@
                             </div>
 
                             <div class="control-group tree-wrapper {{ old('permission_type') == 'all' ? 'hide' : '' }}">
-                                <tree-view value-field="key" id-field="key" items='@json($acl->items)'></tree-view>
+                                <tree-view value-field="key" id-field="key" items='@json(acl()->getItems())'></tree-view>
                             </div>
 
                             {!! view_render_event('admin.settings.roles.create.form_controls.after') !!}

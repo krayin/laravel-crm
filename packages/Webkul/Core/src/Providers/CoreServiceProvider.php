@@ -5,8 +5,12 @@ namespace Webkul\Core\Providers;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Console\Commands\Version;
+use Webkul\Core\Acl;
 use Webkul\Core\Core;
+use Webkul\Core\Menu;
+use Webkul\Core\Facades\Acl as AclFacade;
 use Webkul\Core\Facades\Core as CoreFacade;
+use Webkul\Core\Facades\Menu as MenuFacade;
 
 class CoreServiceProvider extends ServiceProvider
 {
@@ -54,11 +58,17 @@ class CoreServiceProvider extends ServiceProvider
     {
         $loader = AliasLoader::getInstance();
 
+        $loader->alias('acl', AclFacade::class);
+
         $loader->alias('core', CoreFacade::class);
 
-        $this->app->singleton('core', function () {
-            return app()->make(Core::class);
-        });
+        $loader->alias('menu', MenuFacade::class);
+
+        $this->app->singleton('acl', fn () => app(Acl::class));
+
+        $this->app->singleton('core', fn () => app(Core::class));
+
+        $this->app->singleton('menu', fn () => app(Menu::class));
     }
 
     /**
