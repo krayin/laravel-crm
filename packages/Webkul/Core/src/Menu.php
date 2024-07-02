@@ -64,14 +64,6 @@ class Menu
                     ->toArray();
                 break;
 
-            case self::CUSTOMER:
-                $canShowWishlist = ! (bool) core()->getConfigData('customer.settings.wishlist.wishlist_option');
-
-                $this->configMenu = $configMenu
-                    ->reject(fn ($item) => $item['key'] == 'account.wishlist' && $canShowWishlist)
-                    ->toArray();
-                break;
-
             default:
                 $this->configMenu = $configMenu->toArray();
 

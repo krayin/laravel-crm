@@ -23,7 +23,7 @@ return [
         'key'        => 'mail',
         'name'       => 'admin::app.layouts.mail.title',
         'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'inbox'],
+        'params'     => ['route' => 'compose'],
         'sort'       => 4,
         'icon-class' => 'emails-icon',
     ], [
