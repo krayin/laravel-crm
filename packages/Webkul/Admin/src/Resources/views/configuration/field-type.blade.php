@@ -115,7 +115,6 @@
 @push('scripts')
     @if ($field['type'] == 'country')
         <script type="text/x-template" id="country-template">
-
             <div>
                 <select
                     type="text"
@@ -136,7 +135,6 @@
                     @endforeach
                 </select>
             </div>
-
         </script>
 
         <script type="text/x-template" id="state-template">

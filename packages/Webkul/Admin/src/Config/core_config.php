@@ -4,10 +4,12 @@ return [
     [
         'key'  => 'general',
         'name' => 'admin::app.configuration.general',
+        'info' => 'admin::app.configuration.locale-settings',
         'sort' => 1,
     ], [
         'key'    => 'general.locale_settings',
         'name'   => 'admin::app.configuration.locale-settings',
+        'info'   => 'admin::app.configuration.locale-settings',
         'sort'   => 1,
         'fields' => [
             [
