@@ -78,6 +78,9 @@ class Bouncer
      */
     public function checkIfAuthorized()
     {
+        $roles = acl()->getRoles();
+
+        dd($roles);
         $acl = app('acl');
 
         if ($acl && isset($acl->roles[Route::currentRouteName()])) {

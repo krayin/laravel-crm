@@ -61,8 +61,6 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
 
         $this->registerCoreConfig();
-
-        $this->registerACL();
     }
 
     /**
@@ -119,41 +117,5 @@ class AdminServiceProvider extends ServiceProvider
 
             return $tree;
         });
-    }
-
-    /**
-     * Registers acl to entire application.
-     *
-     * @return void
-     */
-    protected function registerACL()
-    {
-        $this->app->singleton('acl', function () {
-            return $this->createACL();
-        });
-    }
-
-    /**
-     * Create ACL tree.
-     *
-     * @return mixed
-     */
-    protected function createACL()
-    {
-        static $tree;
-
-        if ($tree) {
-            return $tree;
-        }
-
-        $tree = Tree::create();
-
-        foreach (config('acl') as $item) {
-            $tree->add($item, 'acl');
-        }
-
-        $tree->items = core()->sortItems($tree->items);
-
-        return $tree;
     }
 }

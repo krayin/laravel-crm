@@ -3,6 +3,7 @@ use Webkul\Core\ViewRenderEventManager;
 
 use Webkul\Core\Core;
 use Webkul\Core\Menu;
+use Webkul\Core\Acl;
 
 if (! function_exists('core')) {
     function core(): Core
@@ -15,6 +16,16 @@ if (! function_exists('menu')) {
     function menu(): Menu
     {
         return app('menu');
+    }
+}
+
+if (! function_exists('acl')) {
+    /**
+     * Acl helper.
+     */
+    function acl(): Acl
+    {
+        return app('acl');
     }
 }
 
