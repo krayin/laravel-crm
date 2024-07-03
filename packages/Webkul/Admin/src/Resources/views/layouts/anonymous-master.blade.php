@@ -40,9 +40,7 @@
             <flash-wrapper ref='flashes'></flash-wrapper>
 
             <div class="center-box">
-
                 <div class="adjacent-center">
-
                     <div class="brand-logo">
                         <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
 
@@ -54,11 +52,8 @@
                     @yield('content')
 
                     {!! view_render_event('admin.layout.content.after') !!}
-
                 </div>
-
             </div>
-
         </div>
 
         <script type="text/javascript">

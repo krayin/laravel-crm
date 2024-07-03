@@ -1,25 +1,43 @@
 <?php
 
 return [
+    /**
+     * Dashboard.
+     */
     [
         'key'        => 'dashboard',
         'name'       => 'admin::app.layouts.dashboard',
         'route'      => 'admin.dashboard.index',
         'sort'       => 1,
         'icon-class' => 'dashboard-icon',
-    ], [
+    ],
+
+    /**
+     * Leads.
+     */
+    [
         'key'        => 'leads',
         'name'       => 'admin::app.layouts.leads',
         'route'      => 'admin.leads.index',
         'sort'       => 2,
         'icon-class' => 'leads-icon',
-    ], [
+    ],
+
+    /**
+     * Quotes.
+     */
+    [
         'key'        => 'quotes',
         'name'       => 'admin::app.layouts.quotes',
         'route'      => 'admin.quotes.index',
         'sort'       => 3,
         'icon-class' => 'quotes-icon',
-    ], [
+    ],
+
+    /**
+     * Emails.
+     */
+    [
         'key'        => 'mail',
         'name'       => 'admin::app.layouts.mail.title',
         'route'      => 'admin.mail.index',
@@ -62,7 +80,7 @@ return [
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'trash'],
         'sort'       => 5,
-    ]
+    ],
     // , [
     //     'key'        => 'mail.setting',
     //     'name'       => 'admin::app.layouts.mail.setting',
@@ -70,13 +88,22 @@ return [
     //     'params'     => ['route' => 'setting'],
     //     'sort'       => 5,
     // ]
-    , [
+
+    /**
+     * Activities.
+     */
+    [
         'key'        => 'activities',
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
         'sort'       => 5,
         'icon-class' => 'activities-icon',
-    ], [
+    ],
+
+    /**
+     * Contacts.
+     */
+    [
         'key'        => 'contacts',
         'name'       => 'admin::app.layouts.contacts',
         'route'      => 'admin.contacts.persons.index',
@@ -92,13 +119,23 @@ return [
         'name'       => 'admin::app.layouts.organizations',
         'route'      => 'admin.contacts.organizations.index',
         'sort'       => 2,
-    ], [
+    ],
+
+    /**
+     * Products.
+     */
+    [
         'key'        => 'products',
         'name'       => 'admin::app.layouts.products',
         'route'      => 'admin.products.index',
         'sort'       => 7,
         'icon-class' => 'products-icon',
-    ], [
+    ],
+
+    /**
+     * Settings.
+     */
+    [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.index',
@@ -159,6 +196,26 @@ return [
         'sort'       => 3,
         'icon-class' => 'type-icon',
     ], [
+        'key'        => 'settings.warehouse',
+        'name'       => 'admin::app.layouts.warehouse',
+        'info'       => 'admin::app.layouts.warehouses-info',
+        'route'      => 'admin.settings.pipelines.index',
+        'sort'       => 2,
+    ], [
+        'key'        => 'settings.warehouse.warehouses',
+        'name'       => 'admin::app.layouts.warehouses',
+        'info'       => 'admin::app.layouts.warehouses-info',
+        'route'      => 'admin.settings.warehouses.index',
+        'sort'       => 1,
+        'icon-class' => 'pipeline-icon',
+    ], [
+        'key'        => 'settings.warehouse.locations',
+        'name'       => 'admin::app.layouts.locations',
+        'info'       => 'admin::app.layouts.locations-info',
+        'route'      => 'admin.settings.locations.index',
+        'sort'       => 2,
+        'icon-class' => 'source-icon',
+    ], [
         'key'        => 'settings.automation',
         'name'       => 'admin::app.layouts.automation',
         'info'       => 'admin::app.layouts.automation-info',
@@ -199,7 +256,12 @@ return [
         'route'      => 'admin.settings.tags.index',
         'sort'       => 1,
         'icon-class' => 'tag-icon',
-    ], [
+    ],
+
+    /**
+     * Configuration.
+     */
+    [
         'key'        => 'configuration',
         'name'       => 'admin::app.layouts.configuration',
         'route'      => 'admin.configuration.index',

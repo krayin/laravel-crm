@@ -58,6 +58,7 @@ Vue.component('line-chart', require('./components/line-chart.vue').default);
 Vue.component('tabs', require('./components/tabs/tabs').default);
 Vue.component('tab', require('./components/tabs/tab').default);
 Vue.component('modal', require('./components/modal').default);
+Vue.component('drawer', require('./components/drawer').default);
 Vue.component('accordian', require('./components/accordian').default);
 Vue.component('attachment-wrapper', require('./components/attachment/attachment-wrapper').default);
 Vue.component('attachment-item', require('./components/attachment/attachment-item').default);

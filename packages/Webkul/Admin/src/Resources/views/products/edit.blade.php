@@ -20,10 +20,8 @@
         {!! view_render_event('admin.products.edit.header.after', ['product' => $product]) !!}
 
         <form method="POST" action="{{ route('admin.products.update', $product->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.products.edit.form_buttons.before', ['product' => $product]) !!}
@@ -38,29 +36,25 @@
                         </div>
         
                         <div class="panel-body">
-                            {!! view_render_event('admin.products.edit.form_controls.before', ['product' => $product]) !!}
-
                             @csrf()
 
                             <input name="_method" type="hidden" value="PUT">
-                
+
+                            {!! view_render_event('admin.products.edit.form_controls.before', ['product' => $product]) !!}
+                        
                             @include('admin::common.custom-attributes.edit', [
                                 'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
+                                    ['code' , '!=', 'quantity']
                                 ]),
                                 'entity'           => $product,
                             ])
 
                             {!! view_render_event('admin.products.edit.form_controls.after', ['product' => $product]) !!}
-
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 @stop

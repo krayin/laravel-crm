@@ -6,11 +6,9 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
-
         {!! view_render_event('admin.mail.compose.header.before', ['email' => $email ?? null]) !!}
 
         <div class="page-header">
-            
             {{ Breadcrumbs::render('mail.route', request('route')) }}
 
             <div class="page-title">
@@ -21,11 +19,8 @@
         {!! view_render_event('admin.mail.compose.header.after', ['email' => $email ?? null]) !!}
 
         <div class="page-content">
-
             <email-form></email-form>
-
         </div>
-
     </div>
 @stop
 
@@ -39,9 +34,7 @@
             enctype="multipart/form-data"
             @submit.prevent="onSubmit"
         >
-
             <div class="form-container">
-
                 <div class="panel">
                     <div class="panel-header">
                         {!! view_render_event('admin.mail.compose.form_buttons.before', ['email' => $email ?? null]) !!}
@@ -168,9 +161,7 @@
                         {!! view_render_event('admin.mail.compose.form_controls.after', ['email' => $email ?? null]) !!}
                     </div>
                 </div>
-
             </div>
-
         </form>
     </script>
 

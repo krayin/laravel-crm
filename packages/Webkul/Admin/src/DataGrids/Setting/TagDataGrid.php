@@ -124,7 +124,7 @@ class TagDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.tags.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'source']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'source']),
             'icon'         => 'trash-icon',
         ]);
     }

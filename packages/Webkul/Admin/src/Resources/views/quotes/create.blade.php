@@ -32,10 +32,8 @@
         {!! view_render_event('admin.quotes.create.header.after') !!}
 
         <form method="POST" action="{{ route('admin.quotes.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.quotes.create.form_buttons.before') !!}
@@ -58,7 +56,6 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
                                 <div slot="body">
-
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
                                             ->scopeQuery(function($query) {
@@ -100,7 +97,6 @@
                                             :data='@json($lookUpEntityData)'
                                         ></lookup-component>
                                     </div>
-
                                 </div>
                             </accordian>
 
@@ -111,7 +107,6 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.address-information') }}'" :active="true">
                                 <div slot="body">
-
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
                                             ->scopeQuery(function($query){
@@ -124,7 +119,6 @@
                                             })->get(),
                                         'entity'           => $quote,
                                     ])
-
                                 </div>
                             </accordian>
 
@@ -135,9 +129,7 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-items') }}'" :active="true">
                                 <div slot="body">
-
                                     <quote-item-list></quote-item-list>
-
                                 </div>
                             </accordian>
 
@@ -146,13 +138,9 @@
                             {!! view_render_event('admin.quotes.create.form_controls.after') !!}
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 @stop
 
@@ -161,7 +149,6 @@
         <div class="quote-item-list">
             <div class="table">
                 <table>
-
                     <thead>
                         <tr>
                             <th class="name">
@@ -226,7 +213,6 @@
                     </thead>
 
                     <tbody>
-
                         <quote-item
                             v-for='(product, index) in products'
                             :product="product"
@@ -234,9 +220,7 @@
                             :index="index"
                             @onRemoveProduct="removeProduct($event)"
                         ></quote-item>
-
                     </tbody>
-
                 </table>
 
                 <a class="add-more-link" href @click.prevent="addProduct">+ {{ __('admin::app.common.add_more') }}</a>
@@ -465,7 +449,8 @@
                         type="text"
                         class="control"
                         :value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
-                        readonly/>
+                        readonly
+                    />
                 </div>
             </td>
 
@@ -477,7 +462,6 @@
 
     <script>
         Vue.component('quote-item-list', {
-
             template: '#quote-item-list-template',
 
             props: ['data'],
@@ -576,7 +560,6 @@
         });
 
         Vue.component('quote-item', {
-
             template: '#quote-item-template',
 
             props: ['index', 'product'],
@@ -624,13 +607,11 @@
                     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
                         .then (function(response) {
                             self.$parent.products.forEach(function(addedProduct) {
-
                                 response.data.forEach(function(product, index) {
                                     if (product.id == addedProduct.product_id) {
                                         response.data.splice(index, 1);
                                     }
                                 });
-
                             });
 
                             self.products = response.data;

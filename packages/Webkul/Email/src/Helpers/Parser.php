@@ -189,7 +189,7 @@ class Parser
             $structure = mailparse_msg_get_structure($this->resource);
         }
 
-        $this->parts = array();
+        $this->parts = [];
 
         foreach ($structure as $part_id) {
             $part = mailparse_msg_get_part($this->resource, $part_id);

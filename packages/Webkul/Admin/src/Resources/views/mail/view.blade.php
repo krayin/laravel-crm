@@ -21,7 +21,6 @@
 @stop
 
 @section('content-wrapper')
-
     @php
         if (! $email->lead) {
             $email->lead = app('\Webkul\Lead\Repositories\LeadRepository')->getModel()->fill(['title' => $email->subject]);
@@ -33,11 +32,9 @@
     @endphp
 
     <div class="content full-page">
-
         {!! view_render_event('admin.mail.view.header.before', ['email' => $email]) !!}
 
         <div class="page-header">
-            
             {{ Breadcrumbs::render('mail.route.view', request('route'), $email) }}
 
             <div class="page-title">
@@ -58,13 +55,11 @@
 
 
         <div class="page-content" style="margin-top: 30px; padding-bottom: 30px;">
-
             {!! view_render_event('admin.mail.view.list.before', ['email' => $email]) !!}
 
             <email-list-component></email-list-component>
 
             {!! view_render_event('admin.mail.view.list.after', ['email' => $email]) !!}
-
         </div>
     </div>
 
@@ -74,7 +69,6 @@
         data-vv-scope="person-form"
         @submit.prevent="onSubmit($event, 'person-form')"
     >
-
         <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
             <h3 slot="header-title">{{ __('admin::app.contacts.persons.create-title') }}</h3>
             
@@ -123,7 +117,6 @@
         data-vv-scope="lead-form"
         @submit.prevent="onSubmit($event, 'lead-form')"
     >
-
         <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
             <h3 slot="header-title">{{ __('admin::app.leads.create-title') }}</h3>
             
@@ -194,12 +187,10 @@
                 {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.after', ['email' => $email]) !!}
             </div>
         </modal>
-
     </form>
 @stop
 
 @push('scripts')
-
     <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
 
     <script type="text/x-template" id="email-action-component-template">
@@ -305,6 +296,7 @@
 
 
                     {!! view_render_event('admin.mail.view.actions.link_lead.before', ['email' => $email]) !!}
+
                     @if (bouncer()->hasPermission('leads.view') || bouncer()->hasPermission('leads.create'))
                         <div class="panel">
                             <div class="link-lead" v-if="! email.lead_id">
@@ -561,11 +553,8 @@
             data-vv-scope="email-form"
             @submit.prevent="$root.onSubmit($event, 'email-form')"
         >
-
             <div class="form-container">
-
                 <div class="panel">
-    
                     <div class="panel-body">
                         {!! view_render_event('admin.mail.view.email.create.form_controls.before', ['email' => $email]) !!}
 
@@ -674,9 +663,7 @@
                         {!! view_render_event('admin.mail.view.email.create.form_buttons.after', ['email' => $email]) !!}
                     </div>
                 </div>
-
             </div>
-
         </form>
     </script>
 

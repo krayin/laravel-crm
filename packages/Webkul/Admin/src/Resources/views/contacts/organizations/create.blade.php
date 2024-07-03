@@ -6,7 +6,6 @@
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
-
         {!! view_render_event('admin.contacts.organizations.create.header.before') !!}
 
         <div class="page-header">
@@ -21,10 +20,8 @@
         {!! view_render_event('admin.contacts.organizations.create.header.after') !!}
 
         <form method="POST" action="{{ route('admin.contacts.organizations.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.contacts.organizations.create.form_buttons.before') !!}
@@ -54,7 +51,6 @@
                     </div>
                 </div>
             </div>
-
         </form>
     </div>
 @stop

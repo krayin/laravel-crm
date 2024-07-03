@@ -13,7 +13,6 @@
         </div>
 
         <div class="calendar-body">
-
             <calendar-filters></calendar-filters>
 
             <calendar-component></calendar-component>
@@ -27,17 +26,13 @@
             <div></div>
             
             <div class="filter-right">
-
                 @include('admin::activities.index.view-swither')
-
             </div>
-
         </div>
     </script>
 
     <script type="text/x-template" id="calendar-component-tempalte">
         <div class="calendar-container">
-
             <vue-cal
                 hide-view-selector
                 :watchRealTime="true"
@@ -50,7 +45,6 @@
                 :on-event-click="onEventClick"
                 locale="{{ app()->getLocale() }}"
             />
-
         </div>
     </script>
 
@@ -58,7 +52,6 @@
         Vue.component('calendar-filters', {
             template: '#calendar-filters-tempalte',
         });
-
 
         Vue.component('calendar-component', {
             template: '#calendar-component-tempalte',

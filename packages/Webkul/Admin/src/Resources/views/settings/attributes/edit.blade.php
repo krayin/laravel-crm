@@ -29,10 +29,8 @@
         {!! view_render_event('admin.settings.attributes.edit.header.after', ['attribute' => $attribute]) !!}
 
         <form method="POST" action="{{ route('admin.settings.attributes.update', $attribute->id) }}" @submit.prevent="onSubmit">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.settings.attributes.edit.form_buttons.before', ['attribute' => $attribute]) !!}
@@ -99,13 +97,11 @@
                                 <?php $selectedOption = old('type') ?: $attribute->entity_type ?>
 
                                 <select class="control" id="entity_type" name="entity_type">
-
                                     @foreach (config('attribute_entity_types') as $key => $entityType)
                                         <option value="{{ $key }}" {{ $selectedOption == $key ? 'selected' : '' }}>
-                                            {{ $entityType['name'] }}
+                                            {{ trans($entityType['name']) }}
                                         </option>
                                     @endforeach
-
                                 </select>
                             </div>
 

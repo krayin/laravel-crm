@@ -19,7 +19,7 @@ return [
         'export'        => 'اکسپورت',
         'select-format' => 'انتخاب فرمت',
 
-        'massaction' => [
+        'mass-action' => [
             'select_action'         => 'انتخاب عملیات',
             'mass-delete-confirm'   => 'آیا از حذف این :resource انتخاب شده اطمینان دارید؟',
             'mass-update-status'    => 'آیا از بروزرسانی وضعیت این :resource انتخاب شده اطمینان دارید؟',

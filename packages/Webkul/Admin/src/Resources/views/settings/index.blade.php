@@ -6,9 +6,7 @@
 
 @section('content-wrapper')
     <div class="content full-page">
-
         <div class="page-header">
-            
             {{ Breadcrumbs::render('settings') }}
 
             <div class="page-title">
@@ -31,9 +29,7 @@
                     
                     <div class="panel-body">
                         <div class="setting-link-container">
-
                             @foreach ($setting['children'] as $subSetting)
-
                                 <div class="setting-link-item">
                                     <a href="{{ $subSetting['url'] }}">
                                         <div class="icon-container">
@@ -46,9 +42,7 @@
                                         </div>
                                     </a>
                                 </div>
-
                             @endforeach
-
                         </div>
                     </div>
                 </div>

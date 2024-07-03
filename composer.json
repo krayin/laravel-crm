@@ -66,6 +66,7 @@
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
             "Webkul\\UI\\": "packages/Webkul/UI/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
+            "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
         }

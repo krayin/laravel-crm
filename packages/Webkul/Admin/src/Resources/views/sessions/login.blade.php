@@ -7,7 +7,6 @@
 @section('content')
     <div class="panel">
         <div class="panel-body">
-
             <div class="form-container">
                 <h1>{{ __('admin::app.sessions.login.welcome') }}</h1>
 

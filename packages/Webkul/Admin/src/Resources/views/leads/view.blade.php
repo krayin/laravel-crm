@@ -21,13 +21,10 @@
 @stop
 
 @section('content-wrapper')
-
     <div class="content full-page">
-
         {!! view_render_event('admin.leads.view.header.before', ['lead' => $lead]) !!}
 
         <div class="page-header">
-
             {{ Breadcrumbs::render('leads.view', $lead) }}
 
             <div class="page-title">
@@ -49,7 +46,6 @@
         {!! view_render_event('admin.leads.view.informations.before', ['lead' => $lead]) !!}
 
         <div class="page-content lead-view">
-
             <div class="lead-content-left">
                 {!! view_render_event('admin.leads.view.informations.details.before', ['lead' => $lead]) !!}
 
@@ -66,7 +62,6 @@
                     </div>
 
                     <div class="panel-body">
-
                         <div class="custom-attribute-view">
                             @include('admin::common.custom-attributes.view', [
                                 'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -82,7 +77,6 @@
                                 </div>
                             @endif
                         </div>
-
                     </div>
                 </div>
 
@@ -97,7 +91,6 @@
                     </div>
 
                     <div class="panel-body custom-attribute-view">
-
                         <div class="attribute-value-row">
                             <div class="label">Name</div>
 
@@ -153,9 +146,7 @@
                     <div class="panel-body" style="position: relative">
                         @if ($lead->products->count())
                             <div class="lead-product-list">
-
                                 @foreach ($lead->products as $product)
-
                                     <div class="lead-product">
                                         <div class="top-control-group">
                                             <div class="form-group">
@@ -194,7 +185,6 @@
                                         </div>
                                     </div>
                                 @endforeach
-
                             </div>
                         @else
                             <div class="empty-record">
@@ -231,7 +221,7 @@
 
     <script type="text/x-template" id="edit-lead-form-template">
         <form action="{{ route('admin.leads.update', $lead->id) }}" method="post" @submit.prevent="onSubmit" enctype="multipart/form-data">
-            <modal id="updateLeadModal" :is-open="$root.modalIds.updateLeadModal">
+            <modal ref="updateLeadModal" id="updateLeadModal" :is-open="$root.modalIds.updateLeadModal">
                 <h3 slot="header-title">{{ __('admin::app.leads.edit-title') }}</h3>
 
                 <div slot="header-actions">

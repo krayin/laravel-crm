@@ -4,12 +4,15 @@
             ->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
     @endphp
 
-    <multi-lookup-component :attribute='@json($attribute)' :validations="'{{$validations}}'" :data='@json($lookUpEntityData)'></multi-lookup-component>
+    <multi-lookup-component
+        :attribute='@json($attribute)'
+        :validations="'{{$validations}}'"
+        :data='@json($lookUpEntityData)'
+    ></multi-lookup-component>
 @endif
 
 @once
     @push('scripts')
-
         <script type="text/x-template" id="multi-lookup-component-template">
             <div class="lookup-control">
                 <div class="form-group" style="margin-bottom: 0">

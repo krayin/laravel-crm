@@ -1,6 +1,5 @@
 <div class="content full-page">
     <table-component data-src="{{ route('admin.activities.get') }}" switch-page-url="{{ route('admin.activities.index') }}">
-
         <template v-slot:extra-filters>
             @include('admin::activities.index.view-swither')
         </template>

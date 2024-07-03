@@ -161,7 +161,6 @@
     </div>
 @stop
 
-
 @push('scripts')
     <script type="text/x-template" id="upload-profile-image-template">
         <div class="form-group">
