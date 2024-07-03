@@ -14,7 +14,6 @@
         "doctrine/dbal": "^3.0",
         "guzzlehttp/guzzle": "^7.0.1",
         "konekt/concord": "^1.10",
-        "krayin/rest-api": "dev-master",
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",

@@ -111,7 +111,7 @@
                             </div>
 
                             <div class="control-group tree-wrapper {{ $selectedOption == 'all' ? 'hide' : '' }}">
-                                <tree-view value-field="key" id-field="key" items='@json($acl->items)' value='@json($role->permissions)'></tree-view>
+                                <tree-view value-field="key" id-field="key" items='@json(acl()->getItems())' value='@json($role->permissions)'></tree-view>
                             </div>
 
                             {!! view_render_event('admin.settings.roles.edit.form_controls.after', ['role' => $role]) !!}

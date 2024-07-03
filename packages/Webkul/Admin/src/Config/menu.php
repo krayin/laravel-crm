@@ -41,7 +41,7 @@ return [
         'key'        => 'mail',
         'name'       => 'admin::app.layouts.mail.title',
         'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'inbox'],
+        'params'     => ['route' => 'compose'],
         'sort'       => 4,
         'icon-class' => 'emails-icon',
     ], [
@@ -50,36 +50,42 @@ return [
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'compose'],
         'sort'       => 1,
+        'icon-class' => '',
     ], [
         'key'        => 'mail.inbox',
         'name'       => 'admin::app.layouts.mail.inbox',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'inbox'],
         'sort'       => 2,
+        'icon-class' => '',
     ], [
         'key'        => 'mail.draft',
         'name'       => 'admin::app.layouts.mail.draft',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'draft'],
         'sort'       => 3,
+        'icon-class' => '',
     ], [
         'key'        => 'mail.outbox',
         'name'       => 'admin::app.layouts.mail.outbox',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'outbox'],
         'sort'       => 4,
+        'icon-class' => '',
     ], [
         'key'        => 'mail.sent',
         'name'       => 'admin::app.layouts.mail.sent',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'sent'],
         'sort'       => 4,
+        'icon-class' => '',
     ], [
         'key'        => 'mail.trash',
         'name'       => 'admin::app.layouts.mail.trash',
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'trash'],
         'sort'       => 5,
+        'icon-class' => '',
     ],
     // , [
     //     'key'        => 'mail.setting',
@@ -114,11 +120,13 @@ return [
         'name'       => 'admin::app.layouts.persons',
         'route'      => 'admin.contacts.persons.index',
         'sort'       => 1,
+        'icon-class' => '',
     ], [
         'key'        => 'contacts.organizations',
         'name'       => 'admin::app.layouts.organizations',
         'route'      => 'admin.contacts.organizations.index',
         'sort'       => 2,
+        'icon-class' => '',
     ],
 
     /**
@@ -147,6 +155,7 @@ return [
         'route'      => 'admin.settings.groups.index',
         'info'       => 'admin::app.layouts.user-info',
         'sort'       => 1,
+        'icon-class' => 'group-icon',
     ], [
         'key'        => 'settings.user.groups',
         'name'       => 'admin::app.layouts.groups',
@@ -174,6 +183,7 @@ return [
         'info'       => 'admin::app.layouts.lead-info',
         'route'      => 'admin.settings.pipelines.index',
         'sort'       => 2,
+        'icon-class' => '',
     ], [
         'key'        => 'settings.lead.pipelines',
         'name'       => 'admin::app.layouts.pipelines',
@@ -200,6 +210,7 @@ return [
         'name'       => 'admin::app.layouts.warehouse',
         'info'       => 'admin::app.layouts.warehouses-info',
         'route'      => 'admin.settings.pipelines.index',
+        'icon-class' => '',
         'sort'       => 2,
     ], [
         'key'        => 'settings.warehouse.warehouses',
@@ -221,6 +232,7 @@ return [
         'info'       => 'admin::app.layouts.automation-info',
         'route'      => 'admin.settings.attributes.index',
         'sort'       => 3,
+        'icon-class' => '',
     ], [
         'key'        => 'settings.automation.attributes',
         'name'       => 'admin::app.layouts.attributes',

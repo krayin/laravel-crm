@@ -4,7 +4,7 @@
     {{ __('admin::app.user.account.my_account') }}
 @stop
 
-@section('css')
+@push('css')
     <style>
         .panel-header,
         .panel-body {
@@ -12,7 +12,7 @@
             max-width: 800px;
         }
     </style>
-@stop
+@endpush
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">
@@ -47,6 +47,8 @@
                                 <input
                                     type="checkbox"
                                     name="remove_image"
+                                    id="remove"
+                                    value="1"
                                 />
 
                                 <label for="remove" class="">

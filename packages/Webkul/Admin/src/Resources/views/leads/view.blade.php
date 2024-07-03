@@ -4,7 +4,7 @@
     {{ $lead->title }}
 @stop
 
-@section('css')
+@push('css')
     <style>
         .modal-container .modal-header {
             border: 0;
@@ -18,7 +18,7 @@
             margin-bottom: 30px;
         }
     </style>
-@stop
+@endpush
 
 @section('content-wrapper')
     <div class="content full-page">

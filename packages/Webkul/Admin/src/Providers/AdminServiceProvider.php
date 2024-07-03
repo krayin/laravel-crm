@@ -31,6 +31,7 @@ class AdminServiceProvider extends ServiceProvider
         $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
         $router->aliasMiddleware('user', \Webkul\Admin\Http\Middleware\Bouncer::class);
+
         $router->aliasMiddleware('admin_locale', Locale::class);
 
         $this->publishes([
@@ -62,8 +63,6 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerConfig();
 
         $this->registerCoreConfig();
-
-        $this->registerACL();
     }
 
     /**
@@ -76,14 +75,9 @@ class AdminServiceProvider extends ServiceProvider
         $loader = AliasLoader::getInstance();
 
         $loader->alias('Bouncer', \Webkul\Admin\Facades\Bouncer::class);
-        $loader->alias('Menu', \Webkul\Admin\Facades\Menu::class);
 
         $this->app->singleton('bouncer', function () {
             return new \Webkul\Admin\Bouncer();
-        });
-
-        $this->app->singleton('menu', function () {
-            return new \Webkul\Admin\Menu();
         });
     }
 
@@ -125,41 +119,5 @@ class AdminServiceProvider extends ServiceProvider
 
             return $tree;
         });
-    }
-
-    /**
-     * Registers acl to entire application.
-     *
-     * @return void
-     */
-    protected function registerACL()
-    {
-        $this->app->singleton('acl', function () {
-            return $this->createACL();
-        });
-    }
-
-    /**
-     * Create ACL tree.
-     *
-     * @return mixed
-     */
-    protected function createACL()
-    {
-        static $tree;
-
-        if ($tree) {
-            return $tree;
-        }
-
-        $tree = Tree::create();
-
-        foreach (config('acl') as $item) {
-            $tree->add($item, 'acl');
-        }
-
-        $tree->items = core()->sortItems($tree->items);
-
-        return $tree;
     }
 }

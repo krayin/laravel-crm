@@ -1,10 +1,10 @@
 <?php
 
-namespace Webkul\Admin\Facades;
+namespace Webkul\Core\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
-class Menu extends Facade
+class Acl extends Facade
 {
     /**
      * Get the registered name of the component.
@@ -13,6 +13,6 @@ class Menu extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'menu';
+        return 'acl';
     }
 }

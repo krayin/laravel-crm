@@ -1,45 +1,57 @@
-@php($menu = Menu::prepare())
-
-<div class="navbar-left" v-bind:class="{'open': isMenuOpen}">
+<div
+    class="navbar-left"
+    :class="{'open': isMenuOpen}"
+>
     <ul class="menubar">
-        @foreach ($menu->items as $menuItem)
+        @foreach (
+            menu()->getItems('admin') 
+            as $menuItem
+        )
             <li
-                class="menu-item {{ Menu::getActive($menuItem) }}"
-                title="{{ $menuItem['name'] }}"
-                @if (! count($menuItem['children'])
-                    || $menuItem['key'] == 'settings'
+                class="menu-item {{ $menuItem->isActive() ? 'active' : 'inactive' }}"
+                title="{{ $name = $menuItem->getName() }}"
+                @if (
+                    ! $menuItem->haveChildren()
+                    || $menuItem->getKey() == 'settings'
                 )
                     v-tooltip.right="{
-                        content: '{{ $menuItem['name'] }}',
+                        content: '{{ $name }}',
                         classes: [isMenuOpen ? 'hide' : 'show']
                     }"
                 @endif
             >
 
-                <a href="{{ $menuItem['url'] }}">
-                    <i class="icon sprite {{ $menuItem['icon-class'] }}"></i>
+                <a href="{{ $menuItem->getUrl() }}">
+                    <i class="icon sprite {{ $menuItem->getIcon() }}"></i>
                     
-                    <span class="menu-label">{{ $menuItem['name'] }}</span>
+                    <span class="menu-label">{{ $menuItem->getName() }}</span>
                 </a>
 
-                @if ($menuItem['key'] != 'configuration')
-                    @if ($menuItem['key'] != 'settings' && count($menuItem['children']))
-                        <ul class="sub-menubar">
-                            @foreach ($menuItem['children'] as $subMenuItem)
-                                <li class="sub-menu-item {{ Menu::getActive($subMenuItem) }}">
-                                    <a href="{{ count($subMenuItem['children']) ? current($subMenuItem['children'])['url'] : $subMenuItem['url'] }}">
-                                        <span class="menu-label">{{ $subMenuItem['name'] }}</span>
-                                    </a>
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
+                @if (
+                    ! in_array($menuItem->getKey(), ['settings', 'configuration'])
+                    && $menuItem->haveChildren()
+                )
+                    <ul class="sub-menubar">
+                        @foreach ($menuItem->getChildren() as $subMenuItem)
+                            <li class="sub-menu-item {{ $subMenuItem->isActive() ? 'active' : 'inactive' }}">
+                                <a href="{{ $subMenuItem->getUrl() }}">
+                                    <span class="menu-label">{{ $subMenuItem->getName() }}</span>
+                                </a>
+                            </li>
+                        @endforeach
+                    </ul>
                 @endif
             </li>
         @endforeach
     </ul>
 
-    <div class="menubar-bottom" @click="toggleMenu">
-        <span class="icon" v-bind:class="[isMenuOpen ? 'menu-fold-icon' : 'menu-unfold-icon']"></span>
+    <div
+        class="menubar-bottom"
+        @click="toggleMenu"
+    >
+        <span
+            class="icon"
+            v-bind:class="[isMenuOpen ? 'menu-fold-icon' : 'menu-unfold-icon']"
+        ></span>
     </div>
 </div>

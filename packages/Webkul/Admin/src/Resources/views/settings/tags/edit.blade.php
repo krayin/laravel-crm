@@ -4,7 +4,7 @@
     {{ __('admin::app.settings.tags.edit-title') }}
 @stop
 
-@section('css')
+@push('css')
     <style>
         .color-item {
             position: relative;
@@ -36,7 +36,7 @@
             border: solid 3px #FFFFFF;
         }
     </style>
-@stop
+@endpush
 
 @section('content-wrapper')
     <div class="content full-page adjacent-center">

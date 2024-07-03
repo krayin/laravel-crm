@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\User;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class AccountController extends Controller
@@ -36,7 +37,8 @@ class AccountController extends Controller
             'email'            => 'email|unique:users,email,' . $user->id,
             'password'         => 'nullable|min:6|confirmed',
             'current_password' => 'nullable|required|min:6',
-            'image'            => 'mimes:jpeg,jpg,png,gif'
+            'image'            => 'mimes:jpeg,jpg,png,gif',
+            'remove_image'     => 'sometimes|boolean',
         ]);
 
         $data = request()->input();
@@ -61,13 +63,7 @@ class AccountController extends Controller
             $data['password'] = bcrypt($data['password']);
         }
 
-        if (request()->hasFile('image')) {
-            $data['image'] = request()->file('image')->store('users/' . $user->id);
-        }
-
-        if (isset($data['remove_image']) && $data['remove_image'] !== '') {
-            $data['image'] = null;
-        }
+        $this->handleProfileImageUpload($data, $user);
 
         $user->update($data);
 
@@ -78,5 +74,39 @@ class AccountController extends Controller
         session()->flash('success', trans('admin::app.user.account.account-save'));
 
         return redirect()->route('admin.dashboard.index');
+    }
+
+    /**
+     * Handle profile image upload.
+     *
+     * @param  array  $data
+     * @param  Object $user
+     * @return void
+     */
+    public function handleProfileImageUpload(&$data, $user)
+    {
+        $oldImage = $user->image;
+
+        if (! isset($data['image'])) {
+            $data['image'] = $user->image;
+        }
+    
+        if (request()->hasFile('image')) {
+            $data['image'] = request()->file('image')->store('users/' . $user->id);
+        }
+    
+        if (
+            isset($data['remove_image'])
+            && $data['remove_image']
+        ) {
+            $data['image'] = null;
+        }
+    
+        if (
+            $oldImage 
+            && ($data['image'] !== $oldImage)
+        ) {
+            Storage::delete($oldImage);
+        }
     }
 }
