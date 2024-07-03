@@ -136,7 +136,7 @@ class SystemConfig
     /**
      * Get config field.
      */
-    public function getConfigField(string $fieldName): ?array
+    private function getConfigField(string $fieldName): ?array
     {
         foreach ($this->retrieveCoreConfig() as $coreData) {
             if (! isset($coreData['fields'])) {
@@ -156,49 +156,11 @@ class SystemConfig
     }
 
     /**
-     * Get core config values.
-     */
-    protected function getCoreConfig(string $field, ?string $channel, ?string $locale): ?CoreConfig
-    {
-        $fields = $this->getConfigField($field);
-
-        if (! empty($fields['channel_based'])) {
-            if (! empty($fields['locale_based'])) {
-                $coreConfigValue = $this->coreConfigRepository->findOneWhere([
-                    'code'         => $field,
-                    'channel_code' => $channel,
-                    'locale_code'  => $locale,
-                ]);
-            } else {
-                $coreConfigValue = $this->coreConfigRepository->findOneWhere([
-                    'code'         => $field,
-                    'channel_code' => $channel,
-                ]);
-            }
-        } else {
-            if (! empty($fields['locale_based'])) {
-                $coreConfigValue = $this->coreConfigRepository->findOneWhere([
-                    'code'        => $field,
-                    'locale_code' => $locale,
-                ]);
-            } else {
-                $coreConfigValue = $this->coreConfigRepository->findOneWhere([
-                    'code' => $field,
-                ]);
-            }
-        }
-
-        return $coreConfigValue;
-    }
-
-    /**
      * Get default config.
      */
-    protected function getDefaultConfig(string $field): mixed
+    private function getDefaultConfig(string $field): mixed
     {
         $configFieldInfo = $this->getConfigField($field);
-
-        dd($configFieldInfo);
 
         $fields = explode('.', $field);
 
@@ -210,24 +172,16 @@ class SystemConfig
     }
 
     /**
-     * Get the config data.
+     * Retrieve information for configuration
      */
     public function getConfigData(string $field): mixed
     {
-        $fields = $this->getConfigField($field);
-
         $coreConfigValue = $this->coreConfigRepository->findOneWhere([
             'code' => $field,
         ]);
 
         if (! $coreConfigValue) {
-            $fields = explode(".", $field);
-
-            array_shift($fields);
-
-            $field = implode(".", $fields);
-
-            return Config::get($field);
+            return $this->getDefaultConfig($field);
         }
 
         return $coreConfigValue->value;

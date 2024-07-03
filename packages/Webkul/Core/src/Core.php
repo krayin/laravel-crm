@@ -24,10 +24,8 @@ class Core
 
     /**
      * Retrieve all timezones.
-     *
-     * @return array
      */
-    public function timezones()
+    public function timezones(): array
     {
         $timezones = [];
 
@@ -40,10 +38,8 @@ class Core
 
     /**
      * Retrieve all locales.
-     *
-     * @return array
      */
-    public function locales()
+    public function locales(): array
     {
         $options = [];
 
@@ -69,12 +65,8 @@ class Core
 
     /**
      * Returns country name by code.
-     *
-     * @param string $code
-     *
-     * @return string
      */
-    public function country_name($code)
+    public function country_name(string $code): string
     {
         $country = $this->countryRepository->findOneByField('code', $code);
 
@@ -83,12 +75,8 @@ class Core
 
     /**
      * Returns state name by code.
-     *
-     * @param string $code
-     *
-     * @return string
      */
-    public function state_name($code)
+    public function state_name(string $code): string
     {
         $state = $this->countryStateRepository->findOneByField('code', $code);
 
@@ -98,11 +86,9 @@ class Core
     /**
      * Retrieve all country states.
      *
-     * @param string $countryCode
-     *
      * @return \Illuminate\Support\Collection
      */
-    public function states($countryCode)
+    public function states(string $countryCode)
     {
         return $this->countryStateRepository->findByField('country_code', $countryCode);
     }
@@ -317,9 +303,9 @@ class Core
             $price = 0;
         }
 
-        $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
-        return $formater->formatCurrency($price, config('app.currency'));
+        return $formatter->formatCurrency($price, config('app.currency'));
     }
 
     /**

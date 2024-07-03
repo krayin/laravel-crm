@@ -67,24 +67,11 @@ return [
                     ]
                 ]
             ],
-
             [
                 'name'    => 'title',
                 'title'   => 'Order Title',
                 'type'    => 'textarea',
                 'default' => 'Get UPTO 40% OFF on your 1st order',
-            ],
-
-            [
-                'name'    => 'country',
-                'title'   => 'Country',
-                'type'    => 'country',
-            ],
-
-            [
-                'name'    => 'state',
-                'title'   => 'State',
-                'type'    => 'state',
             ],
         ],
     ],

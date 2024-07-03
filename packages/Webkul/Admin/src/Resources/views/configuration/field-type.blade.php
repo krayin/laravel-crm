@@ -1,5 +1,5 @@
 @php
-    $value = system_config()->getConfigData($field->getNameKey()) ?? $field->getDefault();
+    $value = system_config()->getConfigData($field->getNameKey());
 @endphp
 
 <input
@@ -252,16 +252,14 @@
                 class="control"
                 :id="name"
                 v-model="country"
-                v-validate="validations"
+                {{-- v-validate="validations" --}}
                 data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
                 @change="sendCountryCode"
             >
                 <option value=""></option>
 
                 @foreach (core()->countries() as $country)
-
                     <option value="{{ $country->code }}">{{ $country->name }}</option>
-
                 @endforeach
             </select>
         </div>
@@ -271,37 +269,38 @@
     <script type="text/x-template" id="state-template">
 
         <div>
-            <input
-                type="text"
-                :name="name"
-                class="control"
-                :id="name"
-                v-model="state"
-                v-validate="'required'"
-                data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
-                v-if="! haveStates()"
-            />
+            <template v-if="! haveStates()">
+                <input
+                    type="text"
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    v-model="state"
+                    v-validate="'required'"
+                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                />
+            </template>
 
-            <select
-                :name="name"
-                class="control"
-                :id="name"
-                v-model="state"
-                v-validate="'required'"
-                data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
-                v-if="haveStates()"
-            >
-                <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
+           <template v-else>
+                <select
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    v-model="state"
+                    v-validate="'required'"
+                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                >
+                    <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
 
-                <option
-                    v-for='(state, index) in countryStates[country]'
-                    :value="state.code"
-                    :text="state.name"
-                ></option>
-            </select>
-
+                    <option
+                        v-for='(state, index) in countryStates[country]'
+                        :value="state.code"
+                    >
+                        @{{ state.name }}
+                    </option>
+                </select>
+           </template>
         </div>
-
     </script>
 
     <script>
