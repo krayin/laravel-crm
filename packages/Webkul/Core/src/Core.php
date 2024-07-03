@@ -45,7 +45,16 @@ class Core
      */
     public function locales()
     {
-        return config('app.available_locales');
+        $options = [];
+
+        foreach (config('app.available_locales') as $key => $title) {
+            $options[] = [
+                'title' => $title,
+                'value' => $key,
+            ];
+        }
+
+        return $options;
     }
 
     /**

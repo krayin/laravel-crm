@@ -1,354 +1,415 @@
-@php   
-    $validations = [];
-
-    if (isset($field['validations'])) {
-        array_push($validations, $field['validations']);
-    }
-
-    $validations = implode('|', array_filter($validations));
-
-    $key = explode(".", $item['key']);
-
-    $firstField = current($key);
-
-    $secondField = next($key);
-
-    $name = $item['key'] . '.' . $field['name'];
-
-    if (isset($field['data_source'])) {
-        $temp = explode("@", $field['data_source']);
-
-        $value = app(current($temp))->{end($temp)}();
-    }
-
-    $fieldName = $firstField . "[" . $secondField . "][" . $field['name'] . "]";
+@php
+    $value = system_config()->getConfigData($field->getNameKey()) ?? $field->getDefault();
 @endphp
 
-@if ($field['type'] == 'depends')
-    @php        
-        $depends = explode(":", $field['depend']);
+<input
+    type="hidden"
+    name="keys[]"
+    value="{{ json_encode($child) }}"
+/>
 
-        $dependField = current($depends);
+<div class="mb-4 last:!mb-0">
+    <configurable
+        name="{{ $field->getNameField() }}"
+        value="{{ $value }}"
+        label="{{ trans($field->getTitle()) }}"
+        info="{{ trans($field->getInfo()) }}"
+        validations="{{ $field->getValidations() }}"
+        is-require="{{ $field->isRequired() }}"
+        depend-name="{{ $field->getDependFieldName() }}"
+        src="{{ Storage::url($value) }}"
+        field-data="{{ json_encode($field) }}"
+    ></configurable>
+</div>
 
-        $dependValue = end($depends);
-
-        if (isset($value) && $value) {
-            $i = 0;
-
-            foreach ($value as $key => $result) {
-                $data['title'] = $result;
-
-                $data['value'] = $key;
-
-                $options[$i] = $data;
-
-                $i++;
-            }
-
-            $field['options'] = $options;
-        }
-
-        if (! isset($field['options'])) {
-            $field['options'] = '';
-        }
-
-        $selectedOption = core()->getConfigData($name) ?? '';
-    @endphp
-
-    <depends
-        :name="'{{ $fieldName }}'"
-        :value="'{{ $dependValue }}'"
-        :result="'{{ $selectedOption }}'"
-        :options='@json($field['options'])'
-        :validations="'{{ $validations }}'"
-        :field_name="'{{ trans($field['title']) }}'"
-        :depend="'{{ $firstField }}[{{ $secondField }}][{{ $dependField }}]'"
-    ></depends>
-
-@else
-    <div
-        class="form-group {{ $field['type'] }}"
-        @if ($field['type'] == 'multiselect')
-            :class="[errors.has('{{ $fieldName }}[]') ? 'has-error' : '']"
-        @else
-            :class="[errors.has('{{ $fieldName }}') ? 'has-error' : '']"
-        @endif
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="configurable-template"
     >
-
-        <label
-            for="{{ $name }}"
-            {{ !isset($field['validations']) || preg_match('/\brequired\b/', $field['validations']) == false ? '' : 'class=required' }}
-        >
-            {{ __($field['title']) }}
-
-        </label>
-
-        @if ($field['type'] == "password" || $field['type'] == "color")
-            @include('admin::configuration.fields.input')
-        @else
-            @include('admin::configuration.fields.' . $field['type'])
-        @endif
-
-        @if (isset($field['info']))
-            <span class="control-info mt-10">{{ trans($field['info']) }}</span>
-        @endif
-
-        <span
-            class="control-error"
-            @if ($field['type'] == 'multiselect')
-                v-if="errors.has('{{ $fieldName }}[]')"
+        <div
+            {{-- class="form-group {{ $field['type'] }}" --}}
+            class="form-group"
+            {{-- @if ($field['type'] == 'multiselect')
+                :class="[errors.has('{{ $fieldName }}[]') ? 'has-error' : '']"
             @else
-                v-if="errors.has('{{ $fieldName }}')"
-            @endif
+                :class="[errors.has('{{ $fieldName }}') ? 'has-error' : '']"
+            @endif --}}
         >
-            @if ($field['type'] == 'multiselect')
-                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $field['name'] !!}][]') }}
-            @else
-                @{{ errors.first('{!! $firstField !!}[{!! $secondField !!}][{!! $field['name'] !!}]') }}
-            @endif
-        </span>
 
-    </div>
-
-@endif
-
-@push('scripts')
-    @if ($field['type'] == 'country')
-        <script type="text/x-template" id="country-template">
-            <div>
-                <select
-                    type="text"
-                    :name="name"
-                    class="control"
-                    :id="name"
-                    v-model="country"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
-                    @change="sendCountryCode"
-                >
-                    <option value=""></option>
-
-                    @foreach (core()->countries() as $country)
-
-                        <option value="{{ $country->code }}">{{ $country->name }}</option>
-
-                    @endforeach
-                </select>
-            </div>
-        </script>
-
-        <script type="text/x-template" id="state-template">
-
-            <div>
-                <input
-                    type="text"
-                    :name="name"
-                    class="control"
-                    :id="name"
-                    v-model="state"
-                    v-validate="'required'"
-                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
-                    v-if="! haveStates()"
-                />
-
-                <select
-                    :name="name"
-                    class="control"
-                    :id="name"
-                    v-model="state"
-                    v-validate="'required'"
-                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
-                    v-if="haveStates()"
-                >
-
-                    <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
-
-                    <option v-for='(state, index) in countryStates[country]' :value="state.code">
-                        @{{ state.default_name }}
-                    </option>
-
-                </select>
-
-            </div>
-
-        </script>
-
-        <script>
-            Vue.component('country', {
-
-                template: '#country-template',
-
-                inject: ['$validator'],
-
-                props: ['country_code', 'name', 'validations'],
-
-                data: function () {
-                    return {
-                        country: "",
-                    }
-                },
-
-                mounted: function () {
-                    this.country = this.country_code;
-                    this.sendCountryCode()
-                },
-
-                methods: {
-                    sendCountryCode: function () {
-                        this.$root.$emit('countryCode', this.country)
-                    },
-                }
-            });
-
-            Vue.component('state', {
-
-                template: '#state-template',
-
-                inject: ['$validator'],
-
-                props: ['state_code', 'name', 'validations'],
-
-                data: function () {
-                    return {
-                        state: "",
-
-                        country: "",
-
-                        countryStates: @json(core()->groupedStatesByCountries())
-                    }
-                },
-
-                mounted: function () {
-                    this.state = this.state_code
-                },
-
-                methods: {
-                    haveStates: function () {
-                        var this_this = this;
-
-                        this_this.$root.$on('countryCode', function (country) {
-                            this_this.country = country;
-                        });
-
-                        if (this.countryStates[this.country] && this.countryStates[this.country].length)
-                            return true;
-
-                        return false;
-                    },
-                }
-            });
-        </script>
-    @endif
-
-    <script type="text/x-template" id="depends-template">
-
-        <div class="form-group"  :class="[errors.has(name) ? 'has-error' : '']" v-if="this.isVisible">
-            <label :for="name" :class="[ isRequire ? 'required' : '']">
-                @{{ field_name }}
+            <label
+                :for="name"
+                {{-- {{ !isset($field['validations']) || preg_match('/\brequired\b/', $field['validations']) == false ? '' : 'class=required' }} --}}
+            >
+                @{{ label }}
             </label>
 
+            <template v-if="field.type == 'password' || field.type== 'color' && field.is_visible">
+                <input
+                    :type="field.type"
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    :value="value"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                />
+            </template>
+
+            <template v-if="field.type == 'boolean' && field.is_visible">
+                <input
+                    type="hidden"
+                    :name="name"
+                    value="0"
+                />
+
+                <label class="switch">
+                    <input
+                        type="checkbox"
+                        :name="name"
+                        class="control"
+                        :id="name"
+                        :value="1"
+                        :checked="parseInt(value || 0)"
+                    />
+
+                    <span class="slider round"></span>
+                </label>
+            </template>
+
+            <template v-if="field.type == 'text' && field.is_visible">
+                <input
+                    :type="field.type"
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    :value="value"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                />
+            </template>
+
+            <template v-if="field.type == 'textarea' && field.is_visible">
+                <textarea
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                    :value="value"
+                ></textarea>
+            </template>
+
+            <!-- Select input -->
+            <template v-if="field.type == 'select' && field.is_visible">
+                <select
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :value="value"
+                    :data-vv-as="label"
+                >
+                    <option
+                        v-for="option in field.options"
+                        :value="option.value"
+                        v-text="option.title"
+                    >
+                    </option>
+                </select>
+            </template>
+
+            <!-- Multiselect Input -->
+            <template v-if="field.type == 'multiselect' && field.is_visible">
+                <select
+                    :name="`${name}[]`"
+                    multiple
+                    class="control"
+                    :id="`${name}[]`"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                    v-model="value.split(',')"
+                    multiple
+                >
+                    <option
+                        v-for="option in field.options"
+                        :key="option.value"
+                        :value="option.value"
+                        v-text="option.title"
+                    >
+                    </option>
+                </select>
+            </template>
+
+            <template v-if="field.type == 'file' && field.is_visible">
+                <a
+                    v-if="value"
+                    :href="`{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), '']) }}/${value.split('/')[1]}`"
+                >
+                    <i class="icon sort-down-icon download"></i>
+                </a>
+
+                <input
+                    :type="field.type"
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    :value="value"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                />
+
+                <div
+                    v-if="value"
+                    class="form-group"
+                >
+                    <span class="checkbox">
+                        <input
+                            :name="`${name}[delete]`"
+                            :id="`${name}[delete]`"
+                            type="checkbox"
+                            value="1"
+                        />
+
+                        <label
+                            class="checkbox-view"
+                            :for="`${name}[delete]`"
+                        ></label>
+
+                        {{ __('admin::app.configuration.delete') }}
+                    </span>
+                </div>
+            </template>
+
+            <template v-if="field.type == 'image' && field.is_visible">
+                <a
+                    v-if="value"
+                    :href="src"
+                    target="_blank"
+                >
+                    <img
+                        :src="src"
+                        :alt="name"
+                        class="configuration-image"
+                    />
+                </a>
+
+                <input
+                    :name="name"
+                    type="file"
+                    class="control"
+                    :id="name"
+                    :value="value"
+                    {{-- v-validate="'{{ $validations }}'" --}}
+                    :data-vv-as="label"
+                />
+
+                <div
+                    v-if="value"
+                    class="form-group"
+                >
+                    <span class="checkbox">
+                        <input
+                            type="checkbox"
+                            :name="`${name}[delete]`"
+                            :id="`${name}[delete]`"
+                            :value="1"
+                        />
+
+                        <label
+                            class="checkbox-view"
+                            :for="`${name}[delete]`"
+                        ></label>
+
+                        {{ __('admin::app.configuration.delete') }}
+                    </span>
+                </div>
+            </template>
+
+            <template v-if="field.type == 'state' && field.is_visible">
+                <state
+                    :name="name"
+                    :state_code="value"
+                    :validations="''"
+                ></state>
+            </template>
+
+            <template v-if="field.type == 'country' && field.is_visible">
+                <country
+                    :name="name"
+                    :country_code="value"
+                    :validations="''"
+                ></country>
+            </template>
+        </div>
+    </script>
+
+    <script type="text/x-template" id="country-template">
+        <div>
             <select
-                :id="name"
+                type="text"
                 :name="name"
                 class="control"
-                v-model="savedValue"
+                :id="name"
+                v-model="country"
                 v-validate="validations"
-                :data-vv-as="field_name"
-                v-if="this.options.length"
+                data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
+                @change="sendCountryCode"
             >
-                <option v-for='(option, index) in this.options' :value="option.value">
-                    @{{ option.title }}
-                </option>
+                <option value=""></option>
+
+                @foreach (core()->countries() as $country)
+
+                    <option value="{{ $country->code }}">{{ $country->name }}</option>
+
+                @endforeach
+            </select>
+        </div>
+
+    </script>
+
+    <script type="text/x-template" id="state-template">
+
+        <div>
+            <input
+                type="text"
+                :name="name"
+                class="control"
+                :id="name"
+                v-model="state"
+                v-validate="'required'"
+                data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                v-if="! haveStates()"
+            />
+
+            <select
+                :name="name"
+                class="control"
+                :id="name"
+                v-model="state"
+                v-validate="'required'"
+                data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                v-if="haveStates()"
+            >
+                <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
+
+                <option
+                    v-for='(state, index) in countryStates[country]'
+                    :value="state.code"
+                    :text="state.name"
+                ></option>
             </select>
 
-            <input
-                :id="name"
-                :name="name"
-                class="control"
-                v-else type="text"
-                v-model="savedValue"
-                v-validate="validations"
-                :data-vv-as="field_name"
-            >
-
-            <span class="control-error" v-if="errors.has(name)">
-                @{{ errors.first(name) }}
-            </span>
         </div>
 
     </script>
 
     <script>
-        Vue.component('depends', {
+        Vue.component('configurable', {
+            template: '#configurable-template',
 
-            template: '#depends-template',
+            props: [
+                'dependName',
+                'fieldData',
+                'info',
+                'isRequire',
+                'label',
+                'name',
+                'src',
+                'validations',
+                'value',
+            ],
+
+            data() {
+                return {
+                    field: JSON.parse(this.fieldData),
+                };
+            },
+
+            mounted() {
+                if (! this.dependName) {
+                    return;
+                }
+
+                const dependElement = document.getElementById(this.dependName);
+
+                if (! dependElement) {
+                    return;
+                }
+
+                dependElement.addEventListener('change', (event) => {
+                    this.field['is_visible'] = 
+                        event.target.type === 'checkbox' 
+                        ? event.target.checked
+                        : this.validations.split(',').slice(1).includes(event.target.value);
+                });
+
+                dependElement.dispatchEvent(new Event('change'));
+            },
+        });
+
+        Vue.component('country', {
+
+            template: '#country-template',
 
             inject: ['$validator'],
 
-            props: [
-                'name',
-                'depend',
-                'value',
-                'result',
-                'options',
-                'data_source',
-                'field_name',
-                'validations',
-            ],
+            props: ['country_code', 'name', 'validations'],
 
-            data: function() {
+            data: function () {
                 return {
-                    isRequire: false,
-                    isVisible: false,
-                    savedValue: "",
+                    country: "",
                 }
             },
 
             mounted: function () {
-                var this_this = this;
+                this.country = this.country_code;
+                this.sendCountryCode()
+            },
 
-                this_this.savedValue = this_this.result;
+            methods: {
+                sendCountryCode: function () {
+                    this.$root.$emit('countryCode', this.country)
+                },
+            }
+        });
 
-                if (this_this.validations || (this_this.validations.indexOf("required") != -1)) {
-                    this_this.isRequire = true;
+        Vue.component('state', {
+
+            template: '#state-template',
+
+            inject: ['$validator'],
+
+            props: ['state_code', 'name', 'validations'],
+
+            data: function () {
+                return {
+                    state: "",
+
+                    country: "",
+
+                    countryStates: @json(core()->groupedStatesByCountries())
                 }
+            },
 
-                $(document).ready(function(){
-                    var dependentElement = document.getElementById(this_this.depend);
-                    var dependValue = this_this.value;
+            mounted: function () {
+                this.state = this.state_code
+            },
 
-                    if (dependValue == 'true') {
-                        dependValue = 1;
-                    } else if (dependValue == 'false') {
-                        dependValue = 0;
-                    }
+            methods: {
+                haveStates: function () {
+                    var this_this = this;
 
-                    $(document).on("change", "select.control", function() {
-                        if (this_this.depend == this.name) {
-                            if (this_this.value == this.value) {
-                                this_this.isVisible = true;
-                            } else {
-                                this_this.isVisible = false;
-                            }
-                        }
-                    })
+                    this_this.$root.$on('countryCode', function (country) {
+                        this_this.country = country;
+                    });
 
-                    if (dependentElement && dependentElement.value == dependValue) {
-                        this_this.isVisible = true;
-                    } else {
-                        this_this.isVisible = false;
-                    }
+                    if (this.countryStates[this.country] && this.countryStates[this.country].length)
+                        return true;
 
-                    if (this_this.result) {
-                        if (dependentElement.value == this_this.value) {
-                            this_this.isVisible = true;
-                        } else {
-                            this_this.isVisible = false;
-                        }
-                    }
-                });
+                    return false;
+                },
             }
         });
     </script>
-
-@endpush
+@endPushOnce

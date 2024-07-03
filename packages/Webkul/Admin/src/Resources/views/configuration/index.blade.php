@@ -1,3 +1,11 @@
+@php
+    $config = system_config();
+
+    $activeConfiguration = $config->getActiveConfigurationItem();
+
+    $configItems = $config->getItems();
+@endphp
+
 @extends('admin::layouts.master')
 
 @section('page_title')
@@ -21,8 +29,6 @@
 
             <div class="page-content">
                 <div class="form-container">
-                    @php($configItems = system_config()->getItems())
-
                     <div class="nav-aside">
                         <ul class="sub-menubar">
                             @foreach ($configItems as $item)
@@ -49,12 +55,10 @@
                         @csrf()
 
                         <tabs>
-                            @foreach ($configItems as $key => $child)
+                            @foreach ($activeConfiguration->getChildren() as $child)
                                 <tab :name="'{{ $child->getName() }}'">
-                                    @foreach ($child->getChildren() as $field)
-
-                                        {{-- @include ('admin::configuration.field-type', ['field' => $field]) --}}
-
+                                    @foreach ($child->getFields() as $field)
+                                        @include ('admin::configuration.field-type', compact('field'))
                                     @endforeach
                                 </tab>
                             @endforeach

@@ -13,10 +13,78 @@ return [
         'sort'   => 1,
         'fields' => [
             [
-                'name'          => 'locale',
-                'title'         => 'admin::app.configuration.locale',
-                'type'          => 'select',
-                'data_source'   => 'Webkul\Core\Core@locales'
+                'name'    => 'locale',
+                'title'   => 'admin::app.configuration.locale',
+                'type'    => 'select',
+                'options' => 'Webkul\Core\Core@locales'
+            ],
+        ],
+    ], [
+        'key'    => 'general.shipping',
+        'name'   => 'Shipping',
+        'info'   => 'Shipping',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'    => 'shipping',
+                'title'   => 'Shipping',
+                'type'    => 'select',
+                'options' => [
+                    [
+                        'value'    => 1,
+                        'title' => 'Flat Rate'
+                    ],
+                    [
+                        'value'    => 2,
+                        'title' => 'Test 2'
+                    ]
+                ]
+            ],
+        ],
+    ], [
+        'key'  => 'test',
+        'name' => 'Test',
+        'info' => 'admin::app.configuration.locale-settings',
+        'sort' => 1,
+    ], [
+        'key'    => 'test.settings',
+        'name'   => 'Settings',
+        'info'   => 'admin::app.configuration.locale-settings',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'    => 'locale',
+                'title'   => 'Test',
+                'type'    => 'multiselect',
+                'options' => [
+                    [
+                        'value'    => 1,
+                        'title' => 'Test 1'
+                    ],
+                    [
+                        'value'    => 2,
+                        'title' => 'Test 2'
+                    ]
+                ]
+            ],
+
+            [
+                'name'    => 'title',
+                'title'   => 'Order Title',
+                'type'    => 'textarea',
+                'default' => 'Get UPTO 40% OFF on your 1st order',
+            ],
+
+            [
+                'name'    => 'country',
+                'title'   => 'Country',
+                'type'    => 'country',
+            ],
+
+            [
+                'name'    => 'state',
+                'title'   => 'State',
+                'type'    => 'state',
             ],
         ],
     ],

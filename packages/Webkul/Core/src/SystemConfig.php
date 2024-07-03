@@ -198,6 +198,8 @@ class SystemConfig
     {
         $configFieldInfo = $this->getConfigField($field);
 
+        dd($configFieldInfo);
+
         $fields = explode('.', $field);
 
         array_shift($fields);
@@ -210,7 +212,7 @@ class SystemConfig
     /**
      * Get the config data.
      */
-    public function getConfigData(string $field, ?string $currentChannelCode = null, ?string $currentLocaleCode = null): mixed
+    public function getConfigData(string $field): mixed
     {
         $fields = $this->getConfigField($field);
 
