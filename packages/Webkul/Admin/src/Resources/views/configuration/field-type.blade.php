@@ -1,4 +1,4 @@
-@php($value = system_config()->getConfigData($field->getNameKey()))
+@php($value = old($field->getNameKey()) ??  system_config()->getConfigData($field->getNameKey()))
 
 <input
     type="hidden"
@@ -24,6 +24,7 @@
     >
         <div :class="['form-group', field.type, { 'has-error': hasError }]">
             <label
+                v-if="field.is_visible"
                 :for="name"
                 :class="isRequire"
             >
@@ -56,7 +57,7 @@
                         class="control"
                         :id="name"
                         :value="1"
-                        v-model="value"
+                        :checked="parseInt(value || 0)"
                     />
 
                     <span class="slider round"></span>
@@ -258,7 +259,7 @@
                 class="control"
                 :id="name"
                 v-model="country"
-                {{-- v-validate="validations" --}}
+                v-validate="validations"
                 data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
                 @change="sendCountryCode"
             >

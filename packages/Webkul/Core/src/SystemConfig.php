@@ -130,7 +130,7 @@ class SystemConfig
     /**
      * Get config field.
      */
-    private function getConfigField(string $fieldName): ?array
+    public function getConfigField(string $fieldName): ?array
     {
         foreach ($this->retrieveCoreConfig() as $coreData) {
             if (! isset($coreData['fields'])) {
