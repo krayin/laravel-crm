@@ -13,7 +13,6 @@ class Item
         public Collection $children,
         public ?array $fields,
         public ?string $icon,
-        public ?string $info,
         public string $key,
         public string $name,
         public ?string $route = null,
@@ -46,7 +45,6 @@ class Item
                 item_key: $this->key,
                 name: $field['name'],
                 title: $field['title'],
-                info: $field['info'] ?? null,
                 type: $field['type'],
                 depends: $field['depends'] ?? null,
                 path: $field['path'] ?? null,
@@ -58,14 +56,6 @@ class Item
                 is_visible: true,
             );
         });
-    }
-
-    /**
-     * Get name of config item.
-     */
-    public function getInfo(): ?string
-    {
-        return $this->info;
     }
 
     /**

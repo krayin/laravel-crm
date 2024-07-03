@@ -419,9 +419,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                 Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
 
-                Route::get('{path}', 'ConfigurationController@download')->defaults('_config', [
-                    'redirect' => 'admin.configuration.index',
-                ])->name('admin.configuration.download');
+                Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
             });
         });
     });

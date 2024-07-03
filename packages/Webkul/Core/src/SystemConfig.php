@@ -78,7 +78,6 @@ class SystemConfig
                 children: $subConfigItems,
                 fields: $configItem['fields'] ?? null,
                 icon: $configItem['icon'] ?? null,
-                info: trans($configItem['info']) ?? null,
                 key: $configItem['key'],
                 name: trans($configItem['name']),
                 route: $configItem['route'] ?? null,
@@ -102,7 +101,6 @@ class SystemConfig
                     children: $configItemChildren,
                     fields: $subConfigItem['fields'] ?? null,
                     icon: $subConfigItem['icon'] ?? null,
-                    info: trans($subConfigItem['info']) ?? null,
                     key: $subConfigItem['key'],
                     name: trans($subConfigItem['name']),
                     route: $subConfigItem['route'] ?? null,
@@ -124,10 +122,6 @@ class SystemConfig
 
         if (! $activeItem) {
             return null;
-        }
-
-        if ($slug2 = request()->route('slug2')) {
-            $activeItem = $activeItem->getChildren()[$slug2];
         }
 
         return $activeItem;

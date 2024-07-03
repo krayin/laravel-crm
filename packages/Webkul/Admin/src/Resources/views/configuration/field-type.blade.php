@@ -1,6 +1,4 @@
-@php
-    $value = system_config()->getConfigData($field->getNameKey());
-@endphp
+@php($value = system_config()->getConfigData($field->getNameKey()))
 
 <input
     type="hidden"
@@ -8,40 +6,28 @@
     value="{{ json_encode($child) }}"
 />
 
-<div class="mb-4 last:!mb-0">
-    <configurable
-        name="{{ $field->getNameField() }}"
-        value="{{ $value }}"
-        label="{{ trans($field->getTitle()) }}"
-        info="{{ trans($field->getInfo()) }}"
-        validations="{{ $field->getValidations() }}"
-        is-require="{{ $field->isRequired() }}"
-        depend-name="{{ $field->getDependFieldName() }}"
-        src="{{ Storage::url($value) }}"
-        field-data="{{ json_encode($field) }}"
-    ></configurable>
-</div>
+<configurable
+    name="{{ $field->getNameField() }}"
+    value="{{ $value }}"
+    title="{{ trans($field->getTitle()) }}"
+    validations="{{ $field->getValidations() }}"
+    is-require="{{ $field->isRequired() }}"
+    depend-name="{{ $field->getDependFieldName() }}"
+    src="{{ Storage::url($value) }}"
+    field-data="{{ json_encode($field) }}"
+></configurable>
 
 @pushOnce('scripts')
     <script
         type="text/x-template"
         id="configurable-template"
     >
-        <div
-            {{-- class="form-group {{ $field['type'] }}" --}}
-            class="form-group"
-            {{-- @if ($field['type'] == 'multiselect')
-                :class="[errors.has('{{ $fieldName }}[]') ? 'has-error' : '']"
-            @else
-                :class="[errors.has('{{ $fieldName }}') ? 'has-error' : '']"
-            @endif --}}
-        >
-
+        <div :class="['form-group', field.type, { 'has-error': hasError }]">
             <label
                 :for="name"
-                {{-- {{ !isset($field['validations']) || preg_match('/\brequired\b/', $field['validations']) == false ? '' : 'class=required' }} --}}
+                :class="isRequire"
             >
-                @{{ label }}
+                @{{ title }}
             </label>
 
             <template v-if="field.type == 'password' || field.type== 'color' && field.is_visible">
@@ -50,9 +36,9 @@
                     :name="name"
                     class="control"
                     :id="name"
-                    :value="value"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
+                    v-model="value"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 />
             </template>
 
@@ -70,11 +56,23 @@
                         class="control"
                         :id="name"
                         :value="1"
-                        :checked="parseInt(value || 0)"
+                        v-model="value"
                     />
 
                     <span class="slider round"></span>
                 </label>
+            </template>
+
+            <template v-if="field.type == 'number' && field.is_visible">
+                <input
+                    :type="field.type"
+                    :name="name"
+                    class="control"
+                    :id="name"
+                    v-model="value"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
+                />
             </template>
 
             <template v-if="field.type == 'text' && field.is_visible">
@@ -83,9 +81,9 @@
                     :name="name"
                     class="control"
                     :id="name"
-                    :value="value"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
+                    v-model="value"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 />
             </template>
 
@@ -94,9 +92,9 @@
                     :name="name"
                     class="control"
                     :id="name"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
-                    :value="value"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
+                    v-model="value"
                 ></textarea>
             </template>
 
@@ -106,9 +104,9 @@
                     :name="name"
                     class="control"
                     :id="name"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :value="value"
-                    :data-vv-as="label"
+                    v-validate="validations"
+                    v-model="value"
+                    :data-vv-as="formattedTitle"
                 >
                     <option
                         v-for="option in field.options"
@@ -126,8 +124,8 @@
                     multiple
                     class="control"
                     :id="`${name}[]`"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                     v-model="value.split(',')"
                     multiple
                 >
@@ -144,9 +142,10 @@
             <template v-if="field.type == 'file' && field.is_visible">
                 <a
                     v-if="value"
-                    :href="`{{ route('admin.configuration.download', [request()->route('slug'), request()->route('slug2'), '']) }}/${value.split('/')[1]}`"
+                    :href="`{{ route('admin.configuration.download', [request()->route('slug'), '']) }}/${value.split('/')[1]}`"
+                    target="_blank"
                 >
-                    <i class="icon sort-down-icon download"></i>
+                    <i class="icon download-icon"></i>
                 </a>
 
                 <input
@@ -154,9 +153,8 @@
                     :name="name"
                     class="control"
                     :id="name"
-                    :value="value"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 />
 
                 <div
@@ -191,6 +189,8 @@
                         :src="src"
                         :alt="name"
                         class="configuration-image"
+                        height="33"
+                        width="33"
                     />
                 </a>
 
@@ -199,9 +199,8 @@
                     type="file"
                     class="control"
                     :id="name"
-                    :value="value"
-                    {{-- v-validate="'{{ $validations }}'" --}}
-                    :data-vv-as="label"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 />
 
                 <div
@@ -241,6 +240,13 @@
                     :validations="''"
                 ></country>
             </template>
+
+            <span
+                class="control-error"
+                v-if="errors.has(name)"
+            >
+                @{{ errors.first(name) }}
+            </span>
         </div>
     </script>
 
@@ -307,12 +313,13 @@
         Vue.component('configurable', {
             template: '#configurable-template',
 
+            inject: ['$validator'],
+
             props: [
                 'dependName',
                 'fieldData',
-                'info',
                 'isRequire',
-                'label',
+                'title',
                 'name',
                 'src',
                 'validations',
@@ -323,6 +330,20 @@
                 return {
                     field: JSON.parse(this.fieldData),
                 };
+            },
+
+            computed: {
+                hasError() {
+                    if (this.field.type == 'multiselect') {
+                        return this.errors.has(`${this.name}[]`);
+                    } else {
+                        return this.errors.has(this.name);
+                    }
+                },
+
+                formattedTitle() {
+                    return `"${this.title}"`;
+                },
             },
 
             mounted() {

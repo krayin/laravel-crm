@@ -2,10 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\Configuration;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Core\Contracts\Validations\Code;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\ConfigurationForm;
 use Webkul\Core\Repositories\CoreConfigRepository as ConfigurationRepository;
 
 class ConfigurationController extends Controller
@@ -26,11 +27,11 @@ class ConfigurationController extends Controller
      */
     public function index()
     {
-        // $slugs = $this->getDefaultConfigSlugs();
+        $slugs = $this->getDefaultConfigSlugs();
 
-        // if (count($slugs)) {
-        //     return redirect()->route('admin.configuration.index', $slugs);
-        // }
+        if (count($slugs)) {
+            return redirect()->route('admin.configuration.index', $slugs);
+        }
 
         return view('admin::configuration.index');
     }
@@ -55,13 +56,9 @@ class ConfigurationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(ConfigurationForm $request): RedirectResponse
     {
-        dd(request()->all());
-
         Event::dispatch('core.configuration.save.before');
 
         $this->configurationRepository->create(request()->all());
