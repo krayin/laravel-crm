@@ -98,5 +98,5 @@ return [
             'shelf'     => 'Raf',
             'warehouse' => 'Depo',
         ],
-git    ],
+    ],
 ];
