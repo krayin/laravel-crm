@@ -8,7 +8,7 @@
 
 <configurable
     name="{{ $field->getNameField() }}"
-    value="{{ $value }}"
+    field-value="{{ $value }}"
     title="{{ trans($field->getTitle()) }}"
     validations="{{ $field->getValidations() }}"
     is-require="{{ $field->isRequired() }}"
@@ -230,7 +230,8 @@
                 <state
                     :name="name"
                     :state_code="value"
-                    :validations="''"
+                    :validations="validations"
+                    :formatted-title="formattedTitle"
                 ></state>
             </template>
 
@@ -238,7 +239,8 @@
                 <country
                     :name="name"
                     :country_code="value"
-                    :validations="''"
+                    :validations="validations"
+                    :formatted-title="formattedTitle"
                 ></country>
             </template>
 
@@ -260,11 +262,9 @@
                 :id="name"
                 v-model="country"
                 v-validate="validations"
-                data-vv-as="&quot;{{ __('admin::app.customers.customers.country') }}&quot;"
+                :data-vv-as="formattedTitle"
                 @change="sendCountryCode"
             >
-                <option value=""></option>
-
                 @foreach (core()->countries() as $country)
                     <option value="{{ $country->code }}">{{ $country->name }}</option>
                 @endforeach
@@ -283,8 +283,8 @@
                     class="control"
                     :id="name"
                     v-model="state"
-                    v-validate="'required'"
-                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 />
             </template>
 
@@ -294,11 +294,9 @@
                     class="control"
                     :id="name"
                     v-model="state"
-                    v-validate="'required'"
-                    data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
+                    v-validate="validations"
+                    :data-vv-as="formattedTitle"
                 >
-                    <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
-
                     <option
                         v-for='(state, index) in countryStates[country]'
                         :value="state.code"
@@ -324,12 +322,14 @@
                 'name',
                 'src',
                 'validations',
-                'value',
+                'fieldValue',
             ],
 
             data() {
                 return {
                     field: JSON.parse(this.fieldData),
+
+                    value: this.fieldValue,
                 };
             },
 
@@ -375,7 +375,7 @@
 
             inject: ['$validator'],
 
-            props: ['country_code', 'name', 'validations'],
+            props: ['country_code', 'name', 'validations', 'formattedTitle'],
 
             data: function () {
                 return {
@@ -401,7 +401,7 @@
 
             inject: ['$validator'],
 
-            props: ['state_code', 'name', 'validations'],
+            props: ['state_code', 'name', 'validations', 'formattedTitle'],
 
             data: function () {
                 return {
