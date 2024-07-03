@@ -14,7 +14,7 @@ return [
                 'name'          => 'locale',
                 'title'         => 'admin::app.configuration.locale',
                 'type'          => 'select',
-                'data_source'   => 'Webkul\Core\Core@locales'
+                'options'       => 'Webkul\Core\Core@locales'
             ],
         ],
     ],

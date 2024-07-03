@@ -44,9 +44,9 @@ class ConfigurationController extends Controller
     public function getDefaultConfigSlugs()
     {
         if (! request()->route('slug')) {
-            $firstItem = current(app('core_config')->items);
+            $firstItem = current(current(system_config()->getItems()));
 
-            $temp = explode('.', $firstItem['key']);
+            $temp = explode('.', $firstItem->getKey());
 
             return ['slug' => current($temp)];
         }
