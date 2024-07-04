@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Configuration;
 
+use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
@@ -22,14 +23,12 @@ class ConfigurationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): RedirectResponse|View
     {
-        $slugs = $this->getDefaultConfigSlugs();
+        $slugs = (array) $this->getDefaultConfigSlugs();
 
-        if (count($slugs)) {
+        if (! empty($slugs)) {
             return redirect()->route('admin.configuration.index', $slugs);
         }
 
@@ -38,17 +37,13 @@ class ConfigurationController extends Controller
 
     /**
      * Returns slugs
-     *
-     * @return array
      */
-    public function getDefaultConfigSlugs()
+    public function getDefaultConfigSlugs(): array
     {
         if (! request()->route('slug')) {
-            $firstItem = current(current(system_config()->getItems()));
+            $slug = system_config()->getItems()->first()->getKey();
 
-            $temp = explode('.', $firstItem->getKey());
-
-            return ['slug' => current($temp)];
+            return ['slug' => $slug];
         }
 
         return [];
@@ -61,7 +56,7 @@ class ConfigurationController extends Controller
     {
         Event::dispatch('core.configuration.save.before');
 
-        $this->configurationRepository->create(request()->all());
+        $this->configurationRepository->create($request->all());
 
         Event::dispatch('core.configuration.save.after');
 
