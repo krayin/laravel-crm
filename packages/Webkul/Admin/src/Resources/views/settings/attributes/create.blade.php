@@ -29,10 +29,8 @@
         {!! view_render_event('admin.settings.attributes.create.header.after') !!}
 
         <form method="POST" action="{{ route('admin.settings.attributes.store') }}" @submit.prevent="onSubmit">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.settings.attributes.create.form_buttons.before') !!}
@@ -93,7 +91,7 @@
 
                                 <select class="control" id="entity_type" name="entity_type">
                                     @foreach (config('attribute_entity_types') as $key => $entityType)
-                                        <option value="{{ $key }}">{{ $entityType['name'] }}</option>
+                                        <option value="{{ $key }}">{{ trans($entityType['name']) }}</option>
                                     @endforeach
                                 </select>
                             </div>

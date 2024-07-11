@@ -5,10 +5,8 @@
 @stop
 
 @section('content')
-
     <div class="panel">
         <div class="panel-body">
-
             <div class="form-container">
                 <h1>{{ __('admin::app.sessions.forgot-password.title') }}</h1>
 
@@ -50,8 +48,6 @@
                     </div>
                 </form>
             </div>
-
         </div>
     </div>
-
 @stop

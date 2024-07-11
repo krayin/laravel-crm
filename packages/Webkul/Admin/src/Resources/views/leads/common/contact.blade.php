@@ -1,7 +1,6 @@
 @push('scripts')
     <script type="text/x-template" id="contact-component-template">
         <div class="contact-controls">
-            
             <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}person[name]') ? 'has-error' : '']">
                 <label for="person[name]" class="required">{{ __('admin::app.leads.name') }}</label>
 

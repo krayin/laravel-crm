@@ -65,7 +65,7 @@ class WorkflowDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.workflows.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'type']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'type']),
             'icon'         => 'trash-icon',
         ]);
     }

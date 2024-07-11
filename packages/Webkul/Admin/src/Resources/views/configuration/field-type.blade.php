@@ -74,7 +74,6 @@
             :class="[errors.has('{{ $fieldName }}') ? 'has-error' : '']"
         @endif
     >
-
         <label
             for="{{ $name }}"
             {{ !isset($field['validations']) || preg_match('/\brequired\b/', $field['validations']) == false ? '' : 'class=required' }}
@@ -115,7 +114,6 @@
 @push('scripts')
     @if ($field['type'] == 'country')
         <script type="text/x-template" id="country-template">
-
             <div>
                 <select
                     type="text"
@@ -136,11 +134,9 @@
                     @endforeach
                 </select>
             </div>
-
         </script>
 
         <script type="text/x-template" id="state-template">
-
             <div>
                 <input
                     type="text"
@@ -162,17 +158,13 @@
                     data-vv-as="&quot;{{ __('admin::app.customers.customers.state') }}&quot;"
                     v-if="haveStates()"
                 >
-
                     <option value="">{{ __('admin::app.customers.customers.select-state') }}</option>
 
                     <option v-for='(state, index) in countryStates[country]' :value="state.code">
                         @{{ state.default_name }}
                     </option>
-
                 </select>
-
             </div>
-
         </script>
 
         <script>

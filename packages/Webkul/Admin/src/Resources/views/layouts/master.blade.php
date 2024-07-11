@@ -54,7 +54,6 @@
 
                 {!! view_render_event('admin.layout.nav-left.after') !!}
 
-
                 <div class="content-container" :style="{ paddingLeft: isMenuOpen ? '250px' : ''}">
 
                     {!! view_render_event('admin.layout.content.before') !!}
@@ -62,7 +61,6 @@
                     @yield('content-wrapper')
 
                     {!! view_render_event('admin.layout.content.after') !!}
-
                 </div>
             </div>
         </div>
@@ -85,7 +83,6 @@
             window._translations = {};
             window._translations['ui'] = @json(app('Webkul\Core\Helpers\Helper')->jsonTranslations("UI"));
             window.baseURL = '{{ url()->to('/') }}';
-            window.params = @json(request()->route()->parameters());
         </script>
 
         <script type="text/javascript" src="{{ asset('vendor/webkul/admin/assets/js/admin.js') }}"></script>

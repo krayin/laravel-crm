@@ -73,7 +73,7 @@ class GroupDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.groups.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'group']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'group']),
             'icon'         => 'trash-icon',
         ]);
     }

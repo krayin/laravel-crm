@@ -1,7 +1,6 @@
 <lookup-component></lookup-component>
 
 @push('scripts')
-
     <script type="text/x-template" id="lookup-component-template">
         <div class="lookup-control">
             <div class="form-group">

@@ -93,7 +93,6 @@
 
     <body style="background-image: none; background-color: #fff;">
         <div class="container">
-
             <div class="header">
                 <div class="row">
                     <div class="col-12">
@@ -186,7 +185,6 @@
                         </thead>
 
                         <tbody>
-
                             @foreach ($quote->items as $item)
                                 <tr>
                                     <td>{{ $item->sku }}</td>
@@ -208,11 +206,9 @@
                                     <td class="text-center">{!! core()->formatBasePrice($item->total + $item->tax_amount - $item->discount_amount, true) !!}</td>
                                 </tr>
                             @endforeach
-
                         </tbody>
                     </table>
                 </div>
-
 
                 <table class="sale-summary">
                     <tr>
@@ -245,9 +241,7 @@
                         <td><strong>{!! core()->formatBasePrice($quote->grand_total, true) !!}</strong></td>
                     </tr>
                 </table>
-
             </div>
-
         </div>
     </body>
 </html>

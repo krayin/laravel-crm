@@ -8,7 +8,6 @@
 
 @once
     @push('scripts')
-
         <script type="text/x-template" id="phone-component-template">
             <div class="phone-control">
                 <div
@@ -16,7 +15,6 @@
                     v-for="(contactNumber, index) in contactNumbers"
                     :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
                 >
-
                     <input
                         type="text"
                         :name="attribute['code'] + '[' + index + '][value]'"

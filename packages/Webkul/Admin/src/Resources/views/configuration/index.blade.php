@@ -21,7 +21,6 @@
 
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="nav-aside">
                         <ul class="sub-menubar">
                             @foreach (app('core_config')->items as $key => $item)
@@ -48,30 +47,19 @@
                         @csrf()
 
                         @if ($groups = \Illuminate\Support\Arr::get(app('core_config')->items, request()->route('slug') . '.children'))
-
                             <tabs>
                                 @foreach ($groups as $key => $item)
-
                                     <tab :name="'{{ __($item['name']) }}'">
-
                                         @foreach ($item['fields'] as $field)
-
                                             @include ('admin::configuration.field-type', ['field' => $field])
-
                                         @endforeach
-
                                     </tab>
-
                                 @endforeach
                             </tabs>
-
                         @endif
-
                     </div>
-
                 </div>
             </div>
-
         </form>
     </div>
 @stop
