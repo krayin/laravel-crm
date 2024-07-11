@@ -2,12 +2,13 @@
 
 namespace Webkul\Admin\Providers;
 
-use Illuminate\Database\Eloquent\Relations\Relation;
-use Webkul\Admin\Http\Middleware\Locale;
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Routing\Router;
-use Illuminate\Support\ServiceProvider;
 use Webkul\Core\Tree;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Support\ServiceProvider;
+use Webkul\Admin\Http\Middleware\Locale;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -24,9 +25,11 @@ class AdminServiceProvider extends ServiceProvider
 
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'admin');
 
-        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'admin');
+
+        Blade::anonymousComponentPath(__DIR__.'/../Resources/views/components', 'admin');
 
         $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
@@ -34,9 +37,9 @@ class AdminServiceProvider extends ServiceProvider
 
         $router->aliasMiddleware('admin_locale', Locale::class);
 
-        $this->publishes([
-            __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),
-        ], 'public');
+        // $this->publishes([
+        //     __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),
+        // ], 'public');
 
         Relation::morphMap([
             'leads'         => 'Webkul\Lead\Models\Lead',
