@@ -10,13 +10,6 @@
             />
         </a>
 
-        <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
-            <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
-            <input
-                type="text"
-                class="peer block w-full rounded-lg border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                placeholder="Mega Search">
-        </div>
     </div>
 
     <div class="flex items-center gap-2.5">
@@ -41,84 +34,84 @@
                 <!-- Admin Dropdown -->
                 <x-slot:content class="!p-0">
                     <div class="relative">
-                        <div class="absolute right-0 mt-2 w-64 shadow-lg bg-white ring-1 ring-black ring-opacity-5 dropdown-list">
-                            <div class="grid grid-cols-3 gap-2 p-4 text-center quick-link-container text-xs font-medium">
+                        <div class="absolute right-0 mt-2 w-64 bg-white shadow-lg ring-1 ring-black ring-opacity-5">
+                            <div class="grid grid-cols-3 gap-2 p-4 text-center text-xs font-medium">
                                 @if (bouncer()->hasPermission('leads.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.leads.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon icon-settings w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.leads.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon icon-settings mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.lead') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('quotes.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.quotes.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon quotation-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.quotes.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon quotation-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.quote') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('mail.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.mail.index', ['route' => 'compose']) }}" class="block text-gray-700 p-2">
-                                            <i class="icon mail-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.mail.index', ['route' => 'compose']) }}" class="block p-2 text-gray-700">
+                                            <i class="icon mail-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.email') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('contacts.persons.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.contacts.persons.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon person-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.contacts.persons.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon person-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.person') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('contacts.organizations.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.contacts.organizations.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon organization-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.contacts.organizations.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon organization-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.organization') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('products.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.products.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon product-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.products.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon product-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.product') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('settings.automation.attributes.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.settings.attributes.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon attribute-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.settings.attributes.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon attribute-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.attribute') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('settings.user.roles.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.settings.roles.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon role-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.settings.roles.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon role-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.role') }}</span>
                                         </a>
                                     </div>
                                 @endif
                     
                                 @if (bouncer()->hasPermission('settings.user.users.create'))
-                                    <div class="bg-white w-20 hover:bg-gray-100 rounded-lg quick-link-item">
-                                        <a href="{{ route('admin.settings.users.create') }}" class="block text-gray-700 p-2">
-                                            <i class="icon user-icon w-10 h-10 mb-1"></i>
+                                    <div class="w-20 rounded-lg bg-white hover:bg-gray-100">
+                                        <a href="{{ route('admin.settings.users.create') }}" class="block p-2 text-gray-700">
+                                            <i class="icon user-icon mb-1 h-10 w-10"></i>
                                             <span>{{ __('admin::app.layouts.user') }}</span>
                                         </a>
                                     </div>
