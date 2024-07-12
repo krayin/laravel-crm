@@ -14,15 +14,11 @@ return new class extends Migration
         Schema::create('warehouse_locations', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('aisle');
-            $table->string('bay', 50);
-            $table->string('shelf', 50);
-            $table->string('bin', 50);
             
             $table->integer('warehouse_id')->unsigned();
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
 
-            $table->unique(['warehouse_id', 'aisle', 'bay', 'shelf', 'bin'], 'warehouse_location_unique');
+            $table->unique(['warehouse_id', 'name']);
             
             $table->timestamps();
         });

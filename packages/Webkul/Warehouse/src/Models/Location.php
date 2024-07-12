@@ -20,29 +20,8 @@ class Location extends Model implements LocationContract
      */
     protected $fillable = [
         'name',
-        'aisle',
-        'bay',
-        'shelf',
-        'bin',
         'warehouse_id',
     ];
-
-    /**
-     * Interact with the name.
-     */
-    protected function name(): Attribute
-    {
-        $attributes = array_filter([
-            $this->attributes['aisle'],
-            $this->attributes['bay'],
-            $this->attributes['shelf'],
-            $this->attributes['bin'],
-        ], fn ($item) => null !== $item && '' !== $item);
-
-        return Attribute::make(
-            set: fn (string $value) => implode('.', $attributes)
-        );
-    }
 
     /**
      * Get the warehouse that owns the location.

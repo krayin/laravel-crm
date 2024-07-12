@@ -30,9 +30,4 @@ return [
         'name'       => 'admin::app.settings.warehouses.title',
         'repository' => 'Webkul\Warehouse\Repositories\WarehouseRepository',
     ],
-
-    'locations'      => [
-        'name'       => 'admin::app.settings.locations.title',
-        'repository' => 'Webkul\Warehouse\Repositories\LocationRepository',
-    ],
 ];

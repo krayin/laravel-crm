@@ -31,7 +31,7 @@ class AttributeDataGrid extends DataGrid
                             'key'      => 'all',
                         ],
                     ],
-                    collect(config('attribute_entity_types'))->except('locations')->map(function ($entityType, $key) {
+                    collect(config('attribute_entity_types'))->map(function ($entityType, $key) {
                         return [
                             'name'     => trans($entityType['name']),
                             'isActive' => false,

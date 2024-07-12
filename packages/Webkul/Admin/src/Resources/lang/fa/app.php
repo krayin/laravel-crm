@@ -88,9 +88,6 @@
             'warehouses'           => 'Almacenes',
             'warehouse'            => 'Almacén',
             'warehouses-info'      => 'Agregar, editar o eliminar almacenes desde CRM',
-            'locations'            => 'Ubicaciones',
-            'location'             => 'Ubicación',
-            'locations-info'       => 'Agregar, editar o eliminar ubicaciones desde CRM',
         ],
 
         'contacts' => [
@@ -612,20 +609,6 @@
                 'delete-failed'       => 'امکان حذف انبار وجود ندارد.',
             ],
 
-            'locations' => [
-                'title'          => 'مکان‌ها',
-                'create-title'   => 'ایجاد مکان',
-                'edit-title'     => 'ویرایش مکان',
-                'save-btn-title' => 'ذخیره به عنوان مکان',
-                'back'           => 'بازگشت',
-                'cancel'         => 'انصراف',
-                'create-success' => 'مکان با موفقیت ایجاد شد.',
-                'name-exists'    => 'نام مکان از قبل موجود است.',
-                'update-success' => 'مکان با موفقیت به روزرسانی شد.',
-                'delete-success' => 'مکان با موفقیت حذف شد.',
-                'delete-failed'  => 'امکان حذف مکان وجود ندارد.',
-            ],
-
             'email-templates' => [
                 'title'          => 'قالب‌های ایمیل',
                 'create-title'   => 'ایجاد قالب ایمیل',
@@ -820,10 +803,6 @@
             'contact-name'    => 'نام تماس',
             'contact-emails'  => 'ایمیل‌های تماس',
             'contact-numbers' => 'شماره‌های تماس',
-            'aisle'           => 'رو‌به‌رو',
-            'bay'             => 'خلیج',
-            'shelf'           => 'قفسه',
-            'bin'             => 'ظرف',
             'in-stock'        => 'موجود در انبار',
             'allocated'       => 'تخصیص یافته',
             'on-hand'         => 'در دسترس',

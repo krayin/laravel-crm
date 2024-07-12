@@ -88,9 +88,6 @@
             'warehouses'           => 'Almacenes',
             'warehouse'            => 'Almacén',
             'warehouses-info'      => 'Agregar, editar o eliminar almacenes desde CRM',
-            'locations'            => 'Ubicaciones',
-            'location'             => 'Ubicación',
-            'locations-info'       => 'Agregar, editar o eliminar ubicaciones desde CRM',
         ],
 
         'contacts' => [
@@ -612,20 +609,6 @@
                 'delete-failed'       => 'No se puede eliminar el almacén.',
             ],
 
-            'locations' => [
-                'title'          => 'Ubicaciones',
-                'create-title'   => 'Crear ubicación',
-                'edit-title'     => 'Editar ubicación',
-                'save-btn-title' => 'Guardar como ubicación',
-                'back'           => 'Atrás',
-                'cancel'         => 'Cancelar',
-                'create-success' => 'Ubicación creada exitosamente.',
-                'name-exists'    => 'El nombre de la ubicación ya existe.',
-                'update-success' => 'Ubicación actualizada exitosamente.',
-                'delete-success' => 'Ubicación eliminada exitosamente.',
-                'delete-failed'  => 'No se puede eliminar la ubicación.',
-            ],
-
             'email-templates' => [
                 'title'          => 'Plantillas de Email',
                 'create-title'   => 'Crear Plantilla de Email',
@@ -820,10 +803,6 @@
             'contact-name'    => 'Nombre de contacto',
             'contact-emails'  => 'Correos electrónicos de contacto',
             'contact-numbers' => 'Números de contacto',
-            'aisle'           => 'Pasillo',
-            'bay'             => 'Bahía',
-            'shelf'           => 'Estantería',
-            'bin'             => 'Contenedor',
             'in-stock'        => 'En stock',
             'allocated'       => 'Asignado',
             'on-hand'         => 'Disponible',

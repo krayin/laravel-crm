@@ -68,18 +68,16 @@
             {!! view_render_event('admin.settings.warehouses.view.locations.after', ['warehouse' => $warehouse]) !!}
             
             <div class="panel warehouse-locations">
-                <button class="btn btn-md btn-primary" @click="$root.openModal('addLocationModal')">
-                    {{ __('admin::app.settings.warehouses.add-location') }}
-                </button>
+                <div class="panel-header">
+                    {{ __('admin::app.settings.warehouses.locations') }}
+                </div>
 
                 <div class="panel-body">
-                    <table-component data-src="{{ route('admin.settings.locations.index', ['warehouse_id' => $warehouse->id]) }}"><table-component>
+                    <v-locations></v-locations>
                 </div>
             </div>
 
             {!! view_render_event('admin.settings.warehouses.view.locations.after', ['warehouse' => $warehouse]) !!}
-
-            <v-add-location></v-add-location>
 
             {!! view_render_event('admin.settings.warehouses.view.content.after', ['warehouse' => $warehouse]) !!}
         </div>
@@ -87,55 +85,121 @@
 @stop
 
 @push('scripts')
-    <script type="text/x-template" id="v-add-location-template">
-        <form
-            action="{{ route('admin.settings.warehouses.create', $warehouse->id) }}"
-            method="post"
-            @submit.prevent="onSubmit"
-            enctype="multipart/form-data"
-        >
-            <modal id="addLocationModal" :is-open="$root.modalIds.addLocationModal">
-                <h3 slot="header-title">
-                    {{ __('admin::app.settings.warehouses.add-location') }}
-                </h3>
+    <script type="text/x-template" id="v-locations-template">
+        <div class="table">
+            <table>
+                <thead>
+                    <tr>
+                        <th>{{ __('admin::app.settings.warehouses.name') }}</th>
+                        <th>{{ __('admin::app.settings.warehouses.action') }}</th>
+                    </tr>
+                </thead>
 
-                <div slot="header-actions">
-                    <button
-                        class="btn btn-sm btn-secondary-outline"
-                        @click="$root.closeModal('addLocationModal')"
-                    >
-                        {{ __('admin::app.settings.warehouses.cancel') }}
-                    </button>
+                <tbody>
+                    <tr v-for="location in locations">
+                        <td>@{{ location.name }}</td>
 
-                    <button class="btn btn-sm btn-primary">{{ __('admin::app.leads.save-btn-title') }}</button>
-                </div>
+                        <td>
+                            <a href="#" @click.prevent="remove(location)">{{ __('admin::app.settings.warehouses.delete') }}</a>
+                        </td>
+                    </tr>
+                </tbody>
 
-                <div slot="body">
-                    {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.before', ['warehouse' => $warehouse]) !!}
+                <tfoot>
+                    <tr>
+                        <td colspan="2">
+                            <span @click="$root.openModal('addLocationModal')">
+                                {{ __('admin::app.settings.warehouses.add-location') }}
+                            </span>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
 
-                    <input type="hidden" name="warehouse_id" value="{{ $warehouse->id }}" />
+            <form
+                action="{{ route('admin.settings.warehouses.create', $warehouse->id) }}"
+                method="post"
+                @submit.prevent="create"
+                enctype="multipart/form-data"
+            >
+                <modal id="addLocationModal" :is-open="$root.modalIds.addLocationModal">
+                    <h3 slot="header-title">
+                        {{ __('admin::app.settings.warehouses.add-location') }}
+                    </h3>
 
-                    @include('admin::common.custom-attributes.edit', [
-                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                            'entity_type' => 'locations',
-                            ['code', '<>', 'warehouse_id']
-                        ]),
-                    ])
+                    <div slot="header-actions">
+                        <button
+                            class="btn btn-sm btn-secondary-outline"
+                            @click="$root.closeModal('addLocationModal')"
+                        >
+                            {{ __('admin::app.settings.warehouses.cancel') }}
+                        </button>
 
-                    {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.after', ['warehouse' => $warehouse]) !!}
-                </div>
-            </modal>
-        </form>
+                        <button class="btn btn-sm btn-primary">{{ __('admin::app.settings.warehouses.save-btn') }}</button>
+                    </div>
+
+                    <div slot="body">
+                        {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.before', ['warehouse' => $warehouse]) !!}
+
+                        <input type="hidden" name="warehouse_id" value="{{ $warehouse->id }}" />
+
+                        <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
+                            <label class="required">
+                                {{ __('admin::app.settings.warehouses.name') }}
+                            </label>
+
+                            <input
+                                type="text"
+                                name="name"
+                                class="control"
+                                value="{{ old('name') }}"
+                                placeholder="{{ __('admin::app.settings.warehouses.name') }}"
+                                v-validate="'required'"
+                                data-vv-as="{{ __('admin::app.settings.warehouses.name') }}"
+                            />
+
+                            <span class="control-error" v-if="errors.has('name')">
+                                @{{ errors.first('name') }}
+                            </span>
+                        </div>
+
+                        {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.after', ['warehouse' => $warehouse]) !!}
+                    </div>
+                </modal>
+            </form>
+        </div>
     </script>
 
     <script>
-        Vue.component('v-add-location', {
-            template: '#v-add-location-template',
+        Vue.component('v-locations', {
+            template: '#v-locations-template',
 
             inject: ['$validator'],
 
+            data: function () {
+                return {
+                    locations: [],
+                }
+            },
+
+            mounted() {
+                this.get();
+            },
+
             methods: {
-                onSubmit: function(e) {
+                get: function() {
+                    let self = this;
+
+                    this.$http.get("{{ route('admin.settings.locations.search') }}")
+                        .then(response => {
+                            self.locations = response.data;
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                },
+
+                create: function(e) {
                     var self = this;
 
                     let params = new FormData(e.target);
@@ -143,9 +207,7 @@
                     this.$validator.validateAll().then((result) => {
                         if (result) {
                             self.$http.post(`{{ route('admin.settings.locations.store') }}`, params).then(response => {
-                                EventBus.$emit('refresh_table_data', {
-                                    usePrevious: true
-                                });
+                                self.get();
 
                                 self.$root.closeModal('addLocationModal');
                             })
@@ -156,8 +218,24 @@
                             });
                         }
                     });
+                },
+
+                remove(location) {
+                    if (! confirm("{{ __('admin::app.settings.warehouses.confirm-delete') }}")) {
+                        return;
+                    }
+
+                    let self = this;
+
+                    this.$http.delete("{{ route('admin.settings.locations.delete', 'locationId') }}".replace('locationId', location.id))
+                        .then(response => {
+                            self.get();
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
                 }
-            }
+            },
         });
     </script>
 @endpush

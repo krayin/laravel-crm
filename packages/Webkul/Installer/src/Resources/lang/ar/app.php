@@ -90,13 +90,5 @@ return [
             'description'     => 'الوصف',
             'name'            => 'الاسم',
         ],
-
-        'locations' => [
-            'aisle'     => 'ممر',
-            'bay'       => 'خليج',
-            'bin'       => 'صندوق',
-            'shelf'     => 'رف',
-            'warehouse' => 'المستودع',
-        ],
     ],
 ];

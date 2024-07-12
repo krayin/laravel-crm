@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Admin\DataGrids\Setting\LocationDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -17,31 +18,20 @@ class LocationController extends Controller
      */
     public function __construct(protected LocationRepository $locationRepository)
     {
-        request()->request->add(['entity_type' => 'locations']);
     }
 
     /**
-     * Display a listing of the resource.
+     * Search location results
      *
-     * @return \Illuminate\View\View
+     * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function search()
     {
-        if (request()->ajax()) {
-            return app(LocationDataGrid::class)->toJson();
-        }
+        $results = $this->locationRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
 
-        return view('admin::settings.locations.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('admin::settings.locations.create');
+        return response()->json($results);
     }
 
     /**
@@ -58,48 +48,9 @@ class LocationController extends Controller
 
         Event::dispatch('settings.location.create.after', $location);
 
-        if (request()->ajax()) {
-            return response()->json([
-                'message' => trans('admin::app.locations.create-success'),
-            ]);
-        }
-
-        session()->flash('success', trans('admin::app.locations.create-success'));
-
-        return redirect()->route('admin.settings.locations.index');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $location = $this->locationRepository->findOrFail($id);
-
-        return view('admin::settings.locations.edit', compact('location'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @param int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(AttributeForm $request, $id)
-    {
-        Event::dispatch('settings.location.update.before', $id);
-
-        $location = $this->locationRepository->update(request()->all(), $id);
-
-        Event::dispatch('settings.location.update.after', $location);
-
-        session()->flash('success', trans('admin::app.locations.update-success'));
-
-        return redirect()->route('admin.settings.locations.index');
+        return response()->json([
+            'message' => trans('admin::app.locations.create-success'),
+        ]);
     }
 
     /**
@@ -127,19 +78,5 @@ class LocationController extends Controller
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.locations.location')]),
             ], 400);
         }
-    }
-
-    /**
-     * Search location results
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search()
-    {
-        $results = $this->locationRepository->findWhere([
-            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
-        ]);
-
-        return response()->json($results);
     }
 }
