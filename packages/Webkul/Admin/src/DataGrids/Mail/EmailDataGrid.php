@@ -113,7 +113,7 @@ class EmailDataGrid extends DataGrid
                                     ? 'delete'
                                     : 'trash'
                             ],
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'email']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'email']),
             'icon'         => 'trash-icon',
         ]);
     }

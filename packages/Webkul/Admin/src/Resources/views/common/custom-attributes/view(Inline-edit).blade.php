@@ -1,7 +1,5 @@
 @foreach ($customAttributes as $attribute)
-
     @if (view()->exists($typeView = 'admin::common.custom-attributes.view.' . $attribute->type))
-
         <div class="attribute-value-row">
             <div class="label">{{ $attribute->name }}</div>
 
@@ -13,7 +11,6 @@
 
             <div class="dropdown-list bottom-right">
                 <div class="dropdown-container">
-
                     @php
                         $validations = [];
 
@@ -31,7 +28,6 @@
                     @endphp
 
                     @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
-
                         <div class="form-group {{ $attribute->type }}"
                             @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $attribute->code }}[]') ? 'has-error' : '']"
                             @else :class="[errors.has('{{ $attribute->code }}') ? 'has-error' : '']" @endif>
@@ -62,13 +58,9 @@
                         <button type="submit" class="btn btn-sm btn-primary" @click="test('{{ $attribute->code }}')">
                             Save
                         </button>
-
                     @endif
-
                 </div>
             </div>
         </div>
-
     @endif
-
 @endforeach

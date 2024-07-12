@@ -18,7 +18,7 @@ return [
         'export'        => 'Dışa aktar',
         'select-format' => 'Biçim Seç',
 
-        'massaction' => [
+        'mass-action' => [
             'select_action'         => 'Eylemi seç',
             'mass-delete-confirm'   => 'Bu seçili :resource gerçekten silmek istiyor musunuz?',
             'mass-update-status'    => 'Bu seçilen :resource durumunu gerçekten güncellemek istiyor musunuz?',

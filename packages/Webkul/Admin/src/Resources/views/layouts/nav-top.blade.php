@@ -24,7 +24,6 @@
                 </span>
 
                 <div class="dropdown-list bottom-right">
-
                     <div class="quick-link-container">
                         @if (bouncer()->hasPermission('leads.create'))
                             <div class="quick-link-item">
@@ -116,7 +115,6 @@
                             </div>
                         @endif
                     </div>
-
                 </div>
             </div>
         @endif

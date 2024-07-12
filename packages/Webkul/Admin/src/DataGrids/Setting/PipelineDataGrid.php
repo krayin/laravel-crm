@@ -90,7 +90,7 @@ class PipelineDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.pipelines.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'pipeline']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'pipeline']),
             'icon'         => 'trash-icon',
         ]);
     }

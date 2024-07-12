@@ -36,5 +36,4 @@
             </option>
         @endforeach
     @endif
-
 </select>

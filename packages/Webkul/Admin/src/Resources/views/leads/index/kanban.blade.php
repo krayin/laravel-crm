@@ -4,10 +4,6 @@
             overflow: hidden;
         }
 
-        .drag-container {
-            overflow: inherit;
-        }
-
         .table {
             height: 100%;
             width: 100%;
@@ -20,7 +16,7 @@
 @endpush
 
 <div class="content full-page">
-    <div class="table">
+    <div class="table" style="overflow: unset !important;">
         <div class="table-header">
             <h1>
                 {!! view_render_event('admin.leads.index.header.before') !!}

@@ -8,7 +8,6 @@
 
 @once
     @push('scripts')
-
         <script type="text/x-template" id="tags-component-template">
             <div class="tags-control">
                 <div
@@ -16,7 +15,6 @@
                     v-for="(tag, index) in tags"
                     :class="[errors.has(attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
                 >
-                
                     <input
                         type="text"
                         class="control"

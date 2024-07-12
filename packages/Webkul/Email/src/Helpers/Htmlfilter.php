@@ -156,7 +156,7 @@ class Htmlfilter
         $pos = $this->tln_skipspace($body, $lt + 1);
 
         if ($pos >= strlen($body)) {
-            return array(false, false, false, $lt, strlen($body));
+            return [false, false, false, $lt, strlen($body)];
         }
 
         /**
@@ -187,11 +187,11 @@ class Htmlfilter
                         $gt += 2;
                     }
 
-                    return array(false, false, false, $lt, $gt);
+                    return [false, false, false, $lt, $gt];
                 } else {
                     $gt = $this->tln_findnxstr($body, $pos, '>');
 
-                    return array(false, false, false, $lt, $gt);
+                    return [false, false, false, $lt, $gt];
                 }
                 break;
 
@@ -210,7 +210,7 @@ class Htmlfilter
         $regary = $this->tln_findnxreg($body, $pos, '[^\w\-_]');
 
         if ($regary == false) {
-            return array(false, false, false, $lt, strlen($body));
+            return [false, false, false, $lt, strlen($body)];
         }
 
         list($pos, $tagname, $match) = $regary;
@@ -238,14 +238,14 @@ class Htmlfilter
                     $tagtype = 3;
                 } else {
                     $gt = $this->tln_findnxstr($body, $pos, '>');
-                    $retary = array(false, false, false, $lt, $gt);
+                    $retary = [false, false, false, $lt, $gt];
 
                     return $retary;
                 }
 
             //intentional fall-through
             case '>':
-                return array($tagname, false, $tagtype, $lt, $pos);
+                return [$tagname, false, $tagtype, $lt, $pos];
                 break;
 
             default:
@@ -258,7 +258,7 @@ class Htmlfilter
                      */
                     $gt = $this->tln_findnxstr($body, $lt, '>');
 
-                    return array(false, false, false, $lt, $gt);
+                    return [false, false, false, $lt, $gt];
                 }
                 break;
         }
@@ -279,7 +279,7 @@ class Htmlfilter
                 /**
                  * Non-closed tag.
                  */
-                return array(false, false, false, $lt, $pos);
+                return [false, false, false, $lt, $pos];
             }
 
             /**
@@ -299,7 +299,7 @@ class Htmlfilter
                     $pos++;
                 }
 
-                return array($tagname, $attary, $tagtype, $lt, $pos);
+                return [$tagname, $attary, $tagtype, $lt, $pos];
             }
 
             /**
@@ -325,7 +325,7 @@ class Htmlfilter
                 /**
                  * Looks like body ended before the end of tag.
                  */
-                return array(false, false, false, $lt, strlen($body));
+                return [false, false, false, $lt, strlen($body)];
             }
 
             list($pos, $attname, $match) = $regary;
@@ -352,7 +352,7 @@ class Htmlfilter
                         $tagtype = 3;
                     } else {
                         $gt = $this->tln_findnxstr($body, $pos, '>');
-                        $retary = array(false, false, false, $lt, $gt);
+                        $retary = [false, false, false, $lt, $gt];
                         return $retary;
                     }
 
@@ -360,7 +360,7 @@ class Htmlfilter
                 case '>':
                     $attary[$attname] = '"yes"';
                     
-                    return array($tagname, $attary, $tagtype, $lt, $pos);
+                    return [$tagname, $attary, $tagtype, $lt, $pos];
                     break;
 
                 default:
@@ -394,7 +394,7 @@ class Htmlfilter
                             $regary = $this->tln_findnxreg($body, $pos + 1, '\'');
 
                             if ($regary == false) {
-                                return array(false, false, false, $lt, strlen($body));
+                                return [false, false, false, $lt, strlen($body)];
                             }
 
                             list($pos, $attval, $match) = $regary;
@@ -406,7 +406,7 @@ class Htmlfilter
                             $regary = $this->tln_findnxreg($body, $pos + 1, '\"');
 
                             if ($regary == false) {
-                                return array(false, false, false, $lt, strlen($body));
+                                return [false, false, false, $lt, strlen($body)];
                             }
 
                             list($pos, $attval, $match) = $regary;
@@ -421,7 +421,7 @@ class Htmlfilter
                             $regary = $this->tln_findnxreg($body, $pos, '[\s>]');
 
                             if ($regary == false) {
-                                return array(false, false, false, $lt, strlen($body));
+                                return [false, false, false, $lt, strlen($body)];
                             }
 
                             list($pos, $attval, $match) = $regary;
@@ -444,7 +444,7 @@ class Htmlfilter
                          */
                         $gt = $this->tln_findnxstr($body, $pos, '>');
 
-                        return array(false, false, false, $lt, $gt);
+                        return [false, false, false, $lt, $gt];
                     }
                     break;
             }
@@ -454,7 +454,7 @@ class Htmlfilter
          * The fact that we got here indicates that the tag end was never
          * found. Return invalid tag indication so it gets stripped.
          */
-        return array(false, false, false, $lt, strlen($body));
+        return [false, false, false, $lt, strlen($body)];
     }
 
     /**
@@ -531,8 +531,8 @@ class Htmlfilter
     {
         if (strcspn($attvalue, "\t\r\n\0 ") != strlen($attvalue)) {
             $attvalue = str_replace(
-                array("\t", "\r", "\n", "\0", " "),
-                array('', '', '', '', ''),
+                ["\t", "\r", "\n", "\0", " "],
+                ['', '', '', '', ''],
                 $attvalue
             );
         }
@@ -786,7 +786,7 @@ class Htmlfilter
         }
 
         if ($bSucces == FALSE){
-            return array(FALSE, strlen($body));
+            return [FALSE, strlen($body)];
         }
 
 
@@ -810,7 +810,7 @@ class Htmlfilter
         // first check for 8bit sequences and disallowed control characters
         if (preg_match('/[\16-\37\200-\377]+/',$content)) {
             $content = '<!-- style block removed by html filter due to presence of 8bit characters -->';
-            return array($content, $newpos);
+            return [$content, $newpos];
         }
 
         // remove @import line
@@ -858,7 +858,7 @@ class Htmlfilter
             $content = $contentNew;
         }
 
-        return array($content, $newpos);
+        return [$content, $newpos];
     }
 
     public function tln_body2div($attary, $trans_image_path)
@@ -1244,10 +1244,9 @@ class Htmlfilter
             // );
         }
 
-        $add_attr_to_tag = array(
-            "/^a$/i" =>
-                array('target' => '"_blank"')
-        );
+        $add_attr_to_tag = [
+            "/^a$/i" => ['target' => '"_blank"']
+        ];
 
         $trusted = $this->tln_sanitize(
             $body,
@@ -1294,8 +1293,8 @@ class Htmlfilter
 
     public function AutoEmailUrls($string)
     {
-        $search  = array('/<p>__<\/p>/', '/([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/');
-        $replace = array('<hr />', '<a href="mailto:$1">$1</a>');
+        $search  = ['/<p>__<\/p>/', '/([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/'];
+        $replace = ['<hr />', '<a href="mailto:$1">$1</a>'];
         return preg_replace($search, $replace, $string);
     }
 }

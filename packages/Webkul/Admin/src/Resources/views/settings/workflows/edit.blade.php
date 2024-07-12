@@ -61,7 +61,6 @@
     @parent
 
     <script type="text/x-template" id="workflow-component-template">
-
         <div>
             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                 <label class="required">{{ __('admin::app.settings.workflows.name') }}</label>

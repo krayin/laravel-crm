@@ -11,9 +11,7 @@
             {!! view_render_event('admin.leads.view.informations.activity_list.general.before', ['lead' => $lead]) !!}
 
             <tab v-for="type in types" :name="typeLabels[type]" :key="type" :selected="type == 'all'">
-
                 <div v-for="subType in ['planned', 'done']" class="activities" :class="subType + '-activities ' + type">
-
                     <div class="timeline-bar"></div>
 
                     <div class="section-tag" v-if="type != 'note' && type != 'file' && type != 'email'">
@@ -29,7 +27,6 @@
                         v-for="activity in getActivities(type, subType)"
                         :class="[activity.type == 'email' ? 'email' : 'activity']"
                     >
-
                         <i :class="'icon timeline-bar-icon ' + activity.type"></i>
 
                         <template v-if="activity.type != 'email'">
@@ -167,7 +164,6 @@
             @if (bouncer()->hasPermission('quotes'))
                 <tab name="{{ __('admin::app.leads.quote') }}">
                     <div class="table lead-quote-list" style="padding: 5px">
-
                         <table>
                             <thead>
                                 <tr>

@@ -9,7 +9,6 @@
         {!! view_render_event('admin.leads.create.header.before') !!}
 
         <div class="page-header">
-
             {{ Breadcrumbs::render('leads.create') }}
 
             <div class="page-title">
@@ -20,10 +19,8 @@
         {!! view_render_event('admin.leads.create.header.after') !!}
 
         <form method="POST" action="{{ route('admin.leads.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.leads.create.form_buttons.before') !!}
@@ -87,14 +84,9 @@
                         </tabs>
 
                         {!! view_render_event('admin.leads.create.form_controls.after') !!}
-
                     </div>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 @stop

@@ -19,7 +19,7 @@ return [
         'export'        => 'Exportar',
         'select-format' => 'Seleccionar Formato',
 
-        'massaction' => [
+        'mass-action' => [
             'select_action'         => 'Seleccionar Acción',
             'mass-delete-confirm'   => '¿Realmente desea eliminar los elementos tipo :resource seleccionados?',
             'mass-update-status'    => '¿Realmente desea actualizar el estado de los elementos tipo :resource seleccionados?',

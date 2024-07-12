@@ -81,5 +81,22 @@ return [
             'email-to-participants-after-activity-updation' => 'Etkinlik güncellendikten sonra katılımcılara e-posta gönder',
             'email-to-participants-after-activity-creation' => 'Etkinlik oluşturulduktan sonra katılımcılara e-posta gönder',
         ],
+
+        'warehouses' => [
+            'contact-name'    => 'İrtibat Adı',
+            'contact-emails'  => 'İrtibat E-postaları',
+            'contact-numbers' => 'İrtibat Numaraları',
+            'contact-address' => 'İrtibat Adresi',
+            'description'     => 'Açıklama',
+            'name'            => 'Adı',
+        ],
+
+        'locations' => [
+            'aisle'     => 'Koridor',
+            'bay'       => 'Raf',
+            'bin'       => 'Bölme',
+            'shelf'     => 'Raf',
+            'warehouse' => 'Depo',
+        ],
     ],
 ];

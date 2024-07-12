@@ -3,7 +3,6 @@
 @endphp
 
 @foreach ($customAttributes as $attribute)
-
     @php
         if (isset($customValidations[$attribute->code])) {
             $validations = implode('|', $customValidations[$attribute->code]);
@@ -35,13 +34,11 @@
     @endphp
 
     @if (view()->exists($typeView = 'admin::common.custom-attributes.edit.' . $attribute->type))
-
         <div
             class="form-group {{ $attribute->type }}"
             @if ($attribute->type == 'multiselect') :class="[errors.has('{{ $formScope . $attribute->code }}[]') ? 'has-error' : '']"
             @else :class="[errors.has('{{ $formScope . $attribute->code }}') ? 'has-error' : '']" @endif
         >
-
             <label for="{{ $attribute->code }}" {{ $attribute->is_required ? 'class=required' : '' }}>
                 {{ $attribute->name }}
 
@@ -66,7 +63,5 @@
                 @endif
             </span>
         </div>
-
     @endif
-
 @endforeach

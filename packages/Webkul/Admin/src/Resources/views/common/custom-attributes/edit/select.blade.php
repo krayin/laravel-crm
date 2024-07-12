@@ -1,5 +1,10 @@
-<select v-validate="'{{$validations}}'" class="control" id="{{ $attribute->code }}" name="{{ $attribute->code }}" data-vv-as="&quot;{{ $attribute->name }}&quot;">
-
+<select
+    v-validate="'{{$validations}}'"
+    class="control"
+    id="{{ $attribute->code }}"
+    name="{{ $attribute->code }}"
+    data-vv-as="&quot;{{ $attribute->name }}&quot;"
+>
     @php
         $options = $attribute->lookup_type
             ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->lookup_type)
@@ -15,5 +20,4 @@
             {{ $option->name }}
         </option>
     @endforeach
-
 </select>

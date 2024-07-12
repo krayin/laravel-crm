@@ -5,13 +5,9 @@
 @endphp
 
 @if (count($options))
-    
     @foreach ($options as $option)
         <span class="multi-value">{{ $option->name }}</span>
     @endforeach
-
 @else
-    
     {{ __('admin::app.common.not-available') }}
-
 @endif

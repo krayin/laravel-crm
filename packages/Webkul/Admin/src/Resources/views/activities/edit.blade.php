@@ -9,7 +9,6 @@
         {!! view_render_event('admin.activities.edit.header.before', ['activity' => $activity]) !!}
 
         <div class="page-header">
-
             {{ Breadcrumbs::render('activities.edit', $activity) }}
 
             <div class="page-title">
@@ -20,10 +19,8 @@
         {!! view_render_event('admin.activities.edit.header.after', ['activity' => $activity]) !!}
 
         <form method="POST" action="{{ route('admin.activities.update', $activity->id) }}" @submit.prevent="onSubmit">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.activities.edit.form_buttons.before', ['activity' => $activity]) !!}
@@ -128,11 +125,11 @@
                                 <input name="location" class="control" value="{{ old('location') ?: $activity->location }}"/>
                             </div>
 
-                            <div class="form-group video-conference">
-                            </div>
+                            <div class="form-group video-conference"></div>
         
                             <div class="form-group">
                                 <label for="comment">{{ __('admin::app.activities.description') }}</label>
+
                                 <textarea class="control" id="activity-comment" name="comment" v-pre>{{ old('comment') ?: $activity->comment }}</textarea>
                             </div>
         
@@ -167,16 +164,11 @@
                             </div>
 
                             {!! view_render_event('admin.activities.edit.form_controls.after', ['activity' => $activity]) !!}
-
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 @stop
 
