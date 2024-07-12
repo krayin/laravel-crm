@@ -72,11 +72,11 @@
             <table>
                 <thead>
                     <tr>
-                        <th>Source</th>
-                        <th>In Stock (1000)</th>
-                        <th>Allocated (200)</th>
-                        <th>On Hand (800)</th>
-                        <th>Action</th>
+                        <th>{{ __('admin::app.products.source') }}</th>
+                        <th>{{ __('admin::app.products.in-stock') }}</th>
+                        <th>{{ __('admin::app.products.allocated') }}</th>
+                        <th>{{ __('admin::app.products.on-hand') }}</th>
+                        <th>{{ __('admin::app.products.actions') }}</th>
                     </tr>
                 </thead>
 
@@ -88,7 +88,9 @@
                             <td>@{{ warehouse.allocated }}</td>
                             <td>@{{ warehouse.on_hand }}</td>
                             <td>
-                                <a href="#" @click.prevent="selectWarehouse(warehouse)">Assign</a>
+                                <a href="#" @click.prevent="selectWarehouse(warehouse)">
+                                    {{ __('admin::app.products.assign') }}
+                                </a>
                             </td>
                         </tr>
 
@@ -108,7 +110,7 @@
                     <tr>
                         <td colspan="5">
                             <span class="dropdown-toggle">
-                                Add Source
+                                {{ __('admin::app.products.add-source') }}
                             </span>
 
                             <div class="dropdown-list">
@@ -243,13 +245,11 @@
                     />
 
                     <div class="lookup-results" v-if="state == ''">
-                        <template v-for='warehouse in searchedLocations'>
-                            <ul>
-                                <li v-for='location in warehouse.locations' @click="add(location)">
-                                    <span>@{{ location.name }}</span>
-                                </li>
-                            </ul>
-                        </template>
+                        <ul>
+                            <li v-for='location in searchedLocations' @click="add(location)">
+                                <span>@{{ location.name }}</span>
+                            </li>
+                        </ul>
 
                         <template v-if="! searchedLocations.length && location['name'].length && ! isSearching">
                             <ul>
@@ -340,7 +340,7 @@
 
             methods: {
                 getAllWarehouses: function() {
-                    this.$http.get("{{ route('admin.settings.warehouses.get') }}")
+                    this.$http.get("{{ route('admin.settings.warehouses.search') }}")
                         .then(response => {
                             this.warehouses = response.data;
                         })
@@ -488,13 +488,17 @@
 
                     var self = this;
 
-                    this.$http.get("{{ route('admin.settings.warehouses.get', ':id') }}".replace(':id', this.warehouse.id), {params: {query: this.location['name']}})
+                    this.$http.get("{{ route('admin.settings.locations.search') }}", {
+                            params: {
+                                search: 'warehouse_id:' + this.warehouse.id + ';name:' + this.location['name'],
+                                searchFields: 'warehouse_id:=;name:like',
+                                searchJoin: 'and'
+                            }
+                        })
                         .then (function(response) {
                             self.$parent.warehouseLocations.forEach(function(addedLocation) {
-                                response.data.forEach(function(warehouse, index) {
-                                    warehouse.locations = warehouse.locations.filter(function(location) {
-                                        return location.id !== addedLocation.id;
-                                    });
+                                response.data = response.data.filter(function(location) {
+                                    return location.id !== addedLocation.id;
                                 });
                             });
 

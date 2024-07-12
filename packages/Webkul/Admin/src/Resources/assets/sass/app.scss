@@ -2382,16 +2382,23 @@ body {
 
         &.warehouse-locations {
             padding: 40px 0;
-            position: relative;
-
-            button {
-                position: absolute;
-            }
 
             .panel-body {
                 padding: 0;
                 background: transparent;
-                box-shadow: none;
+
+                table {
+                    margin: 0;
+
+                    tfoot {
+                        td {
+                            span {
+                                cursor: pointer;
+                                color: #0E90D9;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

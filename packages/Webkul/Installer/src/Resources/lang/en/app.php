@@ -90,13 +90,5 @@ return [
             'description'     => 'Description',
             'name'            => 'Name',
         ],
-
-        'locations' => [
-            'aisle'     => 'Aisle',
-            'bay'       => 'Bay',
-            'bin'       => 'Bin',
-            'shelf'     => 'Shelf',
-            'warehouse' => 'Warehouse',
-        ],
     ],
 ];

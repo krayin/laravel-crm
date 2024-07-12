@@ -3,11 +3,11 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Admin\DataGrids\Setting\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
-use Webkul\Warehouse\Repositories\LocationRepository;
 
 class WarehouseController extends Controller
 {
@@ -16,10 +16,7 @@ class WarehouseController extends Controller
      *
      * @return void
      */
-    public function __construct(
-        protected WarehouseRepository $warehouseRepository,
-        protected LocationRepository $locationRepository
-    )
+    public function __construct(protected WarehouseRepository $warehouseRepository)
     {
         request()->request->add(['entity_type' => 'warehouses']);
     }
@@ -36,6 +33,20 @@ class WarehouseController extends Controller
         }
 
         return view('admin::settings.warehouses.index');
+    }
+
+    /**
+     * Search location results
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function search()
+    {
+        $results = $this->warehouseRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
+
+        return response()->json($results);
     }
 
     /**
@@ -155,58 +166,5 @@ class WarehouseController extends Controller
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.warehouses.warehouse')]),
             ], 400);
         }
-    }
-
-    /**
-     * Search warehouse results
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function search()
-    {
-        $results = $this->warehouseRepository->findWhere([
-            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
-        ]);
-
-        return response()->json($results);
-    }
-
-    /**
-     * Returns warehouse locations.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function get($id = null)
-    {
-        $results = $this->locationRepository
-            ->leftJoin('warehouses', 'warehouse_locations.warehouse_id', '=', 'warehouses.id')
-            ->where('warehouse_locations.name', 'like', urldecode(request()->input('query')) . '%')
-            ->select('warehouse_locations.*')
-            ->addSelect('warehouse_locations.id as id')
-            ->addSelect('warehouses.name as warehouse_name')
-            ->get();
-
-        $locations = [];
-
-        foreach ($results as $result) {
-            if (
-                $id
-                && $result->warehouse_id != $id
-            ) {
-                continue;
-            }
-
-            if (! isset($locations[$result->warehouse_id])) {
-                $locations[$result->warehouse_id] = [
-                    'id'  => $result->warehouse_id,
-                    'name' => $result->warehouse_name,
-                ];
-            }
-
-            $locations[$result->warehouse_id]['locations'][] = $result;
-        }
-
-        return response()->json(array_values($locations));
     }
 }

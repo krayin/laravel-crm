@@ -90,13 +90,5 @@ return [
             'description'     => 'Açıklama',
             'name'            => 'Adı',
         ],
-
-        'locations' => [
-            'aisle'     => 'Koridor',
-            'bay'       => 'Raf',
-            'bin'       => 'Bölme',
-            'shelf'     => 'Raf',
-            'warehouse' => 'Depo',
-        ],
     ],
 ];
