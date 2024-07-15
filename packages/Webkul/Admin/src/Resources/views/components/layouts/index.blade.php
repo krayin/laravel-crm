@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 
 <html
-    class="{{ request()->cookie('dark_mode') ?? 0 ? 'dark' : '' }}"
+    class="{{ request()->cookie('dark_mode') ? 'dark' : '' }}"
     lang="{{ app()->getLocale() }}"
-    {{-- dir="{{ core()->getCurrentLocale()->direction }}" --}}
+    dir="{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'rtl' : 'ltr' }}"
 >
 
 <head>
