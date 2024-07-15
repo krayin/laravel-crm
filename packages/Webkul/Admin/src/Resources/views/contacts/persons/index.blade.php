@@ -11,12 +11,12 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                <button
+                <a
+                    href="{{ route('admin.contacts.persons.create') }}"
                     class="primary-button"
-                    @click="$refs.createCustomerComponent.openModal()"
                 >
                     Create
-                </button>
+                </a>
             </div>
         </div>
     </div>

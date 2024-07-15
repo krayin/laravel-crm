@@ -13,7 +13,7 @@
                 <div
                     class="form-group input-group"
                     v-for="(contactNumber, index) in contactNumbers"
-                    :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
+                    {{-- :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']" --}}
                 >
                     <input
                         type="text"
@@ -37,17 +37,17 @@
 
                     <i class="icon trash-icon" v-if="contactNumbers.length > 1" @click="removePhone(contactNumber)"></i>
 
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
+                    {{-- <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
                         @{{ errors.first('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') }}
-                    </span>
+                    </span> --}}
                 </div>
 
                 <a class="add-more-link" href @click.prevent="addPhone">+ {{ __('admin::app.common.add_more') }}</a>
             </div>
         </script>
 
-        <script>
-            Vue.component('phone-component', {
+        <script type="module">
+            app.component('phone-component', {
 
                 template: '#phone-component-template',
 
@@ -70,7 +70,7 @@
                 },
 
                 created: function() {
-                    this.extendValidator();
+                    // this.extendValidator();
 
                     if (! this.contactNumbers || ! this.contactNumbers.length) {
                         this.contactNumbers = [{

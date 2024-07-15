@@ -42,11 +42,13 @@ window.app = createApp({
 import Axios from "./plugins/axios";
 import Emitter from "./plugins/emitter";
 import Flatpickr from "./plugins/flatpickr";
+import VeeValidate from "./plugins/vee-validate";
 
 [
     Axios,
     Emitter,
     Flatpickr,
+    VeeValidate
 ].forEach((plugin) => app.use(plugin));
 
 export default app;

@@ -51,8 +51,8 @@
             </div>
         </script>
 
-        <script>
-            Vue.component('lookup-component', {
+        <script type="module">
+            app.component('lookup-component', {
 
                 template: '#lookup-component-template',
 
@@ -95,31 +95,31 @@
                 },
 
                 methods: {
-                    search: debounce(function () {
-                        this.state = '';
+                    // search: debounce(function () {
+                    //     this.state = '';
 
-                        this.entity_id = null;
+                    //     this.entity_id = null;
 
-                        this.is_searching = true;
+                    //     this.is_searching = true;
 
-                        if (this.search_term.length < 2) {
-                            this.results = [];
+                    //     if (this.search_term.length < 2) {
+                    //         this.results = [];
 
-                            this.is_searching = false;
+                    //         this.is_searching = false;
 
-                            return;
-                        }
+                    //         return;
+                    //     }
 
-                        this.$http.get(this.search_route, {params: {query: this.search_term}})
-                            .then (response => {
-                                this.results = response.data;
+                    //     this.$http.get(this.search_route, {params: {query: this.search_term}})
+                    //         .then (response => {
+                    //             this.results = response.data;
 
-                                this.is_searching = false;
-                            })
-                            .catch (error => {
-                                this.is_searching = false;
-                            })
-                    }, 500),
+                    //             this.is_searching = false;
+                    //         })
+                    //         .catch (error => {
+                    //             this.is_searching = false;
+                    //         })
+                    // }, 500),
 
                     addLookUp: function(result) {
                         this.state = 'old';

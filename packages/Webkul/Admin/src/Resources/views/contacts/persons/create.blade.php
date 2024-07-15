@@ -1,56 +1,59 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <!--Page title -->
+    <x-slot:title>
+        @lang('Create Person')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.contacts.persons.create-title') }}
-@stop
+    <!--Create Page Form -->
+    <x-admin::form
+        :action="route('admin.contacts.persons.store')"
+        enctype="multipart/form-data"
+    >
 
-@section('content-wrapper')
-    <div class="content full-page adjacent-center">
-        {!! view_render_event('admin.contacts.persons.create.header.before') !!}
+        {!! view_render_event('bagisto.admin.cms.pages.create.create_form_controls.before') !!}
 
-        <div class="page-header">
+        <div class="flex items-center justify-between gap-4 max-sm:flex-wrap">
+            <p class="text-xl font-bold text-gray-800 dark:text-white">
+                @lang('Create Person')
+            </p>
 
-            {{ Breadcrumbs::render('contacts.persons.create') }}
+            <div class="flex items-center gap-x-2.5">
+                <!-- Back Button -->
+                <a
+                    href="{{ route('admin.contacts.persons.index') }}"
+                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
+                >
+                    @lang('Back')
+                </a>
 
-            <div class="page-title">
-                <h1>{{ __('admin::app.contacts.persons.create-title') }}</h1>
+                <!--Save Button -->
+                <button
+                    type="submit"
+                    class="primary-button"
+                >
+                    @lang('Save')
+                </button>
             </div>
         </div>
 
-        {!! view_render_event('admin.contacts.persons.create.header.after') !!}
+        <!-- body content -->
+        {!! view_render_event('bagisto.admin.cms.pages.create.create_form_controls.after') !!}
 
-        <form method="POST" action="{{ route('admin.contacts.persons.store') }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-            <div class="page-content">
-                <div class="form-container">
-                    <div class="panel">
-                        <div class="panel-header">
-                            {!! view_render_event('admin.contacts.persons.create.form_buttons.before') !!}
-
-                            <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.contacts.persons.save-btn-title') }}
-                            </button>
-
-                            <a href="{{ route('admin.contacts.persons.index') }}">{{ __('admin::app.contacts.persons.back') }}</a>
-
-                            {!! view_render_event('admin.contacts.persons.create.form_buttons.after') !!}
-                        </div>
-        
-                        <div class="panel-body">
-                            {!! view_render_event('admin.contacts.persons.create.form_controls.before') !!}
-
-                            @csrf()
-                            
-                            @include('admin::common.custom-attributes.edit', [
-                                'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'persons',
-                                ]),
-                            ])
-
-                            {!! view_render_event('admin.contacts.persons.create.form_controls.after') !!}
-                        </div>
-                    </div>
+        <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+            <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    
+                    @include('admin::common.custom-attributes.edit', [
+                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'entity_type' => 'persons',
+                        ]),
+                    ])
+                  
                 </div>
             </div>
-        </form>
-    </div>
-@stop
+        </div>
+
+        {!! view_render_event('bagisto.admin.cms.pages.create.create_form_controls.after') !!}
+
+    </x-admin::form>
+</x-admin::layouts>
