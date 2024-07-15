@@ -1,29 +1,29 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.customers.customers.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.contacts.organizations.title') }}
-@stop
+    <div class="flex items-center justify-between">
+        <p class="text-xl font-bold text-gray-800 dark:text-white">
+            Organizations
+        </p>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.contacts.organizations.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.contacts.organizations.index.header.before') !!}
-
-                    {{ Breadcrumbs::render('contacts.organizations') }}
-
-                    {{ __('admin::app.contacts.organizations.title') }}
-
-                    {!! view_render_event('admin.contacts.organizations.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('contacts.organizations.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.contacts.organizations.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.contacts.organizations.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <button
+                    class="primary-button"
+                    @click="$refs.createCustomerComponent.openModal()"
+                >
+                    Create
+                </button>
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.organizations.datagrid.index.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.contacts.organizations.index') }}" />
+
+    {!! view_render_event('krayin.admin.organizations.datagrid.index.after') !!}
+</x-admin::layouts>

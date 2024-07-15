@@ -2,10 +2,14 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\OrganizationRepository;
+use Webkul\Admin\DataGrids\Contact\OrganizationDataGrid;
 
 class OrganizationController extends Controller
 {
@@ -21,13 +25,11 @@ class OrganizationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Contact\OrganizationDataGrid::class)->toJson();
+            return datagrid(OrganizationDataGrid::class)->process();
         }
 
         return view('admin::contacts.organizations.index');
@@ -43,14 +45,10 @@ class OrganizationController extends Controller
         return view('admin::contacts.organizations.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(AttributeForm $request): RedirectResponse
     {
         Event::dispatch('contacts.organization.create.before');
 
