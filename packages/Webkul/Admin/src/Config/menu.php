@@ -220,13 +220,6 @@ return [
         'sort'       => 1,
         'icon-class' => 'pipeline-icon',
     ], [
-        'key'        => 'settings.warehouse.locations',
-        'name'       => 'admin::app.layouts.locations',
-        'info'       => 'admin::app.layouts.locations-info',
-        'route'      => 'admin.settings.locations.index',
-        'sort'       => 2,
-        'icon-class' => 'source-icon',
-    ], [
         'key'        => 'settings.automation',
         'name'       => 'admin::app.layouts.automation',
         'info'       => 'admin::app.layouts.automation-info',

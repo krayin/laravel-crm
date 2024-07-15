@@ -88,9 +88,6 @@
             'warehouses'           => 'Depolar',
             'warehouse'            => 'Depo',
             'warehouses-info'      => 'CRM üzerinden depo ekle, düzenle veya sil',
-            'locations'            => 'Konumlar',
-            'location'             => 'Konum',
-            'locations-info'       => 'CRM üzerinden konum ekle, düzenle veya sil',
         ],
 
         'contacts' => [
@@ -612,20 +609,6 @@
                 'delete-failed'       => 'Depo silinemedi.',
             ],
 
-            'locations' => [
-                'title'          => 'Konumlar',
-                'create-title'   => 'Konum Oluştur',
-                'edit-title'     => 'Konum Düzenle',
-                'save-btn-title' => 'Konum Olarak Kaydet',
-                'back'           => 'Geri',
-                'cancel'         => 'İptal',
-                'create-success' => 'Konum başarıyla oluşturuldu.',
-                'name-exists'    => 'Konum adı zaten mevcut.',
-                'update-success' => 'Konum başarıyla güncellendi.',
-                'delete-success' => 'Konum başarıyla silindi.',
-                'delete-failed'  => 'Konum silinemedi.',
-            ],
-
             'email-templates' => [
                 'title'          => 'E-posta Şablonları',
                 'create-title'   => 'E-posta Şablonu Oluştur',
@@ -820,10 +803,6 @@
             'contact-name'        => 'İrtibat Adı',
             'contact-emails'      => 'İrtibat E-postaları',
             'contact-numbers'     => 'İrtibat Numaraları',
-            'aisle'               => 'Koridor',
-            'bay'                 => 'Raf',
-            'shelf'               => 'Raf',
-            'bin'                 => 'Bölme',
             'in-stock'            => 'Stokta',
             'allocated'           => 'Tahsis Edilen',
             'on-hand'             => 'Eldeki',
