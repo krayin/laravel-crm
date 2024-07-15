@@ -33,6 +33,27 @@ window.app = createApp({
                 });
             }, 100);
         },
+
+        handleMouseOver(event) {
+            const parentElement = event.currentTarget.parentElement;
+             
+            if (parentElement.classList.contains('sidebar-collapsed')) {
+                parentElement.classList.remove('sidebar-collapsed');
+                
+                parentElement.classList.add('sidebar-not-collapsed');
+            }
+
+        },
+
+        handleMouseLeave(event) {
+            const parentElement = event.currentTarget.parentElement;
+             
+            if (parentElement.classList.contains('sidebar-not-collapsed')) {
+                parentElement.classList.remove('sidebar-not-collapsed');
+
+                parentElement.classList.add('sidebar-collapsed');
+            }
+        }
     },
 });
 
