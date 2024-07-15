@@ -4,15 +4,14 @@ namespace Webkul\Admin\DataGrids\Contact;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 
 class PersonDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return \Illuminate\Database\Query\Builder
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('persons')
             ->addSelect(
@@ -34,10 +33,8 @@ class PersonDataGrid extends DataGrid
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function prepareColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'id',
@@ -60,11 +57,7 @@ class PersonDataGrid extends DataGrid
             'type'     => 'string',
             'sortable' => false,
             'closure'  => function ($row) {
-                $emails = json_decode($row->emails, true);
-
-                if ($emails) {
-                    return collect($emails)->pluck('value')->join(', ');
-                }
+                return collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', ');
             },
         ]);
 
@@ -74,33 +67,27 @@ class PersonDataGrid extends DataGrid
             'type'     => 'string',
             'sortable' => false,
             'closure'  => function ($row) {
-                $contactNumbers = json_decode($row->contact_numbers, true);
-
-                if ($contactNumbers) {
-                    return collect($contactNumbers)->pluck('value')->join(', ');
-                }
+                return collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', ');
             },
         ]);
 
         $this->addColumn([
-            'index'            => 'organization',
-            'label'            => trans('admin::app.datagrid.organization_name'),
-            'type'               => 'string',
-            'searchable'         => true,
-            'filterable'         => true,
-            'filterable_type'    => 'dropdown',
-            'closure'  => function ($row) {
-                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank'>" . $row->organization . "</a>";
-            },
+            'index'           => 'organization',
+            'label'           => trans('admin::app.datagrid.organization_name'),
+            'type'            => 'string',
+            'searchable'      => true,
+            'filterable'      => true,
+            'filterable_type' => 'dropdown',
+            'closure'         => function ($row) {
+                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank' class='text-blue-600 hover:underline'>" . $row->organization . "</a>";
+            }
         ]);
     }
 
-     /**
+    /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         if (bouncer()->hasPermission('contacts.persons.edit')) {
             $this->addAction([
@@ -127,10 +114,8 @@ class PersonDataGrid extends DataGrid
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         if (bouncer()->hasPermission('contacts.persons.delete')) {
             $this->addMassAction([

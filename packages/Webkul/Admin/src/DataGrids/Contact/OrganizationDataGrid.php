@@ -56,10 +56,8 @@ class OrganizationDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
             'icon'   => 'icon-edit',
@@ -82,16 +80,14 @@ class OrganizationDataGrid extends DataGrid
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
             'icon'   => 'icon-delete',
             'title'  => trans('ui::app.datagrid.delete'),
             'method' => 'PUT',
-            'url' => route('admin.contacts.organizations.mass_delete'),
+            'url'    => route('admin.contacts.organizations.mass_delete'),
         ]);
     }
 }
