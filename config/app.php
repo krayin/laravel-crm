@@ -209,6 +209,7 @@ return [
         Illuminate\Translation\TranslationServiceProvider::class,
         Illuminate\Validation\ValidationServiceProvider::class,
         Illuminate\View\ViewServiceProvider::class,
+        Webkul\DataGrid\Providers\DataGridServiceProvider::class,
 
         /*
          * Package Service Providers...

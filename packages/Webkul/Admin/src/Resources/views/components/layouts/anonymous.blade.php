@@ -56,7 +56,7 @@
     @else
         <link
             type="image/x-icon"
-            href="{{ bagisto_asset('images/favicon.ico') }}"
+            href="{{ asset('images/favicon.ico') }}"
             rel="shortcut icon"
             sizes="16x16"
         />
