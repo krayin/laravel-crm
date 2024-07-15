@@ -14,7 +14,7 @@ class PersonDataGrid extends DataGrid
      */
     public function prepareQueryBuilder()
     {
-        return DB::table('persons')
+        $queryBuilder = DB::table('persons')
             ->addSelect(
                 'persons.id',
                 'persons.name as person_name',
@@ -24,6 +24,12 @@ class PersonDataGrid extends DataGrid
                 'organizations.id as organization_id'
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
+
+        $this->addFilter('id', 'persons.id');
+        $this->addFilter('person_name', 'persons.name');
+        $this->addFilter('organization', 'organizations.id');
+
+        return $queryBuilder;
     }
 
     /**

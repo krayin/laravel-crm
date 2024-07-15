@@ -1,139 +1,149 @@
-@if (isset($attribute))
-    <phone-component
-        :attribute='@json($attribute)'
-        :validations="'{{$validations}}'"
-        :data='@json(old($attribute->code) ?: $value)'
-    ></phone-component>
-@endif
+<v-phone-component
+    :attribute="{{ json_encode($attribute) }}"
+    :validations="'{{ $validations }}'"
+    :value="{{ json_encode(old($attribute->code) ?? $value) }}"
+>
+    <div class="flex items-center mt-2">
+        <input
+            type="text"
+            class="w-full border px-3 py-2.5 text-sm transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+        >
 
-@once
-    @push('scripts')
-        <script type="text/x-template" id="phone-component-template">
-            <div class="phone-control">
-                <div
-                    class="form-group input-group"
-                    v-for="(contactNumber, index) in contactNumbers"
-                    {{-- :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']" --}}
-                >
-                    <input
-                        type="text"
-                        :name="attribute['code'] + '[' + index + '][value]'"
-                        class="control"
-                        v-model="contactNumber['value']"
-                        v-validate="validations ? validations + '|unique_contact_number' : 'unique_contact_number'"
-                        :data-vv-as="attribute['name']"
-                    />
+        <div class="relative">
+            <select class="custom-select w-full border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6">
+                <option value="work" selected>Work</option>
+                <option value="home">Home</option>
+            </select>
+        </div>
+    </div>
 
-                    <div class="input-group-append">
-                        <select
-                            :name="attribute['code'] + '[' + index + '][label]'"
-                            class="control"
-                            v-model="contactNumber['label']"
-                        >
-                            <option value="work">{{ __('admin::app.common.work') }}</option>
-                            <option value="home">{{ __('admin::app.common.home') }}</option>
-                        </select>
-                    </div>
+    <span class="cursor-pointer">
+        + @lang("admin::app.common.add_more")
+    </span>
+</v-phone-component>
 
-                    <i class="icon trash-icon" v-if="contactNumbers.length > 1" @click="removePhone(contactNumber)"></i>
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-phone-component-template"
+    >
+        <template v-for="(contactNumber, index) in contactNumbers">
+            <div class="flex items-center mt-2">
+                <x-admin::form.control-group.control
+                    type="text"
+                    ::id="attribute.code"
+                    ::name="`${attribute['code']}[${index}][value]`"
+                    class="rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+                    ::rules="getValidation"
+                    ::label="attribute.name"
+                    v-model="contactNumber['value']"
+                />
 
-                    {{-- <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') }}
-                    </span> --}}
+                <div class="relative">
+                    <x-admin::form.control-group.control
+                        type="select"
+                        ::id="attribute.code"
+                        ::name="`${attribute['code']}[${index}][label]`"
+                        class="rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6"
+                        rules="required"
+                        ::label="attribute.name"
+                        v-model="contactNumber['label']"
+                    >
+                        <option value="work">@lang('admin::app.common.work')</option>
+                        <option value="home">@lang('admin::app.common.home')</option>
+                    </x-admin::form.control-group.control>
                 </div>
 
-                <a class="add-more-link" href @click.prevent="addPhone">+ {{ __('admin::app.common.add_more') }}</a>
+                <i
+                    v-if="contactNumbers.length > 1"
+                    class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                    @click="remove(contactNumber)"
+                ></i>
             </div>
-        </script>
 
-        <script type="module">
-            app.component('phone-component', {
+            <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}][value]`"/>
+        </template>
 
-                template: '#phone-component-template',
+        <span
+            class="cursor-pointer"
+            @click="add"
+        >
+            + @lang("admin::app.common.add_more")
+        </span>
+    </script>
 
-                props: ['validations', 'attribute', 'data'],
+    <script type="module">
+        app.component('v-phone-component', {
+            template: '#v-phone-component-template',
 
-                inject: ['$validator'],
+            props: ['validations', 'attribute', 'value'],
 
-                data: function () {
+            data() {
+                return {
+                    contactNumbers: this.value || [{'value': '', 'label': 'work'}],
+                };
+            },
+
+            watch: { 
+                value(newVal, oldVal) {
+                    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                        this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
+                    }
+                },
+            },
+
+            computed: {
+                getValidation() {
                     return {
-                        contactNumbers: this.data,
-                    }
+                        numeric: true,
+                        unique_contact_number: this.contactNumbers ?? [],
+                        ...(this.validations === 'required' ? { required: true } : {}),
+                    };
                 },
+            },
 
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                            this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
-                        }
-                    }
-                },
+            created() {
+                this.extendValidations();
 
-                created: function() {
-                    // this.extendValidator();
-
-                    if (! this.contactNumbers || ! this.contactNumbers.length) {
-                        this.contactNumbers = [{
-                            'value': '',
-                            'label': 'work'
-                        }];
-                    }
-                },
-
-                methods: {
-                    addPhone: function() {
-                        this.contactNumbers.push({
-                            'value': '',
-                            'label': 'work'
-                        })
-                    },
-
-                    removePhone: function(contactNumber) {
-                        const index = this.contactNumbers.indexOf(contactNumber);
-
-                        Vue.delete(this.contactNumbers, index);
-                    },
-
-                    extendValidator: function () {
-                        this.$validator.extend('unique_contact_number', {
-                            getMessage: (field) => '{!! __('admin::app.common.duplicate-value') !!}',
-
-                            validate: (value) => {
-                                let filteredContactNumbers = this.contactNumbers.filter((contactNumber) => {
-                                    return contactNumber.value == value;
-                                });
-
-                                if (filteredContactNumbers.length > 1) {
-                                    return false;
-                                }
-
-                                this.removeUniqueErrors();
-
-                                return true;
-                            }
-                        });
-                    },
-
-                    isDuplicateExists: function () {
-                        let contactNumbers = this.contactNumbers.map((contactNumber) => contactNumber.value);
-
-                        return contactNumbers.some((contactNumber, index) => contactNumbers.indexOf(contactNumber) != index);
-                    },
-
-                    removeUniqueErrors: function () {
-                        if (! this.isDuplicateExists()) {
-                            this.errors
-                                .items
-                                .filter(error => error.rule === 'unique')
-                                .map(error => error.id)
-                                .forEach((id) => {
-                                    this.errors.removeById(id);
-                                });
-                        }
-                    }
+                if (! this.contactNumbers || ! this.contactNumbers.length) {
+                    this.contactNumbers = [{
+                        'value': '',
+                        'label': 'work'
+                    }];
                 }
-            });
-        </script>
+            },
 
-    @endpush
-@endonce
+            methods: {
+                add() {
+                    this.contactNumbers.push({
+                        'value': '',
+                        'label': 'work'
+                    });
+                },
+
+                remove(contactNumber) {
+                    this.contactNumbers = this.contactNumbers.filter(number => number !== contactNumber);
+                },
+
+                extendValidations() {
+                    defineRule('unique_contact_number', (value, contactNumbers) => {
+                        if (
+                            ! value
+                            || ! value.length
+                        ) {
+                            return true;
+                        }
+
+                        const phoneOccurrences = contactNumbers.filter(contactNumber => contactNumber.value === value).length;
+
+                        if (phoneOccurrences > 1) {
+                            return 'This phone number is already used';
+                        }
+
+                        return true;
+                    });
+                },
+            },
+        });
+    </script>
+@endPushOnce

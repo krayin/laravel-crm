@@ -2,7 +2,25 @@
     :attribute="{{ json_encode($attribute) }}"
     :validations="'{{ $validations }}'"
     :value="{{ json_encode(old($attribute->code) ?? $value) }}"
-></v-email-component>
+>
+    <div class="flex items-center mt-2">
+        <input
+            type="text"
+            class="w-full border px-3 py-2.5 text-sm transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+        >
+
+        <div class="relative">
+            <select class="custom-select w-full border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6">
+                <option value="work" selected>Work</option>
+                <option value="home">Home</option>
+            </select>
+        </div>
+    </div>
+
+    <span class="cursor-pointer">
+        + @lang("admin::app.common.add_more")
+    </span>
+</v-email-component>
 
 @pushOnce('scripts')
     <script
@@ -43,15 +61,15 @@
                 ></i>
             </div>
 
-            <x-admin::form.control-group.error ::name="attribute['code'] + '[' + index + '][value]'"/>
+            <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}][value]`"/>
         </template>
 
-        <a
+        <span
             class="cursor-pointer"
-            @click.prevent="add"
+            @click="add"
         >
             + @lang("admin::app.common.add_more")
-        </a>
+        </span>
     </script>
 
     <script type="module">
@@ -62,7 +80,7 @@
 
             data() {
                 return {
-                    emails: this.value,
+                    emails: this.value || [{'value': '', 'label': 'work'}],
                 };
             },
 
@@ -74,7 +92,7 @@
                     ) {
                         this.emails = newValue || [{'value': '', 'label': 'work'}];
                     }
-                }
+                },
             },
 
             computed: {
@@ -89,16 +107,6 @@
 
             created() {
                 this.extendValidations();
-
-                if (
-                    ! this.emails
-                    || ! this.emails.length
-                ) {
-                    this.emails = [{
-                        'value': '',
-                        'label': 'work'
-                    }];
-                }
             },
 
             methods: {
@@ -106,11 +114,11 @@
                     this.emails.push({
                         'value': '',
                         'label': 'work'
-                    })
+                    });
                 },
 
                 remove(email) {
-                    this.emails = this.emails.filter((item) => item !== email);
+                    this.emails = this.emails.filter(item => item !== email);
                 },
 
                 extendValidations() {

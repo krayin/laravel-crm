@@ -72,4 +72,12 @@ import VeeValidate from "./plugins/vee-validate";
     VeeValidate
 ].forEach((plugin) => app.use(plugin));
 
+
+/**
+ * Global directives.
+ */
+import Debounce from "./directives/debounce";
+
+app.directive("debounce", Debounce);
+
 export default app;
