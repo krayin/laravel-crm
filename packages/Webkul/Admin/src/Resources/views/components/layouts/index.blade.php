@@ -91,10 +91,10 @@
         class="h-full"
     >
         <!-- Flash Message Blade Component -->
-        {{-- <x-admin::flash-group /> --}}
+        <x-admin::flash-group />
 
         <!-- Confirm Modal Blade Component -->
-        {{-- <x-admin::modal.confirm /> --}}
+        <x-admin::modal.confirm />
 
         {!! view_render_event('bagisto.admin.layout.content.before') !!}
 

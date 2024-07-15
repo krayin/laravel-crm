@@ -34,7 +34,9 @@
 
     @stack('meta')
 
-    @bagistoVite(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+    {{
+        vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+    }}
 
     <link
         href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"

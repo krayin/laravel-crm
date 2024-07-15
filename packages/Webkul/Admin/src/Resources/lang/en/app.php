@@ -1,5 +1,92 @@
 <?php
     return [
+        'components' => [
+            'datagrid' => [
+                'index' => [
+                    'no-records-selected'              => 'No records have been selected.',
+                    'must-select-a-mass-action-option' => 'You must select a mass action\'s option.',
+                    'must-select-a-mass-action'        => 'You must select a mass action.',
+                ],
+    
+                'toolbar' => [
+                    'length-of' => ':length of',
+                    'of'        => 'of',
+                    'per-page'  => 'Per Page',
+                    'results'   => ':total Results',
+                    'selected'  => ':total Selected',
+    
+                    'mass-actions' => [
+                        'submit'        => 'Submit',
+                        'select-option' => 'Select Option',
+                        'select-action' => 'Select Action',
+                    ],
+    
+                    'filter' => [
+                        'apply-filters-btn' => 'Apply Filters',
+                        'back-btn'          => 'Back',
+                        'create-new-filter' => 'Create New Filter',
+                        'custom-filters'    => 'Custom Filters',
+                        'delete-error'      => 'Something went wrong while deleting the filter, please try again.',
+                        'delete-success'    => 'Filter has been deleted successfully.',
+                        'empty-description' => 'There is no selected filters available to save. Please select filters to save.',
+                        'empty-title'       => 'Add Filters to Save',
+                        'name'              => 'Name',
+                        'quick-filters'     => 'Quick Filters',
+                        'save-btn'          => 'Save',
+                        'save-filter'       => 'Save Filter',
+                        'saved-success'     => 'Filter has been saved successfully.',
+                        'selected-filters'  => 'Selected Filters',
+                        'title'             => 'Filter',
+                        'update'            => 'Update',
+                        'update-filter'     => 'Update Filter',
+                        'updated-success'   => 'Filter has been updated successfully.',
+                    ],
+    
+                    'search' => [
+                        'title' => 'Search',
+                    ],
+                ],
+    
+                'filters' => [
+                    'select' => 'Select',
+                    'title'  => 'Filters',
+    
+                    'dropdown' => [
+                        'searchable' => [
+                            'atleast-two-chars' => 'Type atleast 2 characters...',
+                            'no-results'        => 'No result found...',
+                        ],
+                    ],
+    
+                    'custom-filters' => [
+                        'clear-all' => 'Clear All',
+                        'title'     => 'Custom Filters',
+                    ],
+    
+                    'boolean-options' => [
+                        'false' => 'False',
+                        'true'  => 'True',
+                    ],
+    
+                    'date-options' => [
+                        'last-month'        => 'Last Month',
+                        'last-six-months'   => 'Last 6 Months',
+                        'last-three-months' => 'Last 3 Months',
+                        'this-month'        => 'This Month',
+                        'this-week'         => 'This Week',
+                        'this-year'         => 'This Year',
+                        'today'             => 'Today',
+                        'yesterday'         => 'Yesterday',
+                    ],
+                ],
+    
+                'table' => [
+                    'actions'              => 'Actions',
+                    'no-records-available' => 'No Records Available.',
+                ],
+            ],
+        ],
+
         'dashboard' => [
             'title'             => 'Dashboard',
             'cards'             => 'Cards',

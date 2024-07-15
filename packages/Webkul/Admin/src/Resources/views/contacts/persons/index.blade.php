@@ -5,7 +5,7 @@
 
     <div class="flex items-center justify-between">
         <p class="text-xl font-bold text-gray-800 dark:text-white">
-            @lang('admin::app.customers.customers.index.title')
+            Person
         </p>
 
         <div class="flex items-center gap-x-2.5">
@@ -15,7 +15,7 @@
                     class="primary-button"
                     @click="$refs.createCustomerComponent.openModal()"
                 >
-                    @lang('admin::app.customers.customers.index.create.create-btn')
+                    Create
                 </button>
             </div>
         </div>
