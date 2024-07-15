@@ -15,15 +15,26 @@ class ProductDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('products')
-            ->addSelect(
+            ->leftJoin('product_inventories', 'products.id', '=', 'product_inventories.product_id')
+            ->select(
                 'products.id',
                 'products.sku',
                 'products.name',
                 'products.price',
-                'products.quantity'
-            );
+            )
+            ->addSelect(DB::raw('SUM(product_inventories.in_stock) as total_in_stock'))
+            ->addSelect(DB::raw('SUM(product_inventories.allocated) as total_allocated'))
+            ->addSelect(DB::raw('SUM(product_inventories.in_stock - product_inventories.allocated) as total_on_hand'))
+            ->groupBy('products.id');
+
+        if (request()->route('id')) {
+            $queryBuilder->where('product_inventories.warehouse_id', request()->route('id'));
+        }
 
         $this->addFilter('id', 'products.id');
+        $this->addFilter('total_in_stock', DB::raw('SUM(product_inventories.in_stock'));
+        $this->addFilter('total_allocated', DB::raw('SUM(product_inventories.allocated'));
+        $this->addFilter('total_on_hand', DB::raw('SUM(product_inventories.in_stock - product_inventories.allocated'));
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -60,8 +71,22 @@ class ProductDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'quantity',
-            'label'    => trans('admin::app.datagrid.quantity'),
+            'index'    => 'total_in_stock',
+            'label'    => trans('admin::app.datagrid.in-stock'),
+            'type'     => 'string',
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'    => 'total_allocated',
+            'label'    => trans('admin::app.datagrid.allocated'),
+            'type'     => 'string',
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'    => 'total_on_hand',
+            'label'    => trans('admin::app.datagrid.on-hand'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -75,6 +100,13 @@ class ProductDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
+            'title'  => trans('ui::app.datagrid.view'),
+            'method' => 'GET',
+            'route'  => 'admin.products.view',
+            'icon'   => 'eye-icon',
+        ]);
+
+        $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
             'route'  => 'admin.products.edit',
@@ -85,7 +117,7 @@ class ProductDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.products.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'user']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'user']),
             'icon'         => 'trash-icon',
         ]);
     }

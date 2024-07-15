@@ -63,6 +63,19 @@ class ProductController extends Controller
     }
 
     /**
+     * Show the form for viewing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function view($id)
+    {
+        $product = $this->productRepository->findOrFail($id);
+
+        return view('admin::products.view', compact('product'));
+    }
+
+    /**
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
@@ -72,7 +85,21 @@ class ProductController extends Controller
     {
         $product = $this->productRepository->findOrFail($id);
 
-        return view('admin::products.edit', compact('product'));
+        $inventories = $product->inventories()
+            ->with('location')
+            ->get()
+            ->map(function ($inventory) {
+                return [
+                    'id'                    => $inventory->id,
+                    'name'                  => $inventory->location->name,
+                    'warehouse_id'          => $inventory->warehouse_id,
+                    'warehouse_location_id' => $inventory->warehouse_location_id,
+                    'in_stock'              => $inventory->in_stock,
+                    'allocated'             => $inventory->allocated,
+                ];
+            });
+
+        return view('admin::products.edit', compact('product', 'inventories'));
     }
 
     /**
@@ -96,6 +123,36 @@ class ProductController extends Controller
     }
 
     /**
+     * Store a newly created resource in storage.
+     *
+     * @param int  $id
+     * @param int  $warehouseId
+     * @return \Illuminate\Http\Response
+     */
+    public function storeInventories($id, $warehouseId = null)
+    {
+        $this->validate(request(), [
+            'inventories'                         => 'array',
+            'inventories.*.warehouse_location_id' => 'required',
+            'inventories.*.warehouse_id'          => 'required',
+            'inventories.*.in_stock'              => 'required|integer|min:0',
+            'inventories.*.allocated'             => 'required|integer|min:0',
+        ]);
+
+        $product = $this->productRepository->findOrFail($id);
+
+        Event::dispatch('product.update.before', $id);
+
+        $this->productRepository->saveInventories(request()->all(), $id, $warehouseId);
+
+        Event::dispatch('product.update.after', $product);
+
+        return response()->json([
+            'message' => trans('admin::app.products.update-success'),
+        ], 200);
+    }
+
+    /**
      * Search product results
      *
      * @return \Illuminate\Http\Response
@@ -107,6 +164,19 @@ class ProductController extends Controller
         ]);
 
         return response()->json($results);
+    }
+
+    /**
+     * Returns product inventories grouped by warehouse.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function warehouses($id)
+    {
+        $warehouses = $this->productRepository->getInventoriesGroupedByWarehouse($id);
+
+        return response()->json(array_values($warehouses));
     }
 
     /**

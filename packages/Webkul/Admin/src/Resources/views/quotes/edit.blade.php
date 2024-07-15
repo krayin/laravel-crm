@@ -9,7 +9,6 @@
         {!! view_render_event('admin.quotes.edit.header.before', ['quote' => $quote]) !!}
 
         <div class="page-header">
-
             {{ Breadcrumbs::render('quotes.edit', $quote) }}
 
             <div class="page-title">
@@ -20,10 +19,8 @@
         {!! view_render_event('admin.quotes.edit.header.after', ['quote' => $quote]) !!}
 
         <form method="POST" action="{{ route('admin.quotes.update', $quote->id) }}" @submit.prevent="onSubmit" enctype="multipart/form-data">
-
             <div class="page-content">
                 <div class="form-container">
-
                     <div class="panel">
                         <div class="panel-header">
                             {!! view_render_event('admin.quotes.edit.form_buttons.before', ['quote' => $quote]) !!}
@@ -48,7 +45,6 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.quote-information') }}'" :active="true">
                                 <div slot="body">
-
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
                                             ->scopeQuery(function($query){
@@ -98,7 +94,6 @@
                                             :data='@json($lookUpEntityData)'
                                         ></lookup-component>
                                     </div>
-
                                 </div>
                             </accordian>
 
@@ -109,7 +104,6 @@
 
                             <accordian :title="'{{ __('admin::app.quotes.address-information') }}'" :active="true">
                                 <div slot="body">
-
                                     @include('admin::common.custom-attributes.edit', [
                                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
                                         ->scopeQuery(function($query){
@@ -122,7 +116,6 @@
                                         })->get(),
                                         'entity'           => $quote,
                                     ])
-
                                 </div>
                             </accordian>
 
@@ -144,13 +137,9 @@
                             {!! view_render_event('admin.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
                         </div>
                     </div>
-
                 </div>
-
             </div>
-
         </form>
-
     </div>
 @stop
 
@@ -159,7 +148,6 @@
         <div class="quote-item-list">
             <div class="table">
                 <table>
-
                     <thead>
                         <tr>
                             <th class="name">
@@ -217,8 +205,9 @@
                             <th class="total">
                                 <div class="form-group">     
                                     {{ __('admin::app.quotes.total') }}
+
                                     <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
-                                    </div>
+                                </div>
                             </th>
 
                             <th class="actions"></th>
@@ -226,7 +215,6 @@
                     </thead>
 
                     <tbody>
-
                         <quote-item
                             v-for='(product, index) in products'
                             :product="product"
@@ -234,9 +222,7 @@
                             :index="index"
                             @onRemoveProduct="removeProduct($event)"
                         ></quote-item>
-
                     </tbody>
-
                 </table>
 
                 <a class="add-more-link" href @click.prevent="addProduct">+ {{ __('admin::app.common.add_more') }}</a>

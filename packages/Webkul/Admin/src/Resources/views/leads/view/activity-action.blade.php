@@ -17,7 +17,6 @@
                     data-vv-scope="note-form"
                     @submit.prevent="onSubmit($event, 'note-form')"
                 >
-
                     <input type="hidden" name="type" value="note">
 
                     <input type="hidden" name="lead_id" value="{{ $lead->id }}">
@@ -43,7 +42,6 @@
                     <button type="submit" class="btn btn-md btn-primary">
                         {{ __('admin::app.leads.save') }}
                     </button>
-
                 </form>
             </tab>
 
@@ -60,7 +58,6 @@
                         data-vv-scope="activity-form"
                         @submit.prevent="checkIfOverlapping($event, 'activity-form')"
                     >
-
                         <input type="hidden" name="lead_id" value="{{ $lead->id }}">
 
                         @csrf()
@@ -146,8 +143,7 @@
                             <input name="location" class="control"/>
                         </div>
 
-                        <div class="form-group video-conference">
-                        </div>
+                        <div class="form-group video-conference"></div>
 
                         <div class="form-group">
                             <label for="comment">{{ __('admin::app.leads.description') }}</label>
@@ -217,7 +213,6 @@
                         <button type="submit" class="btn btn-md btn-primary">
                             {{ __('admin::app.leads.save') }}
                         </button>
-
                     </form>
                 </tab>
             @endif
@@ -236,7 +231,6 @@
                         data-vv-scope="email-form"
                         @submit.prevent="onSubmit($event, 'email-form')"
                     >
-
                         @csrf()
 
                         <input type="hidden" name="lead_id" value="{{ $lead->id }}"/>
@@ -351,7 +345,6 @@
                     data-vv-scope="file-form"
                     @submit.prevent="onSubmit($event, 'file-form')"
                 >
-
                     <input type="hidden" name="type" value="file">
 
                     <input type="hidden" name="lead_id" value="{{ $lead->id }}">
@@ -390,7 +383,6 @@
                     <button type="submit" class="btn btn-md btn-primary">
                         {{ __('admin::app.leads.upload') }}
                     </button>
-
                 </form>
             </tab>
 

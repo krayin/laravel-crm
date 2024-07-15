@@ -136,7 +136,7 @@ class PersonDataGrid extends DataGrid
                 'title'        => trans('ui::app.datagrid.delete'),
                 'method'       => 'DELETE',
                 'route'        => 'admin.contacts.persons.delete',
-                'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
+                'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
                 'icon'         => 'trash-icon',
             ]);
         }

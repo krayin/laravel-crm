@@ -81,5 +81,14 @@ return [
             'email-to-participants-after-activity-updation' => 'إرسال بريد إلكتروني للمشاركين بعد تحديث النشاط',
             'email-to-participants-after-activity-creation' => 'إرسال بريد إلكتروني للمشاركين بعد إنشاء النشاط',
         ],
+
+        'warehouses' => [
+            'contact-name'    => 'اسم جهة الاتصال',
+            'contact-emails'  => 'البريد الإلكتروني لجهة الاتصال',
+            'contact-numbers' => 'أرقام جهة الاتصال',
+            'contact-address' => 'عنوان جهة الاتصال',
+            'description'     => 'الوصف',
+            'name'            => 'الاسم',
+        ],
     ],
 ];

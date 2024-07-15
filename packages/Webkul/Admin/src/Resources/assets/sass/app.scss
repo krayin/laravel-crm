@@ -200,7 +200,7 @@ body {
 
 .navbar-left {
     left: 0;
-    bottom: 0;
+    bottom: 46px;
     top: 60px;
     z-index: 2;
     width: 48px;
@@ -222,6 +222,7 @@ body {
                 padding: 16px 12px;
                 color: $secondary-font-color;
                 width: 100%;
+                min-height: 54px;
 
                 .icon {
                     display: inline-block;
@@ -296,6 +297,15 @@ body {
         }
     }
 
+    .menubar-bottom {
+        padding: 12px;
+        cursor: pointer;
+        position: fixed;
+        bottom: 0;
+        width: 47px;
+        background-color: $dark-color;
+    }
+
     &.open {
         width: 250px;
         overflow-x: auto;
@@ -359,14 +369,10 @@ body {
                 }
             }
         }
-    }
 
-    .menubar-bottom {
-        padding: 12px;
-        cursor: pointer;
-        position: absolute;
-        width: calc(100% - 1px);
-        background-color: $dark-color;
+        .menubar-bottom {
+            width: 249px;
+        }
     }
 }
 
@@ -988,6 +994,10 @@ body {
 }
 
 .custom-attribute-view {
+    h3 {
+        margin: 0 0 20px 0;
+    }
+
     .attribute-value-row {
         width: 100%;
         padding: 6px;
@@ -2357,6 +2367,63 @@ body {
 
                     .dropdown-list {
                         right: 60px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.page-content.warehouse-view {
+    .panel {
+        .panel-body {
+            display: flex;
+        }
+
+        &.warehouse-locations {
+            padding: 40px 0;
+
+            .panel-body {
+                padding: 0;
+                background: transparent;
+
+                table {
+                    margin: 0;
+
+                    tfoot {
+                        td {
+                            span {
+                                cursor: pointer;
+                                color: #0E90D9;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+.page-content.product-view {
+    .panel {
+        table {
+            margin-top: 0;
+        }
+
+        &.product-inventories {
+            table {
+                tfoot {
+                    td {
+                        span {
+                            cursor: pointer;
+                            color: #0E90D9;
+                        }
+
+                        .dropdown-list {
+                            margin-top: 11px;
+                            margin-left: -10px;
+                            font-weight: 400;
+                        }
                     }
                 }
             }

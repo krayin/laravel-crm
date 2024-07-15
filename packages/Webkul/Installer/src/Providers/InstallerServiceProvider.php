@@ -22,6 +22,8 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        
         $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'installer');
 
         Event::listen('krayin.installed', 'Webkul\Installer\Listeners\Installer@installed');

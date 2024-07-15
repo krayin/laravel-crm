@@ -18,7 +18,7 @@ return [
         'export'        => 'يصدر',
         'select-format' => 'حدد التنسيق',
 
-        'massaction' => [
+        'mass-action' => [
             'select_action'         => 'اختر فعلا',
             'mass-delete-confirm'   => 'هل تريد حقًا حذف هذه المختارة:الموارد?',
             'mass-update-status'    => 'هل تريد حقًا تحديث حالة هؤلاء المختارين:الموارد?',

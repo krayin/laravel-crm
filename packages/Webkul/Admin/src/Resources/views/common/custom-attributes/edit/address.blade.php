@@ -7,7 +7,6 @@
 @endif
 
 @push('scripts')
-
     <script type="text/x-template" id="address-component-template">
         <div class="form-group" :class="[errors.has(attribute['code'] + '[address]') || errors.has(attribute['code'] + '[country]') || errors.has(attribute['code'] + '[state]') || errors.has(attribute['code'] + '[city]') || errors.has(attribute['code'] + '[postcode]') ? 'has-error' : '']">
             <div class="address-left">
@@ -20,7 +19,6 @@
             </div>
     
             <div class="address-right">
-
                 <select
                     :name="attribute['code'] + '[country]'"
                     class="control"
@@ -45,13 +43,11 @@
                     data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
                     v-if="haveStates()"
                 >
-
                     <option value="">{{ __('admin::app.common.select-state') }}</option>
 
                     <option v-for='(state, index) in countryStates[country]' :value="state.code">
                         @{{ state.name }}
                     </option>
-
                 </select>
 
                 <input
@@ -64,7 +60,6 @@
                     data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
                     v-else
                 />
-
                 
                 <input
                     type="text"

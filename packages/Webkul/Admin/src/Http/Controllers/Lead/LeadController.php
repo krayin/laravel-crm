@@ -213,6 +213,7 @@ class LeadController extends Controller
     public function update(LeadForm $request, $id)
     {
         Event::dispatch('lead.update.before', $id);
+        
         $data = request()->all();
 
         if ($data['lead_pipeline_stage_id']) {

@@ -62,15 +62,11 @@
                     </span>
 
                     <span class="pull-right">
-
                         @if ($lead->closed_at && in_array($lead->stage->code, ['won', 'lost']))
-                            
                             <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.closed-date:') }}</label>
                             <span title="{{ core()->formatDate($lead->closed_at, 'd M Y') }}">{{ $lead->closed_at->diffForHumans() }}</span>
-
                         @elseif ($lead->expected_close_date)
-
                             <i class="icon calendar-icon"></i>
                             <label>{{ __('admin::app.leads.expected-close-date:') }}</label>
                             <span title="{{ core()->formatDate($lead->expected_close_date, 'd M Y') }}">
@@ -80,7 +76,6 @@
                                     : $lead->expected_close_date->diffForHumans()
                                 }}
                             </span>
-
                         @endif
                     </span>
                 </div>

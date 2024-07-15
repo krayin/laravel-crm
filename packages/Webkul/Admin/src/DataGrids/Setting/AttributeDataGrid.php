@@ -24,34 +24,22 @@ class AttributeDataGrid extends DataGrid
                 'type'      => 'pill',
                 'key'       => 'entity_type',
                 'condition' => 'eq',
-                'values'    => [
-                    [
-                        'name'      => trans('admin::app.leads.all'),
-                        'isActive'  => true,
-                        'key'       => 'all',
-                    ], [
-                        'name'      => trans('admin::app.leads.title'),
-                        'isActive'  => false,
-                        'key'       => 'leads',
-                    ], [
-                        'name'      => trans('admin::app.contacts.persons.title'),
-                        'isActive'  => false,
-                        'key'       => 'persons',
-                    ], [
-                        'name'      => trans('admin::app.contacts.organizations.title'),
-                        'isActive'  => false,
-                        'key'       => 'organizations',
-                    ], [
-                        'name'      => trans('admin::app.products.title'),
-                        'isActive'  => false,
-                        'key'       => 'products',
-                    ], [
-                        'name'      => trans('admin::app.quotes.title'),
-                        'isActive'  => false,
-                        'key'       => 'quotes',
-                    ]
-                ]
-            ]
+                'values'    => array_merge([
+                        [
+                            'name'     => trans('admin::app.leads.all'),
+                            'isActive' => true,
+                            'key'      => 'all',
+                        ],
+                    ],
+                    collect(config('attribute_entity_types'))->map(function ($entityType, $key) {
+                        return [
+                            'name'     => trans($entityType['name']),
+                            'isActive' => false,
+                            'key'      => $key,
+                        ];
+                    })->values()->toArray()
+                ),
+            ],
         ];
     }
 
@@ -63,14 +51,15 @@ class AttributeDataGrid extends DataGrid
     public function prepareQueryBuilder()
     {
         $queryBuilder = DB::table('attributes')
-            ->addSelect(
+            ->select(
                 'attributes.id',
                 'attributes.code',
                 'attributes.name',
                 'attributes.type',
                 'attributes.entity_type',
                 'attributes.is_user_defined as attribute_type'
-            );
+            )
+            ->where('entity_type', '<>', 'locations');
 
         $this->addFilter('id', 'attributes.id');
         $this->addFilter('type', 'attributes.type');
@@ -154,7 +143,7 @@ class AttributeDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.attributes.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'attributes']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'attributes']),
             'icon'         => 'trash-icon',
         ]);
     }

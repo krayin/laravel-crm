@@ -136,9 +136,7 @@
     <body>
         <div class="anonymous-layout-container">
             <div class="center-box">
-
                 <div class="adjacent-center">
-
                     <div class="brand-logo">
                         <img src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" alt="{{ config('app.name') }}"/>
                     </div>
@@ -167,9 +165,7 @@
 
                         <p>© Copyright 2021 <a href="https:krayincrm.com">Krayin</a>, All right reserved.</p>
                     </div>
-
                 </div>
-
             </div>
         </div>
     </body>

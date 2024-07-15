@@ -65,7 +65,7 @@ class SourceDataGrid extends DataGrid
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
             'route'        => 'admin.settings.sources.delete',
-            'confirm_text' => trans('ui::app.datagrid.massaction.delete', ['resource' => 'source']),
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'source']),
             'icon'         => 'trash-icon',
         ]);
     }

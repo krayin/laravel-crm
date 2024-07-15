@@ -81,5 +81,14 @@ return [
             'email-to-participants-after-activity-updation' => 'Emails to participants after activity updation',
             'email-to-participants-after-activity-creation' => 'Emails to participants after activity creation',
         ],
+
+        'warehouses' => [
+            'contact-name'    => 'Contact Name',
+            'contact-emails'  => 'Contact Emails',
+            'contact-numbers' => 'Contact Numbers',
+            'contact-address' => 'Contact Address',
+            'description'     => 'Description',
+            'name'            => 'Name',
+        ],
     ],
 ];

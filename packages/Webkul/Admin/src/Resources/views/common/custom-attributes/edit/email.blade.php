@@ -8,7 +8,6 @@
 
 @once
     @push('scripts')
-
         <script type="text/x-template" id="email-component-template">
             <div class="emails-control">
                 <div
