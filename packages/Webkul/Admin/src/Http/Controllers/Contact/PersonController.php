@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Admin\DataGrids\Contact\PersonDataGrid; 
 
 class PersonController extends Controller
 {
@@ -27,7 +28,7 @@ class PersonController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Contact\PersonDataGrid::class)->toJson();
+            return datagrid(PersonDataGrid::class)->process();
         }
 
         return view('admin::contacts.persons.index');
