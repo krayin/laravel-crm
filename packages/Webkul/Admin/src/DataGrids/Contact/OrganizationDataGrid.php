@@ -30,6 +30,9 @@ class OrganizationDataGrid extends DataGrid
                 'organizations.address',
                 'organizations.created_at'
             );
+
+        $this->addFilter('id', 'organizations.id');
+        $this->addFilter('organization', 'organizations.name');
     }
 
     /**
@@ -50,8 +53,8 @@ class OrganizationDataGrid extends DataGrid
             'label'    => trans('admin::app.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
+            'filterable' => true,
         ]);
-
     }
 
     /**

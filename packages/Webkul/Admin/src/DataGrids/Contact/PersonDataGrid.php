@@ -5,9 +5,17 @@ namespace Webkul\Admin\DataGrids\Contact;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 use Illuminate\Database\Query\Builder;
+use Webkul\Contact\Repositories\OrganizationRepository;
 
 class PersonDataGrid extends DataGrid
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct(protected OrganizationRepository $organizationRepository) {}
+
     /**
      * Prepare query builder.
      */
@@ -26,7 +34,7 @@ class PersonDataGrid extends DataGrid
 
         $this->addFilter('id', 'persons.id');
         $this->addFilter('person_name', 'persons.name');
-        $this->addFilter('organization', 'organizations.id');
+        $this->addFilter('organization', 'organizations.name');
 
         return $queryBuilder;
     }
@@ -78,16 +86,14 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'           => 'organization',
-            'label'           => trans('admin::app.datagrid.organization_name'),
-            'type'            => 'string',
-            'searchable'      => true,
-            'filterable'      => true,
-            'sortable'        => true,
-            'filterable_type' => 'dropdown',
-            'closure'         => function ($row) {
-                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank' class='text-blue-600 hover:underline'>" . $row->organization . "</a>";
-            }
+            'index'              => 'organization',
+            'label'              => trans('admin::app.datagrid.organization_name'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'filterable'         => true,
+            'sortable'           => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->organizationRepository->all(['name as label', 'name as value'])->toArray(),
         ]);
     }
 
