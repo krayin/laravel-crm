@@ -1,10 +1,9 @@
-
 <template v-if="isLoading">
     <x-admin::shimmer.datagrid.toolbar />
 </template>
 
 <template v-else>
-    <div class="mt-7 flex items-center justify-between gap-4 max-md:flex-wrap">
+    <div class="mt-2 flex items-center justify-between gap-4 h-[58px] pr-4 pl-2 border border-b-0 rounded-t-lg bg-white border-gray-200 max-md:flex-wrap">
         <!-- Left Toolbar -->
         <div class="flex gap-x-1">
             <!-- Mass Actions Panel -->
@@ -37,7 +36,7 @@
                         available,
                         applied,
                         search,
-                        getSearchedValues
+                        getSearchedValues,
                     }">
                         <slot
                             name="search"
@@ -53,38 +52,7 @@
         </div>
 
         <!-- Right Toolbar -->
-        <div class="flex gap-x-4">                   
-            <!-- Filter Panel -->
-            <x-admin::datagrid.toolbar.filter>
-                <template #filter="{
-                    available,
-                    applied,
-                    filters,
-                    applyFilter,
-                    applyColumnValues,
-                    findAppliedColumn,
-                    hasAnyAppliedColumnValues,
-                    getAppliedColumnValues,
-                    removeAppliedColumnValue,
-                    removeAppliedColumnAllValues
-                }">
-                    <slot
-                        name="filter"
-                        :available="available"
-                        :applied="applied"
-                        :filters="filters"
-                        :apply-filter="applyFilter"
-                        :apply-column-values="applyColumnValues"
-                        :find-applied-column="findAppliedColumn"
-                        :has-any-applied-column-values="hasAnyAppliedColumnValues"
-                        :get-applied-column-values="getAppliedColumnValues"
-                        :remove-applied-column-value="removeAppliedColumnValue"
-                        :remove-applied-column-all-values="removeAppliedColumnAllValues"
-                    >
-                    </slot>
-                </template>
-            </x-admin::datagrid.toolbar.filter>
-
+        <div class="flex gap-x-4">   
             <!-- Pagination Panel -->
             <x-admin::datagrid.toolbar.pagination>
                 <template #pagination="{

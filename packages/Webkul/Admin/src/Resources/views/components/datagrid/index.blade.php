@@ -13,7 +13,7 @@
             <!-- Toolbar -->
             <x-admin::datagrid.toolbar />
 
-            <div class="mt-4 flex">
+            <div class="flex">
                 <x-admin::datagrid.table :isMultiRow="$isMultiRow">
                     <template #header="{
                         isLoading,

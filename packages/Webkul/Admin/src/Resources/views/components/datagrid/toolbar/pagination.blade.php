@@ -26,18 +26,24 @@
 
             <template v-else>
                 <div class="flex items-center gap-x-2">
+                    <p class="whitespace-nowrap text-gray-600 dark:text-gray-300 max-sm:hidden">
+                        @lang('admin::app.components.datagrid.toolbar.per-page')
+                    </p>
+
                     <x-admin::dropdown>
                         <x-slot:toggle>
-                            <button
-                                type="button"
-                                class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                            >
-                                <span>
-                                    @{{ applied.pagination.perPage }}
-                                </span>
-
-                                <span class="icon-sort-down text-2xl"></span>
-                            </button>
+                            <div class="flex items-center gap-1">
+                                <button
+                                    type="button"
+                                    class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                >
+                                    <span>
+                                        @{{ applied.pagination.perPage }}
+                                    </span>
+    
+                                    <span class="icon-sort-down text-2xl"></span>
+                                </button>
+                            </div>
                         </x-slot>
 
                         <x-slot:menu>
@@ -49,26 +55,20 @@
                             </x-admin::dropdown.menu.item>
                         </x-slot>
                     </x-admin::dropdown>
-
-                    <p class="whitespace-nowrap text-gray-600 dark:text-gray-300 max-sm:hidden">
-                        @lang('admin::app.components.datagrid.toolbar.per-page')
-                    </p>
-
-                    <input
-                        type="text"
-                        class="inline-flex min-h-[38px] max-w-10 appearance-none items-center justify-center gap-x-1 rounded-md border bg-white px-3 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 focus:outline-none dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 max-sm:hidden"
-                        :value="available.meta.current_page"
-                        @change="changePage(parseInt($event.target.value))"
-                    >
-
+                   
                     <div class="whitespace-nowrap text-gray-600 dark:text-gray-300">
+                        <span>
+                            @{{ available.meta.from }} - @{{ available.meta.to }}
+                        </span>
+
                         <span>
                             @lang('admin::app.components.datagrid.toolbar.of')
                         </span>
 
                         <span>
-                            @{{ available.meta.last_page }}
+                            @{{ available.meta.total }}
                         </span>
+                       
                     </div>
 
                     <div class="flex items-center gap-1">

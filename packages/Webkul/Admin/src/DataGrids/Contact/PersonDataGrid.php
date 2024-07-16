@@ -49,6 +49,12 @@ class PersonDataGrid extends DataGrid
             'label'    => trans('admin::app.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
+            'closure'  => function ($row) {
+                return '<div class="flex items-center gap-3">
+                        <div class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brandColor text-sm font-semibold leading-6 text-white transition-all hover:bg-blue-500 focus:bg-blue-500 uppercase">'.substr($row->person_name, 0, 2).'</div>
+                        <span class="text-base font-small">'.$row->person_name.'</span>
+                    </div>';
+            },
         ]);
 
         $this->addColumn([
@@ -77,6 +83,7 @@ class PersonDataGrid extends DataGrid
             'type'            => 'string',
             'searchable'      => true,
             'filterable'      => true,
+            'sortable'        => true,
             'filterable_type' => 'dropdown',
             'closure'         => function ($row) {
                 return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank' class='text-blue-600 hover:underline'>" . $row->organization . "</a>";
