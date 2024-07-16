@@ -7,10 +7,7 @@
         <nav class="grid w-full gap-2">
             <!-- Navigation Menu -->
             @foreach (menu()->getItems('admin') as $menuItem)
-                <div
-                    class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}"
-                    onmouseenter="adjustSubMenuPosition(event)"
-                >
+                <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                     <a
                         href="{{ $menuItem->getUrl() }}"
                         class="flex gap-2.5 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-blue-600 rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
