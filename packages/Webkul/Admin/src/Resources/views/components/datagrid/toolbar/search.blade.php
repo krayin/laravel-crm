@@ -2,7 +2,10 @@
     :is-loading="isLoading"
     :available="available"
     :applied="applied"
+    :src="src"
     @search="search"
+    @filter="filter"
+    @applySavedFilter="applySavedFilter"
 >
     {{ $slot }}
 </v-datagrid-search>
@@ -87,9 +90,9 @@
         app.component('v-datagrid-search', {
             template: '#v-datagrid-search-template',
 
-            props: ['isLoading', 'available', 'applied'],
+            props: ['isLoading', 'available', 'applied', 'src'],
 
-            emits: ['search'],
+            emits: ['search', 'filter', 'applySavedFilter'],
 
             data() {
                 return {
@@ -133,6 +136,14 @@
                     }
 
                     this.$emit('search', this.filters);
+                },
+
+                filter(filter) {
+                    this.$emit('filter', filter);
+                },
+
+                applySavedFilter(filter) {
+                    this.$emit('applySavedFilter', filter);
                 },
 
                 /**

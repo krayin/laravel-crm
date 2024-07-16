@@ -1,17 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController;
 
 Route::group(['middleware' => ['web', 'admin_locale']], function () {
     Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin')->name('krayin.home');
 
-    // datagrid saved filters test routes
-    Route::post('test/update', 'Webkul\Admin\Http\Controllers\TestController@index')->name('admin.datagrid.saved_filters.update');
-    Route::post('test', 'Webkul\Admin\Http\Controllers\TestController@index')->name('admin.datagrid.saved_filters.store');
-    Route::get('index', function() {
-        return [];
-        })->name('admin.datagrid.saved_filters.index');
-    Route::get('create/{id}', 'Webkul\Admin\Http\Controllers\TestController@create')->name('admin.datagrid.saved_filters.destroy');
+    Route::get('create/{id}', 'Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController@create')->name('admin.datagrid.saved_filters.destroy');
 
     Route::prefix(config('app.admin_path'))->group(function () {
 
@@ -455,6 +450,16 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::put('mass-destroy', 'TagController@massDestroy')->name('admin.settings.tags.mass_delete');
                 });
+            });
+
+            Route::controller(SavedFilterController::class)->prefix('datagrid/saved-filters')->group(function () {
+                Route::post('', 'store')->name('admin.datagrid.saved_filters.store');
+        
+                Route::get('', 'get')->name('admin.datagrid.saved_filters.index');
+        
+                Route::put('{id}', 'update')->name('admin.datagrid.saved_filters.update');
+        
+                Route::delete('{id}', 'destroy')->name('admin.datagrid.saved_filters.destroy');
             });
 
             // Configuration Routes
