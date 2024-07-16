@@ -1,4 +1,3 @@
-{{-- TODO: need to look into this --}}
 @php
     $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
 @endphp
@@ -67,7 +66,7 @@
         app.component('v-lookup-component', {
             template: '#v-lookup-component-template',
 
-            props: ['validations', 'attribute', 'src', 'value'],
+            props: ['validations', 'attribute', 'value'],
 
             data() {
                 return {
@@ -79,7 +78,7 @@
 
                     entityId: null,
 
-                    searchRoute: this.src ?? `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`,
+                    searchRoute: `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`,
                 };
             },
 
@@ -113,7 +112,7 @@
                 search(event) {
                     const searchTerm = event.target.value;
 
-                    if (searchTerm <= 1) {
+                    if (searchTerm.length <= 2) {
                         this.searchedResults = [];
 
                         this.isDropdownOpen = false;

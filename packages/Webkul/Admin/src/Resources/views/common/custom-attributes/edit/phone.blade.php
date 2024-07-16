@@ -62,6 +62,8 @@
             </div>
 
             <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}][value]`"/>
+
+            <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}].value`"/>
         </template>
 
         <span

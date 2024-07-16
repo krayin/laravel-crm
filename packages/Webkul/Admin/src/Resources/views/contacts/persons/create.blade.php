@@ -9,7 +9,6 @@
         :action="route('admin.contacts.persons.store')"
         enctype="multipart/form-data"
     >
-
         {!! view_render_event('bagisto.admin.cms.pages.create.create_form_controls.before') !!}
 
         <div class="flex items-center justify-between gap-4 max-sm:flex-wrap">
@@ -42,13 +41,11 @@
         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                    
                     @include('admin::common.custom-attributes.edit', [
                         'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             'entity_type' => 'persons',
                         ]),
                     ])
-                  
                 </div>
             </div>
         </div>
