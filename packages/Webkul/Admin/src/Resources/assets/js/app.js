@@ -13,7 +13,9 @@ import { createApp } from "vue/dist/vue.esm-bundler";
  */
 window.app = createApp({
     data() {
-        return {};
+        return {
+            isMenuFocused: false,
+        };
     },
 
     methods: {
@@ -35,6 +37,10 @@ window.app = createApp({
         },
 
         handleMouseOver(event) {
+            if (this.$data.isMenuFocused) {
+                return;
+            }
+
             const parentElement = event.currentTarget.parentElement;
              
             if (parentElement.classList.contains('sidebar-collapsed')) {
@@ -46,6 +52,10 @@ window.app = createApp({
         },
 
         handleMouseLeave(event) {
+            if (this.$data.isMenuFocused) {
+                return;
+            }
+
             const parentElement = event.currentTarget.parentElement;
              
             if (parentElement.classList.contains('sidebar-not-collapsed')) {
