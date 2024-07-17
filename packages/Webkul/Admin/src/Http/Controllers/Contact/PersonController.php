@@ -2,16 +2,22 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Admin\DataGrids\Contact\PersonDataGrid; 
+use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+
+use function Pest\Laravel\call;
 
 class PersonController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Create a new class instance.
      *
      * @return void
      */
@@ -22,10 +28,8 @@ class PersonController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
             return datagrid(PersonDataGrid::class)->process();
@@ -36,25 +40,20 @@ class PersonController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::contacts.persons.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(AttributeForm $request): RedirectResponse
     {
         Event::dispatch('contacts.person.create.before');
 
-        $person = $this->personRepository->create($this->sanitizeRequestedPersonData());
+        $person = $this->personRepository->create($this->sanitizeRequestedPersonData($request->all()));
 
         Event::dispatch('contacts.person.create.after', $person);
 
@@ -65,11 +64,8 @@ class PersonController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $person = $this->personRepository->findOrFail($id);
 
@@ -78,16 +74,12 @@ class PersonController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @param int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, $id)
+    public function update(AttributeForm $request, int $id): RedirectResponse
     {
         Event::dispatch('contacts.person.update.before', $id);
 
-        $person = $this->personRepository->update($this->sanitizeRequestedPersonData(), $id);
+        $person = $this->personRepository->update($this->sanitizeRequestedPersonData($request->all()), $id);
 
         Event::dispatch('contacts.person.update.after', $person);
 
@@ -98,10 +90,8 @@ class PersonController extends Controller
 
     /**
      * Search person results.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(): JsonResponse
     {
         $results = $this->personRepository->findWhere([
             ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
@@ -112,18 +102,15 @@ class PersonController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $person = $this->personRepository->findOrFail($id);
 
         try {
             Event::dispatch('contacts.person.delete.before', $id);
 
-            $this->personRepository->delete($id);
+            $person->delete($id);
 
             Event::dispatch('contacts.person.delete.after', $id);
 
@@ -139,17 +126,17 @@ class PersonController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $personId) {
-            Event::dispatch('contact.person.delete.before', $personId);
+        $persons = $this->personRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-            $this->personRepository->delete($personId);
+        foreach ($persons as $person) {
+            Event::dispatch('contact.person.delete.before', $person);
 
-            Event::dispatch('contact.person.delete.after', $personId);
+            $this->personRepository->delete($person->id);
+
+            Event::dispatch('contact.person.delete.after', $person);
         }
 
         return response()->json([
@@ -159,16 +146,10 @@ class PersonController extends Controller
 
     /**
      * Sanitize requested person data and return the clean array.
-     *
-     * @return array
      */
-    private function sanitizeRequestedPersonData(): array
+    private function sanitizeRequestedPersonData(array $data): array
     {
-        $data = request()->all();
-
-        $data['contact_numbers'] = collect($data['contact_numbers'])->filter(function ($number) {
-            return ! is_null($number['value']);
-        })->toArray();
+        $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
 
         return $data;
     }
