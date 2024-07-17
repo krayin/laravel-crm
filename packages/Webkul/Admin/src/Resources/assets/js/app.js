@@ -14,7 +14,9 @@ import { createApp } from "vue/dist/vue.esm-bundler";
 window.app = createApp({
     data() {
         return {
-            isMenuFocused: false,
+            isMenuActive: false,
+
+            hoveringMenu: '',
         };
     },
 
@@ -45,7 +47,7 @@ window.app = createApp({
         },
 
         handleMouseOver(event) {
-            if (this.isMenuFocused) {
+            if (this.isMenuActive) {
                 return;
             }
 
@@ -60,7 +62,7 @@ window.app = createApp({
         },
 
         handleMouseLeave(event) {
-            if (this.isMenuFocused) {
+            if (this.isMenuActive) {
                 return;
             }
 
@@ -80,7 +82,7 @@ window.app = createApp({
                 sidebar && 
                 !sidebar.contains(event.target)
             ) {
-                this.isMenuFocused = false;
+                this.isMenuActive = false;
 
                 const parentElement = sidebar.parentElement;
 
