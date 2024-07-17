@@ -42,7 +42,7 @@
                     <x-slot:toggle>
                         <div>
                             <div
-                                class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 focus:outline-none focus:ring-2 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
+                                class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 focus:outline-none focus:ring-2 dark:border-gray-800 hover:text-gray-800 dark:text-white dark:bg-brandColor dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
                                 :class="{'[&>*]:text-sky-600 [&>*]:dark:text-white': hasAnyAppliedColumn() }"
                             >
                                 <span>

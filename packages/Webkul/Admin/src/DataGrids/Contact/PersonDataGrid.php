@@ -10,7 +10,7 @@ use Webkul\Contact\Repositories\OrganizationRepository;
 class PersonDataGrid extends DataGrid
 {
     /**
-     * Create a new controller instance.
+     * Create a new class instance.
      *
      * @return void
      */

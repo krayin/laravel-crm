@@ -193,7 +193,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::middleware(['throttle:100,60'])->delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
 
-                    Route::put('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass_delete');
+                    Route::post('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass_delete');
                 });
 
                 // Companies Routes
