@@ -18,6 +18,14 @@ window.app = createApp({
         };
     },
 
+    created() {
+        window.addEventListener('click', this.handleFocusOut);
+    },
+
+    beforeDestroy() {
+        window.removeEventListener('click', this.handleFocusOut);
+    },
+
     methods: {
         onSubmit() {},
 
@@ -37,7 +45,7 @@ window.app = createApp({
         },
 
         handleMouseOver(event) {
-            if (this.$data.isMenuFocused) {
+            if (this.isMenuFocused) {
                 return;
             }
 
@@ -52,7 +60,7 @@ window.app = createApp({
         },
 
         handleMouseLeave(event) {
-            if (this.$data.isMenuFocused) {
+            if (this.isMenuFocused) {
                 return;
             }
 
@@ -63,7 +71,26 @@ window.app = createApp({
 
                 parentElement.classList.add('sidebar-collapsed');
             }
-        }
+        },
+
+        handleFocusOut(event) {
+            const sidebar = this.$refs.sidebar;
+
+            if (
+                sidebar && 
+                !sidebar.contains(event.target)
+            ) {
+                this.isMenuFocused = false;
+
+                const parentElement = sidebar.parentElement;
+
+                if (parentElement.classList.contains('sidebar-not-collapsed')) {
+                    parentElement.classList.remove('sidebar-not-collapsed');
+
+                    parentElement.classList.add('sidebar-collapsed');
+                }
+            }
+        },
     },
 });
 
