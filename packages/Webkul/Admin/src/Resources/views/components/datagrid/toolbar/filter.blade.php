@@ -43,7 +43,7 @@
                         <div>
                             <div
                                 class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 focus:outline-none focus:ring-2 dark:border-gray-800 hover:text-gray-800 dark:text-white dark:bg-brandColor dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
-                                :class="{'[&>*]:text-sky-600 [&>*]:dark:text-white': hasAnyAppliedColumn() }"
+                                :class="{'ltr:pl-3 ltr:pr-4 rtl:pl-3 rtl:pr-4 [&>*]:text-sky-600 [&>*]:dark:text-white': hasAnyAppliedColumn() }"
                             >
                                 <span>
                                     @lang('admin::app.components.datagrid.toolbar.filter.title')
@@ -56,8 +56,7 @@
                                 </span>
                             </div>
 
-                            <div class="z-10 hidden w-full divide-y divide-gray-100 rounded bg-white shadow dark:bg-gray-900">
-                            </div>
+                            <div class="z-10 hidden w-full divide-y divide-gray-100 rounded bg-white shadow dark:bg-gray-900"></div>
                         </div>
                     </x-slot>
 
@@ -65,11 +64,19 @@
                         <!-- Apply Filter Title -->
                         <div
                             v-if="! isShowSavedFilters"
-                            class="flex items-center justify-between px-1 py-2"
+                            class="flex items-center justify-between"
                         >
                             <p class="text-xl font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.components.datagrid.filters.title')
                             </p>
+
+                            <div
+                                v-if="hasAnyAppliedColumn() || isFilterDirty"
+                                class="cursor-pointer text-xs font-medium leading-8 text-brandColor hover:underline ltr:ml-11 ltr:mr-11 rtl:mr-11"
+                                @click="removeAllAppliedFilters()"
+                            >
+                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                            </div>
                         </div>
 
                         <!-- Save Filter Title -->
@@ -127,17 +134,9 @@
                                     <p class="text-base font-semibold text-gray-800 dark:text-white">
                                         @lang('admin::app.components.datagrid.toolbar.filter.custom-filters')
                                     </p>
-
-                                    <div
-                                        v-if="hasAnyAppliedColumn() || isFilterDirty"
-                                        class="cursor-pointer text-xs font-medium leading-6 text-blue-600 transition-all hover:underline ltr:ml-20 rtl:mr-20"
-                                        @click="removeAllAppliedFilters()"
-                                    >
-                                        @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
-                                    </div>
                                 </x-slot>
 
-                                <x-slot:content class="!p-4">
+                                <x-slot:content class="">
                                     <!-- All Filters -->
                                     <div v-for="column in available.columns">
                                         <div v-if="column.filterable">
@@ -157,7 +156,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -243,7 +242,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -329,7 +328,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -386,7 +385,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -472,7 +471,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -529,7 +528,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -609,7 +608,7 @@
                                                             @click="removeAppliedColumnAllValues(column.index)"
                                                         >
                                                             <p
-                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                                             >
                                                                 @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
@@ -664,30 +663,6 @@
                                             </div>
                                         </div>
                                     </div>
-
-                                    <!-- Buttons Panel -->
-                                    <div class="flex gap-2">
-                                        <!-- Apply Filter Button -->
-                                        <button
-                                            type="button"
-                                            class="secondary-button w-full"
-                                            @click="applyFilters"
-                                            :disabled="! isFilterDirty"
-                                        >
-                                            @lang('admin::app.components.datagrid.toolbar.filter.apply-filters-btn')
-                                        </button>
-
-                                        <!-- Save Filter Button -->
-                                        <button
-                                            type="button"
-                                            v-if="hasAnyColumn"
-                                            class="secondary-button w-full"
-                                            @click="isShowSavedFilters = ! isShowSavedFilters"
-                                            :disabled="isFilterDirty || ! filters.columns.length > 0"
-                                        >
-                                            @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
-                                        </button>
-                                    </div>
                                 </x-slot>
                             </x-admin::accordion>
                         </template>
@@ -732,19 +707,14 @@
                                                     />
 
                                                     <x-admin::form.control-group.error control-name="name" />
-                                                </x-admin::form.control-group>
 
-                                                <!-- Save Filter Form Submit Button -->
-                                                <div class="mb-4 flex content-end items-center justify-end">
                                                     <button
                                                         type="submit"
-                                                        class="primary-button"
-                                                        aria-label="@lang('admin::app.components.datagrid.toolbar.filter.save-btn')"
+                                                        class="hidden"
                                                         :disabled="savedFilters.params.filters.columns.every(column => column.value.length === 0)"
-                                                    >
-                                                        @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
-                                                    </button>
-                                                </div>
+                                                        id="save-filter"
+                                                    ></button>
+                                                </x-admin::form.control-group>
                                             </div>
 
                                             <div class="flex flex-col gap-4 px-4">
@@ -854,6 +824,51 @@
                                 </x-admin::form>
                             </div>
                         </template>
+                    </x-slot>
+
+                    <x-slot:footer class="!pb-3">
+                        <!-- Buttons Panel -->
+                        <div
+                            class="flex justify-end gap-2 px-2 pt-3"
+                            v-if="! isShowSavedFilters"
+                        >
+                            <!-- Save Filter Button -->
+                            <button
+                                type="button"
+                                v-if="hasAnyColumn"
+                                @click="isShowSavedFilters = ! isShowSavedFilters"
+                                class="text-gray-900"
+                                :disabled="isFilterDirty || ! filters.columns.length > 0"
+                            >
+                                @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
+                            </button>
+                            
+                            <!-- Apply Filter Button -->
+                            <button
+                                type="button"
+                                class="primary-button"
+                                @click="applyFilters"
+                                :disabled="! isFilterDirty"
+                            >
+                                @lang('admin::app.components.datagrid.toolbar.filter.apply-filters-btn')
+                            </button>
+                        </div>
+
+                        <!-- Save Filter Form Submit Button -->
+                        <div
+                            v-else
+                            class="flex justify-end gap-1 px-2 pt-3"
+                        >
+                            <button
+                                type="button"
+                                class="primary-button"
+                                aria-label="@lang('admin::app.components.datagrid.toolbar.filter.save-btn')"
+                                :disabled="savedFilters.params.filters.columns.every(column => column.value.length === 0)"
+                                @click="handleSaveFilterForm"
+                            >
+                                @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
+                            </button>
+                        </div>
                     </x-slot>
                 </x-admin::drawer>
             </template>
@@ -977,6 +992,14 @@
                         column.value = column.value.filter((columnValue) => columnValue !== value);
                     } else {
                         column.value = '';
+                    }
+                },
+
+                handleSaveFilterForm() {
+                    const saveFilterForm = document.getElementById('save-filter');
+
+                    if (saveFilterForm) {
+                        saveFilterForm.click();
                     }
                 },
 

@@ -3,8 +3,8 @@
         @lang('admin::app.customers.customers.index.title')
     </x-slot>
 
-    <div class="flex items-center justify-between h-[58px] pr-4 pl-2 border text-sm rounded-lg bg-white border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-        <div class="flex flex-col my-6">
+    <div class="flex items-center justify-between pr-4 pl-2 py-2 border text-sm rounded-lg bg-white border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col">
             <div class="flex items-center cursor-pointer">
                 <i class="icon icon-arrow-right text-xl text-gray-800"></i>
 

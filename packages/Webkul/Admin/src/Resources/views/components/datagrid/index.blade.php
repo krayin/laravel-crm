@@ -368,8 +368,6 @@
                  * @returns {void}
                  */
                  applySavedFilter(filter) {
-                    console.log("🚀 ~ applySavedFilter ~ filter:", filter);
-
                     if (! filter) {
                         this.applied.savedFilterId = null;
 
