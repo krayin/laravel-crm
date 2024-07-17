@@ -9,8 +9,8 @@
             <!-- Navigation Menu -->
             @foreach (menu()->getItems('admin') as $menuItem)
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
-                    <div
-                        href="{{ $menuItem->getUrl() }}"
+                    <a
+                        href="{{ $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
                         @mouseleave="!isMenuActive ? hoveringMenu = '' : {}"
                         @mouseover="hoveringMenu='{{$menuItem->getKey()}}'"
                         @click="isMenuActive = !isMenuActive"
@@ -25,7 +25,7 @@
                                 <i class="icon-arrow-left invisible text-2xl group-hover:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
                             @endif
                         </div>
-                    </div>
+                    </a>
 
                     <!-- Submenu -->
                     @if ($menuItem->haveChildren())
