@@ -3,9 +3,12 @@
 namespace Webkul\Admin\Http\Controllers\Product;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 
 class ProductController extends Controller
 {
@@ -21,13 +24,11 @@ class ProductController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Product\ProductDataGrid::class)->toJson();
+            return datagrid(ProductDataGrid::class)->process();
         }
 
         return view('admin::products.index');

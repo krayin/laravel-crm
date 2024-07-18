@@ -1,29 +1,42 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.customers.customers.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.products.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col">
+            <div class="flex cursor-pointer items-center">
+                <i class="icon-left-arrow text-2xl text-gray-800"></i>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.products.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.products.index.header.before') !!}
+                <a
+                    href="{{ route('admin.products.index') }}"
+                    class="text-xs text-gray-800 dark:text-gray-300"
+                >
+                    Settings
+                </a>
+            </div>
 
-                    {{ Breadcrumbs::render('products') }}
+            <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                Products
+            </div>
+        </div>
 
-                    {{ __('admin::app.products.title') }}
-
-                    {!! view_render_event('admin.products.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('products.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.products.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.products.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <a
+                    href="{{ route('admin.products.create') }}"
+                    class="primary-button"
+                >
+                    Create Products
+                </a>
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.product.datagrid.index.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.products.index') }}" />
+
+    {!! view_render_event('krayin.admin.product.datagrid.index.after') !!}
+</x-admin::layouts>
