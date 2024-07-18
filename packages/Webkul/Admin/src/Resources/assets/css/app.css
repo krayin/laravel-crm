@@ -392,20 +392,12 @@
     @apply cursor-not-allowed opacity-50;
 }
 
-
 /*--------------------------------- New UI CSS --------------------------------------------------------------- */
 
-.sidebar-rounded:after {
-    width: 30px;
-    height: 30px;
-    top: 5px;
-    right: -30px;
-    position: absolute;
-    border-top-left-radius: 58%;
+.sidebar-rounded::after {
+    @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-13px_-5px_0px_1px_rgba(255,255,255,1)] ;
     content: "";
-    box-shadow: rgb(255, 255, 255) -13px -5px 0px 1px;
     pointer-events: none;
-    /* border-left: 1px solid#d3d3d3; */
 }
 
 /* -------------------------------- new css end -------------------------------- */  
