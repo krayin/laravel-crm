@@ -71,7 +71,7 @@
                                 />
 
                                 <label
-                                    class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer text-2xl peer-checked:text-blue-600"
+                                    class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer text-2xl text-gray-500 peer-checked:text-blue-600"
                                     :for="'searched-product' + product.id"
                                 >
                                 </label>
