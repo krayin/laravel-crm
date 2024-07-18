@@ -1,29 +1,46 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.products.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.products.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col">
+            <div class="flex cursor-pointer items-center">
+                <i class="icon-left-arrow text-2xl text-gray-800"></i>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.products.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.products.index.header.before') !!}
+                <a
+                    href="{{ route('admin.products.index') }}"
+                    class="text-xs text-gray-800 dark:text-gray-300"
+                >
+                    Settings
+                </a>
+            </div>
 
-                    {{ Breadcrumbs::render('products') }}
+            <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                @lang('admin::app.products.index.title')
+            </div>
+        </div>
 
-                    {{ __('admin::app.products.title') }}
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.product.index.create-button.before') !!}
 
-                    {!! view_render_event('admin.products.index.header.after') !!}
-                </h1>
-            </template>
+                <a
+                    href="{{ route('admin.products.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.products.index.create-btn')
+                </a>
 
-            @if (bouncer()->hasPermission('products.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.products.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.products.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+                {!! view_render_event('krayin.admin.product.index.create-button.after') !!}
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.product.index.datagrid.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.products.index') }}" />
+
+    {!! view_render_event('krayin.admin.product.index.datagrid.after') !!}
+</x-admin::layouts>

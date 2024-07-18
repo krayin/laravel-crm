@@ -1,31 +1,46 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.settings.groups.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.groups.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col">
+            <div class="flex cursor-pointer items-center">
+                <i class="icon-left-arrow text-2xl text-gray-800"></i>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.groups.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.groups.index.header.before') !!}
+                <a
+                    href="{{ route('admin.settings.groups.index') }}"
+                    class="text-xs text-gray-800 dark:text-gray-300"
+                >
+                    Settings
+                </a>
+            </div>
 
-                    {{ Breadcrumbs::render('settings.groups') }}
+            <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                @lang('admin::app.settings.groups.index.title')
+            </div>
+        </div>
 
-                    {{ __('admin::app.settings.groups.title') }}
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.settings.groups.index.create-button.before') !!}
 
-                    {!! view_render_event('admin.settings.groups.index.header.after') !!}
-                </h1>
-            </template>
+                <a
+                    href="{{ route('admin.settings.groups.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.settings.groups.index.create-btn')
+                </a>
 
-            @if (bouncer()->hasPermission('settings.user.groups.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.groups.create') }}" class="btn btn-md btn-primary">
-                        {{ __('admin::app.settings.groups.create-title') }}
-                    </a>
-                </template>
-            @endif
-        <table-component>
+                {!! view_render_event('krayin.admin.settings.groups.index.create-button.after') !!}
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.settings.groups.index.datagrid.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.settings.groups.index') }}" />
+
+    {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
+</x-admin::layouts>
