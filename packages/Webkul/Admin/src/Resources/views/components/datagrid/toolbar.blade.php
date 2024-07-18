@@ -3,7 +3,7 @@
 </template>
 
 <template v-else>
-    <div class="mt-2 flex items-center justify-between gap-4 h-[58px] pr-4 pl-2 border border-b-0 rounded-t-lg bg-white border-gray-200 max-md:flex-wrap dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+    <div class="mt-2 flex h-[58px] items-center justify-between gap-4 rounded-t-lg border border-b-0 border-gray-200 bg-white pl-2 pr-4 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-md:flex-wrap">
         <!-- Left Toolbar -->
         <div class="flex gap-x-1">
             <!-- Mass Actions Panel -->
@@ -30,25 +30,23 @@
             </template>
 
             <!-- Search Panel -->
-            <template v-else>
-                <x-admin::datagrid.toolbar.search>
-                    <template #search="{
-                        available,
-                        applied,
-                        search,
-                        getSearchedValues,
-                    }">
-                        <slot
-                            name="search"
-                            :available="available"
-                            :applied="applied"
-                            :search="search"
-                            :get-searched-values="getSearchedValues"
-                        >
-                        </slot>
-                    </template>
-                </x-admin::datagrid.toolbar.search>
-            </template>
+            <x-admin::datagrid.toolbar.search>
+                <template #search="{
+                    available,
+                    applied,
+                    search,
+                    getSearchedValues,
+                }">
+                    <slot
+                        name="search"
+                        :available="available"
+                        :applied="applied"
+                        :search="search"
+                        :get-searched-values="getSearchedValues"
+                    >
+                    </slot>
+                </template>
+            </x-admin::datagrid.toolbar.search>
         </div>
 
         <!-- Right Toolbar -->

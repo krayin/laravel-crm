@@ -58,7 +58,7 @@
                    
                     <div class="whitespace-nowrap text-gray-600 dark:text-gray-300">
                         <span>
-                            @{{ available.meta.from }} - @{{ available.meta.to }}
+                            @{{ available.meta.from ?? 0 }} - @{{ available.meta.to ?? 0 }}
                         </span>
 
                         <span>

@@ -18,8 +18,8 @@
             :validate-mass-action="validateMassAction"
             :perform-mass-action="performMassAction"
         >
-            <div class="flex w-full items-center gap-x-1">
-                <x-admin::dropdown>
+            <div class="fixed inset-x-0 bottom-24 mx-auto flex max-w-max items-center justify-center rounded bg-white p-2 shadow-lg">
+                <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                     <x-slot:toggle>
                         <button
                             type="button"
@@ -29,7 +29,7 @@
                                 @lang('admin::app.components.datagrid.toolbar.mass-actions.select-action')
                             </span>
 
-                            <span class="icon-sort-down text-2xl"></span>
+                            <span class="icon-down-arrow text-2xl"></span>
                         </button>
                     </x-slot>
 
@@ -40,21 +40,23 @@
                                 v-if="massAction?.options?.length"
                             >
                                 <a
-                                    class="whitespace-no-wrap flex cursor-not-allowed justify-between gap-1.5 rounded-t px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                    class="whitespace-no-wrap flex cursor-not-allowed items-center justify-between gap-1.5 rounded-t px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                     href="javascript:void(0);"
                                 >
-                                    <i
-                                        class="text-2xl"
-                                        :class="massAction.icon"
-                                        v-if="massAction?.icon"
-                                    >
-                                    </i>
+                                    <div class="items flex items-center gap-1.5">
+                                        <i
+                                            class="text-2xl"
+                                            :class="massAction.icon"
+                                            v-if="massAction?.icon"
+                                        >
+                                        </i>
 
-                                    <span>
-                                        @{{ massAction.title }}
-                                    </span>
+                                        <span>
+                                            @{{ massAction.title }}
+                                        </span>
+                                    </div>
 
-                                    <i class="icon-arrow-left -mt-px text-xl"></i>
+                                    <i class="icon-right-arrow -mt-px text-xl"></i>
                                 </a>
 
                                 <ul class="absolute top-0 z-10 hidden w-max min-w-[150px] rounded border bg-white shadow-[0_5px_20px_rgba(0,0,0,0.15)] group-hover/item:block dark:border-gray-800 dark:bg-gray-900 ltr:left-full rtl:right-full">
@@ -90,13 +92,13 @@
                     </x-slot>
                 </x-admin::dropdown>
 
-                <div class="ltr:pl-2.5 rtl:pr-2.5">
+                {{-- <div class="ltr:pl-2.5 rtl:pr-2.5">
                     <p class="text-sm font-light text-gray-800 dark:text-white">
                         @{{ "@lang('admin::app.components.datagrid.toolbar.length-of')".replace(':length', massActions.indices.length) }}
 
                         @{{ "@lang('admin::app.components.datagrid.toolbar.selected')".replace(':total', available.meta.total) }}
                     </p>
-                </div>
+                </div> --}}
             </div>
         </slot>
     </script>
