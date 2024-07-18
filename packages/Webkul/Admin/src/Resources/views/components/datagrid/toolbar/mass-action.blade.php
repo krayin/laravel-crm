@@ -18,7 +18,7 @@
             :validate-mass-action="validateMassAction"
             :perform-mass-action="performMassAction"
         >
-            <div class="fixed inset-x-0 bottom-24 mx-auto flex max-w-max items-center justify-center rounded bg-white p-2 shadow-lg">
+            <div class="fixed inset-x-0 bottom-24 mx-auto flex max-w-max items-center justify-center rounded bg-white p-2 shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                     <x-slot:toggle>
                         <button
