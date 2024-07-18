@@ -20,7 +20,7 @@ return [
         'name'       => 'admin::app.layouts.leads',
         'route'      => 'admin.leads.index',
         'sort'       => 2,
-        'icon-class' => 'icon-sales',
+        'icon-class' => 'icon-leads',
     ],
 
     /**
@@ -31,7 +31,7 @@ return [
         'name'       => 'admin::app.layouts.quotes',
         'route'      => 'admin.quotes.index',
         'sort'       => 3,
-        'icon-class' => 'icon-promotion',
+        'icon-class' => 'icon-quote',
     ],
 
     /**
@@ -43,7 +43,7 @@ return [
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'compose'],
         'sort'       => 4,
-        'icon-class' => 'icon-cms',
+        'icon-class' => 'icon-mail',
     ], [
         'key'        => 'mail.compose',
         'name'       => 'admin::app.layouts.mail.compose',
@@ -103,7 +103,7 @@ return [
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
         'sort'       => 5,
-        'icon-class' => 'icon-report',
+        'icon-class' => 'icon-activity',
     ],
 
     /**
@@ -114,7 +114,7 @@ return [
         'name'       => 'admin::app.layouts.contacts',
         'route'      => 'admin.contacts.persons.index',
         'sort'       => 6,
-        'icon-class' => 'icon-customer-2',
+        'icon-class' => 'icon-contact',
     ], [
         'key'        => 'contacts.persons',
         'name'       => 'admin::app.layouts.persons',
@@ -148,7 +148,7 @@ return [
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.index',
         'sort'       => 8,
-        'icon-class' => 'icon-settings',
+        'icon-class' => 'icon-setting',
     ], [
         'key'        => 'settings.user',
         'name'       => 'admin::app.layouts.user',

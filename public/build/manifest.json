@@ -1,12 +1,24 @@
 {
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-74deffec.css",
+    "file": "assets/app-8d8b34bb.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
-  "src/Resources/assets/fonts/bagisto-admin.woff": {
-    "file": "assets/bagisto-admin-37c2feba.woff",
-    "src": "src/Resources/assets/fonts/bagisto-admin.woff"
+  "src/Resources/assets/fonts/icomoon.eot": {
+    "file": "assets/icomoon-3c1a1ac1.eot",
+    "src": "src/Resources/assets/fonts/icomoon.eot"
+  },
+  "src/Resources/assets/fonts/icomoon.svg": {
+    "file": "assets/icomoon-5fdd85ba.svg",
+    "src": "src/Resources/assets/fonts/icomoon.svg"
+  },
+  "src/Resources/assets/fonts/icomoon.ttf": {
+    "file": "assets/icomoon-17f0f1b6.ttf",
+    "src": "src/Resources/assets/fonts/icomoon.ttf"
+  },
+  "src/Resources/assets/fonts/icomoon.woff": {
+    "file": "assets/icomoon-05b7fa81.woff",
+    "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/activities-active-icon.svg": {
     "file": "assets/activities-active-icon-a9fab3a3.svg",
@@ -348,7 +360,7 @@
     "css": [
       "assets/app-c04ede37.css"
     ],
-    "file": "assets/app-bf3ab185.js",
+    "file": "assets/app-778f7809.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }

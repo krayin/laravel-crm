@@ -2,13 +2,36 @@
 @tailwind components;
 @tailwind utilities;
 
+/* -------------------------------- new css -------------------------------- */
+
 @font-face {
-    font-family: "bagisto-admin";
-    src: url("../fonts/bagisto-admin.woff?jwnnow") format("woff");
+    font-family: 'icomoon';
+    src:  url('../fonts/icomoon.eot?w2trdd');
+    src:  url('../fonts/icomoon.eot?w2trdd#iefix') format('embedded-opentype'),
+      url('../fonts/icomoon.ttf?w2trdd') format('truetype'),
+      url('../fonts/icomoon.woff?w2trdd') format('woff'),
+      url('../fonts/icomoon.svg?w2trdd#icomoon') format('svg');
     font-weight: normal;
     font-style: normal;
     font-display: block;
-}
+  }
+  
+  [class^="icon-"], [class*=" icon-"] {
+    /* use !important to prevent issues with browser extensions that change fonts */
+    font-family: 'icomoon' !important;
+    speak: never;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+  
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  
+/* -------------------------------- new css end -------------------------------- */  
 
 @layer components {
     ::selection {
@@ -40,24 +63,6 @@
         background: #e0e7ff;
     }
 
-    [class^="icon-"],
-    [class*=" icon-"] {
-        /* use !important to prevent issues with browser extensions that change fonts */
-        font-family: "bagisto-admin" !important;
-        speak: never;
-        font-style: normal;
-        font-weight: normal;
-        font-variant: normal;
-        text-transform: none;
-        line-height: 1;
-        color: #6b7280;
-        
-        /* Better Font Rendering =========== */
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        line-height: 1 !important;
-    }
-
     html.dark [class^="icon-"],
     html.dark [class*=" icon-"]{
         color: #d1d5db;
@@ -67,325 +72,154 @@
         @apply border-[1px] dark:border-gray-800 shadow-[0px_0px_0px_0px_rgba(0,0,0,0.03),0px_1px_1px_0px_rgba(0,0,0,0.03),0px_3px_3px_0px_rgba(0,0,0,0.03),0px_6px_4px_0px_rgba(0,0,0,0.02),0px_11px_4px_0px_rgba(0,0,0,0.00),0px_17px_5px_0px_rgba(0,0,0,0.00)];
     }
 
-    .icon-magic:before {
-        content: "\e94b";
-    }
-
-    .icon-zoom:before {
-        content: "\e94c";
-    }
-
-    .icon-ar:before {
-        content: "\e94a";
-    }
-
-    .icon-report:before {
-        content: "\e942";
-    }
-
-    .icon-refund:before {
-        content: "\e948";
-    }
-
-    .icon-light:before {
-        content: "\e947";
-    }
-
-    .icon-dark:before {
-        content: "\e949";
-    }
-
-    .icon-checkbox-partical:before {
+    
+    /* -------------------------------- new css -------------------------------- */
+    
+    .icon-notification:before {
         content: "\e900";
     }
 
-    .icon-uncheckbox:before {
+    .icon-configuration:before {
         content: "\e901";
     }
 
-    .icon-add-customer:before {
+    .icon-note:before {
         content: "\e902";
     }
-
-    .icon-arrow-down:before {
+    
+    .icon-edit:before {
         content: "\e903";
     }
-
-    .icon-arrow-left:before {
+    
+    .icon-calender:before {
         content: "\e904";
     }
 
-    .icon-arrow-right:before {
+    .icon-delete:before {
         content: "\e905";
     }
-
-    .icon-arrow-up:before {
+    
+    .icon-more:before {
         content: "\e906";
     }
-
-    .icon-attribute-block:before {
+    
+    .icon-checkbox-multiple:before {
         content: "\e907";
     }
-
-    .icon-attribute:before {
+    
+    .icon-checkbox-select:before {
         content: "\e908";
     }
-
-    .icon-calendar:before {
+    
+    .icon-checkbox-outline:before {
         content: "\e909";
     }
-
-    .icon-cancel-1:before {
+    
+    .icon-message:before {
         content: "\e90a";
     }
-
-    .icon-cancel:before {
+    
+    .icon-video:before {
         content: "\e90b";
     }
-
-    .icon-cart:before {
+    
+    .icon-attachmetent:before {
         content: "\e90c";
     }
-
-    .icon-checked:before {
+    
+    .icon-sent:before {
         content: "\e90d";
     }
-
-    .icon-cms:before {
+    
+    .icon-call:before {
         content: "\e90e";
     }
-
-    .icon-configuration:before {
+    
+    .icon-meeting:before {
         content: "\e90f";
     }
-
-    .icon-cross:before {
+    
+    .icon-light:before {
         content: "\e910";
     }
-
-    .icon-customer-2:before {
+    
+    .icon-dark:before {
         content: "\e911";
     }
-
-    .icon-customer:before {
+    
+    .icon-mail:before {
         content: "\e912";
     }
-
-    .icon-dashboard:before {
+    
+    .icon-leads:before {
         content: "\e913";
     }
-
-    .icon-delete:before {
+    
+    .icon-filter:before {
         content: "\e914";
     }
-
-    .icon-done:before {
+    
+    .icon-setting:before {
         content: "\e915";
     }
-
-    .icon-dot:before {
+    
+    .icon-product:before {
         content: "\e916";
     }
-
-    .icon-dots:before {
+    
+    .icon-contact:before {
         content: "\e917";
     }
-
-    .icon-down-stat:before {
+    
+    .icon-activity:before {
         content: "\e918";
     }
-
-    .icon-drag:before {
+    
+    .icon-perosnal:before {
         content: "\e919";
     }
-
-    .icon-edit-save:before {
+    
+    .icon-quote:before {
         content: "\e91a";
     }
-
-    .icon-edit:before {
+    
+    .icon-dashboard:before {
         content: "\e91b";
     }
-
-    .icon-filter:before {
+    
+    .icon-cross-large:before {
         content: "\e91c";
     }
-
-    .icon-folder-block:before {
+    
+    .icon-left-arrow:before {
         content: "\e91d";
     }
-
-    .icon-folder:before {
+    
+    .icon-right-arrow:before {
         content: "\e91e";
     }
-
-    .icon-image:before {
+    
+    .icon-up-arrow:before {
         content: "\e91f";
     }
-
-    .icon-information:before {
+    
+    .icon-down-arrow:before {
         content: "\e920";
     }
-
-    .icon-language:before {
+    
+    .icon-search:before {
         content: "\e921";
     }
-
-    .icon-location:before {
+    
+    .icon-add:before {
         content: "\e922";
     }
-
-    .icon-mail:before {
+    
+    .icon-add-2:before {
         content: "\e923";
     }
-
-    .icon-menu:before {
-        content: "\e924";
-    }
-
-    .icon-notification:before {
-        content: "\e925";
-    }
-
-    .icon-order-back:before {
-        content: "\e926";
-    }
-
-    .icon-printer:before {
-        content: "\e927";
-    }
-
-    .icon-processing:before {
-        content: "\e928";
-    }
-
-    .icon-product-1:before {
-        content: "\e929";
-    }
-
-    .icon-product:before {
-        content: "\e92a";
-    }
-
-    .icon-promotion:before {
-        content: "\e92b";
-    }
-
-    .icon-radio-normal:before {
-        content: "\e92c";
-    }
-
-    .icon-radio-selected:before {
-        content: "\e92d";
-    }
-
-    .icon-repeat:before {
-        content: "\e92e";
-    }
-
-    .icon-sales:before {
-        content: "\e92f";
-    }
-
-    .icon-search:before {
-        content: "\e930";
-    }
-
-    .icon-setting:before {
-        content: "\e931";
-    }
-
-    .icon-settings:before {
-        content: "\e932";
-    }
-
-    .icon-ship:before {
-        content: "\e933";
-    }
-
-    .icon-sort-down:before {
-        content: "\e934";
-    }
-
-    .icon-sort-left:before {
-        content: "\e935";
-    }
-
-    .icon-sort-right:before {
-        content: "\e936";
-    }
-
-    .icon-sort-up-down:before {
-        content: "\e937";
-    }
-
-    .icon-sort-up:before {
-        content: "\e938";
-    }
-
-    .icon-star:before {
-        content: "\e939";
-    }
-
-    .icon-store:before {
-        content: "\e93a";
-    }
-
-    .icon-tick:before {
-        content: "\e93b";
-    }
-
-    .icon-up-stat:before {
-        content: "\e93c";
-    }
-
-    .icon-view:before {
-        content: "\e93d";
-    }
-
-    .icon-view-close:before {
-        content: "\e946";
-    }
-
-    .icon-copy:before {
-        content: "\e93e";
-    }
-
-    .icon-exit:before {
-        content: "\e93f";
-    }
-
-    .icon-clip:before {
-        content: "\e940";
-    }
-
-    .icon-collapse:before {
-        content: "\e941";
-    }
-
-    .icon-login:before {
-        content: "\e943";
-    }
-
-    .icon-pause:before {
-        content: "\e944";
-    }
-
-    .icon-play:before {
-        content: "\e945";
-    }
-
-    .icon-import:before {
-        content: "\e943";
-        transform: rotate(90deg);
-        display: inline-block;
-    }
-
-    .icon-export:before {
-        content: "\e943";
-        transform: rotate(270deg);
-        display: inline-block;
-    }
+    
+    /* -------------------------------- new css end -------------------------------- */  
       
     p {
         @apply text-[14px] !leading-[17px];
@@ -569,7 +403,9 @@
     position: absolute;
     border-top-left-radius: 58%;
     content: "";
-    box-shadow: rgb(255, 255, 255) -4px -5px 0px 1px;
+    box-shadow: rgb(255, 255, 255) -13px -5px 0px 1px;
     pointer-events: none;
     /* border-left: 1px solid#d3d3d3; */
 }
+
+/* -------------------------------- new css end -------------------------------- */  

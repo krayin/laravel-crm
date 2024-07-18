@@ -42,7 +42,7 @@
                     <x-slot:toggle>
                         <div>
                             <div
-                                class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 focus:outline-none focus:ring-2 dark:border-gray-800 hover:text-gray-800 dark:text-white dark:bg-brandColor dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
+                                class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 hover:text-gray-800 focus:outline-none focus:ring-2 dark:border-gray-800 dark:bg-brandColor dark:text-white dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
                                 :class="{'ltr:pl-3 ltr:pr-4 rtl:pl-3 rtl:pr-4 [&>*]:text-sky-600 [&>*]:dark:text-white': hasAnyAppliedColumn() }"
                             >
                                 <span>
@@ -118,7 +118,7 @@
                                                 <span class="text-xs font-medium text-gray-800 dark:text-white">@{{ filter.name }}</span>
 
                                                 <span
-                                                    class="icon-cross rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
+                                                    class="icon-cross-large-large rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
                                                     @click.stop="deleteSavedFilter(filter)"
                                                 >
                                                 </span>
@@ -213,7 +213,7 @@
                                                                 <span v-text="column.filterable_options.find((option => option.value == appliedColumnValue)).label"></span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index, appliedColumnValue)"
                                                                 >
                                                                 </span>
@@ -305,7 +305,7 @@
                                                                 </span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index)"
                                                                 >
                                                                 </span>
@@ -359,7 +359,7 @@
                                                                 </span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index)"
                                                                 >
                                                                 </span>
@@ -448,7 +448,7 @@
                                                                 </span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index)"
                                                                 >
                                                                 </span>
@@ -502,7 +502,7 @@
                                                                 </span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index)"
                                                                 >
                                                                 </span>
@@ -585,7 +585,7 @@
                                                                 <span v-text="column.filterable_options.find((option => option.value == appliedColumnValue)).label"></span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index, appliedColumnValue)"
                                                                 >
                                                                 </span>
@@ -636,7 +636,7 @@
                                                                 <span v-text="appliedColumnValue"></span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index, appliedColumnValue)"
                                                                 >
                                                                 </span>
@@ -652,7 +652,7 @@
                                                                 <span v-text="getAppliedColumnValues(column.index)"></span>
 
                                                                 <span
-                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                     @click="removeAppliedColumnValue(column.index, getAppliedColumnValues(column.index))"
                                                                 >
                                                                 </span>
@@ -743,7 +743,7 @@
 
                                                                         <div>
                                                                             <span
-                                                                                class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                                class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                                 @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
                                                                             >
                                                                             </span>
@@ -765,7 +765,7 @@
 
                                                                             <div>
                                                                                 <span
-                                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                                     @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
                                                                                 >
                                                                                 </span>
@@ -782,7 +782,7 @@
 
                                                                             <div>
                                                                                 <span
-                                                                                    class="icon-cross cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                                                     @click="removeSavedFilterColumnValue(column, column.value)"
                                                                                 >
                                                                                 </span>

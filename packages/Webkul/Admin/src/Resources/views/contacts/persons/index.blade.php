@@ -3,10 +3,10 @@
         @lang('admin::app.customers.customers.index.title')
     </x-slot>
 
-    <div class="flex items-center justify-between pr-4 pl-2 py-2 border text-sm rounded-lg bg-white border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
         <div class="flex flex-col">
-            <div class="flex items-center cursor-pointer">
-                <i class="icon icon-arrow-right text-xl text-gray-800"></i>
+            <div class="flex cursor-pointer items-center">
+                <i class="icon-left-arrow text-2xl text-gray-800"></i>
 
                 <a
                     href="{{ route('admin.contacts.persons.index') }}"
@@ -16,7 +16,7 @@
                 </a>
             </div>
 
-            <div class="text-xl font-normal pl-3 dark:text-gray-300">
+            <div class="pl-3 text-xl font-normal dark:text-gray-300">
                 Persons
             </div>
         </div>

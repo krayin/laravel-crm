@@ -5,7 +5,7 @@
     @mouseleave="handleMouseLeave"
 >
     <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto group-[.sidebar-collapsed]/container:overflow-visible">
-        <nav class="sidebar-rounded grid w-full gap-2">
+        <nav class="sidebar-rounded grid w-full gap-1">
             <!-- Navigation Menu -->
             @foreach (menu()->getItems('admin') as $menuItem)
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
@@ -22,7 +22,7 @@
                             <p>{{ $menuItem->getName() }}</p>
                         
                             @if ($menuItem->haveChildren())
-                                <i class="icon-arrow-left invisible text-2xl group-hover:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
+                                <i class="icon-right-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
                             @endif
                         </div>
                     </a>
@@ -35,7 +35,7 @@
                         >
                             <div class="sidebar-rounded fixed top-14 z-[1000] h-full w-[140px] border bg-white pt-4 dark:bg-gray-900 max-lg:hidden">
                                 <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto">
-                                    <nav class="grid w-full gap-2">
+                                    <nav class="grid w-full gap-1">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)
                                             <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                                                 <a

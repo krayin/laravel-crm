@@ -39,7 +39,7 @@
                 <x-admin::dropdown position="bottom-right">
                     <x-slot:toggle>
                         <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brandColor text-sm font-semibold leading-6 text-white transition-all hover:bg-blue-500 focus:bg-blue-500">
-                            {{ substr(auth()->guard('user')->user()->name, 0, 1) }}
+                            <i class="icon-add text-2xl"></i>
                         </button>
                     </x-slot>
 
@@ -147,6 +147,17 @@
             </div>
         </v-dark>
         
+        <!-- Notification Component -->
+        <v-notifications {{ $attributes }}>
+            <span class="relative flex">
+                <span 
+                    class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950" 
+                    title="@lang('admin::app.components.layouts.header.notifications')"
+                >
+                </span>
+            </span>
+        </v-notifications>
+            
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-right">
             <x-slot:toggle>
@@ -158,7 +169,7 @@
                         />
                     </button>
                 @else
-                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-brandColor text-sm font-semibold leading-6 text-white transition-all hover:bg-blue-500 focus:bg-blue-500">
+                    <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-pink-400 text-sm font-semibold leading-6 text-white transition-all hover:bg-blue-500 focus:bg-blue-500">
                         {{ substr(auth()->guard('user')->user()->name, 0, 1) }}
                     </button>
                 @endif
