@@ -39,7 +39,7 @@ class AlterLeadsTable extends Migration
         Schema::table('leads', function (Blueprint $table) {
             $table->dropForeign('leads_lead_pipeline_stage_id_foreign');
             $table->dropColumn('lead_pipeline_stage_id');
-            
+
             $table->integer('lead_stage_id')->unsigned();
             $table->foreign('lead_stage_id')->references('id')->on('lead_stages')->onDelete('cascade');
         });

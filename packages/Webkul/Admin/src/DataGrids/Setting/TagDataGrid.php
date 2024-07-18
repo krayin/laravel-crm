@@ -78,10 +78,9 @@ class TagDataGrid extends DataGrid
             'searchable' => true,
             'sortable'   => false,
             'closure'    => function ($row) {
-                $html = '<span style="background: ' . ($row->color ?? '#546E7A') . ';width: 15px;height: 15px;margin-top: 3px;border-radius: 50%;float: left;margin-right: 10px;box-shadow: 0px 4px 15.36px 0.75px rgb(0 0 0 / 10%), 0px 2px 6px 0px rgb(0 0 0 / 15%);"></span>';
+                $html = '<span style="background: '.($row->color ?? '#546E7A').';width: 15px;height: 15px;margin-top: 3px;border-radius: 50%;float: left;margin-right: 10px;box-shadow: 0px 4px 15.36px 0.75px rgb(0 0 0 / 10%), 0px 2px 6px 0px rgb(0 0 0 / 15%);"></span>';
 
-
-                return $html . htmlspecialchars($row->name);
+                return $html.htmlspecialchars($row->name);
             },
         ]);
 

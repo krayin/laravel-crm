@@ -3,7 +3,6 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
-use Carbon\Carbon;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
@@ -51,13 +50,13 @@ class LeadDataGrid extends DataGrid
     {
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
-            'condition' => function ($row) {
+            'condition'       => function ($row) {
                 if (in_array($row->stage_code, ['won', 'lost']) || ! $row->rotten_lead) {
                     return false;
                 }
 
                 return true;
-            }
+            },
         ]);
     }
 
@@ -86,7 +85,7 @@ class LeadDataGrid extends DataGrid
                 'tags.name as tag_name',
                 'lead_pipelines.rotten_days as pipeline_rotten_days',
                 'lead_pipeline_stages.code as stage_code',
-                DB::raw('CASE WHEN DATEDIFF(NOW(),' . DB::getTablePrefix() . 'leads.created_at) >=' . DB::getTablePrefix() . 'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
+                DB::raw('CASE WHEN DATEDIFF(NOW(),'.DB::getTablePrefix().'leads.created_at) >='.DB::getTablePrefix().'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
@@ -110,7 +109,7 @@ class LeadDataGrid extends DataGrid
         }
 
         if (! is_null(request()->input('rotten_lead.in'))) {
-            $queryBuilder->havingRaw(DB::getTablePrefix() . 'rotten_lead = ' . request()->input('rotten_lead.in'));
+            $queryBuilder->havingRaw(DB::getTablePrefix().'rotten_lead = '.request()->input('rotten_lead.in'));
         }
 
         $this->addFilter('id', 'leads.id');
@@ -123,7 +122,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
-        $this->addFilter('rotten_lead',  DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'leads.created_at) >= ' . DB::getTablePrefix() . 'lead_pipelines.rotten_days'));
+        $this->addFilter('rotten_lead', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'leads.created_at) >= '.DB::getTablePrefix().'lead_pipelines.rotten_days'));
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -152,7 +151,7 @@ class LeadDataGrid extends DataGrid
             'closure'          => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
-                return "<a href='" . $route . "'>" . $row->sales_person . "</a>";
+                return "<a href='".$route."'>".$row->sales_person.'</a>';
             },
         ]);
 
@@ -198,7 +197,7 @@ class LeadDataGrid extends DataGrid
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
-                return "<a href='" . $route . "'>" . $row->person_name . "</a>";
+                return "<a href='".$route."'>".$row->person_name.'</a>';
             },
         ]);
 
@@ -212,13 +211,13 @@ class LeadDataGrid extends DataGrid
             'closure'    => function ($row) {
                 if ($row->stage == 'Won') {
                     $badge = 'success';
-                } else if ($row->stage == 'Lost') {
+                } elseif ($row->stage == 'Lost') {
                     $badge = 'danger';
                 } else {
                     $badge = 'primary';
                 }
 
-                return "<span class='badge badge-round badge-{$badge}'></span>" . $row->stage;
+                return "<span class='badge badge-round badge-{$badge}'></span>".$row->stage;
             },
         ]);
 
@@ -232,7 +231,7 @@ class LeadDataGrid extends DataGrid
             'condition'         => 'eq',
             'closure'           => function ($row) {
                 return ! $row->rotten_lead || in_array($row->stage_code, ['won', 'lost']) ? trans('admin::app.common.no') : trans('admin::app.common.yes');
-            }
+            },
         ]);
 
         $this->addColumn([

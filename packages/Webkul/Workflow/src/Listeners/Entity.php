@@ -2,8 +2,8 @@
 
 namespace Webkul\Workflow\Listeners;
 
-use Webkul\Workflow\Repositories\WorkflowRepository;
 use Webkul\Workflow\Helpers\Validator;
+use Webkul\Workflow\Repositories\WorkflowRepository;
 
 class Entity
 {
@@ -15,8 +15,7 @@ class Entity
     public function __construct(
         protected WorkflowRepository $workflowRepository,
         protected Validator $validator
-    ) {
-    }
+    ) {}
 
     /**
      * @param  string  $eventName
@@ -28,7 +27,7 @@ class Entity
         $workflows = $this->workflowRepository->findByField('event', $eventName);
 
         foreach ($workflows as $workflow) {
-            $workflowEntity = app(config('workflows.trigger_entities.' . $workflow->entity_type . '.class'));
+            $workflowEntity = app(config('workflows.trigger_entities.'.$workflow->entity_type.'.class'));
 
             $entity = $workflowEntity->getEntity($entity);
 

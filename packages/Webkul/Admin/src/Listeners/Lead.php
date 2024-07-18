@@ -11,9 +11,7 @@ class Lead
      *
      * @return void
      */
-    public function __construct(protected EmailRepository $emailRepository)
-    {
-    }
+    public function __construct(protected EmailRepository $emailRepository) {}
 
     /**
      * @param  \Webkul\Lead\Models\Lead  $lead

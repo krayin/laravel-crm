@@ -3,8 +3,8 @@
 namespace Webkul\Warehouse\Repositories;
 
 use Illuminate\Container\Container;
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Core\Eloquent\Repository;
 
 class WarehouseRepository extends Repository
 {
@@ -25,13 +25,12 @@ class WarehouseRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Warehouse\Contracts\Warehouse';
     }
 
     /**
-     * @param array $data
      * @return \Webkul\Warehouse\Contracts\Warehouse
      */
     public function create(array $data)
@@ -44,12 +43,11 @@ class WarehouseRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Warehouse\Contracts\Warehouse
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $warehouse = parent::update($data, $id);
 

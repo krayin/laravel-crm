@@ -8,5 +8,5 @@ return [
         'route'      => 'admin.settings.web_forms.index',
         'sort'       => 1,
         'icon-class' => 'web-form-icon',
-    ]
+    ],
 ];

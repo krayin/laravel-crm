@@ -65,6 +65,6 @@ class Person extends Model implements PersonContract
      */
     protected static function newFactory()
     {
-        return PersonFactory::new ();
+        return PersonFactory::new();
     }
 }

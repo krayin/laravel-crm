@@ -18,7 +18,7 @@ class ExportController extends Controller
     {
         $requestedInfo = request()->validate([
             'gridClassName' => 'required',
-            'format' => 'required',
+            'format'        => 'required',
         ]);
 
         $format = $requestedInfo['format'];
@@ -36,11 +36,11 @@ class ExportController extends Controller
             }
 
             if ($format == 'csv') {
-                return Excel::download(new DataGridExport($records), Str::random(16) . '.csv');
+                return Excel::download(new DataGridExport($records), Str::random(16).'.csv');
             }
 
             if ($format == 'xls') {
-                return Excel::download(new DataGridExport($records), Str::random(16) . '.xlsx');
+                return Excel::download(new DataGridExport($records), Str::random(16).'.xlsx');
             }
         }
 

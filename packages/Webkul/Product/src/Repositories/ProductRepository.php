@@ -4,9 +4,8 @@ namespace Webkul\Product\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
-use Webkul\Product\Repositories\ProductInventoryRepository;
+use Webkul\Core\Eloquent\Repository;
 
 class ProductRepository extends Repository
 {
@@ -19,8 +18,7 @@ class ProductRepository extends Repository
         protected AttributeValueRepository $attributeValueRepository,
         protected ProductInventoryRepository $productInventoryRepository,
         Container $container
-    )
-    {
+    ) {
         parent::__construct($container);
     }
 
@@ -29,13 +27,12 @@ class ProductRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Product\Contracts\Product';
     }
 
     /**
-     * @param array $data
      * @return \Webkul\Product\Contracts\Product
      */
     public function create(array $data)
@@ -48,12 +45,11 @@ class ProductRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Product\Contracts\Product
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $product = parent::update($data, $id);
 
@@ -63,8 +59,7 @@ class ProductRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
+     * @param  int  $id
      */
     public function saveInventories(array $data, $id, $warehouseId = null)
     {
@@ -80,7 +75,7 @@ class ProductRepository extends Repository
             foreach ($data['inventories'] as $inventoryId => $inventoryData) {
                 if (Str::contains($inventoryId, 'inventory_')) {
                     $this->productInventoryRepository->create(array_merge($inventoryData, [
-                        'product_id' => $id,
+                        'product_id'   => $id,
                         'warehouse_id' => $warehouseId,
                     ]));
                 } else {

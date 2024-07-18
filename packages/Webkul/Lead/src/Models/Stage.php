@@ -8,9 +8,9 @@ use Webkul\Lead\Contracts\Stage as StageContract;
 class Stage extends Model implements StageContract
 {
     public $timestamps = false;
-    
+
     protected $table = 'lead_pipeline_stages';
-    
+
     /**
      * The attributes that are mass assignable.
      *

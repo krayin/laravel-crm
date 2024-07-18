@@ -4,8 +4,8 @@ namespace Webkul\Quote\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Core\Eloquent\Repository;
 
 class QuoteRepository extends Repository
 {
@@ -27,13 +27,12 @@ class QuoteRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Quote\Contracts\Quote';
     }
 
     /**
-     * @param array $data
      * @return \Webkul\Quote\Contracts\Quote
      */
     public function create(array $data)
@@ -52,12 +51,11 @@ class QuoteRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Quote\Contracts\Quote
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $quote = $this->find($id);
 
@@ -102,8 +100,8 @@ class QuoteRepository extends Repository
     public function getQuotesCount($startDate, $endDate)
     {
         return $this
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->get()
-                ->count();
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get()
+            ->count();
     }
 }

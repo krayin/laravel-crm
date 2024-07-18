@@ -2,13 +2,13 @@
 
 namespace Webkul\Admin\Http\Controllers\Quote;
 
-use Illuminate\Support\Facades\Event;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Support\Facades\Event;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
-use Webkul\Quote\Repositories\QuoteRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Quote\Repositories\QuoteRepository;
 
 class QuoteController extends Controller
 {
@@ -20,8 +20,7 @@ class QuoteController extends Controller
     public function __construct(
         protected QuoteRepository $quoteRepository,
         protected LeadRepository $leadRepository
-    )
-    {
+    ) {
         request()->request->add(['entity_type' => 'quotes']);
     }
 
@@ -54,7 +53,6 @@ class QuoteController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -92,8 +90,7 @@ class QuoteController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @param int  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(AttributeForm $request, $id)
@@ -125,7 +122,7 @@ class QuoteController extends Controller
     public function search()
     {
         $results = $this->quoteRepository->findWhere([
-            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
         ]);
 
         return response()->json($results);
@@ -151,7 +148,7 @@ class QuoteController extends Controller
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
             ], 400);
@@ -190,6 +187,6 @@ class QuoteController extends Controller
 
         return PDF::loadHTML(view('admin::quotes.pdf', compact('quote'))->render())
             ->setPaper('a4')
-            ->download('Quote_' . $quote->subject . '.pdf');
+            ->download('Quote_'.$quote->subject.'.pdf');
     }
 }

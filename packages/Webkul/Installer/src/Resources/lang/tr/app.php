@@ -57,11 +57,11 @@ return [
             ],
 
             'source' => [
-                'direct'    => 'Doğrudan',
-                'email'     => 'E-posta',
-                'phone'     => 'Telefon',
-                'web'       => 'Web',
-                'web-form'  => 'Web Formu',
+                'direct'   => 'Doğrudan',
+                'email'    => 'E-posta',
+                'phone'    => 'Telefon',
+                'web'      => 'Web',
+                'web-form' => 'Web Formu',
             ],
 
             'type' => [

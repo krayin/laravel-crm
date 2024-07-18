@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait ProvideCollection
 {
-    use ProvideTabFilters, ProvideQueryResolver, ProvideQueryStringParser;
+    use ProvideQueryResolver, ProvideQueryStringParser, ProvideTabFilters;
 
     /**
      * Get collections.
@@ -33,7 +33,7 @@ trait ProvideCollection
      * Sort or filter collection.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $parseInfo
+     * @param  array  $parseInfo
      * @return \Illuminate\Support\Collection
      */
     public function sortOrFilterCollection($collection, $parseInfo)
@@ -43,7 +43,7 @@ trait ProvideCollection
             $columnName = $this->findColumnType($key)[1] ?? null;
 
             switch ($key) {
-                    /**
+                /**
                  * All sorting related method will go here.
                  */
                 case 'sort':
@@ -195,7 +195,7 @@ trait ProvideCollection
      * Sort collection.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
+     * @param  array  $info
      * @return void
      */
     private function sortCollection($collection, $info)
@@ -222,7 +222,7 @@ trait ProvideCollection
      * Search collection.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
+     * @param  array  $info
      * @return void
      */
     private function searchCollection($collection, $info)
@@ -242,7 +242,7 @@ trait ProvideCollection
                      * Or if searchable key found, then it should be `true` for working or `false` for disabling.
                      */
                     if (! isset($column['searchable']) || (isset($column['searchable']) && $column['searchable'])) {
-                        $this->resolve($collection, $column['index'], 'like', '%' . $info['all'] . '%', 'orWhere');
+                        $this->resolve($collection, $column['index'], 'like', '%'.$info['all'].'%', 'orWhere');
                     }
                 }
             });
@@ -253,9 +253,9 @@ trait ProvideCollection
      * Filter collection.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  array                           $info
-     * @param  string                          $columnType
-     * @param  string                          $columnName
+     * @param  array  $info
+     * @param  string  $columnType
+     * @param  string  $columnName
      * @return void
      */
     private function filterCollection($collection, $info, $columnType, $columnName)
@@ -264,7 +264,7 @@ trait ProvideCollection
             switch (array_keys($info)[0]) {
                 case 'like':
                 case 'nlike':
-                    $this->resolve($collection, $columnName, $condition, '%' . $filterValue . '%');
+                    $this->resolve($collection, $columnName, $condition, '%'.$filterValue.'%');
                     break;
 
                 case 'in':
@@ -296,7 +296,7 @@ trait ProvideCollection
 
                     if ($columnType === 'datetime') {
                         $this->resolve($collection, $columnName, $condition, $filterValue, 'whereDate');
-                    } else if ($columnType === 'boolean') {
+                    } elseif ($columnType === 'boolean') {
                         $this->resolve($collection, $columnName, $condition, $filterValue, 'where', 'resolveBooleanQuery');
                     } else {
                         $this->resolve($collection, $columnName, $condition, $filterValue);
@@ -310,6 +310,7 @@ trait ProvideCollection
      * Transform your columns.
      *
      * @parma  object  $record
+     *
      * @return void
      */
     private function transformColumns($record)
@@ -335,6 +336,7 @@ trait ProvideCollection
      * Transform your rows.
      *
      * @parma  object  $record
+     *
      * @return void
      */
     private function transformRows($record)
@@ -348,6 +350,7 @@ trait ProvideCollection
      * Transform your actions.
      *
      * @parma  object  $record
+     *
      * @return void
      */
     private function transformActions($record)
@@ -413,6 +416,6 @@ trait ProvideCollection
     {
         $validatedStrings = Str::slug($title, '_');
 
-        return strtolower($validatedStrings) . $suffix;
+        return strtolower($validatedStrings).$suffix;
     }
 }

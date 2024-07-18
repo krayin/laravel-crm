@@ -2,8 +2,8 @@
 
 namespace Webkul\Installer\Database\Seeders\User;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class RoleSeeder extends Seeder
 {

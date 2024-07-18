@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Product;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class ProductDataGrid extends DataGrid
 {

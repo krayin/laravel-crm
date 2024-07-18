@@ -43,11 +43,9 @@ class OrganizationController extends Controller
         return view('admin::contacts.organizations.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -79,8 +77,7 @@ class OrganizationController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @param int  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(AttributeForm $request, $id)
@@ -114,7 +111,7 @@ class OrganizationController extends Controller
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.organizations.organization')]),
             ], 400);
@@ -137,7 +134,7 @@ class OrganizationController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.title')])
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.organizations.title')]),
         ]);
     }
 }

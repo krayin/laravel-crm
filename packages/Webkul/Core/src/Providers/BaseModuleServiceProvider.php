@@ -7,7 +7,7 @@ use Konekt\Concord\BaseModuleServiceProvider as ConcordBaseModuleServiceProvider
 class BaseModuleServiceProvider extends ConcordBaseModuleServiceProvider
 {
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function boot()
     {

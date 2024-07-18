@@ -3,10 +3,10 @@
 namespace Webkul\Admin\Providers;
 
 use Illuminate\Database\Eloquent\Relations\Relation;
-use Webkul\Admin\Http\Middleware\Locale;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Admin\Http\Middleware\Locale;
 use Webkul\Core\Tree;
 
 class AdminServiceProvider extends ServiceProvider
@@ -18,15 +18,15 @@ class AdminServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        include __DIR__ . '/../Http/helpers.php';
+        include __DIR__.'/../Http/helpers.php';
 
-        $this->loadRoutesFrom(__DIR__ . '/../Http/routes.php');
+        $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
 
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'admin');
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'admin');
 
-        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'admin');
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'admin');
 
         $this->app->bind(\Illuminate\Contracts\Debug\ExceptionHandler::class, \Webkul\Admin\Exceptions\Handler::class);
 
@@ -35,7 +35,7 @@ class AdminServiceProvider extends ServiceProvider
         $router->aliasMiddleware('admin_locale', Locale::class);
 
         $this->publishes([
-            __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),
+            __DIR__.'/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),
         ], 'public');
 
         Relation::morphMap([
@@ -87,17 +87,17 @@ class AdminServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/acl.php', 'acl');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/acl.php', 'acl');
 
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/menu.php', 'menu.admin');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/menu.php', 'menu.admin');
 
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/core_config.php', 'core_config');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/core_config.php', 'core_config');
 
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/dashboard_cards.php', 'dashboard_cards');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/dashboard_cards.php', 'dashboard_cards');
 
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/attribute_lookups.php', 'attribute_lookups');
 
-        $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/attribute_entity_types.php', 'attribute_entity_types');
     }
 
     /**

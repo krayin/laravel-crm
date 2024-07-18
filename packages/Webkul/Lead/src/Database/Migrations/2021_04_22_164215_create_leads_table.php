@@ -39,7 +39,7 @@ class CreateLeadsTable extends Migration
 
             $table->integer('lead_stage_id')->unsigned();
             $table->foreign('lead_stage_id')->references('id')->on('lead_stages')->onDelete('cascade');
-            
+
             $table->timestamps();
         });
     }

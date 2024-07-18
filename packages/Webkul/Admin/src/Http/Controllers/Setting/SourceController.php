@@ -14,9 +14,7 @@ class SourceController extends Controller
      *
      * @return void
      */
-    public function __construct(protected SourceRepository $sourceRepository)
-    {
-    }
+    public function __construct(protected SourceRepository $sourceRepository) {}
 
     /**
      * Display a listing of the resource.
@@ -40,9 +38,9 @@ class SourceController extends Controller
     public function store()
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:lead_sources,name'
+            'name' => 'required|unique:lead_sources,name',
         ]);
-        
+
         if ($validator->fails()) {
             session()->flash('error', trans('admin::app.settings.sources.name-exists'));
 
@@ -82,7 +80,7 @@ class SourceController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'name' => 'required|unique:lead_sources,name,' . $id,
+            'name' => 'required|unique:lead_sources,name,'.$id,
         ]);
 
         Event::dispatch('settings.source.update.before', $id);
@@ -116,7 +114,7 @@ class SourceController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.sources.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.sources.delete-failed'),
             ], 400);

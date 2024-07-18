@@ -3,8 +3,8 @@
 namespace Webkul\Admin\Http\Controllers\Admin;
 
 use Carbon\Carbon;
-use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Helpers\Dashboard as DashboardHelper;
+use Webkul\Admin\Http\Controllers\Controller;
 
 class DashboardController extends Controller
 {
@@ -13,9 +13,7 @@ class DashboardController extends Controller
      *
      * @return void
      */
-    public function __construct(protected DashboardHelper $dashboardHelper)
-    {
-    }
+    public function __construct(protected DashboardHelper $dashboardHelper) {}
 
     /**
      * Display a listing of the resource.
@@ -27,13 +25,13 @@ class DashboardController extends Controller
         $cards = $this->dashboardHelper->getCards();
 
         if ($dateRange = request('date-range')) {
-            $dateRange = explode(",", $dateRange);
+            $dateRange = explode(',', $dateRange);
 
             $endDate = $dateRange[1];
             $startDate = $dateRange[0];
         } else {
             $endDate = Carbon::now()->format('Y-m-d');
-            
+
             $startDate = Carbon::now()->subMonth()->addDays(1)->format('Y-m-d');
         }
 
@@ -62,12 +60,12 @@ class DashboardController extends Controller
 
     /**
      * Returns json data for available dashboard cards.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function getCards()
     {
-        $response = $this->dashboardHelper->getCards();;
+        $response = $this->dashboardHelper->getCards();
 
         $response = array_map(function ($card) {
             if ($card['view_url'] ?? false) {
@@ -82,7 +80,7 @@ class DashboardController extends Controller
 
     /**
      * Returns updated json data for available dashboard cards.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function updateCards()

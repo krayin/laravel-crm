@@ -7,7 +7,6 @@ trait ProvideRouteResolver
     /**
      * Fetch current route acl. As no access to acl key, this will fetch acl by route name.
      *
-     * @param  $action
      * @return array
      */
     private function fetchCurrentRouteACL($action)
@@ -20,7 +19,6 @@ trait ProvideRouteResolver
     /**
      * Fetch route name from full url, not the current one.
      *
-     * @param  $action
      * @return array
      */
     private function getRouteNameFromUrl($action, $method)

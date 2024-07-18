@@ -54,13 +54,13 @@ class LeadController extends Controller
             } else {
                 $createdAt = request('created_at') ?? null;
 
-                if ($createdAt && isset($createdAt["bw"])) {
-                    $createdAt = explode(",", $createdAt["bw"]);
+                if ($createdAt && isset($createdAt['bw'])) {
+                    $createdAt = explode(',', $createdAt['bw']);
 
                     $createdAt[0] .= ' 00:01';
 
                     $createdAt[1] = $createdAt[1]
-                        ? $createdAt[1] . ' 23:59'
+                        ? $createdAt[1].' 23:59'
                         : Carbon::now()->format('Y-m-d 23:59');
                 } else {
                     $createdAt = null;
@@ -80,17 +80,17 @@ class LeadController extends Controller
                     $paginator = $query->paginate(10);
 
                     $data[$stageId] = [
-                        'leads' => [],
+                        'leads'      => [],
                         'pagination' => [
                             'current' => $current = $paginator->currentPage(),
-                            'last' => $last = $paginator->lastPage(),
-                            'next' => $current < $last ? $current + 1 : null,
+                            'last'    => $last = $paginator->lastPage(),
+                            'next'    => $current < $last ? $current + 1 : null,
                         ],
                         'total' => core()->formatBasePrice($query->getModel()->paginate(request('page') ? request('page') * 10 : 10, ['lead_value'], 'page', 1)->sum('lead_value')),
                     ];
 
                     foreach ($paginator as $lead) {
-                        $data[$stageId]['leads'][] =  array_merge($lead->toArray(), [
+                        $data[$stageId]['leads'][] = array_merge($lead->toArray(), [
                             'lead_value' => core()->formatBasePrice($lead->lead_value),
                         ]);
                     }
@@ -101,17 +101,17 @@ class LeadController extends Controller
                         $paginator = $query->paginate(10);
 
                         $data[$stage->id] = [
-                            'leads' => [],
+                            'leads'      => [],
                             'pagination' => [
                                 'current' => $current = $paginator->currentPage(),
-                                'last' => $last = $paginator->lastPage(),
-                                'next' => $current < $last ? $current + 1 : null,
+                                'last'    => $last = $paginator->lastPage(),
+                                'next'    => $current < $last ? $current + 1 : null,
                             ],
                             'total' => core()->formatBasePrice($query->paginate(10)->sum('lead_value')),
                         ];
 
                         foreach ($paginator as $lead) {
-                            $data[$stage->id]['leads'][] =  array_merge($lead->toArray(), [
+                            $data[$stage->id]['leads'][] = array_merge($lead->toArray(), [
                                 'lead_value' => core()->formatBasePrice($lead->lead_value),
                             ]);
                         }
@@ -136,7 +136,6 @@ class LeadController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Admin\Http\Requests\LeadForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(LeadForm $request)
@@ -206,14 +205,13 @@ class LeadController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Webkul\Admin\Http\Requests\LeadForm $request
-     * @param int  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(LeadForm $request, $id)
     {
         Event::dispatch('lead.update.before', $id);
-        
+
         $data = request()->all();
 
         if ($data['lead_pipeline_stage_id']) {
@@ -230,7 +228,7 @@ class LeadController extends Controller
             $data['lead_pipeline_stage_id'] = $stage->id;
         }
 
-        $lead = $this->leadRepository->update($data, $id);        
+        $lead = $this->leadRepository->update($data, $id);
 
         Event::dispatch('lead.update.after', $lead);
 
@@ -244,7 +242,7 @@ class LeadController extends Controller
             if (request()->has('closed_at')) {
                 return redirect()->back();
             } else {
-               return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
+                return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
             }
         }
     }
@@ -258,24 +256,24 @@ class LeadController extends Controller
     {
         $currentUser = auth()->guard('user')->user();
 
-        if ($currentUser->view_permission == 'global') {            
+        if ($currentUser->view_permission == 'global') {
             $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%' . urldecode(request()->input('query')) . '%'],
+                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
             ]);
-        } elseif ($currentUser->view_permission == 'individual') {            
+        } elseif ($currentUser->view_permission == 'individual') {
             $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%' . urldecode(request()->input('query')) . '%'],
+                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
                 ['user_id', '=', $currentUser->id],
             ]);
         } elseif ($currentUser->view_permission == 'group') {
             $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
-            
+
             $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%' . urldecode(request()->input('query')) . '%'],
+                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
                 ['user_id', 'IN', $userIds],
             ]);
         }
-        
+
         return response()->json($results);
     }
 
@@ -326,7 +324,7 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')])
+            'message' => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')]),
         ]);
     }
 

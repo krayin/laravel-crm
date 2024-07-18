@@ -13,7 +13,7 @@ return [
     'embed'                     => 'Incrustado',
     'public-url'                => 'Url Publica',
     'code-snippet'              => 'Fragmento de Código',
-    'copy'                      =>  'Copiar',
+    'copy'                      => 'Copiar',
     'title-control'             => 'Titulo',
     'description'               => 'Descripción',
     'submit-button-label'       => 'Etiqueta Botón Enviar',
