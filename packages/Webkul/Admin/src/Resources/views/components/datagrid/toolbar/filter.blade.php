@@ -60,7 +60,7 @@
                         </div>
                     </x-slot>
 
-                    <x-slot:header>
+                    <x-slot:header class="p-3.5">
                         <!-- Apply Filter Title -->
                         <div
                             v-if="! isShowSavedFilters"
