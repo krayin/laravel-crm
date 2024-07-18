@@ -88,7 +88,7 @@
     {!! view_render_event('bagisto.admin.layout.head.after') !!}
 </head>
 
-<body class="h-full dark:bg-gray-950">
+<body class="h-full font-inter dark:bg-gray-950">
     {!! view_render_event('bagisto.admin.layout.body.before') !!}
 
     <div
