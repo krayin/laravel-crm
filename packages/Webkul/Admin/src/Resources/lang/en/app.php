@@ -145,6 +145,15 @@
                         'id'          => 'ID',
                         'name'        => 'Name',
                     ],
+                    'edit' => [
+                        'title' => 'Edit Group',
+                    ],
+                    'create' => [
+                        'name'        => 'Name',
+                        'title'       => 'Create Group',
+                        'description' => 'Description',
+                        'save-btn'    => 'Save Group'
+                    ],
                 ]
             ]
         ],

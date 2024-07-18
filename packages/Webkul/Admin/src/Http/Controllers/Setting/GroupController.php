@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 
 use Webkul\User\Repositories\GroupRepository;
@@ -44,10 +45,8 @@ class GroupController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): JsonResource
     {
         $this->validate(request(), [
             'name' => 'required|unique:groups,name',
@@ -59,22 +58,21 @@ class GroupController extends Controller
 
         Event::dispatch('settings.group.create.after', $group);
 
-        session()->flash('success', trans('admin::app.settings.groups.create-success'));
-
-        return redirect()->route('admin.settings.groups.index');
+        return new JsonResource([
+            'data' => $group,
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): JsonResource
     {
         $group = $this->groupRepository->findOrFail($id);
 
-        return view('admin::settings.groups.edit', compact('group'));
+        return new JsonResource([
+            'data' => $group,
+        ]);
     }
 
     /**
@@ -95,9 +93,9 @@ class GroupController extends Controller
 
         Event::dispatch('settings.group.update.after', $group);
 
-        session()->flash('success', trans('admin::app.settings.groups.update-success'));
-
-        return redirect()->route('admin.settings.groups.index');
+        return new JsonResource([
+            'data' => $group,
+        ]);
     }
 
     /**
