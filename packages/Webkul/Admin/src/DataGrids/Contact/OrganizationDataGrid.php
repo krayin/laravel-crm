@@ -42,7 +42,7 @@ class OrganizationDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.contacts.organizations.index.datagrid.id'),
             'type'       => 'integer',
             'filterable' => true,
             'sortable'   => true,
@@ -50,7 +50,7 @@ class OrganizationDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
+            'label'      => trans('admin::app.contacts.organizations.index.datagrid.name'),
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
@@ -64,7 +64,7 @@ class OrganizationDataGrid extends DataGrid
     {
         $this->addAction([
             'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.catalog.attributes.index.datagrid.edit'),
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.edit'),
             'method' => 'GET',
             'url'    => function ($row) {
                 return route('admin.contacts.organizations.edit', $row->id);
@@ -73,7 +73,7 @@ class OrganizationDataGrid extends DataGrid
 
         $this->addAction([
             'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.catalog.attributes.index.datagrid.delete'),
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
             'method' => 'DELETE',
             'url'    => function ($row) {
                 return route('admin.contacts.organizations.delete', $row->id);
@@ -88,7 +88,7 @@ class OrganizationDataGrid extends DataGrid
     {
         $this->addMassAction([
             'icon'   => 'icon-delete',
-            'title'  => trans('ui::app.datagrid.delete'),
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
             'method' => 'PUT',
             'url'    => route('admin.contacts.organizations.mass_delete'),
         ]);

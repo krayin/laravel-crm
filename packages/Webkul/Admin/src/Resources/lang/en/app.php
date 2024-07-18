@@ -87,6 +87,35 @@
             ],
         ],
 
+        'contacts' => [
+            'persons' => [
+                'index' => [
+                    'datagrid' => [
+                        'id'                => 'ID',
+                        'name'              => 'Name',
+                        'emails'            => 'Emails',
+                        'contact-numbers'   => 'Contact Numbers',
+                        'organization-name' => 'Organization Name',
+                        'edit'              => 'Edit',
+                        'delete'            => 'Delete',
+                    ],
+                ],
+            ],
+
+            'organizations' => [
+                'index' => [
+                    'datagrid' => [
+                        'id'     => 'ID',
+                        'name'   => 'Name',
+                        'edit'   => 'Edit',
+                        'delete' => 'Delete',
+                    ],
+                ],
+            ],
+        ],
+
+// ----------------------------------------------------------------Old version locale ----------------------------------
+
         'dashboard' => [
             'title'             => 'Dashboard',
             'cards'             => 'Cards',
@@ -177,35 +206,35 @@
             'warehouses-info'      => 'Add, edit or delete warehouses from CRM',
         ],
 
-        'contacts' => [
-            'organizations' => [
-                'title'          => 'Organizations',
-                'organization'   => 'Organization',
-                'create-title'   => 'Create Organization',
-                'edit-title'     => 'Edit Organization',
-                'save-btn-title' => 'Save as Organization',
-                'back'           => 'Back',
-                'cancel'         => 'Cancel',
-                'create-success' => 'Organization created successfully.',
-                'update-success' => 'Organization updated successfully.',
-                'delete-success' => 'Organization deleted successfully.',
-                'delete-failed'  => 'Organization can not be deleted.',
-            ],
+        // 'contacts' => [
+        //     'organizations' => [
+        //         'title'          => 'Organizations',
+        //         'organization'   => 'Organization',
+        //         'create-title'   => 'Create Organization',
+        //         'edit-title'     => 'Edit Organization',
+        //         'save-btn-title' => 'Save as Organization',
+        //         'back'           => 'Back',
+        //         'cancel'         => 'Cancel',
+        //         'create-success' => 'Organization created successfully.',
+        //         'update-success' => 'Organization updated successfully.',
+        //         'delete-success' => 'Organization deleted successfully.',
+        //         'delete-failed'  => 'Organization can not be deleted.',
+        //     ],
 
-            'persons' => [
-                'title'          => 'Persons',
-                'person'         => 'Person',
-                'create-title'   => 'Create Person',
-                'edit-title'     => 'Edit Person',
-                'save-btn-title' => 'Save as Person',
-                'back'           => 'Back',
-                'cancel'         => 'Cancel',
-                'create-success' => 'Person created successfully.',
-                'update-success' => 'Person updated successfully.',
-                'delete-success' => 'Person deleted successfully.',
-                'delete-failed'  => 'Person can not be deleted.',
-            ],
-        ],
+        //     'persons' => [
+        //         'title'          => 'Persons',
+        //         'person'         => 'Person',
+        //         'create-title'   => 'Create Person',
+        //         'edit-title'     => 'Edit Person',
+        //         'save-btn-title' => 'Save as Person',
+        //         'back'           => 'Back',
+        //         'cancel'         => 'Cancel',
+        //         'create-success' => 'Person created successfully.',
+        //         'update-success' => 'Person updated successfully.',
+        //         'delete-success' => 'Person deleted successfully.',
+        //         'delete-failed'  => 'Person can not be deleted.',
+        //     ],
+        // ],
 
         'leads' => [
             'title'                      => 'Leads',

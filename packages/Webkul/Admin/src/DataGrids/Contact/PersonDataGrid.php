@@ -46,7 +46,7 @@ class PersonDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.id'),
             'type'       => 'integer',
             'filterable' => true,
             'sortable'   => true,
@@ -54,7 +54,7 @@ class PersonDataGrid extends DataGrid
 
         $this->addColumn([
             'index'    => 'person_name',
-            'label'    => trans('admin::app.datagrid.name'),
+            'label'    => trans('admin::app.contacts.persons.index.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
             'closure'  => function ($row) {
@@ -70,16 +70,16 @@ class PersonDataGrid extends DataGrid
                     $sortName = substr($nameParts[0], 0, 2);
                 }
 
-                return '<div class="flex items-center gap-3">
-                        <div class="flex h-9 w-9 text-sm cursor-pointer items-center justify-center rounded-full ' . $bgColorClass . ' uppercase ' . $textColorClass . ' transition-all">'.$sortName.'</div>
-                        <p class="text-sm text-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">'.$row->person_name.'</p>
-                    </div>';
+                return "<div class='flex items-center gap-3'>
+                            <div class='$bgColorClass $textColorClass flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-sm'>$sortName</div>
+                            <p class='text-sm text-black dark:bg-gray-900 dark:text-gray-300'>$row->person_name</p>
+                        </div>";
             },
         ]);
 
         $this->addColumn([
             'index'    => 'emails',
-            'label'    => trans('admin::app.datagrid.emails'),
+            'label'    => trans('admin::app.contacts.persons.index.datagrid.emails'),
             'type'     => 'string',
             'sortable' => false,
             'closure'  => function ($row) {
@@ -89,7 +89,7 @@ class PersonDataGrid extends DataGrid
 
         $this->addColumn([
             'index'    => 'contact_numbers',
-            'label'    => trans('admin::app.datagrid.contact_numbers'),
+            'label'    => trans('admin::app.contacts.persons.index.datagrid.contact-numbers'),
             'type'     => 'string',
             'sortable' => false,
             'closure'  => function ($row) {
@@ -99,7 +99,7 @@ class PersonDataGrid extends DataGrid
 
         $this->addColumn([
             'index'              => 'organization',
-            'label'              => trans('admin::app.datagrid.organization_name'),
+            'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
             'type'               => 'string',
             'searchable'         => true,
             'filterable'         => true,
@@ -117,7 +117,7 @@ class PersonDataGrid extends DataGrid
         if (bouncer()->hasPermission('contacts.persons.edit')) {
             $this->addAction([
                 'icon'   => 'icon-edit',
-                'title'  => trans('admin::app.catalog.attributes.index.datagrid.edit'),
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.edit'),
                 'method' => 'GET',
                 'url'    => function ($row) {
                     return route('admin.contacts.persons.edit', $row->id);
@@ -128,7 +128,7 @@ class PersonDataGrid extends DataGrid
         if (bouncer()->hasPermission('contacts.persons.delete')) {
             $this->addAction([
                 'icon'   => 'icon-delete',
-                'title'  => trans('admin::app.catalog.attributes.index.datagrid.delete'),
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.delete'),
                 'method' => 'DELETE',
                 'url'    => function ($row) {
                     return route('admin.contacts.persons.delete', $row->id);
@@ -145,7 +145,7 @@ class PersonDataGrid extends DataGrid
         if (bouncer()->hasPermission('contacts.persons.delete')) {
             $this->addMassAction([
                 'icon'   => 'icon-delete',
-                'title'  => trans('Delete'),
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.delete'),
                 'method' => 'POST',
                 'url'    => route('admin.contacts.persons.mass_delete'),
             ]);
