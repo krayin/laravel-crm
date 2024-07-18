@@ -24,19 +24,23 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.settings.groups.index.create-button.before') !!}
+
                 <a
                     href="{{ route('admin.settings.groups.create') }}"
                     class="primary-button"
                 >
                     @lang('admin::app.settings.groups.index.create-btn')
                 </a>
+
+                {!! view_render_event('krayin.admin.settings.groups.index.create-button.after') !!}
             </div>
         </div>
     </div>
 
-    {!! view_render_event('krayin.admin.product.datagrid.index.before') !!}
+    {!! view_render_event('krayin.admin.settings.groups.index.datagrid.before') !!}
 
     <x-admin::datagrid src="{{ route('admin.settings.groups.index') }}" />
 
-    {!! view_render_event('krayin.admin.product.datagrid.index.after') !!}
+    {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
 </x-admin::layouts>

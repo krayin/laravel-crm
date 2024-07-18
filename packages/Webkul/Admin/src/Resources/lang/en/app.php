@@ -53,7 +53,7 @@
     
                     'dropdown' => [
                         'searchable' => [
-                            'atleast-two-chars' => 'Type atleast 2 characters...',
+                            'at-least-two-chars' => 'Type at least 2 characters...',
                             'no-results'        => 'No result found...',
                         ],
                     ],
@@ -116,6 +116,8 @@
 
         'products' => [
             'index' => [
+                'title' => 'Products',
+                'create-btn' => 'Create Product',
                 'datagrid' => [
                     'allocated' => 'Allocated',
                     'delete'    => 'Delete',
