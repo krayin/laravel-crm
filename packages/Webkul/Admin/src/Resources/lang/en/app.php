@@ -164,6 +164,19 @@
                         'permission-type' => 'Permission Type',
                     ],
                 ],
+
+                'create' => [
+                    'access-control' => 'Access Control',
+                    'all'            => 'All',
+                    'back-btn'       => 'Back',
+                    'custom'         => 'Custom',
+                    'description'    => 'Description',
+                    'general'        => 'General',
+                    'name'           => 'Name',
+                    'permissions'    => 'Permissions',
+                    'save-btn'       => 'Save Role',
+                    'title'          => 'Create Role',
+                ],
             ],
         ],
 
