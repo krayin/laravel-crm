@@ -103,10 +103,12 @@ import Axios from "./plugins/axios";
 import Emitter from "./plugins/emitter";
 import Flatpickr from "./plugins/flatpickr";
 import VeeValidate from "./plugins/vee-validate";
+import CreateElement from "./plugins/createElement";
 
 [
     Axios,
     Emitter,
+    CreateElement,
     Flatpickr,
     VeeValidate
 ].forEach((plugin) => app.use(plugin));

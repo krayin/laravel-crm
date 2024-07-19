@@ -3,9 +3,12 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Admin\DataGrids\Setting\TypeDataGrid;
 
 class TypeController extends Controller
 {
@@ -20,13 +23,11 @@ class TypeController extends Controller
 
     /**
      * Display a listing of the type.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\TypeDataGrid::class)->toJson();
+            return datagrid(TypeDataGrid::class)->process();
         }
 
         return view('admin::settings.types.index');

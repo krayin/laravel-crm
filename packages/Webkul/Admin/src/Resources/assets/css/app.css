@@ -395,7 +395,7 @@
 /*--------------------------------- New UI CSS --------------------------------------------------------------- */
 
 .sidebar-rounded::after {
-    @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-13px_-5px_0px_1px_rgba(255,255,255,1)] ;
+    @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-8px_-5px_0px_1px_rgba(255,255,255,1)] ;
     content: "";
     pointer-events: none;
 }
