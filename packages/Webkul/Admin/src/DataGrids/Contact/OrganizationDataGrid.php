@@ -71,7 +71,7 @@ class OrganizationDataGrid extends DataGrid
 
                 $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
 
-                return "<a href='".$route."'>".$personsCount.'</a>';
+                return "<a href='" . $route . "'>" . $personsCount . "</a>";
             },
         ]);
 

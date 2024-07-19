@@ -11,7 +11,7 @@ class WebFormAttributeRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\WebForm\Contracts\WebFormAttribute';
     }

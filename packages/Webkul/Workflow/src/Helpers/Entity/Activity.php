@@ -2,23 +2,23 @@
 
 namespace Webkul\Workflow\Helpers\Entity;
 
-use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-use Webkul\Activity\Repositories\ActivityRepository;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
+use Carbon\Carbon;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
-use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Activity\Repositories\ActivityRepository;
 
 class Activity extends AbstractEntity
 {
     /**
      * Define the entity type.
-     *
-     * @var string
+     * 
+     * @var string  $entityType
      */
     protected $entityType = 'activities';
 
@@ -33,13 +33,15 @@ class Activity extends AbstractEntity
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository,
         protected ActivityRepository $activityRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Returns attributes
      *
      * @param  string  $entityType
      * @param  array  $skipAttributes
+     * 
      * @return array
      */
     public function getAttributes($entityType, $skipAttributes = [])
@@ -104,7 +106,7 @@ class Activity extends AbstractEntity
                 'name'        => 'User',
                 'lookup_type' => 'users',
                 'options'     => $this->attributeRepository->getLookUpOptions('users'),
-            ],
+            ]
         ];
 
         return $attributes;
@@ -112,7 +114,7 @@ class Activity extends AbstractEntity
 
     /**
      * Returns placeholders for email templates.
-     *
+     * 
      * @param  array  $entity
      * @return array
      */
@@ -122,7 +124,7 @@ class Activity extends AbstractEntity
 
         $emailTemplates['menu'][] = [
             'text'  => 'Participants',
-            'value' => '{%activities.participants%}',
+            'value' => '{%activities.participants%}'
         ];
 
         return $emailTemplates;
@@ -130,9 +132,9 @@ class Activity extends AbstractEntity
 
     /**
      * Replace placeholders with values.
-     *
+     * 
      * @param  \Webkul\Activity\Contracts\Activity  $entity
-     * @param  mixed  $content
+     * @param  mixed $content
      * @return string
      */
     public function replacePlaceholders($entity, $content)
@@ -142,14 +144,14 @@ class Activity extends AbstractEntity
         $value = '<ul style="padding-left: 18px;margin: 0;">';
 
         foreach ($entity->participants as $participant) {
-            $value .= '<li>'.($participant->user ? $participant->user->name : $participant->person->name).'</li>';
+            $value .= '<li>' . ($participant->user ? $participant->user->name : $participant->person->name) . '</li>';
         }
 
         $value .= '</ul>';
 
         $content = strtr($content, [
-            '{%'.$this->entityType.'.participants%}'   => $value,
-            '{% '.$this->entityType.'.participants %}' => $value,
+            '{%' . $this->entityType . '.participants%}'   => $value,
+            '{% ' . $this->entityType . '.participants %}' => $value,
         ]);
 
         return $content;
@@ -157,7 +159,7 @@ class Activity extends AbstractEntity
 
     /**
      * Listing of the entities.
-     *
+     * 
      * @param  \Webkul\Activity\Contracts\Activity  $entity
      * @return \Webkul\Activity\Contracts\Activity
      */
@@ -172,7 +174,7 @@ class Activity extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
+     * 
      * @return array
      */
     public function getActions()
@@ -193,8 +195,8 @@ class Activity extends AbstractEntity
                 'name'    => __('admin::app.settings.workflows.send-email-to-participants'),
                 'options' => $emailTemplates,
             ], [
-                'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
                     'get'    => __('admin::app.settings.workflows.get_method'),
                     'post'   => __('admin::app.settings.workflows.post_method'),
@@ -204,15 +206,15 @@ class Activity extends AbstractEntity
                 ],
                 'encodings' => [
                     'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
-                ],
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ]
             ],
         ];
     }
 
     /**
      * Execute workflow actions.
-     *
+     * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Activity\Contracts\Activity  $activity
      * @return array
@@ -258,8 +260,7 @@ class Activity extends AbstractEntity
                                 ],
                             ],
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -287,8 +288,7 @@ class Activity extends AbstractEntity
                                 ],
                             ]));
                         }
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -311,9 +311,9 @@ class Activity extends AbstractEntity
 
     /**
      * Trigger Webhook.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
+     * 
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
      * @return void
      */
     private function triggerWebhook($hook, $activity)
@@ -336,8 +336,8 @@ class Activity extends AbstractEntity
 
     /**
      * Formatting headers.
-     *
-     * @param  array  $hook
+     * 
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -357,9 +357,10 @@ class Activity extends AbstractEntity
 
     /**
      * Prepare Request Body.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
+     * 
+     * @param array $hook
+     * @param \Webkul\Activity\Contracts\Activity $activity
+     * 
      * @return array
      */
     private function getRequestBody($hook, $activity)
@@ -392,7 +393,7 @@ class Activity extends AbstractEntity
 
     /**
      * Returns .ics file for attachments.
-     *
+     * 
      * @param  \Webkul\Activity\Contracts\Activity  $activity
      * @return string
      */
@@ -403,29 +404,29 @@ class Activity extends AbstractEntity
             'VERSION:2.0',
             'PRODID:-//Krayincrm//Krayincrm//EN',
             'BEGIN:VEVENT',
-            'UID:'.time().'-'.$activity->id,
-            'DTSTAMP:'.Carbon::now()->format('YmdTHis'),
-            'CREATED:'.$activity->created_at->format('YmdTHis'),
+            'UID:' . time() . '-' . $activity->id,
+            'DTSTAMP:' . Carbon::now()->format('YmdTHis'),
+            'CREATED:' . $activity->created_at->format('YmdTHis'),
             'SEQUENCE:1',
-            'ORGANIZER;CN='.$activity->user->name.':MAILTO:'.$activity->user->email,
+            'ORGANIZER;CN=' . $activity->user->name . ':MAILTO:' . $activity->user->email,
         ];
 
         foreach ($activity->participants as $participant) {
             if ($participant->user) {
-                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->user->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$participant->user->email;
+                $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN=' . $participant->user->name . ';PARTSTAT=NEEDS-ACTION:MAILTO:' . $participant->user->email;
             } else {
                 foreach (data_get($participant->person->emails, '*.value') as $email) {
-                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN='.$participant->person->name.';PARTSTAT=NEEDS-ACTION:MAILTO:'.$email;
+                    $content[] = 'ATTENDEE;ROLE=REQ-PARTICIPANT;CN=' . $participant->person->name . ';PARTSTAT=NEEDS-ACTION:MAILTO:' . $email;
                 }
             }
         }
 
         $content = array_merge($content, [
-            'DTSTART:'.$activity->schedule_from->format('YmdTHis'),
-            'DTEND:'.$activity->schedule_to->format('YmdTHis'),
-            'SUMMARY:'.$activity->title,
-            'LOCATION:'.$activity->location,
-            'DESCRIPTION:'.$activity->comment,
+            'DTSTART:' . $activity->schedule_from->format('YmdTHis'),
+            'DTEND:' . $activity->schedule_to->format('YmdTHis'),
+            'SUMMARY:' . $activity->title,
+            'LOCATION:' . $activity->location,
+            'DESCRIPTION:' . $activity->comment,
             'END:VEVENT',
             'END:VCALENDAR',
         ]);

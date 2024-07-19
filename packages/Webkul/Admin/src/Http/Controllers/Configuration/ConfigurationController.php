@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Configuration;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Core\Contracts\Validations\Code;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Core\Repositories\CoreConfigRepository as ConfigurationRepository;
 
@@ -14,7 +15,9 @@ class ConfigurationController extends Controller
      *
      * @return void
      */
-    public function __construct(protected ConfigurationRepository $configurationRepository) {}
+    public function __construct(protected ConfigurationRepository $configurationRepository)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -77,7 +80,7 @@ class ConfigurationController extends Controller
     {
         $path = request()->route()->parameters()['path'];
 
-        $fileName = 'configuration/'.$path;
+        $fileName = 'configuration/'. $path;
 
         $config = $this->configurationRepository->findOneByField('value', $fileName);
 

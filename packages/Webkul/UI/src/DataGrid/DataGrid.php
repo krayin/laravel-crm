@@ -126,7 +126,7 @@ abstract class DataGrid
     /**
      * Enable items per page.
      *
-     * @var bool
+     * @var boolean
      */
     protected $enablePerPage = true;
 
@@ -140,14 +140,14 @@ abstract class DataGrid
     /**
      * Enable search field.
      *
-     * @var bool
+     * @var boolean
      */
     protected $enableSearch = true;
 
     /**
      * Enable sidebar filters.
      *
-     * @var bool
+     * @var boolean
      */
     protected $enableFilters = true;
 
@@ -212,7 +212,7 @@ abstract class DataGrid
     /**
      * Export option.
      *
-     * @var bool
+     * @var boolean
      */
     protected $export = false;
 
@@ -231,7 +231,9 @@ abstract class DataGrid
      *
      * @return void
      */
-    public function init() {}
+    public function init()
+    {
+    }
 
     /**
      * Abstract method. Required method.
@@ -252,14 +254,18 @@ abstract class DataGrid
      *
      * @return void
      */
-    public function prepareActions() {}
+    public function prepareActions()
+    {
+    }
 
     /**
      * Preprare mass actions. Optional method.
      *
      * @return void
      */
-    public function prepareMassActions() {}
+    public function prepareMassActions()
+    {
+    }
 
     /**
      * Trigger event.
@@ -276,7 +282,7 @@ abstract class DataGrid
 
             $className = strtolower($className);
 
-            $eventName = $className.'.'.$name;
+            $eventName = $className . '.' . $name;
 
             Event::dispatch($eventName, $this->invoker);
         }
@@ -340,13 +346,13 @@ abstract class DataGrid
     {
         $this->checkRequiredColumnKeys($column);
 
-        $this->fireEvent('add.column.before.'.$column['index']);
+        $this->fireEvent('add.column.before.' . $column['index']);
 
         $this->columns[] = $column;
 
         $this->setCompleteColumnDetails($column);
 
-        $this->fireEvent('add.column.after.'.$column['index']);
+        $this->fireEvent('add.column.after.' . $column['index']);
     }
 
     /**
@@ -355,7 +361,7 @@ abstract class DataGrid
      * in second param.
      *
      * @param  array  $action
-     * @param  bool  $specialPermission
+     * @param  bool   $specialPermission
      * @return void
      */
     public function addAction($action, $specialPermission = false)
@@ -363,7 +369,7 @@ abstract class DataGrid
         $this->checkRequiredActionKeys($action);
 
         $this->checkPermissions($action, $specialPermission, function ($action, $eventName) {
-            $this->fireEvent('action.before.'.$eventName);
+            $this->fireEvent('action.before.' . $eventName);
 
             $action['key'] = Str::slug($action['title'], '_');
 
@@ -371,7 +377,7 @@ abstract class DataGrid
 
             $this->enableAction = true;
 
-            $this->fireEvent('action.after.'.$eventName);
+            $this->fireEvent('action.after.' . $eventName);
         });
     }
 
@@ -381,7 +387,7 @@ abstract class DataGrid
      * in second param.
      *
      * @param  array  $massAction
-     * @param  bool  $specialPermission
+     * @param  bool   $specialPermission
      * @return void
      */
     public function addMassAction($massAction, $specialPermission = false)
@@ -389,12 +395,12 @@ abstract class DataGrid
         $massAction['route'] = $this->getRouteNameFromUrl($massAction['action'], $massAction['method']);
 
         $this->checkPermissions($massAction, $specialPermission, function ($action, $eventName) {
-            $this->fireEvent('mass.action.before.'.$eventName);
+            $this->fireEvent('mass.action.before.' . $eventName);
 
             $this->massActions[] = $action;
             $this->enableMassAction = true;
 
-            $this->fireEvent('mass.action.after.'.$eventName);
+            $this->fireEvent('mass.action.after.' . $eventName);
         }, 'label');
     }
 

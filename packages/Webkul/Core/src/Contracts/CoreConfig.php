@@ -2,4 +2,6 @@
 
 namespace Webkul\Core\Contracts;
 
-interface CoreConfig {}
+interface CoreConfig
+{
+}

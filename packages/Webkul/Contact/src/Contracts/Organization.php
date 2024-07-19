@@ -2,4 +2,6 @@
 
 namespace Webkul\Contact\Contracts;
 
-interface Organization {}
+interface Organization
+{
+}

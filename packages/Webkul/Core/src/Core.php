@@ -4,8 +4,8 @@ namespace Webkul\Core;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
-use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryRepository;
+use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
 
 class Core
@@ -19,7 +19,8 @@ class Core
         protected CountryRepository $countryRepository,
         protected CoreConfigRepository $coreConfigRepository,
         protected CountryStateRepository $countryStateRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Retrieve all timezones.
@@ -60,7 +61,8 @@ class Core
     /**
      * Returns country name by code.
      *
-     * @param  string  $code
+     * @param string $code
+     *
      * @return string
      */
     public function country_name($code)
@@ -73,7 +75,8 @@ class Core
     /**
      * Returns state name by code.
      *
-     * @param  string  $code
+     * @param string $code
+     *
      * @return string
      */
     public function state_name($code)
@@ -86,7 +89,8 @@ class Core
     /**
      * Retrieve all country states.
      *
-     * @param  string  $countryCode
+     * @param string $countryCode
+     *
      * @return \Illuminate\Support\Collection
      */
     public function states($countryCode)
@@ -121,7 +125,7 @@ class Core
 
         $collection = $this->countryStateRepository->findByField([
             'country_code' => $countryCode,
-            'code'         => $stateCode,
+            'code' => $stateCode
         ]);
 
         if (count($collection)) {
@@ -134,7 +138,8 @@ class Core
     /**
      * Method to sort through the acl items and put them in order.
      *
-     * @param  array  $items
+     * @param array $items
+     *
      * @return array
      */
     public function sortItems($items)
@@ -155,11 +160,12 @@ class Core
 
         return $this->convertToAssociativeArray($items);
     }
-
+    
     /**
-     * @param  array  $items
-     * @param  string  $key
-     * @param  string|int|float  $value
+     * @param array            $items
+     * @param string           $key
+     * @param string|int|float $value
+     *
      * @return array
      */
     public function array_set(&$array, $key, $value)
@@ -193,7 +199,8 @@ class Core
     }
 
     /**
-     * @param  array  $items
+     * @param array $items
+     *
      * @return array
      */
     public function convertToAssociativeArray($items)
@@ -226,6 +233,9 @@ class Core
     }
 
     /**
+     * @param array $array1
+     * @param array $array2
+     *
      * @return array
      */
     protected function arrayMerge(array &$array1, array &$array2)
@@ -246,7 +256,7 @@ class Core
     /**
      * Create singleton object through single facade.
      *
-     * @param  string  $className
+     * @param string $className
      * @return mixed
      */
     public function getSingletonInstance($className)
@@ -273,12 +283,13 @@ class Core
     /**
      * Return currency symbol from currency code.
      *
-     * @param  float  $price
+     * @param float $price
+     *
      * @return string
      */
     public function currencySymbol($code)
     {
-        $formatter = new \NumberFormatter(app()->getLocale().'@currency='.$code, \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter(app()->getLocale() . '@currency=' . $code, \NumberFormatter::CURRENCY);
 
         return $formatter->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
     }
@@ -287,7 +298,8 @@ class Core
      * Format price with base currency symbol. This method also give ability to encode
      * the base currency symbol and its optional.
      *
-     * @param  float  $price
+     * @param  float $price
+     *
      * @return string
      */
     public function formatBasePrice($price)
@@ -302,7 +314,8 @@ class Core
     }
 
     /**
-     * @param  string  $fieldName
+     * @param string $fieldName
+     *
      * @return array
      */
     public function getConfigField($fieldName)
@@ -310,7 +323,7 @@ class Core
         foreach (config('core_config') as $coreData) {
             if (isset($coreData['fields'])) {
                 foreach ($coreData['fields'] as $field) {
-                    $name = $coreData['key'].'.'.$field['name'];
+                    $name = $coreData['key'] . '.' . $field['name'];
 
                     if ($name == $fieldName) {
                         return $field;
@@ -323,9 +336,10 @@ class Core
     /**
      * Retrieve information for configuration
      *
-     * @param  string  $field
-     * @param  int|string|null  $channelId
-     * @param  string|null  $locale
+     * @param string          $field
+     * @param int|string|null $channelId
+     * @param string|null     $locale
+     *
      * @return mixed
      */
     public function getConfigData($field)
@@ -337,11 +351,11 @@ class Core
         ]);
 
         if (! $coreConfigValue) {
-            $fields = explode('.', $field);
+            $fields = explode(".", $field);
 
             array_shift($fields);
 
-            $field = implode('.', $fields);
+            $field = implode(".", $fields);
 
             return Config::get($field);
         }

@@ -2,4 +2,6 @@
 
 namespace Webkul\WebForm\Contracts;
 
-interface WebFormAttribute {}
+interface WebFormAttribute
+{
+}

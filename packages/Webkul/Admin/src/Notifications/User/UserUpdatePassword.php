@@ -16,7 +16,9 @@ class UserUpdatePassword extends Mailable
      * @param  \Webkul\User\Contracts\User  $user
      * @return void
      */
-    public function __construct(public $user) {}
+    public function __construct(public $user)
+    {
+    }
 
     /**
      * Build the message.
@@ -26,8 +28,8 @@ class UserUpdatePassword extends Mailable
     public function build()
     {
         return $this->from(core()->getSenderEmailDetails()['email'], core()->getSenderEmailDetails()['name'])
-            ->to($this->user->email, $this->user->name)
-            ->subject(trans('shop::app.mail.update-password.subject'))
-            ->view('shop::emails.users.update-password', ['user' => $this->user]);
+                    ->to($this->user->email, $this->user->name)
+                    ->subject(trans('shop::app.mail.update-password.subject'))
+                    ->view('shop::emails.users.update-password', ['user' => $this->user]);
     }
 }

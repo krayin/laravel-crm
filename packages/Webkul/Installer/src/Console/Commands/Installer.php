@@ -248,13 +248,13 @@ class Installer extends Command
                 ['mysql', 'pgsql', 'sqlsrv']
             ),
 
-            'DB_HOST' => text(
+            'DB_HOST'       => text(
                 label: 'Please enter the database host',
                 default: env('DB_HOST', '127.0.0.1'),
                 required: true
             ),
 
-            'DB_PORT' => text(
+            'DB_PORT'       => text(
                 label: 'Please enter the database port',
                 default: env('DB_PORT', '3306'),
                 required: true

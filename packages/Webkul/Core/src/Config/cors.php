@@ -22,7 +22,7 @@ return [
      * Example: ['api/*']
      */
     'paths' => [
-        'admin/web-forms/forms/*',
+        'admin/web-forms/forms/*'
     ],
 
     /*

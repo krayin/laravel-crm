@@ -15,11 +15,12 @@ class Entity
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Returns events to match for the entity
-     *
+     * 
      * @return array
      */
     public function getEvents()
@@ -43,7 +44,7 @@ class Entity
 
     /**
      * Returns conditions to match for the entity
-     *
+     * 
      * @return array
      */
     public function getConditions()
@@ -63,7 +64,7 @@ class Entity
 
     /**
      * Returns workflow actions
-     *
+     * 
      * @return array
      */
     public function getActions()
@@ -83,7 +84,7 @@ class Entity
 
     /**
      * Returns placeholders for email templates
-     *
+     * 
      * @return array
      */
     public function getEmailTemplatePlaceholders()

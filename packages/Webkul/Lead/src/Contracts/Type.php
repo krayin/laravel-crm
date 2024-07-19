@@ -2,4 +2,6 @@
 
 namespace Webkul\Lead\Contracts;
 
-interface Type {}
+interface Type
+{
+}

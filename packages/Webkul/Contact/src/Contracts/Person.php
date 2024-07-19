@@ -2,4 +2,6 @@
 
 namespace Webkul\Contact\Contracts;
 
-interface Person {}
+interface Person
+{
+}

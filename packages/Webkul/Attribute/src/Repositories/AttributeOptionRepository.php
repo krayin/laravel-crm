@@ -11,7 +11,7 @@ class AttributeOptionRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Attribute\Contracts\AttributeOption';
     }

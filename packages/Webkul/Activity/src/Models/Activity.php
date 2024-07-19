@@ -3,9 +3,9 @@
 namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Activity\Contracts\Activity as ActivityContract;
-use Webkul\Lead\Models\LeadProxy;
 use Webkul\User\Models\UserProxy;
+use Webkul\Lead\Models\LeadProxy;
+use Webkul\Activity\Contracts\Activity as ActivityContract;
 
 class Activity extends Model implements ActivityContract
 {

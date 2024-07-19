@@ -2,22 +2,22 @@
 
 namespace Webkul\Workflow\Helpers\Entity;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Arr;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
-use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
-use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
+use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Contact\Repositories\PersonRepository;
 
 class Quote extends AbstractEntity
 {
     /**
      * Define the entity type.
-     *
-     * @var string
+     * 
+     * @var string $entityType
      */
     protected $entityType = 'quotes';
 
@@ -32,12 +32,13 @@ class Quote extends AbstractEntity
         protected QuoteRepository $quoteRepository,
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Listing of the entities.
-     *
-     * @param  \Webkul\Quote\Contracts\Quote|int  $entity
+     * 
+     * @param  \Webkul\Quote\Contracts\Quote|integer  $entity
      * @return \Webkul\Quote\Contracts\Quote
      */
     public function getEntity($entity)
@@ -51,7 +52,7 @@ class Quote extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
+     * 
      * @return array
      */
     public function getActions()
@@ -80,8 +81,8 @@ class Quote extends AbstractEntity
                 'name'    => __('admin::app.settings.workflows.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
-                'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
+                'id'   => 'trigger_webhook',
+                'name' => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
                     'get'    => __('admin::app.settings.workflows.get_method'),
                     'post'   => __('admin::app.settings.workflows.post_method'),
@@ -91,15 +92,15 @@ class Quote extends AbstractEntity
                 ],
                 'encodings' => [
                     'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
-                ],
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                ]
             ],
         ];
     }
 
     /**
      * Execute workflow actions.
-     *
+     * 
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Quote\Contracts\Quote  $quote
      * @return array
@@ -147,8 +148,7 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -165,8 +165,7 @@ class Quote extends AbstractEntity
                             'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {
-                    }
+                    } catch (\Exception $e) {}
 
                     break;
 
@@ -189,9 +188,9 @@ class Quote extends AbstractEntity
 
     /**
      * Trigger webhook.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
+     * 
+     * @param array $hook
+     * @param \Webkul\Quote\Contracts\Quote $quote
      * @return void
      */
     private function triggerWebhook($hook, $quote)
@@ -214,8 +213,8 @@ class Quote extends AbstractEntity
 
     /**
      * Format headers.
-     *
-     * @param  array  $hook
+     * 
+     * @param array $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -235,9 +234,9 @@ class Quote extends AbstractEntity
 
     /**
      * Prepare request body.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
+     * 
+     * @param array $hook
+     * @param \Webkul\Quote\Contracts\Quote $quote
      * @return array
      */
     private function getRequestBody($hook, $quote)

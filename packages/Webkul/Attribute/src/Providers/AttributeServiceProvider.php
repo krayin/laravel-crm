@@ -2,8 +2,10 @@
 
 namespace Webkul\Attribute\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Event;
 
 class AttributeServiceProvider extends ServiceProvider
 {
@@ -14,7 +16,7 @@ class AttributeServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -26,7 +28,7 @@ class AttributeServiceProvider extends ServiceProvider
     {
         $this->registerConfig();
     }
-
+    
     /**
      * Register package config.
      *
@@ -35,7 +37,7 @@ class AttributeServiceProvider extends ServiceProvider
     protected function registerConfig()
     {
         $this->mergeConfigFrom(
-            dirname(__DIR__).'/Config/attribute_lookups.php', 'attribute_lookups'
+            dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups'
         );
     }
 }

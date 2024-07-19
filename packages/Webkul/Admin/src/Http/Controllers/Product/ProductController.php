@@ -46,6 +46,7 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -104,7 +105,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(AttributeForm $request, $id)
@@ -123,8 +125,8 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  int  $id
-     * @param  int  $warehouseId
+     * @param int  $id
+     * @param int  $warehouseId
      * @return \Illuminate\Http\Response
      */
     public function storeInventories($id, $warehouseId = null)
@@ -158,7 +160,7 @@ class ProductController extends Controller
     public function search()
     {
         $results = $this->productRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
         ]);
 
         return response()->json($results);
@@ -197,7 +199,7 @@ class ProductController extends Controller
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.products.product')]),
             ], 200);
-        } catch (\Exception $exception) {
+        } catch(\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.products.product')]),
             ], 400);

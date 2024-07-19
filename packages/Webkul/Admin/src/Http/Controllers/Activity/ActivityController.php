@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\Http\Controllers\Activity;
 
-use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Carbon\Carbon;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -26,7 +26,8 @@ class ActivityController extends Controller
         protected LeadRepository $leadRepository,
         protected UserRepository $userRepository,
         protected PersonRepository $personRepository
-    ) {}
+    ) {
+    }
 
     /**
      * Display a listing of the resource.
@@ -47,11 +48,11 @@ class ActivityController extends Controller
     {
         if (request('view_type')) {
             $startDate = request()->get('startDate')
-                        ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
+                        ? Carbon::createFromTimeString(request()->get('startDate') . " 00:00:01")
                         : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
 
             $endDate = request()->get('endDate')
-                    ? Carbon::createFromTimeString(request()->get('endDate').' 23:59:59')
+                    ? Carbon::createFromTimeString(request()->get('endDate') . " 23:59:59")
                     : Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
 
             $activities = $this->activityRepository->getActivities([$startDate, $endDate])->toArray();
@@ -108,7 +109,7 @@ class ActivityController extends Controller
             if (is_array(request('participants.users'))) {
                 foreach (request('participants.users') as $userId) {
                     $activity->participants()->create([
-                        'user_id' => $userId,
+                        'user_id' => $userId
                     ]);
                 }
             }
@@ -130,7 +131,7 @@ class ActivityController extends Controller
 
         Event::dispatch('activity.create.after', $activity);
 
-        session()->flash('success', trans('admin::app.activities.create-success', ['type' => trans('admin::app.activities.'.$activity->type)]));
+        session()->flash('success', trans('admin::app.activities.create-success', ['type' => trans('admin::app.activities.' . $activity->type)]));
 
         return redirect()->back();
     }
@@ -151,7 +152,7 @@ class ActivityController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update($id)
@@ -166,7 +167,7 @@ class ActivityController extends Controller
             if (is_array(request('participants.users'))) {
                 foreach (request('participants.users') as $userId) {
                     $activity->participants()->create([
-                        'user_id' => $userId,
+                        'user_id' => $userId
                     ]);
                 }
             }
@@ -192,10 +193,10 @@ class ActivityController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                'message' => trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.'.$activity->type)]),
+                'message' => trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ]);
         } else {
-            session()->flash('success', trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.'.$activity->type)]));
+            session()->flash('success', trans('admin::app.activities.update-success', ['type' => trans('admin::app.activities.' . $activity->type)]));
 
             return redirect()->route('admin.activities.index');
         }
@@ -243,11 +244,11 @@ class ActivityController extends Controller
     public function searchParticipants()
     {
         $users = $this->userRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
         ]);
 
         $persons = $this->personRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
         ]);
 
         return response()->json([
@@ -319,11 +320,11 @@ class ActivityController extends Controller
             Event::dispatch('activity.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.activities.destroy-success', ['type' => trans('admin::app.activities.'.$activity->type)]),
+                'message' => trans('admin::app.activities.destroy-success', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.activities.destroy-failed', ['type' => trans('admin::app.activities.'.$activity->type)]),
+                'message' => trans('admin::app.activities.destroy-failed', ['type' => trans('admin::app.activities.' . $activity->type)]),
             ], 400);
         }
     }
@@ -344,7 +345,7 @@ class ActivityController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.activities.title')]),
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.activities.title')])
         ]);
     }
 }

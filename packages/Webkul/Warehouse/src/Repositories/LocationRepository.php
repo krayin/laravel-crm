@@ -19,7 +19,7 @@ class LocationRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Warehouse\Contracts\Location';
     }

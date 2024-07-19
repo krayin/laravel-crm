@@ -2,4 +2,6 @@
 
 namespace Webkul\Workflow\Contracts;
 
-interface Workflow {}
+interface Workflow
+{
+}

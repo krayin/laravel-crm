@@ -16,7 +16,8 @@ class AttributeRepository extends Repository
     public function __construct(
         protected AttributeOptionRepository $attributeOptionRepository,
         Container $container
-    ) {
+    )
+    {
         parent::__construct($container);
     }
 
@@ -25,12 +26,13 @@ class AttributeRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Attribute\Contracts\Attribute';
     }
 
     /**
+     * @param  array  $data
      * @return \Webkul\Attribute\Contracts\Attribute
      */
     public function create(array $data)
@@ -45,7 +47,7 @@ class AttributeRepository extends Repository
             foreach ($options as $optionInputs) {
                 $this->attributeOptionRepository->create(array_merge([
                     'attribute_id' => $attribute->id,
-                    'sort_order'   => $sortOrder++,
+                    'sort_order'  => $sortOrder++,
                 ], $optionInputs));
             }
         }
@@ -54,11 +56,12 @@ class AttributeRepository extends Repository
     }
 
     /**
-     * @param  int  $id
+     * @param  array  $data
+     * @param  int $id
      * @param  string  $attribute
      * @return \Webkul\Attribute\Contracts\Attribute
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attribute = "id")
     {
         $attribute = $this->find($id);
 
@@ -110,27 +113,27 @@ class AttributeRepository extends Repository
     }
 
     /**
-     * @param  int  $lookup
+     * @param  integer  $lookup
      * @param  string  $query
      * @param  array  $columns
      * @return array
      */
     public function getLookUpOptions($lookup, $query = '', $columns = [])
     {
-        $lookup = config('attribute_lookups.'.$lookup);
+        $lookup = config('attribute_lookups.' . $lookup);
 
         if (! count($columns)) {
-            $columns = [($lookup['value_column'] ?? 'id').' as id', ($lookup['label_column'] ?? 'name').' as name'];
+            $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
         }
 
         if (Str::contains($lookup['repository'], 'UserRepository')) {
             $userRepository = app($lookup['repository']);
-
+            
             $currentUser = auth()->guard('user')->user();
-
+        
             if ($currentUser->view_permission === 'group') {
                 return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                    ->where('users.name', 'like', '%'.urldecode($query).'%')
+                    ->where('users.name', 'like', '%' . urldecode($query) . '%')
                     ->get();
             } elseif ($currentUser->view_permission === 'individual') {
                 return $userRepository->findByField('users.id', $currentUser->id);
@@ -138,13 +141,13 @@ class AttributeRepository extends Repository
         }
 
         return app($lookup['repository'])->findWhere([
-            [$lookup['label_column'] ?? 'name', 'like', '%'.urldecode($query).'%'],
+            [$lookup['label_column'] ?? 'name', 'like', '%' . urldecode($query) . '%']
         ], $columns);
     }
 
     /**
      * @param  string  $lookup
-     * @param  int|array  $entityId
+     * @param  integer|array  $entityId
      * @param  array  $columns
      * @return mixed
      */
@@ -154,10 +157,10 @@ class AttributeRepository extends Repository
             return;
         }
 
-        $lookup = config('attribute_lookups.'.$lookup);
+        $lookup = config('attribute_lookups.' . $lookup);
 
         if (! count($columns)) {
-            $columns = [($lookup['value_column'] ?? 'id').' as id', ($lookup['label_column'] ?? 'name').' as name'];
+            $columns = [($lookup['value_column'] ?? 'id') . ' as id' , ($lookup['label_column'] ?? 'name') . ' as name'];
         }
 
         if (is_array($entityId)) {

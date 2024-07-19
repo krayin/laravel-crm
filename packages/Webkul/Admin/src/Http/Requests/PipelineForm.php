@@ -10,6 +10,7 @@ class PipelineForm extends FormRequest
     /**
      * Constructor.
      *
+     * @param  \Illuminate\Validation\Factory  $validationFactory
      * @return void
      */
     public function __construct(ValidationFactory $validationFactory)
@@ -36,15 +37,15 @@ class PipelineForm extends FormRequest
     {
         if (request('id')) {
             return [
-                'name'          => 'required',
+                'name' => 'required',
                 'stages.*.name' => 'unique_key',
                 'stages.*.code' => 'unique_key',
             ];
         }
 
         return [
-            'name'          => 'required',
-            'rotten_days'   => 'required',
+            'name'        => 'required',
+            'rotten_days' => 'required',
             'stages.*.name' => 'unique_key',
             'stages.*.code' => 'unique_key',
         ];
@@ -65,6 +66,7 @@ class PipelineForm extends FormRequest
     /**
      * Place all your validator extensions here.
      *
+     * @param  \Illuminate\Validation\Factory  $validationFactory
      * @return void
      */
     public function validatorExtensions(ValidationFactory $validationFactory)

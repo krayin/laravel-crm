@@ -4,8 +4,8 @@ namespace Webkul\Contact\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
-use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 
 class OrganizationRepository extends Repository
 {
@@ -20,18 +20,19 @@ class OrganizationRepository extends Repository
     ) {
         parent::__construct($container);
     }
-
+    
     /**
      * Specify Model class name
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Contact\Contracts\Organization';
     }
 
     /**
+     * @param array $data
      * @return \Webkul\Contact\Contracts\Organization
      */
     public function create(array $data)
@@ -44,11 +45,12 @@ class OrganizationRepository extends Repository
     }
 
     /**
-     * @param  int  $id
-     * @param  string  $attribute
+     * @param array  $data
+     * @param int    $id
+     * @param string $attribute
      * @return \Webkul\Contact\Contracts\Organization
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attribute = "id")
     {
         $organization = parent::update($data, $id);
 
@@ -59,22 +61,22 @@ class OrganizationRepository extends Repository
 
     /**
      * Delete organization and it's persons.
-     *
-     * @param  int  $id
+     * 
+     * @param int $id
      * @return @void
      */
     public function delete($id)
     {
         $organization = $this->findOrFail($id);
-
-        DB::transaction(function () use ($organization, $id) {
+    
+        DB::transaction(function() use($organization, $id) {
             $organization->persons()->delete();
-
+    
             $this->attributeValueRepository->deleteWhere([
                 'entity_id'   => $id,
                 'entity_type' => 'organizations',
             ]);
-
+    
             $organization->delete();
         });
     }

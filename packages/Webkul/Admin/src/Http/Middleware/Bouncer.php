@@ -10,6 +10,7 @@ class Bouncer
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Closure  $next
      * @param  string|null  $guard
      * @return mixed
      */
@@ -39,7 +40,7 @@ class Bouncer
             auth()->guard($guard)->logout();
 
             session()->flash('error', __('admin::app.errors.401'));
-
+            
             return redirect()->route('admin.session.create');
         }
 

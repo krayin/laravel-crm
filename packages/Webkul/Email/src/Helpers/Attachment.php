@@ -5,13 +5,13 @@ namespace Webkul\Email\Helpers;
 class Attachment
 {
     /**
-     * @var File Content
-     */
+    * @var $content File Content
+    */
     private $content;
 
     /**
-     * @var Filename extension
-     */
+    * @var $extension Filename extension
+    */
     private $extension;
 
     /**
@@ -69,10 +69,10 @@ class Attachment
     }
 
     /**
-     * Retrieve the Attachment Headers
-     *
-     * @return string
-     */
+    * Retrieve the Attachment Headers
+    *
+    * @return string
+    */
     public function getHeaders()
     {
         return $this->headers;
@@ -82,7 +82,7 @@ class Attachment
      * Read the contents a few bytes at a time until completed
      * Once read to completion, it always returns false
      *
-     * @param  int  $bytes
+     * @param  integer  $bytes
      * @return string
      */
     public function read($bytes = 2082)

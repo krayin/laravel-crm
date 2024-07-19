@@ -2,8 +2,8 @@
 
 namespace Webkul\Core\Eloquent;
 
-use Astrotomic\Translatable\Translatable;
 use Illuminate\Database\Eloquent\Model;
+use Astrotomic\Translatable\Translatable;
 
 class TranslatableModel extends Model
 {

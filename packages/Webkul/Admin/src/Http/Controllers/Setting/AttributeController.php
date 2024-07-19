@@ -4,8 +4,8 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Core\Contracts\Validations\Code;
 
 class AttributeController extends Controller
@@ -15,7 +15,9 @@ class AttributeController extends Controller
      *
      * @return void
      */
-    public function __construct(protected AttributeRepository $attributeRepository) {}
+    public function __construct(protected AttributeRepository $attributeRepository)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -49,7 +51,7 @@ class AttributeController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.request('entity_type'), new Code],
+            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,' . request('entity_type'), new Code],
             'name' => 'required',
             'type' => 'required',
         ]);
@@ -89,7 +91,7 @@ class AttributeController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,'.$id, new Code],
+            'code' => ['required', 'unique:attributes,code,NULL,NULL,entity_type,' . $id, new Code],
             'name' => 'required',
             'type' => 'required',
         ]);
@@ -132,7 +134,7 @@ class AttributeController extends Controller
                 'status'  => true,
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.attributes.attribute')]),
             ], 200);
-        } catch (\Exception $exception) {
+        } catch(\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.attributes.delete-failed'),
             ], 400);

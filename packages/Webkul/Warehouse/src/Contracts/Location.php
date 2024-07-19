@@ -2,4 +2,6 @@
 
 namespace Webkul\Warehouse\Contracts;
 
-interface Location {}
+interface Location
+{
+}

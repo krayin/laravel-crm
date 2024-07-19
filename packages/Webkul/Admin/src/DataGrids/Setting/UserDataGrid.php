@@ -19,9 +19,10 @@ class UserDataGrid extends DataGrid
      */
     protected $userRepository;
 
-    /**
+     /**
      * Create data grid instance.
-     *
+     * 
+     * @param \Webkul\User\Repositories\UserRepository  $userRepository
      * @return void
      */
     public function __construct(UserRepository $userRepository)
@@ -86,9 +87,9 @@ class UserDataGrid extends DataGrid
             'sortable' => true,
             'closure'  => function ($row) {
                 if ($row->image) {
-                    return '<div class="avatar"><img src="'.Storage::url($row->image).'"></div>'.$row->name;
+                    return '<div class="avatar"><img src="' . Storage::url($row->image) . '"></div>' . $row->name;
                 } else {
-                    return '<div class="avatar"><span class="icon avatar-icon"></span></div>'.$row->name;
+                    return '<div class="avatar"><span class="icon avatar-icon"></span></div>' . $row->name;
                 }
             },
         ]);
@@ -108,9 +109,9 @@ class UserDataGrid extends DataGrid
             'searchable'       => false,
             'closure'          => function ($row) {
                 if ($row->status == 1) {
-                    return '<span class="badge badge-round badge-primary"></span>'.trans('admin::app.datagrid.active');
+                    return '<span class="badge badge-round badge-primary"></span>' . trans('admin::app.datagrid.active');
                 } else {
-                    return '<span class="badge badge-round badge-danger"></span>'.trans('admin::app.datagrid.inactive');
+                    return '<span class="badge badge-round badge-danger"></span>' . trans('admin::app.datagrid.inactive');
                 }
             },
         ]);

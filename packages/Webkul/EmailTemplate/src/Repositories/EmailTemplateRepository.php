@@ -11,7 +11,7 @@ class EmailTemplateRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\EmailTemplate\Contracts\EmailTemplate';
     }

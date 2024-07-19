@@ -2,8 +2,9 @@
 
 namespace Webkul\Contact\Providers;
 
-use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\AliasLoader;
+use Illuminate\Routing\Router;
 
 class ContactServiceProvider extends ServiceProvider
 {
@@ -14,7 +15,7 @@ class ContactServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
     }
 
     /**
@@ -22,5 +23,7 @@ class ContactServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register() {}
+    public function register()
+    {
+    }
 }

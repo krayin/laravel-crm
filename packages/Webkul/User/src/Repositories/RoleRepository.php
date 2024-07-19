@@ -11,7 +11,7 @@ class RoleRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\User\Contracts\Role';
     }

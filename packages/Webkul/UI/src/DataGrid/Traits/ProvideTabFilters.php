@@ -25,7 +25,9 @@ trait ProvideTabFilters
      *
      * @return array
      */
-    public function prepareTabFilters() {}
+    public function prepareTabFilters()
+    {
+    }
 
     /**
      * Add tab filter.
@@ -68,8 +70,8 @@ trait ProvideTabFilters
      * Resolve custom tab filter query.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  string  $key
-     * @param  array  $info
+     * @param  string                          $key
+     * @param  array                           $info
      * @return void
      */
     public function resolveCustomTabFiltersQuery($collection, $key, $info)
@@ -139,8 +141,8 @@ trait ProvideTabFilters
      * Filter collection from tab filter.
      *
      * @param  \Illuminate\Support\Collection  $collection
-     * @param  string  $key
-     * @param  array  $info
+     * @param  string                          $key
+     * @param  array                           $info
      * @return void
      */
     public function filterCollectionFromTabFilter($collection, $key, $info)
@@ -153,7 +155,7 @@ trait ProvideTabFilters
                         $filterValue['key'] == array_values($info)[0]
                     ) {
                         $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = true;
-                    } elseif ($filterValue['key'] == 'all') {
+                    } else if ($filterValue['key'] == 'all') {
                         $this->tabFilters[$filterIndex]['values'][$filterValueIndex]['isActive'] = false;
                     }
                 }

@@ -11,7 +11,7 @@ class WorkflowRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Workflow\Contracts\Workflow';
     }

@@ -2,6 +2,7 @@
 
 namespace Webkul\Warehouse\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Warehouse\Contracts\Location as LocationContract;
 

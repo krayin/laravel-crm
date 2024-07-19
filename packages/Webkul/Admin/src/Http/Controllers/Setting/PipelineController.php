@@ -14,7 +14,9 @@ class PipelineController extends Controller
      *
      * @return void
      */
-    public function __construct(protected PipelineRepository $pipelineRepository) {}
+    public function __construct(protected PipelineRepository $pipelineRepository)
+    {
+    }
 
     /**
      * Display a listing of the resource.
@@ -135,7 +137,7 @@ class PipelineController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.pipelines.delete-success'),
             ], 200);
-        } catch (\Exception $exception) {
+        } catch(\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.pipelines.delete-failed'),
             ], 400);

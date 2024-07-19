@@ -2,13 +2,13 @@
 
 namespace Webkul\Lead\Repositories;
 
-use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
-use Webkul\Attribute\Repositories\AttributeValueRepository;
-use Webkul\Contact\Repositories\PersonRepository;
+use Carbon\Carbon;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 
 class LeadRepository extends Repository
 {
@@ -32,14 +32,14 @@ class LeadRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Lead\Contracts\Lead';
     }
 
     /**
-     * @param  int  $pipelineId
-     * @param  int  $pipelineStageId
+     * @param  integer  $pipelineId
+     * @param  integer  $pipelineStageId
      * @param  string  $term
      * @param  string  $createdAtRange
      * @return mixed
@@ -50,26 +50,26 @@ class LeadRepository extends Repository
             'attribute_values',
             'pipeline',
             'stage',
-        ])->scopeQuery(function ($query) use ($pipelineId, $pipelineStageId, $term, $createdAtRange) {
+        ])->scopeQuery(function ($query) use($pipelineId, $pipelineStageId, $term, $createdAtRange) {
             return $query->select(
-                'leads.id as id',
-                'leads.created_at as created_at',
-                'title',
-                'lead_value',
-                'persons.name as person_name',
-                'leads.person_id as person_id',
-                'lead_pipelines.id as lead_pipeline_id',
-                'lead_pipeline_stages.name as status',
-                'lead_pipeline_stages.id as lead_pipeline_stage_id'
-            )
+                    'leads.id as id',
+                    'leads.created_at as created_at',
+                    'title',
+                    'lead_value',
+                    'persons.name as person_name',
+                    'leads.person_id as person_id',
+                    'lead_pipelines.id as lead_pipeline_id',
+                    'lead_pipeline_stages.name as status',
+                    'lead_pipeline_stages.id as lead_pipeline_stage_id'
+                )
                 ->addSelect(\DB::raw('DATEDIFF(leads.created_at + INTERVAL lead_pipelines.rotten_days DAY, now()) as rotten_days'))
                 ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
                 ->leftJoin('lead_pipelines', 'leads.lead_pipeline_id', '=', 'lead_pipelines.id')
                 ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
-                ->where('title', 'like', "%$term%")
-                ->where('leads.lead_pipeline_id', $pipelineId)
-                ->where('leads.lead_pipeline_stage_id', $pipelineStageId)
-                ->when($createdAtRange, function ($query) use ($createdAtRange) {
+                ->where("title", 'like', "%$term%")
+                ->where("leads.lead_pipeline_id", $pipelineId)
+                ->where("leads.lead_pipeline_stage_id", $pipelineStageId)
+                ->when($createdAtRange, function($query) use ($createdAtRange) {
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
                 ->where(function ($query) {
@@ -83,10 +83,11 @@ class LeadRepository extends Repository
                         }
                     }
                 });
-        });
+            });
     }
 
     /**
+     * @param array $data
      * @return \Webkul\Lead\Contracts\Lead
      */
     public function create(array $data)
@@ -124,11 +125,12 @@ class LeadRepository extends Repository
     }
 
     /**
-     * @param  int  $id
-     * @param  string  $attribute
+     * @param array  $data
+     * @param int    $id
+     * @param string $attribute
      * @return \Webkul\Lead\Contracts\Lead
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attribute = "id")
     {
         if (isset($data['person'])) {
             if (isset($data['person']['id'])) {
@@ -195,12 +197,12 @@ class LeadRepository extends Repository
         $query = $this
             ->whereBetween('leads.created_at', [$startDate, $endDate])
             ->where(function ($query) {
-                if (($currentUser = auth()->guard('user')->user())->view_permission == 'individual') {
+                if (($currentUser = auth()->guard('user')->user())->view_permission == "individual") {
                     $query->where('leads.user_id', $currentUser->id);
                 }
             });
 
-        if ($leadStage != 'all') {
+        if ($leadStage != "all") {
             $query->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
                 ->where('lead_pipeline_stages.name', $leadStage);
         }
@@ -211,7 +213,7 @@ class LeadRepository extends Repository
     /**
      * Retrieves all lead's activities
      *
-     * @param  int  $id
+     * @param  integer  $id
      * @return mixed
      */
     public function getAllActivities($id)
@@ -223,11 +225,11 @@ class LeadRepository extends Repository
 
             $item->type = 'email';
 
-            $item->from = Str::replaceFirst('"', '', Str::replaceLast('"', '', $item->from));
+            $item->from =  Str::replaceFirst('"', '', Str::replaceLast('"', '', $item->from));
 
-            $item->reply_to = json_decode($item->reply_to);
+            $item->reply_to =  json_decode($item->reply_to);
 
-            $item->folders = json_decode($item->folders);
+            $item->folders =  json_decode($item->folders);
 
             $item->type = 'email';
 
@@ -238,7 +240,7 @@ class LeadRepository extends Repository
     /**
      * Retrieves all lead's activities
      *
-     * @param  int  $leadId
+     * @param  integer  $leadId
      * @return mixed
      */
     public function getFlattenEmails($leadId)

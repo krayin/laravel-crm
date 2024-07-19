@@ -11,14 +11,14 @@ class UserRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\User\Contracts\User';
     }
 
     /**
      * This function will return user ids of current user's groups
-     *
+     * 
      * @return array
      */
     public function getCurrentUserGroupsUserIds()

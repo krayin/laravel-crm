@@ -11,7 +11,9 @@ class Person
      *
      * @return void
      */
-    public function __construct(protected EmailRepository $emailRepository) {}
+    public function __construct(protected EmailRepository $emailRepository)
+    {
+    }
 
     /**
      * @param  \Webkul\Contact\Models\Person  $person

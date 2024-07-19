@@ -4,9 +4,9 @@ namespace Webkul\Admin\Exceptions;
 
 use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
+use PDOException;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use PDOException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
 
@@ -32,7 +32,7 @@ class Handler extends AppExceptionHandler
             '404' => trans('admin::app.common.resource-not-found'),
             '403' => trans('admin::app.common.forbidden-error'),
             '401' => trans('admin::app.common.unauthenticated'),
-            '500' => trans('admin::app.common.internal-server-error'),
+            '500' => trans('admin::app.common.internal-server-error')
         ];
     }
 
@@ -40,6 +40,7 @@ class Handler extends AppExceptionHandler
      * Render an exception into an HTTP response.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Throwable   $exception
      * @return \Illuminate\Http\Response
      */
     public function render($request, Throwable $exception)
@@ -54,6 +55,7 @@ class Handler extends AppExceptionHandler
     /**
      * Report the exception.
      *
+     * @param  \Throwable   $exception
      * @return void
      */
     public function report(Throwable $exception)
@@ -65,6 +67,7 @@ class Handler extends AppExceptionHandler
      * Convert an authentication exception into a response.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Auth\AuthenticationException  $exception
      * @return \Illuminate\Http\Response
      */
     protected function unauthenticated($request, AuthenticationException $exception)
@@ -79,6 +82,7 @@ class Handler extends AppExceptionHandler
     /**
      * Render custom HTTP response.
      *
+     * @param  \Throwable  $exception
      * @return \Illuminate\Http\Response|null
      */
     private function renderCustomResponse(Throwable $exception)
@@ -117,7 +121,7 @@ class Handler extends AppExceptionHandler
             return response()->json([
                 'message' => isset($this->jsonErrorMessages[$statusCode])
                     ? $this->jsonErrorMessages[$statusCode]
-                    : trans('admin::app.common.something-went-wrong'),
+                    : trans('admin::app.common.something-went-wrong')
             ], $statusCode);
         }
 

@@ -2,4 +2,6 @@
 
 namespace Webkul\User\Contracts;
 
-interface Group {}
+interface Group
+{
+}

@@ -32,6 +32,7 @@ class FileRepository extends Repository
     /**
      * Upload files.
      *
+     * @param  array  $data
      * @return mixed|void
      */
     public function upload(array $data)
@@ -49,7 +50,7 @@ class FileRepository extends Repository
 
         return parent::create([
             'name'        => $data['name'] ?? request()->file('file')->getClientOriginalName(),
-            'path'        => request()->file('file')->store('activities/'.$leadActivity->id),
+            'path'        => request()->file('file')->store('activities/' . $leadActivity->id),
             'activity_id' => $leadActivity->id,
         ]);
     }

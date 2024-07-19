@@ -46,6 +46,7 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -77,7 +78,8 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
+     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
+     * @param int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(AttributeForm $request, $id)
@@ -101,7 +103,7 @@ class PersonController extends Controller
     public function search()
     {
         $results = $this->personRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
+            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
         ]);
 
         return response()->json($results);
@@ -150,12 +152,14 @@ class PersonController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')]),
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')])
         ]);
     }
 
     /**
      * Sanitize requested person data and return the clean array.
+     *
+     * @return array
      */
     private function sanitizeRequestedPersonData(): array
     {

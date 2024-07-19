@@ -8,10 +8,12 @@ class Common extends Mailable
 {
     /**
      * Create a new notification instance.
-     *
+     * 
      * @return void
      */
-    public function __construct(public $data) {}
+    public function __construct(public $data)
+    {
+    }
 
     /**
      * Build the mail representation of the notification.

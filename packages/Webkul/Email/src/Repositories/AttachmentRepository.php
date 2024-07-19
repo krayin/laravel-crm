@@ -19,7 +19,7 @@ class AttachmentRepository extends Repository
      *
      * @return mixed
      */
-    public function model()
+    function model()
     {
         return 'Webkul\Email\Contracts\Attachment';
     }
@@ -37,6 +37,7 @@ class AttachmentRepository extends Repository
 
     /**
      * @param  \Webkul\Email\Contracts\Email  $email
+     * @param  array $data
      * @return void
      */
     public function uploadAttachments($email, array $data)
@@ -44,10 +45,10 @@ class AttachmentRepository extends Repository
         if (! isset($data['source'])) {
             return;
         }
-
+        
         if ($data['source'] == 'email') {
             foreach ($this->emailParser->getAttachments() as $attachment) {
-                Storage::put($path = 'emails/'.$email->id.'/'.$attachment->getFilename(), $attachment->getContent());
+                Storage::put($path = 'emails/' . $email->id . '/' . $attachment->getFilename(), $attachment->getContent());
 
                 $this->create([
                     'path'         => $path,
@@ -62,10 +63,10 @@ class AttachmentRepository extends Repository
             if (! isset($data['attachments'])) {
                 return;
             }
-
+            
             foreach ($data['attachments'] as $index => $attachment) {
                 $this->create([
-                    'path'         => $path = request()->file('attachments.'.$index)->store('emails/'.$email->id),
+                    'path'         => $path = request()->file('attachments.' . $index)->store('emails/' . $email->id),
                     'name'         => $attachment->getClientOriginalName(),
                     'content_type' => $attachment->getClientMimeType(),
                     'size'         => Storage::size($path),

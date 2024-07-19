@@ -2,4 +2,6 @@
 
 namespace Webkul\Activity\Contracts;
 
-interface Participant {}
+interface Participant
+{
+}

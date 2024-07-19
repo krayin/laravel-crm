@@ -48,7 +48,7 @@ class ActivityDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->where(function ($query) {
+                $queryBuilder->where(function ($query) use ($currentUser) {
                     $userIds = $this->userRepository->getCurrentUserGroupsUserIds();
 
                     $query->whereIn('activities.user_id', $userIds)
@@ -111,7 +111,7 @@ class ActivityDataGrid extends DataGrid
             'closure'          => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
-                return "<a href='".$route."'>".$row->created_by.'</a>';
+                return "<a href='" . $route . "'>" . $row->created_by . "</a>";
             },
         ]);
 
@@ -132,18 +132,18 @@ class ActivityDataGrid extends DataGrid
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
-                return "<a href='".$route."'>".$row->lead_title.'</a>';
+                return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
             },
         ]);
 
         $this->addColumn([
-            'index'            => 'type',
-            'label'            => trans('admin::app.datagrid.type'),
-            'type'             => 'dropdown',
+            'index'      => 'type',
+            'label'      => trans('admin::app.datagrid.type'),
+            'type'       => 'dropdown',
             'dropdown_options' => $this->getActivityTypeDropdownOptions(),
-            'searchable'       => false,
-            'filterable'       => false,
-            'closure'          => function ($row) {
+            'searchable' => false,
+            'filterable' => false,
+            'closure'  => function ($row) {
                 return trans('admin::app.activities.'.$row->type);
             },
         ]);
@@ -210,8 +210,8 @@ class ActivityDataGrid extends DataGrid
                     'name'     => 'admin::app.leads.lunch',
                     'isActive' => false,
                     'key'      => 'lunch',
-                ],
-            ],
+                ]
+            ]
         ]);
 
         $this->addTabFilter([
@@ -243,8 +243,8 @@ class ActivityDataGrid extends DataGrid
                     'name'     => 'admin::app.datagrid.filters.custom',
                     'isActive' => false,
                     'key'      => 'custom',
-                ],
-            ],
+                ]
+            ]
         ]);
     }
 
