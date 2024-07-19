@@ -11,7 +11,7 @@ class GroupRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\User\Contracts\Group';
     }

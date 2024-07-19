@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\UI\DataGrid\DataGrid;
 
 class WorkflowDataGrid extends DataGrid
 {

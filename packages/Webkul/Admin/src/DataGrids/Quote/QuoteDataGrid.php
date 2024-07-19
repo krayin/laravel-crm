@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Quote;
 
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
@@ -31,13 +31,13 @@ class QuoteDataGrid extends DataGrid
     {
         $this->setRowProperties([
             'backgroundColor' => '#ffd0d6',
-            'condition' => function ($row) {
-                if (Carbon::createFromFormat('Y-m-d H:i:s',  $row->expired_at)->endOfDay() < Carbon::now()) {
+            'condition'       => function ($row) {
+                if (Carbon::createFromFormat('Y-m-d H:i:s', $row->expired_at)->endOfDay() < Carbon::now()) {
                     return true;
                 }
 
                 return false;
-            }
+            },
         ]);
     }
 
@@ -86,9 +86,9 @@ class QuoteDataGrid extends DataGrid
         $this->addFilter('created_at', 'quotes.created_at');
 
         if (request()->input('expired_quotes.in') == 1) {
-            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) >= ' . DB::getTablePrefix() . 'NOW()'));
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'quotes.expired_at) >= '.DB::getTablePrefix().'NOW()'));
         } else {
-            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), ' . DB::getTablePrefix() . 'quotes.expired_at) < ' . DB::getTablePrefix() . 'NOW()'));
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'quotes.expired_at) < '.DB::getTablePrefix().'NOW()'));
         }
 
         $this->setQueryBuilder($queryBuilder);
@@ -117,7 +117,7 @@ class QuoteDataGrid extends DataGrid
             'closure'          => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
-                return "<a href='" . $route . "'>" . $row->sales_person . "</a>";
+                return "<a href='".$route."'>".$row->sales_person.'</a>';
             },
         ]);
 
@@ -137,7 +137,7 @@ class QuoteDataGrid extends DataGrid
             'closure'  => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
-                return "<a href='" . $route . "'>" . $row->person_name . "</a>";
+                return "<a href='".$route."'>".$row->person_name.'</a>';
             },
         ]);
 

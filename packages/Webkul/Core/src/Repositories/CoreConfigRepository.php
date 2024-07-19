@@ -2,9 +2,9 @@
 
 namespace Webkul\Core\Repositories;
 
-use Webkul\Core\Eloquent\Repository;
 use Illuminate\Support\Facades\Storage;
 use Prettus\Repository\Traits\CacheableRepository;
+use Webkul\Core\Eloquent\Repository;
 
 class CoreConfigRepository extends Repository
 {
@@ -15,13 +15,12 @@ class CoreConfigRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Core\Contracts\CoreConfig';
     }
 
     /**
-     * @param  array  $data
      * @return \Webkul\Core\Contracts\CoreConfig
      */
     public function create(array $data)
@@ -29,18 +28,18 @@ class CoreConfigRepository extends Repository
         unset($data['_token']);
 
         foreach ($data as $method => $fieldData) {
-            $recurssiveData = $this->recuressiveArray($fieldData , $method);
+            $recurssiveData = $this->recuressiveArray($fieldData, $method);
 
             foreach ($recurssiveData as $fieldName => $value) {
                 $field = core()->getConfigField($fieldName);
 
-                if (getType($value) == 'array' && ! isset($value['delete'])) {
-                    $value = implode(",", $value);
+                if (gettype($value) == 'array' && ! isset($value['delete'])) {
+                    $value = implode(',', $value);
                 }
 
                 $coreConfigValue = $this->model
-                                    ->where('code', $fieldName)
-                                    ->get();
+                    ->where('code', $fieldName)
+                    ->get();
 
                 if (request()->hasFile($fieldName)) {
                     $value = request()->file($fieldName)->store('configuration');
@@ -55,7 +54,7 @@ class CoreConfigRepository extends Repository
                     foreach ($coreConfigValue as $coreConfig) {
                         Storage::delete($coreConfig['value']);
 
-                        if(isset($value['delete'])) {
+                        if (isset($value['delete'])) {
                             $this->model->destroy($coreConfig['id']);
                         } else {
                             $coreConfig->update([
@@ -70,17 +69,17 @@ class CoreConfigRepository extends Repository
     }
 
     /**
-     * @param  array  $formData
      * @param  string  $method
      * @return array
      */
-    public function recuressiveArray(array $formData, $method) {
+    public function recuressiveArray(array $formData, $method)
+    {
         static $data = [];
 
         static $recuressiveArrayData = [];
 
         foreach ($formData as $form => $formValue) {
-            $value = $method . '.' . $form;
+            $value = $method.'.'.$form;
 
             if (is_array($formValue)) {
                 $dim = $this->countDim($formValue);
@@ -100,7 +99,7 @@ class CoreConfigRepository extends Repository
                 $recuressiveArrayData[$key] = $value;
             } else {
                 foreach ($value as $key1 => $val) {
-                    $recuressiveArrayData[$key . '.' . $key1] = $val;
+                    $recuressiveArrayData[$key.'.'.$key1] = $val;
                 }
             }
         }
@@ -113,7 +112,7 @@ class CoreConfigRepository extends Repository
      *
      * @param  array  $array
      * @return int
-    */
+     */
     public function countDim($array)
     {
         if (is_array(reset($array))) {

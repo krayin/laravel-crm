@@ -4,11 +4,10 @@ namespace Webkul\Product\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOneThrough;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Webkul\Product\Contracts\ProductInventory as ProductInventoryContract;
 use Webkul\Warehouse\Models\LocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
-use Webkul\Product\Contracts\ProductInventory as ProductInventoryContract;
 
 class ProductInventory extends Model implements ProductInventoryContract
 {

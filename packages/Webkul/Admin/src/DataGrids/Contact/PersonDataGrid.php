@@ -13,7 +13,7 @@ class PersonDataGrid extends DataGrid
     /**
      * Export option.
      *
-     * @var boolean
+     * @var bool
      */
     protected $export;
 
@@ -109,8 +109,8 @@ class PersonDataGrid extends DataGrid
             'type'             => 'dropdown',
             'dropdown_options' => $this->getOrganizationDropdownOptions(),
             'sortable'         => false,
-            'closure'  => function ($row) {
-                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank'>" . $row->organization . "</a>";
+            'closure'          => function ($row) {
+                return "<a href='".route('admin.contacts.organizations.edit', $row->organization_id)."' target='_blank'>".$row->organization.'</a>';
             },
         ]);
     }

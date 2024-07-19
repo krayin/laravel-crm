@@ -19,9 +19,7 @@ class Installer
      *
      * @return void
      */
-    public function __construct(protected UserRepository $userRepository)
-    {
-    }
+    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * After Krayin is successfully installed
@@ -39,7 +37,7 @@ class Installer
                 'headers' => [
                     'Accept' => 'application/json',
                 ],
-                'json'    => [
+                'json' => [
                     'domain'       => config('app.url'),
                     'email'        => $user?->email,
                     'name'         => $user?->name,

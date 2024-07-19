@@ -25,7 +25,7 @@ class WebFormRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\WebForm\Contracts\WebForm';
     }
@@ -33,7 +33,6 @@ class WebFormRepository extends Repository
     /**
      * Create Web Form.
      *
-     * @param  array  $data
      * @return \Webkul\WebForm\Contracts\WebForm
      */
     public function create(array $data)
@@ -54,12 +53,11 @@ class WebFormRepository extends Repository
     /**
      * Update Web Form.
      *
-     * @param  array  $data
      * @param  int  $id
      * @param  string  $attribute
      * @return \Webkul\WebForm\Contracts\WebForm
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $webForm = parent::update($data, $id);
 

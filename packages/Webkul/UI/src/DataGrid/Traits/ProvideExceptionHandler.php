@@ -34,7 +34,7 @@ trait ProvideExceptionHandler
     public function checkRequiredRowPropertiesKeys($rowProperty)
     {
         $this->checkRequiredKeys($this->requiredRowPropertiesKeys, $rowProperty, function ($missingKeys) {
-            $message = 'Missing Keys: ' . implode(', ', $missingKeys);
+            $message = 'Missing Keys: '.implode(', ', $missingKeys);
 
             throw new \Webkul\UI\Exceptions\ConditionKeyException($message);
         });
@@ -49,7 +49,7 @@ trait ProvideExceptionHandler
     public function checkRequiredColumnKeys($column)
     {
         $this->checkRequiredKeys($this->requiredColumnKeys, $column, function ($missingKeys) {
-            $message = 'Missing Keys: ' . implode(', ', $missingKeys);
+            $message = 'Missing Keys: '.implode(', ', $missingKeys);
 
             throw new \Webkul\UI\Exceptions\ColumnKeyException($message);
         });
@@ -64,7 +64,7 @@ trait ProvideExceptionHandler
     public function checkRequiredActionKeys($action)
     {
         $this->checkRequiredKeys($this->requiredActionKeys, $action, function ($missingKeys) {
-            $message = 'Missing Keys: ' . implode(', ', $missingKeys);
+            $message = 'Missing Keys: '.implode(', ', $missingKeys);
 
             throw new \Webkul\UI\Exceptions\ActionKeyException($message);
         });

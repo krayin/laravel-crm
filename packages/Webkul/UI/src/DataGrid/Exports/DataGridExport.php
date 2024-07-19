@@ -13,14 +13,10 @@ class DataGridExport implements FromView, ShouldAutoSize
      *
      * @return void
      */
-    public function __construct(protected $gridData)
-    {
-    }
+    public function __construct(protected $gridData) {}
 
     /**
      * Method to create a blade view for export.
-     *
-     * @return \Illuminate\Contracts\View\View
      */
     public function view(): View
     {

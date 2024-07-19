@@ -31,7 +31,7 @@ class PipelineSeeder extends Seeder
                 'is_default' => 1,
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ]);
 
         DB::table('lead_pipeline_stages')->insert($data = [
@@ -77,7 +77,7 @@ class PipelineSeeder extends Seeder
                 'probability'      => 0,
                 'sort_order'       => 6,
                 'lead_pipeline_id' => 1,
-            ]
+            ],
         ]);
     }
 }

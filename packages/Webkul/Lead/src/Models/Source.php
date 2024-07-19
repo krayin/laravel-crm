@@ -8,14 +8,14 @@ use Webkul\Lead\Contracts\Source as SourceContract;
 class Source extends Model implements SourceContract
 {
     protected $table = 'lead_sources';
-    
+
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**

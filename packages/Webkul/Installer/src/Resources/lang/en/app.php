@@ -41,7 +41,7 @@ return [
             'title'                 => 'Title',
             'type'                  => 'Type',
         ],
-        
+
         'lead' => [
             'pipeline' => [
                 'default' => 'Default Pipeline',
@@ -57,11 +57,11 @@ return [
             ],
 
             'source' => [
-                'direct'    => 'Direct',
-                'email'     => 'Email',
-                'phone'     => 'Phone',
-                'web'       => 'Web',
-                'web-form'  => 'Web Form',
+                'direct'   => 'Direct',
+                'email'    => 'Email',
+                'phone'    => 'Phone',
+                'web'      => 'Web',
+                'web-form' => 'Web Form',
             ],
 
             'type' => [

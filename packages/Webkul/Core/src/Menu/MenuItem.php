@@ -53,7 +53,8 @@ class MenuItem
     /**
      * Get position of menu item.
      */
-    public function getPosition() {
+    public function getPosition()
+    {
         return $this->sort;
     }
 

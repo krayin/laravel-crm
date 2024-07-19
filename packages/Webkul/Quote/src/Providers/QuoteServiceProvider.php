@@ -2,9 +2,8 @@
 
 namespace Webkul\Quote\Providers;
 
-use Illuminate\Support\ServiceProvider;
-use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
+use Illuminate\Support\ServiceProvider;
 
 class QuoteServiceProvider extends ServiceProvider
 {
@@ -15,7 +14,7 @@ class QuoteServiceProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
-        $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
     }
 
     /**
@@ -23,7 +22,5 @@ class QuoteServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-    }
+    public function register() {}
 }

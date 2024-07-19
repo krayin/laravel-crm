@@ -17,7 +17,7 @@ class SourceSeeder extends Seeder
     public function run($parameters = [])
     {
         DB::table('lead_sources')->delete();
-        
+
         $now = Carbon::now();
 
         $defaultLocale = $parameters['locale'] ?? config('app.locale');
@@ -48,7 +48,7 @@ class SourceSeeder extends Seeder
                 'name'       => trans('installer::app.seeders.lead.source.direct', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ]);
     }
 }

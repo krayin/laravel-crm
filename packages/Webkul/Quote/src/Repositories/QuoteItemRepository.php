@@ -16,8 +16,7 @@ class QuoteItemRepository extends Repository
     public function __construct(
         protected ProductRepository $productRepository,
         Container $container
-    )
-    {
+    ) {
         parent::__construct($container);
     }
 
@@ -26,13 +25,12 @@ class QuoteItemRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Quote\Contracts\QuoteItem';
     }
 
     /**
-     * @param array $data
      * @return \Webkul\Quote\Contracts\QuoteItem
      */
     public function create(array $data)
@@ -48,12 +46,11 @@ class QuoteItemRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Quote\Contracts\QuoteItem
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $product = $this->productRepository->findOrFail($data['product_id']);
 

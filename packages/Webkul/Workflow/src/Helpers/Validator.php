@@ -9,7 +9,7 @@ class Validator
      *
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  mixed  $entity
-     * @return boolean
+     * @return bool
      */
     public function validate($workflow, $entity)
     {
@@ -66,7 +66,7 @@ class Validator
      *
      * @param  array  $condition
      * @param  mixed  $entity
-     * @return boolean
+     * @return bool
      */
     public function getAttributeValue($condition, $entity)
     {
@@ -159,17 +159,13 @@ class Validator
 
     /**
      * Validate the condition value against a multi dimensional array recursively
-     *
-     * @param  array  $attributeValue
-     * @param  string  $conditionValue
-     * @return bool
      */
     private static function validateArrayValues(array $attributeValue, string $conditionValue): bool
     {
         if (in_array($conditionValue, $attributeValue, true) === true) {
             return true;
         }
-        
+
         foreach ($attributeValue as $subValue) {
             if (! is_array($subValue)) {
                 continue;

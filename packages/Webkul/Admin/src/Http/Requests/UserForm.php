@@ -35,7 +35,7 @@ class UserForm extends FormRequest
         ];
 
         if ($this->method() == 'PUT') {
-            $this->rules['email'] = 'email|unique:users,email,' . $this->route('id');
+            $this->rules['email'] = 'email|unique:users,email,'.$this->route('id');
         }
 
         return $this->rules;

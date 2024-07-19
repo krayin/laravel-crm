@@ -14,9 +14,7 @@ class TypeController extends Controller
      *
      * @return void
      */
-    public function __construct(protected TypeRepository $typeRepository)
-    {
-    }
+    public function __construct(protected TypeRepository $typeRepository) {}
 
     /**
      * Display a listing of the type.
@@ -40,9 +38,9 @@ class TypeController extends Controller
     public function store()
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:lead_types,name'
+            'name' => 'required|unique:lead_types,name',
         ]);
-        
+
         if ($validator->fails()) {
             session()->flash('error', trans('admin::app.settings.types.name-exists'));
 
@@ -82,7 +80,7 @@ class TypeController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'name' => 'required|unique:lead_types,name,' . $id,
+            'name' => 'required|unique:lead_types,name,'.$id,
         ]);
 
         Event::dispatch('settings.type.update.before', $id);
@@ -116,7 +114,7 @@ class TypeController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.types.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.types.delete-failed'),
             ], 400);

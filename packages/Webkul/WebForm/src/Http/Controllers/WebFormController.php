@@ -3,14 +3,14 @@
 namespace Webkul\WebForm\Http\Controllers;
 
 use Illuminate\Support\Facades\Event;
-use Webkul\WebForm\Http\Requests\WebForm;
 use Webkul\Attribute\Repositories\AttributeRepository;
-use Webkul\WebForm\Repositories\WebFormRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\WebForm\Http\Requests\WebForm;
+use Webkul\WebForm\Repositories\WebFormRepository;
 
 class WebFormController extends Controller
 {
@@ -27,8 +27,7 @@ class WebFormController extends Controller
         protected PipelineRepository $pipelineRepository,
         protected SourceRepository $sourceRepository,
         protected TypeRepository $typeRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the email template.
@@ -113,7 +112,7 @@ class WebFormController extends Controller
 
         $attributes = $this->attributeRepository->findWhere([
             ['entity_type', 'IN', ['persons', 'leads']],
-            ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()]
+            ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()],
         ]);
 
         return view('web_form::settings.web-forms.edit', compact('webForm', 'attributes'));
@@ -169,7 +168,7 @@ class WebFormController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.web-forms.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.web-forms.delete-failed'),
             ], 400);
@@ -205,7 +204,7 @@ class WebFormController extends Controller
     {
         $person = $this->personRepository
             ->getModel()
-            ->where('emails', 'like', "%" . request('persons.emails.0.value') . "%")
+            ->where('emails', 'like', '%'.request('persons.emails.0.value').'%')
             ->first();
 
         if ($person) {
@@ -228,7 +227,6 @@ class WebFormController extends Controller
             $data['person'] = request('persons');
 
             $data['status'] = 1;
-
 
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
 

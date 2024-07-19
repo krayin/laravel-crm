@@ -2,6 +2,4 @@
 
 namespace Webkul\Email\Contracts;
 
-interface Email
-{
-}
+interface Email {}

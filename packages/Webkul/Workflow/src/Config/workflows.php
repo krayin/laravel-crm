@@ -9,15 +9,15 @@ return [
             'events' => [
                 [
                     'event' => 'lead.create.after',
-                    'name'  => 'Created',  
+                    'name'  => 'Created',
                 ], [
                     'event' => 'lead.update.after',
-                    'name'  => 'Updated',  
+                    'name'  => 'Updated',
                 ], [
                     'event' => 'lead.delete.before',
-                    'name'  => 'Deleted',  
+                    'name'  => 'Deleted',
                 ],
-            ]
+            ],
         ],
 
         'activities' => [
@@ -26,32 +26,32 @@ return [
             'events' => [
                 [
                     'event' => 'activity.create.after',
-                    'name'  => 'Created',  
+                    'name'  => 'Created',
                 ], [
                     'event' => 'activity.update.after',
-                    'name'  => 'Updated',  
+                    'name'  => 'Updated',
                 ], [
                     'event' => 'activity.delete.before',
-                    'name'  => 'Deleted',  
+                    'name'  => 'Deleted',
                 ],
-            ]
+            ],
         ],
-        
+
         'persons' => [
             'name'   => 'Persons',
             'class'  => 'Webkul\Workflow\Helpers\Entity\Person',
             'events' => [
                 [
                     'event' => 'contacts.person.create.after',
-                    'name'  => 'Created',  
+                    'name'  => 'Created',
                 ], [
                     'event' => 'contacts.person.update.after',
-                    'name'  => 'Updated',  
+                    'name'  => 'Updated',
                 ], [
                     'event' => 'contacts.person.delete.before',
-                    'name'  => 'Deleted',  
+                    'name'  => 'Deleted',
                 ],
-            ]
+            ],
         ],
 
         'quotes' => [
@@ -60,15 +60,15 @@ return [
             'events' => [
                 [
                     'event' => 'quote.create.after',
-                    'name'  => 'Created',  
+                    'name'  => 'Created',
                 ], [
                     'event' => 'quote.update.after',
-                    'name'  => 'Updated',  
+                    'name'  => 'Updated',
                 ], [
                     'event' => 'quote.delete.before',
-                    'name'  => 'Deleted',  
+                    'name'  => 'Deleted',
                 ],
-            ]
-        ]
-    ]
+            ],
+        ],
+    ],
 ];

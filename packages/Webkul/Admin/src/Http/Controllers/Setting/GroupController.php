@@ -3,9 +3,8 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
-
-use Webkul\User\Repositories\GroupRepository;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\User\Repositories\GroupRepository;
 
 class GroupController extends Controller
 {
@@ -14,9 +13,7 @@ class GroupController extends Controller
      *
      * @return void
      */
-    public function __construct(protected GroupRepository $groupRepository)
-    {
-    }
+    public function __construct(protected GroupRepository $groupRepository) {}
 
     /**
      * Display a listing of the resource.
@@ -86,7 +83,7 @@ class GroupController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'name' => 'required|unique:groups,name,' . $id,
+            'name' => 'required|unique:groups,name,'.$id,
         ]);
 
         Event::dispatch('settings.group.update.before', $id);
@@ -120,7 +117,7 @@ class GroupController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.groups.destroy-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.groups.delete-failed'),
             ], 400);
