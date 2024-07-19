@@ -1,29 +1,42 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('Organizations')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.contacts.organizations.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col">
+            <div class="flex cursor-pointer items-center">
+                <i class="icon-left-arrow text-2xl text-gray-800"></i>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.contacts.organizations.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.contacts.organizations.index.header.before') !!}
+                <a
+                    href="{{ route('admin.contacts.persons.index') }}"
+                    class="text-xs text-gray-800 dark:text-gray-300"
+                >
+                    Settings
+                </a>
+            </div>
 
-                    {{ Breadcrumbs::render('contacts.organizations') }}
+            <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                Organizations
+            </div>
+        </div>
 
-                    {{ __('admin::app.contacts.organizations.title') }}
-
-                    {!! view_render_event('admin.contacts.organizations.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('contacts.organizations.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.contacts.organizations.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.contacts.organizations.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <a
+                    href="{{ route('admin.contacts.organizations.create') }}"
+                    class="primary-button"
+                >
+                    Create Organization
+                </a>
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.organizations.datagrid.index.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.contacts.organizations.index') }}" />
+
+    {!! view_render_event('krayin.admin.organizations.datagrid.index.after') !!}
+</x-admin::layouts>

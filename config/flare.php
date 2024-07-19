@@ -6,10 +6,12 @@ use Spatie\FlareClient\FlareMiddleware\CensorRequestBodyFields;
 use Spatie\FlareClient\FlareMiddleware\CensorRequestHeaders;
 use Spatie\LaravelIgnition\FlareMiddleware\AddDumps;
 use Spatie\LaravelIgnition\FlareMiddleware\AddEnvironmentInformation;
+use Spatie\LaravelIgnition\FlareMiddleware\AddExceptionHandledStatus;
 use Spatie\LaravelIgnition\FlareMiddleware\AddExceptionInformation;
 use Spatie\LaravelIgnition\FlareMiddleware\AddJobs;
 use Spatie\LaravelIgnition\FlareMiddleware\AddLogs;
 use Spatie\LaravelIgnition\FlareMiddleware\AddQueries;
+use Spatie\LaravelIgnition\FlareMiddleware\AddContext;
 use Spatie\LaravelIgnition\FlareMiddleware\AddNotifierName;
 
 return [
@@ -53,6 +55,8 @@ return [
         AddJobs::class => [
             'max_chained_job_reporting_depth' => 5,
         ],
+        AddContext::class,
+        AddExceptionHandledStatus::class,
         CensorRequestBodyFields::class => [
             'censor_fields' => [
                 'password',
@@ -62,8 +66,13 @@ return [
         CensorRequestHeaders::class => [
             'headers' => [
                 'API-KEY',
+                'Authorization',
+                'Cookie',
+                'Set-Cookie',
+                'X-CSRF-TOKEN',
+                'X-XSRF-TOKEN',
             ]
-        ]
+        ],
     ],
 
     /*

@@ -3,16 +3,15 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 
 class GroupDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('groups')
             ->addSelect(
@@ -23,33 +22,35 @@ class GroupDataGrid extends DataGrid
 
         $this->addFilter('id', 'groups.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
-     * Add columns.
-     *
-     * @return void
+     * Prepare columns.
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.settings.groups.index.datagrid.id'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'type'       => 'string',
+            'label'      => trans('admin::app.settings.groups.index.datagrid.name'),
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'    => 'description',
-            'label'    => trans('admin::app.datagrid.description'),
+            'label'    => trans('admin::app.settings.groups.index.datagrid.description'),
             'type'     => 'string',
             'sortable' => false,
         ]);
@@ -57,24 +58,21 @@ class GroupDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.groups.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.groups.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => fn ($row) => route('admin.settings.groups.edit', $row->id)
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.groups.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'group']),
-            'icon'         => 'trash-icon',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => fn ($row) => route('admin.settings.groups.delete', $row->id)
         ]);
     }
 }

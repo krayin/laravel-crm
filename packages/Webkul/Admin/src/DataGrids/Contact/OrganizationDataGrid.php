@@ -4,7 +4,8 @@ namespace Webkul\Admin\DataGrids\Contact;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 
 class OrganizationDataGrid extends DataGrid
 {
@@ -15,17 +16,14 @@ class OrganizationDataGrid extends DataGrid
      */
     public function __construct(protected PersonRepository $personRepository)
     {
-        parent::__construct();
     }
 
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('organizations')
+        return DB::table('organizations')
             ->addSelect(
                 'organizations.id',
                 'organizations.name',
@@ -34,93 +32,65 @@ class OrganizationDataGrid extends DataGrid
             );
 
         $this->addFilter('id', 'organizations.id');
-
-        $this->setQueryBuilder($queryBuilder);
+        $this->addFilter('organization', 'organizations.name');
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.contacts.organizations.index.datagrid.id'),
+            'type'       => 'integer',
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'      => 'persons_count',
-            'label'      => trans('admin::app.datagrid.persons_count'),
+            'index'      => 'name',
+            'label'      => trans('admin::app.contacts.organizations.index.datagrid.name'),
             'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => false,
-            'filterable' => false,
-            'closure'    => function ($row) {
-                $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
-
-                $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
-
-                return "<a href='" . $route . "'>" . $personsCount . "</a>";
-            },
-        ]);
-
-        $this->addColumn([
-            'index'    => 'created_at',
-            'label'    => trans('admin::app.datagrid.created_at'),
-            'type'     => 'date_range',
-            'sortable' => true,
-            'closure'  => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
+            'sortable'   => true,
+            'filterable' => true,
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.contacts.organizations.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.contacts.organizations.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.contacts.organizations.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'user']),
-            'icon'         => 'trash-icon',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.contacts.organizations.delete', $row->id);
+            },
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.contacts.organizations.mass_delete'),
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
             'method' => 'PUT',
+            'url'    => route('admin.contacts.organizations.mass_delete'),
         ]);
     }
 }

@@ -1,134 +1,147 @@
-@if (isset($attribute))
-    <email-component
-        :attribute='@json($attribute)'
-        :validations="'{{$validations}}'"
-        :data='@json(old($attribute->code) ?: $value)'
-    ></email-component>
-@endif
+<v-email-component
+    :attribute="{{ json_encode($attribute) }}"
+    :validations="'{{ $validations }}'"
+    :value="{{ json_encode(old($attribute->code) ?? $value) }}"
+>
+    <div class="flex items-center mt-2">
+        <input
+            type="text"
+            class="w-full border px-3 py-2.5 text-sm transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+        >
 
-@once
-    @push('scripts')
-        <script type="text/x-template" id="email-component-template">
-            <div class="emails-control">
-                <div
-                    class="form-group input-group"
-                    v-for="(email, index) in emails"
-                    :class="[errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') ? 'has-error' : '']"
-                >
-                    <input
-                        type="text"
-                        :name="attribute['code'] + '[' + index + '][value]'"
-                        class="control"
-                        v-model="email['value']"
-                        v-validate="validations ? validations + '|unique_email' : 'unique_email'"
-                        :data-vv-as="attribute['name']"
+        <div class="relative">
+            <select class="custom-select w-full border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6">
+                <option value="work" selected>Work</option>
+                <option value="home">Home</option>
+            </select>
+        </div>
+    </div>
+
+    <span class="cursor-pointer">
+        + @lang("admin::app.common.add_more")
+    </span>
+</v-email-component>
+
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-email-component-template"
+    >
+        <template v-for="(email, index) in emails">
+            <div class="flex items-center mt-2">
+                <x-admin::form.control-group.control
+                    type="text"
+                    ::id="attribute.code"
+                    ::name="`${attribute['code']}[${index}][value]`"
+                    class="rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+                    ::rules="getValidation"
+                    ::label="attribute.name"
+                    v-model="email['value']"
+                />
+
+                <div class="relative">
+                    <x-admin::form.control-group.control
+                        type="select"
+                        ::id="attribute.code"
+                        ::name="`${attribute['code']}[${index}][label]`"
+                        class="rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6"
+                        rules="required"
+                        ::label="attribute.name"
+                        v-model="email['label']"
                     >
-
-                    <div class="input-group-append">
-                        <select :name="attribute['code'] + '[' + index + '][label]'" class="control" v-model="email['label']">
-                            <option value="work">{{ __('admin::app.common.work') }}</option>
-                            <option value="home">{{ __('admin::app.common.home') }}</option>
-                        </select>
-                    </div>
-
-                    <i class="icon trash-icon" v-if="emails.length > 1" @click="removeEmail(email)"></i>
-
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + attribute['code'] + '[' + index + '][value]') }}
-                    </span>
+                        <option value="work">@lang('admin::app.common.work')</option>
+                        <option value="home">@lang('admin::app.common.home')</option>
+                    </x-admin::form.control-group.control>
                 </div>
 
-                <a class="add-more-link" href @click.prevent="addEmail">+ {{ __('admin::app.common.add_more') }}</a>
+                <i
+                    v-if="emails.length > 1"
+                    class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                    @click="remove(email)"
+                ></i>
             </div>
-        </script>
 
-        <script>
-            Vue.component('email-component', {
-    
-                template: '#email-component-template',
-    
-                props: ['validations', 'attribute', 'data'],
-    
-                inject: ['$validator'],
-    
-                data: function () {
+            <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}][value]`"/>
+
+            <x-admin::form.control-group.error ::name="`${attribute['code']}[${index}].value`"/>
+        </template>
+
+        <span
+            class="cursor-pointer"
+            @click="add"
+        >
+            + @lang("admin::app.common.add_more")
+        </span>
+    </script>
+
+    <script type="module">
+        app.component('v-email-component', {
+            template: '#v-email-component-template',
+
+            props: ['validations', 'attribute', 'value'],
+
+            data() {
+                return {
+                    emails: this.value || [{'value': '', 'label': 'work'}],
+                };
+            },
+
+            watch: { 
+                data(newValue, oldValue) {
+                    if (
+                        JSON.stringify(newValue)
+                        !== JSON.stringify(oldValue)
+                    ) {
+                        this.emails = newValue || [{'value': '', 'label': 'work'}];
+                    }
+                },
+            },
+
+            computed: {
+                getValidation() {
                     return {
-                        emails: this.data,
-                    }
+                        email: true,
+                        unique_email: this.emails ?? [],
+                        ...(this.validations === 'required' ? { required: true } : {}),
+                    };
+                },
+            },
+
+            created() {
+                this.extendValidations();
+            },
+
+            methods: {
+                add() {
+                    this.emails.push({
+                        'value': '',
+                        'label': 'work'
+                    });
                 },
 
-                watch: { 
-                    data: function(newVal, oldVal) {
-                        if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                            this.emails = newVal || [{'value': '', 'label': 'work'}];
+                remove(email) {
+                    this.emails = this.emails.filter(item => item !== email);
+                },
+
+                extendValidations() {
+                    defineRule('unique_email', (value, emails) => {
+                        if (
+                            ! value
+                            || ! value.length
+                        ) {
+                            return true;
                         }
-                    }
-                },
-    
-                created: function() {
-                    this.extendValidator();
 
-                    if (! this.emails || ! this.emails.length) {
-                        this.emails = [{
-                            'value': '',
-                            'label': 'work'
-                        }];
-                    }
-                },
-    
-                methods: {
-                    addEmail: function() {
-                        this.emails.push({
-                            'value': '',
-                            'label': 'work'
-                        })
-                    },
-    
-                    removeEmail: function(email) {
-                        const index = this.emails.indexOf(email);
-    
-                        Vue.delete(this.emails, index);
-                    },
+                        const emailOccurrences = emails.filter(email => email.value === value).length;
 
-                    extendValidator: function () {
-                        this.$validator.extend('unique_email', {
-                            getMessage: (field) => '{!! __('admin::app.common.duplicate-value') !!}',
-
-                            validate: (value) => {
-                                let filteredEmails = this.emails.filter((email) => {
-                                    return email.value == value;
-                                });
-
-                                if (filteredEmails.length > 1) {
-                                    return false;
-                                }
-
-                                this.removeUniqueErrors();
-
-                                return true;
-                            }
-                        });
-                    },
-
-                    isDuplicateExists: function () {
-                        let emails = this.emails.map((email) => email.value);
-
-                        return emails.some((email, index) => emails.indexOf(email) != index);
-                    },
-
-                    removeUniqueErrors: function () {
-                        if (! this.isDuplicateExists()) {
-                            this.errors
-                                .items
-                                .filter(error => error.rule === 'unique')
-                                .map(error => error.id)
-                                .forEach((id) => {
-                                    this.errors.removeById(id);
-                                });
+                        if (emailOccurrences > 1) {
+                            return 'This email is already used';
                         }
-                    }
-                }
-            });
-        </script>
-    @endpush
-@endonce
+
+                        return true;
+                    });
+                },
+            },
+        });
+    </script>
+@endPushOnce

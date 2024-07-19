@@ -67,7 +67,8 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
+            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src",
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
         }
     },
     "autoload-dev": {

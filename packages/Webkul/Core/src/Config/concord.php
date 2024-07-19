@@ -7,6 +7,7 @@ return [
         \Webkul\Attribute\Providers\ModuleServiceProvider::class,
         \Webkul\Contact\Providers\ModuleServiceProvider::class,
         \Webkul\Core\Providers\ModuleServiceProvider::class,
+        \Webkul\DataGrid\Providers\ModuleServiceProvider::class,
         \Webkul\Email\Providers\ModuleServiceProvider::class,
         \Webkul\EmailTemplate\Providers\ModuleServiceProvider::class,
         \Webkul\Lead\Providers\ModuleServiceProvider::class,
