@@ -4,19 +4,19 @@
     </x-slot>
 
     <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-        <div class="flex flex-col">
+        <div class="flex flex-col gap-2">
             <div class="flex cursor-pointer items-center">
-                <i class="icon-left-arrow text-2xl text-gray-800"></i>
-
-                <a
-                    href="{{ route('admin.settings.roles.index') }}"
-                    class="text-xs text-gray-800 dark:text-gray-300"
+                <a 
+                    href="{{ route('admin.settings.roles.index') }}" 
+                    class="flex items-center text-xs text-gray-600 dark:text-gray-300"
                 >
+                    <i class="icon-left-arrow text-2xl"></i>
+                    
                     @lang('admin::app.settings.roles.index.settings')
                 </a>
             </div>
 
-            <div class="pl-3 text-xl font-normal dark:text-gray-300">
+            <div class="px-4 text-xl font-bold dark:text-gray-300">
                 @lang('admin::app.settings.roles.index.title')
             </div>
         </div>
