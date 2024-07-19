@@ -734,6 +734,7 @@
             'timezone'          => 'Saat Dilimi',
             'date-time-formats' => 'Tarih ve Saat Formatları',
             'save-message'      => 'Yapılandırma başarıyla güncellendi!',
+            'delete'            => 'Sil',
             "emails"            => [
                 'email'                 => 'E-posta',
                 'notification_label'    => 'Bildirimler',

@@ -1,3 +1,11 @@
+@php
+    $config = system_config();
+
+    $activeConfiguration = $config->getActiveConfigurationItem();
+
+    $configItems = $config->getItems();
+@endphp
+
 @extends('admin::layouts.master')
 
 @section('page_title')
@@ -23,10 +31,10 @@
                 <div class="form-container">
                     <div class="nav-aside">
                         <ul class="sub-menubar">
-                            @foreach (app('core_config')->items as $key => $item)
-                                <li class="sub-menu-item {{ $item['key'] == request()->route('slug') ? 'active' : '' }}">
-                                    <a href="{{ route('admin.configuration.index', $item['key']) }}">
-                                        {{ isset($item['name']) ? trans($item['name']) : '' }}
+                            @foreach ($configItems as $item)
+                                <li class="sub-menu-item {{ $item->getKey() == request()->route('slug') ? 'active' : '' }}">
+                                    <a href="{{ route('admin.configuration.index', $item->getKey()) }}">
+                                        {{ $item->getName() }}
                                     </a>
                                 </li>
                             @endforeach
@@ -46,17 +54,15 @@
                     
                         @csrf()
 
-                        @if ($groups = \Illuminate\Support\Arr::get(app('core_config')->items, request()->route('slug') . '.children'))
-                            <tabs>
-                                @foreach ($groups as $key => $item)
-                                    <tab :name="'{{ __($item['name']) }}'">
-                                        @foreach ($item['fields'] as $field)
-                                            @include ('admin::configuration.field-type', ['field' => $field])
-                                        @endforeach
-                                    </tab>
-                                @endforeach
-                            </tabs>
-                        @endif
+                        <tabs>
+                            @foreach ($activeConfiguration->getChildren() as $child)
+                                <tab :name="'{{ $child->getName() }}'">
+                                    @foreach ($child->getFields() as $field)
+                                        @include ('admin::configuration.field-type', compact('field'))
+                                    @endforeach
+                                </tab>
+                            @endforeach
+                        </tabs>
                     </div>
                 </div>
             </div>

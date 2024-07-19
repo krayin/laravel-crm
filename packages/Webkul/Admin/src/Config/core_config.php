@@ -11,10 +11,11 @@ return [
         'sort'   => 1,
         'fields' => [
             [
-                'name'          => 'locale',
-                'title'         => 'admin::app.configuration.locale',
-                'type'          => 'select',
-                'data_source'   => 'Webkul\Core\Core@locales'
+                'name'       => 'locale',
+                'title'      => 'admin::app.configuration.locale',
+                'type'       => 'select',
+                'validation' => 'required',
+                'options'    => 'Webkul\Core\Core@locales'
             ],
         ],
     ],

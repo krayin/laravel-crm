@@ -2,10 +2,12 @@
 
 namespace Webkul\Admin\Http\Controllers\Configuration;
 
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Core\Contracts\Validations\Code;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\ConfigurationForm;
 use Webkul\Core\Repositories\CoreConfigRepository as ConfigurationRepository;
 
 class ConfigurationController extends Controller
@@ -21,14 +23,12 @@ class ConfigurationController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): RedirectResponse|View
     {
-        $slugs = $this->getDefaultConfigSlugs();
+        $slugs = (array) $this->getDefaultConfigSlugs();
 
-        if (count($slugs)) {
+        if (! empty($slugs)) {
             return redirect()->route('admin.configuration.index', $slugs);
         }
 
@@ -37,17 +37,13 @@ class ConfigurationController extends Controller
 
     /**
      * Returns slugs
-     *
-     * @return array
      */
-    public function getDefaultConfigSlugs()
+    public function getDefaultConfigSlugs(): array
     {
         if (! request()->route('slug')) {
-            $firstItem = current(app('core_config')->items);
+            $slug = system_config()->getItems()->first()->getKey();
 
-            $temp = explode('.', $firstItem['key']);
-
-            return ['slug' => current($temp)];
+            return ['slug' => $slug];
         }
 
         return [];
@@ -55,14 +51,12 @@ class ConfigurationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(ConfigurationForm $request): RedirectResponse
     {
         Event::dispatch('core.configuration.save.before');
 
-        $this->configurationRepository->create(request()->all());
+        $this->configurationRepository->create($request->all());
 
         Event::dispatch('core.configuration.save.after');
 

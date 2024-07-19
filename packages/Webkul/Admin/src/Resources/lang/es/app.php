@@ -734,6 +734,7 @@
             'timezone'          => 'Zona Horaria',
             'date-time-formats' => 'Formato de Fecha y Hora',
             'save-message'      => 'Configuración actualizada con éxito!',
+            'delete'            => 'Eliminar',
             "emails"            => [
                 'email'                 => 'Email',
                 'notification_label'    => 'Notificaciones',
