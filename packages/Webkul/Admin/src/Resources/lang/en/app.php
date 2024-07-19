@@ -146,15 +146,61 @@ return [
                     'id'          => 'ID',
                     'name'        => 'Name',
                 ],
+
                 'edit' => [
                     'title' => 'Edit Group',
                 ],
+
                 'create' => [
                     'name'        => 'Name',
                     'title'       => 'Create Group',
                     'description' => 'Description',
                     'save-btn'    => 'Save Group',
                 ],
+            ],
+        ],
+
+        'roles' => [
+            'index' => [
+                'create-btn' => 'Create Roles',
+                'title'      => 'Roles',
+                'settings'   => 'Settings',
+                'datagrid'   => [
+                    'all'             => 'All',
+                    'custom'          => 'Custom',
+                    'delete'          => 'Delete',
+                    'description'     => 'Description',
+                    'edit'            => 'Edit',
+                    'id'              => 'ID',
+                    'name'            => 'Name',
+                    'permission-type' => 'Permission Type',
+                ],
+            ],
+
+            'create' => [
+                'access-control' => 'Access Control',
+                'all'            => 'All',
+                'back-btn'       => 'Back',
+                'custom'         => 'Custom',
+                'description'    => 'Description',
+                'general'        => 'General',
+                'name'           => 'Name',
+                'permissions'    => 'Permissions',
+                'save-btn'       => 'Save Role',
+                'title'          => 'Create Role',
+            ],
+
+            'edit' => [
+                'access-control' => 'Access Control',
+                'all'            => 'All',
+                'back-btn'       => 'Back',
+                'custom'         => 'Custom',
+                'description'    => 'Description',
+                'general'        => 'General',
+                'name'           => 'Name',
+                'permissions'    => 'Permissions',
+                'save-btn'       => 'Save Role',
+                'title'          => 'Edit Role',
             ],
         ],
     ],
