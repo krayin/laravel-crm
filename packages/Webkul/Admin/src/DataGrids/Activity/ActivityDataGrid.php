@@ -4,7 +4,8 @@ namespace Webkul\Admin\DataGrids\Activity;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
+use Webkul\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
@@ -12,21 +13,16 @@ class ActivityDataGrid extends DataGrid
     use ProvideDropdownOptions;
 
     /**
-     * Create data grid instance.
+     * Create class instance.
      *
      * @return void
      */
-    public function __construct(protected UserRepository $userRepository)
-    {
-        parent::__construct();
-    }
+    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('activities')
             ->distinct()
@@ -74,44 +70,66 @@ class ActivityDataGrid extends DataGrid
         $this->addFilter('created_at', 'activities.created_at');
         $this->addFilter('lead_title', 'leads.title');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
-     * Add columns.
-     *
-     * @return void
+     * Prepare columns.
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
+        $this->addColumn([
+            'index'      => 'id',
+            'label'      => trans('ID'),
+            'type'       => 'integer',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
+        ]);
+
         $this->addColumn([
             'index'            => 'is_done',
             'label'            => trans('admin::app.datagrid.is_done'),
-            'type'             => 'dropdown',
+            'type'             => 'string',
             'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
             'searchable'       => false,
             'closure'          => function ($row) {
-                return view('admin::activities.datagrid.is-done', compact('row'))->render();
+                return "
+                    <label for='is_done_{$row->id}'>
+                        <input
+                            name='is_done'
+                            type='checkbox'
+                            id='is_done_{$row->id}'
+                            value='1'
+                            " . ($row->is_done ? 'checked' : '') . "
+                            onchange='updateStatus(event, \"" . route('admin.activities.update', $row->id) . "\")'
+                            class='peer hidden'
+                        >
+                        <span class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'></span>
+                    </label>
+                ";
             },
         ]);
 
         $this->addColumn([
-            'index' => 'title',
-            'label' => trans('admin::app.datagrid.title'),
-            'type'  => 'string',
+            'index'      => 'title',
+            'label'      => trans('Title'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'            => 'created_by_id',
-            'label'            => trans('admin::app.datagrid.created_by'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getUserDropdownOptions(),
-            'searchable'       => false,
-            'sortable'         => true,
-            'closure'          => function ($row) {
+            'index'      => 'created_by_id',
+            'label'      => trans('admin::app.datagrid.created_by'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
-                return "<a href='" . $route . "'>" . $row->created_by . "</a>";
+                return "<a class='text-brandColor hover:underline' href='" . $route . "'>" . $row->created_by . "</a>";
             },
         ]);
 
@@ -119,181 +137,111 @@ class ActivityDataGrid extends DataGrid
             'index'   => 'comment',
             'label'   => trans('admin::app.datagrid.comment'),
             'type'    => 'string',
-            'closure' => function ($row) {
-                return $row->comment;
-            },
         ]);
 
         $this->addColumn([
             'index'      => 'lead_title',
             'label'      => trans('admin::app.datagrid.lead'),
             'type'       => 'string',
-            'searchable' => false,
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
             'closure'    => function ($row) {
+                if ($row->lead_title == null) {
+                    return 'N/A';
+                }
+
                 $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
-                return "<a href='" . $route . "'>" . $row->lead_title . "</a>";
+                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->lead_title."</a>";
             },
         ]);
 
         $this->addColumn([
             'index'      => 'type',
             'label'      => trans('admin::app.datagrid.type'),
-            'type'       => 'dropdown',
-            'dropdown_options' => $this->getActivityTypeDropdownOptions(),
+            'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'closure'  => function ($row) {
-                return trans('admin::app.activities.'.$row->type);
-            },
+            'closure'  => fn ($row) => trans('admin::app.activities.'.$row->type)
         ]);
 
         $this->addColumn([
             'index'      => 'schedule_from',
             'label'      => trans('admin::app.datagrid.schedule_from'),
-            'type'       => 'date_range',
+            'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->schedule_from);
-            },
+            'closure'    => fn($row) => core()->formatDate($row->schedule_from),
         ]);
 
         $this->addColumn([
             'index'      => 'schedule_to',
             'label'      => trans('admin::app.datagrid.schedule_to'),
-            'type'       => 'date_range',
+            'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->schedule_to);
-            },
+            'closure'    => fn($row) => core()->formatDate($row->schedule_to),
         ]);
 
         $this->addColumn([
             'index'      => 'created_at',
             'label'      => trans('admin::app.datagrid.created_at'),
-            'type'       => 'date_range',
+            'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
-        ]);
-    }
-
-    /**
-     * Prepare tab filters.
-     *
-     * @return array
-     */
-    public function prepareTabFilters()
-    {
-        $this->addTabFilter([
-            'key'       => 'type',
-            'type'      => 'pill',
-            'condition' => 'eq',
-            'values'    => [
-                [
-                    'name'     => 'admin::app.leads.all',
-                    'isActive' => true,
-                    'key'      => 'all',
-                ], [
-                    'name'     => 'admin::app.leads.call',
-                    'isActive' => false,
-                    'key'      => 'call',
-                ], [
-                    'name'     => 'admin::app.leads.meeting',
-                    'isActive' => false,
-                    'key'      => 'meeting',
-                ], [
-                    'name'     => 'admin::app.leads.lunch',
-                    'isActive' => false,
-                    'key'      => 'lunch',
-                ]
-            ]
-        ]);
-
-        $this->addTabFilter([
-            'key'       => 'scheduled',
-            'type'      => 'group',
-            'condition' => 'eq',
-            'values'    => [
-                [
-                    'name'     => 'admin::app.datagrid.filters.yesterday',
-                    'isActive' => false,
-                    'key'      => 'yesterday',
-                ], [
-                    'name'     => 'admin::app.datagrid.filters.today',
-                    'isActive' => false,
-                    'key'      => 'today',
-                ], [
-                    'name'     => 'admin::app.datagrid.filters.tomorrow',
-                    'isActive' => false,
-                    'key'      => 'tomorrow',
-                ], [
-                    'name'     => 'admin::app.datagrid.filters.this-week',
-                    'isActive' => false,
-                    'key'      => 'this_week',
-                ], [
-                    'name'     => 'admin::app.datagrid.filters.this-month',
-                    'isActive' => false,
-                    'key'      => 'this_month',
-                ], [
-                    'name'     => 'admin::app.datagrid.filters.custom',
-                    'isActive' => false,
-                    'key'      => 'custom',
-                ]
-            ]
+            'closure'    => fn($row) => core()->formatDate($row->created_at),
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.activities.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => fn ($row) => route('admin.activities.edit', $row->id)
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.activities.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete'),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => fn ($row) => route('admin.activities.delete', $row->id)
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
+
         $this->addMassAction([
-            'type'    => 'update',
-            'label'   => trans('ui::app.datagrid.is-done'),
-            'action'  => route('admin.activities.mass_update'),
-            'method'  => 'PUT',
-            'options' => [
-                trans('admin::app.datagrid.yes') => 1,
-                trans('admin::app.datagrid.no')  => 0,
-            ],
+            'title'  => trans('Delete'),
+            'url'    => route('admin.activities.mass_delete'),
+            'method' => 'POST',
         ]);
 
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.activities.mass_delete'),
-            'method' => 'PUT',
+            'title'   => trans('Mass Update'),
+            'url'     => route('admin.activities.mass_update'),
+            'method'  => 'POST',
+            'options' => [
+                [
+                    'label' => trans('admin::app.catalog.products.index.datagrid.active'),
+                    'value' => 1,
+                ],
+                [
+                    'label' => trans('admin::app.catalog.products.index.datagrid.disable'),
+                    'value' => 0,
+                ],
+            ],
         ]);
     }
 }

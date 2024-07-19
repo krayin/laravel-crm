@@ -1,14 +1,14 @@
-<div class="form-group">
-    <span class="radio" style="margin: 0">
-        <input
-            name="is_done"
-            type="checkbox"
-            id="{{ 'is_done_' . $row->id }}"
-            value="{{ $row->is_done ? '0' : '1' }}"
-            {{ $row->is_done ? 'checked' : '' }}
-            onchange="updateStatus(event, '{{ route('admin.activities.update', $row->id) }}')"
-        >
 
-        <label for="{{ 'is_done_' . $row->id }}" class="radio-view"></label>
-    </span>
-</div>
+<label for="{{ 'is_done_' . $row->id }}">
+    <input
+        name="is_done"
+        type="checkbox"
+        id="{{ 'is_done_' . $row->id }}"
+        value="{{ $row->is_done ? '0' : '1' }}"
+        {{ $row->is_done ? 'checked' : '' }}
+        onchange="updateStatus(event, '{{ route('admin.activities.update', $row->id) }}')"
+        class="peer hidden"
+    >
+
+    <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor"></span>
+</label>

@@ -1,17 +1,19 @@
-@php
-    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
-@endphp
+@if (isset($attribute))
+    @php
+        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, old($attribute->code) ?: $value);
+    @endphp
 
-<v-lookup-component
-    :attribute="{{ json_encode($attribute) }}"
-    :validations="'{{ $validations }}'"
-    :value="{{ json_encode($lookUpEntityData)}}"
->
-    <x-admin::form.control-group.control
-        type="text"
-        placeholder="@lang('admin::app.common.start-typing')"
-    />
-</v-lookup-component>
+    <v-lookup-component
+        :attribute="{{ json_encode($attribute) }}"
+        :validations="'{{ $validations }}'"
+        :value="{{ json_encode($lookUpEntityData)}}"
+    >
+        <x-admin::form.control-group.control
+            type="text"
+            placeholder="@lang('admin::app.common.start-typing')"
+        />
+    </v-lookup-component>
+@endif
 
 @pushOnce('scripts')
     <script

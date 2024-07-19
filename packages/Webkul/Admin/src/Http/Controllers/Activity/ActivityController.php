@@ -11,12 +11,13 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 
 class ActivityController extends Controller
 {
     /**
      * Create a new controller instance.
-     *
      *
      * @return void
      */
@@ -31,18 +32,14 @@ class ActivityController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View
     {
         return view('admin::activities.index');
     }
 
     /**
      * Returns a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
     public function get()
     {
@@ -61,7 +58,7 @@ class ActivityController extends Controller
                 'activities' => $activities,
             ]);
         } else {
-            return app(\Webkul\Admin\DataGrids\Activity\ActivityDataGrid::class)->toJson();
+            return datagrid(ActivityDataGrid::class)->process();
         }
     }
 

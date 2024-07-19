@@ -62,6 +62,7 @@ class GroupDataGrid extends DataGrid
     public function prepareActions(): void
     {
         $this->addAction([
+            'index'  => 'edit',
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.groups.index.datagrid.edit'),
             'method' => 'GET',
@@ -69,6 +70,7 @@ class GroupDataGrid extends DataGrid
         ]);
 
         $this->addAction([
+            'index'  => 'delete',
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
             'method' => 'DELETE',
