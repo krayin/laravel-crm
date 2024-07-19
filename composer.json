@@ -15,6 +15,7 @@
         "guzzlehttp/guzzle": "^7.0.1",
         "konekt/concord": "^1.10",
         "laravel/framework": "^10.0",
+        "laravel/pint": "^1.16",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^4.0",
