@@ -145,8 +145,26 @@
                         'id'          => 'ID',
                         'name'        => 'Name',
                     ],
-                ]
-            ]
+                ],
+            ],
+
+            'roles' => [
+                'index' => [
+                    'create-btn' => 'Create Roles',
+                    'title'      => 'Roles',
+                    'settings'   => 'Settings',
+                    'datagrid'   => [
+                        'all'             => 'All',
+                        'custom'          => 'Custom',
+                        'delete'          => 'Delete',
+                        'description'     => 'Description',
+                        'edit'            => 'Edit',
+                        'id'              => 'ID',
+                        'name'            => 'Name',
+                        'permission-type' => 'Permission Type',
+                    ],
+                ],
+            ],
         ],
 
 // ----------------------------------------------------------------Old version locale ----------------------------------

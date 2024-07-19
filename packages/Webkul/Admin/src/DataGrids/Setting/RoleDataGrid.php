@@ -3,19 +3,15 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 
 class RoleDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('roles')
             ->addSelect(
@@ -26,67 +22,81 @@ class RoleDataGrid extends DataGrid
             );
 
         $this->addFilter('id', 'roles.id');
+        $this->addFilter('name', 'roles.name');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
+            'label'    => trans('admin::app.settings.roles.index.datagrid.id'),
             'type'     => 'string',
-            'sortable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
+            'label'    => trans('admin::app.settings.roles.index.datagrid.name'),
             'type'     => 'string',
-            'sortable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'    => 'description',
-            'label'    => trans('admin::app.datagrid.description'),
+            'label'    => trans('admin::app.settings.roles.index.datagrid.description'),
             'type'     => 'string',
             'sortable' => false,
         ]);
 
         $this->addColumn([
-            'index'            => 'permission_type',
-            'label'            => trans('admin::app.datagrid.permission_type'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getRoleDropdownOptions(),
-            'sortable'         => false,
+            'index'              => 'permission_type',
+            'label'              => trans('admin::app.settings.roles.index.datagrid.permission-type'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => [
+                [
+                    'label' => trans('admin::app.settings.roles.index.datagrid.custom'),
+                    'value' => 'custom',
+                ],
+                [
+                    'label' => trans('admin::app.settings.roles.index.datagrid.all'),
+                    'value' => 'all',
+                ],
+            ],
+            'sortable'   => true,
         ]);
     }
-
+   
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.roles.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.roles.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.roles.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'user']),
-            'icon'         => 'trash-icon',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.roles.delete', $row->id);
+            },
         ]);
     }
 }

@@ -3,8 +3,11 @@
 namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\RoleRepository;
+use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
 
 class RoleController extends Controller
 {
@@ -22,10 +25,10 @@ class RoleController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\RoleDataGrid::class)->toJson();
+            return datagrid(RoleDataGrid::class)->process();
         }
 
         return view('admin::settings.roles.index');
