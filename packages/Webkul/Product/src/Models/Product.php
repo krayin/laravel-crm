@@ -5,10 +5,10 @@ namespace Webkul\Product\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Webkul\Warehouse\Models\WarehouseProxy;
-use Webkul\Warehouse\Models\WarehouseLocationProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Product\Contracts\Product as ProductContract;
+use Webkul\Warehouse\Models\WarehouseLocationProxy;
+use Webkul\Warehouse\Models\WarehouseProxy;
 
 class Product extends Model implements ProductContract
 {
@@ -24,7 +24,7 @@ class Product extends Model implements ProductContract
         'sku',
         'description',
         'quantity',
-        'price'
+        'price',
     ];
 
     /**

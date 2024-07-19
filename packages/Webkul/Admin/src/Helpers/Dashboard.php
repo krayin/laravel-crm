@@ -38,8 +38,7 @@ class Dashboard
         protected ActivityRepository $activityRepository,
         protected UserRepository $userRepository,
         protected EmailRepository $emailRepository
-    ) {
-    }
+    ) {}
 
     /**
      * This will set all available cards data to be displayed on dashboard.
@@ -59,12 +58,10 @@ class Dashboard
 
     /**
      * This will set all available cards data to be displayed on dashboard.
-     *
-     * @return array
      */
     public function getCards(): array
     {
-        if(! $this->cards) {
+        if (! $this->cards) {
             $this->setCards();
         }
 
@@ -74,7 +71,7 @@ class Dashboard
     /**
      * Collect leads card data.
      *
-     * @return array|boolean
+     * @return array|bool
      */
     public function getLeads($startDateFilter, $endDateFilter, $totalWeeks)
     {
@@ -86,45 +83,45 @@ class Dashboard
 
         if ($totalWeeks) {
             for ($index = $totalWeeks; $index >= 1; $index--) {
-                list(
+                [
                     'startDate' => $startDate,
                     'endDate'   => $endDate,
                     'labels'    => $labels,
-                ) = $this->getFormattedDateRange([
-                    "start_date"    => $startDateFilter,
-                    "end_date"      => $endDateFilter,
-                    "index"         => $index,
-                    "labels"        => $labels,
-                    "total_weeks"   => $totalWeeks,
+                ] = $this->getFormattedDateRange([
+                    'start_date'    => $startDateFilter,
+                    'end_date'      => $endDateFilter,
+                    'index'         => $index,
+                    'labels'        => $labels,
+                    'total_weeks'   => $totalWeeks,
                 ]);
 
-                array_push($wonLeadsCount, $this->leadRepository->getLeadsCount("Won", $startDate, $endDate));
+                array_push($wonLeadsCount, $this->leadRepository->getLeadsCount('Won', $startDate, $endDate));
 
-                array_push($lostLeadsCount, $this->leadRepository->getLeadsCount("Lost", $startDate, $endDate));
+                array_push($lostLeadsCount, $this->leadRepository->getLeadsCount('Lost', $startDate, $endDate));
             }
         } else {
-            $labels = [__("admin::app.dashboard.week") . "1"];
+            $labels = [__('admin::app.dashboard.week').'1'];
 
-            $wonLeadsCount = [$this->leadRepository->getLeadsCount("Won", $startDateFilter, $endDateFilter)];
-            $lostLeadsCount = [$this->leadRepository->getLeadsCount("Lost", $startDateFilter, $endDateFilter)];
+            $wonLeadsCount = [$this->leadRepository->getLeadsCount('Won', $startDateFilter, $endDateFilter)];
+            $lostLeadsCount = [$this->leadRepository->getLeadsCount('Lost', $startDateFilter, $endDateFilter)];
         }
 
         if (! (empty(array_filter($wonLeadsCount)) && empty(array_filter($lostLeadsCount)))) {
             $cardData = [
-                "data" => [
-                    "labels"   => $labels,
-                    "datasets" => [
+                'data' => [
+                    'labels'   => $labels,
+                    'datasets' => [
                         [
-                            "data"            => $wonLeadsCount,
-                            "label"           => __("admin::app.settings.pipelines.won-stage"),
-                            "backgroundColor" => "#4BC0C0",
+                            'data'            => $wonLeadsCount,
+                            'label'           => __('admin::app.settings.pipelines.won-stage'),
+                            'backgroundColor' => '#4BC0C0',
                         ], [
-                            "backgroundColor" => "#FF4D50",
-                            "data"            => $lostLeadsCount,
-                            "label"           => __("admin::app.settings.pipelines.lost-stage"),
-                        ]
-                    ]
-                ]
+                            'backgroundColor' => '#FF4D50',
+                            'data'            => $lostLeadsCount,
+                            'label'           => __('admin::app.settings.pipelines.lost-stage'),
+                        ],
+                    ],
+                ],
             ];
         }
 
@@ -137,53 +134,53 @@ class Dashboard
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
-     * @return array|boolean
+     * @return array|bool
      */
     public function getLeadsStarted($startDateFilter, $endDateFilter, $totalWeeks)
     {
         if (! bouncer()->hasPermission('leads')) {
             return 0;
         }
-        
+
         $labels = $leadsStarted = [];
 
         if ($totalWeeks) {
             for ($index = $totalWeeks; $index >= 1; $index--) {
-                list(
+                [
                     'startDate' => $startDate,
                     'endDate'   => $endDate,
                     'labels'    => $labels,
-                ) = $this->getFormattedDateRange([
-                    "start_date"  => $startDateFilter,
-                    "end_date"    => $endDateFilter,
-                    "index"       => $index,
-                    "labels"      => $labels,
-                    "total_weeks" => $totalWeeks,
+                ] = $this->getFormattedDateRange([
+                    'start_date'  => $startDateFilter,
+                    'end_date'    => $endDateFilter,
+                    'index'       => $index,
+                    'labels'      => $labels,
+                    'total_weeks' => $totalWeeks,
                 ]);
 
-                array_push($leadsStarted, $this->leadRepository->getLeadsCount("all", $startDate, $endDate));
+                array_push($leadsStarted, $this->leadRepository->getLeadsCount('all', $startDate, $endDate));
             }
         } else {
-            $labels = [__("admin::app.dashboard.week") . "1"];
+            $labels = [__('admin::app.dashboard.week').'1'];
 
-            $leadsStarted = [$this->leadRepository->getLeadsCount("Won", $startDateFilter, $endDateFilter)];
+            $leadsStarted = [$this->leadRepository->getLeadsCount('Won', $startDateFilter, $endDateFilter)];
         }
 
         if (! empty(array_filter($leadsStarted))) {
             $cardData = [
-                "data" => [
-                    "labels"   => $labels,
-                    "datasets" => [
+                'data' => [
+                    'labels'   => $labels,
+                    'datasets' => [
                         [
-                            "fill"            => true,
-                            "tension"         => 0.6,
-                            "backgroundColor" => "#4BC0C0",
-                            "borderColor"     => '#2f7373',
-                            "data"            => $leadsStarted,
-                            "label"           => __("admin::app.dashboard.leads_started"),
+                            'fill'            => true,
+                            'tension'         => 0.6,
+                            'backgroundColor' => '#4BC0C0',
+                            'borderColor'     => '#2f7373',
+                            'data'            => $leadsStarted,
+                            'label'           => __('admin::app.dashboard.leads_started'),
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -196,7 +193,7 @@ class Dashboard
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
-     * @return array|boolean
+     * @return array|bool
      */
     public function getProducts($startDateFilter, $endDateFilter, $totalWeeks)
     {
@@ -204,41 +201,41 @@ class Dashboard
 
         if ($totalWeeks) {
             for ($index = $totalWeeks; $index >= 1; $index--) {
-                list(
+                [
                     'startDate' => $startDate,
                     'endDate'   => $endDate,
                     'labels'    => $labels,
-                ) = $this->getFormattedDateRange([
-                    "start_date"  => $startDateFilter,
-                    "end_date"    => $endDateFilter,
-                    "index"       => $index,
-                    "labels"      => $labels,
-                    "total_weeks" => $totalWeeks,
+                ] = $this->getFormattedDateRange([
+                    'start_date'  => $startDateFilter,
+                    'end_date'    => $endDateFilter,
+                    'index'       => $index,
+                    'labels'      => $labels,
+                    'total_weeks' => $totalWeeks,
                 ]);
 
                 // get products count
                 array_push($productsCount, $this->productRepository->getProductCount($startDate, $endDate));
             }
         } else {
-            $labels = [__("admin::app.dashboard.week") . "1"];
+            $labels = [__('admin::app.dashboard.week').'1'];
             $productsCount = [$this->productRepository->getProductCount($startDateFilter, $endDateFilter)];
         }
 
         if (! empty(array_filter($productsCount))) {
             $cardData = [
-                "data" => [
-                    "labels"   => $labels,
-                    "datasets" => [
+                'data' => [
+                    'labels'   => $labels,
+                    'datasets' => [
                         [
-                            "fill"            => true,
-                            "tension"         => 0.6,
-                            "backgroundColor" => "#4BC0C0",
-                            "borderColor"     => '#2f7373',
-                            "data"            => $productsCount,
-                            "label"           => __("admin::app.dashboard.products"),
+                            'fill'            => true,
+                            'tension'         => 0.6,
+                            'backgroundColor' => '#4BC0C0',
+                            'borderColor'     => '#2f7373',
+                            'data'            => $productsCount,
+                            'label'           => __('admin::app.dashboard.products'),
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -251,7 +248,7 @@ class Dashboard
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
-     * @return array|boolean
+     * @return array|bool
      */
     public function getCustomers($startDateFilter, $endDateFilter, $totalWeeks)
     {
@@ -259,41 +256,41 @@ class Dashboard
 
         if ($totalWeeks) {
             for ($index = $totalWeeks; $index >= 1; $index--) {
-                list(
+                [
                     'startDate' => $startDate,
                     'endDate'   => $endDate,
                     'labels'    => $labels,
-                ) = $this->getFormattedDateRange([
-                    "start_date"  => $startDateFilter,
-                    "end_date"    => $endDateFilter,
-                    "index"       => $index,
-                    "labels"      => $labels,
-                    "total_weeks" => $totalWeeks,
+                ] = $this->getFormattedDateRange([
+                    'start_date'  => $startDateFilter,
+                    'end_date'    => $endDateFilter,
+                    'index'       => $index,
+                    'labels'      => $labels,
+                    'total_weeks' => $totalWeeks,
                 ]);
 
                 // get customers count
                 array_push($customersCount, $this->personRepository->getCustomerCount($startDate, $endDate));
             }
         } else {
-            $labels = [__("admin::app.dashboard.week") . "1"];
+            $labels = [__('admin::app.dashboard.week').'1'];
             $customersCount = [$this->personRepository->getCustomerCount($startDateFilter, $endDateFilter)];
         }
 
         if (! empty(array_filter($customersCount))) {
             $cardData = [
-                "data" => [
-                    "labels"   => $labels,
-                    "datasets" => [
+                'data' => [
+                    'labels'   => $labels,
+                    'datasets' => [
                         [
-                            "fill"            => true,
-                            "tension"         => 0.6,
-                            "backgroundColor" => "#4BC0C0",
-                            "borderColor"     => '#2f7373',
-                            "data"            => $customersCount,
-                            "label"           => __("admin::app.dashboard.customers"),
+                            'fill'            => true,
+                            'tension'         => 0.6,
+                            'backgroundColor' => '#4BC0C0',
+                            'borderColor'     => '#2f7373',
+                            'data'            => $customersCount,
+                            'label'           => __('admin::app.dashboard.customers'),
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -313,7 +310,7 @@ class Dashboard
         $activityTypes = ['call', 'meeting', 'lunch'];
 
         $activities = $this->activityRepository
-            ->select(DB::raw("(COUNT(DISTINCT activities.id)) as count"), 'type as label')
+            ->select(DB::raw('(COUNT(DISTINCT activities.id)) as count'), 'type as label')
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->groupBy('type')
             ->orderBy('count', 'desc')
@@ -340,10 +337,10 @@ class Dashboard
             ->filter(function ($type) use ($activities) {
                 return ! in_array($type, $activities->pluck('label')->toArray());
             })
-            ->map(function ($type) { 
+            ->map(function ($type) {
                 return [
                     'count' => 0,
-                    'label' => __("admin::app.activities.$type")
+                    'label' => __("admin::app.activities.$type"),
                 ];
             });
 
@@ -351,7 +348,7 @@ class Dashboard
 
         return [
             'data'  => $activities,
-            'total' => $activities->pluck('count')->sum()
+            'total' => $activities->pluck('count')->sum(),
         ];
     }
 
@@ -364,32 +361,32 @@ class Dashboard
      * @return array
      */
     public function getTopLeads($startDateFilter, $endDateFilter, $totalWeeks)
-    {   
+    {
         if (! bouncer()->hasPermission('leads')) {
             return 0;
         }
-       
+
         $topLeads = $this->leadRepository
             ->select('leads.id', 'title', 'lead_value as amount', 'leads.created_at', 'status', 'lead_pipeline_stages.name as statusLabel')
             ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
             ->orderBy('lead_value', 'desc')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->where(function ($query) {
-            $currentUser = auth()->guard('user')->user();
+                $currentUser = auth()->guard('user')->user();
 
-            if ($currentUser->view_permission != 'global') {
-                if ($currentUser->view_permission == 'group') {
-                    $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
-                } else {
-                    $query->where('leads.user_id', $currentUser->id);
+                if ($currentUser->view_permission != 'global') {
+                    if ($currentUser->view_permission == 'group') {
+                        $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
+                    } else {
+                        $query->where('leads.user_id', $currentUser->id);
+                    }
                 }
-            }
-        })
-        ->limit(3)
-        ->get();
+            })
+            ->limit(3)
+            ->get();
 
         $cardData = [
-            "data" => $topLeads,
+            'data' => $topLeads,
         ];
 
         return $cardData;
@@ -401,7 +398,6 @@ class Dashboard
      * @param  string  $startDateFilter
      * @param  string  $endDateFilter
      * @param  array  $totalWeeks
-     * @return array
      */
     public function getPipelines($startDateFilter, $endDateFilter, $totalWeeks): array
     {
@@ -430,7 +426,7 @@ class Dashboard
                     ->where('lead_pipelines.id', $pipeline->id)
                     ->where(function ($query) {
                         $currentUser = auth()->guard('user')->user();
-        
+
                         if ($currentUser->view_permission != 'global') {
                             if ($currentUser->view_permission == 'group') {
                                 $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
@@ -449,7 +445,7 @@ class Dashboard
 
         return [
             'data'  => $leadPipelines,
-            'total' => $totalLeadsBetweenDateCount
+            'total' => $totalLeadsBetweenDateCount,
         ];
     }
 
@@ -472,13 +468,13 @@ class Dashboard
         foreach ($emailsCollection as $key => $email) {
             if (in_array('inbox', $email->folders) !== false) {
                 $receivedEmails++;
-            } else if (in_array('draft', $email->folders) !== false) {
+            } elseif (in_array('draft', $email->folders) !== false) {
                 $draftEmails++;
-            } else if (in_array('outbox', $email->folders) !== false) {
+            } elseif (in_array('outbox', $email->folders) !== false) {
                 $outboxEmails++;
-            } else if (in_array('sent', $email->folders) !== false) {
+            } elseif (in_array('sent', $email->folders) !== false) {
                 $sentEmails++;
-            } else if (in_array('trash', $email->folders) !== false) {
+            } elseif (in_array('trash', $email->folders) !== false) {
                 $trashEmails++;
             }
 
@@ -486,27 +482,27 @@ class Dashboard
         }
 
         $cardData = [
-            "data" => [
+            'data' => [
                 [
-                    'label' => __("admin::app.mail.total"),
-                    'count' => $totalEmails
+                    'label' => __('admin::app.mail.total'),
+                    'count' => $totalEmails,
                 ], [
-                    'label' => __("admin::app.mail.inbox"),
-                    'count' => $receivedEmails
+                    'label' => __('admin::app.mail.inbox'),
+                    'count' => $receivedEmails,
                 ], [
-                    'label' => __("admin::app.mail.draft"),
-                    'count' => $draftEmails
+                    'label' => __('admin::app.mail.draft'),
+                    'count' => $draftEmails,
                 ], [
-                    'label' => __("admin::app.mail.outbox"),
-                    'count' => $outboxEmails
+                    'label' => __('admin::app.mail.outbox'),
+                    'count' => $outboxEmails,
                 ], [
-                    'label' => __("admin::app.mail.sent"),
-                    'count' => $sentEmails
+                    'label' => __('admin::app.mail.sent'),
+                    'count' => $sentEmails,
                 ], [
-                    'label' => __("admin::app.mail.trash"),
-                    'count' => $trashEmails
+                    'label' => __('admin::app.mail.trash'),
+                    'count' => $trashEmails,
                 ],
-            ]
+            ],
         ];
 
         return $cardData;
@@ -523,7 +519,7 @@ class Dashboard
     public function getTopCustomers($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topCustomers = $this->leadRepository
-            ->select('persons.id as personId', 'persons.name as label', DB::raw("(COUNT(*)) as count"))
+            ->select('persons.id as personId', 'persons.name as label', DB::raw('(COUNT(*)) as count'))
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
             ->whereBetween('leads.created_at', [$startDateFilter, $endDateFilter])
             ->groupBy('person_id')
@@ -533,7 +529,7 @@ class Dashboard
             ->get();
 
         $cardData = [
-            "data" => $topCustomers
+            'data' => $topCustomers,
         ];
 
         return $cardData;
@@ -550,7 +546,7 @@ class Dashboard
     public function getTopProducts($startDateFilter, $endDateFilter, $totalWeeks)
     {
         $topProducts = $this->leadProductRepository
-            ->select('lead_products.*', 'products.name as label', DB::raw("(COUNT(*)) as count"))
+            ->select('lead_products.*', 'products.name as label', DB::raw('(COUNT(*)) as count'))
             ->leftJoin('leads', 'lead_products.lead_id', '=', 'leads.id')
             ->leftJoin('products', 'lead_products.product_id', '=', 'products.id')
             ->groupBy('lead_products.product_id')
@@ -559,7 +555,7 @@ class Dashboard
             ->get();
 
         $cardData = [
-            "data" => $topProducts
+            'data' => $topProducts,
         ];
 
         return $cardData;
@@ -579,42 +575,42 @@ class Dashboard
 
         if ($totalWeeks) {
             for ($index = $totalWeeks; $index >= 1; $index--) {
-                list(
+                [
                     'startDate' => $startDate,
                     'endDate'   => $endDate,
                     'labels'    => $labels,
-                ) = $this->getFormattedDateRange([
-                    "start_date"  => $startDateFilter,
-                    "end_date"    => $endDateFilter,
-                    "index"       => $index,
-                    "labels"      => $labels,
-                    "total_weeks" => $totalWeeks,
+                ] = $this->getFormattedDateRange([
+                    'start_date'  => $startDateFilter,
+                    'end_date'    => $endDateFilter,
+                    'index'       => $index,
+                    'labels'      => $labels,
+                    'total_weeks' => $totalWeeks,
                 ]);
 
                 // get quotes count
                 array_push($quotes, $this->quoteRepository->getQuotesCount($startDate, $endDate));
             }
         } else {
-            $labels = [__("admin::app.dashboard.week") . "1"];
+            $labels = [__('admin::app.dashboard.week').'1'];
 
-            $quotes = [$this->quoteRepository->getQuotesCount("Won", $startDateFilter, $endDateFilter)];
+            $quotes = [$this->quoteRepository->getQuotesCount('Won', $startDateFilter, $endDateFilter)];
         }
 
         if (! empty(array_filter($quotes))) {
             $cardData = [
-                "data" => [
-                    "labels" => $labels,
-                    "datasets" => [
+                'data' => [
+                    'labels'   => $labels,
+                    'datasets' => [
                         [
-                            "fill"            => true,
-                            "tension"         => 0.6,
-                            "backgroundColor" => "#4BC0C0",
-                            "borderColor"     => '#2f7373',
-                            "data"            => $quotes,
-                            "label"           => __("admin::app.dashboard.leads_started"),
+                            'fill'            => true,
+                            'tension'         => 0.6,
+                            'backgroundColor' => '#4BC0C0',
+                            'borderColor'     => '#2f7373',
+                            'data'            => $quotes,
+                            'label'           => __('admin::app.dashboard.leads_started'),
                         ],
-                    ]
-                ]
+                    ],
+                ],
             ];
         }
 
@@ -631,11 +627,11 @@ class Dashboard
     {
         $cardId = $data['card-id'];
 
-        $dateRange = $data['date-range'] ?? Carbon::now()->subMonth()->addDays(1)->format('Y-m-d') . "," . Carbon::now()->format('Y-m-d');
-        $dateRange = explode(",", $dateRange);
+        $dateRange = $data['date-range'] ?? Carbon::now()->subMonth()->addDays(1)->format('Y-m-d').','.Carbon::now()->format('Y-m-d');
+        $dateRange = explode(',', $dateRange);
 
-        $startDateFilter = $dateRange[0] . ' ' . Carbon::parse('00:01')->format('H:i');
-        $endDateFilter = $dateRange[1] . ' ' . Carbon::parse('23:59')->format('H:i');
+        $startDateFilter = $dateRange[0].' '.Carbon::parse('00:01')->format('H:i');
+        $endDateFilter = $dateRange[1].' '.Carbon::parse('23:59')->format('H:i');
 
         $startDate = Carbon::parse($startDateFilter);
         $endDate = Carbon::parse($endDateFilter);
@@ -664,10 +660,10 @@ class Dashboard
         $currentIndex = $data['index'];
         $totalWeeks = $data['total_weeks'];
 
-        $startDate = Carbon::parse($data["start_date"]);
-        $endDate = Carbon::parse($data["end_date"]);
+        $startDate = Carbon::parse($data['start_date']);
+        $endDate = Carbon::parse($data['end_date']);
 
-        array_push($labels, __("admin::app.dashboard.week") . (($totalWeeks + 1) - $currentIndex));
+        array_push($labels, __('admin::app.dashboard.week').(($totalWeeks + 1) - $currentIndex));
 
         $startDate = $currentIndex != $totalWeeks
             ? $startDate->addDays((7 * ($totalWeeks - $currentIndex)) + ($totalWeeks - $currentIndex))
@@ -685,20 +681,20 @@ class Dashboard
      * Collect card data based on `cardId`.
      *
      * @param  array  $requestData
-     * @return array|boolean
+     * @return array|bool
      */
     public function getFormattedCardData($requestData)
     {
         $relevantFunction = false;
 
-        list(
+        [
             'cardId'          => $cardId,
             'endDate'         => $endDate,
             'startDate'       => $startDate,
             'totalWeeks'      => $totalWeeks,
             'endDateFilter'   => $endDateFilter,
             'startDateFilter' => $startDateFilter,
-        ) = $this->getDateRangeDetails($requestData);
+        ] = $this->getDateRangeDetails($requestData);
 
         foreach ($this->getCards() as $card) {
             if (isset($card['card_id']) && $card['card_id'] == $cardId) {
@@ -715,7 +711,7 @@ class Dashboard
         $class = $class ?? $this;
 
         if (! $relevantFunction) {
-            $relevantFunction = "get" . str_replace(" ", "", ucwords(str_replace("_", " ", $cardId)));
+            $relevantFunction = 'get'.str_replace(' ', '', ucwords(str_replace('_', ' ', $cardId)));
         }
 
         if (! method_exists($class ?? $this, $relevantFunction)) {

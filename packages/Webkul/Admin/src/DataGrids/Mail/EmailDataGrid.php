@@ -21,11 +21,11 @@ class EmailDataGrid extends DataGrid
                 'emails.subject',
                 'emails.reply',
                 'emails.created_at',
-                DB::raw('COUNT(DISTINCT ' . DB::getTablePrefix() . 'email_attachments.id) as attachments')
+                DB::raw('COUNT(DISTINCT '.DB::getTablePrefix().'email_attachments.id) as attachments')
             )
             ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
             ->groupBy('emails.id')
-            ->where('folders', 'like', '%"' . request('route') . '"%')
+            ->where('folders', 'like', '%"'.request('route').'"%')
             ->whereNull('parent_id');
 
         $this->addFilter('id', 'emails.id');
@@ -69,7 +69,7 @@ class EmailDataGrid extends DataGrid
             'type'     => 'string',
             'sortable' => true,
             'closure'  => function ($row) {
-                return '<div class="subject-wrapper"><span class="subject-content">' . $row->subject . '</span><span class="reply"> - ' . substr(strip_tags($row->reply), 0, 225) . '<span></div>';
+                return '<div class="subject-wrapper"><span class="subject-content">'.$row->subject.'</span><span class="reply"> - '.substr(strip_tags($row->reply), 0, 225).'<span></div>';
             },
         ]);
 
@@ -101,7 +101,7 @@ class EmailDataGrid extends DataGrid
             'params' => ['route' => request('route')],
             'icon'   => request('route') == 'draft'
                 ? 'pencil-icon'
-                : 'eye-icon'
+                : 'eye-icon',
         ]);
 
         $this->addAction([
@@ -109,10 +109,10 @@ class EmailDataGrid extends DataGrid
             'method'       => 'DELETE',
             'route'        => 'admin.mail.delete',
             'params'       => [
-                                'type' => request('route') == 'trash'
-                                    ? 'delete'
-                                    : 'trash'
-                            ],
+                'type' => request('route') == 'trash'
+                    ? 'delete'
+                    : 'trash',
+            ],
             'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'email']),
             'icon'         => 'trash-icon',
         ]);
@@ -130,8 +130,8 @@ class EmailDataGrid extends DataGrid
                 'type'   => 'delete',
                 'label'  => trans('admin::app.datagrid.move-to-inbox'),
                 'action' => route('admin.mail.mass_update', [
-                                'folders' => ['inbox'],
-                            ]),
+                    'folders' => ['inbox'],
+                ]),
                 'method' => 'PUT',
             ]);
         }
@@ -140,10 +140,10 @@ class EmailDataGrid extends DataGrid
             'type'   => 'delete',
             'label'  => trans('ui::app.datagrid.delete'),
             'action' => route('admin.mail.mass_delete', [
-                            'type' => request('route') == 'trash'
-                                ? 'delete'
-                                : 'trash',
-                        ]),
+                'type' => request('route') == 'trash'
+                    ? 'delete'
+                    : 'trash',
+            ]),
             'method' => 'PUT',
         ]);
     }

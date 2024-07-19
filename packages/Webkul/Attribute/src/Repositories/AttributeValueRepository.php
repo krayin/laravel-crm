@@ -25,14 +25,13 @@ class AttributeValueRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Attribute\Contracts\AttributeValue';
     }
 
     /**
-     * @param array  $data
-     * @param int  $entityId
+     * @param  int  $entityId
      * @return void
      */
     public function save(array $data, $entityId)
@@ -42,12 +41,12 @@ class AttributeValueRepository extends Repository
         if (isset($data['quick_add'])) {
             $conditions['quick_add'] = 1;
         }
-        
+
         $attributes = $this->attributeRepository->findWhere($conditions);
 
         foreach ($attributes as $attribute) {
             $typeColumn = $this->model::$attributeTypeFields[$attribute->type];
-            
+
             if ($attribute->type === 'boolean') {
                 $data[$attribute->code] = isset($data[$attribute->code]) && $data[$attribute->code] ? 1 : 0;
             }
@@ -77,7 +76,7 @@ class AttributeValueRepository extends Repository
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
                 $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
-                    ? request()->file($attribute->code)->store($data['entity_type'] . '/' . $entityId)
+                    ? request()->file($attribute->code)->store($data['entity_type'].'/'.$entityId)
                     : null;
             }
 
@@ -111,7 +110,7 @@ class AttributeValueRepository extends Repository
      * @param  string  $entityType
      * @param  \Webkul\Attribute\Contracts\Attribute  $attribute
      * @param  string  $value
-     * @return boolean
+     * @return bool
      */
     public function isValueUnique($entityId, $entityType, $attribute, $value)
     {
@@ -131,7 +130,7 @@ class AttributeValueRepository extends Repository
 
     /**
      * Removed null values from email and phone fields.
-     * 
+     *
      * @param  array  $data
      * @return array
      */

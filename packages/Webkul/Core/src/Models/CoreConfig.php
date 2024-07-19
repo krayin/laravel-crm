@@ -12,7 +12,6 @@ class CoreConfig extends Model implements CoreConfigContract
      *
      * @var array
      */
-
     protected $table = 'core_config';
 
     protected $fillable = [

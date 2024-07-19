@@ -13,14 +13,14 @@ class UIServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'ui');
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'ui');
 
-        $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'ui');
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'ui');
 
         $this->publishes([
-            __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/ui/assets'),
+            __DIR__.'/../../publishable/assets' => public_path('vendor/webkul/ui/assets'),
         ], 'public');
     }
 
@@ -29,7 +29,5 @@ class UIServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function register()
-    {
-    }
+    public function register() {}
 }

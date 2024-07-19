@@ -2,10 +2,10 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Illuminate\Foundation\Auth\ResetsPasswords;
-use Illuminate\Support\Facades\Password;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Auth\Events\PasswordReset;
+use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Str;
 use Webkul\Admin\Http\Controllers\Controller;
 
@@ -58,7 +58,7 @@ class ResetPasswordController extends Controller
                 ->withErrors([
                     'email' => trans($response),
                 ]);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
 
             return redirect()->back();

@@ -2,6 +2,4 @@
 
 namespace Webkul\Quote\Contracts;
 
-interface Quote
-{
-}
+interface Quote {}

@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Activity;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Illuminate\Database\Query\Builder;
 use Webkul\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
@@ -44,7 +44,7 @@ class ActivityDataGrid extends DataGrid
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $queryBuilder->where(function ($query) use ($currentUser) {
+                $queryBuilder->where(function ($query) {
                     $userIds = $this->userRepository->getCurrentUserGroupsUserIds();
 
                     $query->whereIn('activities.user_id', $userIds)
@@ -101,8 +101,8 @@ class ActivityDataGrid extends DataGrid
                             type='checkbox'
                             id='is_done_{$row->id}'
                             value='1'
-                            " . ($row->is_done ? 'checked' : '') . "
-                            onchange='updateStatus(event, \"" . route('admin.activities.update', $row->id) . "\")'
+                            ".($row->is_done ? 'checked' : '')."
+                            onchange='updateStatus(event, \"".route('admin.activities.update', $row->id)."\")'
                             class='peer hidden'
                         >
                         <span class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'></span>
@@ -129,7 +129,7 @@ class ActivityDataGrid extends DataGrid
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
-                return "<a class='text-brandColor hover:underline' href='" . $route . "'>" . $row->created_by . "</a>";
+                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->created_by.'</a>';
             },
         ]);
 
@@ -153,7 +153,7 @@ class ActivityDataGrid extends DataGrid
 
                 $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));
 
-                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->lead_title."</a>";
+                return "<a class='text-brandColor hover:underline' href='".$route."'>".$row->lead_title.'</a>';
             },
         ]);
 
@@ -163,7 +163,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'closure'  => fn ($row) => trans('admin::app.activities.'.$row->type)
+            'closure'    => fn ($row) => trans('admin::app.activities.'.$row->type),
         ]);
 
         $this->addColumn([
@@ -172,7 +172,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => fn($row) => core()->formatDate($row->schedule_from),
+            'closure'    => fn ($row) => core()->formatDate($row->schedule_from),
         ]);
 
         $this->addColumn([
@@ -181,7 +181,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => fn($row) => core()->formatDate($row->schedule_to),
+            'closure'    => fn ($row) => core()->formatDate($row->schedule_to),
         ]);
 
         $this->addColumn([
@@ -190,7 +190,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
-            'closure'    => fn($row) => core()->formatDate($row->created_at),
+            'closure'    => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 
@@ -204,7 +204,7 @@ class ActivityDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.activities.edit', $row->id)
+            'url'    => fn ($row) => route('admin.activities.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -212,7 +212,7 @@ class ActivityDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.activities.delete', $row->id)
+            'url'    => fn ($row) => route('admin.activities.delete', $row->id),
         ]);
     }
 

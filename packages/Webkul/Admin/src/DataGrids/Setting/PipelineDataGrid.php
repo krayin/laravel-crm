@@ -68,7 +68,7 @@ class PipelineDataGrid extends DataGrid
                 return (bool) $row->is_default
                     ? __('admin::app.common.yes')
                     : __('admin::app.common.no');
-            }
+            },
         ]);
     }
 

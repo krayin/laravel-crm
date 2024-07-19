@@ -8,7 +8,7 @@ use Webkul\Attribute\Contracts\AttributeOption as AttributeOptionContract;
 class AttributeOption extends Model implements AttributeOptionContract
 {
     public $timestamps = false;
-    
+
     /**
      * The attributes that are mass assignable.
      *

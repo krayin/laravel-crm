@@ -1,9 +1,8 @@
 <?php
 
-use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Support\Facades\DB;
 
 class InsertExpectedClosedDateColumnInAttributesTable extends Migration
 {
@@ -21,8 +20,8 @@ class InsertExpectedClosedDateColumnInAttributesTable extends Migration
                 'name'            => 'Expected Close Date',
                 'type'            => 'date',
                 'entity_type'     => 'leads',
-                'lookup_type'     => NULL,
-                'validation'      => NULL,
+                'lookup_type'     => null,
+                'validation'      => null,
                 'sort_order'      => '8',
                 'is_required'     => '0',
                 'is_unique'       => '0',
@@ -30,7 +29,7 @@ class InsertExpectedClosedDateColumnInAttributesTable extends Migration
                 'is_user_defined' => '0',
                 'created_at'      => Carbon::now(),
                 'updated_at'      => Carbon::now(),
-            ]
+            ],
         ]);
     }
 
@@ -39,7 +38,5 @@ class InsertExpectedClosedDateColumnInAttributesTable extends Migration
      *
      * @return void
      */
-    public function down()
-    {
-    }
+    public function down() {}
 }

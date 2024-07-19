@@ -57,7 +57,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             // User Routes
             Route::group([
                 'prefix'    => 'account',
-                'namespace' => 'Webkul\Admin\Http\Controllers\User'
+                'namespace' => 'Webkul\Admin\Http\Controllers\User',
             ], function () {
                 Route::get('', 'AccountController@edit')->name('admin.user.account.edit');
 
@@ -175,7 +175,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             // Contacts Routes
             Route::group([
                 'prefix'    => 'contacts',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Contact'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Contact',
             ], function () {
                 // Customers Routes
                 Route::prefix('persons')->group(function () {
@@ -217,7 +217,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             // Products Routes
             Route::group([
                 'prefix'    => 'products',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Product'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Product',
             ], function () {
                 Route::get('', 'ProductController@index')->name('admin.products.index');
 
@@ -245,7 +245,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             // Contacts Routes
             Route::group([
                 'prefix'    => 'settings',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Setting'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Setting',
             ], function () {
 
                 Route::get('', 'SettingController@index')->name('admin.settings.index');
@@ -324,7 +324,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
                 });
 
-
                 // Lead Pipelines Routes
                 Route::prefix('pipelines')->group(function () {
                     Route::get('', 'PipelineController@index')->name('admin.settings.pipelines.index');
@@ -340,7 +339,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'PipelineController@destroy')->name('admin.settings.pipelines.delete');
                 });
 
-
                 // Lead Sources Routes
                 Route::prefix('sources')->group(function () {
                     Route::get('', 'SourceController@index')->name('admin.settings.sources.index');
@@ -354,7 +352,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
                 });
 
-
                 // Lead Types Routes
                 Route::prefix('types')->group(function () {
                     Route::get('', 'TypeController@index')->name('admin.settings.types.index');
@@ -367,7 +364,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::delete('{id}', 'TypeController@destroy')->name('admin.settings.types.delete');
                 });
-
 
                 // Email Templates Routes
                 Route::prefix('email-templates')->group(function () {
@@ -383,7 +379,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::delete('{id}', 'EmailTemplateController@destroy')->name('admin.settings.email_templates.delete');
                 });
-
 
                 // Warehouses Routes
                 Route::prefix('warehouses')->group(function () {
@@ -417,7 +412,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'LocationController@destroy')->name('admin.settings.locations.delete');
                 });
 
-
                 // Workflows Routes
                 Route::prefix('workflows')->group(function () {
                     Route::get('', 'WorkflowController@index')->name('admin.settings.workflows.index');
@@ -432,7 +426,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                     Route::delete('{id}', 'WorkflowController@destroy')->name('admin.settings.workflows.delete');
                 });
-
 
                 // Tags Routes
                 Route::prefix('tags')->group(function () {
@@ -454,18 +447,18 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
             Route::controller(SavedFilterController::class)->prefix('datagrid/saved-filters')->group(function () {
                 Route::post('', 'store')->name('admin.datagrid.saved_filters.store');
-        
+
                 Route::get('', 'get')->name('admin.datagrid.saved_filters.index');
-        
+
                 Route::put('{id}', 'update')->name('admin.datagrid.saved_filters.update');
-        
+
                 Route::delete('{id}', 'destroy')->name('admin.datagrid.saved_filters.destroy');
             });
 
             // Configuration Routes
             Route::group([
                 'prefix'    => 'configuration',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Configuration'
+                'namespace' => 'Webkul\Admin\Http\Controllers\Configuration',
             ], function () {
                 Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 

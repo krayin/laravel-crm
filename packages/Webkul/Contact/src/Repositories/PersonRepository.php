@@ -3,8 +3,8 @@
 namespace Webkul\Contact\Repositories;
 
 use Illuminate\Container\Container;
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Core\Eloquent\Repository;
 
 class PersonRepository extends Repository
 {
@@ -19,19 +19,18 @@ class PersonRepository extends Repository
     ) {
         parent::__construct($container);
     }
-    
+
     /**
      * Specify Model class name
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Contact\Contracts\Person';
     }
 
     /**
-     * @param array $data
      * @return \Webkul\Contact\Contracts\Person
      */
     public function create(array $data)
@@ -44,12 +43,11 @@ class PersonRepository extends Repository
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Contact\Contracts\Person
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $person = parent::update($data, $id);
 
@@ -66,8 +64,8 @@ class PersonRepository extends Repository
     public function getCustomerCount($startDate, $endDate)
     {
         return $this
-                ->whereBetween('created_at', [$startDate, $endDate])
-                ->get()
-                ->count();
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->get()
+            ->count();
     }
 }

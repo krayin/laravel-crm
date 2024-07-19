@@ -2,23 +2,23 @@
 
 namespace Webkul\Workflow\Helpers\Entity;
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
+use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Activity\Repositories\ActivityRepository;
-use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Tag\Repositories\TagRepository;
 
 class Lead extends AbstractEntity
 {
     /**
      * Define the entity type.
-     * 
-     * @var string $entityType
+     *
+     * @var string
      */
     protected $entityType = 'leads';
 
@@ -34,12 +34,11 @@ class Lead extends AbstractEntity
         protected ActivityRepository $activityRepository,
         protected PersonRepository $personRepository,
         protected TagRepository $tagRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Listing of the entities.
-     * 
+     *
      * @param  \Webkul\Lead\Contracts\Lead  $entity
      * @return \Webkul\Lead\Contracts\Lead
      */
@@ -77,7 +76,7 @@ class Lead extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     * 
+     *
      * @return array
      */
     public function getActions()
@@ -108,8 +107,8 @@ class Lead extends AbstractEntity
                 'id'   => 'add_note_as_activity',
                 'name' => __('admin::app.settings.workflows.add-note-as-activity'),
             ], [
-                'id'   => 'trigger_webhook',
-                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'id'              => 'trigger_webhook',
+                'name'            => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
                     'get'    => __('admin::app.settings.workflows.get_method'),
                     'post'   => __('admin::app.settings.workflows.post_method'),
@@ -119,15 +118,15 @@ class Lead extends AbstractEntity
                 ],
                 'encodings' => [
                     'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
-                ]
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
+                ],
             ],
         ];
     }
 
     /**
      * Execute workflow actions.
-     * 
+     *
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Lead\Contracts\Lead  $lead
      * @return array
@@ -165,7 +164,8 @@ class Lead extends AbstractEntity
                             'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
@@ -182,7 +182,8 @@ class Lead extends AbstractEntity
                             'subject' => $this->replacePlaceholders($lead, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($lead, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
@@ -193,7 +194,7 @@ class Lead extends AbstractEntity
                         '#E5549F',
                         '#27B6BB',
                         '#FB8A3F',
-                        '#43AF52'
+                        '#43AF52',
                     ];
 
                     if (! $tag = $this->tagRepository->findOneByField('name', $action['value'])) {
@@ -241,9 +242,9 @@ class Lead extends AbstractEntity
 
     /**
      * Trigger webhook.
-     * 
-     * @param array $hook
-     * @param \Webkul\Lead\Contracts\Lead $lead
+     *
+     * @param  array  $hook
+     * @param  \Webkul\Lead\Contracts\Lead  $lead
      * @return void
      */
     private function triggerWebhook($hook, $lead)
@@ -266,8 +267,8 @@ class Lead extends AbstractEntity
 
     /**
      * Format headers.
-     * 
-     * @param array $hook
+     *
+     * @param  array  $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -287,9 +288,9 @@ class Lead extends AbstractEntity
 
     /**
      * Prepare request body.
-     * 
-     * @param array $hook
-     * @param \Webkul\Lead\Contracts\Lead $lead
+     *
+     * @param  array  $hook
+     * @param  \Webkul\Lead\Contracts\Lead  $lead
      * @return array
      */
     private function getRequestBody($hook, $lead)
@@ -305,15 +306,15 @@ class Lead extends AbstractEntity
 
         if (isset($hook['simple'])) {
             $simpleFormatted = [];
-            
+
             foreach ($hook['simple'] as $field) {
                 if (strpos($field, 'lead_') === 0) {
                     $simpleFormatted['lead'][] = substr($field, 5);
-                } else if (strpos($field, 'person_') === 0) {
+                } elseif (strpos($field, 'person_') === 0) {
                     $simpleFormatted['person'][] = substr($field, 7);
-                } else if (strpos($field, 'quote_') === 0) {
+                } elseif (strpos($field, 'quote_') === 0) {
                     $simpleFormatted['quote'][] = substr($field, 6);
-                } else if (strpos($field, 'activity_') === 0) {
+                } elseif (strpos($field, 'activity_') === 0) {
                     $simpleFormatted['activity'][] = substr($field, 9);
                 }
             }
@@ -325,13 +326,13 @@ class Lead extends AbstractEntity
                         ->get($fields)
                         ->first()
                         ->toArray();
-                } else if ($entity == 'person') {
+                } elseif ($entity == 'person') {
                     $personResult = $this->personRepository
                         ->find($lead->person_id)
                         ->get($fields)
                         ->first()
                         ->toArray();
-                } else if ($entity == 'quote') {
+                } elseif ($entity == 'quote') {
                     $quoteResult = $lead
                         ->quotes()
                         ->where(
@@ -340,7 +341,7 @@ class Lead extends AbstractEntity
                         )
                         ->get($fields)
                         ->toArray();
-                } else if ($entity == 'activity') {
+                } elseif ($entity == 'activity') {
                     $activityResult = $lead
                         ->activities()
                         ->where(

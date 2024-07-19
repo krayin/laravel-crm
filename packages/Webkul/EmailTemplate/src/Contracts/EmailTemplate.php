@@ -2,6 +2,4 @@
 
 namespace Webkul\EmailTemplate\Contracts;
 
-interface EmailTemplate
-{
-}
+interface EmailTemplate {}

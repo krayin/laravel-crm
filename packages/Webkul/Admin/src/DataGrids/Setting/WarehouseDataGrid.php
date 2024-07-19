@@ -96,7 +96,7 @@ class WarehouseDataGrid extends DataGrid
             'sortable'   => true,
             'filterable' => false,
             'closure'    => function ($row) {
-                return "<a href='" . route('admin.settings.warehouses.products.index', $row->id) . "'>" . $row->products . "</a>";
+                return "<a href='".route('admin.settings.warehouses.products.index', $row->id)."'>".$row->products.'</a>';
             },
         ]);
 

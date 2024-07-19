@@ -4,8 +4,8 @@ namespace Webkul\Core;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Config;
-use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CoreConfigRepository;
+use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
 
 class Core
@@ -19,8 +19,7 @@ class Core
         protected CountryRepository $countryRepository,
         protected CoreConfigRepository $coreConfigRepository,
         protected CountryStateRepository $countryStateRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Retrieve all timezones.
@@ -120,7 +119,7 @@ class Core
 
         $collection = $this->countryStateRepository->findByField([
             'country_code' => $countryCode,
-            'code' => $stateCode
+            'code'         => $stateCode,
         ]);
 
         if (count($collection)) {
@@ -133,7 +132,7 @@ class Core
     /**
      * Create singleton object through single facade.
      *
-     * @param string $className
+     * @param  string  $className
      * @return mixed
      */
     public function getSingletonInstance($className)
@@ -160,13 +159,12 @@ class Core
     /**
      * Return currency symbol from currency code.
      *
-     * @param float $price
-     *
+     * @param  float  $price
      * @return string
      */
     public function currencySymbol($code)
     {
-        $formatter = new \NumberFormatter(app()->getLocale() . '@currency=' . $code, \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter(app()->getLocale().'@currency='.$code, \NumberFormatter::CURRENCY);
 
         return $formatter->getSymbol(\NumberFormatter::CURRENCY_SYMBOL);
     }
@@ -175,8 +173,7 @@ class Core
      * Format price with base currency symbol. This method also give ability to encode
      * the base currency symbol and its optional.
      *
-     * @param  float $price
-     *
+     * @param  float  $price
      * @return string
      */
     public function formatBasePrice($price)
@@ -193,7 +190,7 @@ class Core
     /**
      * Get the config field.
      */
-    public function getConfigField(string $fieldName): array|null
+    public function getConfigField(string $fieldName): ?array
     {
         return system_config()->getConfigField($fieldName);
     }

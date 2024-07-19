@@ -2,21 +2,21 @@
 
 namespace Webkul\Workflow\Helpers\Entity;
 
-use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Contact\Repositories\PersonRepository;
 
 class Person extends AbstractEntity
 {
     /**
      * Define the entity type.
-     * 
-     * @var string $entityType
+     *
+     * @var string
      */
     protected $entityType = 'persons';
 
@@ -30,12 +30,11 @@ class Person extends AbstractEntity
         protected EmailTemplateRepository $emailTemplateRepository,
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Listing of the entities.
-     * 
+     *
      * @param  \Webkul\Contact\Contracts\Person  $entity
      * @return \Webkul\Contact\Contracts\Person
      */
@@ -50,7 +49,7 @@ class Person extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     * 
+     *
      * @return array
      */
     public function getActions()
@@ -71,8 +70,8 @@ class Person extends AbstractEntity
                 'name'    => __('admin::app.settings.workflows.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
-                'id'   => 'trigger_webhook',
-                'name' => __('admin::app.settings.workflows.add-webhook'),
+                'id'              => 'trigger_webhook',
+                'name'            => __('admin::app.settings.workflows.add-webhook'),
                 'request_methods' => [
                     'get'    => __('admin::app.settings.workflows.get_method'),
                     'post'   => __('admin::app.settings.workflows.post_method'),
@@ -82,7 +81,7 @@ class Person extends AbstractEntity
                 ],
                 'encodings' => [
                     'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query')
+                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
                 ],
             ],
         ];
@@ -90,7 +89,7 @@ class Person extends AbstractEntity
 
     /**
      * Execute workflow actions.
-     * 
+     *
      * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
      * @param  \Webkul\Contact\Contracts\Person  $person
      * @return array
@@ -132,7 +131,8 @@ class Person extends AbstractEntity
                             'subject' => $this->replacePlaceholders($person, $emailTemplate->subject),
                             'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
-                    } catch (\Exception $e) {}
+                    } catch (\Exception $e) {
+                    }
 
                     break;
 
@@ -155,9 +155,9 @@ class Person extends AbstractEntity
 
     /**
      * Trigger webhook.
-     * 
-     * @param array $hook
-     * @param \Webkul\Contact\Contracts\Person $person
+     *
+     * @param  array  $hook
+     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return void
      */
     private function triggerWebhook($hook, $person)
@@ -180,8 +180,8 @@ class Person extends AbstractEntity
 
     /**
      * Format headers.
-     * 
-     * @param array $hook
+     *
+     * @param  array  $hook
      * @return array
      */
     private function formatHeaders($hook)
@@ -201,9 +201,9 @@ class Person extends AbstractEntity
 
     /**
      * Prepare request body.
-     * 
-     * @param array $hook
-     * @param \Webkul\Contact\Contracts\Person $person
+     *
+     * @param  array  $hook
+     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return array
      */
     private function getRequestBody($hook, $person)

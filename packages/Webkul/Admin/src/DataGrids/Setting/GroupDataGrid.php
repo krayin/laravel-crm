@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Illuminate\Database\Query\Builder;
 
 class GroupDataGrid extends DataGrid
 {
@@ -66,7 +66,7 @@ class GroupDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.groups.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.groups.edit', $row->id)
+            'url'    => fn ($row) => route('admin.settings.groups.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -74,7 +74,7 @@ class GroupDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.groups.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.groups.delete', $row->id)
+            'url'    => fn ($row) => route('admin.settings.groups.delete', $row->id),
         ]);
     }
 }

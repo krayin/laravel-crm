@@ -4,8 +4,8 @@ namespace Webkul\Email\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
-use Webkul\Lead\Models\LeadProxy;
 use Webkul\Email\Contracts\Email as EmailContract;
+use Webkul\Lead\Models\LeadProxy;
 
 class Email extends Model implements EmailContract
 {

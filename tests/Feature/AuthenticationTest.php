@@ -21,7 +21,7 @@ test('check for admin logout', function () {
 
     test()->actingAs($admin)
         ->delete(route('admin.session.destroy'), [
-            '_token' => csrf_token()
+            '_token' => csrf_token(),
         ])
         ->assertStatus(302);
 

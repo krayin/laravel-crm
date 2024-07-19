@@ -3,13 +3,13 @@
 namespace Webkul\Admin\DataGrids\Setting;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
+use Webkul\UI\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
 {
     use ProvideDropdownOptions;
-    
+
     /**
      * Create datagrid instance.
      *
@@ -25,12 +25,12 @@ class AttributeDataGrid extends DataGrid
                 'key'       => 'entity_type',
                 'condition' => 'eq',
                 'values'    => array_merge([
-                        [
-                            'name'     => trans('admin::app.leads.all'),
-                            'isActive' => true,
-                            'key'      => 'all',
-                        ],
+                    [
+                        'name'     => trans('admin::app.leads.all'),
+                        'isActive' => true,
+                        'key'      => 'all',
                     ],
+                ],
                     collect(config('attribute_entity_types'))->map(function ($entityType, $key) {
                         return [
                             'name'     => trans($entityType['name']),

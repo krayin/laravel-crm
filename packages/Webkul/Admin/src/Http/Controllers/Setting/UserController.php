@@ -4,11 +4,11 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
-use Webkul\User\Repositories\RoleRepository;
-use Webkul\User\Repositories\GroupRepository;
-use Webkul\User\Repositories\UserRepository;
-use Webkul\Admin\Notifications\User\Create;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Notifications\User\Create;
+use Webkul\User\Repositories\GroupRepository;
+use Webkul\User\Repositories\RoleRepository;
+use Webkul\User\Repositories\UserRepository;
 
 class UserController extends Controller
 {
@@ -21,8 +21,7 @@ class UserController extends Controller
         protected UserRepository $userRepository,
         protected GroupRepository $groupRepository,
         protected RoleRepository $roleRepository
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the resource.
@@ -87,7 +86,8 @@ class UserController extends Controller
 
         try {
             Mail::queue(new Create($admin));
-        } catch (\Exception $e) {}
+        } catch (\Exception $e) {
+        }
 
         Event::dispatch('settings.user.create.after', $admin);
 
@@ -122,7 +122,7 @@ class UserController extends Controller
     public function update($id)
     {
         $this->validate(request(), [
-            'email'            => 'required|email|unique:users,email,' . $id,
+            'email'            => 'required|email|unique:users,email,'.$id,
             'name'             => 'required',
             'password'         => 'nullable',
             'confirm_password' => 'nullable|required_with:password|same:password',
@@ -170,7 +170,7 @@ class UserController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.users.delete-failed'),
             ], 400);
-        } else if ($this->userRepository->count() == 1) {
+        } elseif ($this->userRepository->count() == 1) {
             return response()->json([
                 'message' => trans('admin::app.settings.users.last-delete-error'),
             ], 400);
@@ -242,7 +242,7 @@ class UserController extends Controller
             if (auth()->guard('user')->user()->id == $userId) {
                 continue;
             }
-            
+
             Event::dispatch('settings.user.delete.before', $userId);
 
             $this->userRepository->delete($userId);

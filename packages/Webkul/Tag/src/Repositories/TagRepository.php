@@ -11,7 +11,7 @@ class TagRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Tag\Contracts\Tag';
     }

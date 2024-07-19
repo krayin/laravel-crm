@@ -51,7 +51,7 @@ return [
         'value-here'            => 'Burada değer',
         'numeric-value-here'    => 'Burada Sayısal Değer',
         'submit'                => 'Gönder',
-        "mandatory_mass_action" => "Lütfen gerçekleştirilecek bir işlem seçin.",
+        'mandatory_mass_action' => 'Lütfen gerçekleştirilecek bir işlem seçin.',
         'multiple_sort_keys'    => 'Ölümcül hata! Birden Fazla Sıralama Anahtarı Bulundu, Lütfen URL\'yi Manuel Olarak Çözün',
         'multiple_search_keys'  => 'Birden Fazla Arama Anahtarı Bulundu, Lütfen URL\'yi Manuel Olarak Çözün',
         'is-done'               => 'Tamamlandı',

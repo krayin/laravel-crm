@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Product;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Illuminate\Database\Query\Builder;
 
 class ProductDataGrid extends DataGrid
 {

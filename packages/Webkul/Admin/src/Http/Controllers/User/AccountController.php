@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Admin\Http\Controllers\Controller;
 
@@ -34,7 +34,7 @@ class AccountController extends Controller
 
         $this->validate(request(), [
             'name'             => 'required',
-            'email'            => 'email|unique:users,email,' . $user->id,
+            'email'            => 'email|unique:users,email,'.$user->id,
             'password'         => 'nullable|min:6|confirmed',
             'current_password' => 'nullable|required|min:6',
             'image'            => 'mimes:jpeg,jpg,png,gif',
@@ -49,7 +49,7 @@ class AccountController extends Controller
             return redirect()->back();
         }
 
-        if( isset($data['role_id']) || isset($data['view_permission']) ) {
+        if (isset($data['role_id']) || isset($data['view_permission'])) {
             session()->flash('warning', trans('admin::app.user.account.permission-denied'));
 
             return redirect()->back();
@@ -80,7 +80,7 @@ class AccountController extends Controller
      * Handle profile image upload.
      *
      * @param  array  $data
-     * @param  Object $user
+     * @param  object  $user
      * @return void
      */
     public function handleProfileImageUpload(&$data, $user)
@@ -90,20 +90,20 @@ class AccountController extends Controller
         if (! isset($data['image'])) {
             $data['image'] = $user->image;
         }
-    
+
         if (request()->hasFile('image')) {
-            $data['image'] = request()->file('image')->store('users/' . $user->id);
+            $data['image'] = request()->file('image')->store('users/'.$user->id);
         }
-    
+
         if (
             isset($data['remove_image'])
             && $data['remove_image']
         ) {
             $data['image'] = null;
         }
-    
+
         if (
-            $oldImage 
+            $oldImage
             && ($data['image'] !== $oldImage)
         ) {
             Storage::delete($oldImage);

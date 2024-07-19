@@ -17,7 +17,7 @@ class TypeSeeder extends Seeder
     public function run($parameters = [])
     {
         DB::table('lead_types')->delete();
-        
+
         $now = Carbon::now();
 
         $defaultLocale = $parameters['locale'] ?? config('app.locale');
@@ -33,7 +33,7 @@ class TypeSeeder extends Seeder
                 'name'       => trans('installer::app.seeders.lead.type.existing-business', [], $defaultLocale),
                 'created_at' => $now,
                 'updated_at' => $now,
-            ]
+            ],
         ]);
     }
 }

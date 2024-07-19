@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Illuminate\Support\Facades\Auth;
 use Webkul\Admin\Http\Controllers\Controller;
 
 class SessionController extends Controller

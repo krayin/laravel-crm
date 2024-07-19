@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Illuminate\Database\Query\Builder;
 
 class RoleDataGrid extends DataGrid
 {
@@ -33,17 +33,17 @@ class RoleDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.settings.roles.index.datagrid.id'),
-            'type'     => 'string',
+            'index'      => 'id',
+            'label'      => trans('admin::app.settings.roles.index.datagrid.id'),
+            'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.roles.index.datagrid.name'),
-            'type'     => 'string',
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.roles.index.datagrid.name'),
+            'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
         ]);
@@ -75,7 +75,7 @@ class RoleDataGrid extends DataGrid
             'sortable'   => true,
         ]);
     }
-   
+
     /**
      * Prepare actions.
      */

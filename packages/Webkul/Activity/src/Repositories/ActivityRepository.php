@@ -12,7 +12,7 @@ class ActivityRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Activity\Contracts\Activity';
     }
@@ -24,13 +24,13 @@ class ActivityRepository extends Repository
     public function getActivities($dateRange)
     {
         return $this->select(
-                'activities.id',
-                'activities.created_at',
-                'activities.title',
-                'activities.schedule_from as start',
-                'activities.schedule_to as end',
-                'users.name as user_name',
-            )
+            'activities.id',
+            'activities.created_at',
+            'activities.title',
+            'activities.schedule_from as start',
+            'activities.schedule_to as end',
+            'users.name as user_name',
+        )
             ->addSelect(\DB::raw('IF(activities.is_done, "done", "") as class'))
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
@@ -59,10 +59,10 @@ class ActivityRepository extends Repository
      * @param  string  $startFrom
      * @param  string  $endFrom
      * @param  array  $participants
-     * @param  integer  $id
-     * @return boolean
+     * @param  int  $id
+     * @return bool
      */
-    public function isDurationOverlapping($startFrom, $endFrom, $participants = [], $id)
+    public function isDurationOverlapping($startFrom, $endFrom, $participants, $id)
     {
         $queryBuilder = $this->model
             ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
