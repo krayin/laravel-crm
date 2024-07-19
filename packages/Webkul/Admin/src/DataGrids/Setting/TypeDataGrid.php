@@ -2,17 +2,16 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
-use Webkul\UI\DataGrid\DataGrid;
 use Illuminate\Support\Facades\DB;
+use Webkul\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 
 class TypeDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('lead_types')
             ->addSelect(
@@ -22,51 +21,52 @@ class TypeDataGrid extends DataGrid
 
         $this->addFilter('id', 'lead_types.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'    => 'id',
             'label'    => trans('admin::app.datagrid.id'),
             'type'     => 'string',
-            'sortable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'    => 'name',
             'label'    => trans('admin::app.datagrid.name'),
             'type'     => 'string',
-            'sortable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.types.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.types.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.types.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'type']),
-            'icon'         => 'trash-icon',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.types.delete', $row->id);
+            },
         ]);
     }
 }
