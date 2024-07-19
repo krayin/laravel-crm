@@ -13,6 +13,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Attribute\Repositories\AttributeRepository;
 
 class ActivityController extends Controller
 {
@@ -26,7 +27,8 @@ class ActivityController extends Controller
         protected FileRepository $fileRepository,
         protected LeadRepository $leadRepository,
         protected UserRepository $userRepository,
-        protected PersonRepository $personRepository
+        protected PersonRepository $personRepository,
+        protected AttributeRepository $attributeRepository,
     ) {}
 
     /**
@@ -142,7 +144,11 @@ class ActivityController extends Controller
     {
         $activity = $this->activityRepository->findOrFail($id);
 
-        return view('admin::activities.edit', compact('activity'));
+        $leadId = old('lead_id') ?? optional($activity->leads()->first())->id;
+
+        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
+        
+        return view('admin::activities.edit', compact('activity', 'lookUpEntityData'));
     }
 
     /**

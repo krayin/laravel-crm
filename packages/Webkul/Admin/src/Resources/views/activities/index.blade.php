@@ -11,7 +11,7 @@
                     <i class="icon-left-arrow text-2xl text-gray-800"></i>
     
                     <a
-                        href="{{ route('admin.settings.groups.index') }}"
+                        href="{{ route('admin.activities.index') }}"
                         class="text-xs text-gray-800 dark:text-gray-300"
                     >
                         Settings
@@ -19,19 +19,7 @@
                 </div>
     
                 <div class="pl-3 text-xl font-normal dark:text-gray-300">
-                    @lang('admin::app.settings.groups.index.title')
-                </div>
-            </div>
-    
-            <div class="flex items-center gap-x-2.5">
-                <!-- Create button for person -->
-                <div class="flex items-center gap-x-2.5">
-                    <a
-                        href="{{ route('admin.settings.groups.create') }}"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.groups.index.create-btn')
-                    </a>
+                    @lang('admin::app.activities.index.title')
                 </div>
             </div>
         </div>
@@ -51,7 +39,7 @@
                         <i class="icon-left-arrow text-2xl text-gray-800"></i>
         
                         <a
-                            href="{{ route('admin.settings.groups.index') }}"
+                            href="{{ route('admin.activities.index') }}"
                             class="text-xs text-gray-800 dark:text-gray-300"
                         >
                             Settings
@@ -59,19 +47,7 @@
                     </div>
         
                     <div class="pl-3 text-xl font-normal dark:text-gray-300">
-                        @lang('admin::app.settings.groups.index.title')
-                    </div>
-                </div>
-        
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for person -->
-                    <div class="flex items-center gap-x-2.5">
-                        <a
-                            href="{{ route('admin.settings.groups.create') }}"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.settings.groups.index.create-btn')
-                        </a>
+                        @lang('admin::app.activities.index.title')
                     </div>
                 </div>
             </div>
@@ -98,7 +74,7 @@
                         <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800">
                             <div
                                 class="flex select-none items-center gap-2.5"
-                                v-for="(columnGroup, index) in [['title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
+                                v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
                             >
                                 <label
                                     class="flex w-max cursor-pointer select-none items-center gap-1"
@@ -188,7 +164,11 @@
                                 ></label>
         
                                 <div class="flex flex-col gap-1.5">
-                                    <p class="text-base  dark:text-white">
+                                    <p class="text-gray-600 dark:text-gray-300">
+                                        @{{ record.id }}
+                                    </p>
+
+                                    <p class="text-gray-600 dark:text-gray-300">
                                         @{{ record.title }}
                                     </p>
         
@@ -268,7 +248,8 @@
         <script>
             /**
              * Update status for `is_done`.
-             * @param {Event} event
+             * 
+             * @param {Event} {target}
              * @return {void}
              */
             const updateStatus = ({ target }, url) => {
