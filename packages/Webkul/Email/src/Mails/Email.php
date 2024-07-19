@@ -16,9 +16,7 @@ class Email extends Mailable
      *
      * @return void
      */
-    public function __construct(public $email)
-    {
-    }
+    public function __construct(public $email) {}
 
     /**
      * Build the message.

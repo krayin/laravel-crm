@@ -3,7 +3,6 @@
 namespace Webkul\Admin\Notifications\User;
 
 use Illuminate\Mail\Mailable;
-use Illuminate\Notifications\Messages\MailMessage;
 
 class Create extends Mailable
 {
@@ -11,9 +10,7 @@ class Create extends Mailable
      * @param  object  $user
      * @return void
      */
-    public function __construct(public $user)
-    {
-    }
+    public function __construct(public $user) {}
 
     /**
      * Build the mail representation of the notification.

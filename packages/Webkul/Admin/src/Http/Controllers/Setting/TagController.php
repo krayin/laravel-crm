@@ -4,8 +4,8 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
-use Webkul\Tag\Repositories\TagRepository;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Tag\Repositories\TagRepository;
 
 class TagController extends Controller
 {
@@ -14,9 +14,7 @@ class TagController extends Controller
      *
      * @return void
      */
-    public function __construct(protected TagRepository $tagRepository)
-    {
-    }
+    public function __construct(protected TagRepository $tagRepository) {}
 
     /**
      * Display a listing of the resource.
@@ -98,7 +96,7 @@ class TagController extends Controller
     public function update($id)
     {
         $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:tags,name,' . $id,
+            'name' => 'required|unique:tags,name,'.$id,
         ]);
 
         if ($validator->fails()) {
@@ -106,7 +104,7 @@ class TagController extends Controller
 
             return redirect()->back();
         }
-        
+
         Event::dispatch('settings.tag.update.before', $id);
 
         $tag = $this->tagRepository->update(request()->all(), $id);
@@ -138,7 +136,7 @@ class TagController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.tags.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.tags.delete-failed'),
             ], 400);
@@ -157,7 +155,7 @@ class TagController extends Controller
     public function search()
     {
         $results = $this->tagRepository->findWhere([
-            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
         ]);
 
         return response()->json($results);

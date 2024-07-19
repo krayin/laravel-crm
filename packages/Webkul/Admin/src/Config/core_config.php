@@ -15,7 +15,7 @@ return [
                 'title'      => 'admin::app.configuration.locale',
                 'type'       => 'select',
                 'validation' => 'required',
-                'options'    => 'Webkul\Core\Core@locales'
+                'options'    => 'Webkul\Core\Core@locales',
             ],
         ],
     ],

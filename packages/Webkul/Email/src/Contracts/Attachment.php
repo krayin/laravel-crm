@@ -2,6 +2,4 @@
 
 namespace Webkul\Email\Contracts;
 
-interface Attachment
-{
-}
+interface Attachment {}

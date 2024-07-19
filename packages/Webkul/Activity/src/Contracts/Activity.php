@@ -2,6 +2,4 @@
 
 namespace Webkul\Activity\Contracts;
 
-interface Activity
-{
-}
+interface Activity {}

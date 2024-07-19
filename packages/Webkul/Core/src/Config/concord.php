@@ -19,5 +19,5 @@ return [
         \Webkul\WebForm\Providers\ModuleServiceProvider::class,
         \Webkul\Workflow\Providers\ModuleServiceProvider::class,
     ],
-    'register_route_models' => true
+    'register_route_models' => true,
 ];

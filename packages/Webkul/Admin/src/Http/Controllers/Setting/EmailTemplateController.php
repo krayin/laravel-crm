@@ -17,8 +17,7 @@ class EmailTemplateController extends Controller
     public function __construct(
         protected EmailTemplateRepository $emailTemplateRepository,
         protected Entity $workflowEntityHelper
-    ) {
-    }
+    ) {}
 
     /**
      * Display a listing of the email template.
@@ -130,7 +129,7 @@ class EmailTemplateController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.email-templates.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.email-templates.delete-failed'),
             ], 400);

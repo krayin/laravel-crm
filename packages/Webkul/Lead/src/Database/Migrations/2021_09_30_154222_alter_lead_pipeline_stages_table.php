@@ -2,8 +2,8 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class AlterLeadPipelineStagesTable extends Migration
 {
@@ -23,7 +23,7 @@ class AlterLeadPipelineStagesTable extends Migration
             ->join('lead_stages', 'lead_pipeline_stages.lead_stage_id', '=', 'lead_stages.id')
             ->update([
                 'lead_pipeline_stages.code' => DB::raw('lead_stages.code'),
-                'lead_pipeline_stages.name' => DB::raw('lead_stages.name')
+                'lead_pipeline_stages.name' => DB::raw('lead_stages.name'),
             ]);
 
         Schema::table('lead_pipeline_stages', function (Blueprint $table) {
@@ -48,7 +48,7 @@ class AlterLeadPipelineStagesTable extends Migration
 
             $table->integer('lead_stage_id')->unsigned();
             $table->foreign('lead_stage_id')->references('id')->on('lead_stages')->onDelete('cascade');
-            
+
             $table->dropUnique(['lead_pipeline_stages_code_lead_pipeline_id_unique', 'lead_pipeline_stages_name_lead_pipeline_id_unique']);
         });
     }

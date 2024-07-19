@@ -41,7 +41,7 @@ abstract class AbstractEntity
             }
 
             if ($attribute->lookup_type) {
-                $options = [];//$this->attributeRepository->getLookUpOptions($attribute->lookup_type);
+                $options = []; //$this->attributeRepository->getLookUpOptions($attribute->lookup_type);
             } else {
                 $options = $attribute->options;
             }
@@ -60,7 +60,7 @@ abstract class AbstractEntity
 
     /**
      * Returns placeholders for email templates
-     * 
+     *
      * @param  array  $entity
      * @return array
      */
@@ -71,7 +71,7 @@ abstract class AbstractEntity
         foreach ($this->getAttributes($this->entityType) as $attribute) {
             $menuItems[] = [
                 'text'  => $attribute['name'],
-                'value' => '{%' . $this->entityType . '.' . $attribute['id'] . '%}',
+                'value' => '{%'.$this->entityType.'.'.$attribute['id'].'%}',
             ];
         }
 
@@ -83,7 +83,7 @@ abstract class AbstractEntity
 
     /**
      * Replace placeholders with values
-     * 
+     *
      * @param  array  $entity
      * @param  array  $values
      * @return string
@@ -92,7 +92,7 @@ abstract class AbstractEntity
     {
         foreach ($this->getAttributes($this->entityType, []) as $attribute) {
             $value = '';
-            
+
             switch ($attribute['type']) {
                 case 'price':
                     $value = core()->formatBasePrice($entity->{$attribute['id']});
@@ -144,7 +144,7 @@ abstract class AbstractEntity
                     $optionsLabels = [];
 
                     foreach ($entity->{$attribute['id']} as $item) {
-                        $optionsLabels[] = $item['value'] . ' (' . $item['label'] . ')';
+                        $optionsLabels[] = $item['value'].' ('.$item['label'].')';
                     }
 
                     $value = implode(', ', $optionsLabels);
@@ -156,16 +156,16 @@ abstract class AbstractEntity
                         break;
                     }
 
-                    $value = $entity->{$attribute['id']}['address']. "<br>"
-                             . $entity->{$attribute['id']}['postcode'] . '  ' . $entity->{$attribute['id']}['city'] . "<br>"
-                             . core()->state_name($entity->{$attribute['id']}['state']) . "<br>"
-                             . core()->country_name($entity->{$attribute['id']}['country']) . "<br>";
+                    $value = $entity->{$attribute['id']}['address'].'<br>'
+                             .$entity->{$attribute['id']}['postcode'].'  '.$entity->{$attribute['id']}['city'].'<br>'
+                             .core()->state_name($entity->{$attribute['id']}['state']).'<br>'
+                             .core()->country_name($entity->{$attribute['id']}['country']).'<br>';
 
                     break;
-                
+
                 case 'date':
                     if ($entity->{$attribute['id']}) {
-                        $value = $entity->{$attribute['id']}->format("D M d, Y");
+                        $value = $entity->{$attribute['id']}->format('D M d, Y');
                     } else {
                         $value = 'N/A';
                     }
@@ -174,11 +174,11 @@ abstract class AbstractEntity
 
                 case 'datetime':
                     if ($entity->{$attribute['id']}) {
-                        $value = $entity->{$attribute['id']}->format("D M d, Y H:i A");
+                        $value = $entity->{$attribute['id']}->format('D M d, Y H:i A');
                     } else {
                         $value = 'N/A';
                     }
-                
+
                     break;
 
                 default:
@@ -188,8 +188,8 @@ abstract class AbstractEntity
             }
 
             $content = strtr($content, [
-                '{%' . $this->entityType . '.' . $attribute['id'] . '%}'   => $value,
-                '{% ' . $this->entityType . '.' . $attribute['id'] . ' %}' => $value,
+                '{%'.$this->entityType.'.'.$attribute['id'].'%}'   => $value,
+                '{% '.$this->entityType.'.'.$attribute['id'].' %}' => $value,
             ]);
         }
 

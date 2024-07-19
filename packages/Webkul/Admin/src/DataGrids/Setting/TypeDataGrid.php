@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Setting;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Illuminate\Database\Query\Builder;
 
 class TypeDataGrid extends DataGrid
 {
@@ -30,17 +30,17 @@ class TypeDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
+            'index'      => 'id',
+            'label'      => trans('admin::app.datagrid.id'),
+            'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
+            'index'      => 'name',
+            'label'      => trans('admin::app.datagrid.name'),
+            'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
         ]);

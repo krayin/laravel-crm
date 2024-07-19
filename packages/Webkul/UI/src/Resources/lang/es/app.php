@@ -52,7 +52,7 @@ return [
         'value-here'            => 'Valor aquí',
         'numeric-value-here'    => 'Valor Numérico aquí',
         'submit'                => 'Enviar',
-        "mandatory_mass_action" => "Por favor seleccione la acción a realizar.",
+        'mandatory_mass_action' => 'Por favor seleccione la acción a realizar.',
         'multiple_sort_keys'    => '¡Error Fatal! Multiples Claves de Orden encontradas, Por favor resuelva la URL manualmente',
         'multiple_search_keys'  => 'Multiples Claves de Búsqueda encontradas, Por favor resuelva la URL manualmente',
         'is-done'               => 'Ha Terminado',

@@ -15,14 +15,13 @@ trait ProvideDropdownOptions
      */
     public $booleanDropdownChoices = [
         'active_inactive',
-        'yes_no'
+        'yes_no',
     ];
 
     /**
      * Is boolean dropdown choice exists.
      *
      * @param  string  $choice
-     * @return bool
      */
     public function isBooleanDropdownChoiceExists($choice): bool
     {
@@ -33,7 +32,6 @@ trait ProvideDropdownOptions
      * Get boolean dropdown options.
      *
      * @param  string  $choice
-     * @return array
      */
     public function getBooleanDropdownOptions($choice = 'active_inactive'): array
     {
@@ -44,8 +42,6 @@ trait ProvideDropdownOptions
 
     /**
      * Get active/inactive dropdown options.
-     *
-     * @return array
      */
     public function getActiveInactiveDropdownOptions(): array
     {
@@ -72,8 +68,6 @@ trait ProvideDropdownOptions
 
     /**
      * Get yes/no dropdown options.
-     *
-     * @return array
      */
     public function getYesNoDropdownOptions(): array
     {
@@ -94,14 +88,12 @@ trait ProvideDropdownOptions
                 'label'    => __('admin::app.common.yes'),
                 'disabled' => false,
                 'selected' => false,
-            ]
+            ],
         ];
     }
 
     /**
      * Get user dropdown options.
-     *
-     * @return array
      */
     public function getUserDropdownOptions(): array
     {
@@ -123,14 +115,12 @@ trait ProvideDropdownOptions
                 'disabled' => true,
                 'selected' => true,
             ],
-            ...$options
+            ...$options,
         ];
     }
 
     /**
      * Get lead source options.
-     *
-     * @return array
      */
     public function getLeadSourcesOptions(): array
     {
@@ -152,14 +142,12 @@ trait ProvideDropdownOptions
                 'disabled' => true,
                 'selected' => true,
             ],
-            ...$options
+            ...$options,
         ];
     }
 
     /**
      * Get organization dropdown options.
-     *
-     * @return array
      */
     public function getOrganizationDropdownOptions(): array
     {
@@ -181,14 +169,12 @@ trait ProvideDropdownOptions
                 'disabled' => true,
                 'selected' => true,
             ],
-            ...$options
+            ...$options,
         ];
     }
 
     /**
      * Get role dropdown options.
-     *
-     * @return array
      */
     public function getRoleDropdownOptions(): array
     {
@@ -209,8 +195,6 @@ trait ProvideDropdownOptions
 
     /**
      * Get activity type dropdown options.
-     *
-     * @return array
      */
     public function getActivityTypeDropdownOptions(): array
     {
@@ -241,8 +225,6 @@ trait ProvideDropdownOptions
 
     /**
      * Get attribute type dropdown options.
-     *
-     * @return array
      */
     public function getAttributeTypeDropdownOptions(): array
     {
@@ -252,13 +234,13 @@ trait ProvideDropdownOptions
                 'value'    => '',
                 'disabled' => true,
                 'selected' => true,
-            ], 
+            ],
             [
                 'label'    => trans('admin::app.common.system_attribute'),
                 'value'    => '0',
                 'disabled' => false,
                 'selected' => false,
-            ], 
+            ],
             [
                 'label'    => trans('admin::app.common.custom_attribute'),
                 'value'    => '1',
@@ -270,8 +252,6 @@ trait ProvideDropdownOptions
 
     /**
      * Get organization dropdown options.
-     *
-     * @return array
      */
     public function getWarehouseDropdownOptions(): array
     {
@@ -293,7 +273,7 @@ trait ProvideDropdownOptions
                 'disabled' => true,
                 'selected' => true,
             ],
-            ...$options
+            ...$options,
         ];
     }
 }

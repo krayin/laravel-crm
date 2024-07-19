@@ -2,10 +2,10 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
-use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 use Webkul\Contact\Repositories\OrganizationRepository;
+use Webkul\DataGrid\DataGrid;
 
 class PersonDataGrid extends DataGrid
 {
@@ -61,11 +61,11 @@ class PersonDataGrid extends DataGrid
                 [$bgColorClass, $textColorClass] = $this->generateRandomColorClasses();
 
                 $nameParts = explode(' ', $row->person_name);
-                
+
                 $sortName = '';
-            
+
                 if (count($nameParts) >= 2) {
-                    $sortName = ($nameParts[0][0] . $nameParts[1][0]);
+                    $sortName = ($nameParts[0][0].$nameParts[1][0]);
                 } elseif (count($nameParts) === 1) {
                     $sortName = substr($nameParts[0], 0, 2);
                 }

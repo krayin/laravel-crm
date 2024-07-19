@@ -3,9 +3,9 @@
 namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\User\Models\UserProxy;
-use Webkul\Contact\Models\PersonProxy;
 use Webkul\Activity\Contracts\Participant as ParticipantContract;
+use Webkul\Contact\Models\PersonProxy;
+use Webkul\User\Models\UserProxy;
 
 class Participant extends Model implements ParticipantContract
 {
@@ -25,7 +25,7 @@ class Participant extends Model implements ParticipantContract
         'user_id',
         'person_id',
     ];
-    
+
     /**
      * Get the activity that owns the participant.
      */
@@ -33,20 +33,20 @@ class Participant extends Model implements ParticipantContract
     {
         return $this->belongsTo(ActivityProxy::modelClass());
     }
-    
-   /**
-    * Get the user that owns the participant.
-    */
-   public function user()
-   {
-       return $this->belongsTo(UserProxy::modelClass());
-   }
-    
-   /**
-    * Get the person that owns the participant.
-    */
-   public function person()
-   {
-       return $this->belongsTo(PersonProxy::modelClass());
-   }
+
+    /**
+     * Get the user that owns the participant.
+     */
+    public function user()
+    {
+        return $this->belongsTo(UserProxy::modelClass());
+    }
+
+    /**
+     * Get the person that owns the participant.
+     */
+    public function person()
+    {
+        return $this->belongsTo(PersonProxy::modelClass());
+    }
 }

@@ -1,10 +1,10 @@
 <?php
-use Webkul\Core\ViewRenderEventManager;
 
+use Webkul\Core\Acl;
 use Webkul\Core\Core;
 use Webkul\Core\Menu;
-use Webkul\Core\Acl;
 use Webkul\Core\SystemConfig;
+use Webkul\Core\ViewRenderEventManager;
 
 if (! function_exists('core')) {
     function core(): Core
@@ -52,4 +52,3 @@ if (! function_exists('view_render_event')) {
         return $viewEventManager->render();
     }
 }
-?>

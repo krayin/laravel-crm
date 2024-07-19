@@ -3,12 +3,10 @@
 use Diglactic\Breadcrumbs\Breadcrumbs;
 use Diglactic\Breadcrumbs\Generator as BreadcrumbTrail;
 
-
 // Dashboard
 Breadcrumbs::for('dashboard', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.layouts.dashboard'), route('admin.dashboard.index'));
 });
-
 
 // Dashboard > Leads
 Breadcrumbs::for('leads', function (BreadcrumbTrail $trail) {
@@ -28,7 +26,6 @@ Breadcrumbs::for('leads.view', function (BreadcrumbTrail $trail, $lead) {
     $trail->push($lead->title, route('admin.leads.view', $lead->id));
 });
 
-
 // Dashboard > Quotes
 Breadcrumbs::for('quotes', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -47,7 +44,6 @@ Breadcrumbs::for('quotes.edit', function (BreadcrumbTrail $trail, $quote) {
     $trail->push(trans('admin::app.quotes.edit-title'), route('admin.quotes.edit', $quote->id));
 });
 
-
 // Mail
 Breadcrumbs::for('mail', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -57,7 +53,7 @@ Breadcrumbs::for('mail', function (BreadcrumbTrail $trail) {
 // Mail > [Compose | Inbox | Outbox | Draft | Sent | Trash]
 Breadcrumbs::for('mail.route', function (BreadcrumbTrail $trail, $route) {
     $trail->parent('mail');
-    $trail->push(trans('admin::app.mail.' . $route), route('admin.mail.index', ['route' => $route]));
+    $trail->push(trans('admin::app.mail.'.$route), route('admin.mail.index', ['route' => $route]));
 });
 
 // Mail > [Inbox | Outbox | Draft | Sent | Trash] > Title
@@ -65,7 +61,6 @@ Breadcrumbs::for('mail.route.view', function (BreadcrumbTrail $trail, $route, $e
     $trail->parent('mail.route', $route);
     $trail->push($email->subject ?? '', route('admin.mail.view', ['route' => $route, 'id' => $email->id]));
 });
-
 
 // Dashboard > Activities
 Breadcrumbs::for('activities', function (BreadcrumbTrail $trail) {
@@ -78,7 +73,6 @@ Breadcrumbs::for('activities.edit', function (BreadcrumbTrail $trail, $activity)
     $trail->parent('activities');
     $trail->push(trans('admin::app.activities.edit-title'), route('admin.activities.edit', $activity->id));
 });
-
 
 // Dashboard > Contacts
 Breadcrumbs::for('contacts', function (BreadcrumbTrail $trail) {
@@ -104,7 +98,6 @@ Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $per
     $trail->push(trans('admin::app.contacts.persons.edit-title'), route('admin.contacts.persons.edit', $person->id));
 });
 
-
 // Dashboard > Contacts > Organizations
 Breadcrumbs::for('contacts.organizations', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts');
@@ -122,7 +115,6 @@ Breadcrumbs::for('contacts.organizations.edit', function (BreadcrumbTrail $trail
     $trail->parent('contacts.organizations');
     $trail->push(trans('admin::app.contacts.organizations.edit-title'), route('admin.contacts.organizations.edit', $organization->id));
 });
-
 
 // Products
 Breadcrumbs::for('products', function (BreadcrumbTrail $trail) {
@@ -148,7 +140,6 @@ Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
     $trail->push(trans('admin::app.products.edit-title'), route('admin.products.edit', $product->id));
 });
 
-
 // Settings
 Breadcrumbs::for('settings', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');
@@ -173,7 +164,6 @@ Breadcrumbs::for('settings.groups.edit', function (BreadcrumbTrail $trail, $role
     $trail->push(trans('admin::app.settings.groups.edit-title'), route('admin.settings.groups.edit', $role->id));
 });
 
-
 // Settings > Roles
 Breadcrumbs::for('settings.roles', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -191,7 +181,6 @@ Breadcrumbs::for('settings.roles.edit', function (BreadcrumbTrail $trail, $role)
     $trail->parent('settings.roles');
     $trail->push(trans('admin::app.settings.roles.edit-title'), route('admin.settings.roles.edit', $role->id));
 });
-
 
 // Settings > Users
 Breadcrumbs::for('settings.users', function (BreadcrumbTrail $trail) {
@@ -211,7 +200,6 @@ Breadcrumbs::for('settings.users.edit', function (BreadcrumbTrail $trail, $user)
     $trail->push(trans('admin::app.settings.users.edit-title'), route('admin.settings.users.edit', $user->id));
 });
 
-
 // Settings > Attributes
 Breadcrumbs::for('settings.attributes', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -229,7 +217,6 @@ Breadcrumbs::for('settings.attributes.edit', function (BreadcrumbTrail $trail, $
     $trail->parent('settings.attributes');
     $trail->push(trans('admin::app.settings.attributes.edit-title'), route('admin.settings.attributes.edit', $attribute->id));
 });
-
 
 // Settings > Pipelines
 Breadcrumbs::for('settings.pipelines', function (BreadcrumbTrail $trail) {
@@ -249,7 +236,6 @@ Breadcrumbs::for('settings.pipelines.edit', function (BreadcrumbTrail $trail, $p
     $trail->push(trans('admin::app.settings.pipelines.edit-title'), route('admin.settings.pipelines.edit', $pipeline->id));
 });
 
-
 // Settings > Sources
 Breadcrumbs::for('settings.sources', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -262,7 +248,6 @@ Breadcrumbs::for('settings.sources.edit', function (BreadcrumbTrail $trail, $sou
     $trail->push(trans('admin::app.settings.sources.edit-title'), route('admin.settings.sources.edit', $source->id));
 });
 
-
 // Settings > Types
 Breadcrumbs::for('settings.types', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -274,7 +259,6 @@ Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type)
     $trail->parent('settings.types');
     $trail->push(trans('admin::app.settings.types.edit-title'), route('admin.settings.types.edit', $type->id));
 });
-
 
 // Settings > Email Templates
 Breadcrumbs::for('settings.email_templates', function (BreadcrumbTrail $trail) {
@@ -294,7 +278,6 @@ Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $tra
     $trail->push(trans('admin::app.settings.email-templates.edit-title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
 });
 
-
 // Settings > Workflows
 Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -313,7 +296,6 @@ Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $w
     $trail->push(trans('admin::app.settings.workflows.edit-title'), route('admin.settings.workflows.edit', $workflow->id));
 });
 
-
 // Settings > Tags
 Breadcrumbs::for('settings.tags', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -325,7 +307,6 @@ Breadcrumbs::for('settings.tags.edit', function (BreadcrumbTrail $trail, $tag) {
     $trail->parent('settings.tags');
     $trail->push(trans('admin::app.settings.tags.edit-title'), route('admin.settings.tags.edit', $tag->id));
 });
-
 
 // Settings > Web Form
 Breadcrumbs::for('settings.web_forms', function (BreadcrumbTrail $trail) {
@@ -344,7 +325,6 @@ Breadcrumbs::for('settings.web_forms.edit', function (BreadcrumbTrail $trail, $w
     $trail->parent('settings.web_forms');
     $trail->push(trans('web_form::app.edit-title'), route('admin.settings.web_forms.edit', $webForm->id));
 });
-
 
 // Settings > Warehouse
 Breadcrumbs::for('settings.warehouses', function (BreadcrumbTrail $trail) {
@@ -376,7 +356,6 @@ Breadcrumbs::for('settings.warehouses.view.products', function (BreadcrumbTrail 
     $trail->push(trans('admin::app.settings.warehouses.products'), route('admin.settings.warehouses.products.index', $warehouse->id));
 });
 
-
 // Dashboard > Settings > Locations
 Breadcrumbs::for('settings.locations', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -394,7 +373,6 @@ Breadcrumbs::for('settings.locations.edit', function (BreadcrumbTrail $trail, $l
     $trail->parent('settings.locations');
     $trail->push(trans('admin::app.settings.locations.edit-title'), route('admin.settings.locations.edit', $location->id));
 });
-
 
 // Configuration
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {

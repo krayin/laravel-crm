@@ -51,7 +51,7 @@ return [
         'value-here'            => 'القيمة هنا',
         'numeric-value-here'    => 'القيمة الرقمية هنا',
         'submit'                => 'إرسال',
-        "mandatory_mass_action" => "الرجاء تحديد إجراء لأداء.",
+        'mandatory_mass_action' => 'الرجاء تحديد إجراء لأداء.',
         'multiple_sort_keys'    => 'خطأ فادح! تم العثور على مفاتيح فرز متعددة ، يرجى حل عنوان URL يدويًا',
         'multiple_search_keys'  => 'تم العثور على مفاتيح بحث متعددة ، يرجى حل عنوان URL يدويًا',
         'is-done'               => 'تم',

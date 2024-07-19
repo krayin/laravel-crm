@@ -2,12 +2,12 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
-use Illuminate\Support\Facades\Event;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\RoleRepository;
-use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
 
 class RoleController extends Controller
 {
@@ -16,9 +16,7 @@ class RoleController extends Controller
      *
      * @return void
      */
-    public function __construct(protected RoleRepository $roleRepository)
-    {
-    }
+    public function __construct(protected RoleRepository $roleRepository) {}
 
     /**
      * Display a listing of the resource.
@@ -138,7 +136,7 @@ class RoleController extends Controller
             $response['message'] = trans('admin::app.settings.roles.being-used');
 
             session()->flash('error', $response['message']);
-        } else if ($this->roleRepository->count() == 1) {
+        } elseif ($this->roleRepository->count() == 1) {
             $response['message'] = trans('admin::app.settings.roles.last-delete-error');
 
             session()->flash('error', $response['message']);

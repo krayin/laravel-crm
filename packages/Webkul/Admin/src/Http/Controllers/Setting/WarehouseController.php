@@ -4,9 +4,9 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Admin\DataGrids\Setting\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
 
 class WarehouseController extends Controller
@@ -79,7 +79,6 @@ class WarehouseController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -124,8 +123,7 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
-     * @param int  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function update(AttributeForm $request, $id)
@@ -161,7 +159,7 @@ class WarehouseController extends Controller
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.warehouses.warehouse')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.warehouses.warehouse')]),
             ], 400);

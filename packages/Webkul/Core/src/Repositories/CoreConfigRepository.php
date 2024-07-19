@@ -4,8 +4,8 @@ namespace Webkul\Core\Repositories;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Core\Eloquent\Repository;
 use Webkul\Core\Contracts\CoreConfig;
+use Webkul\Core\Eloquent\Repository;
 
 class CoreConfigRepository extends Repository
 {
@@ -19,7 +19,6 @@ class CoreConfigRepository extends Repository
 
     /**
      * Create core configuration.
-     *
      */
     public function create(array $data): void
     {

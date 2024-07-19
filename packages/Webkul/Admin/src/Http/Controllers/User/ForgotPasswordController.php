@@ -17,7 +17,7 @@ class ForgotPasswordController extends Controller
      * @return \Illuminate\View\View
      */
     public function create()
-    {        
+    {
         if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');
         } else {
@@ -45,7 +45,7 @@ class ForgotPasswordController extends Controller
                 'email' => 'required|email',
             ]);
 
-            $response = $this->broker()->sendResetLink(request(['email']), function($user, $token) {
+            $response = $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
                 $user->notify(new UserResetPassword($token));
             });
 
@@ -60,7 +60,7 @@ class ForgotPasswordController extends Controller
                 ->withErrors([
                     'email' => trans('admin::app.sessions.forgot-password.email-not-exist'),
                 ]);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
 
             return redirect()->back();

@@ -18,7 +18,7 @@ class CreateCountryStatesTable extends Migration
             $table->string('country_code');
             $table->string('code');
             $table->string('name');
-            
+
             $table->integer('country_id')->unsigned();
             $table->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });

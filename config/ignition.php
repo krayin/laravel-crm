@@ -17,15 +17,15 @@ use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingImportSolutionProv
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingLivewireComponentSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingMixManifestSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\MissingViteManifestSolutionProvider;
+use Spatie\LaravelIgnition\Solutions\SolutionProviders\OpenAiSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\RunningLaravelDuskInProductionProvider;
+use Spatie\LaravelIgnition\Solutions\SolutionProviders\SailNetworkSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\TableNotFoundSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\UndefinedViewVariableSolutionProvider;
-use Spatie\LaravelIgnition\Solutions\SolutionProviders\UnknownValidationSolutionProvider;
-use Spatie\LaravelIgnition\Solutions\SolutionProviders\ViewNotFoundSolutionProvider;
-use Spatie\LaravelIgnition\Solutions\SolutionProviders\OpenAiSolutionProvider;
-use Spatie\LaravelIgnition\Solutions\SolutionProviders\SailNetworkSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\UnknownMariadbCollationSolutionProvider;
 use Spatie\LaravelIgnition\Solutions\SolutionProviders\UnknownMysql8CollationSolutionProvider;
+use Spatie\LaravelIgnition\Solutions\SolutionProviders\UnknownValidationSolutionProvider;
+use Spatie\LaravelIgnition\Solutions\SolutionProviders\ViewNotFoundSolutionProvider;
 
 return [
 
@@ -91,8 +91,8 @@ return [
     | Solution Providers
     |--------------------------------------------------------------------------
     |
-    | List of solution providers that should be loaded. You may specify additional 
-    | providers as fully qualified class names. 
+    | List of solution providers that should be loaded. You may specify additional
+    | providers as fully qualified class names.
     |
     */
 
@@ -183,7 +183,7 @@ return [
     */
 
     'remote_sites_path' => env('IGNITION_REMOTE_SITES_PATH', base_path()),
-    'local_sites_path' => env('IGNITION_LOCAL_SITES_PATH', ''),
+    'local_sites_path'  => env('IGNITION_LOCAL_SITES_PATH', ''),
 
     /*
     |--------------------------------------------------------------------------

@@ -3,8 +3,8 @@
 namespace Webkul\Lead\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Product\Models\ProductProxy;
 use Webkul\Lead\Contracts\Product as ProductContract;
+use Webkul\Product\Models\ProductProxy;
 
 class Product extends Model implements ProductContract
 {

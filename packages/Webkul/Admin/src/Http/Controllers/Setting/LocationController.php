@@ -4,9 +4,8 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Webkul\Attribute\Http\Requests\AttributeForm;
-use Webkul\Admin\DataGrids\Setting\LocationDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\LocationRepository;
 
 class LocationController extends Controller
@@ -16,9 +15,7 @@ class LocationController extends Controller
      *
      * @return void
      */
-    public function __construct(protected LocationRepository $locationRepository)
-    {
-    }
+    public function __construct(protected LocationRepository $locationRepository) {}
 
     /**
      * Search location results
@@ -37,7 +34,6 @@ class LocationController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Webkul\Attribute\Http\Requests\AttributeForm $request
      * @return \Illuminate\Http\Response
      */
     public function store(AttributeForm $request)
@@ -73,7 +69,7 @@ class LocationController extends Controller
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.locations.location')]),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.locations.location')]),
             ], 400);

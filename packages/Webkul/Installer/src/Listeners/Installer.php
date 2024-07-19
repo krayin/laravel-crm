@@ -19,9 +19,7 @@ class Installer
      *
      * @return void
      */
-    public function __construct(protected UserRepository $userRepository)
-    {
-    }
+    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * After Krayin is successfully installed

@@ -272,5 +272,5 @@ return [
         'route'      => 'admin.configuration.index',
         'sort'       => 9,
         'icon-class' => 'icon-configuration',
-    ]
+    ],
 ];

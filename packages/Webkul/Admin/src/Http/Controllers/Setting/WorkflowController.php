@@ -13,9 +13,7 @@ class WorkflowController extends Controller
      *
      * @return void
      */
-    public function __construct(protected WorkflowRepository $workflowRepository)
-    {
-    }
+    public function __construct(protected WorkflowRepository $workflowRepository) {}
 
     /**
      * Display a listing of the workflow.
@@ -119,7 +117,7 @@ class WorkflowController extends Controller
             return response()->json([
                 'message' => trans('admin::app.settings.workflows.delete-success'),
             ], 200);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.settings.workflows.delete-failed'),
             ], 400);

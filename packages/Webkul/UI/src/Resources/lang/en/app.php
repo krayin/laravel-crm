@@ -52,7 +52,7 @@ return [
         'value-here'            => 'Value here',
         'numeric-value-here'    => 'Numeric Value here',
         'submit'                => 'Submit',
-        "mandatory_mass_action" => "Please select an action to perform.",
+        'mandatory_mass_action' => 'Please select an action to perform.',
         'multiple_sort_keys'    => 'Fatal Error! Multiple Sort keys Found, Please Resolve the URL Manually',
         'multiple_search_keys'  => 'Multiple Search keys Found, Please Resolve the URL Manually',
         'is-done'               => 'Is Done',

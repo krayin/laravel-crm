@@ -5,7 +5,6 @@ namespace Webkul\Core;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Config;
-use Webkul\Core\Models\CoreConfig;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\SystemConfig\Item;
 

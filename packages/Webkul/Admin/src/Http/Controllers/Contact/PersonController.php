@@ -4,15 +4,13 @@ namespace Webkul\Admin\Http\Controllers\Contact;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\View\View;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
-use Webkul\Admin\Http\Requests\MassDestroyRequest;
-
-use function Pest\Laravel\call;
 
 class PersonController extends Controller
 {
@@ -94,7 +92,7 @@ class PersonController extends Controller
     public function search(): JsonResponse
     {
         $results = $this->personRepository->findWhere([
-            ['name', 'like', '%' . urldecode(request()->input('query')) . '%']
+            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
         ]);
 
         return response()->json($results);
@@ -140,7 +138,7 @@ class PersonController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')])
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')]),
         ]);
     }
 

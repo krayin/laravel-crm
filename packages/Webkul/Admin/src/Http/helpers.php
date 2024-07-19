@@ -1,4 +1,5 @@
 <?php
+
 if (! function_exists('bouncer')) {
     function bouncer()
     {
@@ -10,4 +11,3 @@ function vite()
 {
     return app(\Webkul\Core\Vite::class);
 }
-?>

@@ -1,7 +1,5 @@
 <?php
+
 namespace Webkul\Email\Helpers;
 
-class Exception extends \RuntimeException
-{
-
-}
+class Exception extends \RuntimeException {}

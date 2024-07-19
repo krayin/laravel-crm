@@ -10,7 +10,7 @@ return [
         'key'   => 'settings.other_settings.web_forms.view',
         'name'  => 'admin::app.acl.view',
         'route' => 'admin.settings.web_forms.view',
-        'sort'  => 1
+        'sort'  => 1,
     ], [
         'key'   => 'settings.other_settings.web_forms.create',
         'name'  => 'admin::app.acl.create',
@@ -26,5 +26,5 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.web_forms.delete',
         'sort'  => 4,
-    ]
+    ],
 ];
