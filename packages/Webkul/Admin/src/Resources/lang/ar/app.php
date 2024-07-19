@@ -734,6 +734,7 @@
             'timezone'          => 'وحدة زمنية',
             'date-time-formats' => 'تنسيقات التاريخ والوقت',
             'save-message'      => 'تم تحديث التهيئة بنجاح!',
+            'delete'            => 'حذف',
             "emails"            => [
                 'email'                 => 'بريد الالكتروني',
                 'notification_label'    => 'إشعارات',

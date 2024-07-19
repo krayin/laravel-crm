@@ -49,7 +49,7 @@
                                     >
 
                                     <span
-                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl"
+                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500"
                                         :class="[
                                             applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor ' : (
                                                 applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-partial peer-checked:brandColor' : ''
@@ -121,7 +121,7 @@
                                             v-model="applied.massActions.indices"
                                         >
 
-                                        <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor">
+                                        <span class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor">
                                         </span>
                                     </label>
                                 </p>

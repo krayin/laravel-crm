@@ -4,6 +4,7 @@ use Webkul\Core\ViewRenderEventManager;
 use Webkul\Core\Core;
 use Webkul\Core\Menu;
 use Webkul\Core\Acl;
+use Webkul\Core\SystemConfig;
 
 if (! function_exists('core')) {
     function core(): Core
@@ -26,6 +27,16 @@ if (! function_exists('acl')) {
     function acl(): Acl
     {
         return app('acl');
+    }
+}
+
+if (! function_exists('system_config')) {
+    /**
+     * System Config helper.
+     */
+    function system_config(): SystemConfig
+    {
+        return app('system_config');
     }
 }
 

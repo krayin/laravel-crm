@@ -904,6 +904,7 @@
             'timezone'          => 'Timezone',
             'date-time-formats' => 'Date And Time Formats',
             'save-message'      => 'Configuration updated successfully!',
+            'delete'            => 'Delete',
             "emails"            => [
                 'email'                 => 'Email',
                 'notification_label'    => 'Notifications',

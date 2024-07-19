@@ -217,14 +217,14 @@
                                 }, [
                                     this.generateToggleIconComponent({
                                         class: [
-                                            hasChildren ? 'icon-sort-down' : '',
+                                            hasChildren ? 'icon-down-arrow' : '',
                                             'text-xl rounded-md cursor-pointer transition-all hover:bg-gray-100 dark:hover:bg-gray-950'
                                         ],
                                     }),
 
                                     this.generateFolderIconComponent({
                                         class: [
-                                            hasChildren ? 'icon-folder' : 'icon-attribute',
+                                            hasChildren ? 'icon-perosnal' : 'icon-note',
                                             'text-2xl cursor-pointer'
                                         ],
                                     }),

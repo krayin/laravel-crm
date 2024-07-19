@@ -734,6 +734,7 @@
             'timezone'          => 'منطقه زمانی',
             'date-time-formats' => 'فرمت‌های تاریخ و زمان',
             'save-message'      => 'پیکربندی با موفقیت بروزرسانی شد!',
+            'delete'            => 'حذف', 
             "emails"            => [
                 'email'                 => 'ایمیل',
                 'notification_label'    => 'اطلاعیه‌ها',

@@ -14,10 +14,8 @@ class AdminServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot(Router $router)
+    public function boot(Router $router): void
     {
         include __DIR__ . '/../Http/helpers.php';
 
@@ -36,10 +34,6 @@ class AdminServiceProvider extends ServiceProvider
         $router->aliasMiddleware('user', \Webkul\Admin\Http\Middleware\Bouncer::class);
 
         $router->aliasMiddleware('admin_locale', Locale::class);
-
-        // $this->publishes([
-        //     __DIR__ . '/../../publishable/assets' => public_path('vendor/webkul/admin/assets'),
-        // ], 'public');
 
         Relation::morphMap([
             'leads'         => 'Webkul\Lead\Models\Lead',
@@ -63,16 +57,12 @@ class AdminServiceProvider extends ServiceProvider
         $this->registerFacades();
 
         $this->registerConfig();
-
-        $this->registerCoreConfig();
     }
 
     /**
      * Register Bouncer as a singleton.
-     *
-     * @return void
      */
-    protected function registerFacades()
+    protected function registerFacades(): void
     {
         $loader = AliasLoader::getInstance();
 
@@ -85,10 +75,8 @@ class AdminServiceProvider extends ServiceProvider
 
     /**
      * Register package config.
-     *
-     * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/acl.php', 'acl');
 
@@ -101,25 +89,5 @@ class AdminServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_lookups.php', 'attribute_lookups');
 
         $this->mergeConfigFrom(dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types');
-    }
-
-    /**
-     * Register core config.
-     *
-     * @return void
-     */
-    protected function registerCoreConfig()
-    {
-        $this->app->singleton('core_config', function () {
-            $tree = Tree::create();
-
-            foreach (config('core_config') as $item) {
-                $tree->add($item);
-            }
-
-            $tree->items = core()->sortItems($tree->items);
-
-            return $tree;
-        });
     }
 }

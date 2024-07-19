@@ -24,10 +24,8 @@ class Core
 
     /**
      * Retrieve all timezones.
-     *
-     * @return array
      */
-    public function timezones()
+    public function timezones(): array
     {
         $timezones = [];
 
@@ -40,12 +38,19 @@ class Core
 
     /**
      * Retrieve all locales.
-     *
-     * @return array
      */
-    public function locales()
+    public function locales(): array
     {
-        return config('app.available_locales');
+        $options = [];
+
+        foreach (config('app.available_locales') as $key => $title) {
+            $options[] = [
+                'title' => $title,
+                'value' => $key,
+            ];
+        }
+
+        return $options;
     }
 
     /**
@@ -60,12 +65,8 @@ class Core
 
     /**
      * Returns country name by code.
-     *
-     * @param string $code
-     *
-     * @return string
      */
-    public function country_name($code)
+    public function country_name(string $code): string
     {
         $country = $this->countryRepository->findOneByField('code', $code);
 
@@ -74,12 +75,8 @@ class Core
 
     /**
      * Returns state name by code.
-     *
-     * @param string $code
-     *
-     * @return string
      */
-    public function state_name($code)
+    public function state_name(string $code): string
     {
         $state = $this->countryStateRepository->findOneByField('code', $code);
 
@@ -89,11 +86,9 @@ class Core
     /**
      * Retrieve all country states.
      *
-     * @param string $countryCode
-     *
      * @return \Illuminate\Support\Collection
      */
-    public function states($countryCode)
+    public function states(string $countryCode)
     {
         return $this->countryStateRepository->findByField('country_code', $countryCode);
     }
@@ -133,124 +128,6 @@ class Core
         } else {
             return false;
         }
-    }
-
-    /**
-     * Method to sort through the acl items and put them in order.
-     *
-     * @param array $items
-     *
-     * @return array
-     */
-    public function sortItems($items)
-    {
-        foreach ($items as &$item) {
-            if (count($item['children'])) {
-                $item['children'] = $this->sortItems($item['children']);
-            }
-        }
-
-        usort($items, function ($a, $b) {
-            if ($a['sort'] == $b['sort']) {
-                return 0;
-            }
-
-            return ($a['sort'] < $b['sort']) ? -1 : 1;
-        });
-
-        return $this->convertToAssociativeArray($items);
-    }
-    
-    /**
-     * @param array            $items
-     * @param string           $key
-     * @param string|int|float $value
-     *
-     * @return array
-     */
-    public function array_set(&$array, $key, $value)
-    {
-        if (is_null($key)) {
-            return $array = $value;
-        }
-
-        $keys = explode('.', $key);
-        $count = count($keys);
-
-        while (count($keys) > 1) {
-            $key = array_shift($keys);
-
-            if (! isset($array[$key]) || ! is_array($array[$key])) {
-                $array[$key] = [];
-            }
-
-            $array = &$array[$key];
-        }
-
-        $finalKey = array_shift($keys);
-
-        if (isset($array[$finalKey])) {
-            $array[$finalKey] = $this->arrayMerge($array[$finalKey], $value);
-        } else {
-            $array[$finalKey] = $value;
-        }
-
-        return $array;
-    }
-
-    /**
-     * @param array $items
-     *
-     * @return array
-     */
-    public function convertToAssociativeArray($items)
-    {
-        foreach ($items as $key1 => $level1) {
-            unset($items[$key1]);
-            $items[$level1['key']] = $level1;
-
-            if (count($level1['children'])) {
-                foreach ($level1['children'] as $key2 => $level2) {
-                    $temp2 = explode('.', $level2['key']);
-                    $finalKey2 = end($temp2);
-                    unset($items[$level1['key']]['children'][$key2]);
-                    $items[$level1['key']]['children'][$finalKey2] = $level2;
-
-                    if (count($level2['children'])) {
-                        foreach ($level2['children'] as $key3 => $level3) {
-                            $temp3 = explode('.', $level3['key']);
-                            $finalKey3 = end($temp3);
-                            unset($items[$level1['key']]['children'][$finalKey2]['children'][$key3]);
-                            $items[$level1['key']]['children'][$finalKey2]['children'][$finalKey3] = $level3;
-                        }
-                    }
-
-                }
-            }
-        }
-
-        return $items;
-    }
-
-    /**
-     * @param array $array1
-     * @param array $array2
-     *
-     * @return array
-     */
-    protected function arrayMerge(array &$array1, array &$array2)
-    {
-        $merged = $array1;
-
-        foreach ($array2 as $key => &$value) {
-            if (is_array($value) && isset($merged[$key]) && is_array($merged[$key])) {
-                $merged[$key] = $this->arrayMerge($merged[$key], $value);
-            } else {
-                $merged[$key] = $value;
-            }
-        }
-
-        return $merged;
     }
 
     /**
@@ -308,58 +185,24 @@ class Core
             $price = 0;
         }
 
-        $formater = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
+        $formatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
-        return $formater->formatCurrency($price, config('app.currency'));
+        return $formatter->formatCurrency($price, config('app.currency'));
     }
 
     /**
-     * @param string $fieldName
-     *
-     * @return array
+     * Get the config field.
      */
-    public function getConfigField($fieldName)
+    public function getConfigField(string $fieldName): array|null
     {
-        foreach (config('core_config') as $coreData) {
-            if (isset($coreData['fields'])) {
-                foreach ($coreData['fields'] as $field) {
-                    $name = $coreData['key'] . '.' . $field['name'];
-
-                    if ($name == $fieldName) {
-                        return $field;
-                    }
-                }
-            }
-        }
+        return system_config()->getConfigField($fieldName);
     }
 
     /**
-     * Retrieve information for configuration
-     *
-     * @param string          $field
-     * @param int|string|null $channelId
-     * @param string|null     $locale
-     *
-     * @return mixed
+     * Retrieve information for configuration.
      */
-    public function getConfigData($field)
+    public function getConfigData(string $field): mixed
     {
-        $fields = $this->getConfigField($field);
-
-        $coreConfigValue = $this->coreConfigRepository->findOneWhere([
-            'code' => $field,
-        ]);
-
-        if (! $coreConfigValue) {
-            $fields = explode(".", $field);
-
-            array_shift($fields);
-
-            $field = implode(".", $fields);
-
-            return Config::get($field);
-        }
-
-        return $coreConfigValue->value;
+        return system_config()->getConfigData($field);
     }
 }

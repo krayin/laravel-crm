@@ -470,6 +470,8 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 
                 Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+
+                Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
             });
         });
     });
