@@ -2,7 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Setting\WorkflowDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Workflow\Repositories\WorkflowRepository;
 
@@ -17,13 +21,11 @@ class WorkflowController extends Controller
 
     /**
      * Display a listing of the workflow.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\WorkflowDataGrid::class)->toJson();
+            return datagrid(WorkflowDataGrid::class)->process();
         }
 
         return view('admin::settings.workflows.index');
@@ -31,20 +33,16 @@ class WorkflowController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::settings.workflows.create');
     }
 
     /**
      * Store a newly created workflow in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -63,11 +61,8 @@ class WorkflowController extends Controller
 
     /**
      * Show the form for editing the specified workflow.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $workflow = $this->workflowRepository->findOrFail($id);
 
@@ -76,11 +71,8 @@ class WorkflowController extends Controller
 
     /**
      * Update the specified workflow in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -99,11 +91,8 @@ class WorkflowController extends Controller
 
     /**
      * Remove the specified workflow from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $workflow = $this->workflowRepository->findOrFail($id);
 
