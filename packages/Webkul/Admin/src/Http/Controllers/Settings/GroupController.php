@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Setting\GroupDataGrid;
+use Webkul\Admin\DataGrids\Settings\GroupDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\GroupRepository;
 

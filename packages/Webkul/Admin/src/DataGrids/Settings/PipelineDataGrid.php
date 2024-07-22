@@ -1,12 +1,15 @@
 <?php
 
-namespace Webkul\Admin\DataGrids\Setting;
+namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\UI\DataGrid\DataGrid;
 
-class EmailTemplateDataGrid extends DataGrid
+class PipelineDataGrid extends DataGrid
 {
+    use ProvideDropdownOptions;
+
     /**
      * Prepare query builder.
      *
@@ -14,14 +17,15 @@ class EmailTemplateDataGrid extends DataGrid
      */
     public function prepareQueryBuilder()
     {
-        $queryBuilder = DB::table('email_templates')
+        $queryBuilder = DB::table('lead_pipelines')
             ->addSelect(
-                'email_templates.id',
-                'email_templates.name',
-                'email_templates.subject',
+                'lead_pipelines.id',
+                'lead_pipelines.name',
+                'lead_pipelines.rotten_days',
+                'lead_pipelines.is_default',
             );
 
-        $this->addFilter('id', 'email_templates.id');
+        $this->addFilter('id', 'lead_pipelines.id');
 
         $this->setQueryBuilder($queryBuilder);
     }
@@ -48,10 +52,23 @@ class EmailTemplateDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'subject',
-            'label'    => trans('admin::app.datagrid.subject'),
+            'index'    => 'rotten_days',
+            'label'    => trans('admin::app.datagrid.rotten-days'),
             'type'     => 'string',
             'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'            => 'is_default',
+            'label'            => trans('admin::app.datagrid.is-default'),
+            'type'             => 'dropdown',
+            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
+            'sortable'         => false,
+            'closure'          => function ($row) {
+                return (bool) $row->is_default
+                    ? __('admin::app.common.yes')
+                    : __('admin::app.common.no');
+            },
         ]);
     }
 
@@ -65,15 +82,15 @@ class EmailTemplateDataGrid extends DataGrid
         $this->addAction([
             'title'  => trans('ui::app.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.email_templates.edit',
+            'route'  => 'admin.settings.pipelines.edit',
             'icon'   => 'pencil-icon',
         ]);
 
         $this->addAction([
             'title'        => trans('ui::app.datagrid.delete'),
             'method'       => 'DELETE',
-            'route'        => 'admin.settings.email_templates.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'type']),
+            'route'        => 'admin.settings.pipelines.delete',
+            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'pipeline']),
             'icon'         => 'trash-icon',
         ]);
     }

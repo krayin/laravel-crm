@@ -31,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\UserDataGrid::class)->toJson();
+            return app(\Webkul\Admin\DataGrids\Settings\UserDataGrid::class)->toJson();
         }
 
         return view('admin::settings.users.index');

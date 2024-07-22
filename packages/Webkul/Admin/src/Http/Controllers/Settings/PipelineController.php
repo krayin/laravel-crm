@@ -24,7 +24,7 @@ class PipelineController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\PipelineDataGrid::class)->toJson();
+            return app(\Webkul\Admin\DataGrids\Settings\PipelineDataGrid::class)->toJson();
         }
 
         return view('admin::settings.pipelines.index');

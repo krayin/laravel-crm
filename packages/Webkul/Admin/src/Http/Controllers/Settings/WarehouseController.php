@@ -4,7 +4,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
-use Webkul\Admin\DataGrids\Setting\WarehouseDataGrid;
+use Webkul\Admin\DataGrids\Settings\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\WarehouseRepository;

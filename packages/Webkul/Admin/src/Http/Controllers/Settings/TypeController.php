@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Setting\TypeDataGrid;
+use Webkul\Admin\DataGrids\Settings\TypeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Lead\Repositories\TypeRepository;
 

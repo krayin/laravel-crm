@@ -5,7 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
+use Webkul\Admin\DataGrids\Settings\RoleDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\RoleRepository;
 

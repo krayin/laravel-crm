@@ -24,7 +24,7 @@ class SourceController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\SourceDataGrid::class)->toJson();
+            return app(\Webkul\Admin\DataGrids\Settings\SourceDataGrid::class)->toJson();
         }
 
         return view('admin::settings.sources.index');
