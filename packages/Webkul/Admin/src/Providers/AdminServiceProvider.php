@@ -8,6 +8,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Admin\Http\Middleware\Locale;
+use Illuminate\Support\Facades\Route;
 
 class AdminServiceProvider extends ServiceProvider
 {
@@ -17,6 +18,8 @@ class AdminServiceProvider extends ServiceProvider
     public function boot(Router $router): void
     {
         include __DIR__.'/../Http/helpers.php';
+
+        Route::middleware('web')->group(__DIR__.'/../Routes/web.php');
 
         $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
 
