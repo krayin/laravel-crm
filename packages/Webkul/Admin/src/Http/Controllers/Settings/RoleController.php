@@ -2,13 +2,12 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Webkul\User\Repositories\RoleRepository;
-use Webkul\User\Repositories\UserRepository;
-use Webkul\Admin\Http\Controllers\Controller;
+use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\User\Repositories\RoleRepository;
 
 class RoleController extends Controller
 {
@@ -17,11 +16,8 @@ class RoleController extends Controller
      *
      * @return void
      */
-    public function __construct(
-        protected RoleRepository $roleRepository,
-        protected UserRepository $userRepository
-    ) {}
-    
+    public function __construct(protected RoleRepository $roleRepository) {}
+
     /**
      * Display a listing of the resource.
      */
