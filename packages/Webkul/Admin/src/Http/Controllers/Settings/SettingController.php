@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Webkul\Admin\Http\Controllers\Controller;
 

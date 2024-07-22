@@ -7,6 +7,7 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    <!-- Bredcrumbs -->
                     <x-admin::breadcrumbs name="settings.groups" />
                 </div>
     
@@ -40,6 +41,7 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        <!-- Bredcrumbs -->
                         <x-admin::breadcrumbs name="settings.groups" />
                     </div>
         
@@ -51,7 +53,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.groups.index.create-button.before') !!}
+                        {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
         
                         <x-admin::button
                             button-type="button"
@@ -60,13 +62,14 @@
                             @click="selectedGroup=false; $refs.groupUpdateAndCreateModal.toggle()"
                         />
         
-                        {!! view_render_event('krayin.admin.settings.groups.index.create-button.after') !!}
+                        {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
                     </div>
                 </div>
             </div>
         
             {!! view_render_event('krayin.admin.settings.groups.index.datagrid.before') !!}
         
+            <!-- DataGrid -->
             <x-admin::datagrid
                 src="{{ route('admin.settings.groups.index') }}"
                 ref="datagrid"
@@ -95,7 +98,7 @@
                             <!-- Group Name -->
                             <p>@{{ record.name }}</p>
         
-                            <!-- Group Code -->
+                            <!-- Group Description -->
                             <p>@{{ record.description }}</p>
         
                             <!-- Actions -->
@@ -127,7 +130,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
-                    {!! view_render_event('krayin.admin.settings.groups.create_form_controls.before') !!}
+                    {!! view_render_event('krayin.admin.settings.groups.index.create_form_controls.before') !!}
 
                     <x-admin::modal ref="groupUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -143,13 +146,14 @@
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.groups.create.before') !!}
+                            {!! view_render_event('krayin.admin.settings.groups.index.content.before') !!}
 
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="id"
                             />
 
+                            <!-- Name -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.groups.index.create.name')
@@ -167,6 +171,7 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
+                            <!-- Description -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.groups.index.create.description')
@@ -184,11 +189,12 @@
                                 <x-admin::form.control-group.error control-name="description" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.groups.create.after') !!}
+                            {!! view_render_event('krayin.admin.settings.groups.index.content.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
                                 class="primary-button justify-center"
@@ -199,7 +205,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.groups.create_form_controls.after') !!}
+                    {!! view_render_event('krayin.admin.settings.groups.index.create_form_controls.after') !!}
                 </form>
             </x-admin::form>
 
@@ -247,6 +253,8 @@
                             this.isProcessing = false;
 
                             this.$refs.groupUpdateAndCreateModal.toggle();
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
                             this.$refs.datagrid.get();
 

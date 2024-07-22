@@ -137,8 +137,13 @@ return [
     'settings' => [
         'groups' => [
             'index' => [
-                'create-btn' => 'Create Group',
-                'title'      => 'Groups',
+                'create-btn'        => 'Create Group',
+                'title'             => 'Groups',
+                'create-success'    => 'Group created successfully.',
+                'update-success'    => 'Group updated successfully.',
+                'destroy-success'   => 'Group deleted successfully.',
+                'delete-failed'     => 'Group can not be deleted.',
+
                 'datagrid'   => [
                     'delete'      => 'Delete',
                     'description' => 'Description',

@@ -1,11 +1,14 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\View\View;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\GroupRepository;
+use Webkul\Admin\DataGrids\Setting\GroupDataGrid;
 
 class GroupController extends Controller
 {
@@ -18,32 +21,20 @@ class GroupController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\GroupDataGrid::class)->toJson();
+            return datagrid(GroupDataGrid::class)->process();
         }
 
         return view('admin::settings.groups.index');
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        return view('admin::settings.groups.create');
-    }
-
-    /**
      * Store a newly created resource in storage.
      */
-    public function store(): JsonResource
+    public function store(): JsonResponse
     {
         $this->validate(request(), [
             'name' => 'required|unique:groups,name',
@@ -51,12 +42,16 @@ class GroupController extends Controller
 
         Event::dispatch('settings.group.create.before');
 
-        $group = $this->groupRepository->create(request()->all());
+        $group = $this->groupRepository->create(request()->only([
+            'name',
+            'description',
+        ]));
 
         Event::dispatch('settings.group.create.after', $group);
 
-        return new JsonResource([
-            'data' => $group,
+        return new JsonResponse([
+            'data'    => $group,
+            'message' => trans('admin::app.settings.groups.index.create-success'),
         ]);
     }
 
@@ -74,11 +69,8 @@ class GroupController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
             'name' => 'required|unique:groups,name,'.$id,
@@ -86,43 +78,42 @@ class GroupController extends Controller
 
         Event::dispatch('settings.group.update.before', $id);
 
-        $group = $this->groupRepository->update(request()->all(), $id);
+        $group = $this->groupRepository->update(request()->only([
+            'name',
+            'description',
+        ]), $id);
 
         Event::dispatch('settings.group.update.after', $group);
 
-        return new JsonResource([
-            'data' => $group,
+        return new JsonResponse([
+            'data'    => $group,
+            'message' => trans('admin::app.settings.groups.index.update-success'),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $group = $this->groupRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.group.delete.before', $id);
 
-            $this->groupRepository->delete($id);
+            $group->delete($id);
 
             Event::dispatch('settings.group.delete.after', $id);
 
-            return response()->json([
-                'message' => trans('admin::app.settings.groups.destroy-success'),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.groups.index.destroy-success'),
             ], 200);
         } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.settings.groups.delete-failed'),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.groups.index.delete-failed'),
             ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.groups.delete-failed'),
-        ], 400);
     }
 }

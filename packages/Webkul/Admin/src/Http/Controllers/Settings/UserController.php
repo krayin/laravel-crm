@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
