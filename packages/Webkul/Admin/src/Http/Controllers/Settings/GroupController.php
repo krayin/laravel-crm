@@ -3,12 +3,12 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
-use Illuminate\View\View;
 use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Setting\GroupDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\GroupRepository;
-use Webkul\Admin\DataGrids\Setting\GroupDataGrid;
 
 class GroupController extends Controller
 {

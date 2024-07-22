@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\RoleController;
+use Webkul\Admin\Http\Controllers\Settings\TypeController;
 
 /**
  * Settings routes.
@@ -39,6 +40,23 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.types.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.types.delete');
+        });
+
+        /**
+         * Roles routes.
+         */
+        Route::controller(RoleController::class)->prefix('roles')->group(function () {
+            Route::get('', 'index')->name('admin.settings.roles.index');
+
+            Route::get('create', 'create')->name('admin.settings.roles.create');
+
+            Route::post('create', 'store')->name('admin.settings.roles.store');
+
+            Route::get('edit/{id}', 'edit')->name('admin.settings.roles.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.roles.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.roles.delete');
         });
     });
 });

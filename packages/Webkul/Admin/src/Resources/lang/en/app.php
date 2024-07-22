@@ -119,6 +119,7 @@ return [
         'index' => [
             'title'      => 'Products',
             'create-btn' => 'Create Product',
+
             'datagrid'   => [
                 'allocated' => 'Allocated',
                 'delete'    => 'Delete',
@@ -167,9 +168,18 @@ return [
 
         'roles' => [
             'index' => [
-                'create-btn' => 'Create Roles',
-                'title'      => 'Roles',
-                'settings'   => 'Settings',
+                'being-used'                => 'Role can not be deleted, as this is being used in admin user.',
+                'create-btn'                => 'Create Roles',
+                'create-success'            => 'Role created successfully.',
+                'current-role-delete-error' => 'Can not delete role assigned to the current user.',
+                'delete-failed'             => 'Role can not be deleted.',
+                'delete-success'            => 'Role deleted successfully.',
+                'last-delete-error'         => 'At least one role is required.',
+                'settings'                  => 'Settings',
+                'title'                     => 'Roles',
+                'update-success'            => 'Role updated successfully.',
+                'user-define-error'         => 'Can not delete system role.',
+
                 'datagrid'   => [
                     'all'             => 'All',
                     'custom'          => 'Custom',
