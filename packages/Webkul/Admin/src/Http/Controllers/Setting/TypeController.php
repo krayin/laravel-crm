@@ -47,7 +47,7 @@ class TypeController extends Controller
 
         return new JsonResponse([
             'data'    => $type,
-            'message' => trans('Lead Type Created successfully'),
+            'message' => trans('admin::app.settings.types.index.create-success'),
         ]);
     }
 
@@ -74,13 +74,13 @@ class TypeController extends Controller
 
         Event::dispatch('settings.type.update.before', $id);
 
-        $type = $this->typeRepository->update(request()->only(['name'] ), $id);
+        $type = $this->typeRepository->update(request()->only(['name']), $id);
 
         Event::dispatch('settings.type.update.after', $type);
 
         return new JsonResponse([
             'data'    => $type,
-            'message' => trans('Lead Type updated successfully'),
+            'message' => trans('admin::app.settings.types.index.update-success'),
         ]);
     }
 
@@ -99,11 +99,11 @@ class TypeController extends Controller
             Event::dispatch('settings.type.delete.after', $id);
 
             return new JsonResponse([
-                'message' => trans('admin::app.settings.types.delete-success'),
+                'message' => trans('admin::app.settings.types.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return new JsonResponse([
-                'message' => trans('admin::app.settings.types.delete-failed'),
+                'message' => trans('admin::app.settings.types.index.delete-failed'),
             ], 400);
         }
     }

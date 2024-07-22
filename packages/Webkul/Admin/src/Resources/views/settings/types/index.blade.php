@@ -1,35 +1,29 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('Types')
+        @lang('admin::app.settings.types.index.title')
     </x-slot>
 
     <v-types-settings>
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    <a 
-                        href="{{ route('admin.settings.types.index') }}" 
-                        class="flex items-center text-xs text-gray-600 dark:text-gray-300"
-                    >
-                        <i class="icon-left-arrow text-2xl"></i>
-                        
-                        @lang('admin::app.settings.roles.index.settings')
-                    </a>
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.types" />
                 </div>
     
-                <div class="px-4 text-xl font-bold dark:text-gray-300">
-                    @lang('Types')
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.types.index.title')
                 </div>
             </div>
     
             <div class="flex items-center gap-x-2.5">
-                <!-- Create button for Types -->
+                <!-- Create button for Leads Type -->
                 <div class="flex items-center gap-x-2.5">
                     <a
                         href="{{ route('admin.settings.groups.create') }}"
                         class="primary-button"
                     >
-                        @lang('Create Types')
+                        @lang('admin::app.settings.types.index.create-btn')
                     </a>
                 </div>
             </div>
@@ -47,40 +41,36 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        <a 
-                            href="{{ route('admin.products.index') }}" 
-                            class="flex items-center text-xs text-gray-600 dark:text-gray-300"
-                        >
-                            <i class="icon-left-arrow text-2xl"></i>
-                            
-                            @lang('admin::app.settings.roles.index.settings')
-                        </a>
+                        <!-- Breadcrumbs -->
+                        <x-admin::breadcrumbs name="settings.types" />
                     </div>
         
-                    <div class="px-4 text-xl font-bold dark:text-gray-300">
-                        @lang('Types')
+                    <div class="text-xl font-bold dark:text-gray-300">
+                        @lang('admin::app.settings.types.index.title')
                     </div>
                 </div>
         
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for person -->
+                    <!-- Create button for Leads Type -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.groups.index.create-button.before') !!}
+                        {!! view_render_event('krayin.admin.settings.types.index.create-button.before') !!}
         
+                        <!-- Create button for Leads Type -->
                         <x-admin::button
                             button-type="button"
                             class="primary-button justify-center"
-                            :title="trans('Create Types')"
+                            :title="trans('admin::app.settings.types.index.create-btn')"
                             @click="selectedType=false; $refs.typeUpdateAndCreateModal.toggle()"
                         />
         
-                        {!! view_render_event('krayin.admin.settings.groups.index.create-button.after') !!}
+                        {!! view_render_event('krayin.admin.settings.types.index.create-button.after') !!}
                     </div>
                 </div>
             </div>
+
+            {!! view_render_event('krayin.admin.settings.types.index.datagrid.before') !!}
         
-            {!! view_render_event('krayin.admin.settings.groups.index.datagrid.before') !!}
-        
+            <!-- Datagrid -->
             <x-admin::datagrid
                 src="{{ route('admin.settings.types.index') }}"
                 ref="datagrid"
@@ -132,6 +122,8 @@
                 </template>
             </x-admin::datagrid>
 
+            {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
+            
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
@@ -146,15 +138,15 @@
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @{{ 
                                     selectedType
-                                    ? "@lang('Edit Type')" 
-                                    : "@lang('Create Type')"
+                                    ? "@lang('admin::app.settings.types.index.edit.title')" 
+                                    : "@lang('admin::app.settings.types.index.create.title')"
                                 }}
                             </p>
                         </x-slot>
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.groups.create.before') !!}
+                            {!! view_render_event('krayin.admin.settings.types.content.before') !!}
 
                             <x-admin::form.control-group.control
                                 type="hidden"
@@ -163,7 +155,7 @@
 
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.settings.groups.index.create.name')
+                                    @lang('admin::app.settings.types.index.create.name')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -171,14 +163,14 @@
                                     id="name"
                                     name="name"
                                     rules="required"
-                                    :label="trans('admin::app.settings.groups.index.create.name')"
-                                    :placeholder="trans('admin::app.settings.groups.index.create.name')"
+                                    :label="trans('admin::app.settings.types.index.create.name')"
+                                    :placeholder="trans('admin::app.settings.types.index.create.name')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.groups.create.after') !!}
+                            {!! view_render_event('krayin.admin.settings.types.content.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
@@ -186,7 +178,7 @@
                             <x-admin::button
                                 button-type="submit"
                                 class="primary-button justify-center"
-                                :title="trans('Save')"
+                                :title="trans('admin::app.settings.types.index.create.save-btn')"
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
@@ -196,8 +188,6 @@
                     {!! view_render_event('krayin.admin.settings.groups.create_form_controls.after') !!}
                 </form>
             </x-admin::form>
-
-            {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
         </script>
 
         <script type="module">

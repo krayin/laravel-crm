@@ -203,6 +203,35 @@ return [
                 'title'          => 'Edit Role',
             ],
         ],
+
+        'types' => [
+            'index' => [
+                'create-btn'     => 'Create Type',
+                'title'          => 'Types',
+                'create-success' => 'Type created successfully.',
+                'update-success' => 'Type updated successfully.',
+                'delete-success' => 'Type deleted successfully.',
+                'delete-failed'  => 'Type can not be deleted.',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'description' => 'Description',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'name'        => 'Name',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Type',
+                    'title'    => 'Create Type',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Type',
+                ],
+            ],
+        ],
     ],
 
     // ----------------------------------------------------------------Old version locale ----------------------------------
