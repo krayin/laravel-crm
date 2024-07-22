@@ -146,14 +146,89 @@ return [
                     'id'          => 'ID',
                     'name'        => 'Name',
                 ],
+
                 'edit' => [
                     'title' => 'Edit Group',
                 ],
+
                 'create' => [
                     'name'        => 'Name',
                     'title'       => 'Create Group',
                     'description' => 'Description',
                     'save-btn'    => 'Save Group',
+                ],
+            ],
+        ],
+
+        'roles' => [
+            'index' => [
+                'create-btn' => 'Create Roles',
+                'title'      => 'Roles',
+                'settings'   => 'Settings',
+                'datagrid'   => [
+                    'all'             => 'All',
+                    'custom'          => 'Custom',
+                    'delete'          => 'Delete',
+                    'description'     => 'Description',
+                    'edit'            => 'Edit',
+                    'id'              => 'ID',
+                    'name'            => 'Name',
+                    'permission-type' => 'Permission Type',
+                ],
+            ],
+
+            'create' => [
+                'access-control' => 'Access Control',
+                'all'            => 'All',
+                'back-btn'       => 'Back',
+                'custom'         => 'Custom',
+                'description'    => 'Description',
+                'general'        => 'General',
+                'name'           => 'Name',
+                'permissions'    => 'Permissions',
+                'save-btn'       => 'Save Role',
+                'title'          => 'Create Role',
+            ],
+
+            'edit' => [
+                'access-control' => 'Access Control',
+                'all'            => 'All',
+                'back-btn'       => 'Back',
+                'custom'         => 'Custom',
+                'description'    => 'Description',
+                'general'        => 'General',
+                'name'           => 'Name',
+                'permissions'    => 'Permissions',
+                'save-btn'       => 'Save Role',
+                'title'          => 'Edit Role',
+            ],
+        ],
+
+        'types' => [
+            'index' => [
+                'create-btn'     => 'Create Type',
+                'title'          => 'Types',
+                'create-success' => 'Type created successfully.',
+                'update-success' => 'Type updated successfully.',
+                'delete-success' => 'Type deleted successfully.',
+                'delete-failed'  => 'Type can not be deleted.',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'description' => 'Description',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'name'        => 'Name',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Type',
+                    'title'    => 'Create Type',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Type',
                 ],
             ],
         ],

@@ -352,18 +352,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
                 });
 
-                // Lead Types Routes
-                Route::prefix('types')->group(function () {
-                    Route::get('', 'TypeController@index')->name('admin.settings.types.index');
-
-                    Route::post('create', 'TypeController@store')->name('admin.settings.types.store');
-
-                    Route::get('edit/{id?}', 'TypeController@edit')->name('admin.settings.types.edit');
-
-                    Route::put('edit/{id}', 'TypeController@update')->name('admin.settings.types.update');
-
-                    Route::delete('{id}', 'TypeController@destroy')->name('admin.settings.types.delete');
-                });
 
                 // Email Templates Routes
                 Route::prefix('email-templates')->group(function () {
