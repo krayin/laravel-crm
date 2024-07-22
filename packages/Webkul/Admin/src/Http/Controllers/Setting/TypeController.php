@@ -4,7 +4,6 @@ namespace Webkul\Admin\Http\Controllers\Setting;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Setting\TypeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -33,52 +32,41 @@ class TypeController extends Controller
 
     /**
      * Store a newly created type in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): JsonResponse
     {
-        $validator = Validator::make(request()->all(), [
-            'name' => 'required|unique:lead_types,name',
+        $this->validate(request(), [
+            'name' => ['required', 'unique:lead_types,name'],
         ]);
-
-        if ($validator->fails()) {
-            session()->flash('error', trans('admin::app.settings.types.name-exists'));
-
-            return redirect()->back();
-        }
 
         Event::dispatch('settings.type.create.before');
 
-        $type = $this->typeRepository->create(request()->all());
+        $type = $this->typeRepository->create(request()->only(['name']));
 
         Event::dispatch('settings.type.create.after', $type);
 
-        session()->flash('success', trans('admin::app.settings.types.create-success'));
-
-        return redirect()->route('admin.settings.types.index');
+        return new JsonResponse([
+            'data'    => $type,
+            'message' => trans('Lead Type Created successfully'),
+        ]);
     }
 
     /**
      * Show the form for editing the specified type.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View|JsonResponse
     {
         $type = $this->typeRepository->findOrFail($id);
 
-        return view('admin::settings.types.edit', compact('type'));
+        return new JsonResponse([
+            'data' => $type,
+        ]);
     }
 
     /**
      * Update the specified type in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
             'name' => 'required|unique:lead_types,name,'.$id,
@@ -86,43 +74,37 @@ class TypeController extends Controller
 
         Event::dispatch('settings.type.update.before', $id);
 
-        $type = $this->typeRepository->update(request()->all(), $id);
+        $type = $this->typeRepository->update(request()->only(['name'] ), $id);
 
         Event::dispatch('settings.type.update.after', $type);
 
-        session()->flash('success', trans('admin::app.settings.types.update-success'));
-
-        return redirect()->route('admin.settings.types.index');
+        return new JsonResponse([
+            'data'    => $type,
+            'message' => trans('Lead Type updated successfully'),
+        ]);
     }
 
     /**
      * Remove the specified type from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $type = $this->typeRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.type.delete.before', $id);
 
-            $this->typeRepository->delete($id);
+            $type->delete($id);
 
             Event::dispatch('settings.type.delete.after', $id);
 
-            return response()->json([
+            return new JsonResponse([
                 'message' => trans('admin::app.settings.types.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
-            return response()->json([
+            return new JsonResponse([
                 'message' => trans('admin::app.settings.types.delete-failed'),
             ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.types.delete-failed'),
-        ], 400);
     }
 }

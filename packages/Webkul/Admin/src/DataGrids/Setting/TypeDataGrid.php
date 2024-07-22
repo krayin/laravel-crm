@@ -52,15 +52,17 @@ class TypeDataGrid extends DataGrid
     public function prepareActions(): void
     {
         $this->addAction([
+            'index'  => 'edit',
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
             'url'    => function ($row) {
-                return route('admin.settings.types.edit', $row->id);
+                return route('admin.settings.types.update', $row->id);
             },
         ]);
 
         $this->addAction([
+            'index'  => 'delete',
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
             'method' => 'DELETE',
