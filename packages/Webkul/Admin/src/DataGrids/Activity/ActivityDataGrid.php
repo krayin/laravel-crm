@@ -133,7 +133,7 @@ class ActivityDataGrid extends DataGrid
             'sortable'   => true,
             'closure'    => function ($row) {
                 if ($row->lead_title == null) {
-                    return 'N/A';
+                    return "<span class='text-gray-800 dark:text-gray-300'>N/A</span>";
                 }
 
                 $route = urldecode(route('admin.leads.index', ['pipeline_id' => $row->lead_pipeline_id, 'view_type' => 'table', 'id[eq]' => $row->lead_id]));

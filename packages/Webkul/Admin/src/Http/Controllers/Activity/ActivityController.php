@@ -44,23 +44,23 @@ class ActivityController extends Controller
      */
     public function get()
     {
-        if (request('view_type')) {
-            $startDate = request()->get('startDate')
-                        ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
-                        : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
-
-            $endDate = request()->get('endDate')
-                    ? Carbon::createFromTimeString(request()->get('endDate').' 23:59:59')
-                    : Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
-
-            $activities = $this->activityRepository->getActivities([$startDate, $endDate])->toArray();
-
-            return response()->json([
-                'activities' => $activities,
-            ]);
-        } else {
+        if (! request()->has('view_type')) {
             return datagrid(ActivityDataGrid::class)->process();
         }
+
+        $startDate = request()->get('startDate') 
+            ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
+            : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
+
+        $endDate = request()->get('endDate')
+            ? Carbon::createFromTimeString(request()->get('endDate').' 23:59:59')
+            : Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
+
+        $activities = $this->activityRepository->getActivities([$startDate, $endDate])->toArray();
+
+        return response()->json([
+            'activities' => $activities,
+        ]);
     }
 
     /**

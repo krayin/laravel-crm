@@ -104,13 +104,15 @@ import Emitter from "./plugins/emitter";
 import Flatpickr from "./plugins/flatpickr";
 import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
+import VueCal from "./plugins/vue-cal";
 
 [
     Axios,
     Emitter,
     CreateElement,
     Flatpickr,
-    VeeValidate
+    VeeValidate,
+    VueCal,
 ].forEach((plugin) => app.use(plugin));
 
 

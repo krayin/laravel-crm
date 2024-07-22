@@ -54,7 +54,7 @@
                 <!-- Access Control Input Fields -->
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                     <x-admin::form.control-group>
-                        <div class="flex gap-2">git 
+                        <div class="flex gap-2"> 
                             <div class="w-full">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.activities.index.edit.schedule_from')
@@ -71,7 +71,7 @@
 
                             <div class="w-full">
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.activities.index.edit.schedule_from')
+                                    @lang('admin::app.activities.index.edit.schedule_to')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::flat-picker.datetime class="!w-full" ::allow-input="false">
@@ -246,7 +246,7 @@
                     >
                 
                     <svg
-                        class="absolute h-5 w-5 animate-spin right-3 top-4"
+                        class="absolute h-5 w-5 animate-spin right-3 top-3 dark:text-gray-300"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none" 
                         aria-hidden="true"
@@ -311,7 +311,7 @@
 
             <div class="relative">
                 <div
-                    class="absolute top-[60px] z-10 w-full border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
+                    class="absolute top-1 z-10 w-full border bg-white shadow-[0px_0px_0px_0px_rgba(0,0,0,0.10),0px_1px_3px_0px_rgba(0,0,0,0.10),0px_5px_5px_0px_rgba(0,0,0,0.09),0px_12px_7px_0px_rgba(0,0,0,0.05),0px_22px_9px_0px_rgba(0,0,0,0.01),0px_34px_9px_0px_rgba(0,0,0,0.00)] dark:border-gray-800 dark:bg-gray-900"
                     v-if="isDropdownOpen"
                 >
                     <div class="flex flex-col overflow-y-auto">
@@ -371,7 +371,7 @@
 
                 data() {
                     return {
-                        searchTerm: 'Role',
+                        searchTerm: '',
                         
                         isSearching: false,
 
@@ -394,7 +394,7 @@
                 watch: {
                     searchTerm(newVal, oldVal) {
                         this.search();
-                    }
+                    },
                 },
 
                 mounted() {
