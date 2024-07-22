@@ -4,28 +4,20 @@
         @lang('admin::app.activities.index.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.settings.roles.create.before') !!}
+    {!! view_render_event('krayin.admin.activities.edit.form.before') !!}
 
     <x-admin::form
         :action="route('admin.activities.update', $activity->id)"
         method="PUT"
     >
-        {!! view_render_event('krayin.settings.roles.create.create_form_controls.before') !!}
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
         <div class="flex items-center justify-between">
             <p class="text-xl font-bold text-gray-800 dark:text-white">
                 @lang('admin::app.activities.index.edit.title')
             </p>
 
             <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.activities.edit.back_button.before') !!}
+
                 <!-- Back Button -->
                 <a
                     href="{{ route('admin.activities.index') }}"
@@ -34,6 +26,10 @@
                     @lang('admin::app.activities.index.edit.back-btn')
                 </a>
 
+                {!! view_render_event('krayin.admin.activities.edit.back_button.after') !!}
+
+                {!! view_render_event('krayin.admin.activities.edit.back_button.before') !!}
+
                 <!-- Save Button -->
                 <button
                     type="submit"
@@ -41,16 +37,15 @@
                 >
                     @lang('admin::app.activities.index.edit.save-btn')
                 </button>
+ 
+                {!! view_render_event('krayin.admin.activities.edit.back_button.after') !!}
             </div>
         </div>
 
-         <!-- body content -->
-         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+        <!-- body content -->
+        <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             <!-- Left sub-component -->
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-
-                {!! view_render_event('krayin.settings.roles.create.card.access_control.before') !!}
-
                 <!-- Access Control Input Fields -->
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                     <x-admin::form.control-group>
@@ -87,18 +82,18 @@
 
                     <x-admin::form.control-group>
                         <x-admin::form.control-group.label>
-                            @lang('admin::app.activities.index.edit.description')
+                            @lang('admin::app.activities.index.edit.comment')
                         </x-admin::form.control-group.label>
 
                         <x-admin::form.control-group.control
                             type="textarea"
-                            name="description"
-                            id="description"
-                            :value="old('description') ?? $activity->description"
-                            :label="trans('admin::app.activities.index.edit.description')"
-                            :placeholder="trans('admin::app.activities.index.edit.description')"
+                            name="comment"
+                            id="comment"
+                            :value="old('comment') ?? $activity->comment"
+                            :label="trans('admin::app.activities.index.edit.comment')"
+                            :placeholder="trans('admin::app.activities.index.edit.comment')"
                         />
-                        <x-admin::form.control-group.error control-name="description" />
+                        <x-admin::form.control-group.error control-name="comment" />
                     </x-admin::form.control-group>
 
                     <v-multi-lookup-component>
@@ -131,14 +126,11 @@
                         </v-lookup-component>
                     </x-admin::form.control-group>
                 </div>
-
-                {!! view_render_event('krayin.settings.roles.create.card.access_control.after') !!}
             </div>
 
             <!-- Right sub-component -->
             <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-
-                {!! view_render_event('krayin.settings.roles.create.card.accordion.general.before') !!}
+                {!! view_render_event('krayin.admin.activities.edit.accordion.general.before') !!}
 
                 <x-admin::accordion>
                     <x-slot:header>
@@ -216,15 +208,12 @@
                     </x-slot>
                 </x-admin::accordion>
 
-                {!! view_render_event('krayin.settings.roles.create.card.accordion.general.after') !!}
+                {!! view_render_event('krayin.admin.activities.edit.accordion.general.after') !!}
             </div>
         </div>
-
-        {!! view_render_event('krayin.settings.roles.create.create_form_controls.after') !!}
-
     </x-admin::form>
 
-    {!! view_render_event('krayin.settings.roles.create.after') !!}
+    {!! view_render_event('krayin.admin.activities.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script 
@@ -317,10 +306,11 @@
                     <div class="flex flex-col overflow-y-auto">
                         <div>
                             <x-admin::form.control-group.label class="font-semibold p-2 !pb-0">
-                                @lang('admin::app.leads.persons')
+                                @lang('admin::app.activities.index.edit.persons')
                             </x-admin::form.control-group.label>
     
-                            <div class="cursor-pointer border-b p-2 text-sm font-semibold text-gray-600 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            <div
+                                class="cursor-pointer border-b p-2 text-sm font-semibold text-gray-600 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                                 v-for="participant in searchedParticipants.persons"
                                 @click="addParticipant('persons', participant)"
                             >
@@ -332,18 +322,19 @@
                                 ! searchedParticipants.persons.length 
                                 && searchTerm.length
                                 && ! isSearching'
-                                class="text-sm p-2"
+                                class="text-sm px-4"
                             >
-                                @lang('admin::app.common.no-result-found')
+                                @lang('admin::app.activities.index.edit.no-result-found')
                             </span>
                         </div>
                         
                         <div>
                             <x-admin::form.control-group.label class="font-semibold p-2 !pb-0">
-                                @lang('admin::app.leads.users')
+                                @lang('admin::app.activities.index.edit.users')
                             </x-admin::form.control-group.label>
     
-                            <div class="cursor-pointer border-b p-2 text-sm font-semibold text-gray-600 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            <div
+                                class="cursor-pointer border-b p-2 text-sm font-semibold text-gray-600 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                                 v-for="participant in searchedParticipants.users"
                                 @click="addParticipant('users', participant)"
                             >
@@ -355,9 +346,9 @@
                                 ! searchedParticipants.users.length 
                                 && searchTerm.length
                                 && ! isSearching'
-                                class="text-sm px-2"
+                                class="text-sm px-4"
                             >
-                                @lang('admin::app.common.no-result-found')
+                                @lang('admin::app.activities.index.edit.no-result-found')
                             </span>
                         </div>
                     </div>
@@ -392,6 +383,13 @@
                 },
 
                 watch: {
+                    /**
+                     * Watch the search term and search for the participants.
+                     * 
+                     * @param {String} newVal
+                     * @param {String} oldVal
+                     * @return {Void}
+                     */
                     searchTerm(newVal, oldVal) {
                         this.search();
                     },

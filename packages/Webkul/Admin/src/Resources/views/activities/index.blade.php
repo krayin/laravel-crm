@@ -1,31 +1,32 @@
 <x-admin::layouts>
     <x-slot:title>
-        Activities
+        @lang('admin::app.activities.index.title')
     </x-slot>
 
     <!-- Activities Datagrid -->
     <v-activities>
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col">
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    <i class="icon-left-arrow text-2xl text-gray-800"></i>
-    
-                    <a
-                        href="{{ route('admin.activities.index') }}"
-                        class="text-xs text-gray-800 dark:text-gray-300"
-                    >
-                        Settings
-                    </a>
+                    <x-admin::breadcrumbs name="activities" />
                 </div>
     
-                <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-gray-300">
                     @lang('admin::app.activities.index.title')
                 </div>
+            </div>
+
+            <div class="flex gap-2">
+                <i class="icon-calender p-1 rounded cursor-pointer"></i>
+    
+                <i class="icon-calender p-1 rounded cursor-pointe"></i>
             </div>
         </div>
 
         <!-- DataGrid Shimmer -->
-        <x-admin::shimmer.datagrid />
+        @if (request()->get('view-type') == 'table')
+            <x-admin::shimmer.datagrid />
+        @endif
     </v-activities>
 
     @pushOnce('scripts')
@@ -33,44 +34,41 @@
             type="text/x-template"
             id="v-activities-template"
         >
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white py-2 pl-2 pr-4 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                <div class="flex flex-col">
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        <i class="icon-left-arrow text-2xl text-gray-800"></i>
-        
-                        <a
-                            href="{{ route('admin.activities.index') }}"
-                            class="text-xs text-gray-800 dark:text-gray-300"
-                        >
-                            Settings
-                        </a>
+                        <x-admin::breadcrumbs name="activities" />
                     </div>
         
-                    <div class="pl-3 text-xl font-normal dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.activities.index.title')
                     </div>
                 </div>
 
-                <div class="flex gap-2">
-                    <span
-                        @click="toggleView('table')"
-                        class="cursor-pointer"
-                    >
-                        Table
-                    </span>
+                {!! view_render_event('krayin.admin.activities.index.toggle_view.before') !!}
 
-                    <span
+                <div class="flex gap-2">
+                    <i
+                        class="icon-calender p-1 text-2xl rounded cursor-pointer"
+                        :class="{'bg-gray-700 text-gray-300': viewType == 'table'}"
+                        @click="toggleView('table')"
+                    ></i>
+        
+                    <i
+                        class="icon-calender p-1 text-2xl rounded cursor-pointer"
+                        :class="{'bg-gray-700 text-gray-300': viewType == 'calendor'}"
                         @click="toggleView('calendor')"
-                        class="cursor-pointer"
-                    >
-                        Calendor
-                    </span>
+                    ></i>
                 </div>
+
+                {!! view_render_event('krayin.admin.activities.index.toggle_view.after') !!}
             </div>
 
             <!-- DataGrid Shimmer -->
             <div>
                 <template v-if="viewType == 'table'">
+                    {!! view_render_event('krayin.admin.activities.index.datagrid.before') !!}
+
                     <x-admin::datagrid
                         src="{{ route('admin.activities.get') }}"
                         :isMultiRow="true"
@@ -255,10 +253,16 @@
                             </template>
                         </template>
                     </x-admin::datagrid>
+
+                    {!! view_render_event('krayin.admin.activities.index.datagrid.after') !!}
                 </template>
 
                 <template v-else>
+                    {!! view_render_event('krayin.admin.activities.index.vue_calender.before') !!}
+
                     <v-calendar></v-calendar>
+
+                    {!! view_render_event('krayin.admin.activities.index.vue_calender.after') !!}
                 </template>
             </div>
         </script>
@@ -267,13 +271,14 @@
             type="text/x-template"
             id="v-calendar-tempalte"
         >
-            <div class="rounded-xl py-3">
+            <div class="!rounded-xl py-3">
                 <v-vue-cal
                     hide-view-selector
                     :watchRealTime="true"
                     :twelveHour="true"
                     :disable-views="['years', 'year', 'month', 'day']"
                     style="height: calc(100vh - 240px);"
+                    :class="{'vuecal--dark': theme === 'dark'}"
                     :events="events"
                     @ready="getActivities"
                     @view-change="getActivities"
@@ -286,6 +291,7 @@
         <script type="module">
             app.component('v-activities', {
                 template: '#v-activities-template',
+
                 data() {
                     return {
                         viewType: (new URLSearchParams(window.location.search))?.get('view-type') || 'table',
@@ -319,14 +325,26 @@
                 data() {
                     return {
                         events: [],
+
+                        theme: document.documentElement.classList.contains('dark') ? 'dark' : 'light',
                     };
+                },
+
+                mounted() {
+                    /**
+                     * Listen for the theme change event.
+                     * 
+                     * @return {void}
+                     */
+                    this.$emitter.on('change-theme', (theme) => this.theme = theme);
                 },
 
                 methods: {
                     /**
                      * Get the activities for the calendar.
                      * 
-                     * @param {Object} {startDate, endDate}
+                     * @param {Object} {startDate}
+                     * @param {Object} {endDate}
                      * @return {void} 
                      */
                     getActivities({startDate, endDate}) {
@@ -385,6 +403,42 @@
 
             .vuecal__event.done {
                 background-color: #53c41a!important
+            }
+
+            .vuecal--dark {
+                background-color: #1F2937 !important; /* bg-gray-800 */
+                color: #FFFFFF !important; /* text-white */
+                border-color: #374151 !important; /* border-gray-700 */
+            }
+
+            .vuecal--dark .vuecal__header,
+            .vuecal--dark .vuecal__header-weekdays,
+            .vuecal--dark .vuecal__header-months {
+                background-color: #374151 !important; /* bg-gray-700 */
+                color: #FFFFFF !important; /* text-white */
+            }
+
+            .vuecal--dark .vuecal__day,
+            .vuecal--dark .vuecal__month-view,
+            .vuecal--dark .vuecal__week-view {
+                background-color: #1F2937 !important; /* bg-gray-800 */
+                color: #FFFFFF !important; /* text-white */
+                border-color: #374151 !important; /* border-gray-700 */
+            }
+
+            .vuecal--dark .vuecal__day--weekend {
+                background-color: #374151 !important; /* bg-gray-700 */
+                color: #FFFFFF !important; /* text-white */
+            }
+
+            .vuecal--dark .vuecal__day--selected {
+                background-color: #374151 !important; /* bg-gray-700 */
+                color: #FFFFFF !important; /* text-white */
+            }
+
+            .vuecal--dark .vuecal__event {
+                background-color: #374151 !important; /* bg-gray-700 */
+                color: #FFFFFF !important; /* text-white */
             }
         </style>
     @endPushOnce
