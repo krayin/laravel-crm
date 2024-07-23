@@ -5,6 +5,7 @@ namespace Webkul\Workflow\Helpers\Entity;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Arabic;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -56,9 +57,8 @@ class Lead extends AbstractEntity
      *
      * @param  string  $entityType
      * @param  array  $skipAttributes
-     * @return array
      */
-    public function getAttributes($entityType, $skipAttributes = ['textarea', 'image', 'file', 'address'])
+    public function getAttributes($entityType, $skipAttributes = ['textarea', 'image', 'file', 'address']): array
     {
         $attributes[] = [
             'id'          => 'lead_pipeline_stage_id',
@@ -76,49 +76,47 @@ class Lead extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
-     * @return array
      */
-    public function getActions()
+    public function getActions(): array
     {
         $emailTemplates = $this->emailTemplateRepository->all(['id', 'name']);
 
         return [
             [
                 'id'         => 'update_lead',
-                'name'       => __('admin::app.settings.workflows.update-lead'),
+                'name'       => trans('admin::app.settings.workflows.edit.helper.update-lead'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'         => 'update_person',
-                'name'       => __('admin::app.settings.workflows.update-person'),
+                'name'       => trans('admin::app.settings.workflows.edit.helper.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
                 'id'      => 'send_email_to_person',
-                'name'    => __('admin::app.settings.workflows.send-email-to-person'),
+                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => __('admin::app.settings.workflows.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'   => 'add_tag',
-                'name' => __('admin::app.settings.workflows.add-tag'),
+                'name' => trans('admin::app.settings.workflows.edit.helper.add-tag'),
             ], [
                 'id'   => 'add_note_as_activity',
-                'name' => __('admin::app.settings.workflows.add-note-as-activity'),
+                'name' => trans('admin::app.settings.workflows.edit.helper.add-note-as-activity'),
             ], [
                 'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
+                'name'            => trans('admin::app.settings.workflows.edit.helper.add-webhook'),
                 'request_methods' => [
-                    'get'    => __('admin::app.settings.workflows.get_method'),
-                    'post'   => __('admin::app.settings.workflows.post_method'),
-                    'put'    => __('admin::app.settings.workflows.put_method'),
-                    'patch'  => __('admin::app.settings.workflows.patch_method'),
-                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                    'get'    => trans('admin::app.settings.workflows.edit.helper.get-method'),
+                    'post'   => trans('admin::app.settings.workflows.edit.helper.post-method'),
+                    'put'    => trans('admin::app.settings.workflows.edit.helper.put-method'),
+                    'patch'  => trans('admin::app.settings.workflows.edit.helper.patch-method'),
+                    'delete' => trans('admin::app.settings.workflows.edit.helper.delete-method'),
                 ],
                 'encodings' => [
-                    'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
+                    'json'       => trans('admin::app.settings.workflows.edit.helper.encoding-json'),
+                    'http_query' => trans('admin::app.settings.workflows.edit.helper.encoding-http-query'),
                 ],
             ],
         ];

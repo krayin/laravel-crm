@@ -94,7 +94,7 @@
                                 </optgroup>
                             </x-admin::form.control-group.control>
 
-                            <x-admin::form.control-group.error control-name="coupon_code" />
+                            <x-admin::form.control-group.error control-name="event" />
                         </x-admin::form.control-group>
                     </div>
 
@@ -291,6 +291,7 @@
                                 :name="`conditions[${index}][value]`"
                                 v-slot="{ field, errorMessage }"
                                 :id="`conditions[${index}][value]`"
+                                label="@lang('admin::app.settings.workflows.edit.value')"
                                 :rules="
                                     matchedAttribute.type == 'price' ? 'regex:^[0-9]+(\\.[0-9]+)?$' : ''
                                     || matchedAttribute.type == 'decimal' ? 'regex:^[0-9]+(\\.[0-9]+)?$' : ''
@@ -319,12 +320,12 @@
                         <!-- Date -->
                         <template v-if="matchedAttribute.type == 'date'">
                             <x-admin::flat-picker.date
-                                class="!w-[140px]"
+                                class="!w-1/3"
                                 ::allow-input="false"
                             >
                                 <input
                                     type="date"
-                                    class="flex min-h-[39px] w-1/3 rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 min:w-1/3"
+                                    class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 min:w-1/3"
                                     :name="['conditions[' + index + '][value]']"
                                     v-model="condition.value"
                                 />
@@ -334,12 +335,12 @@
                         <!-- Datetime -->
                         <template v-if="matchedAttribute.type == 'datetime'">
                             <x-admin::flat-picker.date
-                                class="!w-[140px]"
+                                class="!w-1/3"
                                 ::allow-input="false"
                             >
                                 <input
                                     type="datetime"
-                                    class="flex min-h-[39px] w-1/3 rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 min:w-1/3"
+                                    class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 min:w-1/3"
                                     :name="['conditions[' + index + '][value]']"
                                     v-model="condition.value"
                                 />
@@ -836,7 +837,7 @@
 
                 props: ['index', 'entityType', 'condition'],
 
-                emits: ['on-remove-condition'],
+                emits: ['onRemoveCondition'],
                 
                 data() {
                     return {
@@ -1041,8 +1042,6 @@
                         ) {
                             this.condition.operator = '{}';
                         }
-
-                        console.log("matchedAttribute", matchedAttribute, "called");
 
                         return matchedAttribute;
                     },
