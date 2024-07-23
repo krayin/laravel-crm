@@ -19,12 +19,12 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
-                    <a
-                        href="{{ route('admin.settings.groups.create') }}"
+                    <button
+                        type="button"
                         class="primary-button"
                     >
                         @lang('admin::app.settings.groups.index.create-btn')
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>

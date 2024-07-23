@@ -31,7 +31,7 @@ class TypeDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.settings.types.index.datagrid.id'),
             'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,

@@ -86,6 +86,15 @@ return [
                 'no-records-available' => 'No Records Available.',
             ],
         ],
+
+        'modal' => [
+            'confirm' => [
+                'agree-btn'    => 'Agree',
+                'disagree-btn' => 'Disagree',
+                'message'      => 'Are you sure you want to perform this action?',
+                'title'        => 'Are you sure?',
+            ],
+        ],
     ],
 
     'contacts' => [
@@ -131,6 +140,16 @@ return [
                 'price'     => 'Price',
                 'sku'       => 'SKU',
                 'view'      => 'View',
+            ],
+
+            'create' => [
+                'name'     => 'Name',
+                'save-btn' => 'Save Products',
+                'title'    => 'Create Products',
+            ],
+
+            'edit' => [
+                'title' => 'Edit Products',
             ],
         ],
     ],
@@ -222,11 +241,11 @@ return [
         'types' => [
             'index' => [
                 'create-btn'     => 'Create Type',
-                'title'          => 'Types',
                 'create-success' => 'Type created successfully.',
-                'update-success' => 'Type updated successfully.',
-                'delete-success' => 'Type deleted successfully.',
                 'delete-failed'  => 'Type can not be deleted.',
+                'delete-success' => 'Type deleted successfully.',
+                'title'          => 'Types',
+                'update-success' => 'Type updated successfully.',
 
                 'datagrid' => [
                     'delete'      => 'Delete',
@@ -234,6 +253,34 @@ return [
                     'edit'        => 'Edit',
                     'id'          => 'ID',
                     'name'        => 'Name',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Type',
+                    'title'    => 'Create Type',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Type',
+                ],
+            ],
+        ],
+
+        'sources' => [
+            'index' => [
+                'create-btn'     => 'Create Source',
+                'create-success' => 'Source created successfully.',
+                'delete-failed'  => 'Source can not be deleted.',
+                'delete-success' => 'Source deleted successfully.',
+                'title'          => 'Sources',
+                'update-success' => 'Source updated successfully.',
+
+                'datagrid' => [
+                    'delete' => 'Delete',
+                    'edit'   => 'Edit',
+                    'id'     => 'ID',
+                    'name'   => 'Name',
                 ],
 
                 'create' => [

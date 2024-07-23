@@ -19,12 +19,12 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for Leads Type -->
                 <div class="flex items-center gap-x-2.5">
-                    <a
-                        href="{{ route('admin.settings.groups.create') }}"
+                    <button
+                        type="button"
                         class="primary-button"
                     >
                         @lang('admin::app.settings.types.index.create-btn')
-                    </a>
+                    </button>
                 </div>
             </div>
         </div>
@@ -130,7 +130,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
-                    {!! view_render_event('krayin.admin.settings.types.index.create_form_controls.before') !!}
+                    {!! view_render_event('krayin.admin.settings.types.index.form_controls.before') !!}
 
                     <x-admin::modal ref="typeUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -187,7 +187,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.types.index.create_form_controls.after') !!}
+                    {!! view_render_event('krayin.admin.settings.types.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </script>

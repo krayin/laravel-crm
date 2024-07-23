@@ -2,17 +2,16 @@
 
 namespace Webkul\Admin\DataGrids\Settings;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class SourceDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('lead_sources')
             ->addSelect(
@@ -22,26 +21,24 @@ class SourceDataGrid extends DataGrid
 
         $this->addFilter('id', 'lead_sources.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
+            'label'    => trans('admin::app.settings.sources.index.datagrid.id'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
+            'label'    => trans('admin::app.settings.sources.index.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -49,24 +46,27 @@ class SourceDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.sources.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.sources.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.sources.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.sources.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'source']),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.sources.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.sources.delete', $row->id);
+            },
         ]);
     }
 }
