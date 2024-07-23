@@ -9,27 +9,17 @@
         } else {
             $validations = [];
 
-            if ($attribute->code != 'sku') {
-                if ($attribute->is_required) {
-                    array_push($validations, 'required');
-                }
-
-                if ($attribute->type == 'price') {
-                    array_push($validations, 'decimal');
-                }
-
-                array_push($validations, $attribute->validation);
-
-                $validations = implode('|', array_filter($validations));
-            } else {
-                $validations = "{ ";
-
-                if ($attribute->is_required) {
-                    $validations .= "required: true, ";
-                }
-
-                $validations .= "regex: /^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$/ }";
+            if ($attribute->is_required) {
+                array_push($validations, 'required');
             }
+
+            if ($attribute->type == 'price') {
+                array_push($validations, 'decimal');
+            }
+
+            array_push($validations, $attribute->validation);
+
+            $validations = implode('|', array_filter($validations));
         }
     @endphp
     @if (view()->exists($view = 'admin::common.custom-attributes.edit.' . $attribute->type))
