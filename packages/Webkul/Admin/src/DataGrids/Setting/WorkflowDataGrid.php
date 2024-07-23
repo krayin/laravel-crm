@@ -31,7 +31,7 @@ class WorkflowDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.settings.workflows.index.datagrid.id'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -40,7 +40,7 @@ class WorkflowDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
+            'label'      => trans('admin::app.settings.workflows.index.datagrid.name'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -56,7 +56,7 @@ class WorkflowDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
-            'title'  => trans('ui::app.datagrid.edit'),
+            'title'  => trans('admin::app.settings.workflows.index.datagrid.edit'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.settings.workflows.edit', $row->id),
         ]);
@@ -64,7 +64,7 @@ class WorkflowDataGrid extends DataGrid
         $this->addAction([
             'index'        => 'delete',
             'icon'         => 'icon-delete',
-            'title'        => trans('ui::app.datagrid.delete'),
+            'title'        => trans('admin::app.settings.workflows.index.datagrid.delete'),
             'method'       => 'DELETE',
             'url'          => fn ($row) => route('admin.settings.workflows.delete', $row->id),
         ]);

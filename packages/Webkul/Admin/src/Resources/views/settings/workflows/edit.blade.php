@@ -527,30 +527,13 @@
                                     value="work"
                                 />
 
-                                <v-field
-                                    :name="['actions[' + index + '][value][0][value]']"
-                                    :id="['actions[' + index + '][value][0][value]']"
-                                    v-slot="{ field, errorMessage }"
-                                    :rules="
-                                        matchedAttribute.type == 'email' ? 'email' : ''
-                                        || matchedAttribute.type == 'phone' ? 'regex:^[0-9]+$' : ''
-                                    "
+                                <input
+                                    type="email" 
+                                    :name="`actions[${index}][value][0][value]`"
+                                    :id="`actions[${index}][value][0][value]`"
+                                    class="flex h-10 w-1/3 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 min:w-1/3"
                                     v-model="action.value[0].value"
-                                >
-                                    <input
-                                        type="text"
-                                        v-bind="field"
-                                        :class="{ 'border border-red-500': errorMessage }"
-                                        class="flex h-10 w-1/3 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 min:w-1/3"
-                                    />
-                                </v-field>
-
-                                <v-error-message
-                                    :name="`actions[${index}][value]`"
-                                    class="mt-1 text-xs italic text-red-500"
-                                    as="p"
-                                >
-                                </v-error-message>
+                                />
                             </template>
 
                             <!-- Textarea -->

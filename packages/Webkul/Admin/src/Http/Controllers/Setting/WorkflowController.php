@@ -54,7 +54,7 @@ class WorkflowController extends Controller
 
         Event::dispatch('settings.workflow.create.after', $workflow);
 
-        session()->flash('success', trans('admin::app.settings.workflows.create-success'));
+        session()->flash('success', trans('admin::app.settings.workflows.index.create-success'));
 
         return redirect()->route('admin.settings.workflows.index');
     }
@@ -84,7 +84,7 @@ class WorkflowController extends Controller
 
         Event::dispatch('settings.workflow.update.after', $workflow);
 
-        session()->flash('success', trans('admin::app.settings.workflows.update-success'));
+        session()->flash('success', trans('admin::app.settings.workflows.index.update-success'));
 
         return redirect()->route('admin.settings.workflows.index');
     }
@@ -99,21 +99,21 @@ class WorkflowController extends Controller
         try {
             Event::dispatch('settings.workflow.delete.before', $id);
 
-            $this->workflowRepository->delete($id);
+            $workflow->delete($id);
 
             Event::dispatch('settings.workflow.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.settings.workflows.delete-success'),
+                'message' => trans('admin::app.settings.workflows.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.settings.workflows.delete-failed'),
+                'message' => trans('admin::app.settings.workflows.index.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.workflows.delete-failed'),
+            'message' => trans('admin::app.settings.workflows.index.delete-failed'),
         ], 400);
     }
 }

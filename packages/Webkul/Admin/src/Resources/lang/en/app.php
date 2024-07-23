@@ -234,6 +234,22 @@ return [
         ],
 
         'workflows' => [
+            'index' => [
+                'title'          => 'Workflows',
+                'create-btn'     => 'Create Workflow',
+                'create-success' => 'Workflow created successfully.',
+                'update-success' => 'Workflow updated successfully.',
+                'delete-success' => 'Workflow deleted successfully.',
+                'delete-failed'  => 'Workflow can not be deleted.',
+                'datagrid'       => [
+                    'delete'      => 'Delete',
+                    'description' => 'Description',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'name'        => 'Name',
+                ],
+            ],
+
             'create' => [
                 'title'                  => 'Create Workflow',
                 'event'                  => 'Event',
@@ -251,6 +267,7 @@ return [
                 'add-action'             => 'Add Action',
                 'yes'                    => 'Yes',
                 'no'                     => 'No',
+                'email'                  => 'Email',
                 'is-equal-to'            => 'Is equal to',
                 'is-not-equal-to'        => 'Is not equal to',
                 'equals-or-greater-than' => 'Equals or greater than',
@@ -285,6 +302,7 @@ return [
                 'add-action'             => 'Add Action',
                 'yes'                    => 'Yes',
                 'no'                     => 'No',
+                'email'                  => 'Email',
                 'is-equal-to'            => 'Is equal to',
                 'is-not-equal-to'        => 'Is not equal to',
                 'equals-or-greater-than' => 'Equals or greater than',

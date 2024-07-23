@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        Workflows
+        @lang('admin::app.settings.workflows.index.title')
     </x-slot>
 
     <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -10,7 +10,7 @@
             </div>
 
             <div class="text-xl font-bold dark:text-gray-300">
-                Workflows
+                @lang('admin::app.settings.workflows.index.title')
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                     href="{{ route('admin.settings.workflows.create') }}"
                     class="primary-button"
                 >
-                    Create Workflows
+                    @lang('admin::app.settings.workflows.index.create-btn')
                 </a>
             </div>
         </div>

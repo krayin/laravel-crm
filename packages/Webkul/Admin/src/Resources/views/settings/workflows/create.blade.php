@@ -523,30 +523,13 @@
                                     value="work"
                                 />
 
-                                <v-field
-                                    :name="['actions[' + index + '][value][0][value]']"
-                                    :id="['actions[' + index + '][value][0][value]']"
-                                    v-slot="{ field, errorMessage }"
-                                    :rules="
-                                        matchedAttribute.type == 'email' ? 'email' : ''
-                                        || matchedAttribute.type == 'phone' ? 'regex:^[0-9]+$' : ''
-                                    "
+                                <input
+                                    type="email" 
+                                    :name="`actions[${index}][value][0][value]`"
+                                    :id="`actions[${index}][value][0][value]`"
+                                    class="flex h-10 w-1/3 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 min:w-1/3"
                                     v-model="action.value[0].value"
-                                >
-                                    <input
-                                        type="text"
-                                        v-bind="field"
-                                        :class="{ 'border border-red-500': errorMessage }"
-                                        class="flex h-10 w-1/3 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 min:w-1/3"
-                                    />
-                                </v-field>
-
-                                <v-error-message
-                                    :name="`actions[${index}][value]`"
-                                    class="mt-1 text-xs italic text-red-500"
-                                    as="p"
-                                >
-                                </v-error-message>
+                                />
                             </template>
 
                             <!-- Textarea -->
@@ -688,8 +671,8 @@
                         "
                     >
                         <v-field
-                            :name="['actions[' + index + '][value]']"
-                            :id="['actions[' + index + '][value]']"
+                            :name="`actions[${index}][value]`"
+                            :id="`actions[${index}][value]`"
                             v-slot="{ field, errorMessage }"
                             v-model="action.value"
                         >
@@ -702,7 +685,7 @@
                         </v-field>
 
                         <v-error-message
-                            :name="['actions[' + index + '][value]']"
+                            :name="`actions[${index}][value]`"
                             class="mt-1 text-xs italic text-red-500"
                             as="p"
                         >
@@ -1014,33 +997,27 @@
                      * 
                      * @returns {Object}
                      */
-                    matchedAttribute() {
+                     matchedAttribute: function () {
                         if (this.condition.attribute == '') {
                             return;
                         }
 
-                        let matchedAttribute = this.conditions[this.entityType].find(attribute => attribute.id == this.condition.attribute);
+                        var self = this;
 
-                        if (
-                            matchedAttribute['type'] == 'multiselect'
-                            || matchedAttribute['type'] == 'checkbox'
-                        ) {
-                            if (! this.condition.operator) {
-                                this.condition.operator = '{}'; 
-                            }
+                        let matchedAttribute = this.conditions[this.entityType].filter(function (attribute) {
+                            return attribute.id == self.condition.attribute;
+                        });
 
-                            if (! this.condition.value) {
-                                this.condition.value = [];
-                            }
-                        } else if (
-                            matchedAttribute['type'] == 'email'
-                            || matchedAttribute['type'] == 'phone'
-                        ) {
+                        if (matchedAttribute[0]['type'] == 'multiselect' || matchedAttribute[0]['type'] == 'checkbox') {
+                            this.condition.operator = '{}';
+
+                            this.condition.value = [];
+                        } else if (matchedAttribute[0]['type'] == 'email' || matchedAttribute[0]['type'] == 'phone') {
                             this.condition.operator = '{}';
                         }
 
-                        return matchedAttribute;
-                    },
+                        return matchedAttribute[0];
+                    }
                 },
 
                 methods: {
@@ -1102,25 +1079,20 @@
                             matchedAttribute['type'] == 'multiselect'
                             || matchedAttribute['type'] == 'checkbox'
                         ) {
-                            if (! this.action.value) {
-                                this.action.value = [];
-                            }
+                            this.action.value = [];
                         } else if (
                             matchedAttribute['type'] == 'email'
                             || matchedAttribute['type'] == 'phone'
                         ) {
-                            if (! this.action.value) {
-                                this.action.value = [{
-                                    'label': 'work',
-                                    'value': ''
-                                }];
-                            }
+                            this.action.value = [{
+                                'label': 'work',
+                                'value': ''
+                            }];
                         } else if (matchedAttribute['type'] == 'text') {
-                            if (! this.action.value) {
-                                this.action.value = '';
-                            }
+                            this.action.value = '';
                         }
 
+                        console.log("matchedAttribute", matchedAttribute);
                         return matchedAttribute;
                     },
                 },
