@@ -61,6 +61,7 @@
     @parent
 
     <script type="text/x-template" id="workflow-component-template">
+
         <div>
             <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
                 <label class="required">{{ __('admin::app.settings.workflows.name') }}</label>
@@ -236,12 +237,7 @@
                     </div>
 
                     <div class="form-group" v-if="matchedAttribute.type == 'select' || matchedAttribute.type == 'radio' || matchedAttribute.type == 'lookup'">
-                        <select
-                            :name="['conditions[' + index + '][value]']"
-                            class="control"
-                            v-model="condition.value"
-                            v-if="! matchedAttribute.lookup_type"
-                        >
+                        <select :name="['conditions[' + index + '][value]']" class="control" v-model="condition.value" v-if="! matchedAttribute.lookup_type">
                             <option v-for='option in matchedAttribute.options' :value="option.id">
                                 @{{ option.name }}
                             </option>
@@ -708,7 +704,7 @@
 
                     var self = this;
 
-                    matchedAction = this.actions[this.entityType].filter(function (action) {
+                    let matchedAction = this.actions[this.entityType].filter(function (action) {
                         return action.id == self.action.id;
                     });
 
@@ -749,7 +745,7 @@
                     }
 
                     return matchedAttribute[0];
-                }
+                },
             },
 
             methods: {

@@ -399,8 +399,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'LocationController@destroy')->name('admin.settings.locations.delete');
                 });
 
-            
-
                 // Tags Routes
                 Route::prefix('tags')->group(function () {
                     Route::get('', 'TagController@index')->name('admin.settings.tags.index');
