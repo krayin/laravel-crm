@@ -1,29 +1,32 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('Email template')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.email-templates.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <x-admin::breadcrumbs name="settings.email_templates" />
+            </div>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.email_templates.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.email_templates.index.header.before') !!}
+            <div class="text-xl font-bold dark:text-gray-300">
+                @lang('Email template')
+            </div>
+        </div>
 
-                    {{ Breadcrumbs::render('settings.email_templates') }}
-
-                    {{ __('admin::app.settings.email-templates.title') }}
-
-                    {!! view_render_event('admin.settings.email_templates.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('settings.automation.email_templates.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.email_templates.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.email-templates.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <a
+                    href="{{ route('admin.settings.email_templates.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.settings.groups.index.create-btn')
+                </a>
+            </div>
+        </div>
     </div>
-@stop
+
+    <!-- DataGrid -->
+    <x-admin::datagrid :src="route('admin.settings.email_templates.index')"/>
+</x-admin::layouts>
