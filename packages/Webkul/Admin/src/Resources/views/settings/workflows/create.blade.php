@@ -63,7 +63,7 @@
                             </p>
                         </div>
 
-                        <!-- Coupon Code -->
+                        <!-- Event Name -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.workflows.create.event')
