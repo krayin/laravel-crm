@@ -3,13 +3,17 @@
 namespace Webkul\Admin\Http\Controllers\Activity;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
@@ -26,7 +30,8 @@ class ActivityController extends Controller
         protected FileRepository $fileRepository,
         protected LeadRepository $leadRepository,
         protected UserRepository $userRepository,
-        protected PersonRepository $personRepository
+        protected PersonRepository $personRepository,
+        protected AttributeRepository $attributeRepository,
     ) {}
 
     /**
@@ -40,33 +45,31 @@ class ActivityController extends Controller
     /**
      * Returns a listing of the resource.
      */
-    public function get()
+    public function get(): JsonResponse
     {
-        if (request('view_type')) {
-            $startDate = request()->get('startDate')
-                        ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
-                        : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
-
-            $endDate = request()->get('endDate')
-                    ? Carbon::createFromTimeString(request()->get('endDate').' 23:59:59')
-                    : Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
-
-            $activities = $this->activityRepository->getActivities([$startDate, $endDate])->toArray();
-
-            return response()->json([
-                'activities' => $activities,
-            ]);
-        } else {
+        if (! request()->has('view_type')) {
             return datagrid(ActivityDataGrid::class)->process();
         }
+
+        $startDate = request()->get('startDate')
+            ? Carbon::createFromTimeString(request()->get('startDate').' 00:00:01')
+            : Carbon::now()->startOfWeek()->format('Y-m-d H:i:s');
+
+        $endDate = request()->get('endDate')
+            ? Carbon::createFromTimeString(request()->get('endDate').' 23:59:59')
+            : Carbon::now()->endOfWeek()->format('Y-m-d H:i:s');
+
+        $activities = $this->activityRepository->getActivities([$startDate, $endDate])->toArray();
+
+        return response()->json([
+            'activities' => $activities,
+        ]);
     }
 
     /**
      * Check if activity duration is overlapping with another activity duration.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function checkIfOverlapping()
+    public function checkIfOverlapping(): JsonResponse
     {
         $isOverlapping = $this->activityRepository->isDurationOverlapping(
             request('schedule_from'),
@@ -82,10 +85,8 @@ class ActivityController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'type'          => 'required',
@@ -134,24 +135,22 @@ class ActivityController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $activity = $this->activityRepository->findOrFail($id);
 
-        return view('admin::activities.edit', compact('activity'));
+        $leadId = old('lead_id') ?? optional($activity->leads()->first())->id;
+
+        $lookUpEntityData = $this->attributeRepository->getLookUpEntity('leads', $leadId);
+
+        return view('admin::activities.edit', compact('activity', 'lookUpEntityData'));
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update($id): RedirectResponse|JsonResponse
     {
         Event::dispatch('activity.update.before', $id);
 
@@ -200,10 +199,8 @@ class ActivityController extends Controller
 
     /**
      * Mass Update the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massUpdate()
+    public function massUpdate(): JsonResponse
     {
         $count = 0;
 
@@ -233,11 +230,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * Search participants results
-     *
-     * @return \Illuminate\Http\Response
+     * Search participants results.
      */
-    public function searchParticipants()
+    public function searchParticipants(): JsonResponse
     {
         $users = $this->userRepository->findWhere([
             ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
@@ -254,11 +249,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * Upload files to storage
-     *
-     * @return \Illuminate\View\View
+     * Upload files to storage.
      */
-    public function upload()
+    public function upload(): RedirectResponse
     {
         $this->validate(request(), [
             'file' => 'required',
@@ -286,12 +279,9 @@ class ActivityController extends Controller
     }
 
     /**
-     * Download file from storage
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * Download file from storage.
      */
-    public function download($id)
+    public function download(int $id): StreamedResponse
     {
         $file = $this->fileRepository->findOrFail($id);
 
@@ -300,11 +290,8 @@ class ActivityController extends Controller
 
     /*
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $activity = $this->activityRepository->findOrFail($id);
 
@@ -327,10 +314,8 @@ class ActivityController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(): JsonResponse
     {
         foreach (request('rows') as $activityId) {
             Event::dispatch('activity.delete.before', $activityId);

@@ -10,35 +10,30 @@
         :action="route('admin.settings.workflows.update', $workflow->id)"
         method="PUT"
     >
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('admin::app.settings.workflows.edit.title')
-            </p>
-
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs
+                        name="settings.workflows.edit"
+                        :entity="$workflow"
+                    />
+                </div>
+    
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.workflows.edit.title')
+                </div>
+            </div>
+    
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.activities.edit.back_button.before') !!}
-
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.workflows.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('admin::app.settings.workflows.edit.back-btn')
-                </a>
-
-                {!! view_render_event('krayin.admin.activities.edit.back_button.after') !!}
-
-                {!! view_render_event('krayin.admin.activities.edit.back_button.before') !!}
-
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.workflows.edit.save-btn')
-                </button>
- 
-                {!! view_render_event('krayin.admin.activities.edit.back_button.after') !!}
+                <!-- Save button -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.workflows.edit.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 

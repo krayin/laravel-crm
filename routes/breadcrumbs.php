@@ -263,19 +263,19 @@ Breadcrumbs::for('settings.types.edit', function (BreadcrumbTrail $trail, $type)
 // Settings > Email Templates
 Breadcrumbs::for('settings.email_templates', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push(trans('admin::app.layouts.email-templates'), route('admin.settings.email_templates.index'));
+    $trail->push(trans('admin::app.settings.email-template.index.title'), route('admin.settings.email_templates.index'));
 });
 
 // Dashboard > Email Templates > Create Email Template
 Breadcrumbs::for('settings.email_templates.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.email_templates');
-    $trail->push(trans('admin::app.settings.email-templates.create-title'), route('admin.settings.email_templates.create'));
+    $trail->push(trans('admin::app.settings.email-template.create.title'), route('admin.settings.email_templates.create'));
 });
 
 // Dashboard > Email Templates > Edit Email Template
 Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $trail, $emailTemplate) {
     $trail->parent('settings.email_templates');
-    $trail->push(trans('admin::app.settings.email-templates.edit-title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
+    $trail->push(trans('admin::app.settings.email-template.edit.title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
 });
 
 // Settings > Workflows
@@ -287,13 +287,13 @@ Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
 // Dashboard > Workflows > Create Workflow
 Breadcrumbs::for('settings.workflows.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.workflows');
-    $trail->push(trans('admin::app.settings.workflows.create-title'), route('admin.settings.workflows.create'));
+    $trail->push(trans('admin::app.settings.workflows.create.title'), route('admin.settings.workflows.create'));
 });
 
 // Dashboard > Workflows > Edit Workflow
 Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $workflow) {
     $trail->parent('settings.workflows');
-    $trail->push(trans('admin::app.settings.workflows.edit-title'), route('admin.settings.workflows.edit', $workflow->id));
+    $trail->push(trans('admin::app.settings.workflows.edit.title'), route('admin.settings.workflows.edit', $workflow->id));
 });
 
 // Settings > Tags
