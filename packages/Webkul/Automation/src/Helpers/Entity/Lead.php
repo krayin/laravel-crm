@@ -1,11 +1,10 @@
 <?php
 
-namespace Webkul\Workflow\Helpers\Entity;
+namespace Webkul\Automation\Helpers\Entity;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
-use PhpOffice\PhpSpreadsheet\Calculation\MathTrig\Arabic;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -125,7 +124,7 @@ class Lead extends AbstractEntity
     /**
      * Execute workflow actions.
      *
-     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
+     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
      * @param  \Webkul\Lead\Contracts\Lead  $lead
      * @return array
      */

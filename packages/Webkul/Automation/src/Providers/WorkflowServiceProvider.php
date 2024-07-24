@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Workflow\Providers;
+namespace Webkul\Automation\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
@@ -21,7 +21,7 @@ class WorkflowServiceProvider extends ServiceProvider
                 return;
             }
 
-            app(\Webkul\Workflow\Listeners\Entity::class)->process($eventName, current($data));
+            app(\Webkul\Automation\Listeners\Entity::class)->process($eventName, current($data));
         });
     }
 

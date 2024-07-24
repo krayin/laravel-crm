@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Workflow\Models;
+namespace Webkul\Automation\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\Workflow\Contracts\Workflow as WorkflowContract;
+use Webkul\Automation\Contracts\Workflow as WorkflowContract;
 
 class Workflow extends Model implements WorkflowContract
 {

@@ -218,10 +218,10 @@
                         }
                     },
                     headers: @json(collect($workflow->actions ?? [])->first()['hook']['headers'] ?? []),
-                    leads: @json(app('\Webkul\Workflow\Helpers\Entity\Lead')->getAttributes('leads', [])),
-                    persons: @json(app('\Webkul\Workflow\Helpers\Entity\Person')->getAttributes('persons', [])),
-                    quotes: @json(app('\Webkul\Workflow\Helpers\Entity\Quote')->getAttributes('quotes', [])),
-                    activities: @json(app('\Webkul\Workflow\Helpers\Entity\Activity')->getAttributes('activities', [])),
+                    leads: @json(app('\Webkul\Automation\Helpers\Entity\Lead')->getAttributes('leads', [])),
+                    persons: @json(app('\Webkul\Automation\Helpers\Entity\Person')->getAttributes('persons', [])),
+                    quotes: @json(app('\Webkul\Automation\Helpers\Entity\Quote')->getAttributes('quotes', [])),
+                    activities: @json(app('\Webkul\Automation\Helpers\Entity\Activity')->getAttributes('activities', [])),
                 }
             },
 

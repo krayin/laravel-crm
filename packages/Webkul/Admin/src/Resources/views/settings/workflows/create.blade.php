@@ -698,7 +698,7 @@
 
                 data() {
                     return {
-                        events: @json(app('\Webkul\Workflow\Helpers\Entity')->getEvents()),
+                        events: @json(app('\Webkul\Automation\Helpers\Entity')->getEvents()),
 
                         event: '',
 
@@ -812,7 +812,7 @@
                 
                 data() {
                     return {
-                        conditions: @json(app('\Webkul\Workflow\Helpers\Entity')->getConditions()),
+                        conditions: @json(app('\Webkul\Automation\Helpers\Entity')->getConditions()),
 
                         conditionOperators: {
                             'price': [{
@@ -1033,7 +1033,7 @@
 
                 data() {
                     return {
-                        actions: @json(app('\Webkul\Workflow\Helpers\Entity')->getActions()),
+                        actions: @json(app('\Webkul\Automation\Helpers\Entity')->getActions()),
                     };
                 },
 

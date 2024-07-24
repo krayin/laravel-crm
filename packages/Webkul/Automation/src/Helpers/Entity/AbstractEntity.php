@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Workflow\Helpers\Entity;
+namespace Webkul\Automation\Helpers\Entity;
 
 abstract class AbstractEntity
 {

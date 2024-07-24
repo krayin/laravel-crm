@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Workflow\Helpers\Entity;
+namespace Webkul\Automation\Helpers\Entity;
 
 use Carbon\Carbon;
 use Illuminate\Support\Arr;
@@ -213,7 +213,7 @@ class Activity extends AbstractEntity
     /**
      * Execute workflow actions.
      *
-     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
+     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
      * @param  \Webkul\Activity\Contracts\Activity  $activity
      * @return array
      */

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Setting\WorkflowDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Workflow\Repositories\WorkflowRepository;
+use Webkul\Automation\Repositories\WorkflowRepository;
 
 class WorkflowController extends Controller
 {

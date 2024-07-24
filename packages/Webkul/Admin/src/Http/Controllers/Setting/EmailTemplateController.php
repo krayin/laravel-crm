@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
-use Webkul\Workflow\Helpers\Entity;
+use Webkul\Automation\Helpers\Entity;
 
 class EmailTemplateController extends Controller
 {

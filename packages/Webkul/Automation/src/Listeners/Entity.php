@@ -1,9 +1,9 @@
 <?php
 
-namespace Webkul\Workflow\Listeners;
+namespace Webkul\Automation\Listeners;
 
-use Webkul\Workflow\Helpers\Validator;
-use Webkul\Workflow\Repositories\WorkflowRepository;
+use Webkul\Automation\Helpers\Validator;
+use Webkul\Automation\Repositories\WorkflowRepository;
 
 class Entity
 {

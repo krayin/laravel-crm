@@ -1,8 +1,9 @@
 <?php
 
-namespace Webkul\Workflow\Repositories;
+namespace Webkul\Automation\Repositories;
 
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Automation\Contracts\Workflow;
 
 class WorkflowRepository extends Repository
 {
@@ -13,6 +14,6 @@ class WorkflowRepository extends Repository
      */
     public function model()
     {
-        return 'Webkul\Workflow\Contracts\Workflow';
+        return Workflow::class;
     }
 }

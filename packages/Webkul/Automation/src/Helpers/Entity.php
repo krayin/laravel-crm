@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Workflow\Helpers;
+namespace Webkul\Automation\Helpers;
 
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;

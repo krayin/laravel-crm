@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Workflow\Helpers\Entity;
+namespace Webkul\Automation\Helpers\Entity;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Http;
@@ -10,16 +10,15 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\Quote\Repositories\QuoteRepository;
 
-class Quote extends AbstractEntity
+class Person extends AbstractEntity
 {
     /**
      * Define the entity type.
      *
      * @var string
      */
-    protected $entityType = 'quotes';
+    protected $entityType = 'persons';
 
     /**
      * Create a new repository instance.
@@ -29,7 +28,6 @@ class Quote extends AbstractEntity
     public function __construct(
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository,
-        protected QuoteRepository $quoteRepository,
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository
     ) {}
@@ -37,13 +35,13 @@ class Quote extends AbstractEntity
     /**
      * Listing of the entities.
      *
-     * @param  \Webkul\Quote\Contracts\Quote|int  $entity
-     * @return \Webkul\Quote\Contracts\Quote
+     * @param  \Webkul\Contact\Contracts\Person  $entity
+     * @return \Webkul\Contact\Contracts\Person
      */
     public function getEntity($entity)
     {
-        if (! $entity instanceof \Webkul\Quote\Contracts\Quote) {
-            $entity = $this->quoteRepository->find($entity);
+        if (! $entity instanceof \Webkul\Contact\Contracts\Person) {
+            $entity = $this->personRepository->find($entity);
         }
 
         return $entity;
@@ -60,10 +58,6 @@ class Quote extends AbstractEntity
 
         return [
             [
-                'id'         => 'update_quote',
-                'name'       => __('admin::app.settings.workflows.update-quote'),
-                'attributes' => $this->getAttributes('quotes'),
-            ], [
                 'id'         => 'update_person',
                 'name'       => __('admin::app.settings.workflows.update-person'),
                 'attributes' => $this->getAttributes('persons'),
@@ -74,10 +68,6 @@ class Quote extends AbstractEntity
             ], [
                 'id'      => 'send_email_to_person',
                 'name'    => __('admin::app.settings.workflows.send-email-to-person'),
-                'options' => $emailTemplates,
-            ], [
-                'id'      => 'send_email_to_sales_owner',
-                'name'    => __('admin::app.settings.workflows.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'              => 'trigger_webhook',
@@ -100,32 +90,26 @@ class Quote extends AbstractEntity
     /**
      * Execute workflow actions.
      *
-     * @param  \Webkul\Workflow\Contracts\Workflow  $workflow
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
+     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
+     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return array
      */
-    public function executeActions($workflow, $quote)
+    public function executeActions($workflow, $person)
     {
         foreach ($workflow->actions as $action) {
             switch ($action['id']) {
-                case 'update_quote':
-                    $this->quoteRepository->update([
-                        'entity_type'        => 'quotes',
-                        $action['attribute'] => $action['value'],
-                    ], $quote->id);
-
-                    break;
-
                 case 'update_person':
                     $this->personRepository->update([
                         'entity_type'        => 'persons',
                         $action['attribute'] => $action['value'],
-                    ], $quote->person_id);
+                    ], $person->id);
 
                     break;
 
                 case 'update_related_leads':
-                    foreach ($quote->leads as $lead) {
+                    $leads = $this->leadRepository->findByField('person_id', $person->id);
+
+                    foreach ($leads as $lead) {
                         $this->leadRepository->update([
                             'entity_type'        => 'leads',
                             $action['attribute'] => $action['value'],
@@ -143,27 +127,9 @@ class Quote extends AbstractEntity
 
                     try {
                         Mail::queue(new Common([
-                            'to'      => data_get($quote->person->emails, '*.value'),
-                            'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
-                            'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
-                        ]));
-                    } catch (\Exception $e) {
-                    }
-
-                    break;
-
-                case 'send_email_to_sales_owner':
-                    $emailTemplate = $this->emailTemplateRepository->find($action['value']);
-
-                    if (! $emailTemplate) {
-                        break;
-                    }
-
-                    try {
-                        Mail::queue(new Common([
-                            'to'      => $quote->user->email,
-                            'subject' => $this->replacePlaceholders($quote, $emailTemplate->subject),
-                            'body'    => $this->replacePlaceholders($quote, $emailTemplate->content),
+                            'to'      => data_get($person->emails, '*.value'),
+                            'subject' => $this->replacePlaceholders($person, $emailTemplate->subject),
+                            'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
                     } catch (\Exception $e) {
                     }
@@ -175,7 +141,7 @@ class Quote extends AbstractEntity
                         try {
                             $this->triggerWebhook(
                                 $action['hook'],
-                                $quote
+                                $person
                             );
                         } catch (\Exception $e) {
                             report($e);
@@ -191,10 +157,10 @@ class Quote extends AbstractEntity
      * Trigger webhook.
      *
      * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
+     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return void
      */
-    private function triggerWebhook($hook, $quote)
+    private function triggerWebhook($hook, $person)
     {
         if (in_array($hook['method'], ['get', 'delete'])) {
             Http::withHeaders(
@@ -207,7 +173,7 @@ class Quote extends AbstractEntity
                 $this->formatHeaders($hook)
             )->{$hook['method']}(
                 $hook['url'],
-                $this->getRequestBody($hook, $quote)
+                $this->getRequestBody($hook, $person)
             );
         }
     }
@@ -237,14 +203,14 @@ class Quote extends AbstractEntity
      * Prepare request body.
      *
      * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
+     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return array
      */
-    private function getRequestBody($hook, $quote)
+    private function getRequestBody($hook, $person)
     {
-        $hook['simple'] = str_replace('quote_', '', $hook['simple']);
+        $hook['simple'] = str_replace('person_', '', $hook['simple']);
 
-        $results = $this->quoteRepository->find($quote->id)->get($hook['simple'])->first()->toArray();
+        $results = $this->personRepository->find($person->id)->get($hook['simple'])->first()->toArray();
 
         if (isset($hook['custom'])) {
             $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
