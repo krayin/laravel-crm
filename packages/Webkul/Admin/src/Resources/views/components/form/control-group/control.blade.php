@@ -108,9 +108,7 @@
                 <x-admin::tinymce 
                     :selector="'textarea#' . $attributes->get('id')"
                     ::field="field"
-                    :placeholders="$attributes->get('placeholders', [])"
-                >
-                </x-admin::tinymce>
+                />
             @endif
         </v-field>
 

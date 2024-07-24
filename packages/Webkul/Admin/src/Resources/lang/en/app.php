@@ -232,6 +232,47 @@ return [
                 ],
             ],
         ],
+
+        'email-template' => [
+            'index' => [
+                'create-btn'     => 'Create Email Template',
+                'title'          => 'Email Templates',
+                'create-success' => 'Email Template created successfully.',
+                'update-success' => 'Email Template updated successfully.',
+                'delete-success' => 'Email Template deleted successfully.',
+                'delete-failed'  => 'Email Template can not be deleted.',
+
+                'datagrid'   => [
+                    'delete'       => 'Delete',
+                    'edit'         => 'Edit',
+                    'id'           => 'ID',
+                    'name'         => 'Name',
+                    'subject'      => 'Subject',
+                ],
+            ],
+
+            'create'     => [
+                'title'                => 'Create Email Template',
+                'save-btn'             => 'Save Email Template',
+                'email-template'       => 'Email Template',
+                'subject'              => 'Subject',
+                'content'              => 'Content',
+                'subject-placeholders' => 'Subject Placeholders',
+                'general'              => 'General',
+                'name'                 => 'Name',
+            ],
+
+            'edit' => [
+                'title'                => 'Edit Email Template',
+                'save-btn'             => 'Save Email Template',
+                'email-template'       => 'Email Template',
+                'subject'              => 'Subject',
+                'content'              => 'Content',
+                'subject-placeholders' => 'Subject Placeholders',
+                'general'              => 'General',
+                'name'                 => 'Name',
+            ],
+        ],
     ],
 
     'activities' => [

@@ -2,48 +2,43 @@
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
-        @lang('Create Email Template')
+        @lang('admin::app.settings.email-template.create.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.email_template.edit.form.before') !!}
+    {!! view_render_event('krayin.admin.email_template.create.form.before') !!}
 
-    <x-admin::form :action="route('admin.settings.workflows.store')">
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('Create Email Template')
-            </p>
+    <x-admin::form
+        :action="route('admin.settings.email_templates.store')"
+        method="POST"
+    >
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs name="settings.email_templates.create" />
+                </div>
+
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.email-template.create.title')
+                </div>
+            </div>
 
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.email_template.edit.back_button.before') !!}
-
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.workflows.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('Back')
-                </a>
-
-                {!! view_render_event('krayin.admin.email_template.edit.back_button.after') !!}
-
-                {!! view_render_event('krayin.admin.email_template.edit.back_button.before') !!}
-
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('Save Email Template')
-                </button>
- 
-                {!! view_render_event('krayin.admin.email_template.edit.back_button.after') !!}
+                <!-- Create button for person -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.email-template.create.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
         <v-email-template></v-email-template>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.email_template.edit.form.after') !!}
+    {!! view_render_event('krayin.admin.email_template.create.form.after') !!}
 
     @pushOnce('scripts')
         <script
@@ -51,19 +46,21 @@
             id="v-email-template-template"
         >
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <!-- Left sub-component -->
+                <!-- Right Component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <!-- Events -->
+                    <!-- Title -->
                     <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        <div class="mb-8 flex items-center justify-between gap-4">
+                        <div class="mb-4 flex items-center justify-between gap-4">
                             <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                @lang('Email Template')
+                                @lang('admin::app.settings.email-template.create.email-template')
                             </p>
                         </div>
 
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>
-                                @lang('Subject')
+                        {!! view_render_event('krayin.admin.email_template.create.subject.before') !!}
+
+                        <x-admin::form.control-group class="!mb-0">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.email-template.create.subject')
                             </x-admin::form.control-group.label>
 
                             <div class="flex">
@@ -73,8 +70,9 @@
                                     id="subject"
                                     class="rounded-r-none"
                                     :value="old('subject')"
-                                    :label="trans('Subject')"
-                                    :placeholder="trans('Subject')"
+                                    rules="required"
+                                    :label="trans('admin::app.settings.email-template.create.subject')"
+                                    :placeholder="trans('admin::app.settings.email-template.create.subject')"
                                     v-model="subject"
                                     @focusout="saveCursorPosition"
                                 />
@@ -84,7 +82,7 @@
                                     name="placeholder"
                                     id="placeholder"
                                     class="!w-1/3 rounded-l-none"
-                                    :label="trans('Subject Placeholder')"
+                                    :label="trans('admin::app.settings.email-template.create.subject-placeholder')"
                                     v-model="selectedPlaceholder"
                                     @change="insertPlaceholder"
                                 >
@@ -101,15 +99,20 @@
                                         ></option>
                                     </optgroup>
                                 </x-admin::form.control-group.control>
-                            </div>
 
-                            <x-admin::form.control-group.error control-name="description" />
+                            </div>
                         </x-admin::form.control-group>
 
+                        <x-admin::form.control-group.error control-name="subject"/>
+
+                        {!! view_render_event('krayin.admin.email_template.create.subject.after') !!}
+
+                        {!! view_render_event('krayin.admin.email_template.create.content.before') !!}
+
                         <!-- Event Name -->
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="mt-4">
                             <x-admin::form.control-group.label class="required">
-                                @lang('Content')
+                                @lang('admin::app.settings.email-template.create.content')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
@@ -119,24 +122,26 @@
                                 rules="required"
                                 :tinymce="true"
                                 :placeholders="json_encode($placeholders)"
-                                :label="trans('Content')"
-                                :placeholder="trans('Content')"
+                                :label="trans('admin::app.settings.email-template.create.content')"
+                                :placeholder="trans('admin::app.settings.email-template.create.content')"
                             />
 
                             <x-admin::form.control-group.error control-name="content" />
                         </x-admin::form.control-group>
+
+                        {!! view_render_event('krayin.admin.email_template.create.content.after') !!}
                     </div>
                 </div>
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.before') !!}
+                    {!! view_render_event('krayin.admin.email_template.create.accordion.general.before') !!}
 
                     <x-admin::accordion>
                         <x-slot:header>
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('General')
+                                    @lang('admin::app.settings.email-template.create.general')
                                 </p>
                             </div>
                         </x-slot>
@@ -144,7 +149,7 @@
                         <x-slot:content>
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('Name')
+                                    @lang('admin::app.settings.email-template.create.name')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -153,15 +158,15 @@
                                     id="name"
                                     :value="old('name')"
                                     rules="required"
-                                    :label="trans('Name')"
-                                    :placeholder="trans('Name')"
+                                    :label="trans('admin::app.settings.email-template.create.name')"
+                                    :placeholder="trans('admin::app.settings.email-template.create.name')"
                                 />
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
                         </x-slot>
                     </x-admin::accordion>
 
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.after') !!}
+                    {!! view_render_event('krayin.admin.email_template.create.accordion.general.after') !!}
                 </div>
             </div>
         </script>
@@ -183,10 +188,21 @@
                 },
 
                 methods: {
+                    /**
+                     * Save the cursor position when the input is focused.
+                     * 
+                     * @param {Event} event
+                     * @returns {void}
+                     */
                     saveCursorPosition(event) {
                         this.cursorPosition = event.target.selectionStart;
                     },
 
+                    /**
+                     * Insert the selected placeholder into the subject.
+                     * 
+                     * @returns {void}
+                     */
                     insertPlaceholder() {
                         const placeholder = this.selectedPlaceholder;
 

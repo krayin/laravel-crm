@@ -32,22 +32,26 @@ class EmailTemplateDataGrid extends DataGrid
     public function prepareColumns()
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.settings.email-template.index.datagrid.id'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.email-template.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'subject',
-            'label'    => trans('admin::app.datagrid.subject'),
+            'label'    => trans('admin::app.settings.email-template.index.datagrid.subject'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -63,17 +67,17 @@ class EmailTemplateDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'delete',
             'icon'   => 'icon-edit',
-            'title'  => trans('ui::app.datagrid.edit'),
+            'title'  => trans('admin::app.settings.email-template.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn($row) => route('admin.settings.email_templates.edit', $row->id),
+            'url'    => fn ($row) => route('admin.settings.email_templates.edit', $row->id),
         ]);
 
         $this->addAction([
             'index'          => 'delete',
-            'icon'         => 'icon-delete',
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'url'          => fn($row) => route('admin.settings.email_templates.delete', $row->id),
+            'icon'           => 'icon-delete',
+            'title'          => trans('admin::app.settings.email-template.index.datagrid.delete'),
+            'method'         => 'DELETE',
+            'url'            => fn ($row) => route('admin.settings.email_templates.delete', $row->id),
         ]);
     }
 }

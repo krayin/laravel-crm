@@ -2,7 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Workflow\Helpers\Entity;
@@ -21,13 +25,11 @@ class EmailTemplateController extends Controller
 
     /**
      * Display a listing of the email template.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid::class)->toJson();
+            return datagrid(EmailTemplateDataGrid::class)->process();
         }
 
         return view('admin::settings.email-templates.index');
@@ -47,10 +49,8 @@ class EmailTemplateController extends Controller
 
     /**
      * Store a newly created email templates in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'name'    => 'required',
@@ -64,18 +64,15 @@ class EmailTemplateController extends Controller
 
         Event::dispatch('settings.email_templates.create.after', $emailTemplate);
 
-        session()->flash('success', trans('admin::app.settings.email-templates.create-success'));
+        session()->flash('success', trans('admin::app.settings.email-template.index.create-success'));
 
         return redirect()->route('admin.settings.email_templates.index');
     }
 
     /**
      * Show the form for editing the specified email template.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $emailTemplate = $this->emailTemplateRepository->findOrFail($id);
 
@@ -86,11 +83,8 @@ class EmailTemplateController extends Controller
 
     /**
      * Update the specified email template in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
             'name'    => 'required',
@@ -104,39 +98,36 @@ class EmailTemplateController extends Controller
 
         Event::dispatch('settings.email_templates.update.after', $emailTemplate);
 
-        session()->flash('success', trans('admin::app.settings.email-templates.update-success'));
+        session()->flash('success', trans('admin::app.settings.email-template.index.update-success'));
 
         return redirect()->route('admin.settings.email_templates.index');
     }
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $emailTemplate = $this->emailTemplateRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.email_templates.delete.before', $id);
 
-            $this->emailTemplateRepository->delete($id);
+            $emailTemplate->delete($id);
 
             Event::dispatch('settings.email_templates.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.settings.email-templates.delete-success'),
+                'message' => trans('admin::app.settings.email-template.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.settings.email-templates.delete-failed'),
+                'message' => trans('admin::app.settings.email-template.index.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.email-templates.delete-failed'),
+            'message' => trans('admin::app.settings.email-template.index.delete-failed'),
         ], 400);
     }
 }

@@ -1,3 +1,5 @@
+@php($placeholders = app('\Webkul\Workflow\Helpers\Entity')->getEmailTemplatePlaceholders())
+
 <v-tinymce {{ $attributes }}></v-tinymce>
 
 @pushOnce('scripts')
@@ -21,7 +23,7 @@
         app.component('v-tinymce', {
             template: '#v-tinymce-template',
                 
-            props: ['selector', 'placeholders'],
+            props: ['selector', 'field'],
 
             data() {
                 return {
@@ -160,38 +162,42 @@
                     tinyMCEHelper.initTinyMCE({
                         selector: this.selector,
                         plugins: 'image media wordcount save fullscreen code table lists link',
-                        toolbar: 'formatselect | bold italic strikethrough forecolor backcolor image alignleft aligncenter alignright alignjustify | link hr | numlist bullist outdent indent | removeformat | code | table | placeholder',
+                        toolbar: 'placeholders | bold italic strikethrough forecolor backcolor image alignleft aligncenter alignright alignjustify | link hr | numlist bullist outdent indent | removeformat | code | table',
                         image_advtab: true,
                         directionality: 'ltr',
+                        setup: (editor) => {
+                            let toggleState = false;
 
-                        setup: editor => {
-                            editor.ui.registry.addMenuButton('placeholder', {
+                            editor.ui.registry.addMenuButton('placeholders', {
                                 text: 'Placeholders',
-                                fetch: callback => {
-                                    let placeholders;
-
-// If placeholders is a JSON string, parse it
-try {
-    placeholders = JSON.parse(this.placeholders);
-} catch (e) {
-    // If JSON parsing fails, fallback to using the string directly if it's an array
-    placeholders = Array.isArray(this.placeholders) ? this.placeholders : [];
-}
-                                    const items = placeholders.map(placeholder => ({
-                                        type: 'menuitem',
-                                        text: placeholder.text,  // The display text in the menu
-                                        value: placeholder.value, // The value to be inserted into the editor
-                                    }));
+                                fetch: function (callback) {
+                                    const items = [
+                                        @foreach($placeholders as $placeholder)
+                                            {
+                                                type: 'nestedmenuitem',
+                                                text: '{{ $placeholder['text'] }}',
+                                                getSubmenuItems: () => [
+                                                    @foreach($placeholder['menu'] as $child)
+                                                        {
+                                                            type: 'menuitem',
+                                                            text: '{{ $child['text'] }}',
+                                                            onAction: function () {
+                                                                editor.insertContent('{{ $child['value'] }}');
+                                                            },
+                                                        },
+                                                    @endforeach
+                                                ],
+                                            },
+                                        @endforeach
+                                    ];
 
                                     callback(items);
-                                },
-                                onAction: (api) => {
-                                    api.close(); // Close the menu after selection
                                 }
                             });
+
+                            editor.on('keyup', () => this.field.onInput(editor.getContent()));
                         }
                     });
-
                 },
             },
         })
