@@ -8,8 +8,8 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Setting\EmailTemplateDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Automation\Helpers\Entity;
+use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 
 class EmailTemplateController extends Controller
 {

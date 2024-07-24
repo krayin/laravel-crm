@@ -2,8 +2,9 @@
 
 namespace Webkul\Automation\Providers;
 
-use Webkul\Core\Providers\BaseModuleServiceProvider;
+use Webkul\Automation\Models\Webhook;
 use Webkul\Automation\Models\Workflow;
+use Webkul\Core\Providers\BaseModuleServiceProvider;
 
 class ModuleServiceProvider extends BaseModuleServiceProvider
 {
@@ -14,5 +15,6 @@ class ModuleServiceProvider extends BaseModuleServiceProvider
      */
     protected $models = [
         Workflow::class,
+        Webhook::class,
     ];
 }

@@ -2,16 +2,16 @@
 
 namespace Webkul\Automation\Repositories;
 
-use Webkul\Automation\Contracts\Workflow;
+use Webkul\Automation\Contracts\Webhook;
 use Webkul\Core\Eloquent\Repository;
 
-class WorkflowRepository extends Repository
+class WebhookRepository extends Repository
 {
     /**
      * Specify Model class name.
      */
     public function model(): string
     {
-        return Workflow::class;
+        return Webhook::class;
     }
 }
