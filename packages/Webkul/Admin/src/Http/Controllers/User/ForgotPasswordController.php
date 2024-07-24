@@ -2,10 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Password;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\UserResetPassword;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
@@ -13,10 +14,8 @@ class ForgotPasswordController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');

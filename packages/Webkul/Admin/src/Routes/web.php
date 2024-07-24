@@ -1,6 +1,11 @@
 <?php
 
 /**
+ * Auth routes.
+ */
+require 'auth-routes.php';
+
+/**
  * Settings routes.
  */
 require 'settings-routes.php';
