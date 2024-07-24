@@ -182,29 +182,29 @@ class Activity extends AbstractEntity
         return [
             [
                 'id'         => 'update_related_leads',
-                'name'       => __('admin::app.settings.workflows.update-related-leads'),
+                'name'       => trans('admin::app.settings.workflows.edit.helper.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => __('admin::app.settings.workflows.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_participants',
-                'name'    => __('admin::app.settings.workflows.send-email-to-participants'),
+                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-participants'),
                 'options' => $emailTemplates,
             ], [
                 'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
+                'name'            => trans('admin::app.settings.workflows.edit.helper.add-webhook'),
                 'request_methods' => [
-                    'get'    => __('admin::app.settings.workflows.get_method'),
-                    'post'   => __('admin::app.settings.workflows.post_method'),
-                    'put'    => __('admin::app.settings.workflows.put_method'),
-                    'patch'  => __('admin::app.settings.workflows.patch_method'),
-                    'delete' => __('admin::app.settings.workflows.delete_method'),
+                    'get'    => trans('admin::app.settings.workflows.edit.helper.get_method'),
+                    'post'   => trans('admin::app.settings.workflows.edit.helper.post_method'),
+                    'put'    => trans('admin::app.settings.workflows.edit.helper.put_method'),
+                    'patch'  => trans('admin::app.settings.workflows.edit.helper.patch_method'),
+                    'delete' => trans('admin::app.settings.workflows.edit.helper.delete_method'),
                 ],
                 'encodings' => [
-                    'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
+                    'json'       => trans('admin::app.settings.workflows.edit.helper.encoding_json'),
+                    'http_query' => trans('admin::app.settings.workflows.edit.helper.encoding_http_query'),
                 ],
             ],
         ];

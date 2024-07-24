@@ -5,6 +5,7 @@ use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
+use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 
 /**
  * Settings routes.
@@ -71,6 +72,23 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.sources.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.sources.delete');
+        });
+
+        /**
+         * Workflows Routes.
+         */
+        Route::controller(WorkflowController::class)->prefix('workflows')->group(function () {
+            Route::get('', 'index')->name('admin.settings.workflows.index');
+
+            Route::get('create', 'create')->name('admin.settings.workflows.create');
+
+            Route::post('create', 'store')->name('admin.settings.workflows.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.workflows.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.workflows.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.workflows.delete');
         });
     });
 });

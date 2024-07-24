@@ -1,8 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Contact\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
+use Webkul\Admin\Http\Controllers\Contact\PersonController;
 
 /**
  * Settings routes.

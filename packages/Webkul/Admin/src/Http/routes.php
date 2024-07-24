@@ -299,21 +299,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'LocationController@destroy')->name('admin.settings.locations.delete');
                 });
 
-                // Workflows Routes
-                Route::prefix('workflows')->group(function () {
-                    Route::get('', 'WorkflowController@index')->name('admin.settings.workflows.index');
-
-                    Route::get('create', 'WorkflowController@create')->name('admin.settings.workflows.create');
-
-                    Route::post('create', 'WorkflowController@store')->name('admin.settings.workflows.store');
-
-                    Route::get('edit/{id?}', 'WorkflowController@edit')->name('admin.settings.workflows.edit');
-
-                    Route::put('edit/{id}', 'WorkflowController@update')->name('admin.settings.workflows.update');
-
-                    Route::delete('{id}', 'WorkflowController@destroy')->name('admin.settings.workflows.delete');
-                });
-
                 // Tags Routes
                 Route::prefix('tags')->group(function () {
                     Route::get('', 'TagController@index')->name('admin.settings.tags.index');
