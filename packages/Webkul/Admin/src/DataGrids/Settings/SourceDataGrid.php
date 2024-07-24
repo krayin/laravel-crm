@@ -1,25 +1,25 @@
 <?php
 
-namespace Webkul\Admin\DataGrids\Setting;
+namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 
-class TypeDataGrid extends DataGrid
+class SourceDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('lead_types')
+        $queryBuilder = DB::table('lead_sources')
             ->addSelect(
-                'lead_types.id',
-                'lead_types.name'
+                'lead_sources.id',
+                'lead_sources.name'
             );
 
-        $this->addFilter('id', 'lead_types.id');
+        $this->addFilter('id', 'lead_sources.id');
 
         return $queryBuilder;
     }
@@ -30,19 +30,17 @@ class TypeDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
-            'type'       => 'string',
-            'filterable' => true,
-            'sortable'   => true,
+            'index'    => 'id',
+            'label'    => trans('admin::app.settings.sources.index.datagrid.id'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
-            'type'       => 'string',
-            'filterable' => true,
-            'sortable'   => true,
+            'index'    => 'name',
+            'label'    => trans('admin::app.settings.sources.index.datagrid.name'),
+            'type'     => 'string',
+            'sortable' => true,
         ]);
     }
 
@@ -54,20 +52,20 @@ class TypeDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
+            'title'  => trans('admin::app.settings.sources.index.datagrid.edit'),
             'method' => 'GET',
             'url'    => function ($row) {
-                return route('admin.settings.types.update', $row->id);
+                return route('admin.settings.sources.edit', $row->id);
             },
         ]);
 
         $this->addAction([
             'index'  => 'delete',
             'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+            'title'  => trans('admin::app.settings.sources.index.datagrid.delete'),
             'method' => 'DELETE',
             'url'    => function ($row) {
-                return route('admin.settings.types.delete', $row->id);
+                return route('admin.settings.sources.delete', $row->id);
             },
         ]);
     }

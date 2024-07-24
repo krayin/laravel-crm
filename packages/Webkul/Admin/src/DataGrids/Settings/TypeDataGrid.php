@@ -1,48 +1,46 @@
 <?php
 
-namespace Webkul\Admin\DataGrids\Setting;
+namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 
-class WorkflowDataGrid extends DataGrid
+class TypeDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
      */
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('workflows')
+        $queryBuilder = DB::table('lead_types')
             ->addSelect(
-                'workflows.id',
-                'workflows.name'
+                'lead_types.id',
+                'lead_types.name'
             );
 
-        $this->addFilter('id', 'workflows.id');
+        $this->addFilter('id', 'lead_types.id');
 
         return $queryBuilder;
     }
 
     /**
-     * Prepare Columns.
+     * Add columns.
      */
     public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.settings.workflows.index.datagrid.id'),
+            'label'      => trans('admin::app.settings.types.index.datagrid.id'),
             'type'       => 'string',
-            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.settings.workflows.index.datagrid.name'),
+            'label'      => trans('admin::app.datagrid.name'),
             'type'       => 'string',
-            'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
         ]);
@@ -56,17 +54,21 @@ class WorkflowDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.workflows.index.datagrid.edit'),
+            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.workflows.edit', $row->id),
+            'url'    => function ($row) {
+                return route('admin.settings.types.update', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'index'        => 'delete',
-            'icon'         => 'icon-delete',
-            'title'        => trans('admin::app.settings.workflows.index.datagrid.delete'),
-            'method'       => 'DELETE',
-            'url'          => fn ($row) => route('admin.settings.workflows.delete', $row->id),
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.types.delete', $row->id);
+            },
         ]);
     }
 }

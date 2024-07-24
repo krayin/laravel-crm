@@ -9,27 +9,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
     Route::get('create/{id}', 'Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController@create')->name('admin.datagrid.saved_filters.destroy');
 
     Route::prefix(config('app.admin_path'))->group(function () {
-
-        Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
-
-        // Login Routes
-        Route::get('login', 'Webkul\Admin\Http\Controllers\User\SessionController@create')->name('admin.session.create');
-
-        //login post route to admin auth controller
-        Route::post('login', 'Webkul\Admin\Http\Controllers\User\SessionController@store')->name('admin.session.store');
-
-        // Forget Password Routes
-        Route::get('forgot-password', 'Webkul\Admin\Http\Controllers\User\ForgotPasswordController@create')->name('admin.forgot_password.create');
-
-        Route::post('forgot-password', 'Webkul\Admin\Http\Controllers\User\ForgotPasswordController@store')->name('admin.forgot_password.store');
-
-        // Reset Password Routes
-        Route::get('reset-password/{token}', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@create')->name('admin.reset_password.create');
-
-        Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
-
-        Route::post('mail/inbound-parse', 'Webkul\Admin\Http\Controllers\Mail\EmailController@inboundParse')->name('admin.mail.inbound_parse');
-
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
             Route::delete('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
@@ -174,111 +153,11 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
             // Contacts Routes
             Route::group([
-                'prefix'    => 'contacts',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Contact',
-            ], function () {
-                // Customers Routes
-                Route::prefix('persons')->group(function () {
-                    Route::get('', 'PersonController@index')->name('admin.contacts.persons.index');
-
-                    Route::get('create', 'PersonController@create')->name('admin.contacts.persons.create');
-
-                    Route::post('create', 'PersonController@store')->name('admin.contacts.persons.store');
-
-                    Route::get('edit/{id?}', 'PersonController@edit')->name('admin.contacts.persons.edit');
-
-                    Route::put('edit/{id}', 'PersonController@update')->name('admin.contacts.persons.update');
-
-                    Route::get('search', 'PersonController@search')->name('admin.contacts.persons.search');
-
-                    Route::middleware(['throttle:100,60'])->delete('{id}', 'PersonController@destroy')->name('admin.contacts.persons.delete');
-
-                    Route::post('mass-destroy', 'PersonController@massDestroy')->name('admin.contacts.persons.mass_delete');
-                });
-
-                // Companies Routes
-                Route::prefix('organizations')->group(function () {
-                    Route::get('', 'OrganizationController@index')->name('admin.contacts.organizations.index');
-
-                    Route::get('create', 'OrganizationController@create')->name('admin.contacts.organizations.create');
-
-                    Route::post('create', 'OrganizationController@store')->name('admin.contacts.organizations.store');
-
-                    Route::get('edit/{id?}', 'OrganizationController@edit')->name('admin.contacts.organizations.edit');
-
-                    Route::put('edit/{id}', 'OrganizationController@update')->name('admin.contacts.organizations.update');
-
-                    Route::delete('{id}', 'OrganizationController@destroy')->name('admin.contacts.organizations.delete');
-
-                    Route::put('mass-destroy', 'OrganizationController@massDestroy')->name('admin.contacts.organizations.mass_delete');
-                });
-            });
-
-            // Products Routes
-            Route::group([
-                'prefix'    => 'products',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Product',
-            ], function () {
-                Route::get('', 'ProductController@index')->name('admin.products.index');
-
-                Route::get('create', 'ProductController@create')->name('admin.products.create');
-
-                Route::post('create', 'ProductController@store')->name('admin.products.store');
-
-                Route::get('view/{id}', 'ProductController@view')->name('admin.products.view');
-
-                Route::get('edit/{id}', 'ProductController@edit')->name('admin.products.edit');
-
-                Route::put('edit/{id}', 'ProductController@update')->name('admin.products.update');
-
-                Route::get('search', 'ProductController@search')->name('admin.products.search');
-
-                Route::get('{id}/warehouses', 'ProductController@warehouses')->name('admin.products.warehouses');
-
-                Route::post('{id}/inventories/{warehouseId?}', 'ProductController@storeInventories')->name('admin.products.inventories.store');
-
-                Route::delete('{id}', 'ProductController@destroy')->name('admin.products.delete');
-
-                Route::put('mass-destroy', 'ProductController@massDestroy')->name('admin.products.mass_delete');
-            });
-
-            // Contacts Routes
-            Route::group([
                 'prefix'    => 'settings',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Setting',
+                'namespace' => 'Webkul\Admin\Http\Controllers\Settings',
             ], function () {
 
                 Route::get('', 'SettingController@index')->name('admin.settings.index');
-
-                // Groups Routes
-                Route::prefix('groups')->group(function () {
-                    Route::get('', 'GroupController@index')->name('admin.settings.groups.index');
-
-                    Route::get('create', 'GroupController@create')->name('admin.settings.groups.create');
-
-                    Route::post('create', 'GroupController@store')->name('admin.settings.groups.store');
-
-                    Route::get('edit/{id}', 'GroupController@edit')->name('admin.settings.groups.edit');
-
-                    Route::put('edit/{id}', 'GroupController@update')->name('admin.settings.groups.update');
-
-                    Route::delete('{id}', 'GroupController@destroy')->name('admin.settings.groups.delete');
-                });
-
-                // Roles Routes
-                Route::prefix('roles')->group(function () {
-                    Route::get('', 'RoleController@index')->name('admin.settings.roles.index');
-
-                    Route::get('create', 'RoleController@create')->name('admin.settings.roles.create');
-
-                    Route::post('create', 'RoleController@store')->name('admin.settings.roles.store');
-
-                    Route::get('edit/{id}', 'RoleController@edit')->name('admin.settings.roles.edit');
-
-                    Route::put('edit/{id}', 'RoleController@update')->name('admin.settings.roles.update');
-
-                    Route::delete('{id}', 'RoleController@destroy')->name('admin.settings.roles.delete');
-                });
 
                 // Users Routes
                 Route::prefix('users')->group(function () {
