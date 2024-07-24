@@ -352,7 +352,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
                 });
 
-
                 // Email Templates Routes
                 Route::prefix('email-templates')->group(function () {
                     Route::get('', 'EmailTemplateController@index')->name('admin.settings.email_templates.index');
