@@ -1,11 +1,11 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Setting\RoleDataGrid;
+use Webkul\Admin\DataGrids\Settings\RoleDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\User\Repositories\RoleRepository;
 
@@ -20,8 +20,6 @@ class RoleController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
     public function index(): View|JsonResponse
     {
@@ -52,34 +50,37 @@ class RoleController extends Controller
         $this->validate(request(), [
             'name'            => 'required',
             'permission_type' => 'required',
+            'description'     => 'required',
         ]);
 
         Event::dispatch('settings.role.create.before');
 
-        $roleData = request()->all();
+        $data = request()->only([
+            'name',
+            'description',
+            'permission_type',
+            'permissions',
+        ]);
 
-        if ($roleData['permission_type'] == 'custom') {
-            if (! isset($roleData['permissions'])) {
-                $roleData['permissions'] = [];
+        if ($data['permission_type'] == 'custom') {
+            if (! isset($data['permissions'])) {
+                $data['permissions'] = [];
             }
         }
 
-        $role = $this->roleRepository->create($roleData);
+        $role = $this->roleRepository->create($data);
 
         Event::dispatch('settings.role.create.after', $role);
 
-        session()->flash('success', trans('admin::app.settings.roles.create-success'));
+        session()->flash('success', trans('admin::app.settings.roles.index.create-success'));
 
         return redirect()->route('admin.settings.roles.index');
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $role = $this->roleRepository->findOrFail($id);
 
@@ -89,31 +90,31 @@ class RoleController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id)
     {
         $this->validate(request(), [
             'name'            => 'required',
-            'permission_type' => 'required',
+            'permission_type' => 'required|in:all,custom',
+            'description'     => 'required',
         ]);
 
         Event::dispatch('settings.role.update.before', $id);
 
-        $roleData = request()->all();
+        $data = array_merge(request()->only([
+            'name',
+            'description',
+            'permission_type',
+        ]), [
+            'permissions' => request()->has('permissions') ? request('permissions') : [],
+        ]);
 
-        if ($roleData['permission_type'] == 'custom') {
-            if (! isset($roleData['permissions'])) {
-                $roleData['permissions'] = [];
-            }
-        }
-
-        $role = $this->roleRepository->update($roleData, $id);
+        $role = $this->roleRepository->update($data, $id);
 
         Event::dispatch('settings.role.update.after', $role);
 
-        session()->flash('success', trans('admin::app.settings.roles.update-success'));
+        session()->flash('success', trans('admin::app.settings.roles.index.update-success'));
 
         return redirect()->route('admin.settings.roles.index');
     }
@@ -121,10 +122,9 @@ class RoleController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $response = [
             'responseCode' => 400,
@@ -133,11 +133,11 @@ class RoleController extends Controller
         $role = $this->roleRepository->findOrFail($id);
 
         if ($role->admins && $role->admins->count() >= 1) {
-            $response['message'] = trans('admin::app.settings.roles.being-used');
+            $response['message'] = trans('admin::app.settings.roles.index.being-used');
 
             session()->flash('error', $response['message']);
         } elseif ($this->roleRepository->count() == 1) {
-            $response['message'] = trans('admin::app.settings.roles.last-delete-error');
+            $response['message'] = trans('admin::app.settings.roles.index.last-delete-error');
 
             session()->flash('error', $response['message']);
         } else {
@@ -145,13 +145,13 @@ class RoleController extends Controller
                 Event::dispatch('settings.role.delete.before', $id);
 
                 if (auth()->guard('user')->user()->role_id == $id) {
-                    $response['message'] = trans('admin::app.settings.roles.current-role-delete-error');
+                    $response['message'] = trans('admin::app.settings.roles.index.current-role-delete-error');
                 } else {
                     $this->roleRepository->delete($id);
 
                     Event::dispatch('settings.role.delete.after', $id);
 
-                    $message = trans('admin::app.settings.roles.delete-success');
+                    $message = trans('admin::app.settings.roles.index.delete-success');
 
                     $response = [
                         'responseCode' => 200,

@@ -86,6 +86,15 @@ return [
                 'no-records-available' => 'No Records Available.',
             ],
         ],
+
+        'modal' => [
+            'confirm' => [
+                'agree-btn'    => 'Agree',
+                'disagree-btn' => 'Disagree',
+                'message'      => 'Are you sure you want to perform this action?',
+                'title'        => 'Are you sure?',
+            ],
+        ],
     ],
 
     'contacts' => [
@@ -119,6 +128,7 @@ return [
         'index' => [
             'title'      => 'Products',
             'create-btn' => 'Create Product',
+
             'datagrid'   => [
                 'allocated' => 'Allocated',
                 'delete'    => 'Delete',
@@ -131,14 +141,29 @@ return [
                 'sku'       => 'SKU',
                 'view'      => 'View',
             ],
+
+            'create' => [
+                'name'     => 'Name',
+                'save-btn' => 'Save Products',
+                'title'    => 'Create Products',
+            ],
+
+            'edit' => [
+                'title' => 'Edit Products',
+            ],
         ],
     ],
 
     'settings' => [
         'groups' => [
             'index' => [
-                'create-btn' => 'Create Group',
-                'title'      => 'Groups',
+                'create-btn'        => 'Create Group',
+                'title'             => 'Groups',
+                'create-success'    => 'Group created successfully.',
+                'update-success'    => 'Group updated successfully.',
+                'destroy-success'   => 'Group deleted successfully.',
+                'delete-failed'     => 'Group can not be deleted.',
+
                 'datagrid'   => [
                     'delete'      => 'Delete',
                     'description' => 'Description',
@@ -162,9 +187,18 @@ return [
 
         'roles' => [
             'index' => [
-                'create-btn' => 'Create Roles',
-                'title'      => 'Roles',
-                'settings'   => 'Settings',
+                'being-used'                => 'Role can not be deleted, as this is being used in admin user.',
+                'create-btn'                => 'Create Roles',
+                'create-success'            => 'Role created successfully.',
+                'current-role-delete-error' => 'Can not delete role assigned to the current user.',
+                'delete-failed'             => 'Role can not be deleted.',
+                'delete-success'            => 'Role deleted successfully.',
+                'last-delete-error'         => 'At least one role is required.',
+                'settings'                  => 'Settings',
+                'title'                     => 'Roles',
+                'update-success'            => 'Role updated successfully.',
+                'user-define-error'         => 'Can not delete system role.',
+
                 'datagrid'   => [
                     'all'             => 'All',
                     'custom'          => 'Custom',
@@ -207,11 +241,11 @@ return [
         'types' => [
             'index' => [
                 'create-btn'     => 'Create Type',
-                'title'          => 'Types',
                 'create-success' => 'Type created successfully.',
-                'update-success' => 'Type updated successfully.',
-                'delete-success' => 'Type deleted successfully.',
                 'delete-failed'  => 'Type can not be deleted.',
+                'delete-success' => 'Type deleted successfully.',
+                'title'          => 'Types',
+                'update-success' => 'Type updated successfully.',
 
                 'datagrid' => [
                     'delete'      => 'Delete',
@@ -219,6 +253,34 @@ return [
                     'edit'        => 'Edit',
                     'id'          => 'ID',
                     'name'        => 'Name',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Type',
+                    'title'    => 'Create Type',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Type',
+                ],
+            ],
+        ],
+
+        'sources' => [
+            'index' => [
+                'create-btn'     => 'Create Source',
+                'create-success' => 'Source created successfully.',
+                'delete-failed'  => 'Source can not be deleted.',
+                'delete-success' => 'Source deleted successfully.',
+                'title'          => 'Sources',
+                'update-success' => 'Source updated successfully.',
+
+                'datagrid' => [
+                    'delete' => 'Delete',
+                    'edit'   => 'Edit',
+                    'id'     => 'ID',
+                    'name'   => 'Name',
                 ],
 
                 'create' => [

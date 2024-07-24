@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
@@ -31,7 +31,7 @@ class UserController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\UserDataGrid::class)->toJson();
+            return app(\Webkul\Admin\DataGrids\Settings\UserDataGrid::class)->toJson();
         }
 
         return view('admin::settings.users.index');

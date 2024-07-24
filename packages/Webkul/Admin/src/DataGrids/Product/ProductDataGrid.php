@@ -95,6 +95,7 @@ class ProductDataGrid extends DataGrid
     public function prepareActions(): void
     {
         $this->addAction([
+            'index'  => 'view',
             'icon'   => 'icon-dark',
             'title'  => trans('admin::app.products.index.datagrid.view'),
             'method' => 'GET',
@@ -104,6 +105,7 @@ class ProductDataGrid extends DataGrid
         ]);
 
         $this->addAction([
+            'index'  => 'edit',
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.products.index.datagrid.edit'),
             'method' => 'GET',
@@ -113,6 +115,7 @@ class ProductDataGrid extends DataGrid
         ]);
 
         $this->addAction([
+            'index'  => 'delete',
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.products.index.datagrid.delete'),
             'method' => 'DELETE',

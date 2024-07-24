@@ -6,6 +6,16 @@
 require 'settings-routes.php';
 
 /**
- * Tinymce file upload handler.
+ * Products routes.
+ */
+require 'products-routes.php';
+
+/**
+ * Contacts routes.
+ */
+require 'contacts-routes.php';
+
+/**
+ * Rest routes.
  */
 require 'rest-routes.php';

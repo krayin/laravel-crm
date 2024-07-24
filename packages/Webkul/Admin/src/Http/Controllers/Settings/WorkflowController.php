@@ -1,12 +1,12 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Setting;
+namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Setting\WorkflowDataGrid;
+use Webkul\Admin\DataGrids\Settings\WorkflowDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Workflow\Repositories\WorkflowRepository;
 
