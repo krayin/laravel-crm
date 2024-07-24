@@ -80,7 +80,7 @@
                     <div class="flex items-center justify-between p-4">
                         <!-- Forgot Password Link -->
                         <a 
-                            class="cursor-pointer text-xs font-semibold leading-6 text-blue-600"
+                            class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
                             href="{{ route('admin.forgot_password.create') }}"
                         >
                             @lang('admin::app.users.login.forget-password-link')
@@ -88,9 +88,9 @@
 
                         <!-- Submit Button -->
                         <button
-                            class="cursor-pointer rounded-md border border-blue-700 bg-blue-600 px-3.5 py-1.5 font-semibold text-gray-50"
+                            class="primary-button"
                             aria-label="{{ trans('admin::app.users.login.submit-btn')}}"
-                        >
+                        >   
                             @lang('admin::app.users.login.submit-btn')
                         </button>
                     </div>
