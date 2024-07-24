@@ -9,27 +9,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
     Route::get('create/{id}', 'Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController@create')->name('admin.datagrid.saved_filters.destroy');
 
     Route::prefix(config('app.admin_path'))->group(function () {
-
-        Route::get('/', 'Webkul\Admin\Http\Controllers\Controller@redirectToLogin');
-
-        // Login Routes
-        Route::get('login', 'Webkul\Admin\Http\Controllers\User\SessionController@create')->name('admin.session.create');
-
-        //login post route to admin auth controller
-        Route::post('login', 'Webkul\Admin\Http\Controllers\User\SessionController@store')->name('admin.session.store');
-
-        // Forget Password Routes
-        Route::get('forgot-password', 'Webkul\Admin\Http\Controllers\User\ForgotPasswordController@create')->name('admin.forgot_password.create');
-
-        Route::post('forgot-password', 'Webkul\Admin\Http\Controllers\User\ForgotPasswordController@store')->name('admin.forgot_password.store');
-
-        // Reset Password Routes
-        Route::get('reset-password/{token}', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@create')->name('admin.reset_password.create');
-
-        Route::post('reset-password', 'Webkul\Admin\Http\Controllers\User\ResetPasswordController@store')->name('admin.reset_password.store');
-
-        Route::post('mail/inbound-parse', 'Webkul\Admin\Http\Controllers\Mail\EmailController@inboundParse')->name('admin.mail.inbound_parse');
-
         // Admin Routes
         Route::group(['middleware' => ['user']], function () {
             Route::delete('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');

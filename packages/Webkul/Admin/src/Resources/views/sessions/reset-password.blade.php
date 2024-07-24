@@ -1,88 +1,119 @@
-@extends('admin::layouts.anonymous-master')
+<x-admin::layouts.anonymous>
+    <!-- Page Title -->
+    <x-slot:title>
+        @lang('admin::app.users.reset-password.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.sessions.reset-password.title') }}
-@stop
+    <div class="flex h-[100vh] items-center justify-center">
+        <div class="flex flex-col items-center gap-5">
+            <!-- Logo -->
+            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+                <img
+                    class="h-10 w-[110px]"
+                    src="{{ Storage::url($logo) }}"
+                    alt="{{ config('app.name') }}"
+                />
+            @else
+                <img
+                    class="w-max" 
+                    src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}"
+                    alt="{{ config('app.name') }}"
+                />
+            @endif
 
-@section('content')
-    <div class="panel">
-        <div class="panel-body">
-            <div class="form-container">
-                <h1>{{ __('admin::app.sessions.reset-password.title') }}</h1>
-
-                <form method="POST" action="{{ route('admin.reset_password.store') }}" @submit.prevent="onSubmit">
-                    {!! view_render_event('admin.sessions.reset_password.form_controls.before') !!}
-
-                    @csrf
-
-                    <input type="hidden" name="token" value="{{ $token }}">
-
-                    <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                        <label for="email">{{ __('admin::app.sessions.reset-password.email') }}</label>
-
-                        <input
-                            type="text"
-                            name="email"
-                            class="control"
-                            id="email"
-                            value="{{ old('email') }}"
-                            v-validate="'required|email'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.email') }}&quot;"
-                        />
-
-                        <span class="control-error" v-if="errors.has('email')">
-                            @{{ errors.first('email') }}
-                        </span>
+            <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
+                <!-- Login Form -->
+                <x-admin::form :action="route('admin.reset_password.store')">
+                    <div class="p-4">
+                        <p class="text-xl font-bold text-gray-800 dark:text-white">
+                            @lang('admin::app.users.reset-password.title')
+                        </p>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
-                        <label for="password">{{ __('admin::app.sessions.reset-password.password') }}</label>
+                    <x-admin::form.control-group.control
+                        type="hidden"
+                        name="token"
+                        :value="$token"       
+                    />
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="control"
-                            id="password"
-                            ref="password"
-                            v-validate="'required|min:6'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.password') }}&quot;"
-                        />
+                    <div class="border-y p-4 dark:border-gray-800">
+                        <!-- Email -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.users.reset-password.email')
+                            </x-admin::form.control-group.label>
 
-                        <span class="control-error" v-if="errors.has('password')">
-                            @{{ errors.first('password') }}
-                        </span>
+                            <x-admin::form.control-group.control
+                                type="email"
+                                class="w-[254px] max-w-full" 
+                                id="email"
+                                name="email" 
+                                rules="required|email" 
+                                :label="trans('admin::app.users.reset-password.email')"
+                                :placeholder="trans('admin::app.users.reset-password.email')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="email" />
+                        </x-admin::form.control-group>
+                        
+                        <!-- Password -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.users.reset-password.password')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                class="w-[254px] max-w-full" 
+                                id="password"
+                                name="password" 
+                                rules="required|min:6" 
+                                :label="trans('admin::app.users.reset-password.password')"
+                                :placeholder="trans('admin::app.users.reset-password.password')"
+                                ref="password"
+                            />
+
+                            <x-admin::form.control-group.error control-name="password" />
+                        </x-admin::form.control-group>
+
+                        <!-- Confirm Password -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.users.reset-password.confirm-password')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                class="w-[254px] max-w-full" 
+                                id="password_confirmation"
+                                name="password_confirmation"
+                                rules="confirmed:@password" 
+                                :label="trans('admin::app.users.reset-password.confirm-password')"
+                                :placeholder="trans('admin::app.users.reset-password.confirm-password')"
+                                ref="password"
+                            />
+
+                            <x-admin::form.control-group.error control-name="password_confirmation" />
+                        </x-admin::form.control-group>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('password_confirmation') ? 'has-error' : '']">
-                        <label for="password_confirmation">{{ __('admin::app.sessions.reset-password.confirm-password') }}</label>
+                    <div class="flex items-center justify-between p-4">
+                        <!-- Back Button-->
+                        <a 
+                            class="cursor-pointer text-xs font-semibold leading-6 text-blue-600"
+                            href="{{ route('admin.session.create') }}"
+                        >
+                            @lang('admin::app.users.reset-password.back-link-title')
+                        </a>
 
-                        <input
-                            type="password"
-                            name="password_confirmation"
-                            class="control"
-                            id="password_confirmation"
-                            v-validate="'required|min:6|confirmed:password'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.reset-password.confirm-password') }}&quot;"
-                        />
-
-                        <span class="control-error" v-if="errors.has('password_confirmation')">
-                            @{{ errors.first('password_confirmation') }}
-                        </span>
-                    </div>
-
-                    {!! view_render_event('admin.sessions.reset_password.form_controls.after') !!}
-                    
-                    <div class="button-group">
-                        {!! view_render_event('admin.sessions.reset_password.form_buttons.before') !!}
-
-                        <button type="submit" class="btn btn-xl btn-primary">
-                            {{ __('admin::app.sessions.reset-password.reset-password') }}
+                        <!-- Submit Button -->
+                        <button 
+                            class="cursor-pointer rounded-md border border-blue-700 bg-blue-600 px-3.5 py-1.5 font-semibold text-gray-50">
+                            @lang('admin::app.users.reset-password.submit-btn')
                         </button>
-
-                        {!! view_render_event('admin.sessions.reset_password.form_buttons.after') !!}
                     </div>
-                </form>
+                </x-admin::form>
             </div>
         </div>
     </div>
-@stop
+</x-admin::layouts.anonymous>
