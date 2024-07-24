@@ -1,29 +1,35 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.settings.workflows.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.workflows.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <x-admin::breadcrumbs name="settings.workflows" />
+            </div>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.workflows.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.workflows.index.header.before') !!}
+            <div class="text-xl font-bold dark:text-gray-300">
+                @lang('admin::app.settings.workflows.index.title')
+            </div>
+        </div>
 
-                    {{ Breadcrumbs::render('settings.workflows') }}
-
-                    {{ __('admin::app.settings.workflows.title') }}
-
-                    {!! view_render_event('admin.settings.workflows.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('settings.automation.workflows.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.workflows.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.settings.workflows.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <a
+                    href="{{ route('admin.settings.workflows.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.settings.workflows.index.create-btn')
+                </a>
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.settings.workflows.index.datagrid.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.settings.workflows.index') }}" />
+
+    {!! view_render_event('krayin.admin.settings.workflows.index.datagrid.after') !!}
+</x-admin::layouts>

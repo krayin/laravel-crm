@@ -287,13 +287,13 @@ Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
 // Dashboard > Workflows > Create Workflow
 Breadcrumbs::for('settings.workflows.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.workflows');
-    $trail->push(trans('admin::app.settings.workflows.create-title'), route('admin.settings.workflows.create'));
+    $trail->push(trans('admin::app.settings.workflows.create.title'), route('admin.settings.workflows.create'));
 });
 
 // Dashboard > Workflows > Edit Workflow
 Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $workflow) {
     $trail->parent('settings.workflows');
-    $trail->push(trans('admin::app.settings.workflows.edit-title'), route('admin.settings.workflows.edit', $workflow->id));
+    $trail->push(trans('admin::app.settings.workflows.edit.title'), route('admin.settings.workflows.edit', $workflow->id));
 });
 
 // Settings > Tags

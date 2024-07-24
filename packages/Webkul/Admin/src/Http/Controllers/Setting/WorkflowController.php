@@ -2,7 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\Setting;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Setting\WorkflowDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Workflow\Repositories\WorkflowRepository;
 
@@ -17,13 +21,11 @@ class WorkflowController extends Controller
 
     /**
      * Display a listing of the workflow.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Setting\WorkflowDataGrid::class)->toJson();
+            return datagrid(WorkflowDataGrid::class)->process();
         }
 
         return view('admin::settings.workflows.index');
@@ -31,20 +33,16 @@ class WorkflowController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::settings.workflows.create');
     }
 
     /**
      * Store a newly created workflow in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -56,18 +54,15 @@ class WorkflowController extends Controller
 
         Event::dispatch('settings.workflow.create.after', $workflow);
 
-        session()->flash('success', trans('admin::app.settings.workflows.create-success'));
+        session()->flash('success', trans('admin::app.settings.workflows.index.create-success'));
 
         return redirect()->route('admin.settings.workflows.index');
     }
 
     /**
      * Show the form for editing the specified workflow.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $workflow = $this->workflowRepository->findOrFail($id);
 
@@ -76,11 +71,8 @@ class WorkflowController extends Controller
 
     /**
      * Update the specified workflow in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
             'name' => 'required',
@@ -92,39 +84,36 @@ class WorkflowController extends Controller
 
         Event::dispatch('settings.workflow.update.after', $workflow);
 
-        session()->flash('success', trans('admin::app.settings.workflows.update-success'));
+        session()->flash('success', trans('admin::app.settings.workflows.index.update-success'));
 
         return redirect()->route('admin.settings.workflows.index');
     }
 
     /**
      * Remove the specified workflow from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $workflow = $this->workflowRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.workflow.delete.before', $id);
 
-            $this->workflowRepository->delete($id);
+            $workflow->delete($id);
 
             Event::dispatch('settings.workflow.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.settings.workflows.delete-success'),
+                'message' => trans('admin::app.settings.workflows.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.settings.workflows.delete-failed'),
+                'message' => trans('admin::app.settings.workflows.index.delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.workflows.delete-failed'),
+            'message' => trans('admin::app.settings.workflows.index.delete-failed'),
         ], 400);
     }
 }
