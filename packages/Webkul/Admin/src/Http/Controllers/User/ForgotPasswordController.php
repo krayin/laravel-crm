@@ -2,11 +2,11 @@
 
 namespace Webkul\Admin\Http\Controllers\User;
 
-use Illuminate\View\View;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\UserResetPassword;
-use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 
 class ForgotPasswordController extends Controller
 {
