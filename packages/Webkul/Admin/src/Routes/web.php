@@ -14,3 +14,8 @@ require 'products-routes.php';
  * Contacts routes.
  */
 require 'contacts-routes.php';
+
+/**
+ * Rest routes.
+ */
+require 'rest-routes.php';

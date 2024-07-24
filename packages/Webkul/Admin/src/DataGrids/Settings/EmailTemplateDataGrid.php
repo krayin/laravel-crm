@@ -3,14 +3,12 @@
 namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class EmailTemplateDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
     public function prepareQueryBuilder()
     {
@@ -23,7 +21,7 @@ class EmailTemplateDataGrid extends DataGrid
 
         $this->addFilter('id', 'email_templates.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
@@ -31,25 +29,29 @@ class EmailTemplateDataGrid extends DataGrid
      *
      * @return void
      */
-    public function addColumns()
+    public function prepareColumns()
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.settings.email-template.index.datagrid.id'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.email-template.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'subject',
-            'label'    => trans('admin::app.datagrid.subject'),
+            'label'    => trans('admin::app.settings.email-template.index.datagrid.subject'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -63,18 +65,19 @@ class EmailTemplateDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'delete',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.email-template.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.email_templates.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => fn ($row) => route('admin.settings.email_templates.edit', $row->id),
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.email_templates.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'type']),
-            'icon'         => 'trash-icon',
+            'index'          => 'delete',
+            'icon'           => 'icon-delete',
+            'title'          => trans('admin::app.settings.email-template.index.datagrid.delete'),
+            'method'         => 'DELETE',
+            'url'            => fn ($row) => route('admin.settings.email_templates.delete', $row->id),
         ]);
     }
 }
