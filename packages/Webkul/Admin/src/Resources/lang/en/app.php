@@ -497,6 +497,58 @@ return [
                 ],
             ],
         ],
+
+        'users' => [
+            'index' => [
+                'create-btn'          => 'Create User',
+                'create-success'      => 'User created successfully.',
+                'delete-failed'       => 'User can not be deleted.',
+                'delete-success'      => 'User deleted successfully.',
+                'last-delete-error'   => 'At least one user is required.',
+                'mass-delete-failed'  => 'Users can not be deleted.',
+                'mass-delete-success' => 'Users deleted successfully.',
+                'mass-update-failed'  => 'Users can not be updated.',
+                'mass-update-success' => 'Users updated successfully.',
+                'title'               => 'Users',
+                'update-success'      => 'User updated successfully.',
+                'user-define-error'   => 'Can not delete system user.',
+
+                'datagrid' => [
+                    'active'        => 'Active',
+                    'created-at'    => 'Created At',
+                    'delete'        => 'Delete',
+                    'edit'          => 'Edit',
+                    'email'         => 'Email',
+                    'id'            => 'ID',
+                    'inactive'      => 'Inactive',
+                    'name'          => 'Name',
+                    'status'        => 'Status',
+                    'update-status' => 'Update Status',
+                    'users'         => 'Users',
+                ],
+
+                'create' => [
+                    'confirm-password' => 'Confirm Password',
+                    'email'            => 'Email',
+                    'general'          => 'General',
+                    'global'           => 'Global',
+                    'group'            => 'Group',
+                    'individual'       => 'Individual',
+                    'name'             => 'Name',
+                    'password'         => 'Password',
+                    'permission'       => 'Permission',
+                    'role'             => 'Role',
+                    'save-btn'         => 'Save User',
+                    'status'           => 'Status',
+                    'title'            => 'Create User',
+                    'view-permission'  => 'View Permission',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit User',
+                ],
+            ],
+        ],
     ],
 
     'activities' => [

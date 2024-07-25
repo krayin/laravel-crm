@@ -49,7 +49,7 @@
                                     >
 
                                     <span
-                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500"
+                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-blue-600"
                                         :class="[
                                             applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor ' : (
                                                 applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-partial peer-checked:brandColor' : ''

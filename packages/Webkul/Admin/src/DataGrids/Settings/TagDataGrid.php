@@ -10,7 +10,7 @@ use Webkul\User\Repositories\UserRepository;
 class TagDataGrid extends DataGrid
 {
     /**
-     * Create a new controller instance.
+     * Constructor for the class.
      *
      * @return void
      */
