@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\TagController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 
@@ -89,6 +90,25 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.workflows.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.workflows.delete');
+        });
+
+        /**
+         * Tags Routes.
+         */
+        Route::controller(TagController::class)->prefix('tags')->group(function () {
+            Route::get('', 'index')->name('admin.settings.tags.index');
+
+            Route::post('create', 'store')->name('admin.settings.tags.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.tags.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.tags.update');
+
+            Route::get('search', 'search')->name('admin.settings.tags.search');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.tags.delete');
+
+            Route::put('mass-destroy', 'massDestroy')->name('admin.settings.tags.mass_delete');
         });
     });
 });

@@ -466,6 +466,37 @@ return [
                 'name'                 => 'Name',
             ],
         ],
+
+        'tags' => [
+            'index' => [
+                'create-btn'     => 'Create Tag',
+                'title'          => 'Tags',
+                'create-success' => 'Tag created successfully.',
+                'update-success' => 'Tag updated successfully.',
+                'delete-success' => 'Tag deleted successfully.',
+                'delete-failed'  => 'Tag can not be deleted.',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'name'        => 'Name',
+                    'users'       => 'Users',
+                    'created-at'  => 'Created At',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Tag',
+                    'title'    => 'Create Tag',
+                    'color'    => 'Color',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Tag',
+                ],
+            ],
+        ],
     ],
 
     'activities' => [
