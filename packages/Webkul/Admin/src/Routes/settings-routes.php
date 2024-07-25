@@ -1,11 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\GroupController;
-use Webkul\Admin\Http\Controllers\Settings\RoleController;
-use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TagController;
+use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
+use Webkul\Admin\Http\Controllers\Settings\UserController;
+use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 
 /**
@@ -109,6 +110,27 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::delete('{id}', 'destroy')->name('admin.settings.tags.delete');
 
             Route::put('mass-destroy', 'massDestroy')->name('admin.settings.tags.mass_delete');
+        });
+
+        /**
+         * Users Routes.
+         */
+        Route::controller(UserController::class)->prefix('users')->group(function () {
+            Route::get('', 'index')->name('admin.settings.users.index');
+
+            Route::get('create', 'create')->name('admin.settings.users.create');
+
+            Route::post('create', 'store')->name('admin.settings.users.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.users.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.users.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.users.delete');
+
+            Route::put('mass-update', 'massUpdate')->name('admin.settings.users.mass_update');
+
+            Route::put('mass-destroy', 'massDestroy')->name('admin.settings.users.mass_delete');
         });
     });
 });
