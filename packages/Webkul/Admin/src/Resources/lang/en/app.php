@@ -141,16 +141,39 @@ return [
                     'organization-name' => 'Organization Name',
                 ],
             ],
+
+            'create' => [
+                'title'    => 'Create Person',
+                'save-btn' => 'Save Person',
+            ],
+
+            'edit' => [
+                'title'    => 'Edit Person',
+                'save-btn' => 'Save Person',
+            ],
         ],
 
         'organizations' => [
             'index' => [
+                'title'      => 'Organizations',
+                'create-btn' => 'Create Organization',
+
                 'datagrid' => [
                     'delete' => 'Delete',
                     'edit'   => 'Edit',
                     'id'     => 'ID',
                     'name'   => 'Name',
                 ],
+            ],
+
+            'create' => [
+                'title'    => 'Create Organization',
+                'save-btn' => 'Save Organization',
+            ],
+
+            'edit' => [
+                'title'    => 'Edit Organization',
+                'save-btn' => 'Save Organization',
             ],
         ],
     ],
