@@ -11,27 +11,27 @@
 
         {!! view_render_event('krayin.admin.settings.roles.create.form_controls.before') !!}
 
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('admin::app.settings.roles.create.title')
-            </p>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs name="settings.roles.create" />
+                </div>
+
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.roles.create.title')
+                </div>
+            </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.roles.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('admin::app.settings.roles.create.back-btn')
-                </a>
-
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.roles.create.save-btn')
-                </button>
+                <!-- Create button for Roles -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.roles.create.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
