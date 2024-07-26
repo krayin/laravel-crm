@@ -572,6 +572,24 @@ return [
                 ],
             ],
         ],
+
+        'pipelines' => [
+            'index' => [
+                'title'      => 'Pipelines',
+                'create-btn' => 'Create Pipeline',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'is-default'  => 'Is Default',
+                    'name'        => 'Name',
+                    'no'          => 'No',
+                    'rotten-days' => 'Rotten Days',
+                    'yes'         => 'Yes',
+                ],
+            ],
+        ],
     ],
 
     'activities' => [
