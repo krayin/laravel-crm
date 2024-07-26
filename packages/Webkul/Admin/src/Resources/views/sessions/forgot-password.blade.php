@@ -55,7 +55,7 @@
                     <div class="flex items-center justify-between p-4">
                         <!-- Back to Sign In link -->
                         <a 
-                            class="cursor-pointer text-xs font-semibold leading-6 text-blue-600"
+                            class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
                             href="{{ route('admin.session.create') }}"
                         >
                             @lang('admin::app.users.forget-password.create.sign-in-link')
@@ -63,7 +63,7 @@
 
                         <!-- Form Submit Button -->
                         <button 
-                            class="cursor-pointer rounded-md border border-blue-700 bg-blue-600 px-3.5 py-1.5 font-semibold text-gray-50">
+                            class="primary-button">
                             @lang('admin::app.users.forget-password.create.submit-btn')
                         </button>
                     </div>

@@ -2,31 +2,26 @@
 
 namespace Webkul\Admin\DataGrids\Settings;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class TagDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
     /**
-     * Create data grid instance.
+     * Constructor for the class.
      *
      * @return void
      */
-    public function __construct(protected UserRepository $userRepository)
-    {
-        parent::__construct();
-    }
+    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * Prepare query builder.
      *
      * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('tags')
             ->addSelect(
@@ -53,19 +48,17 @@ class TagDataGrid extends DataGrid
         $this->addFilter('created_at', 'tags.created_at');
         $this->addFilter('user_name', 'users.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.settings.tags.index.datagrid.id'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => true,
@@ -73,33 +66,38 @@ class TagDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
+            'label'      => trans('admin::app.settings.tags.index.datagrid.name'),
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => false,
             'closure'    => function ($row) {
-                $html = '<span style="background: '.($row->color ?? '#546E7A').';width: 15px;height: 15px;margin-top: 3px;border-radius: 50%;float: left;margin-right: 10px;box-shadow: 0px 4px 15.36px 0.75px rgb(0 0 0 / 10%), 0px 2px 6px 0px rgb(0 0 0 / 15%);"></span>';
+                $color = $row->color ?? 'gray-500';
+                $html = "<div class=\"flex items-center gap-2\">
+                            <span class='inline-block h-4 w-4 cursor-pointer rounded-full bg-{$color } shadow-md'></span>
+                            <span>{$row->name}</span>
+                        </div>";
 
-                return $html.htmlspecialchars($row->name);
+                return $html;
             },
         ]);
 
         $this->addColumn([
             'index'            => 'user_name',
-            'label'            => trans('admin::app.datagrid.user'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getUserDropdownOptions(),
+            'label'            => trans('admin::app.settings.tags.index.datagrid.users'),
+            'type'             => 'string',
             'searchable'       => false,
             'sortable'         => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'created_at',
-            'label'      => trans('admin::app.datagrid.created_at'),
-            'type'       => 'date_range',
-            'searchable' => false,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.settings.tags.index.datagrid.created-at'),
+            'type'            => 'date',
+            'searchable'      => true,
+            'filterable'      => true,
+            'filterable_type' => 'date_range',
+            'sortable'        => true,
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -107,39 +105,40 @@ class TagDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.tags.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.tags.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.tags.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.tags.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'source']),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.tags.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.tags.delete', $row->id);
+            },
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.settings.tags.mass_delete'),
-            'method' => 'PUT',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.tags.index.datagrid.delete'),
+            'method' => 'POST',
+            'url'    => route('admin.settings.tags.mass_delete'),
         ]);
     }
 }

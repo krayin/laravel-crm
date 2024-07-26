@@ -2,9 +2,12 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Settings\TagDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Tag\Repositories\TagRepository;
 
 class TagController extends Controller
@@ -18,13 +21,11 @@ class TagController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Settings\TagDataGrid::class)->toJson();
+            return datagrid(TagDataGrid::class)->process();
         }
 
         return view('admin::settings.tags.index');
@@ -32,119 +33,88 @@ class TagController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): JsonResponse
     {
-        if (request()->ajax()) {
-            $this->validate(request(), [
-                'name' => 'required|unique:tags,name',
-            ]);
-        } else {
-            $validator = Validator::make(request()->all(), [
-                'name' => 'required|unique:tags,name',
-            ]);
-
-            if ($validator->fails()) {
-                session()->flash('error', $validator->errors()->first('name'));
-
-                return redirect()->back();
-            }
-        }
+        $this->validate(request(), [
+            'name' => ['required', 'unique:tags,name'],
+        ]);
 
         Event::dispatch('settings.tag.create.before');
 
-        $tag = $this->tagRepository->create(array_merge([
+        $tag = $this->tagRepository->create(array_merge(request()->only([
+            'name',
+            'color',
+        ]), [
             'user_id' => auth()->guard('user')->user()->id,
-        ], request()->all()));
+        ]));
 
         Event::dispatch('settings.tag.create.after', $tag);
 
-        if (request()->ajax()) {
-            return response()->json([
-                'tag'     => $tag,
-                'status'  => true,
-                'message' => trans('admin::app.settings.tags.create-success'),
-            ]);
-        } else {
-            session()->flash('success', trans('admin::app.settings.tags.create-success'));
-
-            return redirect()->route('admin.settings.tags.index');
-        }
+        return new JsonResponse([
+            'data'    => $tag,
+            'message' => trans('admin::app.settings.tags.index.create-success'),
+        ]);
     }
 
     /**
      * Show the form for editing the specified tag.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View|JsonResponse
     {
         $tag = $this->tagRepository->findOrFail($id);
 
-        return view('admin::settings.tags.edit', compact('tag'));
+        return new JsonResponse([
+            'data' => $tag,
+        ]);
     }
 
     /**
      * Update the specified tag in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): JsonResponse
     {
-        $validator = Validator::make(request()->all(), [
+        $this->validate(request(), [
             'name' => 'required|unique:tags,name,'.$id,
         ]);
 
-        if ($validator->fails()) {
-            session()->flash('error', $validator->errors()->first('name'));
-
-            return redirect()->back();
-        }
-
         Event::dispatch('settings.tag.update.before', $id);
 
-        $tag = $this->tagRepository->update(request()->all(), $id);
+        $tag = $this->tagRepository->update(request()->only([
+            'name',
+            'color',
+        ]), $id);
 
         Event::dispatch('settings.tag.update.after', $tag);
 
-        session()->flash('success', trans('admin::app.settings.tags.update-success'));
-
-        return redirect()->route('admin.settings.tags.index');
+        return new JsonResponse([
+            'data'    => $tag,
+            'message' => trans('admin::app.settings.tags.index.update-success'),
+        ]);
     }
 
     /**
      * Remove the specified type from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        $type = $this->tagRepository->findOrFail($id);
+        $tag = $this->tagRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.tag.delete.before', $id);
 
-            $this->tagRepository->delete($id);
+            $tag->delete($id);
 
             Event::dispatch('settings.tag.delete.after', $id);
 
-            return response()->json([
-                'message' => trans('admin::app.settings.tags.delete-success'),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.tags.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.settings.tags.delete-failed'),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.tags.index.delete-failed'),
             ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.tags.delete-failed'),
-        ], 400);
     }
 
     /**
@@ -163,21 +133,27 @@ class TagController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $tagId) {
-            Event::dispatch('settings.tag.delete.before', $tagId);
+        $indices = $massDestroyRequest->input('indices');
 
-            $this->tagRepository->delete($tagId);
+        try {
+            foreach ($indices as $index) {
+                Event::dispatch('settings.tag.delete.before', $index);
 
-            Event::dispatch('settings.tag.delete.after', $tagId);
+                $this->tagRepository->delete($index);
+
+                Event::dispatch('settings.tag.delete.after', $index);
+            }
+
+            return new JsonResponse([
+                'message' => trans('admin::app.customers.reviews.index.datagrid.mass-delete-success'),
+            ], 200);
+        } catch (\Exception $e) {
+            return new JsonResponse([
+                'message' => $e->getMessage(),
+            ], 500);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.settings.tags.title')]),
-        ]);
     }
 }
