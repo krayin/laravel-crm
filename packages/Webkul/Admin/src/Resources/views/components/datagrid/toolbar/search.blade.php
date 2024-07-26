@@ -15,8 +15,8 @@
         type="text/x-template"
         id="v-datagrid-search-template"
     >
-        <!-- Empty slot for left toolbar before -->
-        <slot name="left-toolbar-left-before"></slot>
+        <!-- Empty slot searchbar before -->
+        <slot name="toolbar-left-search-before"></slot>
         
         <slot
             name="search"
@@ -82,8 +82,8 @@
             </template>
         </slot>
 
-        <!-- Empty slot for left toolbar after -->
-        <slot name="left-toolbar-left-after"></slot>
+        <!-- Empty slot searchbar after -->
+        <slot name="toolbar-left-search-after"></slot>
     </script>
 
     <script type="module">
