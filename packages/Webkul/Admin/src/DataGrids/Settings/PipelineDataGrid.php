@@ -2,20 +2,17 @@
 
 namespace Webkul\Admin\DataGrids\Settings;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class PipelineDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
 
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('lead_pipelines')
             ->addSelect(
@@ -27,47 +24,44 @@ class PipelineDataGrid extends DataGrid
 
         $this->addFilter('id', 'lead_pipelines.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
+            'label'    => trans('admin::app.settings.pipelines.index.datagrid.id'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
+            'label'    => trans('admin::app.settings.pipelines.index.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'rotten_days',
-            'label'    => trans('admin::app.datagrid.rotten-days'),
+            'label'    => trans('admin::app.settings.pipelines.index.datagrid.rotten-days'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
-            'index'            => 'is_default',
-            'label'            => trans('admin::app.datagrid.is-default'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getBooleanDropdownOptions('yes_no'),
-            'sortable'         => false,
-            'closure'          => function ($row) {
-                return (bool) $row->is_default
-                    ? __('admin::app.common.yes')
-                    : __('admin::app.common.no');
+            'index'      => 'is_default',
+            'label'      => trans('admin::app.settings.pipelines.index.datagrid.is-default'),
+            'type'       => 'boolean',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
+            'closure'    => function ($value) {
+                return trans('admin::app.settings.pipelines.index.datagrid.'.($value->is_default ? 'yes' : 'no'));
             },
         ]);
     }
@@ -80,18 +74,23 @@ class PipelineDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.pipelines.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.pipelines.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.pipelines.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.pipelines.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'pipeline']),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.pipelines.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.pipelines.delete', $row->id);
+            },
         ]);
     }
 }

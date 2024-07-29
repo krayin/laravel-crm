@@ -32,8 +32,6 @@
         </div>
 
         <v-webhooks></v-webhooks>
-
-        @include('admin::common.custom-attributes.edit.lookup')
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -236,6 +234,7 @@
                                             v-model="header.key"
                                             rules="required"
                                             :label="trans('Key')"
+                                            ::readonly="header.readOnly"
                                             :placeholder="trans('Key')"
                                         />
                         
@@ -250,6 +249,7 @@
                                             v-model="header.value"
                                             rules="required"
                                             :label="trans('Value')"
+                                            ::readonly="header.readOnly"
                                             :placeholder="trans('Value')"
                                         />
                         
@@ -351,14 +351,6 @@
                                                     name="raw_payload_type"
                                                     v-model="rawType"
                                                 >
-                                                <span
-                                                    class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Default'"
-                                                >
-                                                    <div class="items flex items-center gap-1.5">
-                                                        @lang('Default')
-                                                    </div>
-                                                </span>
 
                                                 <span
                                                     class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
@@ -409,7 +401,7 @@
 
                         parameters: [{ key: '', value: ''}],
 
-                        headers: [{ key: 'Content Type', value: 'text/plain;charset=UTF', isDisabled: true }],
+                        headers: [{ key: 'Content Type', value: 'text/plain;charset=UTF', readOnly: true }],
 
                         contentType: 'default',
 

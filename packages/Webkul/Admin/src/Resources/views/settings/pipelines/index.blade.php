@@ -1,31 +1,40 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.settings.pipelines.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.pipelines.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <!-- breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.pipelines" />
+            </div>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.pipelines.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.pipelines.index.header.before') !!}
+            <div class="text-xl font-bold dark:text-gray-300">
+                <!-- title -->
+                @lang('admin::app.settings.pipelines.index.title')
+            </div>
+        </div>
 
-                    {{ Breadcrumbs::render('settings.pipelines') }}
-
-                    {{ __('admin::app.settings.pipelines.title') }}
-
-                    {!! view_render_event('admin.settings.pipelines.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('settings.lead.pipelines.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.pipelines.create') }}" class="btn btn-md btn-primary">
-                        {{ __('admin::app.settings.pipelines.create-title') }}
-                    </button>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button Pipelines -->
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.settings.pipelines.index.create_button.before') !!}
+                    <a
+                        href="{{ route('admin.settings.pipelines.create') }}"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.pipelines.index.create-btn')
+                    </a>
+                {!! view_render_event('krayin.admin.settings.pipelines.index.create_button.after') !!}
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.settings.pipelines.index.datagrid.before') !!}
+
+    <!-- DataGrid -->
+    <x-admin::datagrid src="{{ route('admin.settings.pipelines.index') }}" />
+
+    {!! view_render_event('krayin.admin.settings.pipelines.index.datagrid.after') !!}
+</x-admin::layouts>

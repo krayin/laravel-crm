@@ -89,13 +89,13 @@ Breadcrumbs::for('contacts.persons', function (BreadcrumbTrail $trail) {
 // Dashboard > Contacts > Persons > Create
 Breadcrumbs::for('contacts.persons.create', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts.persons');
-    $trail->push(trans('admin::app.contacts.persons.create-title'), route('admin.contacts.persons.create'));
+    $trail->push(trans('admin::app.contacts.persons.create.title'), route('admin.contacts.persons.create'));
 });
 
 // Dashboard > Contacts > Persons > Edit
 Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $person) {
     $trail->parent('contacts.persons');
-    $trail->push(trans('admin::app.contacts.persons.edit-title'), route('admin.contacts.persons.edit', $person->id));
+    $trail->push(trans('admin::app.contacts.persons.edit.title'), route('admin.contacts.persons.edit', $person->id));
 });
 
 // Dashboard > Contacts > Organizations
@@ -107,13 +107,13 @@ Breadcrumbs::for('contacts.organizations', function (BreadcrumbTrail $trail) {
 // Dashboard > Contacts > Organizations > Create
 Breadcrumbs::for('contacts.organizations.create', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts.organizations');
-    $trail->push(trans('admin::app.contacts.organizations.create-title'), route('admin.contacts.organizations.create'));
+    $trail->push(trans('admin::app.contacts.organizations.create.title'), route('admin.contacts.organizations.create'));
 });
 
 // Dashboard > Contacts > Organizations > Edit
 Breadcrumbs::for('contacts.organizations.edit', function (BreadcrumbTrail $trail, $organization) {
     $trail->parent('contacts.organizations');
-    $trail->push(trans('admin::app.contacts.organizations.edit-title'), route('admin.contacts.organizations.edit', $organization->id));
+    $trail->push(trans('admin::app.contacts.organizations.edit.title'), route('admin.contacts.organizations.edit', $organization->id));
 });
 
 // Products
@@ -173,13 +173,13 @@ Breadcrumbs::for('settings.roles', function (BreadcrumbTrail $trail) {
 // Dashboard > Roles > Create Role
 Breadcrumbs::for('settings.roles.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.roles');
-    $trail->push(trans('admin::app.settings.roles.create-title'), route('admin.settings.roles.create'));
+    $trail->push(trans('admin::app.settings.roles.create.title'), route('admin.settings.roles.create'));
 });
 
 // Dashboard > Roles > Edit Role
 Breadcrumbs::for('settings.roles.edit', function (BreadcrumbTrail $trail, $role) {
     $trail->parent('settings.roles');
-    $trail->push(trans('admin::app.settings.roles.edit-title'), route('admin.settings.roles.edit', $role->id));
+    $trail->push(trans('admin::app.settings.roles.edit.title'), route('admin.settings.roles.edit', $role->id));
 });
 
 // Settings > Users

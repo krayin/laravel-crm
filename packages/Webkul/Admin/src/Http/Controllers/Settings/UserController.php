@@ -2,13 +2,16 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
-use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Mail;
-use Webkul\Admin\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Event;
 use Webkul\Admin\Notifications\User\Create;
-use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\User\Repositories\GroupRepository;
+use Webkul\Admin\DataGrids\Settings\UserDataGrid;
 
 class UserController extends Controller
 {
@@ -25,38 +28,24 @@ class UserController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Settings\UserDataGrid::class)->toJson();
+            return datagrid(UserDataGrid::class)->process();
         }
 
-        return view('admin::settings.users.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
         $roles = $this->roleRepository->all();
 
         $groups = $this->groupRepository->all();
 
-        return view('admin::settings.users.create', compact('groups', 'roles'));
+        return view('admin::settings.users.index', compact('roles', 'groups'));
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store()
+    public function store(): View|JsonResponse
     {
         $this->validate(request(), [
             'email'            => 'required|email|unique:users,email',
@@ -91,18 +80,16 @@ class UserController extends Controller
 
         Event::dispatch('settings.user.create.after', $admin);
 
-        session()->flash('success', trans('admin::app.settings.users.create-success'));
-
-        return redirect()->route('admin.settings.users.index');
+        return new JsonResponse([
+            'data'    => $admin,
+            'message' => trans('admin::app.settings.users.index.create-success'),
+        ]);
     }
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View|JsonResponse
     {
         $admin = $this->userRepository->findOrFail($id);
 
@@ -110,16 +97,17 @@ class UserController extends Controller
 
         $groups = $this->groupRepository->all();
 
-        return view('admin::settings.users.edit', compact('admin', 'groups', 'roles'));
+        return new JsonResponse([
+            'data' =>$admin,
+            'roles' =>$roles,
+            'groups' =>$groups
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
             'email'            => 'required|email|unique:users,email,'.$id,
@@ -153,44 +141,39 @@ class UserController extends Controller
 
         Event::dispatch('settings.user.update.after', $admin);
 
-        session()->flash('success', trans('admin::app.settings.users.update-success'));
-
-        return redirect()->route('admin.settings.users.index');
+        return new JsonResponse([
+            'data'    => $admin,
+            'message' => trans('admin::app.settings.users.index.update-success'),
+        ]);
     }
 
     /**
      * Destroy specified user.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        if (auth()->guard('user')->user()->id == $id) {
-            return response()->json([
-                'message' => trans('admin::app.settings.users.delete-failed'),
+        if ($this->userRepository->count() == 1) {
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.users.index.last-delete-error'),
             ], 400);
-        } elseif ($this->userRepository->count() == 1) {
-            return response()->json([
-                'message' => trans('admin::app.settings.users.last-delete-error'),
-            ], 400);
-        } else {
-            Event::dispatch('settings.user.delete.before', $id);
-
-            try {
-                $this->userRepository->delete($id);
-
-                Event::dispatch('settings.user.delete.after', $id);
-
-                return response()->json([
-                    'message' => trans('admin::app.settings.users.delete-success'),
-                ]);
-            } catch (\Exception $exception) {
-                return response()->json([
-                    'message' => $exception->getMessage(),
-                ], 400);
-            }
         }
+
+        try {
+            Event::dispatch('user.admin.delete.before', $id);
+
+            $this->userRepository->delete($id);
+
+            Event::dispatch('user.admin.delete.after', $id);
+
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.users.index.delete-success'),
+            ], 200);
+        } catch (\Exception $e) {
+        }
+
+        return new JsonResponse([
+            'message' => trans('admin::app.settings.users.index.delete-failed'),
+        ], 500);
     }
 
     /**
@@ -220,12 +203,12 @@ class UserController extends Controller
 
         if (! $count) {
             return response()->json([
-                'message' => trans('admin::app.settings.users.mass-update-failed'),
+                'message' => trans('admin::app.settings.users.index.mass-update-failed'),
             ], 400);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.users.mass-update-success'),
+            'message' => trans('admin::app.settings.users.index.mass-update-success'),
         ]);
     }
 
@@ -254,12 +237,12 @@ class UserController extends Controller
 
         if (! $count) {
             return response()->json([
-                'message' => trans('admin::app.settings.users.mass-delete-failed'),
+                'message' => trans('admin::app.settings.users.index.mass-delete-failed'),
             ], 400);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.users.mass-delete-success'),
+            'message' => trans('admin::app.settings.users.index.mass-delete-success'),
         ]);
     }
 }

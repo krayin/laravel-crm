@@ -38,8 +38,6 @@
         </div>
 
         <v-webhooks></v-webhooks>
-
-        @include('admin::common.custom-attributes.edit.lookup')
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -339,7 +337,7 @@
                                         <label
                                             for="raw"
                                             class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
-                                            @click="contentType = 'raw'"
+                                            @click="contentType = 'raw';rawType = 'json'"
                                         >
                                             @lang('Raw')
                                         </label>
@@ -361,18 +359,11 @@
                                                     name="raw_payload_type"
                                                     v-model="rawType"
                                                 >
-                                                <span
-                                                    class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Default'"
-                                                >
-                                                    <div class="items flex items-center gap-1.5">
-                                                        @lang('Default')
-                                                    </div>
-                                                </span>
 
                                                 <span
                                                     class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Json'"
+                                                    :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'json'}"
+                                                    @click="rawType = 'json'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
                                                         @lang('JSON')
@@ -381,7 +372,8 @@
 
                                                 <span
                                                     class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Text'"
+                                                    :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'text'}"
+                                                    @click="rawType = 'text'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
                                                         @lang('Text')
@@ -393,16 +385,62 @@
                                 </div>
                             </div>
                            
-                            <x-admin::form.control-group.control
-                                type="textarea"
-                                id="payload"
-                                name="payload"
-                                rules="required"
-                                :value="old('payload') ?? $webhook->payload"
-                                :label="trans('Payload')"
-                                :placeholder="trans('Payload')"
-                            />
+                            <template v-if="showEditor">
+                                <textarea
+                                    ref="payload"
+                                    id="payload"
+                                    name="payload"
+                                >@{{ payload }}</textarea>
+                            </template>
 
+                            <template v-else>
+                                <div class="flex flex-col">
+                                    <div 
+                                        class="flex gap-3 my-2 items-center justify-between"
+                                        v-for="(payload, index) in tempPayload"
+                                    >
+                                        <div class="w-1/2">
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::id="`payload[${index}][key]`"
+                                                ::name="`payload[${index}][key]`"
+                                                v-model="payload.key"
+                                                rules="required"
+                                                :label="trans('Key')"
+                                                :placeholder="trans('Key')"
+                                            />
+                            
+                                            <x-admin::form.control-group.error ::name="`payload[${index}][key]`"/>
+                                        </div>
+                                        <div class="w-full">
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::id="`payload[${index}][value]`"
+                                                ::name="`payload[${index}][value]`"
+                                                v-model="payload.value"
+                                                rules="required"
+                                                :label="trans('Value')"
+                                                :placeholder="trans('Value')"
+                                            />
+                            
+                                            <x-admin::form.control-group.error ::name="`payload[${index}][value]`"/>
+                                        </div>
+                            
+                                        <i 
+                                            class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                                            @click="removeFormBody(index)"
+                                            v-if="payload.length > 1"
+                                        ></i>
+                                    </div>
+                            
+                                    <p 
+                                        class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
+                                        @click="addFormBody(index)" 
+                                    >
+                                        @lang('Add New payload')
+                                    </p>
+                                </div>
+                            </template>
                             <x-admin::form.control-group.error control-name="payload" />
                         </x-admin::form.control-group>
                     </div>
@@ -418,17 +456,48 @@
                     return {
                         baseUrl: '{{ $webhook->end_point ?? '' }}',
 
+                        payload: @json($webhook->payload),
+
+                        tempPayload: [],
+
                         parameters: @json($webhook->query_params),
 
                         headers: @json($webhook->headers),
 
                         contentType: '{{ $webhook->payload_type ?? 'default' }}',
 
-                        rawType: '{{ $webhook->raw_payload_type ?? 'Json' }}',
+                        rawType: '{{ $webhook->raw_payload_type !== "" ? $webhook->raw_payload_type : 'json' }}',
+
+                        codeMirrorInstance: null,
                     };
                 },
 
+                created() {
+                    this.initiateEditor();
+
+                    if (Array.isArray(this.payload)) {
+                        this.tempPayload = this.payload;
+                    }
+                },
+
+                watch: {
+                    rawType(newValue, oldValue) {
+                        this.handleEditorDisplay();
+                    },
+
+                    contentType(newValue, oldValue) {
+                        this.handleEditorDisplay();
+                    }
+                },
+
                 computed: {
+                    showEditor() {
+                        return (
+                            this.contentType === 'default'
+                            || this.contentType === 'raw'
+                        ) && this.contentType !== 'application/x-www-form-urlencoded';
+                    },
+
                     /**
                      * Get the URL endpoint with the parameters
                      * 
@@ -489,8 +558,82 @@
                     removeHeader(index) {
                         this.headers.splice(index, 1);
                     },
+
+                    removeFormBody(index) {
+                        this.tempPayload.splice(index, 1);
+                    },
+
+                    addFormBody() {
+                        this.tempPayload.push({ key: '', value: '' });
+                    },
+
+                    handleEditorDisplay() {
+                        if (this.codeMirrorInstance) {
+                            this.codeMirrorInstance.toTextArea();
+
+                            this.codeMirrorInstance = null;
+                        }
+
+                        if (this.showEditor) {
+                            this.initiateEditor();
+                        }
+                    },
+
+                    /**
+                     * Initiate Editor.
+                     * 
+                     * @param {string} rawType
+                     * @return {void}
+                     */
+                    initiateEditor() {
+                        this.$nextTick(() => {
+                            const mode = this.rawType === 'json' ? 'application/json' : 'text/plain';
+
+                            if (! this.codeMirrorInstance && this.showEditor) {
+                                this.codeMirrorInstance = CodeMirror.fromTextArea(this.$refs.payload, {
+                                    lineNumbers: true,
+                                    mode: this.contentType === 'default' ? 'application/json' : mode,
+                                    styleActiveLine: true,
+                                    lint: true,
+                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'eclipse',
+                                });
+
+                                this.codeMirrorInstance.on('changes', () => this.payload = this.codeMirrorInstance.getValue());
+
+                                return;
+                            }
+
+                            this.codeMirrorInstance?.setOption('mode', mode);
+                        }, 0);
+                    }
                 },
             });
         </script>
+
+        <!-- Code mirror script CDN -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.js"
+        ></script>
+
+        <!-- 
+            Html mixed and xml cnd both are dependent 
+            Used for html and css theme
+        -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/mode/javascript/javascript.js"
+        ></script>
+    @endPushOnce
+
+    @pushOnce('styles')
+        <!-- Code mirror style cdn -->
+        <link 
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css"
+        ></link>
+
+        <!-- Dark theme css -->
+        <link rel="stylesheet" href="https://codemirror.net/5/theme/ayu-dark.css">
     @endPushOnce
 </x-admin::layouts>

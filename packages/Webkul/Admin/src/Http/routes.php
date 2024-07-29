@@ -159,25 +159,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                 Route::get('', 'SettingController@index')->name('admin.settings.index');
 
-                // Users Routes
-                Route::prefix('users')->group(function () {
-                    Route::get('', 'UserController@index')->name('admin.settings.users.index');
-
-                    Route::get('create', 'UserController@create')->name('admin.settings.users.create');
-
-                    Route::post('create', 'UserController@store')->name('admin.settings.users.store');
-
-                    Route::get('edit/{id?}', 'UserController@edit')->name('admin.settings.users.edit');
-
-                    Route::put('edit/{id}', 'UserController@update')->name('admin.settings.users.update');
-
-                    Route::delete('{id}', 'UserController@destroy')->name('admin.settings.users.delete');
-
-                    Route::put('mass-update', 'UserController@massUpdate')->name('admin.settings.users.mass_update');
-
-                    Route::put('mass-destroy', 'UserController@massDestroy')->name('admin.settings.users.mass_delete');
-                });
-
                 // Attributes Routes
                 Route::prefix('attributes')->group(function () {
                     Route::get('', 'AttributeController@index')->name('admin.settings.attributes.index');

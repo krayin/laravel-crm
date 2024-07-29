@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('Organizations')
+        @lang('admin::app.contacts.organizations.index.title')
     </x-slot>
 
     <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -10,7 +10,7 @@
             </div>
 
             <div class="text-xl font-bold dark:text-gray-300">
-                @lang('Organizations')
+                @lang('admin::app.contacts.organizations.index.title')
             </div>
         </div>
 
@@ -21,7 +21,7 @@
                     href="{{ route('admin.contacts.organizations.create') }}"
                     class="primary-button"
                 >
-                    Create Organization
+                    @lang('admin::app.contacts.organizations.index.create-btn')
                 </a>
             </div>
         </div>

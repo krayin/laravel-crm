@@ -141,16 +141,39 @@ return [
                     'organization-name' => 'Organization Name',
                 ],
             ],
+
+            'create' => [
+                'title'    => 'Create Person',
+                'save-btn' => 'Save Person',
+            ],
+
+            'edit' => [
+                'title'    => 'Edit Person',
+                'save-btn' => 'Save Person',
+            ],
         ],
 
         'organizations' => [
             'index' => [
+                'title'      => 'Organizations',
+                'create-btn' => 'Create Organization',
+
                 'datagrid' => [
                     'delete' => 'Delete',
                     'edit'   => 'Edit',
                     'id'     => 'ID',
                     'name'   => 'Name',
                 ],
+            ],
+
+            'create' => [
+                'title'    => 'Create Organization',
+                'save-btn' => 'Save Organization',
+            ],
+
+            'edit' => [
+                'title'    => 'Edit Organization',
+                'save-btn' => 'Save Organization',
             ],
         ],
     ],
@@ -464,6 +487,107 @@ return [
                 'subject-placeholders' => 'Subject Placeholders',
                 'general'              => 'General',
                 'name'                 => 'Name',
+            ],
+        ],
+
+        'tags' => [
+            'index' => [
+                'create-btn'     => 'Create Tag',
+                'title'          => 'Tags',
+                'create-success' => 'Tag created successfully.',
+                'update-success' => 'Tag updated successfully.',
+                'delete-success' => 'Tag deleted successfully.',
+                'delete-failed'  => 'Tag can not be deleted.',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'name'        => 'Name',
+                    'users'       => 'Users',
+                    'created-at'  => 'Created At',
+                ],
+
+                'create' => [
+                    'name'     => 'Name',
+                    'save-btn' => 'Save Tag',
+                    'title'    => 'Create Tag',
+                    'color'    => 'Color',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit Tag',
+                ],
+            ],
+        ],
+
+        'users' => [
+            'index' => [
+                'create-btn'          => 'Create User',
+                'create-success'      => 'User created successfully.',
+                'delete-failed'       => 'User can not be deleted.',
+                'delete-success'      => 'User deleted successfully.',
+                'last-delete-error'   => 'At least one user is required.',
+                'mass-delete-failed'  => 'Users can not be deleted.',
+                'mass-delete-success' => 'Users deleted successfully.',
+                'mass-update-failed'  => 'Users can not be updated.',
+                'mass-update-success' => 'Users updated successfully.',
+                'title'               => 'Users',
+                'update-success'      => 'User updated successfully.',
+                'user-define-error'   => 'Can not delete system user.',
+
+                'datagrid' => [
+                    'active'        => 'Active',
+                    'created-at'    => 'Created At',
+                    'delete'        => 'Delete',
+                    'edit'          => 'Edit',
+                    'email'         => 'Email',
+                    'id'            => 'ID',
+                    'inactive'      => 'Inactive',
+                    'name'          => 'Name',
+                    'status'        => 'Status',
+                    'update-status' => 'Update Status',
+                    'users'         => 'Users',
+                ],
+
+                'create' => [
+                    'confirm-password' => 'Confirm Password',
+                    'email'            => 'Email',
+                    'general'          => 'General',
+                    'global'           => 'Global',
+                    'group'            => 'Group',
+                    'individual'       => 'Individual',
+                    'name'             => 'Name',
+                    'password'         => 'Password',
+                    'permission'       => 'Permission',
+                    'role'             => 'Role',
+                    'save-btn'         => 'Save User',
+                    'status'           => 'Status',
+                    'title'            => 'Create User',
+                    'view-permission'  => 'View Permission',
+                ],
+
+                'edit' => [
+                    'title' => 'Edit User',
+                ],
+            ],
+        ],
+
+        'pipelines' => [
+            'index' => [
+                'title'      => 'Pipelines',
+                'create-btn' => 'Create Pipeline',
+
+                'datagrid' => [
+                    'delete'      => 'Delete',
+                    'edit'        => 'Edit',
+                    'id'          => 'ID',
+                    'is-default'  => 'Is Default',
+                    'name'        => 'Name',
+                    'no'          => 'No',
+                    'rotten-days' => 'Rotten Days',
+                    'yes'         => 'Yes',
+                ],
             ],
         ],
     ],
