@@ -386,7 +386,7 @@ Breadcrumbs::for('configuration.slug', function (BreadcrumbTrail $trail, $slug) 
     $trail->push('', route('admin.configuration.index', ['slug' => $slug]));
 });
 
-// Dashboard > Account > Edit 
+// Dashboard > Account > Edit
 Breadcrumbs::for('dashboard.account.edit', function (BreadcrumbTrail $trail, $user) {
     $trail->parent('dashboard');
     $trail->push(trans('admin::app.account.edit.title'), route('admin.user.account.edit', $user->id));
