@@ -56,67 +56,6 @@
                             </div>
                         </div>
 
-                        <!-- Name -->
-                        <x-admin::form.control-group class="!w-1/2">
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Name')
-                            </x-admin::form.control-group.label>
-
-                            <x-admin::form.control-group.control
-                                type="text"
-                                id="name"
-                                name="name"
-                                rules="required"
-                                :label="trans('Name')"
-                                :placeholder="trans('Name')"
-                            />
-
-                            <x-admin::form.control-group.error control-name="name" />
-                        </x-admin::form.control-group>
-
-                        <!-- Entity Type -->
-                        <x-admin::form.control-group class="!w-1/2">
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Entity Type')
-                            </x-admin::form.control-group.label>
-
-                            <x-admin::form.control-group.control
-                                type="select"
-                                id="entity_type"
-                                name="entity_type"
-                                rules="required"
-                                :label="trans('Entity Type')"
-                                :placeholder="trans('Entity Type')"
-                            >
-                                @foreach (app('\Webkul\Automation\Helpers\Entity')->getEvents() as $item)
-                                    <option value="{{ $item['id'] }}">
-                                        {{ $item['name'] }}
-                                    </option>
-                                @endforeach
-                            </x-admin::form.control-group.control>
-
-                            <x-admin::form.control-group.error control-name="entity_type" />
-
-                        </x-admin::form.control-group>
-
-                        <!-- Description -->
-                        <x-admin::form.control-group class="!w-1/2">
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Name')
-                            </x-admin::form.control-group.label>
-
-                            <x-admin::form.control-group.control
-                                type="textarea"
-                                id="description"
-                                name="description"
-                                rules="required"
-                                :label="trans('Description')"
-                                :placeholder="trans('Description')"
-                            />
-
-                            <x-admin::form.control-group.error control-name="description" />
-                        </x-admin::form.control-group>
-
                         <!-- Method and URL endpoint -->
                         <x-admin::form.control-group class="!w-1/2">
                             <x-admin::form.control-group.label class="!text-gray-600 required">
@@ -354,7 +293,7 @@
 
                                                 <span
                                                     class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Json'"
+                                                    @click="rawType = 'json'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
                                                         @lang('JSON')
@@ -363,7 +302,7 @@
 
                                                 <span
                                                     class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    @click="rawType = 'Text'"
+                                                    @click="rawType = 'text'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
                                                         @lang('Text')
@@ -375,18 +314,141 @@
                                 </div>
                             </div>
                            
-                            <x-admin::form.control-group.control
-                                type="textarea"
-                                id="payload"
-                                name="payload"
-                                rules="required"
-                                :label="trans('Payload')"
-                                :placeholder="trans('Payload')"
-                            />
+                            <template v-if="showEditor">
+                                <textarea
+                                    ref="payload"
+                                    id="payload"
+                                    name="payload"
+                                >@{{ payload }}</textarea>
+                            </template>
+
+                            <template v-else>
+                                <div class="flex flex-col">
+                                    <div 
+                                        class="flex gap-3 my-2 items-center justify-between"
+                                        v-for="(payload, index) in tempPayload"
+                                    >
+                                        <div class="w-1/2">
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::id="`payload[${index}][key]`"
+                                                ::name="`payload[${index}][key]`"
+                                                v-model="payload.key"
+                                                rules="required"
+                                                :label="trans('Key')"
+                                                :placeholder="trans('Key')"
+                                            />
+                            
+                                            <x-admin::form.control-group.error ::name="`payload[${index}][key]`"/>
+                                        </div>
+                                        <div class="w-full">
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::id="`payload[${index}][value]`"
+                                                ::name="`payload[${index}][value]`"
+                                                v-model="payload.value"
+                                                rules="required"
+                                                :label="trans('Value')"
+                                                :placeholder="trans('Value')"
+                                            />
+                            
+                                            <x-admin::form.control-group.error ::name="`payload[${index}][value]`"/>
+                                        </div>
+                            
+                                        <i 
+                                            class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                                            @click="removeFormBody(index)"
+                                            v-if="tempPayload.length > 1"
+                                        ></i>
+                                    </div>
+                            
+                                    <span
+                                        class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
+                                        @click="addFormBody(index)"
+                                    >
+                                        @lang('Add New payload')
+                                    </span>
+                                </div>
+                            </template>
 
                             <x-admin::form.control-group.error control-name="payload" />
                         </x-admin::form.control-group>
                     </div>
+                </div>
+
+                <!-- Right sub-component -->
+                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    <x-admin::accordion>
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('General')
+                                </p>
+                            </div>
+                        </x-slot>
+    
+                        <x-slot:content>
+                            <!-- Name -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                    @lang('Name')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    rules="required"
+                                    :label="trans('Name')"
+                                    :placeholder="trans('Name')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="name" />
+                            </x-admin::form.control-group>
+
+                            <!-- Entity Type -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                    @lang('Entity Type')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    id="entity_type"
+                                    name="entity_type"
+                                    rules="required"
+                                    :label="trans('Entity Type')"
+                                    :placeholder="trans('Entity Type')"
+                                >
+                                    @foreach (app('\Webkul\Automation\Helpers\Entity')->getEvents() as $item)
+                                        <option value="{{ $item['id'] }}">
+                                            {{ $item['name'] }}
+                                        </option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+
+                                <x-admin::form.control-group.error control-name="entity_type" />
+                            </x-admin::form.control-group>
+
+                            <!-- Description -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                    @lang('Name')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="textarea"
+                                    id="description"
+                                    name="description"
+                                    rules="required"
+                                    :label="trans('Description')"
+                                    :placeholder="trans('Description')"
+                                />
+
+                                <x-admin::form.control-group.error control-name="description" />
+                            </x-admin::form.control-group>
+                        </x-slot>
+                    </x-admin::accordion>
                 </div>
             </div>
         </script>
@@ -401,6 +463,10 @@
 
                         parameters: [{ key: '', value: ''}],
 
+                        payload: '',
+
+                        tempPayload: [{ key: '', value: ''}],
+
                         headers: [{ key: 'Content Type', value: 'text/plain;charset=UTF', readOnly: true }],
 
                         contentType: 'default',
@@ -409,7 +475,36 @@
                     };
                 },
 
+                created() {
+                    this.initiateEditor();
+
+                    if (Array.isArray(this.payload)) {
+                        this.tempPayload = this.payload;
+                    }
+                },
+
+                watch: {
+                    rawType(newValue, oldValue) {
+                        this.handleEditorDisplay();
+                    },
+
+                    contentType(newValue, oldValue) {
+                        this.handleEditorDisplay();
+                    }
+                },
+
                 computed: {
+                    /**
+                     * Check if the editor should be displayed.
+                     * @returns {boolean}
+                     */
+                     showEditor() {
+                        return (
+                            this.contentType === 'default'
+                            || this.contentType === 'raw'
+                        ) && this.contentType !== 'application/x-www-form-urlencoded';
+                    },
+
                     /**
                      * Get the URL endpoint with the parameters
                      * 
@@ -470,8 +565,98 @@
                     removeHeader(index) {
                         this.headers.splice(index, 1);
                     },
+
+                    /**
+                     * Add a new parameter.
+                     * 
+                     * @returns {void}
+                     */
+                     removeFormBody(index) {
+                        this.tempPayload.splice(index, 1);
+                    },
+
+                    /**
+                     * Add a new parameter.
+                     * 
+                     * @returns {void}
+                     */
+                    addFormBody() {
+                        this.tempPayload.push({ key: '', value: '' });
+                    },
+
+                    /**
+                     * Handle editor display.
+                     * 
+                     * @returns {void}
+                     */
+                    handleEditorDisplay() {
+                        if (this.codeMirrorInstance) {
+                            this.codeMirrorInstance.toTextArea();
+
+                            this.codeMirrorInstance = null;
+                        }
+
+                        if (this.showEditor) {
+                            this.initiateEditor();
+                        }
+                    },
+
+                    /**
+                     * Initiate Editor.
+                     * 
+                     * @param {string} rawType
+                     * @return {void}
+                     */
+                    initiateEditor() {
+                        this.$nextTick(() => {
+                            const mode = this.rawType === 'json' ? 'application/json' : 'text/plain';
+
+                            if (! this.codeMirrorInstance && this.showEditor) {
+                                this.codeMirrorInstance = CodeMirror.fromTextArea(this.$refs.payload, {
+                                    lineNumbers: true,
+                                    mode: this.contentType === 'default' ? 'application/json' : mode,
+                                    styleActiveLine: true,
+                                    lint: true,
+                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'eclipse',
+                                });
+
+                                this.codeMirrorInstance.on('changes', () => this.payload = this.codeMirrorInstance.getValue());
+
+                                return;
+                            }
+
+                            this.codeMirrorInstance?.setOption('mode', mode);
+                        }, 0);
+                    }
                 },
             });
         </script>
+
+
+        <!-- Code mirror script CDN -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/codemirror.js"
+        ></script>
+
+        <!-- 
+            Html mixed and xml cnd both are dependent 
+            Used for html and css theme
+        -->
+        <script
+            type="text/javascript"
+            src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.30.0/mode/javascript/javascript.js"
+        ></script>
+    @endPushOnce
+
+    @pushOnce('styles')
+        <!-- Code mirror style cdn -->
+        <link 
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.13.4/codemirror.css"
+        ></link>
+
+        <!-- Dark theme css -->
+        <link rel="stylesheet" href="https://codemirror.net/5/theme/ayu-dark.css">
     @endPushOnce
 </x-admin::layouts>
