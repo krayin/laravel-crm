@@ -1,3 +1,5 @@
+@php($placeholders = app('\Webkul\Automation\Helpers\Entity')->getEmailTemplatePlaceholders())
+
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
@@ -57,7 +59,7 @@
                         </div>
 
                         <!-- Method and URL endpoint -->
-                        <x-admin::form.control-group class="!w-1/2">
+                        <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
                                 @lang('URL And Parameters')
                             </x-admin::form.control-group.label>
@@ -89,62 +91,15 @@
                             <x-admin::form.control-group.error control-name="end_point"/>
                         </x-admin::form.control-group>
 
-                        <x-admin::form.control-group class="!w-1/2 my-2">
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Parameters')
-                            </x-admin::form.control-group.label>
-                        
-                            <div class="flex flex-col">
-                                <div 
-                                    class="flex gap-3 my-2 items-center justify-between"
-                                    v-for="(parameter, index) in parameters"
-                                    :key="index"
-                                >
-                                    <div class="w-1/2">
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::id="`query_params[${index}][key]`"
-                                            ::name="`query_params[${index}][key]`"
-                                            v-model="parameter.key"
-                                            rules="required"
-                                            :label="trans('Key')"
-                                            :placeholder="trans('Key')"
-                                        />
-                        
-                                        <x-admin::form.control-group.error ::name="`query_params[${index}][key]`" />
-                                    </div>
-                        
-                                    <div class="w-full">
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::id="`query_params[${index}][value]`"
-                                            ::name="`query_params[${index}][value]`"
-                                            v-model="parameter.value"
-                                            rules="required"
-                                            :label="trans('Value')"
-                                            :placeholder="trans('Value')"
-                                        />
-                        
-                                        <x-admin::form.control-group.error ::name="`query_params[${index}][value]`" />
-                                    </div>
-                        
-                                    <i 
-                                        class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
-                                        @click="removeParameter(index)"
-                                        v-if="parameters.length > 1"
-                                    ></i>
-                                </div>
-                        
-                                <p 
-                                    class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
-                                    @click="addParameter(index)" 
-                                >
-                                    @lang('Add New Parameters')
-                                </p>
-                            </div>
-                        </x-admin::form.control-group>
-                        
-                        <div class="flex items-center justify-between rounded-sm border w-1/2 bg-white border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                        <v-key-and-value
+                            title="@lang('Parameters')"
+                            name="query_params"
+                            :remove-btn-title="'Add new parameter'"
+                            :fields="parameters"
+                            :placeholders="placeholders"
+                        ></v-key-and-value>
+
+                        <div class="flex items-center justify-between rounded-sm border w-full bg-white border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                             <div class="flex gap-3 my-2">
                                 <div class="text-xs font-sm dark:text-gray-300">
                                     @lang('URL Preview :') <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint }}</span>
@@ -152,68 +107,19 @@
                             </div>
                         </div>
 
-                        <hr class="my-4 w-1/2"/>
+                        <hr class="my-4"/>
 
-                        <x-admin::form.control-group class="!w-1/2">
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Headers')
-                            </x-admin::form.control-group.label>
-                        
-                            <div class="flex flex-col">
-                                <div 
-                                    class="flex gap-3 my-2 items-center justify-between"
-                                    v-for="(header, index) in headers"
-                                    :key="index"
-                                >
-                                    <div class="w-1/2">
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::id="`headers[${index}][key]`"
-                                            ::name="`headers[${index}][key]`"
-                                            v-model="header.key"
-                                            rules="required"
-                                            :label="trans('Key')"
-                                            ::readonly="header.readOnly"
-                                            :placeholder="trans('Key')"
-                                        />
-                        
-                                        <x-admin::form.control-group.error ::name="`headers[${index}][key]`" />
-                                    </div>
-                        
-                                    <div class="w-full">
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::id="`headers[${index}][value]`"
-                                            ::name="`headers[${index}][value]`"
-                                            v-model="header.value"
-                                            rules="required"
-                                            :label="trans('Value')"
-                                            ::readonly="header.readOnly"
-                                            :placeholder="trans('Value')"
-                                        />
-                        
-                                        <x-admin::form.control-group.error ::name="`headers[${index}][value]`" />
-                                    </div>
-                        
-                                    <i 
-                                        class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
-                                        @click="removeHeader(index)"
-                                        v-if="headers.length > 1"
-                                    ></i>
-                                </div>
-                        
-                                <p 
-                                    class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
-                                    @click="addHeader(index)" 
-                                >
-                                    @lang('Add New Headers')
-                                </p>
-                            </div>
-                        </x-admin::form.control-group>
+                        <v-key-and-value
+                            title="@lang('Headers')"
+                            name="headers"
+                            :remove-btn-title="'Add new header'"
+                            :fields="headers"
+                            :placeholders="placeholders"
+                        ></v-key-and-value>
 
-                        <hr class="my-4 w-1/2"/>
+                        <hr class="my-4"/>
 
-                        <x-admin::form.control-group class="!w-1/2">
+                        <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
                                 @lang('Body')
                             </x-admin::form.control-group.label>
@@ -323,52 +229,13 @@
                             </template>
 
                             <template v-else>
-                                <div class="flex flex-col">
-                                    <div 
-                                        class="flex gap-3 my-2 items-center justify-between"
-                                        v-for="(payload, index) in tempPayload"
-                                    >
-                                        <div class="w-1/2">
-                                            <x-admin::form.control-group.control
-                                                type="text"
-                                                ::id="`payload[${index}][key]`"
-                                                ::name="`payload[${index}][key]`"
-                                                v-model="payload.key"
-                                                rules="required"
-                                                :label="trans('Key')"
-                                                :placeholder="trans('Key')"
-                                            />
-                            
-                                            <x-admin::form.control-group.error ::name="`payload[${index}][key]`"/>
-                                        </div>
-                                        <div class="w-full">
-                                            <x-admin::form.control-group.control
-                                                type="text"
-                                                ::id="`payload[${index}][value]`"
-                                                ::name="`payload[${index}][value]`"
-                                                v-model="payload.value"
-                                                rules="required"
-                                                :label="trans('Value')"
-                                                :placeholder="trans('Value')"
-                                            />
-                            
-                                            <x-admin::form.control-group.error ::name="`payload[${index}][value]`"/>
-                                        </div>
-                            
-                                        <i 
-                                            class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
-                                            @click="removeFormBody(index)"
-                                            v-if="tempPayload.length > 1"
-                                        ></i>
-                                    </div>
-                            
-                                    <span
-                                        class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
-                                        @click="addFormBody(index)"
-                                    >
-                                        @lang('Add New payload')
-                                    </span>
-                                </div>
+                                <v-key-and-value
+                                    title="@lang('Key and Value')"
+                                    name="payload"
+                                    :remove-btn-title="'Add new payload'"
+                                    :fields="tempPayload"
+                                    :placeholders="placeholders"
+                                ></v-key-and-value>
                             </template>
 
                             <x-admin::form.control-group.error control-name="payload" />
@@ -453,6 +320,97 @@
             </div>
         </script>
 
+        <script
+            type="text/x-template"
+            id="v-key-and-value-template"
+        >
+            <x-admin::form.control-group class="my-2">
+                <x-admin::form.control-group.label class="!text-gray-600 required">
+                    @{{ title }}
+                </x-admin::form.control-group.label>
+            
+                <div class="flex flex-col">
+                    <div 
+                        class="flex gap-3 my-2 items-center justify-between group"
+                        v-for="(field, index) in fields"
+                        :key="index"
+                    >
+                        <div class="w-1/2">
+                            <x-admin::form.control-group.control
+                                type="text"
+                                ::id="`${name}[${index}][key]`"
+                                ::name="`${name}[${index}][key]`"
+                                v-model="field.key"
+                                rules="required"
+                                :label="trans('Key')"
+                                :placeholder="trans('Key')"
+                            />
+                            <x-admin::form.control-group.error ::name="`${name}[${index}][key]`" />
+                        </div>
+
+                        <div class="w-full">
+                            <x-admin::form.control-group.control
+                                type="text"
+                                ::id="`${name}[${index}][value]`"
+                                ::name="`${name}[${index}][value]`"
+                                v-model="field.value"
+                                rules="required"
+                                :label="trans('Value')"
+                                :placeholder="trans('Value')"
+                            />
+                            <x-admin::form.control-group.error ::name="`${name}[${index}][value]`" />
+                        </div>
+
+                        <i 
+                            class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                            @click="remove(index)"
+                            v-if="fields.length > 1"
+                        ></i>
+
+                        <div class="w-1/5">
+                            <x-admin::dropdown class="rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                <x-slot:toggle>
+                                    <span
+                                        class="py-2 text-xs text-brandColor hover:underline hover:text-brandColor cursor-pointer invisible group-hover:visible"
+                                    >
+                                        @lang('Insert Placeholder')
+                                    </span>
+                                </x-slot>
+            
+                                <x-slot:menu class="!p-0 dark:border-gray-800 max-h-80 overflow-y-auto">
+                                    <div
+                                        v-for="entity in placeholders"
+                                        :key="entity.text"
+                                        class="mb-4"
+                                    >
+                                        <div class="font-bold text-lg m-2">@{{ entity.text }}</div>
+
+                                        <span
+                                            v-for="placeholder in entity.menu"
+                                            :key="placeholder.value"
+                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                            @click="insertPlaceholder(index, placeholder.value)"
+                                        >
+                                            <div class="items flex items-center gap-1.5">
+                                                @{{ placeholder.text }}
+                                            </div>
+                                        </span>
+                                    </div>
+                                </x-slot>
+                            </x-admin::dropdown>
+                        </div>
+                    </div>
+            
+                    <span
+                        class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
+                        @click="add(index)" 
+                    >
+                        @{{ removeBtnTitle }}
+                    </span>
+                </div>
+            </x-admin::form.control-group>
+        </script>
+
         <script type="module">
             app.component('v-webhooks', {
                 template: '#webhooks-template',
@@ -461,17 +419,19 @@
                     return {
                         baseUrl: '',
 
-                        parameters: [{ key: '', value: ''}],
-
                         payload: '',
+
+                        contentType: 'default',
+
+                        rawType: 'Json',
+
+                        parameters: [{ key: '', value: ''}],
 
                         tempPayload: [{ key: '', value: ''}],
 
                         headers: [{ key: 'Content Type', value: 'text/plain;charset=UTF', readOnly: true }],
 
-                        contentType: 'default',
-
-                        rawType: 'Json',
+                        placeholders: @json($placeholders),
                     };
                 },
 
@@ -490,7 +450,7 @@
 
                     contentType(newValue, oldValue) {
                         this.handleEditorDisplay();
-                    }
+                    },
                 },
 
                 computed: {
@@ -498,7 +458,7 @@
                      * Check if the editor should be displayed.
                      * @returns {boolean}
                      */
-                     showEditor() {
+                    showEditor() {
                         return (
                             this.contentType === 'default'
                             || this.contentType === 'raw'
@@ -628,6 +588,71 @@
                             this.codeMirrorInstance?.setOption('mode', mode);
                         }, 0);
                     }
+                },
+            });
+
+            app.component('v-key-and-value', {
+                template: '#v-key-and-value-template',
+
+                props: ['title', 'name', 'removeBtnTitle', 'fields', 'placeholders'],
+
+                data() {
+                    return {
+                        selectedPlaceholder: '',
+
+                        cursorPosition: 0,
+                    };
+                },
+
+                methods: {
+                    /**
+                     * Add a new fields.
+                     * 
+                     * @returns {void}
+                     */
+                    add() {
+                        this.fields.push({ key: '', value: '' });
+                    },
+
+                    /**
+                     * Remove a fields.
+                     * 
+                     * @returns {void}
+                     */
+                    remove(index) {
+                        this.fields.splice(index, 1);
+                    },
+
+                    /**
+                     * Save the cursor position when the input is focused.
+                     * 
+                     * @param {Event} event
+                     * @returns {void}
+                     */
+                    saveCursorPosition(event) {
+                        this.cursorPosition = event.target.selectionStart;
+                    },
+
+                    /**
+                     * Insert the selected placeholder into the subject.
+                     * 
+                     * @returns {void}
+                     */
+                    insertPlaceholder(index, value) {
+                        if (this.cursorPosition >= 0) {
+                            const before = this.fields[index].value.substring(0, this.cursorPosition);
+
+                            const after = this.fields[index].value.substring(this.cursorPosition);
+
+                            this.fields[index].value = `${before}${value}${after}`;
+
+                            this.cursorPosition += value.length;
+                        } else if (value) {
+                            this.fields[index].value += value;
+                        }
+
+                        this.selectedPlaceholder = '';
+                    },
                 },
             });
         </script>

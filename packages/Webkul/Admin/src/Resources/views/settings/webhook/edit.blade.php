@@ -359,6 +359,7 @@
                             />
                             <x-admin::form.control-group.error ::name="`${name}[${index}][key]`" />
                         </div>
+
                         <div class="w-full">
                             <x-admin::form.control-group.control
                                 type="text"
@@ -378,28 +379,37 @@
                             v-if="fields.length > 1"
                         ></i>
 
-                        <div class="w-1/6">
-                            <x-admin::form.control-group.control
-                                type="select"
-                                name="placeholder"
-                                id="placeholder"
-                                :label="trans('admin::app.settings.email-template.create.subject-placeholder')"
-                                v-model="selectedPlaceholder"
-                                @change="insertPlaceholder(index)"
-                            >
-                                <optgroup
-                                    v-for="entity in placeholders"
-                                    :key="entity.text"
-                                    :label="entity.text"
-                                >
-                                    <option
-                                        v-for="placeholder in entity.menu"
-                                        :key="placeholder.value"
-                                        :value="placeholder.value"
-                                        :text="placeholder.text"
-                                    ></option>
-                                </optgroup>
-                            </x-admin::form.control-group.control>
+                        <div class="w-1/5">
+                            <x-admin::dropdown class="rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                <x-slot:toggle>
+                                    <span
+                                        class="py-2 text-xs text-brandColor hover:underline hover:text-brandColor cursor-pointer invisible group-hover:visible"
+                                    >
+                                        @lang('Insert Placeholder')
+                                    </span>
+                                </x-slot>
+            
+                                <x-slot:menu class="!p-0 dark:border-gray-800 max-h-80 overflow-y-auto">
+                                    <div
+                                        v-for="entity in placeholders"
+                                        :key="entity.text"
+                                        class="mb-4"
+                                    >
+                                        <div class="font-bold text-lg m-2">@{{ entity.text }}</div>
+
+                                        <span
+                                            v-for="placeholder in entity.menu"
+                                            :key="placeholder.value"
+                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                            @click="insertPlaceholder(index, placeholder.value)"
+                                        >
+                                            <div class="items flex items-center gap-1.5">
+                                                @{{ placeholder.text }}
+                                            </div>
+                                        </span>
+                                    </div>
+                                </x-slot>
+                            </x-admin::dropdown>
                         </div>
                     </div>
             
@@ -420,22 +430,22 @@
                 data() {
                     return {
                         baseUrl: '{{ $webhook->end_point ?? '' }}',
-
-                        payload: @json($webhook->payload),
-
+                        
+                        codeMirrorInstance: null,
+                        
                         tempPayload: [],
+                        
+                        payload: @json($webhook->payload),
 
                         parameters: @json($webhook->query_params),
 
                         headers: @json($webhook->headers),
 
+                        placeholders: @json($placeholders),
+
                         contentType: '{{ $webhook->payload_type ?? 'default' }}',
 
                         rawType: '{{ $webhook->raw_payload_type !== "" ? $webhook->raw_payload_type : 'json' }}',
-
-                        codeMirrorInstance: null,
-
-                        placeholders: @json($placeholders),
                     };
                 },
 
@@ -448,10 +458,20 @@
                 },
 
                 watch: {
+                    /**
+                     * Watch the raw type and update the tempPayload.
+                     * 
+                     * @return {void}
+                     */
                     rawType(newValue, oldValue) {
                         this.handleEditorDisplay();
                     },
 
+                    /**
+                     * Watch the content type and update the tempPayload.
+                     * 
+                     * @return {void}
+                     */
                     contentType(newValue, oldValue) {
                         this.handleEditorDisplay();
                     }
@@ -460,6 +480,7 @@
                 computed: {
                     /**
                      * Check if the editor should be displayed.
+                     * 
                      * @returns {boolean}
                      */
                     showEditor() {
@@ -515,6 +536,7 @@
                      * Initiate Editor.
                      * 
                      * @param {string} rawType
+                     * 
                      * @return {void}
                      */
                     initiateEditor() {
@@ -549,6 +571,7 @@
                 data() {
                     return {
                         selectedPlaceholder: '',
+
                         cursorPosition: 0,
                     };
                 },
@@ -587,25 +610,23 @@
                      * 
                      * @returns {void}
                      */
-                    insertPlaceholder(index) {
-                        const placeholder = this.selectedPlaceholder;
-
+                    insertPlaceholder(index, value) {
                         if (this.cursorPosition >= 0) {
                             const before = this.fields[index].value.substring(0, this.cursorPosition);
 
                             const after = this.fields[index].value.substring(this.cursorPosition);
 
-                            this.fields[index].value = `${before}${placeholder}${after}`;
+                            this.fields[index].value = `${before}${value}${after}`;
 
-                            this.cursorPosition += placeholder.length;
-                        } else if (placeholder) {
-                            this.fields[index].value += placeholder;
+                            this.cursorPosition += value.length;
+                        } else if (value) {
+                            this.fields[index].value += value;
                         }
 
                         this.selectedPlaceholder = '';
                     },
                 },
-            })
+            });
         </script>
 
         <!-- Code mirror script CDN -->
