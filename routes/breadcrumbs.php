@@ -53,7 +53,7 @@ Breadcrumbs::for('mail', function (BreadcrumbTrail $trail) {
 // Mail > [Compose | Inbox | Outbox | Draft | Sent | Trash]
 Breadcrumbs::for('mail.route', function (BreadcrumbTrail $trail, $route) {
     $trail->parent('mail');
-    $trail->push(trans('admin::app.mail.index'.$route), route('admin.mail.index', ['route' => $route]));
+    $trail->push(trans('admin::app.mail.index.'.$route), route('admin.mail.index', ['route' => $route]));
 });
 
 // Mail > [Inbox | Outbox | Draft | Sent | Trash] > Title
