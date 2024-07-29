@@ -50,7 +50,7 @@
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <!-- Events -->
+                    <!-- Title -->
                     <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
