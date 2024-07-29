@@ -8,7 +8,6 @@ use Webkul\DataGrid\DataGrid;
 
 class PipelineDataGrid extends DataGrid
 {
-
     /**
      * Prepare query builder.
      */

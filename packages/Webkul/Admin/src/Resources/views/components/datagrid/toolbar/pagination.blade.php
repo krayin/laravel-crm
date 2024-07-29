@@ -13,6 +13,9 @@
         type="text/x-template"
         id="v-datagrid-pagination-template"
     >
+        <!-- Empty slot for right pegination before -->
+        <slot name="toolbar-right-pagination-before"></slot>
+
         <slot
             name="pagination"
             :available="available"
@@ -90,8 +93,8 @@
             </template>
         </slot>
 
-        <!-- Empty slot for right toolbar after -->
-        <slot name="right-toolbar-left-after"></slot>
+        <!-- Empty slot for right pegination toolbar after -->
+        <slot name="toolbar-right-pagination-after"></slot>
     </script>
 
     <script type="module">

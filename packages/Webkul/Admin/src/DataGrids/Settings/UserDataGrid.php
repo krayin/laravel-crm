@@ -4,8 +4,8 @@ namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 use Illuminate\Support\Facades\Storage;
+use Webkul\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
 
 class UserDataGrid extends DataGrid
@@ -16,7 +16,7 @@ class UserDataGrid extends DataGrid
      * @return void
      */
     public function __construct(protected UserRepository $userRepository) {}
-    
+
     /**
      * Prepare query builder.
      *
@@ -64,14 +64,14 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.users.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.users.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
             'closure'    => function ($row) {
-                return  [
+                return [
                     'image' => $row->image ? Storage::url($row->image) : null,
-                    'name' => $row->name
+                    'name'  => $row->name,
                 ];
             },
         ]);
@@ -90,7 +90,7 @@ class UserDataGrid extends DataGrid
             'filterable' => true,
             'sortable'   => true,
         ]);
-        
+
         $this->addColumn([
             'index'           => 'created_at',
             'label'           => trans('admin::app.settings.users.index.datagrid.created-at'),

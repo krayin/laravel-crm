@@ -14,8 +14,8 @@
         type="text/x-template"
         id="v-datagrid-filter-template"
     >
-        <!-- Empty slot for right toolbar before -->
-        <slot name="right-toolbar-left-before"></slot>
+        <!-- Empty slot for filter before -->
+        <slot name="toolbar-right-filter-before"></slot>
 
         <slot
             name="filter"
@@ -873,6 +873,9 @@
                 </x-admin::drawer>
             </template>
         </slot>
+
+        <!-- Empty slot for filter after -->
+        <slot name="toolbar-right-filter-after"></slot>
     </script>
 
     <script type="module">
