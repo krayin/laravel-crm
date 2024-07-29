@@ -3,7 +3,7 @@
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
-        @lang('Create Webhooks')
+        @lang('admin::app.settings.webhooks.edit.title')
     </x-slot>
 
     {!! view_render_event('krayin.admin.activities.edit.form.before') !!}
@@ -22,7 +22,7 @@
                 </div>
     
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('Create Webhooks')
+                    @lang('admin::app.settings.webhooks.edit.title')
                 </div>
             </div>
     
@@ -33,7 +33,7 @@
                         type="submit"
                         class="primary-button"
                     >
-                        @lang('Save Webhooks')
+                        @lang('admin::app.settings.webhooks.edit.save-btn')
                     </button>
                 </div>
             </div>
@@ -55,11 +55,11 @@
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('Webhooks')
+                                    @lang('admin::app.settings.webhooks.edit.title')
                                 </p>
 
                                 <p class="text-sm text-gray-600 dark:text-white">
-                                    @lang('Edit the details of webhooks')
+                                    @lang('admin::app.settings.webhooks.edit.info')
                                 </p>
                             </div>
                         </div>
@@ -67,7 +67,7 @@
                         <!-- Method and URL endpoint -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('URL And Parameters')
+                                @lang('admin::app.settings.webhooks.edit.url-and-parameters')
                             </x-admin::form.control-group.label>
 
                             <div class="flex">
@@ -77,10 +77,10 @@
                                     id="method"
                                     :value="old('method') ?? $webhook->method"
                                     class="!w-1/6 rounded-r-none"
-                                    :label="trans('Method')"
+                                    :label="trans('admin::app.settings.webhooks.edit.method')"
                                 >
-                                    <option value="post">POST</option>
-                                    <option value="put">PUT</option>
+                                    <option value="post">@lang('admin::app.settings.webhooks.edit.post')</option>
+                                    <option value="put">@lang('admin::app.settings.webhooks.edit.put')</option>
                                 </x-admin::form.control-group.control>
 
                                 <x-admin::form.control-group.control
@@ -90,8 +90,8 @@
                                     class="rounded-l-none"
                                     :value="old('end_point')"
                                     rules="required"
-                                    :label="trans('URL endpoint')"
-                                    :placeholder="trans('URL endpoint')"
+                                    :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
+                                    :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
                                     v-model="urlEndPoint"
                                 />
                             </div>
@@ -99,9 +99,9 @@
                         </x-admin::form.control-group>
 
                         <v-key-and-value
-                            title="@lang('Parameters')"
+                            title="@lang('admin::app.settings.webhooks.edit.parameters')"
                             name="query_params"
-                            :remove-btn-title="'Add new parameter'"
+                            :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-parameter')'"
                             :fields="parameters"
                             :placeholders="placeholders"
                         ></v-key-and-value>
@@ -109,7 +109,9 @@
                         <div class="flex items-center justify-between rounded-sm border w-full bg-white border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                             <div class="flex gap-3 my-2">
                                 <div class="text-xs font-sm dark:text-gray-300">
-                                    @lang('URL Preview :') <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint }}</span>
+                                    @lang('admin::app.settings.webhooks.edit.url-preview')
+
+                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint }}</span>
                                 </div>
                             </div>
                         </div>
@@ -117,9 +119,9 @@
                         <hr class="my-4 w-full"/>
 
                         <v-key-and-value
-                            title="@lang('Headers')"
+                            title="@lang('admin::app.settings.webhooks.edit.headers')"
                             name="headers"
-                            :remove-btn-title="'Add new header'"
+                            :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-header')'"
                             :fields="headers"
                             :placeholders="placeholders"
                         ></v-key-and-value>
@@ -128,7 +130,7 @@
 
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Body')
+                                @lang('admin::app.settings.webhooks.edit.body')
                             </x-admin::form.control-group.label>
 
                             <div class="flex gap-2 items-center mb-4">
@@ -145,7 +147,7 @@
                                         for="default"
                                         class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
                                     >
-                                        @lang('Default')
+                                        @lang('admin::app.settings.webhooks.edit.default')
                                     </label>
                                 </div>
                                 
@@ -162,7 +164,7 @@
                                         for="x-www-form-urlencoded"
                                         class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
                                     >
-                                        @lang('x-www-form-urlencoded')
+                                        @lang('admin::app.settings.webhooks.edit.x-www-form-urlencoded')
                                     </label>
                                 </div>
 
@@ -183,7 +185,7 @@
                                             class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
                                             @click="contentType = 'raw';rawType = 'json'"
                                         >
-                                            @lang('Raw')
+                                            @lang('admin::app.settings.webhooks.edit.raw')
                                         </label>
                                     </div>
 
@@ -210,7 +212,7 @@
                                                     @click="rawType = 'json'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
-                                                        @lang('JSON')
+                                                        @lang('admin::app.settings.webhooks.edit.json')
                                                     </div>
                                                 </span>
 
@@ -220,7 +222,7 @@
                                                     @click="rawType = 'text'"
                                                 >
                                                     <div class="items flex items-center gap-1.5">
-                                                        @lang('Text')
+                                                        @lang('admin::app.settings.webhooks.edit.text')
                                                     </div>
                                                 </span>
                                             </x-slot>
@@ -241,7 +243,7 @@
                                 <v-key-and-value
                                     title="@lang('Key and Value')"
                                     name="payload"
-                                    :remove-btn-title="'Add new payload'"
+                                    :add-btn-title="'Add new payload'"
                                     :fields="tempPayload"
                                     :placeholders="placeholders"
                                 ></v-key-and-value>
@@ -258,7 +260,7 @@
                         <x-slot:header>
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('General')
+                                    @lang('admin::app.settings.webhooks.edit.general')
                                 </p>
                             </div>
                         </x-slot>
@@ -267,7 +269,7 @@
                             <!-- Name -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600 required">
-                                    @lang('Name')
+                                    @lang('admin::app.settings.webhooks.edit.name')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -275,9 +277,9 @@
                                     id="name"
                                     name="name"
                                     rules="required"
-                                    :value="old('name') ?? $webhook->name"
-                                    :label="trans('Name')"
-                                    :placeholder="trans('Name')"
+                                    :value="old('admin::app.settings.webhooks.edit.name') ?? $webhook->name"
+                                    :label="trans('Admin::app.settings.webhooks.edit.name')"
+                                    :placeholder="trans('Admin::app.settings.webhooks.edit.name')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="name" />
@@ -286,7 +288,7 @@
                             <!-- Entity Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600 required">
-                                    @lang('Entity Type')
+                                    @lang('admin::app.settings.webhooks.edit.entity-type')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -295,8 +297,8 @@
                                     name="entity_type"
                                     :value="old('entity_type') ?? $webhook->entity_type"
                                     rules="required"
-                                    :label="trans('Entity Type')"
-                                    :placeholder="trans('Entity Type')"
+                                    :label="trans('admin::app.settings.webhooks.edit.entity-type')"
+                                    :placeholder="trans('admin::app.settings.webhooks.edit.entity-type')"
                                 >
                                     @foreach (app('\Webkul\Automation\Helpers\Entity')->getEvents() as $item)
                                         <option value="{{ $item['id'] }}">
@@ -311,7 +313,7 @@
                             <!-- Description -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600 required">
-                                    @lang('Description')
+                                    @lang('admin::app.settings.webhooks.edit.description')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -320,8 +322,8 @@
                                     name="description"
                                     :value="old('description') ?? $webhook->description"
                                     rules="required"
-                                    :label="trans('Description')"
-                                    :placeholder="trans('Description')"
+                                    :label="trans('admin::app.settings.webhooks.edit.description')"
+                                    :placeholder="trans('admin::app.settings.webhooks.edit.description')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="description" />
@@ -385,7 +387,7 @@
                                     <span
                                         class="py-2 text-xs text-brandColor hover:underline hover:text-brandColor cursor-pointer invisible group-hover:visible"
                                     >
-                                        @lang('Insert Placeholder')
+                                        @lang('admin::app.settings.webhooks.edit.insert-placeholder')
                                     </span>
                                 </x-slot>
             
@@ -417,7 +419,7 @@
                         class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
                         @click="add(index)" 
                     >
-                        @{{ removeBtnTitle }}
+                        @{{ addBtnTitle }}
                     </span>
                 </div>
             </x-admin::form.control-group>
@@ -566,7 +568,7 @@
             app.component('v-key-and-value', {
                 template: '#v-key-and-value-template',
 
-                props: ['title', 'name', 'removeBtnTitle', 'fields', 'placeholders'],
+                props: ['title', 'name', 'addBtnTitle', 'fields', 'placeholders'],
 
                 data() {
                     return {

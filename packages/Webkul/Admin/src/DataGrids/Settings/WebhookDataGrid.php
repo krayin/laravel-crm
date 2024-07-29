@@ -33,7 +33,7 @@ class WebhookDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('ID'),
+            'label'      => trans('admin::app.settings.webhooks.index.datagrid.id'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -42,7 +42,7 @@ class WebhookDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('Name'),
+            'label'      => trans('admin::app.settings.webhooks.index.datagrid.name'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -51,7 +51,7 @@ class WebhookDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'entity_type',
-            'label'      => trans('Entity Type'),
+            'label'      => trans('admin::app.settings.webhooks.index.datagrid.entity-type'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -60,7 +60,7 @@ class WebhookDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'end_point',
-            'label'      => trans('End Point'),
+            'label'      => trans('admin::app.settings.webhooks.index.datagrid.end-point'),
             'type'       => 'string',
             'searchable' => true,
             'filterable' => true,
@@ -82,11 +82,11 @@ class WebhookDataGrid extends DataGrid
         ]);
 
         $this->addAction([
-            'index'        => 'delete',
-            'icon'         => 'icon-delete',
-            'title'        => trans('admin::app.settings.webhooks.index.datagrid.delete'),
-            'method'       => 'DELETE',
-            'url'          => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.webhooks.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
         ]);
     }
 }
