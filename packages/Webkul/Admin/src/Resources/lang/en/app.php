@@ -629,6 +629,8 @@ return [
                 'entity-type'           => 'Entity Type',
                 'insert-placeholder'    => 'Insert Placeholder',
                 'description'           => 'Description',
+                'json'                  => 'Json',
+                'text'                  => 'Text',
             ],
 
             'edit' => [
@@ -655,6 +657,8 @@ return [
                 'entity-type'           => 'Entity Type',
                 'insert-placeholder'    => 'Insert Placeholder',
                 'description'           => 'Description',
+                'json'                  => 'Json',
+                'text'                  => 'Text',
             ],
         ],
     ],
