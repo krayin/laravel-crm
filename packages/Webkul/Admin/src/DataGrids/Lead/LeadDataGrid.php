@@ -3,16 +3,15 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Lead\Repositories\SourceRepository;
+use Webkul\Lead\Repositories\TypeRepository;
 
 class LeadDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
     /**
      * Pipeline instance.
      *
@@ -28,6 +27,8 @@ class LeadDataGrid extends DataGrid
     public function __construct(
         protected PipelineRepository $pipelineRepository,
         protected StageRepository $stageRepository,
+        protected SourceRepository $sourceRepository,
+        protected TypeRepository $typeRepository,
         protected UserRepository $userRepository
     ) {
         if (request('pipeline_id')) {
@@ -35,29 +36,6 @@ class LeadDataGrid extends DataGrid
         } else {
             $this->pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
-
-        parent::__construct();
-
-        $this->export = bouncer()->hasPermission('leads.persons.export') ? true : false;
-    }
-
-    /**
-     * Place your datagrid extra settings here.
-     *
-     * @return void
-     */
-    public function init()
-    {
-        $this->setRowProperties([
-            'backgroundColor' => '#ffd0d6',
-            'condition'       => function ($row) {
-                if (in_array($row->stage_code, ['won', 'lost']) || ! $row->rotten_lead) {
-                    return false;
-                }
-
-                return true;
-            },
-        ]);
     }
 
     /**
@@ -118,13 +96,13 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('lead_source_name', 'lead_sources.id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
-        $this->addFilter('stage', 'lead_pipeline_stages.name');
+        $this->addFilter('stage', 'lead_pipeline_stages.id');
         $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
         $this->addFilter('rotten_lead', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'leads.created_at) >= '.DB::getTablePrefix().'lead_pipelines.rotten_days'));
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
@@ -132,55 +110,49 @@ class LeadDataGrid extends DataGrid
      *
      * @return void
      */
-    public function addColumns()
+    public function prepareColumns()
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.leads.index.datagrid.id'),
+            'type'       => 'integer',
+            'sortable'   => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'            => 'sales_person',
-            'label'            => trans('admin::app.datagrid.sales-person'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getUserDropdownOptions(),
-            'searchable'       => false,
-            'sortable'         => true,
-            'closure'          => function ($row) {
-                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
-
-                return "<a href='".$route."'>".$row->sales_person.'</a>';
-            },
+            'index'              => 'sales_person',
+            'label'              => trans('admin::app.leads.index.datagrid.sales-person'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->userRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
-            'index'    => 'title',
-            'label'    => trans('admin::app.datagrid.subject'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'title',
+            'label'      => trans('admin::app.leads.index.datagrid.subject'),
+            'type'       => 'string',
+            'searchable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'tag_name',
-            'label'    => trans('admin::app.datagrid.tags'),
-            'type'     => 'hidden',
-            'sortable' => true,
-        ]);
-
-        $this->addColumn([
-            'index'            => 'lead_source_name',
-            'label'            => trans('admin::app.leads.lead-source-name'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getLeadSourcesOptions(),
-            'searchable'       => false,
-            'sortable'         => true,
+            'index'              => 'lead_source_name',
+            'label'              => trans('admin::app.leads.index.datagrid.source'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
             'index'    => 'lead_value',
-            'label'    => trans('admin::app.datagrid.lead_value'),
+            'label'    => trans('admin::app.leads.index.datagrid.lead-value'),
             'type'     => 'string',
             'sortable' => true,
             'closure'  => function ($row) {
@@ -190,99 +162,73 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'person_name',
-            'label'      => trans('admin::app.datagrid.contact_person'),
+            'label'      => trans('admin::app.leads.index.datagrid.contact-person'),
             'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => false,
-            'closure'    => function ($row) {
-                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
-
-                return "<a href='".$route."'>".$row->person_name.'</a>';
-            },
-        ]);
-
-        $this->addColumn([
-            'index'      => 'stage',
-            'label'      => trans('admin::app.datagrid.stage'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => false,
-            'filterable' => false,
-            'closure'    => function ($row) {
-                if ($row->stage == 'Won') {
-                    $badge = 'success';
-                } elseif ($row->stage == 'Lost') {
-                    $badge = 'danger';
-                } else {
-                    $badge = 'primary';
-                }
-
-                return "<span class='badge badge-round badge-{$badge}'></span>".$row->stage;
-            },
-        ]);
-
-        $this->addColumn([
-            'index'             => 'rotten_lead',
-            'label'             => trans('admin::app.datagrid.rotten_lead'),
-            'type'              => 'single_dropdown',
-            'dropdown_options'  => $this->getYesNoDropdownOptions(),
-            'sortable'          => true,
-            'searchable'        => false,
-            'condition'         => 'eq',
-            'closure'           => function ($row) {
-                return ! $row->rotten_lead || in_array($row->stage_code, ['won', 'lost']) ? trans('admin::app.common.no') : trans('admin::app.common.yes');
-            },
-        ]);
-
-        $this->addColumn([
-            'index'      => 'expected_close_date',
-            'label'      => trans('admin::app.datagrid.expected_close_date'),
-            'type'       => 'date_range',
             'searchable' => false,
             'sortable'   => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'              => 'stage',
+            'label'              => trans('admin::app.leads.index.datagrid.stage'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->pipeline->stages->pluck('name', 'id')
+                ->map(function ($name, $id) {
+                    return ['value' => $id, 'label' => $name];
+                })
+                ->values()
+                ->all(),
+        ]);
+
+        $this->addColumn([
+            'index'      => 'rotten_lead',
+            'label'      => trans('admin::app.leads.index.datagrid.rotten-lead'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => false,
             'closure'    => function ($row) {
+                if (! $row->rotten_lead) {
+                    return trans('admin::app.leads.index.datagrid.no');
+                }
+
+                if (in_array($row->stage_code, ['won', 'lost'])) {
+                    return trans('admin::app.leads.index.datagrid.no');
+                }
+
+                return trans('admin::app.leads.index.datagrid.yes');
+            },
+        ]);
+
+        $this->addColumn([
+            'index'           => 'expected_close_date',
+            'label'           => trans('admin::app.leads.index.datagrid.expected-close-date'),
+            'type'            => 'date',
+            'searchable'      => false,
+            'sortable'        => true,
+            'filterable'      => true,
+            'filterable_type' => 'date_range',
+            'closure'         => function ($row) {
                 if (! $row->expected_close_date) {
                     return '--';
                 }
 
-                return core()->formatDate($row->expected_close_date);
+                return $row->expected_close_date;
             },
         ]);
 
         $this->addColumn([
-            'index'      => 'created_at',
-            'label'      => trans('admin::app.datagrid.created_at'),
-            'type'       => 'date_range',
-            'searchable' => false,
-            'sortable'   => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
-        ]);
-    }
-
-    /**
-     * Prepare tab filters.
-     *
-     * @return array
-     */
-    public function prepareTabFilters()
-    {
-        $values = $this->pipeline->stages()
-            ->get(['name', 'code as key', DB::raw('false as isActive')])
-            ->prepend([
-                'isActive' => true,
-                'key'      => 'all',
-                'name'     => trans('admin::app.datagrid.all'),
-            ])
-            ->toArray();
-
-        $this->addTabFilter([
-            'key'        => 'type',
-            'type'       => 'pill',
-            'condition'  => 'eq',
-            'value_type' => 'lookup',
-            'values'     => $values,
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.leads.index.datagrid.created-at'),
+            'type'            => 'date',
+            'searchable'      => false,
+            'sortable'        => true,
+            'filterable'      => true,
+            'filterable_type' => 'date_range',
         ]);
     }
 
@@ -293,20 +239,27 @@ class LeadDataGrid extends DataGrid
      */
     public function prepareActions()
     {
-        $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
-            'method' => 'GET',
-            'route'  => 'admin.leads.view',
-            'icon'   => 'eye-icon',
-        ]);
+        if (bouncer()->hasPermission('leads.view')) {
+            $this->addAction([
+                'icon'   => 'icon-eye',
+                'title'  => trans('admin::app.leads.index.datagrid.view'),
+                'method' => 'POST',
+                'url'    => function ($row) {
+                    return route('admin.leads.view', $row->id);
+                },
+            ]);
+        }
 
-        $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.leads.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
-            'icon'         => 'trash-icon',
-        ]);
+        if (bouncer()->hasPermission('leads.delete')) {
+            $this->addAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.leads.index.datagrid.delete'),
+                'method' => 'POST',
+                'url'    => function ($row) {
+                    return route('admin.leads.delete', $row->id);
+                },
+            ]);
+        }
     }
 
     /**
@@ -316,25 +269,25 @@ class LeadDataGrid extends DataGrid
      */
     public function prepareMassActions()
     {
-        $stages = [];
+        // $stages = [];
 
-        foreach ($this->pipeline->stages->toArray() as $stage) {
-            $stages[$stage['name']] = $stage['id'];
-        }
+        // foreach ($this->pipeline->stages->toArray() as $stage) {
+        //     $stages[$stage['name']] = $stage['id'];
+        // }
 
-        $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.leads.mass_delete'),
-            'method' => 'PUT',
-        ]);
+        // $this->addMassAction([
+        //     'type'   => 'delete',
+        //     'label'  => trans('ui::app.datagrid.delete'),
+        //     'action' => route('admin.leads.mass_delete'),
+        //     'method' => 'PUT',
+        // ]);
 
-        $this->addMassAction([
-            'type'    => 'update',
-            'label'   => trans('admin::app.datagrid.update_stage'),
-            'action'  => route('admin.leads.mass_update'),
-            'method'  => 'PUT',
-            'options' => $stages,
-        ]);
+        // $this->addMassAction([
+        //     'type'    => 'update',
+        //     'label'   => trans('admin::app.leads.index.datagrid.update_stage'),
+        //     'action'  => route('admin.leads.mass_update'),
+        //     'method'  => 'PUT',
+        //     'options' => $stages,
+        // ]);
     }
 }

@@ -761,6 +761,33 @@ return [
     // ],
 
     'leads' => [
+        'create-success'    => 'Lead created successfully.',
+        'update-success'    => 'Lead updated successfully.',
+        'destroy-success'   => 'Lead deleted successfully.',
+        'delete-failed'     => 'Lead can not be deleted.',
+
+        'index' => [
+            'title'      => 'Leads',
+            'create-btn' => 'Create Lead',
+
+            'datagrid' => [
+                'id'                  => 'ID',
+                'sales-person'        => 'Sales Person',
+                'subject'             => 'Subject',
+                'source'              => 'Source',
+                'lead-value'          => 'Lead Value',
+                'contact-person'      => 'Contact Person',
+                'stage'               => 'Stage',
+                'rotten-lead'         => 'Rotten Lead',
+                'expected-close-date' => 'Expected Close Date',
+                'created-at'          => 'Created At',
+                'no'                  => 'No',
+                'yes'                 => 'Yes'
+            ]
+        ],
+    ],
+
+    'leads-old' => [
         'title'                      => 'Leads',
         'lead'                       => 'Lead',
         'create-title'               => 'Create Lead',

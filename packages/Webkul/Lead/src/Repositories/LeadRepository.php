@@ -13,6 +13,24 @@ use Webkul\Core\Eloquent\Repository;
 class LeadRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'title',
+        'lead_value',
+        'status',
+        'user_id',
+        'person_id',
+        'lead_source_id',
+        'lead_type_id',
+        'lead_pipeline_id',
+        'lead_pipeline_stage_id',
+        'created_at',
+        'closed_at',
+        'expected_close_date',
+    ];
+
+    /**
      * Create a new repository instance.
      *
      * @return void
