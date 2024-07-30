@@ -32,6 +32,7 @@
             }
         }
     @endphp
+    
     @if (view()->exists($view = 'admin::common.custom-attributes.edit.' . $attribute->type))
         <x-admin::form.control-group class="mb-2.5 w-full">
             <x-admin::form.control-group.label
