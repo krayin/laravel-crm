@@ -296,6 +296,24 @@ Breadcrumbs::for('settings.workflows.edit', function (BreadcrumbTrail $trail, $w
     $trail->push(trans('admin::app.settings.workflows.edit.title'), route('admin.settings.workflows.edit', $workflow->id));
 });
 
+// Settings > Webhooks
+Breadcrumbs::for('settings.webhooks', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.webhooks.index.title'), route('admin.settings.webhooks.index'));
+});
+
+// Dashboard > Webhooks > Create Workflow
+Breadcrumbs::for('settings.webhooks.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.webhooks');
+    $trail->push(trans('admin::app.settings.webhooks.create.title'), route('admin.settings.webhooks.create'));
+});
+
+// Dashboard > Webhooks > Edit Workflow
+Breadcrumbs::for('settings.webhooks.edit', function (BreadcrumbTrail $trail, $workflow) {
+    $trail->parent('settings.webhooks');
+    $trail->push(trans('admin::app.settings.webhooks.edit.edit-btn'), route('admin.settings.workflows.edit', $workflow->id));
+});
+
 // Settings > Tags
 Breadcrumbs::for('settings.tags', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
