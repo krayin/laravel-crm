@@ -10,6 +10,9 @@
         type="text/x-template"
         id="v-datagrid-mass-action-template"
     >
+        <!-- Empty slot for mass-action before -->
+        <slot name="toolbar-left-mass-action-before"></slot>
+
         <slot
             name="mass-action"
             :available="available"
@@ -101,6 +104,9 @@
                 </div> --}}
             </div>
         </slot>
+
+        <!-- Empty slot for mass-action after -->
+        <slot name="toolbar-left-mass-action-after"></slot>
     </script>
 
     <script type="module">

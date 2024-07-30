@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => {
             laravel({
                 hotFile: "../../../public/admin-vite.hot",
                 publicDirectory: "../../../public",
-                buildDirectory: "build",
+                buildDirectory: "admin/build",
                 input: [
                     "src/Resources/assets/css/app.css",
                     "src/Resources/assets/js/app.js",

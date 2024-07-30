@@ -53,7 +53,7 @@ Breadcrumbs::for('mail', function (BreadcrumbTrail $trail) {
 // Mail > [Compose | Inbox | Outbox | Draft | Sent | Trash]
 Breadcrumbs::for('mail.route', function (BreadcrumbTrail $trail, $route) {
     $trail->parent('mail');
-    $trail->push(trans('admin::app.mail.'.$route), route('admin.mail.index', ['route' => $route]));
+    $trail->push(trans('admin::app.mail.index.'.$route), route('admin.mail.index', ['route' => $route]));
 });
 
 // Mail > [Inbox | Outbox | Draft | Sent | Trash] > Title
@@ -402,4 +402,10 @@ Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
 Breadcrumbs::for('configuration.slug', function (BreadcrumbTrail $trail, $slug) {
     $trail->parent('configuration');
     $trail->push('', route('admin.configuration.index', ['slug' => $slug]));
+});
+
+// Dashboard > Account > Edit
+Breadcrumbs::for('dashboard.account.edit', function (BreadcrumbTrail $trail, $user) {
+    $trail->parent('dashboard');
+    $trail->push(trans('admin::app.account.edit.title'), route('admin.user.account.edit', $user->id));
 });

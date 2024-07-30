@@ -16,7 +16,7 @@
             @else
                 <img
                     class="w-max" 
-                    src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}"
+                    src="{{ vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
             @endif

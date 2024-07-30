@@ -2,9 +2,13 @@
 
 namespace Webkul\Admin\Http\Controllers\Mail;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Mail\EmailDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
@@ -26,10 +30,8 @@ class EmailController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse|RedirectResponse
     {
         if (! request('route')) {
             return redirect()->route('admin.mail.index', ['route' => 'inbox']);
@@ -45,7 +47,7 @@ class EmailController extends Controller
 
             default:
                 if (request()->ajax()) {
-                    return app(\Webkul\Admin\DataGrids\Mail\EmailDataGrid::class)->toJson();
+                    return datagrid(EmailDataGrid::class)->process();
                 }
 
                 return view('admin::mail.index');
