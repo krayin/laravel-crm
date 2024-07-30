@@ -709,7 +709,11 @@ return [
             'select-state'   => 'Select State',
             'state'          => 'State',
             'city'           => 'City',
-            'postcode'       => 'Postcode', ],
+            'postcode'       => 'Postcode',
+            'work'           => 'Work',
+            'home'           => 'Home',
+            'add-more'       => 'Add More',
+        ],
     ],
 
     // ----------------------------------------------------------------Old version locale ----------------------------------
