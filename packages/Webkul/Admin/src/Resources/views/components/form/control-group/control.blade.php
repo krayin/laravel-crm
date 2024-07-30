@@ -292,11 +292,21 @@
         />
 
         @break
+    
+    @case('inline')
+        <x-admin::form.control-group.inline
+            name="{{ $name }}"
+            {{ $attributes}}
+        />
+
+        @break
 
     @case('custom')
         <v-field {{ $attributes }}>
             {{ $slot }}
         </v-field>
+
+        @break
 @endswitch
 
 @pushOnce('scripts')
