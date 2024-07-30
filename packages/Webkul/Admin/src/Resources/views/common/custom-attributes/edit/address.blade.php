@@ -1,143 +1,133 @@
 @if (isset($attribute))
-    <address-component
+    <v-address-component
         :attribute='@json($attribute)'
-        :validations="'{{$validations}}'"
         :data='@json(old($attribute->code) ?: $value)'
-    ></address-component>
+    >
+        <x-admin::shimmer.common.address />
+    </v-address-component>
 @endif
 
-@push('scripts')
-    <script type="text/x-template" id="address-component-template">
-        <div class="form-group" :class="[errors.has(attribute['code'] + '[address]') || errors.has(attribute['code'] + '[country]') || errors.has(attribute['code'] + '[state]') || errors.has(attribute['code'] + '[city]') || errors.has(attribute['code'] + '[postcode]') ? 'has-error' : '']">
-            <div class="address-left">
-                <textarea
-                    :name="attribute['code'] + '[address]'"
-                    class="control"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.address') }}&quot;"
-                >@{{ data ? data['address'] : '' }}</textarea>
-            </div>
-    
-            <div class="address-right">
-                <select
-                    :name="attribute['code'] + '[country]'"
-                    class="control"
-                    v-model="country"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.country') }}&quot;"
-                >
-                    <option value="">{{ __('admin::app.common.select-country') }}</option>
+@pushOnce('scripts')
+    <script
+        type="text/x-template"
+        id="v-address-component-template"
+    >
+        <div class="flex gap-4">
+            <div class="w-full">
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="textarea"
+                        ::name="attribute['code'] + '[address]'"
+                        rows="10"
+                        ::value="data ? data['address'] : ''"
+                    />
 
-                    @foreach (core()->countries() as $country)
-
-                        <option value="{{ $country->code }}">{{ $country->name }}</option>
-
-                    @endforeach
-                </select>
-
-                <select
-                    :name="attribute['code'] + '[state]'"
-                    class="control"
-                    v-model="state"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
-                    v-if="haveStates()"
-                >
-                    <option value="">{{ __('admin::app.common.select-state') }}</option>
-
-                    <option v-for='(state, index) in countryStates[country]' :value="state.code">
-                        @{{ state.name }}
-                    </option>
-                </select>
-
-                <input
-                    type="text"
-                    :name="attribute['code'] + '[state]'"
-                    class="control"
-                    v-model="state"
-                    placeholder="{{ __('admin::app.common.state') }}"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.state') }}&quot;"
-                    v-else
-                />
-                
-                <input
-                    type="text"
-                    :name="attribute['code'] + '[city]'"
-                    class="control"
-                    :value="data['city']"
-                    placeholder="{{ __('admin::app.common.city') }}"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
-                    v-if="data && data['city']"
-                />
-
-                <input
-                    type="text"
-                    :name="attribute['code'] + '[city]'"
-                    class="control"
-                    placeholder="{{ __('admin::app.common.city') }}"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.city') }}&quot;"
-                    v-else
-                />
-                
-                <input
-                    type="text"
-                    :name="attribute['code'] + '[postcode]'"
-                    class="control"
-                    :value="data['postcode']"
-                    placeholder="{{ __('admin::app.common.postcode') }}"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
-                    v-if="data && data['postcode']"
-                />
-
-                <input
-                    type="text"
-                    :name="attribute['code'] + '[postcode]'"
-                    class="control"
-                    placeholder="{{ __('admin::app.common.postcode') }}"
-                    v-validate="validations"
-                    data-vv-as="&quot;{{ __('admin::app.common.postcode') }}&quot;"
-                    v-else
-                />
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '[address]'" />
+                </x-admin::form.control-group>
             </div>
 
-            <span class="control-error" v-if="errors.has(attribute['code'] + '[address]') || errors.has(attribute['code'] + '[country]') || errors.has(attribute['code'] + '[state]') || errors.has(attribute['code'] + '[city]') || errors.has(attribute['code'] + '[postcode]')">
-                {{ __('admin::app.common.address-validation') }}
-            </span>
+            <div class="grid w-full">
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="select"
+                        ::name="attribute['code'] + '[country]'"
+                        v-model="country"
+                    >
+                        <option value="">@lang('admin::app.common.custom-attributes.select-country')</option>
+                        
+                        @foreach (core()->countries() as $country)
+                            <option value="{{ $country->code }}">{{ $country->name }}</option>
+                        @endforeach
+                    </x-admin::form.control-group.control>
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '[country]'" />
+
+                </x-admin::form.control-group>
+
+                <template v-if="haveStates()">
+                    <x-admin::form.control-group>
+                        <x-admin::form.control-group.control
+                            type="select"
+                            ::name="attribute['code'] + '[state]'"
+                            v-model="state"
+                        >
+                            <option value="">@lang('admin::app.common.custom-attributes.select-state')</option>
+                            
+                            <option v-for='(state, index) in countryStates[country]' :value="state.code">
+                                @{{ state.name }}
+                            </option>
+                        </x-admin::form.control-group.control>
+
+                        <x-admin::form.control-group.error ::name="attribute['code'] + '[state]'" />
+                    </x-admin::form.control-group>
+                </template>
+
+                <template v-else>
+                    <x-admin::form.control-group>
+                        <x-admin::form.control-group.control
+                            type="text"
+                            ::name="attribute['code'] + '[state]'"
+                            :placeholder="trans('admin::app.common.custom-attributes.state')"
+                            v-model="state"
+                            v-else
+                        >
+                        </x-admin::form.control-group.control>
+                        
+                        <x-admin::form.control-group.error ::name="attribute['code'] + '[state]'" />
+                    </x-admin::form.control-group>
+                </template>
+
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="text"
+                        ::name="attribute['code'] + '[city]'"
+                        ::value="data && data['city'] ? data['city'] : ''"
+                        :placeholder="trans('admin::app.common.custom-attributes.city')"
+                    />
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '[city]'"/>
+                </x-admin::form.control-group>
+
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="text"
+                        ::name="attribute['code'] + '[postcode]'"
+                        ::value="data &&  data['postcode'] ? data['postcode'] : ''"
+                        :placeholder="trans('admin::app.common.custom-attributes.postcode')"
+                    />
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '[postcode]'" />
+                </x-admin::form.control-group>
+            </div>
         </div>
     </script>
 
-    <script>
-        Vue.component('address-component', {
+    <script type="module">
+        app.component('v-address-component', {
+            template: '#v-address-component-template',
 
-            template: '#address-component-template',
-    
-            props: ['validations', 'attribute', 'data'],
+            props: ['attribute', 'data'],
 
-            inject: ['$validator'],
-
-            data: function () {
+            data() {
                 return {
-                    country: this.data ? this.data['country'] : '',
+                    country: this.data?.country || '',
 
-                    state: this.data ? this.data['state'] : '',
+                    state: this.data?.state || '',
 
-                    countryStates: @json(core()->groupedStatesByCountries())
-                }
+                    countryStates: @json(core()->groupedStatesByCountries()),
+                };
             },
-
+            
             methods: {
-                haveStates: function () {
-                    if (this.countryStates[this.country] && this.countryStates[this.country].length) {
-                        return true;
-                    }
-
-                    return false;
+                haveStates() {
+                    /*
+                    * The double negation operator is used to convert the value to a boolean.
+                    * It ensures that the final result is a boolean value,
+                    * true if the array has a length greater than 0, and otherwise false.
+                    */
+                    return !!this.countryStates[this.country]?.length;
                 },
             }
         });
     </script>
-@endpush
+@endPushOnce
