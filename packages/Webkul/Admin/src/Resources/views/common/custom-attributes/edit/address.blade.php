@@ -3,6 +3,7 @@
         :attribute='@json($attribute)'
         :data='@json(old($attribute->code) ?: $value)'
     >
+        <!-- Addresses Shimmer -->    
         <x-admin::shimmer.common.address />
     </v-address-component>
 @endif
@@ -14,6 +15,7 @@
     >
         <div class="flex gap-4">
             <div class="w-full">
+                <!-- Address (Textarea field) -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="textarea"
@@ -27,6 +29,7 @@
             </div>
 
             <div class="grid w-full">
+                <!-- Country Field -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="select"
@@ -44,6 +47,7 @@
 
                 </x-admin::form.control-group>
 
+                <!-- State Field -->
                 <template v-if="haveStates()">
                     <x-admin::form.control-group>
                         <x-admin::form.control-group.control
@@ -77,6 +81,7 @@
                     </x-admin::form.control-group>
                 </template>
 
+                <!-- City Field -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="text"
@@ -88,6 +93,7 @@
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[city]'"/>
                 </x-admin::form.control-group>
 
+                <!-- Postcode Field -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="text"

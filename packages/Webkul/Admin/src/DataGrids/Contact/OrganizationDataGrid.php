@@ -30,6 +30,7 @@ class OrganizationDataGrid extends DataGrid
             );
 
         $this->addFilter('id', 'organizations.id');
+
         $this->addFilter('organization', 'organizations.name');
     }
 
@@ -52,6 +53,35 @@ class OrganizationDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'persons_count',
+            'label'      => trans('admin::app.datagrid.persons_count'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => false,
+            'filterable' => false,
+            'closure'    => function ($row) {
+                $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
+
+                $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
+
+                return "<a href='".$route."' class='text-brandColor'>".$personsCount.'</a>';
+            },
+        ]);
+
+        $this->addColumn([
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.settings.tags.index.datagrid.created-at'),
+            'type'            => 'date',
+            'searchable'      => true,
+            'filterable'      => true,
+            'filterable_type' => 'date_range',
+            'sortable'        => true,
+            'closure'         => function ($row) {
+                return core()->formatDate($row->created_at);
+            },
         ]);
     }
 

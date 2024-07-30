@@ -33,7 +33,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-
             // Leads Routes
             Route::group([
                 'prefix'    => 'leads',
