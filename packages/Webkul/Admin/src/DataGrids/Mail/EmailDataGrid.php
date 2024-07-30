@@ -2,8 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Mail;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {
@@ -12,7 +13,7 @@ class EmailDataGrid extends DataGrid
      *
      * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('emails')
             ->select(
@@ -32,40 +33,38 @@ class EmailDataGrid extends DataGrid
         $this->addFilter('name', 'emails.name');
         $this->addFilter('created_at', 'emails.created_at');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => '<i class="icon attachment-icon"></i>',
+            'label'      => '<span class="icon-leads text-2xl"></span>',
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
             'sortable'   => false,
             'closure'    => function ($row) {
                 if ($row->attachments) {
-                    return '<i class="icon attachment-icon"></i>';
+                    return '<i class="icon-leads"></i>';
                 }
             },
         ]);
 
         $this->addColumn([
             'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.from'),
+            'label'    => trans('admin::app.mail.index.datagrid.from'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'subject',
-            'label'    => trans('admin::app.datagrid.subject'),
+            'label'    => trans('admin::app.mail.index.datagrid.subject'),
             'type'     => 'string',
             'sortable' => true,
             'closure'  => function ($row) {
@@ -74,12 +73,14 @@ class EmailDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'created_at',
-            'label'      => trans('admin::app.datagrid.created_at'),
-            'type'       => 'date_range',
-            'searchable' => false,
-            'sortable'   => true,
-            'closure'    => function ($row) {
+            'index'           => 'created_at',
+            'label'           => trans('admin::app.mail.index.datagrid.created-at'),
+            'type'            => 'date',
+            'searchable'      => true,
+            'filterable'      => true,
+            'filterable_type' => 'date_range',
+            'sortable'        => true,
+            'closure'         => function ($row) {
                 return core()->formatDate($row->created_at);
             },
         ]);
@@ -93,28 +94,37 @@ class EmailDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'  => request('route') == 'draft'
-                ? trans('ui::app.datagrid.edit')
-                : trans('ui::app.datagrid.view'),
-            'method' => 'GET',
-            'route'  => 'admin.mail.view',
-            'params' => ['route' => request('route')],
+            'index'  => 'edit',
             'icon'   => request('route') == 'draft'
-                ? 'pencil-icon'
-                : 'eye-icon',
-        ]);
-
-        $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.mail.delete',
+                ? 'icon-edit'
+                : 'icon-view',
+            'title'  => request('route') == 'draft'
+                ? trans('admin::app.mail.index.datagrid.edit')
+                : trans('admin::app.mail.index.datagrid.view'),
+            'method'       => 'GET',
             'params'       => [
                 'type' => request('route') == 'trash'
                     ? 'delete'
                     : 'trash',
             ],
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'email']),
-            'icon'         => 'trash-icon',
+            'url'    => function ($row) {
+                return route('admin.mail.view', $row->id);
+            },
+        ]);
+
+        $this->addAction([
+            'index'        => 'delete',
+            'icon'         => 'icon-delete',
+            'title'        => trans('admin::app.mail.index.datagrid.delete'),
+            'method'       => 'DELETE',
+            'params'       => [
+                'type' => request('route') == 'trash'
+                    ? 'delete'
+                    : 'trash',
+            ],
+            'url'    => function ($row) {
+                return route('admin.mail.delete', $row->id);
+            },
         ]);
     }
 
@@ -127,24 +137,21 @@ class EmailDataGrid extends DataGrid
     {
         if (request('route') == 'trash') {
             $this->addMassAction([
-                'type'   => 'delete',
-                'label'  => trans('admin::app.datagrid.move-to-inbox'),
-                'action' => route('admin.mail.mass_update', [
-                    'folders' => ['inbox'],
-                ]),
-                'method' => 'PUT',
+                'title'  => trans('admin::app.mail.index.datagrid.move-to-inbox'),
+                'method' => 'POST',
+                'url'    => route('admin.mail.mass_update', ['folders' => ['inbox']]),
             ]);
         }
 
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.mail.mass_delete', [
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.mail.index.datagrid..delete'),
+            'method' => 'POST',
+            'url'    => route('admin.mail.mass_delete', [
                 'type' => request('route') == 'trash'
                     ? 'delete'
                     : 'trash',
             ]),
-            'method' => 'PUT',
         ]);
     }
 }

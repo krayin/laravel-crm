@@ -243,7 +243,7 @@ class LeadDataGrid extends DataGrid
             $this->addAction([
                 'icon'   => 'icon-eye',
                 'title'  => trans('admin::app.leads.index.datagrid.view'),
-                'method' => 'POST',
+                'method' => 'GET',
                 'url'    => function ($row) {
                     return route('admin.leads.view', $row->id);
                 },

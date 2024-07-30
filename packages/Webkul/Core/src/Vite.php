@@ -8,7 +8,7 @@ class Vite
 {
     protected $hotFile = 'admin-vite.hot';
 
-    protected $buildDirectory = 'build';
+    protected $buildDirectory = 'admin/build';
 
     protected $packageAssetDirectory = 'src/Resources/assets';
 

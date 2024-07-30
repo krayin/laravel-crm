@@ -68,7 +68,7 @@
                                     @click="sort(column)"
                                     v-if="column.visibility"
                                 >
-                                    @{{ column.label }}
+                                    <p v-html="column.label"></p>
 
                                     <i
                                         class="align-text-bottom text-base text-gray-600 dark:text-gray-300"

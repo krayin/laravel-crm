@@ -14,9 +14,6 @@
         type="text/x-template"
         id="v-datagrid-filter-template"
     >
-        <!-- Empty slot for right toolbar before -->
-        <slot name="right-toolbar-left-before"></slot>
-
         <slot
             name="filter"
             :available="available"

@@ -33,17 +33,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-            // User Routes
-            Route::group([
-                'prefix'    => 'account',
-                'namespace' => 'Webkul\Admin\Http\Controllers\User',
-            ], function () {
-                Route::get('', 'AccountController@edit')->name('admin.user.account.edit');
-
-                Route::put('update', 'AccountController@update')->name('admin.user.account.update');
-            });
-
-            // Leads Routes
+            // Quotes Routes
             Route::group([
                 'prefix'    => 'quotes',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Quote',
@@ -63,35 +53,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 Route::delete('{id}', 'QuoteController@destroy')->name('admin.quotes.delete');
 
                 Route::put('mass-destroy', 'QuoteController@massDestroy')->name('admin.quotes.mass_delete');
-            });
-
-            Route::group([
-                'prefix'    => 'activities',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Activity',
-            ], function () {
-                Route::get('', 'ActivityController@index')->name('admin.activities.index');
-
-                Route::get('get', 'ActivityController@get')->name('admin.activities.get');
-
-                Route::post('is-overlapping', 'ActivityController@checkIfOverlapping')->name('admin.activities.check_overlapping');
-
-                Route::post('create', 'ActivityController@store')->name('admin.activities.store');
-
-                Route::get('edit/{id?}', 'ActivityController@edit')->name('admin.activities.edit');
-
-                Route::put('edit/{id?}', 'ActivityController@update')->name('admin.activities.update');
-
-                Route::get('search-participants', 'ActivityController@searchParticipants')->name('admin.activities.search_participants');
-
-                Route::post('file-upload', 'ActivityController@upload')->name('admin.activities.file_upload');
-
-                Route::get('file-download/{id?}', 'ActivityController@download')->name('admin.activities.file_download');
-
-                Route::delete('{id?}', 'ActivityController@destroy')->name('admin.activities.delete');
-
-                Route::put('mass-update', 'ActivityController@massUpdate')->name('admin.activities.mass_update');
-
-                Route::put('mass-destroy', 'ActivityController@massDestroy')->name('admin.activities.mass_delete');
             });
 
             Route::group([
@@ -115,7 +76,7 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass_delete');
             });
 
-            // Contacts Routes
+            // Settings Routes
             Route::group([
                 'prefix'    => 'settings',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Settings',
@@ -146,34 +107,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass_delete');
 
                     Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
-                });
-
-                // Lead Pipelines Routes
-                Route::prefix('pipelines')->group(function () {
-                    Route::get('', 'PipelineController@index')->name('admin.settings.pipelines.index');
-
-                    Route::get('create', 'PipelineController@create')->name('admin.settings.pipelines.create');
-
-                    Route::post('create', 'PipelineController@store')->name('admin.settings.pipelines.store');
-
-                    Route::get('edit/{id?}', 'PipelineController@edit')->name('admin.settings.pipelines.edit');
-
-                    Route::put('edit/{id}', 'PipelineController@update')->name('admin.settings.pipelines.update');
-
-                    Route::delete('{id}', 'PipelineController@destroy')->name('admin.settings.pipelines.delete');
-                });
-
-                // Lead Sources Routes
-                Route::prefix('sources')->group(function () {
-                    Route::get('', 'SourceController@index')->name('admin.settings.sources.index');
-
-                    Route::post('create', 'SourceController@store')->name('admin.settings.sources.store');
-
-                    Route::get('edit/{id?}', 'SourceController@edit')->name('admin.settings.sources.edit');
-
-                    Route::put('edit/{id}', 'SourceController@update')->name('admin.settings.sources.update');
-
-                    Route::delete('{id}', 'SourceController@destroy')->name('admin.settings.sources.delete');
                 });
 
                 // Email Templates Routes
@@ -221,23 +154,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::put('edit/{id}', 'LocationController@update')->name('admin.settings.locations.update');
 
                     Route::delete('{id}', 'LocationController@destroy')->name('admin.settings.locations.delete');
-                });
-
-                // Tags Routes
-                Route::prefix('tags')->group(function () {
-                    Route::get('', 'TagController@index')->name('admin.settings.tags.index');
-
-                    Route::post('create', 'TagController@store')->name('admin.settings.tags.store');
-
-                    Route::get('edit/{id?}', 'TagController@edit')->name('admin.settings.tags.edit');
-
-                    Route::put('edit/{id}', 'TagController@update')->name('admin.settings.tags.update');
-
-                    Route::get('search', 'TagController@search')->name('admin.settings.tags.search');
-
-                    Route::delete('{id}', 'TagController@destroy')->name('admin.settings.tags.delete');
-
-                    Route::put('mass-destroy', 'TagController@massDestroy')->name('admin.settings.tags.mass_delete');
                 });
             });
 

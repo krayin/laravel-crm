@@ -4,22 +4,22 @@
         :validations="'{{ $validations }}'"
         :value="{{ json_encode(old($attribute->code) ?? $value) }}"
     >
-        <div class="flex items-center mt-2">
+        <div class="mb-2 flex items-center">
             <input
                 type="text"
-                class="w-full border px-3 py-2.5 text-sm transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
+                class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
             >
 
             <div class="relative">
-                <select class="custom-select w-full border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6">
-                    <option value="work" selected>Work</option>
-                    <option value="home">Home</option>
+                <select class="custom-select w-full rounded-none border bg-white px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:mr-6 rtl:ml-6">
+                    <option value="work" selected>@lang('admin::app.common.custom-attributes.work')</option>
+                    <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
                 </select>
             </div>
         </div>
 
-        <span class="cursor-pointer">
-            + @lang("admin::app.common.add_more")
+        <span class="cursor-pointer text-brandColor">
+            +@lang("admin::app.common.custom-attributes.add-more")
         </span>
     </v-phone-component>
 @endif
@@ -30,12 +30,11 @@
         id="v-phone-component-template"
     >
         <template v-for="(contactNumber, index) in contactNumbers">
-            <div class="flex items-center mt-2">
+            <div class="mb-2 flex items-center">
                 <x-admin::form.control-group.control
                     type="text"
                     ::id="attribute.code"
                     ::name="`${attribute['code']}[${index}][value]`"
-                    class="rounded-none ltr:!rounded-l-lg rtl:!rounded-r-lg text-gray-700"
                     ::rules="getValidation"
                     ::label="attribute.name"
                     v-model="contactNumber['value']"
@@ -46,19 +45,19 @@
                         type="select"
                         ::id="attribute.code"
                         ::name="`${attribute['code']}[${index}][label]`"
-                        class="rounded-none ltr:!rounded-r-lg rtl:!rounded-l-lg ltr:mr-6 rtl:ml-6"
+                        class="ltr:mr-6 rtl:ml-6"
                         rules="required"
                         ::label="attribute.name"
                         v-model="contactNumber['label']"
                     >
-                        <option value="work">@lang('admin::app.common.work')</option>
-                        <option value="home">@lang('admin::app.common.home')</option>
+                        <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
+                        <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
                     </x-admin::form.control-group.control>
                 </div>
 
                 <i
                     v-if="contactNumbers.length > 1"
-                    class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                    class="icon-delete ml-1 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                     @click="remove(contactNumber)"
                 ></i>
             </div>
@@ -69,10 +68,10 @@
         </template>
 
         <span
-            class="cursor-pointer"
+            class="cursor-pointer text-brandColor"
             @click="add"
         >
-            + @lang("admin::app.common.add_more")
+            +@lang("admin::app.common.custom-attributes.add-more")
         </span>
     </script>
 

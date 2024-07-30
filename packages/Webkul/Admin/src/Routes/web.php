@@ -29,3 +29,8 @@ require 'contacts-routes.php';
  * Rest routes.
  */
 require 'rest-routes.php';
+
+/**
+ * Activities routes.
+ */
+require 'activities-routes.php';

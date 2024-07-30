@@ -2,16 +2,16 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\View\View;
+use Webkul\Admin\DataGrids\Settings\UserDataGrid;
+use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\Create;
+use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\User\Repositories\GroupRepository;
-use Webkul\Admin\DataGrids\Settings\UserDataGrid;
 
 class UserController extends Controller
 {
@@ -98,9 +98,9 @@ class UserController extends Controller
         $groups = $this->groupRepository->all();
 
         return new JsonResponse([
-            'data' =>$admin,
-            'roles' =>$roles,
-            'groups' =>$groups
+            'data'   => $admin,
+            'roles'  => $roles,
+            'groups' => $groups,
         ]);
     }
 
