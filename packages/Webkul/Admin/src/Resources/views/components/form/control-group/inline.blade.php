@@ -6,7 +6,7 @@
 <v-inline-edit
     name="{{ $name }}"
     value="{{ $value }}"
-     {{ $attributes }}
+    {{ $attributes }}
 ></v-inline-edit>
 
 @pushOnce('scripts')
