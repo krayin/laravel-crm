@@ -42,7 +42,7 @@
                     type="text"
                     ::id="name"
                     ::name="name"
-                    class="px-2 py-1 pr-16 text-normal"
+                    class="py-1 pr-16 text-normal"
                     ::style="inputPositionStyle"
                     v-model="inputValue"
                 />
@@ -130,7 +130,7 @@
                  * @return {String}
                  */
                 inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left' : 'text-align: right';
+                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
                 },
 
                 /**
