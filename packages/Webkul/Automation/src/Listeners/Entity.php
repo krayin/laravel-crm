@@ -38,7 +38,7 @@ class Entity
             try {
                 $workflowEntity->executeActions($workflow, $entity);
             } catch (\Exception $e) {
-                // Skip exception for now
+                logger()->error($e->getMessage());
             }
         }
     }

@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -31,7 +32,8 @@ class Quote extends AbstractEntity
         protected EmailTemplateRepository $emailTemplateRepository,
         protected QuoteRepository $quoteRepository,
         protected LeadRepository $leadRepository,
-        protected PersonRepository $personRepository
+        protected PersonRepository $personRepository,
+        protected WebhookRepository $webhookRepository,
     ) {}
 
     /**
@@ -51,48 +53,38 @@ class Quote extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
-     * @return array
      */
-    public function getActions()
+    public function getActions(): array
     {
         $emailTemplates = $this->emailTemplateRepository->all(['id', 'name']);
+
+        $webhookOptions = $this->webhookRepository->all(['id', 'name']);
 
         return [
             [
                 'id'         => 'update_quote',
-                'name'       => __('admin::app.settings.workflows.update-quote'),
+                'name'       => trans('admin::app.settings.workflows.update-quote'),
                 'attributes' => $this->getAttributes('quotes'),
             ], [
                 'id'         => 'update_person',
-                'name'       => __('admin::app.settings.workflows.update-person'),
+                'name'       => trans('admin::app.settings.workflows.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
                 'id'         => 'update_related_leads',
-                'name'       => __('admin::app.settings.workflows.update-related-leads'),
+                'name'       => trans('admin::app.settings.workflows.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'      => 'send_email_to_person',
-                'name'    => __('admin::app.settings.workflows.send-email-to-person'),
+                'name'    => trans('admin::app.settings.workflows.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => __('admin::app.settings.workflows.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
-                'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
-                'request_methods' => [
-                    'get'    => __('admin::app.settings.workflows.get_method'),
-                    'post'   => __('admin::app.settings.workflows.post_method'),
-                    'put'    => __('admin::app.settings.workflows.put_method'),
-                    'patch'  => __('admin::app.settings.workflows.patch_method'),
-                    'delete' => __('admin::app.settings.workflows.delete_method'),
-                ],
-                'encodings' => [
-                    'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
-                ],
+                'id'      => 'trigger_webhook',
+                'name'    => trans('admin::app.settings.workflows.add-webhook'),
+                'options' => $webhookOptions,
             ],
         ];
     }

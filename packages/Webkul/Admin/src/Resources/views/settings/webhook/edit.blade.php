@@ -512,7 +512,7 @@
                             }
                         });
 
-                        return url.toString();
+                        return decodeURI(url.toString());
                     },
                 },
 

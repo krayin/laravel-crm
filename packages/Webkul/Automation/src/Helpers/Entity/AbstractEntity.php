@@ -5,6 +5,13 @@ namespace Webkul\Automation\Helpers\Entity;
 abstract class AbstractEntity
 {
     /**
+     * Define the entity type
+     *
+     * @var string
+     */
+    protected $entityType;
+
+    /**
      * Returns attributes for workflow conditions
      *
      * @return array
@@ -84,7 +91,7 @@ abstract class AbstractEntity
     /**
      * Replace placeholders with values
      *
-     * @param  array  $entity
+     * @param  mixed  $entity
      * @param  array  $values
      * @return string
      */

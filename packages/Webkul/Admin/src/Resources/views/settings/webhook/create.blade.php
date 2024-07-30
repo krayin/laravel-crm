@@ -82,7 +82,8 @@
                                     name="end_point"
                                     id="end_point"
                                     class="rounded-l-none"
-                                    rules="required|url"
+                                    :value="old('end_point')"
+                                    rules="required"
                                     :label="trans('admin::app.settings.webhooks.create.url-endpoint')"
                                     :placeholder="trans('admin::app.settings.webhooks.create.url-endpoint')"
                                     v-model="baseUrl"
@@ -482,7 +483,7 @@
                      * 
                      * @returns {string}
                      */
-                    urlEndPoint() {
+                     urlEndPoint() {
                         if (this.baseUrl === '') {
                             return '';
                         }
@@ -497,8 +498,8 @@
                             }
                         });
 
-                        return url.toString();
-                    },
+                        return decodeURI(url.toString());
+                    }
                 },
 
                 methods: {

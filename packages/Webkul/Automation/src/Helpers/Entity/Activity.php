@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Mail;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -32,7 +33,8 @@ class Activity extends AbstractEntity
         protected EmailTemplateRepository $emailTemplateRepository,
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository,
-        protected ActivityRepository $activityRepository
+        protected ActivityRepository $activityRepository,
+        protected WebhookRepository $webhookRepository,
     ) {}
 
     /**
@@ -179,6 +181,8 @@ class Activity extends AbstractEntity
     {
         $emailTemplates = $this->emailTemplateRepository->all(['id', 'name']);
 
+        $webhooksOptions = $this->webhookRepository->all(['id', 'name']);
+
         return [
             [
                 'id'         => 'update_related_leads',
@@ -193,19 +197,9 @@ class Activity extends AbstractEntity
                 'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-participants'),
                 'options' => $emailTemplates,
             ], [
-                'id'              => 'trigger_webhook',
-                'name'            => trans('admin::app.settings.workflows.edit.helper.add-webhook'),
-                'request_methods' => [
-                    'get'    => trans('admin::app.settings.workflows.edit.helper.get_method'),
-                    'post'   => trans('admin::app.settings.workflows.edit.helper.post_method'),
-                    'put'    => trans('admin::app.settings.workflows.edit.helper.put_method'),
-                    'patch'  => trans('admin::app.settings.workflows.edit.helper.patch_method'),
-                    'delete' => trans('admin::app.settings.workflows.edit.helper.delete_method'),
-                ],
-                'encodings' => [
-                    'json'       => trans('admin::app.settings.workflows.edit.helper.encoding_json'),
-                    'http_query' => trans('admin::app.settings.workflows.edit.helper.encoding_http_query'),
-                ],
+                'id'      => 'trigger_webhook',
+                'name'    => trans('admin::app.settings.workflows.edit.helper.add-webhook'),
+                'options' => $webhooksOptions,
             ],
         ];
     }

@@ -2,11 +2,11 @@
 
 namespace Webkul\Automation\Helpers\Entity;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Automation\Repositories\WebhookRepository;
+use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -29,12 +29,14 @@ class Person extends AbstractEntity
         protected AttributeRepository $attributeRepository,
         protected EmailTemplateRepository $emailTemplateRepository,
         protected LeadRepository $leadRepository,
-        protected PersonRepository $personRepository
+        protected PersonRepository $personRepository,
+        protected WebhookRepository $webhookRepository,
+        protected WebhookService $webhookService
     ) {}
 
     /**
      * Listing of the entities.
-     *
+     * 
      * @param  \Webkul\Contact\Contracts\Person  $entity
      * @return \Webkul\Contact\Contracts\Person
      */
@@ -49,40 +51,30 @@ class Person extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
-     * @return array
      */
-    public function getActions()
+    public function getActions(): array
     {
         $emailTemplates = $this->emailTemplateRepository->all(['id', 'name']);
+
+        $webhooksOptions = $this->webhookRepository->all(['id', 'name']);
 
         return [
             [
                 'id'         => 'update_person',
-                'name'       => __('admin::app.settings.workflows.update-person'),
+                'name'       => trans('admin::app.settings.workflows.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
                 'id'         => 'update_related_leads',
-                'name'       => __('admin::app.settings.workflows.update-related-leads'),
+                'name'       => trans('admin::app.settings.workflows.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'      => 'send_email_to_person',
-                'name'    => __('admin::app.settings.workflows.send-email-to-person'),
+                'name'    => trans('admin::app.settings.workflows.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
-                'id'              => 'trigger_webhook',
-                'name'            => __('admin::app.settings.workflows.add-webhook'),
-                'request_methods' => [
-                    'get'    => __('admin::app.settings.workflows.get_method'),
-                    'post'   => __('admin::app.settings.workflows.post_method'),
-                    'put'    => __('admin::app.settings.workflows.put_method'),
-                    'patch'  => __('admin::app.settings.workflows.patch_method'),
-                    'delete' => __('admin::app.settings.workflows.delete_method'),
-                ],
-                'encodings' => [
-                    'json'       => __('admin::app.settings.workflows.encoding_json'),
-                    'http_query' => __('admin::app.settings.workflows.encoding_http_query'),
-                ],
+                'id'      => 'trigger_webhook',
+                'name'    => trans('admin::app.settings.workflows.add-webhook'),
+                'options' => $webhooksOptions,
             ],
         ];
     }
@@ -132,20 +124,16 @@ class Person extends AbstractEntity
                             'body'    => $this->replacePlaceholders($person, $emailTemplate->content),
                         ]));
                     } catch (\Exception $e) {
+                        report($e);
                     }
 
                     break;
 
                 case 'trigger_webhook':
-                    if (isset($action['hook'])) {
-                        try {
-                            $this->triggerWebhook(
-                                $action['hook'],
-                                $person
-                            );
-                        } catch (\Exception $e) {
-                            report($e);
-                        }
+                    try {
+                        $this->triggerWebhook($action['value'], $person);
+                    } catch (\Exception $e) {
+                        report($e);
                     }
 
                     break;
@@ -156,81 +144,18 @@ class Person extends AbstractEntity
     /**
      * Trigger webhook.
      *
-     * @param  array  $hook
-     * @param  \Webkul\Contact\Contracts\Person  $person
      * @return void
      */
-    private function triggerWebhook($hook, $person)
+    public function triggerWebhook(int $webhookId, $person)
     {
-        if (in_array($hook['method'], ['get', 'delete'])) {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url']
-            );
-        } else {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url'],
-                $this->getRequestBody($hook, $person)
-            );
-        }
-    }
+        $webhook = $this->webhookRepository->findOrFail($webhookId);
 
-    /**
-     * Format headers.
-     *
-     * @param  array  $hook
-     * @return array
-     */
-    private function formatHeaders($hook)
-    {
-        $results = $hook['encoding'] == 'json'
-            ? ['Content-Type: application/json']
-            : ['Content-Type: application/x-www-form-urlencoded'];
-
-        if (isset($hook['headers'])) {
-            foreach ($hook['headers'] as $header) {
-                $results[$header['key']] = $header['value'];
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Prepare request body.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Contact\Contracts\Person  $person
-     * @return array
-     */
-    private function getRequestBody($hook, $person)
-    {
-        $hook['simple'] = str_replace('person_', '', $hook['simple']);
-
-        $results = $this->personRepository->find($person->id)->get($hook['simple'])->first()->toArray();
-
-        if (isset($hook['custom'])) {
-            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
-
-            $customResults = [];
-
-            foreach ($customUnformatted as $raw) {
-                [$key, $value] = explode('=', $raw);
-
-                $customResults[$key] = $value;
-            }
-
-            $results = array_merge(
-                $results,
-                $customResults
-            );
-        }
-
-        return $hook['encoding'] == 'http_query'
-            ? Arr::query($results)
-            : json_encode($results);
+        $this->webhookService->triggerWebhook([
+                'method'    => $webhook->method,
+                'end_point' => $this->replacePlaceholders($person, $webhook->end_point),
+                'payload'   => $this->replacePlaceholders($person, json_encode($webhook->payload)),
+                'headers'   => $this->replacePlaceholders($person, json_encode($webhook->headers)),
+            ], $person
+        );
     }
 }
