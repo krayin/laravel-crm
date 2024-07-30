@@ -92,7 +92,7 @@
                                     rules="required"
                                     :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
                                     :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
-                                    v-model="urlEndPoint"
+                                    v-model="baseUrl"
                                 />
                             </div>
                             <x-admin::form.control-group.error control-name="end_point"/>
@@ -512,7 +512,11 @@
                             }
                         });
 
-                        return decodeURI(url.toString());
+                        const decodeUri = decodeURI(url.toString());
+
+                        this.baseUrl = decodeUri;
+
+                        return decodeUri;
                     },
                 },
 

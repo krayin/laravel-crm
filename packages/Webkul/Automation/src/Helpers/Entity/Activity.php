@@ -3,13 +3,13 @@
 namespace Webkul\Automation\Helpers\Entity;
 
 use Carbon\Carbon;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
+use Webkul\Activity\Contracts\Activity as ContractsActivity;
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Automation\Repositories\WebhookRepository;
+use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -35,16 +35,13 @@ class Activity extends AbstractEntity
         protected PersonRepository $personRepository,
         protected ActivityRepository $activityRepository,
         protected WebhookRepository $webhookRepository,
+        protected WebhookService $webhookService
     ) {}
 
     /**
-     * Returns attributes
-     *
-     * @param  string  $entityType
-     * @param  array  $skipAttributes
-     * @return array
+     * Get the attributes for workflow conditions.
      */
-    public function getAttributes($entityType, $skipAttributes = [])
+    public function getAttributes(string $entityType, array $skipAttributes = []): array
     {
         $attributes = [
             [
@@ -114,11 +111,8 @@ class Activity extends AbstractEntity
 
     /**
      * Returns placeholders for email templates.
-     *
-     * @param  array  $entity
-     * @return array
      */
-    public function getEmailTemplatePlaceholders($entity)
+    public function getEmailTemplatePlaceholders(array $entity): array
     {
         $emailTemplates = parent::getEmailTemplatePlaceholders($entity);
 
@@ -132,12 +126,8 @@ class Activity extends AbstractEntity
 
     /**
      * Replace placeholders with values.
-     *
-     * @param  \Webkul\Activity\Contracts\Activity  $entity
-     * @param  mixed  $content
-     * @return string
      */
-    public function replacePlaceholders($entity, $content)
+    public function replacePlaceholders(mixed $entity, string $content): string
     {
         $content = parent::replacePlaceholders($entity, $content);
 
@@ -149,23 +139,18 @@ class Activity extends AbstractEntity
 
         $value .= '</ul>';
 
-        $content = strtr($content, [
+        return strtr($content, [
             '{%'.$this->entityType.'.participants%}'   => $value,
             '{% '.$this->entityType.'.participants %}' => $value,
         ]);
-
-        return $content;
     }
 
     /**
      * Listing of the entities.
-     *
-     * @param  \Webkul\Activity\Contracts\Activity  $entity
-     * @return \Webkul\Activity\Contracts\Activity
      */
-    public function getEntity($entity)
+    public function getEntity(mixed $entity): mixed
     {
-        if (! $entity instanceof \Webkul\Activity\Contracts\Activity) {
+        if (! $entity instanceof ContractsActivity) {
             $entity = $this->activityRepository->find($entity);
         }
 
@@ -174,10 +159,8 @@ class Activity extends AbstractEntity
 
     /**
      * Returns workflow actions.
-     *
-     * @return array
      */
-    public function getActions()
+    public function getActions(): array
     {
         $emailTemplates = $this->emailTemplateRepository->all(['id', 'name']);
 
@@ -206,12 +189,8 @@ class Activity extends AbstractEntity
 
     /**
      * Execute workflow actions.
-     *
-     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
-     * @return array
      */
-    public function executeActions($workflow, $activity)
+    public function executeActions(mixed $workflow, mixed $activity): void
     {
         foreach ($workflow->actions as $action) {
             switch ($action['id']) {
@@ -287,15 +266,10 @@ class Activity extends AbstractEntity
                     break;
 
                 case 'trigger_webhook':
-                    if (isset($action['hook'])) {
-                        try {
-                            $this->triggerWebhook(
-                                $action['hook'],
-                                $activity
-                            );
-                        } catch (\Exception $e) {
-                            report($e);
-                        }
+                    try {
+                        $this->triggerWebhook($action['value'], $activity);
+                    } catch (\Exception $e) {
+                        report($e);
                     }
 
                     break;
@@ -304,93 +278,9 @@ class Activity extends AbstractEntity
     }
 
     /**
-     * Trigger Webhook.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
-     * @return void
-     */
-    private function triggerWebhook($hook, $activity)
-    {
-        if (in_array($hook['method'], ['get', 'delete'])) {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url']
-            );
-        } else {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url'],
-                $this->getRequestBody($hook, $activity)
-            );
-        }
-    }
-
-    /**
-     * Formatting headers.
-     *
-     * @param  array  $hook
-     * @return array
-     */
-    private function formatHeaders($hook)
-    {
-        $results = $hook['encoding'] == 'json'
-            ? ['Content-Type: application/json']
-            : ['Content-Type: application/x-www-form-urlencoded'];
-
-        if (isset($hook['headers'])) {
-            foreach ($hook['headers'] as $header) {
-                $results[$header['key']] = $header['value'];
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Prepare Request Body.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
-     * @return array
-     */
-    private function getRequestBody($hook, $activity)
-    {
-        $hook['simple'] = str_replace('activity_', '', $hook['simple']);
-
-        $results = $this->activityRepository->find($activity->id)->get($hook['simple'])->first()->toArray();
-
-        if (isset($hook['custom'])) {
-            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
-
-            $customResults = [];
-
-            foreach ($customUnformatted as $raw) {
-                [$key, $value] = explode('=', $raw);
-
-                $customResults[$key] = $value;
-            }
-
-            $results = array_merge(
-                $results,
-                $customResults
-            );
-        }
-
-        return $hook['encoding'] == 'http_query'
-            ? Arr::query($results)
-            : json_encode($results);
-    }
-
-    /**
      * Returns .ics file for attachments.
-     *
-     * @param  \Webkul\Activity\Contracts\Activity  $activity
-     * @return string
      */
-    public function getICSContent($activity)
+    public function getICSContent(ContractsActivity $activity): string
     {
         $content = [
             'BEGIN:VCALENDAR',

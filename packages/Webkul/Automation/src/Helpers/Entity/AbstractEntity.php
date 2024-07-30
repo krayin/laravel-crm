@@ -2,33 +2,52 @@
 
 namespace Webkul\Automation\Helpers\Entity;
 
+use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Automation\Repositories\WebhookRepository;
+use Webkul\Automation\Services\WebhookService;
+
 abstract class AbstractEntity
 {
     /**
-     * Define the entity type
-     *
-     * @var string
+     * Create a new repository instance
      */
-    protected $entityType;
+    protected AttributeRepository $attributeRepository;
+
+    /**
+     * Create a new repository instance.
+     */
+    public function __construct(
+        protected WebhookService $webhookService,
+        protected WebhookRepository $webhookRepository,
+    ) {}
+
+    /**
+     * Listing of the entities
+     */
+    abstract public function getEntity(mixed $entity);
+
+    /**
+     * Returns workflow actions
+     */
+    abstract public function getActions();
+
+    /**
+     * Execute workflow actions
+     */
+    abstract public function executeActions(mixed $workflow, mixed $entity): void;
 
     /**
      * Returns attributes for workflow conditions
-     *
-     * @return array
      */
-    public function getConditions()
+    public function getConditions(): array
     {
         return $this->getAttributes($this->entityType);
     }
 
     /**
-     * Returns attributes
-     *
-     * @param  string  $entityType
-     * @param  array  $skipAttributes
-     * @return array
+     * Get attributes for entity.
      */
-    public function getAttributes($entityType, $skipAttributes = ['textarea', 'image', 'file', 'address'])
+    public function getAttributes(string $entityType, array $skipAttributes = ['textarea', 'image', 'file', 'address']): array
     {
         $attributes = [];
 
@@ -37,18 +56,8 @@ abstract class AbstractEntity
                 continue;
             }
 
-            $attributeType = $attribute->type;
-
-            if ($attribute->validation == 'decimal') {
-                $attributeType = 'decimal';
-            }
-
-            if ($attribute->validation == 'numeric') {
-                $attributeType = 'integer';
-            }
-
             if ($attribute->lookup_type) {
-                $options = []; //$this->attributeRepository->getLookUpOptions($attribute->lookup_type);
+                $options = [];
             } else {
                 $options = $attribute->options;
             }
@@ -67,11 +76,8 @@ abstract class AbstractEntity
 
     /**
      * Returns placeholders for email templates
-     *
-     * @param  array  $entity
-     * @return array
      */
-    public function getEmailTemplatePlaceholders($entity)
+    public function getEmailTemplatePlaceholders(array $entity): array
     {
         $menuItems = [];
 
@@ -90,12 +96,8 @@ abstract class AbstractEntity
 
     /**
      * Replace placeholders with values
-     *
-     * @param  mixed  $entity
-     * @param  array  $values
-     * @return string
      */
-    public function replacePlaceholders($entity, $content)
+    public function replacePlaceholders(mixed $entity, string $content): string
     {
         foreach ($this->getAttributes($this->entityType, []) as $attribute) {
             $value = '';
@@ -203,9 +205,22 @@ abstract class AbstractEntity
         return $content;
     }
 
-    abstract public function getEntity($entity);
+    /**
+     * Trigger webhook.
+     *
+     * @return void
+     */
+    public function triggerWebhook(int $webhookId, mixed $entity)
+    {
+        $webhook = $this->webhookRepository->findOrFail($webhookId);
 
-    abstract public function getActions();
+        $payload = [
+            'method'    => $webhook->method,
+            'end_point' => $this->replacePlaceholders($entity, $webhook->end_point),
+            'payload'   => $this->replacePlaceholders($entity, json_encode($webhook->payload)),
+            'headers'   => $this->replacePlaceholders($entity, json_encode($webhook->headers)),
+        ];
 
-    abstract public function executeActions($workflow, $entity);
+        $this->webhookService->triggerWebhook($payload);
+    }
 }

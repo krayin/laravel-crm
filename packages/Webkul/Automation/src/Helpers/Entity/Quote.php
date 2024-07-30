@@ -2,25 +2,23 @@
 
 namespace Webkul\Automation\Helpers\Entity;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Automation\Repositories\WebhookRepository;
+use Webkul\Automation\Services\WebhookService;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Quote\Contracts\Quote as ContractsQuote;
 use Webkul\Quote\Repositories\QuoteRepository;
 
 class Quote extends AbstractEntity
 {
     /**
      * Define the entity type.
-     *
-     * @var string
      */
-    protected $entityType = 'quotes';
+    protected string $entityType = 'quotes';
 
     /**
      * Create a new repository instance.
@@ -34,17 +32,15 @@ class Quote extends AbstractEntity
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository,
         protected WebhookRepository $webhookRepository,
+        protected WebhookService $webhookService
     ) {}
 
     /**
      * Listing of the entities.
-     *
-     * @param  \Webkul\Quote\Contracts\Quote|int  $entity
-     * @return \Webkul\Quote\Contracts\Quote
      */
-    public function getEntity($entity)
+    public function getEntity(mixed $entity): mixed
     {
-        if (! $entity instanceof \Webkul\Quote\Contracts\Quote) {
+        if (! $entity instanceof ContractsQuote) {
             $entity = $this->quoteRepository->find($entity);
         }
 
@@ -91,12 +87,8 @@ class Quote extends AbstractEntity
 
     /**
      * Execute workflow actions.
-     *
-     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
-     * @return array
      */
-    public function executeActions($workflow, $quote)
+    public function executeActions(mixed $workflow, mixed $quote): void
     {
         foreach ($workflow->actions as $action) {
             switch ($action['id']) {
@@ -163,100 +155,14 @@ class Quote extends AbstractEntity
                     break;
 
                 case 'trigger_webhook':
-                    if (isset($action['hook'])) {
-                        try {
-                            $this->triggerWebhook(
-                                $action['hook'],
-                                $quote
-                            );
-                        } catch (\Exception $e) {
-                            report($e);
-                        }
+                    try {
+                        $this->triggerWebhook($action['value'], $quote);
+                    } catch (\Exception $e) {
+                        report($e);
                     }
 
                     break;
             }
         }
-    }
-
-    /**
-     * Trigger webhook.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
-     * @return void
-     */
-    private function triggerWebhook($hook, $quote)
-    {
-        if (in_array($hook['method'], ['get', 'delete'])) {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url']
-            );
-        } else {
-            Http::withHeaders(
-                $this->formatHeaders($hook)
-            )->{$hook['method']}(
-                $hook['url'],
-                $this->getRequestBody($hook, $quote)
-            );
-        }
-    }
-
-    /**
-     * Format headers.
-     *
-     * @param  array  $hook
-     * @return array
-     */
-    private function formatHeaders($hook)
-    {
-        $results = $hook['encoding'] == 'json'
-            ? ['Content-Type: application/json']
-            : ['Content-Type: application/x-www-form-urlencoded'];
-
-        if (isset($hook['headers'])) {
-            foreach ($hook['headers'] as $header) {
-                $results[$header['key']] = $header['value'];
-            }
-        }
-
-        return $results;
-    }
-
-    /**
-     * Prepare request body.
-     *
-     * @param  array  $hook
-     * @param  \Webkul\Quote\Contracts\Quote  $quote
-     * @return array
-     */
-    private function getRequestBody($hook, $quote)
-    {
-        $hook['simple'] = str_replace('quote_', '', $hook['simple']);
-
-        $results = $this->quoteRepository->find($quote->id)->get($hook['simple'])->first()->toArray();
-
-        if (isset($hook['custom'])) {
-            $customUnformatted = preg_split("/[\r\n,]+/", $hook['custom']);
-
-            $customResults = [];
-
-            foreach ($customUnformatted as $raw) {
-                [$key, $value] = explode('=', $raw);
-
-                $customResults[$key] = $value;
-            }
-
-            $results = array_merge(
-                $results,
-                $customResults
-            );
-        }
-
-        return $hook['encoding'] == 'http_query'
-            ? Arr::query($results)
-            : json_encode($results);
     }
 }

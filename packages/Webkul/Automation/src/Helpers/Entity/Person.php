@@ -5,8 +5,10 @@ namespace Webkul\Automation\Helpers\Entity;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Admin\Notifications\Common;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Automation\Contracts\Workflow;
 use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Automation\Services\WebhookService;
+use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\EmailTemplate\Repositories\EmailTemplateRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -15,10 +17,8 @@ class Person extends AbstractEntity
 {
     /**
      * Define the entity type.
-     *
-     * @var string
      */
-    protected $entityType = 'persons';
+    protected string $entityType = 'persons';
 
     /**
      * Create a new repository instance.
@@ -36,13 +36,10 @@ class Person extends AbstractEntity
 
     /**
      * Listing of the entities.
-     * 
-     * @param  \Webkul\Contact\Contracts\Person  $entity
-     * @return \Webkul\Contact\Contracts\Person
      */
-    public function getEntity($entity)
+    public function getEntity(mixed $entity): mixed
     {
-        if (! $entity instanceof \Webkul\Contact\Contracts\Person) {
+        if (! $entity instanceof PersonContract) {
             $entity = $this->personRepository->find($entity);
         }
 
@@ -81,12 +78,8 @@ class Person extends AbstractEntity
 
     /**
      * Execute workflow actions.
-     *
-     * @param  \Webkul\Automation\Contracts\Workflow  $workflow
-     * @param  \Webkul\Contact\Contracts\Person  $person
-     * @return array
      */
-    public function executeActions($workflow, $person)
+    public function executeActions(mixed $workflow, mixed $person): void
     {
         foreach ($workflow->actions as $action) {
             switch ($action['id']) {
@@ -139,23 +132,5 @@ class Person extends AbstractEntity
                     break;
             }
         }
-    }
-
-    /**
-     * Trigger webhook.
-     *
-     * @return void
-     */
-    public function triggerWebhook(int $webhookId, $person)
-    {
-        $webhook = $this->webhookRepository->findOrFail($webhookId);
-
-        $this->webhookService->triggerWebhook([
-                'method'    => $webhook->method,
-                'end_point' => $this->replacePlaceholders($person, $webhook->end_point),
-                'payload'   => $this->replacePlaceholders($person, json_encode($webhook->payload)),
-                'headers'   => $this->replacePlaceholders($person, json_encode($webhook->headers)),
-            ], $person
-        );
     }
 }

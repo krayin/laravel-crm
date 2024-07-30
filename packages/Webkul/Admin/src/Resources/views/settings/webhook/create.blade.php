@@ -498,7 +498,11 @@
                             }
                         });
 
-                        return decodeURI(url.toString());
+                        const decodeUri = decodeURI(url.toString());
+
+                        this.baseUrl = decodeUri;
+
+                        return decodeUri;
                     }
                 },
 

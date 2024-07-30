@@ -9,7 +9,10 @@ use Webkul\Contact\Repositories\PersonRepository;
 
 class WebhookService
 {
-    protected $client;
+    /**
+     * The GuzzleHttp client instance.
+     */
+    protected Client $client;
 
     /**
      * Create a new webhook service instance.
@@ -22,11 +25,11 @@ class WebhookService
     /**
      * Trigger the webhook.
      */
-    public function triggerWebhook(mixed $data, mixed $person): array
+    public function triggerWebhook(mixed $data): array
     {
         $options = [
             'headers'     => $this->formatHeaders(json_decode($data['headers'], true)),
-            'form_params' => $this->formatPayload(json_decode($data['payload'], true), $person),
+            'form_params' => $this->formatPayload(json_decode($data['payload'], true)),
         ];
 
         try {
@@ -65,12 +68,23 @@ class WebhookService
     /**
      * Format payload array.
      */
-    private function formatPayload($payload, $person): array
+    private function formatPayload($payload): array|string
     {
+        if (! is_array($payload)) {
+            $payload = json_decode($payload, true);
+        }
+
         $formattedPayload = [];
 
-        foreach ($payload as $item) {
-            $formattedPayload[$item['key']] = $item['value'];
+        if (
+            isset($payload['key'])
+            && isset($payload['value'])
+        ) {
+            $formattedPayload[$payload['key']] = $payload['value'];
+        } else {
+            foreach ($payload as $item) {
+                $formattedPayload[$item['key']] = $item['value'];
+            }
         }
 
         return $formattedPayload;
