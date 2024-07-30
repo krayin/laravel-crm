@@ -16,7 +16,7 @@
         <x-slot:content class="!p-0">
             <!-- Header -->
             <div class="flex items-center justify-between px-3 py-2.5">
-                <span class="text-sm font-medium text-gray-400">All Pipelines</span>
+                <span class="font-medium text-gray-400">All Pipelines</span>
             </div>
             
             <!-- Pipeline Links -->
@@ -26,7 +26,7 @@
                         'pipeline_id' => $tempPipeline->id,
                         'view_type'   => request('view_type')
                     ]) }}"
-                    class="block px-3 py-2.5 pl-4 text-sm text-gray-600 transition-all hover:bg-gray-100 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100' : '' }}"
+                    class="block px-3 py-2.5 pl-4 text-gray-600 transition-all hover:bg-gray-100 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100' : '' }}"
                 >
                     {{ $tempPipeline->name }}
                 </a>
@@ -38,7 +38,7 @@
                 target="_blank"
                 class="flex items-center justify-between border-t border-gray-300 px-3 py-2.5 text-brandColor"
             >
-                <span class="text-sm font-medium">Create New Pipeline</span>
+                <span class="font-medium">Create New Pipeline</span>
             </a>
         </x-slot>
     </x-admin::dropdown>

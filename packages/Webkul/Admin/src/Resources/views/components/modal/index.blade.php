@@ -1,9 +1,11 @@
 @props([
     'isActive' => false,
+    'position' => 'center',
 ])
 
 <v-modal
     is-active="{{ $isActive }}"
+    position="{{ $position }}"
     {{ $attributes }}
 >
     @isset($toggle)
@@ -74,18 +76,21 @@
                 tag="div"
                 name="modal-content"
                 enter-class="duration-300 ease-[cubic-bezier(.4,0,.2,1)]"
-                enter-from-class="-translate-y-4 opacity-0"
+                :enter-from-class="enterFromLeaveToClasses"
                 enter-to-class="translate-y-0 opacity-100"
                 leave-class="duration-300 ease-[cubic-bezier(.4,0,.2,1)]"
                 leave-from-class="translate-y-0 opacity-100"
-                leave-to-class="-translate-y-4 opacity-0"
+                :leave-to-class="enterFromLeaveToClasses"
             >
                 <div
                     class="fixed inset-0 z-[10002] transform overflow-y-auto transition"
                     v-if="isOpen"
                 >
                     <div class="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-0">
-                        <div class="box-shadow absolute top-1/2 z-[999] w-full max-w-[568px] -translate-y-1/2 rounded-lg bg-white dark:bg-gray-900 max-md:w-[90%] ltr:left-1/2 ltr:-translate-x-1/2 rtl:right-1/2 rtl:translate-x-1/2">
+                        <div
+                            class="box-shadow absolute z-[999] w-full max-w-[568px] overflow-hidden rounded-lg bg-white dark:bg-gray-900"
+                            :class="positionClass"
+                        >
                             <!-- Header Slot -->
                             <slot
                                 name="header"
@@ -110,12 +115,38 @@
         app.component('v-modal', {
             template: '#v-modal-template',
 
-            props: ['isActive'],
+            props: ['isActive', 'position'],
 
             data() {
                 return {
                     isOpen: this.isActive,
                 };
+            },
+
+            computed: {
+                positionClass() {
+                    return {
+                        'center': 'items-center justify-center',
+                        'top-center': 'top-4',
+                        'bottom-center': 'bottom-4',
+                        'bottom-right': 'bottom-4 right-4',
+                        'bottom-left': 'bottom-4 left-4',
+                        'top-right': 'top-4 right-4',
+                        'top-left': 'top-4 left-4',
+                    }[this.position];
+                },
+
+                enterFromLeaveToClasses() {
+                    return {
+                        'center': '-translate-y-4 opacity-0',
+                        'top-center': '-translate-y-4 opacity-0',
+                        'bottom-center': 'translate-y-4 opacity-0',
+                        'bottom-right': 'translate-y-4 opacity-0',
+                        'bottom-left': 'translate-y-4 opacity-0',
+                        'top-right': '-translate-y-4 opacity-0',
+                        'top-left': '-translate-y-4 opacity-0',
+                    }[this.position];
+                }
             },
 
             methods: {
