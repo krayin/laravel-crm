@@ -296,7 +296,7 @@
     @case('inline')
         <x-admin::form.control-group.inline
             name="{{ $name }}"
-            {{ $attributes }}
+            {{ $attributes}}
         />
 
         @break
