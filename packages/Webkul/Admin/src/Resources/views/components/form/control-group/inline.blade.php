@@ -28,7 +28,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="font-normal text-sm">@{{ inputValue }}</span>
+                <span class="font-normal text-sm pl-[2px]">@{{ inputValue }}</span>
         
                 <i
                     @click="isEditing = true"
