@@ -124,27 +124,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::delete('{id}', 'EmailTemplateController@destroy')->name('admin.settings.email_templates.delete');
                 });
 
-                // Warehouses Routes
-                Route::prefix('warehouses')->group(function () {
-                    Route::get('', 'WarehouseController@index')->name('admin.settings.warehouses.index');
-
-                    Route::get('search', 'WarehouseController@search')->name('admin.settings.warehouses.search');
-
-                    Route::get('{id}/products', 'WarehouseController@products')->name('admin.settings.warehouses.products.index');
-
-                    Route::get('create', 'WarehouseController@create')->name('admin.settings.warehouses.create');
-
-                    Route::post('create', 'WarehouseController@store')->name('admin.settings.warehouses.store');
-
-                    Route::get('view/{id}', 'WarehouseController@view')->name('admin.settings.warehouses.view');
-
-                    Route::get('edit/{id?}', 'WarehouseController@edit')->name('admin.settings.warehouses.edit');
-
-                    Route::put('edit/{id}', 'WarehouseController@update')->name('admin.settings.warehouses.update');
-
-                    Route::delete('{id}', 'WarehouseController@destroy')->name('admin.settings.warehouses.delete');
-                });
-
                 // Warehouses Locations Routes
                 Route::prefix('locations')->group(function () {
                     Route::get('search', 'LocationController@search')->name('admin.settings.locations.search');
