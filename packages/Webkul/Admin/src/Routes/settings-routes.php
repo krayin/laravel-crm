@@ -7,6 +7,7 @@ use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\WebFormController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
@@ -62,6 +63,25 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.roles.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.roles.delete');
+        });
+
+        /**
+         * WebForms Routes.
+         */
+        Route::controller(WebFormController::class)->prefix('web-forms')->group(function () {
+            Route::group(['middleware' => ['user']], function () {
+                Route::get('', 'index')->name('admin.settings.web_forms.index');
+
+                Route::get('create', 'create')->name('admin.settings.web_forms.create');
+
+                Route::post('create', 'store')->name('admin.settings.web_forms.store');
+
+                Route::get('edit/{id?}', 'edit')->name('admin.settings.web_forms.edit');
+
+                Route::put('edit/{id}', 'update')->name('admin.settings.web_forms.update');
+
+                Route::delete('{id}', 'destroy')->name('admin.settings.web_forms.delete');
+            });
         });
 
         /**
