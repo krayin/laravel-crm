@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\GroupController;
-use Webkul\Admin\Http\Controllers\Settings\PipelineController;
-use Webkul\Admin\Http\Controllers\Settings\RoleController;
-use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TagController;
+use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
+use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
+use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
+use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 
 /**
  * Settings routes.
@@ -167,6 +168,33 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.sources.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.sources.delete');
+        });
+
+        /**
+         * Attributes Routes.
+         */
+        Route::controller(AttributeController::class)->prefix('attributes')->group(function () {
+            Route::get('', 'index')->name('admin.settings.attributes.index');
+
+            Route::get('create', 'create')->name('admin.settings.attributes.create');
+
+            Route::post('create', 'store')->name('admin.settings.attributes.store');
+
+            Route::get('edit/{id}', 'edit')->name('admin.settings.attributes.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.attributes.update');
+
+            Route::get('lookup/{lookup?}', 'lookup')->name('admin.settings.attributes.lookup');
+
+            Route::get('lookup-entity/{lookup?}', 'lookupEntity')->name('admin.settings.attributes.lookup_entity');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.attributes.delete');
+
+            Route::put('mass-update', 'massUpdate')->name('admin.settings.attributes.mass_update');
+
+            Route::put('mass-destroy', 'massDestroy')->name('admin.settings.attributes.mass_delete');
+
+            Route::get('download', 'download')->name('admin.settings.attributes.download');
         });
     });
 });
