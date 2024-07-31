@@ -140,7 +140,7 @@ class WarehouseController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy(int $id)
