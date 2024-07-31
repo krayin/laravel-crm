@@ -11,6 +11,8 @@ class WebFormServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        include __DIR__.'/../Http/helpers.php';
+
         $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'web_form');

@@ -78,7 +78,6 @@
         <script type="module">
             app.component('v-webform', {
                 template: '#v-webform-template',
-        
                 data() {
                     return {};
                 },
