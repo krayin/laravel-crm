@@ -105,6 +105,7 @@ import Flatpickr from "./plugins/flatpickr";
 import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
 import VueCal from "./plugins/vue-cal";
+import Draggable from "./plugins/draggable";
 
 [
     Axios,
@@ -113,6 +114,7 @@ import VueCal from "./plugins/vue-cal";
     Flatpickr,
     VeeValidate,
     VueCal,
+    Draggable,
 ].forEach((plugin) => app.use(plugin));
 
 

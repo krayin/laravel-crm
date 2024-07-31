@@ -2,11 +2,14 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\View\View;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Core\Contracts\Validations\Code;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
+use Webkul\Attribute\Repositories\AttributeRepository;
 
 class AttributeController extends Controller
 {
@@ -22,10 +25,10 @@ class AttributeController extends Controller
      *
      * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Settings\AttributeDataGrid::class)->toJson();
+            return datagrid(AttributeDataGrid::class)->process();
         }
 
         return view('admin::settings.attributes.index');
