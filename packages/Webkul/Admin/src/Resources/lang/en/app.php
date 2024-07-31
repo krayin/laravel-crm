@@ -87,7 +87,8 @@ return [
                 'of'        => 'of',
                 'per-page'  => 'Per Page',
                 'results'   => ':total Results',
-                'selected'  => ':total Selected',
+                'delete'    => 'Delete',
+                'selected'  => ':total Items Selected',
 
                 'mass-actions' => [
                     'submit'        => 'Submit',
