@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use Webkul\WebForm\Http\Controllers\WebFormController;
 
 Route::controller(WebFormController::class)->prefix('web-forms')->group(function () {

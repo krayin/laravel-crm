@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('Create Webform')
+        @lang('admin::app.settings.webforms.create.title')
     </x-slot>
 
     <x-admin::form :action="route('admin.settings.web_forms.store')">
@@ -11,7 +11,7 @@
                 </div>
     
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('Create Webform')
+                    @lang('admin::app.settings.webforms.create.title')
                 </div>
             </div>
     
@@ -22,7 +22,7 @@
                         type="submit"
                         class="primary-button"
                     >
-                        @lang('Create Webform')
+                        @lang('admin::app.settings.webforms.create.save-btn')
                     </button>
                 </div>
             </div>
@@ -44,7 +44,7 @@
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('Create Webform')
+                                    @lang('admin::app.settings.webforms.create.title')
                                 </p>
                             </div>
                         </div>
@@ -52,7 +52,7 @@
                         <!-- Submit success actions -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Submit Success Action ')
+                                @lang('admin::app.settings.webforms.create.submit-success-action')
                             </x-admin::form.control-group.label>
 
                             <div class="flex">
@@ -62,7 +62,7 @@
                                     id="submit_success_action"
                                     value="message"
                                     class="!w-1/4 rounded-r-none"
-                                    :label="trans('Submit Success Action')"
+                                    :label="trans('admin::app.settings.webforms.create.submit-success-action')"
                                     v-model="submitSuccessAction.value"
                                 >
                                     <template
@@ -82,7 +82,7 @@
                                     id="submit_success_content"
                                     class="rounded-l-none"
                                     rules="required"
-                                    label="Submit Success Content"
+                                    :label="trans('admin::app.settings.webforms.create.submit-success-action')"
                                     ::placeholder="placeholder"
                                 />
                             </div>
@@ -93,7 +93,7 @@
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="!text-gray-600 required">
-                                @lang('Create Lead')
+                                @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
                             <label class="relative inline-flex cursor-pointer items-center">
@@ -114,11 +114,11 @@
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('Customize Web Form')
+                                    @lang('admin::app.settings.webforms.create.customize-webform')
                                 </p>
 
                                 <p class="text-sm text-gray-600 dark:text-white">
-                                    @lang('Customize your web form with element colors of your choosing.')
+                                    @lang('admin::app.settings.webforms.create.customize-webform-info')
                                 </p>
                             </div>
                         </div>
@@ -126,12 +126,12 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="background_color"
-                            title="@lang('Background Color')"
+                            title="@lang('admin::app.settings.webforms.create.backgroud-color')"
                             value="{{ old('background_color') ?? '#F7F8F9' }}"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('Background Color')
+                                    @lang('admin::app.settings.webforms.create.backgroud-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -147,18 +147,20 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="form_background_color"
-                            title="@lang('Form Background Color')"
+                            title="@lang('admin::app.settings.webforms.create.form-background-color')"
                             value="{{ old('form_background_color') ?? '#FFFFFF' }}"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('Form Background Color')
+                                    @lang('admin::app.settings.webforms.create.form-background-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="form_background_color"
                                     id="form_background_color"
+                                    :label="trans('admin::app.settings.webforms.create.form-background-color')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.form-background-color')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="form_background_color"/>
@@ -168,18 +170,20 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="form_title_color"
-                            title="@lang('Form Title Color')"
+                            title="@lang('admin::app.settings.webforms.create.form-title-color')"
                             value="{{ old('form_title_color') ?? '#263238' }}"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('Form Title Color')
+                                    @lang('admin::app.settings.webforms.create.form-title-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="form_title_color"
                                     id="form_title_color"
+                                    :label="trans('admin::app.settings.webforms.create.form-title-color')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.form-title-color')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="form_title_color"/>
@@ -189,18 +193,20 @@
                         <!-- Form Submit Button Picker -->
                         <v-color-picker
                             name="form_submit_button_color"
-                            title="@lang('Form Submit Button Color')"
+                            title="@lang('admin::app.settings.webforms.create.form-submit-btn-color')"
                             value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('Form Title Color')
+                                    @lang('admin::app.settings.webforms.create.form-submit-btn-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="form_submit_button_color"
                                     id="form_submit_button_color"
+                                    :label="trans('admin::app.settings.webforms.create.form-submit-btn-color')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.form-submit-btn-color')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="form_submit_button_color"/>
@@ -210,18 +216,20 @@
                         <!-- Attribute Label Color Picker -->
                         <v-color-picker
                             name="attribute_label_color"
-                            title="@lang('Attribute Label Color')"
+                            title="@lang('admin::app.settings.webforms.create.attribute-label-color')"
                             value="{{ old('attribute_label_color') ?? '#546E7A' }}"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('Form Title Color')
+                                    @lang('admin::app.settings.webforms.create.attribute-label-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="attribute_label_color"
                                     id="attribute_label_color"
+                                    :label="trans('admin::app.settings.webforms.create.attribute-label-color')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.attribute-label-color')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="attribute_label_color"/>
@@ -233,11 +241,11 @@
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('Attributes')
+                                    @lang('admin::app.settings.webforms.create.attributes')
                                 </p>
 
                                 <p class="text-sm text-gray-600 dark:text-white">
-                                    @lang('Add custom attributes to the form.')
+                                    @lang('admin::app.settings.webforms.create.attributes-info')
                                 </p>
                             </div>
                         </div>
@@ -248,13 +256,13 @@
                                     type="button"
                                     class="primary-button"
                                 >
-                                    @lang('Add Attribute')
+                                    @lang('admin::app.settings.webforms.create.add-attribute-btn')
                                 </button>
                             </x-slot>
         
                             <x-slot:menu class="!p-0 dark:border-gray-800 max-h-80 overflow-y-auto">
                                 <template v-if="createLead">
-                                    <div class="font-bold text-lg m-2">@lang('Persons')</div>
+                                    <div class="font-bold text-lg m-2">@lang('admin::app.settings.webforms.create.persons')</div>
 
                                     <span
                                         v-for="attribute in groupedAttributes.persons"
@@ -268,7 +276,7 @@
                                 </template>
 
                                 <template v-else>
-                                    <div class="font-bold text-lg m-2">@lang('Leads')</div>
+                                    <div class="font-bold text-lg m-2">@lang('admin::app.settings.webforms.create.leads')</div>
 
                                     <span
                                         v-for="attribute in groupedAttributes.leads"
@@ -382,7 +390,7 @@
                         <x-slot:header>
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('General')
+                                    @lang('admin::app.settings.webforms.create.general')
                                 </p>
                             </div>
                         </x-slot>
@@ -391,7 +399,7 @@
                             <!-- Title -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600 required">
-                                    @lang('Title')
+                                    @lang('admin::app.settings.webforms.create.title')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -400,8 +408,8 @@
                                     name="title"
                                     rules="required"
                                     :value="old('title')"
-                                    :label="trans('Title')"
-                                    :placeholder="trans('Title')"
+                                    :label="trans('admin::app.settings.webforms.create.title')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.title')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="title" />
@@ -410,7 +418,7 @@
                             <!-- Description -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600">
-                                    @lang('admin::app.settings.webhooks.create.description')
+                                    @lang('admin::app.settings.webforms.create.description')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -418,8 +426,8 @@
                                     id="description"
                                     name="description"
                                     :value="old('description')"
-                                    :label="trans('admin::app.settings.webhooks.create.description')"
-                                    :placeholder="trans('admin::app.settings.webhooks.create.description')"
+                                    :label="trans('admin::app.settings.webforms.create.description')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.description')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="description" />
@@ -428,7 +436,7 @@
                             <!-- Submit button label -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="!text-gray-600 required">
-                                    @lang('Submit Button Label')
+                                    @lang('admin::app.settings.webforms.create.submit-button-label')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -437,8 +445,8 @@
                                     name="submit_button_label"
                                     rules="required"
                                     :value="old('submit_button_label')"
-                                    :label="trans('Submit Button Label')"
-                                    :placeholder="trans('Submit Button Label')"
+                                    :label="trans('admin::app.settings.webforms.create.submit-button-label')"
+                                    :placeholder="trans('admin::app.settings.webforms.create.submit-button-label')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="submit_button_label" />

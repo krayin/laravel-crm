@@ -31,14 +31,14 @@ class WebFormDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'    => 'id',
-            'label'    => trans('Id'),
+            'label'    => trans('admin::app.settings.webforms.index.datagrid.id'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'title',
-            'label'    => trans('Title'),
+            'label'    => trans('admin::app.settings.webforms.index.datagrid.title'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -52,7 +52,7 @@ class WebFormDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'view',
             'icon'   => 'icon-edit',
-            'title'  => trans('View'),
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.view'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.settings.web_forms.view', $row->id),
         ]);
@@ -60,7 +60,7 @@ class WebFormDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
-            'title'  => trans('Edit'),
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.edit'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.settings.web_forms.edit', $row->id),
         ]);
@@ -68,7 +68,7 @@ class WebFormDataGrid extends DataGrid
         $this->addAction([
             'index'  => 'delete',
             'icon'   => 'icon-delete',
-            'title'  => trans('Delete'),
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.delete'),
             'method' => 'DELETE',
             'url'    => fn ($row) => route('admin.settings.web_forms.delete', $row->id),
         ]);

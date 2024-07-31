@@ -93,7 +93,7 @@ class WebFormController extends Controller
 
         Event::dispatch('settings.web_forms.create.after', $webForm);
 
-        session()->flash('success', trans('admin::app.settings.web-forms.create-success'));
+        session()->flash('success', trans('admin::app.settings.webforms.index.create-success'));
 
         return redirect()->route('admin.settings.web_forms.index');
     }
@@ -135,7 +135,7 @@ class WebFormController extends Controller
 
         Event::dispatch('settings.web_forms.update.after', $webForm);
 
-        session()->flash('success', trans('admin::app.settings.web-forms.update-success'));
+        session()->flash('success', trans('admin::app.settings.webforms.index.update-success'));
 
         return redirect()->route('admin.settings.web_forms.index');
     }
@@ -155,11 +155,11 @@ class WebFormController extends Controller
             Event::dispatch('settings.web_forms.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.settings.web-forms.delete-success'),
+                'message' => trans('admin::app.settings.webforms.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.settings.web-forms.delete-failed'),
+                'message' => trans('admin::app.settings.webforms.index.delete-failed'),
             ], 400);
         }
     }
