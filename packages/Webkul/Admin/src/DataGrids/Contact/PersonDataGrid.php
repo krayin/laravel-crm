@@ -150,6 +150,23 @@ class PersonDataGrid extends DataGrid
                 'url'    => route('admin.contacts.persons.mass_delete'),
             ]);
         }
+
+
+        $this->addMassAction([
+            'title'   => trans('Update Data'),
+            'url'    => route('admin.contacts.persons.mass_delete'),
+            'method'  => 'POST',
+            'options' => [
+                [
+                    'label' => trans('Active'),
+                    'value' => 1,
+                ],
+                [
+                    'label' => trans('Disabled'),
+                    'value' => 0,
+                ],
+            ],
+        ]);
     }
 
     /**

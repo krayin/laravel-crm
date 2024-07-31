@@ -21,8 +21,8 @@
             :validate-mass-action="validateMassAction"
             :perform-mass-action="performMassAction"
         >
-            <div class="fixed inset-x-0 bottom-24 mx-auto flex gap-2 max-w-max items-center justify-center rounded-lg bg-white p-2 shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                <div class="ltr:pl-2.5 rtl:pr-2.5">
+            <div class="fixed inset-x-0 bottom-24 mx-auto flex gap-2 max-w-max items-center justify-center rounded-lg bg-white p-2 px-4 shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div>
                     <p class="text-sm font-light text-gray-800 dark:text-white">
                         @{{ "@lang('admin::app.components.datagrid.toolbar.selected')".replace(':total', available.meta.total) }}
                     </p>
