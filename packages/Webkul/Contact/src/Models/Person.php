@@ -45,6 +45,7 @@ class Person extends Model implements PersonContract
         'name',
         'emails',
         'contact_numbers',
+        'job_title',
         'organization_id',
     ];
 

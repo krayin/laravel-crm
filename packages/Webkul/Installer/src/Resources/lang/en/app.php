@@ -3,32 +3,61 @@
 return [
     'seeders' => [
         'attributes' => [
-            'address'             => 'Address',
-            'adjustment-amount'   => 'Adjustment Amount',
-            'billing-address'     => 'Billing Address',
-            'contact-numbers'     => 'Contact Numbers',
-            'description'         => 'Description',
-            'discount-amount'     => 'Discount Amount',
-            'discount-percent'    => 'Discount Percent',
-            'emails'              => 'Emails',
-            'expected-close-date' => 'Expected Close Date',
-            'expired-at'          => 'Expired At',
-            'grand-total'         => 'Grand Total',
-            'lead-value'          => 'Lead Value',
-            'name'                => 'Name',
-            'organization'        => 'Organization',
-            'person'              => 'Person',
-            'price'               => 'Price',
-            'quantity'            => 'Quantity',
-            'sales-owner'         => 'Sales Owner',
-            'shipping-address'    => 'Shipping Address',
-            'sku'                 => 'SKU',
-            'source'              => 'Source',
-            'sub-total'           => 'Sub Total',
-            'subject'             => 'Subject',
-            'tax-amount'          => 'Tax Amount',
-            'title'               => 'Title',
-            'type'                => 'Type',
+            'leads' => [
+                'description'         => 'Description',
+                'expected-close-date' => 'Expected Close Date',
+                'lead-value'          => 'Lead Value',
+                'sales-owner'         => 'Sales Owner',
+                'source'              => 'Source',
+                'title'               => 'Title',
+                'type'                => 'Type',
+            ],
+
+            'persons' => [
+                'contact-numbers' => 'Contact Numbers',
+                'emails'          => 'Emails',
+                'job-tile'        => 'Job Title',
+                'name'            => 'Name',
+                'organization'    => 'Organization',
+            ],
+
+            'organizations' => [
+                'address' => 'Address',
+                'name'    => 'Name',
+            ],
+
+            'products' => [
+                'description' => 'Description',
+                'name'        => 'Name',
+                'price'       => 'Price',
+                'quantity'    => 'Quantity',
+                'sku'         => 'SKU',
+            ],
+
+            'quotes' => [
+                'adjustment-amount' => 'Adjustment Amount',
+                'billing-address'   => 'Billing Address',
+                'description'       => 'Description',
+                'discount-amount'   => 'Discount Amount',
+                'discount-percent'  => 'Discount Percent',
+                'expired-at'        => 'Expired At',
+                'grand-total'       => 'Grand Total',
+                'person'            => 'Person',
+                'sales-owner'       => 'Sales Owner',
+                'shipping-address'  => 'Shipping Address',
+                'sub-total'         => 'Sub Total',
+                'subject'           => 'Subject',
+                'tax-amount'        => 'Tax Amount',
+            ],
+
+            'warehouses' => [
+                'contact-address' => 'Contact Address',
+                'contact-emails'  => 'Contact Emails',
+                'contact-name'    => 'Contact Name',
+                'contact-numbers' => 'Contact Numbers',
+                'description'     => 'Description',
+                'name'            => 'Name',
+            ],
         ],
 
         'email' => [
@@ -41,7 +70,7 @@ return [
             'title'                 => 'Title',
             'type'                  => 'Type',
         ],
-
+        
         'lead' => [
             'pipeline' => [
                 'default' => 'Default Pipeline',
@@ -57,11 +86,11 @@ return [
             ],
 
             'source' => [
-                'direct'    => 'Direct',
-                'email'     => 'Email',
-                'phone'     => 'Phone',
-                'web'       => 'Web',
-                'web-form'  => 'Web Form',
+                'direct'   => 'Direct',
+                'email'    => 'Email',
+                'phone'    => 'Phone',
+                'web'      => 'Web',
+                'web-form' => 'Web Form',
             ],
 
             'type' => [
@@ -80,15 +109,6 @@ return [
         'workflow' => [
             'email-to-participants-after-activity-updation' => 'Emails to participants after activity updation',
             'email-to-participants-after-activity-creation' => 'Emails to participants after activity creation',
-        ],
-
-        'warehouses' => [
-            'contact-name'    => 'Contact Name',
-            'contact-emails'  => 'Contact Emails',
-            'contact-numbers' => 'Contact Numbers',
-            'contact-address' => 'Contact Address',
-            'description'     => 'Description',
-            'name'            => 'Name',
         ],
     ],
 ];
