@@ -1,14 +1,14 @@
 <?php
 
-namespace Webkul\Core;
+namespace Webkul\WebForm;
 
 use Illuminate\Support\Facades\Vite as BaseVite;
 
 class Vite
 {
-    protected $hotFile = 'admin-vite.hot';
+    protected $hotFile = 'webform-vite.hot';
 
-    protected $buildDirectory = 'admin/build';
+    protected $buildDirectory = 'webform/build';
 
     protected $packageAssetDirectory = 'src/Resources/assets';
 

@@ -1,77 +1,31 @@
-<link rel="stylesheet" href="{{ asset('vendor/webkul/web-form/assets/css/web-form.css') }}">
+<x-web_form::layouts>
+    <x-slot:title>
+        @lang('Form Preview')
+    </x-slot>
 
-<style>
-    button.btn {
-        background-color:<?= $webForm->form_submit_button_color ?> !important;
-    }
+    <div
+        class="flex h-[100vh] items-center justify-center"
+        style="background-color: {{ $webForm->background_color }}"
+    >
+        <div class="flex flex-col items-center gap-5">
+            <!-- Logo -->            
+            <img
+                class="h-10 w-[110px]"
+                src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}""
+                alt="krayin"
+            />
 
-    h1.web-form-title {
-        color: <?= $webForm->form_title_color ?> !important;
-    }
+            <h1 style="color: {{ $webForm->form_title_color }} !important;">{{ $webForm->title }}</h1>
 
-    .attribute-label {
-        color: <?= $webForm->attribute_label_color ?> !important;
-    }
+            <p>{{ $webForm->description }}</p>
 
-    form#krayinWebForm {
-        background-color:<?= $webForm->form_background_color ?>;
-    }
-
-    .anonymous-layout-container {
-        background-color:<?= $webForm->background_color ?>;
-    }
-
-    .loaderDiv {
-        z-index: 20;
-        position: absolute;
-        top: 0;
-        left:-5px;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0,0,0,0.4);
-    }
-
-    .imgSpinner {
-        position: absolute;
-        border: 16px solid #f3f3f3; /* Light grey */
-        border-top: 16px solid #3498db; /* Blue */
-        border-radius: 50%;
-        width: 50px;
-        height: 50px;
-        top: 40%;
-        left:45%;
-        animation: spin 2s linear infinite;
-	}
-	
-	@keyframes spin {
-		0% { transform: rotate(0deg); }
-		100% { transform: rotate(360deg); }
-	}
-</style>
-
-
-<div class="anonymous-layout-container">
-    <div class="center-box">
-        <section id="loaderDiv">
-            <div id="imgSpinner"></div>
-        </section>
-        <div class="adjacent-center">
-            <div class="title-box">
-            <img src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}" alt="krayin">
-                <h1 class="web-form-title">{{ $webForm->title }}</h1>
-                <p>{{ $webForm->description }}</p>
-            </div>
-
-            <div class="panel">
-                <div class="panel-body">
-                    <div class="alert-wrapper" style="display: none">
-                        <div class="alert success">
-                            <p>This is message</p>
-                            <span class="icon close-white-icon"></span>
-                        </div>
-                    </div>
-
-                    <form id="krayinWebForm" method="post">
+            <div class="box-shadow flex min-w-[476px] flex-col rounded-lg">
+                <!-- Login Form -->
+                <form 
+                    style="background-color: {{ $webForm->form_background_color }}"
+                    action="{{ route('admin.session.store') }}"
+                >
+                    <div class="p-4 dark:border-gray-800">
                         @foreach ($webForm->attributes as $attribute)
                             @php
                                 $parentAttribute = $attribute->attribute;
@@ -79,20 +33,24 @@
                                 $fieldName = $parentAttribute->entity_type . '[' . $parentAttribute->code . ']';
                             @endphp
 
-                            <div class="form-group {{ $parentAttribute->type }}">
-                                <label class="attribute-label {{ $attribute->is_required ? 'required' : '' }}" for="{{ $attribute->code }}" >
+                            <div class="mt-4 first:mt-0 {{ $parentAttribute->type }}">
+                                <label 
+                                    class="mb-1.5 flex items-center gap-1 text-sm font-normal text-gray-800 dark:text-white {{ $attribute->is_required ? 'required' : '' }}"
+                                    style="color: {{ $webForm->attribute_label_color }} !important;"
+                                    for="{{ $attribute->code }}"
+                                >
                                     {{ $attribute->name ?? $parentAttribute->name }}
                                 </label>
 
                                 @switch($parentAttribute->type)
                                     @case('text')
                                         <input
-                                        type="text"
-                                        name="{{ $fieldName }}"
-                                        class="control"
-                                        placeholder="{{ $attribute->placeholder }}"
-                                        id="{{ $fieldName }}"
-                                        {{ $attribute->is_required ? 'required' : '' }}
+                                            type="text" 
+                                            id="{{ $fieldName }}"
+                                            name="{{ $fieldName }}"
+                                            {{ $attribute->is_required ? 'required' : '' }}
+                                            placeholder="{{ $attribute->placeholder }}"
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
                                         @break;
@@ -100,21 +58,21 @@
                                     @case('date')
                                     @case('datetime')
                                         <input
-                                        type="text"
-                                        name="{{ $fieldName }}"
-                                        class="control"
-                                        id="{{ $fieldName }}"
-                                        {{ $attribute->is_required ? 'required' : '' }}
+                                            type="text"
+                                            name="{{ $fieldName }}"
+                                            id="{{ $fieldName }}"
+                                            {{ $attribute->is_required ? 'required' : '' }}
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
                                         @break;
 
                                     @case('textarea')
                                         <textarea
-                                        name="{{ $fieldName }}"
-                                        class="control"
-                                        id="{{ $fieldName }}"
-                                        {{ $attribute->is_required ? 'required' : '' }}
+                                            name="{{ $fieldName }}"
+                                            id="{{ $fieldName }}"
+                                            {{ $attribute->is_required ? 'required' : '' }}
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         ></textarea>
 
                                         @break;
@@ -123,29 +81,10 @@
                                         <input
                                             type="email"
                                             name="{{ $fieldName }}[0][value]"
-                                            class="control"
                                             placeholder="{{ $attribute->placeholder }}"
                                             id="{{ $fieldName }}"
                                             {{ $attribute->is_required ? 'required' : '' }}
-                                        />
-
-                                        <input
-                                        type="hidden"
-                                        name="{{ $fieldName }}[0][label]"
-                                        class="control"
-                                        value="work"
-                                        />
-
-                                        @break;
-
-                                    @case('phone')
-                                        <input
-                                        type="text"
-                                        name="{{ $fieldName }}[0][value]"
-                                        class="control"
-                                        placeholder="{{ $attribute->placeholder }}"
-                                        id="{{ $fieldName }}"
-                                        {{ $attribute->is_required ? 'required' : '' }}
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
                                         <input
@@ -153,17 +92,36 @@
                                             name="{{ $fieldName }}[0][label]"
                                             class="control"
                                             value="work"
-                                            />
+                                        />
+
+                                        @break;
+
+                                    @case('phone')
+                                        <input
+                                            type="text"
+                                            name="{{ $fieldName }}[0][value]"
+                                            placeholder="{{ $attribute->placeholder }}"
+                                            id="{{ $fieldName }}"
+                                            {{ $attribute->is_required ? 'required' : '' }}
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        />
+
+                                        <input
+                                            type="hidden"
+                                            name="{{ $fieldName }}[0][label]"
+                                            class="control"
+                                            value="work"
+                                        />
 
                                         @break;
 
                                     @case('select')
                                     @case('lookup')
                                         <select
-                                        class="control"
-                                        id="{{ $fieldName }}"
-                                        name="{{ $fieldName }}"
-                                        {{ $attribute->is_required ? 'required' : '' }}
+                                            id="{{ $fieldName }}"
+                                            name="{{ $fieldName }}"
+                                            {{ $attribute->is_required ? 'required' : '' }}
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         >
                                             @php
                                                 $options = $parentAttribute->lookup_type
@@ -184,7 +142,12 @@
                                         @break;
 
                                     @case('multiselect')
-                                        <select class="control" id="{{ $fieldName }}" name="{{ $fieldName }}[]" multiple>
+                                        <select
+                                            id="{{ $fieldName }}"
+                                            name="{{ $fieldName }}[]"
+                                            multiple
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        >
 
                                             @php
                                                 $options = $parentAttribute->lookup_type
@@ -229,17 +192,20 @@
                                     @case('file')
                                     @case('image')
                                         <input
-                                        type="file"
-                                        name="{{ $fieldName }}"
-                                            class="control"
+                                            type="file"
+                                            name="{{ $fieldName }}"
                                             id="{{ $fieldName }}"
-                                            style="padding-top: 5px;"
-                                            />
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        />
 
                                         @break;
 
                                     @case('boolean')
-                                        <select class="control" id="{{ $fieldName }}" name="{{ $fieldName }}">
+                                        <select
+                                            class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                            id="{{ $fieldName }}"
+                                            name="{{ $fieldName }}"
+                                        >
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
@@ -252,16 +218,20 @@
                                 @endswitch
                             </div>
                         @endforeach
+                    </div>
 
-                        <div class="button-group">
-                            <button type="submit" class="btn btn-xl btn-primary">
-                                {{ $webForm->submit_button_label }}
-                            </button>
-                        </div>
-
-                    </form>
-                </div>
+                    <div class="flex items-center justify-center p-4">
+                        <!-- Submit Button -->
+                        <button
+                            type="submit"
+                            style="background-color: {{ $webForm->form_submit_button_color }} !important"
+                            class="flex justify-center w-full bg-brandColor border border-brandColor cursor-pointer focus:opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all"
+                        >
+                            {{ $webForm->submit_button_label }}
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
-</div>
+</x-web_form::layouts>

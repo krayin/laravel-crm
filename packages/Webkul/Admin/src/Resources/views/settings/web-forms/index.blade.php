@@ -1,6 +1,6 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('Webforms')
+        @lang('admin::app.settings.webforms.index.title')
     </x-slot>
 
     <v-webform>
@@ -12,7 +12,7 @@
                 </div>
     
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('Webforms')
+                    @lang('admin::app.settings.webforms.index.title')
                 </div>
             </div>
     
@@ -23,7 +23,7 @@
                         type="button"
                         class="primary-button"
                     >
-                        @lang('Create Webform')
+                        @lang('admin::app.settings.webforms.index.create-btn')
                     </button>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     </div>
         
                     <div class="text-xl font-bold dark:text-gray-300">
-                        @lang('Webforms')
+                        @lang('admin::app.settings.webforms.index.title')
                     </div>
                 </div>
 
@@ -59,7 +59,7 @@
                             href="{{ route('admin.settings.web_forms.create') }}"
                             class="primary-button"
                         >
-                            @lang('Create Webform')
+                            @lang('admin::app.settings.webforms.index.create-btn')
                         </a>
 
                         {!! view_render_event('krayin.admin.settings.web_forms.index.create_button.after') !!}
@@ -78,7 +78,6 @@
         <script type="module">
             app.component('v-webform', {
                 template: '#v-webform-template',
-        
                 data() {
                     return {};
                 },
