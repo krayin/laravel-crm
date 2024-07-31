@@ -11,6 +11,7 @@ return [
         \Webkul\Email\Providers\ModuleServiceProvider::class,
         \Webkul\EmailTemplate\Providers\ModuleServiceProvider::class,
         \Webkul\Lead\Providers\ModuleServiceProvider::class,
+        \Webkul\Warehouse\Providers\ModuleServiceProvider::class,
         \Webkul\Product\Providers\ModuleServiceProvider::class,
         \Webkul\Quote\Providers\ModuleServiceProvider::class,
         \Webkul\Tag\Providers\ModuleServiceProvider::class,

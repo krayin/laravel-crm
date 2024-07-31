@@ -2,7 +2,9 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Settings\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -23,13 +25,11 @@ class WarehouseController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(WarehouseDataGrid::class)->toJson();
+            return datagrid(WarehouseDataGrid::class)->process();
         }
 
         return view('admin::settings.warehouses.index');
@@ -85,11 +85,11 @@ class WarehouseController extends Controller
     {
         Event::dispatch('settings.warehouse.create.before');
 
-        $warehouse = $this->warehouseRepository->create(request()->all());
+        $warehouse = $this->warehouseRepository->create($request->all());
 
         Event::dispatch('settings.warehouse.create.after', $warehouse);
 
-        session()->flash('success', trans('admin::app.warehouses.create-success'));
+        session()->flash('success', trans('admin::app.settings.warehouses.index.create-success'));
 
         return redirect()->route('admin.settings.warehouses.index');
     }
@@ -123,18 +123,17 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, $id)
+    public function update(AttributeForm $request, int $id)
     {
         Event::dispatch('settings.warehouse.update.before', $id);
 
-        $warehouse = $this->warehouseRepository->update(request()->all(), $id);
+        $warehouse = $this->warehouseRepository->update($request->all(), $id);
 
         Event::dispatch('settings.warehouse.update.after', $warehouse);
 
-        session()->flash('success', trans('admin::app.warehouses.update-success'));
+        session()->flash('success', trans('admin::app.settings.warehouses.index.update-success'));
 
         return redirect()->route('admin.settings.warehouses.index');
     }
@@ -142,10 +141,9 @@ class WarehouseController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $this->warehouseRepository->findOrFail($id);
 
@@ -157,11 +155,11 @@ class WarehouseController extends Controller
             Event::dispatch('settings.warehouse.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.warehouses.warehouse')]),
+                'message' => trans('admin::app.settings.warehouses.index.destroy-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.warehouses.warehouse')]),
+                'message' => trans('admin::app.settings.warehouses.index.destroy-success'),
             ], 400);
         }
     }

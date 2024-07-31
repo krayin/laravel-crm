@@ -773,6 +773,40 @@ return [
                 'text'                  => 'Text',
             ],
         ],
+
+        'warehouses' => [
+            'index' => [
+                'title'          => 'Warehouses',
+                'create-btn'     => 'Create Warehouse',
+                'create-success' => 'Warehouse created successfully.',
+                'name-exists'    => 'Warehouse name already exists.',
+                'update-success' => 'Warehouse updated successfully.',
+                'delete-success' => 'Warehouse deleted successfully.',
+                'delete-failed'  => 'Warehouse can not be deleted.',
+
+                'datagrid' => [
+                    'delete'          => 'Delete',
+                    'edit'            => 'Edit',
+                    'view'            => 'View',
+                    'created-at'      => 'Created At',
+                    'products'        => 'Products',
+                    'contact-emails'  => 'Contact Emails',
+                    'contact-numbers' => 'Contact Numbers',
+                ],
+            ],
+
+            'create' => [
+                'title'         => 'Create Warehouse',
+                'save-btn'      => 'Save Warehouse',
+                'contact-info'  => 'Contact Information',
+            ],
+
+            'edit' => [
+                'title'         => 'Edit Warehouse',
+                'save-btn'      => 'Save Warehouse',
+                'contact-info'  => 'Contact Information',
+            ],
+        ],
     ],
 
     'activities' => [
