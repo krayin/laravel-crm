@@ -105,6 +105,7 @@ import Emitter from "./plugins/emitter";
 import Flatpickr from "./plugins/flatpickr";
 import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
+import Draggable from "./plugins/draggable";
 import VueCal from "./plugins/vue-cal";
 import Draggable from "./plugins/draggable";
 
@@ -113,6 +114,7 @@ import Draggable from "./plugins/draggable";
     Axios,
     Emitter,
     CreateElement,
+    Draggable,
     Flatpickr,
     VeeValidate,
     VueCal,

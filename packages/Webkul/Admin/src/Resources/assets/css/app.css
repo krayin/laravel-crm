@@ -313,7 +313,7 @@
     }
 
     .secondary-button {
-        @apply flex cursor-pointer place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-blue-600 bg-white px-3 py-1.5 font-semibold text-blue-600 transition-all hover:bg-[#eff6ff61] focus:bg-[#eff6ff61] dark:border-gray-400 dark:bg-gray-800 dark:text-white dark:hover:opacity-80;
+        @apply flex cursor-pointer place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-brandColor bg-white px-3 py-1.5 font-semibold text-brandColor transition-all hover:bg-[#eff6ff61] focus:bg-[#eff6ff61] dark:border-gray-400 dark:bg-gray-800 dark:text-white dark:hover:opacity-80;
     }
 
     .transparent-button {
