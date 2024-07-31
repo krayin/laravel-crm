@@ -2,7 +2,7 @@
     <h4 class="flex items-center justify-between font-semibold">
         About Contact Person
 
-        <button class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-200"></button>
+        <button class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
     </h4>
 
     <div class="flex gap-2">
