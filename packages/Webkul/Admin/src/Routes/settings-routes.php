@@ -68,29 +68,21 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
          * WebForms Routes.
          */
         Route::controller(WebFormController::class)->prefix('web-forms')->group(function () {
-            Route::get('forms/{id}/form.js', 'formJS')->name('admin.settings.web_forms.form_js');
-        
-            Route::get('forms/{id}/form.html', 'preview')->name('admin.settings.web_forms.preview');
-        
-            Route::post('forms/{id}', 'formStore')->name('admin.settings.web_forms.form_store');
-        
             Route::group(['middleware' => ['user']], function () {
                 Route::get('', 'index')->name('admin.settings.web_forms.index');
-        
-                Route::get('form/{id}/form.html', 'view')->name('admin.settings.web_forms.view');
-        
+
                 Route::get('create', 'create')->name('admin.settings.web_forms.create');
-        
+
                 Route::post('create', 'store')->name('admin.settings.web_forms.store');
-        
+
                 Route::get('edit/{id?}', 'edit')->name('admin.settings.web_forms.edit');
-        
+
                 Route::put('edit/{id}', 'update')->name('admin.settings.web_forms.update');
-        
+
                 Route::delete('{id}', 'destroy')->name('admin.settings.web_forms.delete');
             });
         });
-        
+
         /**
          * Workflows Routes.
          */
