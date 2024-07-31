@@ -1,15 +1,16 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\GroupController;
-use Webkul\Admin\Http\Controllers\Settings\PipelineController;
-use Webkul\Admin\Http\Controllers\Settings\RoleController;
-use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TagController;
+use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
+use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
+use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
+use Webkul\Admin\Http\Controllers\Settings\WarehouseController;
 
 /**
  * Settings routes.
@@ -167,6 +168,29 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::put('edit/{id}', 'update')->name('admin.settings.sources.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.sources.delete');
+        });
+
+        /**
+         * Warehouses Routes.
+         */
+        Route::controller(WarehouseController::class)->prefix('warehouses')->group(function () {
+            Route::get('', 'index')->name('admin.settings.warehouses.index');
+
+            Route::get('search', 'search')->name('admin.settings.warehouses.search');
+
+            Route::get('{id}/products', 'products')->name('admin.settings.warehouses.products.index');
+
+            Route::get('create', 'create')->name('admin.settings.warehouses.create');
+
+            Route::post('create', 'store')->name('admin.settings.warehouses.store');
+
+            Route::get('view/{id}', 'view')->name('admin.settings.warehouses.view');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.warehouses.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.warehouses.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.warehouses.delete');
         });
     });
 });
