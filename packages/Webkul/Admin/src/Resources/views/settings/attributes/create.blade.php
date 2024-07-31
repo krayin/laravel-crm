@@ -181,9 +181,6 @@
                                                 <x-admin::table.th>
                                                     @lang('admin::app.settings.attributes.create.option-name')
                                                 </x-admin::table.th>
-
-                                                <!-- Action tables heading -->
-                                                <x-admin::table.th />
                                             </x-admin::table.thead.tr>
                                         </x-admin::table.thead>
 
