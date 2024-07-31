@@ -1,14 +1,16 @@
-<button
-    class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-green-200 text-green-900"
-    @click="$refs.leadAtivityActionsComponent.openModal('mail')"
->
-    <span class="icon-mail text-2xl"></span>
+<div class="">
+    <button
+        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-green-200 text-green-900"
+        @click="$refs.leadMailActionComponent.openModal('mail')"
+    >
+        <span class="icon-mail text-2xl"></span>
 
-    @lang('admin::app.leads.view.activities.actions.mail.btn')
-</button>
+        @lang('admin::app.leads.view.activities.actions.mail.btn')
+    </button>
 
-<!-- Lead Activity Actions Vue Component -->
-<v-lead-mail-activity ref="leadAtivityActionsComponent"></v-lead-mail-activity>
+    <!-- Lead Mail Activity Action Vue Component -->
+    <v-lead-mail-activity ref="leadMailActionComponent"></v-lead-mail-activity>
+</div>
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-lead-mail-activity-tempalte">
