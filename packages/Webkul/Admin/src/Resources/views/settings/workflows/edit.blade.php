@@ -61,11 +61,17 @@
                             </p>
                         </div>
 
-                        <!-- Coupon Code -->
+                        <!-- Events -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.workflows.edit.event')
                             </x-admin::form.control-group.label>
+
+                            <input
+                                type="hidden"
+                                name="entity_type"
+                                :value="entityType"
+                            />
 
                             <x-admin::form.control-group.control
                                 type="select"
@@ -112,6 +118,7 @@
                                     id="condition_type"
                                     name="condition_type"
                                     v-model="conditionType"
+                                    rules="required"
                                     :label="trans('admin::app.settings.workflows.edit.condition-type')"
                                     :placeholder="trans('admin::app.settings.workflows.edit.condition-type')"
                                 >
@@ -644,8 +651,8 @@
 
                     <template v-if="matchedAction && matchedAction.options">
                         <select
-                            :name="['actions[' + index + '][id]']"
-                            :id="['actions[' + index + '][id]']"
+                            :name="['actions[' + index + '][value]']"
+                            :id="['actions[' + index + '][value]']"
                             class="custom-select flex h-10 w-1/3 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto min:w-1/3"
                             v-model="action.value"
                         >
@@ -655,10 +662,6 @@
                                 :text="option.name"
                             ></option>
                         </select>
-                    </template>
-
-                    <template v-if="matchedAction && matchedAction.request_methods">
-                        {{-- TODO: handle tthis --}}
                     </template>
 
                     <template
@@ -705,7 +708,7 @@
 
                 data() {
                     return {
-                        events: @json(app('\Webkul\Workflow\Helpers\Entity')->getEvents()),
+                        events: @json(app('\Webkul\Automation\Helpers\Entity')->getEvents()),
 
                         event: '{{ $workflow->event }}',
 
@@ -819,7 +822,7 @@
                 
                 data() {
                     return {
-                        conditions: @json(app('\Webkul\Workflow\Helpers\Entity')->getConditions()),
+                        conditions: @json(app('\Webkul\Automation\Helpers\Entity')->getConditions()),
 
                         conditionOperators: {
                             'price': [{
@@ -1046,7 +1049,7 @@
 
                 data() {
                     return {
-                        actions: @json(app('\Webkul\Workflow\Helpers\Entity')->getActions()),
+                        actions: @json(app('\Webkul\Automation\Helpers\Entity')->getActions()),
                     };
                 },
 
@@ -1073,6 +1076,8 @@
                         if (! this.matchedAction) {
                             return;
                         }
+
+                        console.log(this.matchedAction);
 
                         let matchedAttribute = this.matchedAction.attributes.find(attribute => attribute.id == this.action.attribute);
 

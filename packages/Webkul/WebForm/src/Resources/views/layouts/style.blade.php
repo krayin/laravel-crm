@@ -1,1 +1,0 @@
-<link rel="stylesheet" href="{{ asset('vendor/webkul/web-form/assets/css/admin.css') }}">

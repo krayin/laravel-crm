@@ -2,7 +2,11 @@
 
 namespace Webkul\WebForm\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -11,7 +15,7 @@ use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\WebForm\Http\Requests\WebForm;
 use Webkul\WebForm\Repositories\WebFormRepository;
-
+use Webkul\WebForm\DataGrids\WebFormDataGrid;
 class WebFormController extends Controller
 {
     /**
@@ -31,13 +35,11 @@ class WebFormController extends Controller
 
     /**
      * Display a listing of the email template.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
-            return app(\Webkul\WebForm\DataGrids\WebFormDataGrid::class)->toJson();
+            return datagrid(WebFormDataGrid::class)->process();
         }
 
         return view('web_form::settings.web-forms.index');
@@ -45,10 +47,8 @@ class WebFormController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'leads']);
 
@@ -73,10 +73,8 @@ class WebFormController extends Controller
 
     /**
      * Store a newly created email templates in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'title'                  => 'required',
@@ -102,11 +100,8 @@ class WebFormController extends Controller
 
     /**
      * Show the form for editing the specified email template.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $webForm = $this->webFormRepository->findOrFail($id);
 
@@ -120,11 +115,8 @@ class WebFormController extends Controller
 
     /**
      * Update the specified email template in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
             'title'                  => 'required',
@@ -150,18 +142,15 @@ class WebFormController extends Controller
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $webForm = $this->webFormRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.web_forms.delete.before', $id);
 
-            $this->webFormRepository->delete($id);
+            $webForm->delete($id);
 
             Event::dispatch('settings.web_forms.delete.after', $id);
 
@@ -173,19 +162,12 @@ class WebFormController extends Controller
                 'message' => trans('admin::app.settings.web-forms.delete-failed'),
             ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.web-forms.delete-failed'),
-        ], 400);
     }
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
      */
-    public function formJS($id)
+    public function formJS(int $id): Response
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $id);
 
@@ -196,11 +178,8 @@ class WebFormController extends Controller
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function formStore($id)
+    public function formStore(int $id): JsonResponse
     {
         $person = $this->personRepository
             ->getModel()
@@ -284,11 +263,8 @@ class WebFormController extends Controller
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function preview($id)
+    public function preview(int $id): View
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $id);
 
@@ -301,11 +277,8 @@ class WebFormController extends Controller
 
     /**
      * Preview the web form from datagrid.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function view($id)
+    public function view(int $id): View
     {
         $webForm = $this->webFormRepository->findOneByField('id', $id);
 

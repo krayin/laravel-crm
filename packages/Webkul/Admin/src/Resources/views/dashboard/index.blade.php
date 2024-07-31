@@ -1,3 +1,3 @@
 <x-admin::layouts>
-<p>tyest</p>
+<p>Dashboard</p>
 </x-admin::layouts>
