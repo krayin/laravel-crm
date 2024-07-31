@@ -70,7 +70,7 @@
                                         <div class="flex items-center gap-1">
                                             <div
                                                 class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium"
-                                                :style="{ 'background-color': colors[Math.floor(Math.random() * colors.length)] }"
+                                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
                                             >
                                                 @{{ element.person.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                             </div>
@@ -134,15 +134,15 @@
 
                     isLoading: true,
 
-                    colors: [
-                        '#FEF08A',
-                        '#FECACA',
-                        '#D9F99D',
-                        '#BFDBFE',
-                        '#FED7AA',
-                        '#86EFAC',
-                        '#FBCFE8',
-                        '#FACC15'
+                    backgroundColors: [
+                        'bg-yellow-200',
+                        'bg-red-200',
+                        'bg-lime-200',
+                        'bg-blue-200',
+                        'bg-orange-200',
+                        'bg-green-200',
+                        'bg-pink-200',
+                        'bg-yellow-400'
                     ],
                 }
             },

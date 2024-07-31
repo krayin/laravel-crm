@@ -14,13 +14,13 @@
     >
         <div class="w-full">
             <div
-                class="flex justify-center gap-4 border-b border-gray-200 pt-2"
+                class="flex justify-center gap-4 border-b border-gray-200"
                 :style="positionStyles"
             >
                 <div
                     v-for="tab in tabs"
-                    class="cursor-pointer px-2.5 pb-3.5 text-sm font-medium text-gray-800"
-                    :class="{'border-brandColor border-b-2 text-black transition': tab.isActive }"
+                    class="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-800"
+                    :class="{'border-brandColor border-b-2 !text-brandColor transition': tab.isActive }"
                     @click="change(tab)"
                 >
                     @{{ tab.title }}

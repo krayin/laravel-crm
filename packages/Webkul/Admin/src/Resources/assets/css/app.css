@@ -466,6 +466,20 @@
     .CodeMirror {
         @apply !h-[calc(100vh-367px)];
     }
+
+    .stage::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        width: 24px;
+        height: 24px;
+        z-index: 1;
+        border-radius: 0 0 0 25px;
+        transform: translateY(-50%) rotate(45deg);
+        border-right: 4px solid #f3f4f6;
+        border-top: 4px solid #f3f4f6;
+    }
 }
 
 .tox .tox-toolbar__group:last-child button {
@@ -489,6 +503,10 @@
     @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-8px_-5px_0px_1px_rgba(255,255,255,1)] ;
     content: "";
     pointer-events: none;
+}
+
+.tox.tox-silver-sink.tox-tinymce-aux {
+    z-index: 99999;
 }
 
 /* -------------------------------- new css end -------------------------------- */  

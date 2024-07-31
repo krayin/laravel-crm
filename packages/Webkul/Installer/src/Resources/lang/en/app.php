@@ -16,7 +16,7 @@ return [
             'persons' => [
                 'contact-numbers' => 'Contact Numbers',
                 'emails'          => 'Emails',
-                'job-tile'        => 'Job Title',
+                'job-title'       => 'Job Title',
                 'name'            => 'Name',
                 'organization'    => 'Organization',
             ],

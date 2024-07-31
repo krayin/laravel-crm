@@ -934,6 +934,40 @@ return [
                 'yes'                 => 'Yes'
             ]
         ],
+
+        'view' => [
+            'title' => 'Lead: :title',
+
+            'activities' => [
+                'actions' => [
+                    'mail' => [
+                        'btn'      => 'Mail',
+                        'title'    => 'Compose Mail',
+                        'to'       => 'To',
+                        'cc'       => 'CC',
+                        'bcc'      => 'BCC',
+                        'subject'  => 'Subject',
+                        'send-btn' => 'Send',
+                        'message'  => 'Message',
+                    ],
+
+                    'file' => [
+                        'btn'   => 'File',
+                        'title' => 'Add File',
+                    ],
+
+                    'note' => [
+                        'btn'   => 'Note',
+                        'title' => 'Add Note',
+                    ],
+
+                    'activity' => [
+                        'btn'   => 'Activity',
+                        'title' => 'Add Activity',
+                    ],
+                ],
+            ],
+        ],
     ],
 
     'leads-old' => [
