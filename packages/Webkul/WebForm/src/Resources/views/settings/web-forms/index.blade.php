@@ -1,29 +1,88 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('Webforms')
+    </x-slot>
 
-@section('page_title')
-    {{ __('web_form::app.title') }}
-@stop
+    <v-webform>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <!-- Bredcrumbs -->
+                    <x-admin::breadcrumbs name="settings.web_forms" />
+                </div>
+    
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('Webforms')
+                </div>
+            </div>
+    
+            <div class="flex items-center gap-x-2.5">
+                <!-- Create button for person -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="button"
+                        class="primary-button"
+                    >
+                        @lang('Create Webform')
+                    </button>
+                </div>
+            </div>
+        </div>
+    
+        <!-- DataGrid Shimmer -->
+        <x-admin::shimmer.datagrid />
+    </v-webform>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.web_forms.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.web_forms.index.header.before') !!}
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-webform-template"
+        >
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
+                    <div class="flex cursor-pointer items-center">
+                        <!-- Bredcrumbs -->
+                        <x-admin::breadcrumbs name="settings.web_forms" />
+                    </div>
+        
+                    <div class="text-xl font-bold dark:text-gray-300">
+                        @lang('Webforms')
+                    </div>
+                </div>
 
-                    {{ Breadcrumbs::render('settings.web_forms') }}
+                <div class="flex items-center gap-x-2.5">
+                    <!-- Create button for person -->
+                    <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('krayin.admin.settings.web_forms.index.create_button.before') !!}
+        
+                        <a
+                            href="{{ route('admin.settings.web_forms.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('Create Webform')
+                        </a>
 
-                    {{ __('web_form::app.title') }}
+                        {!! view_render_event('krayin.admin.settings.web_forms.index.create_button.after') !!}
+                    </div>
+                </div>
+            </div>
+        
+            {!! view_render_event('krayin.admin.settings.web_forms.index.datagrid.before') !!}
+        
+            <!-- DataGrid -->
+            <x-admin::datagrid src="{{ route('admin.settings.web_forms.index') }}" />
 
-                    {!! view_render_event('admin.settings.web_forms.index.header.after') !!}
-                </h1>
-            </template>
+            {!! view_render_event('krayin.admin.settings.web_forms.index.datagrid.after') !!}
+        </script>
 
-            @if (bouncer()->hasPermission('settings.automation.web_forms.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.web_forms.create') }}" class="btn btn-md btn-primary">{{ __('web_form::app.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
-    </div>
-@stop
+        <script type="module">
+            app.component('v-webform', {
+                template: '#v-webform-template',
+        
+                data() {
+                    return {};
+                },
+            });
+        </script>
+    @endPushOnce
+</x-admin::layouts>
