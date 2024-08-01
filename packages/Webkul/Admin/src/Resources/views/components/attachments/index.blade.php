@@ -15,30 +15,23 @@
     >
         <div class="w-full max-w-md mx-auto">
             <!-- Attachment List -->
-            <div v-if="attachments.length" class="flex flex-wrap gap-2">
+            <div
+                v-if="attachments.length"
+                class="flex flex-wrap gap-2"
+            >
                 <div 
                     v-for="(file, index) in attachments" 
                     :key="index" 
-                    class="flex items-center bg-blue-100 text-blue-700 rounded-full px-4 py-1 text-sm"
+                    class="flex gap-2 items-center justify-center bg-gray-100 rounded-md px-4 py-2"
                 >
-                    <span class="mr-2 truncate max-w-xs">@{{ file.name }}</span>
+                    <div class="flex gap-1 items-center justify-center">
+                        <span class="mr-2 truncate max-w-xs">@{{ file.name }}</span>
 
-                    <button @click="removeAttachment(index)">
-                        <svg 
-                            xmlns="http://www.w3.org/2000/svg"
-                            class="h-4 w-4 text-red-500"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            stroke="currentColor"
-                        >
-                            <path
-                                stroke-linecap="round"
-                                stroke-linejoin="round"
-                                stroke-width="2"
-                                d="M6 18L18 6M6 6l12 12"
-                            />
-                        </svg>
-                    </button>
+                        <i 
+                            @click="removeAttachment(index)"
+                            class="icon-cross-large !font-semibold cursor-pointer"
+                        ></i>
+                    </div>
                 </div>
             </div>
 
@@ -55,9 +48,11 @@
                         :multiple="allowMultiple"
                     />
 
-                    <i class="icon-attachmetent text-2xl"></i>
+                    <div class="flex gap-2 items-center justify-center">
+                        <i class="icon-attachmetent text-xl font-medium"></i>
 
-                    <span class="text-gray-800 text-sm my-2">@lang('Click to attach files')</span>
+                        <span class="text-base font-medium text-gray-800 my-2">@lang('Add Attachments')</span>
+                    </div>
                 </div>
             </div>
         
@@ -119,6 +114,7 @@
 
                 /**
                  * Update file input with the selected files.
+                 *
                  * @return {void}
                  */
                 updateFileInput() {

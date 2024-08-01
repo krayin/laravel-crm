@@ -28,12 +28,16 @@
             <div class="flex items-center gap-x-2.5">
                 <!--  Save button for Person -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
+                    {{-- <button
                         type="submit"
                         class="primary-button"
                     >
                         @lang('admin::app.contacts.persons.edit.save-btn')
-                    </button>
+                    </button> --}}
+                    <x-admin::attachments
+                        name="files[]"
+                        :allow-multiple="true"
+                    />
                 </div>
             </div>
         </div>
