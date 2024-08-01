@@ -238,16 +238,20 @@ return [
                 'sku'       => 'SKU',
                 'view'      => 'View',
             ],
+        ],
 
-            'create' => [
-                'name'     => 'Name',
-                'save-btn' => 'Save Products',
-                'title'    => 'Create Products',
-            ],
+        'create' => [
+            'save-btn'  => 'Save Products',
+            'title'     => 'Create Products',
+            'general'   => 'General',
+            'price'     => 'Price',
+        ],
 
-            'edit' => [
-                'title' => 'Edit Products',
-            ],
+        'edit' => [
+            'title'     => 'Edit Products',
+            'save-btn'  => 'Save Products',
+            'general'   => 'General',
+            'price'     => 'Price',
         ],
     ],
 

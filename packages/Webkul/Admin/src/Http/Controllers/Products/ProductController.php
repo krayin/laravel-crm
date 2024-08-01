@@ -49,7 +49,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request): JsonResponse
+    public function store(AttributeForm $request)
     {
         Event::dispatch('product.create.before');
 
@@ -57,10 +57,9 @@ class ProductController extends Controller
 
         Event::dispatch('product.create.after', $product);
 
-        return new JsonResponse([
-            'data'    => $product,
-            'message' => trans('admin::app.products.create-success'),
-        ]);
+        session()->flash('success', trans('admin::app.products.create-success'));
+
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -94,13 +93,7 @@ class ProductController extends Controller
                 ];
             });
 
-            return new JsonResponse([
-                'data'        => $product,
-                'inventories' => $inventories,
-                'message'     => trans('admin::app.products.update-success'),
-            ]);
-
-        // return view('admin::products.edit', compact('product', 'inventories'));
+        return view('admin::products.edit', compact('product', 'inventories'));
     }
 
     /**
