@@ -1,4 +1,6 @@
-<!-- Note Button -->
+{!! view_render_event('admin.leads.view.actions.file.before', ['lead' => $lead]) !!}
+
+<!-- File Button -->
 <div class="">
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-cyan-200 text-cyan-900"
@@ -13,8 +15,10 @@
     <v-lead-file-activity ref="leadFileActionComponent"></v-lead-file-activity>
 </div>
 
+{!! view_render_event('admin.leads.view.actions.file.after', ['lead' => $lead]) !!}
+
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-file-activity-tempalte">
+    <script type="text/x-template" id="v-lead-file-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -86,7 +90,7 @@
 
     <script type="module">
         app.component('v-lead-file-activity', {
-            template: '#v-lead-file-activity-tempalte',
+            template: '#v-lead-file-activity-template',
 
             data: function () {
                 return {

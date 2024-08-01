@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.index.view_switcher.before') !!}
+
 <div class="flex gap-4">
     <x-admin::dropdown>
         <x-slot:toggle>
@@ -16,7 +18,7 @@
         <x-slot:content class="!p-0">
             <!-- Header -->
             <div class="flex items-center justify-between px-3 py-2.5">
-                <span class="font-medium text-gray-400">All Pipelines</span>
+                <span class="text-xs font-medium text-gray-400">All Pipelines</span>
             </div>
             
             <!-- Pipeline Links -->
@@ -62,3 +64,5 @@
         @endif
     </div>
 </div>
+
+{!! view_render_event('admin.leads.index.view_switcher.after') !!}

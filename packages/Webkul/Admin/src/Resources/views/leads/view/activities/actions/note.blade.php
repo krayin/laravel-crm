@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.view.actions.note.before', ['lead' => $lead]) !!}
+
 <!-- Note Button -->
 <div class="">
     <button
@@ -13,8 +15,10 @@
     <v-lead-note-activity ref="leadNoteActionComponent"></v-lead-note-activity>
 </div>
 
+{!! view_render_event('admin.leads.view.actions.note.after', ['lead' => $lead]) !!}
+
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-note-activity-tempalte">
+    <script type="text/x-template" id="v-lead-note-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -58,7 +62,7 @@
 
     <script type="module">
         app.component('v-lead-note-activity', {
-            template: '#v-lead-note-activity-tempalte',
+            template: '#v-lead-note-activity-template',
 
             data: function () {
                 return {

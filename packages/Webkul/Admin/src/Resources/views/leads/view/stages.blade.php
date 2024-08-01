@@ -1,4 +1,6 @@
 <!-- Stages Navigation -->
+{!! view_render_event('admin.leads.view.person.before', ['lead' => $lead]) !!}
+
 <div class="flex">
     <div
         class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white px-6 first:rounded-l-lg last:rounded-r-lg last:after:content-none"
@@ -23,3 +25,5 @@
         <span class="z-20 whitespace-nowrap text-sm font-semibold">Lost</span>
     </div>
 </div>
+
+{!! view_render_event('admin.leads.view.person.after', ['lead' => $lead]) !!}

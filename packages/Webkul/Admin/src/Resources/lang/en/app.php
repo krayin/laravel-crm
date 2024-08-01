@@ -1036,8 +1036,8 @@ return [
                 'expected-close-date' => 'Expected Close Date',
                 'created-at'          => 'Created At',
                 'no'                  => 'No',
-                'yes'                 => 'Yes'
-            ]
+                'yes'                 => 'Yes',
+            ],
         ],
 
         'view' => [
@@ -1045,14 +1045,21 @@ return [
 
             'activities' => [
                 'index' => [
-                    'all'      => 'All',
-                    'calls'    => 'Calls',
-                    'meetings' => 'Meetings',
-                    'lunches'  => 'Lunches',
-                    'files'    => 'Files',
-                    'quotes'   => 'Quotes',
-                    'notes'    => 'Notes',
-                    'emails'   => 'Emails',
+                    'all'          => 'All',
+                    'calls'        => 'Calls',
+                    'meetings'     => 'Meetings',
+                    'lunches'      => 'Lunches',
+                    'files'        => 'Files',
+                    'quotes'       => 'Quotes',
+                    'notes'        => 'Notes',
+                    'emails'       => 'Emails',
+                    'by-user'      => 'By :user',
+                    'scheduled-on' => 'Scheduled on',
+                    'location'     => 'Location',
+                    'participants' => 'Participants',
+                    'mark-as-done' => 'Mark as Done',
+                    'delete'       => 'Delete',
+                    'edit'         => 'Edit',
                 ],
 
                 'actions' => [

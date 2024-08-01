@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.view.actions.activity.before', ['lead' => $lead]) !!}
+
 <!-- Activity Button -->
 <div class="">
     <button
@@ -13,8 +15,10 @@
     <v-lead-activity ref="leadActionComponent"></v-lead-activity>
 </div>
 
+{!! view_render_event('admin.leads.view.actions.activity.after', ['lead' => $lead]) !!}
+
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-activity-tempalte">
+    <script type="text/x-template" id="v-lead-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -138,7 +142,7 @@
 
     <script type="module">
         app.component('v-lead-activity', {
-            template: '#v-lead-activity-tempalte',
+            template: '#v-lead-activity-template',
 
             data: function () {
                 return {

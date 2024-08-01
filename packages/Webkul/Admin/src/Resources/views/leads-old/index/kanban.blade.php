@@ -44,7 +44,7 @@
 </div>
 
 @push('scripts')
-    <script type="text/x-template" id="kanban-filters-tempalte">
+    <script type="text/x-template" id="kanban-filters-template">
         <div class="form-group datagrid-filters">
             <div class="search-filter">
                 <i class="icon search-icon input-search-icon"></i>
@@ -74,7 +74,7 @@
         </div>
     </script>
 
-    <script type="text/x-template" id="kanban-component-tempalte">
+    <script type="text/x-template" id="kanban-component-template">
         <kanban-board :stages="stage_names" :blocks="leads" @update-block="updateLeadStage">
             <div v-for="(stage, index) in stage_names" :slot="stage" :key="`stage-${stage}`">
                 <h2>
@@ -120,7 +120,7 @@
 
     <script>
         Vue.component('kanban-filters', {
-            template: '#kanban-filters-tempalte',
+            template: '#kanban-filters-template',
 
             data: function () {
                 return {
@@ -162,7 +162,7 @@
 
         Vue.component('kanban-component', {
 
-            template: '#kanban-component-tempalte',
+            template: '#kanban-component-template',
 
             data: function () {
                 return {

@@ -1,4 +1,4 @@
-<x-admin::shimmer.leads.kanban.toolbar />
+<x-admin::shimmer.leads.index.kanban.toolbar />
 
 <div class="flex gap-4 overflow-x-auto">
     <!-- Stages -->

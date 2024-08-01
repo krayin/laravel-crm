@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}
+
 <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4">
     <h4 class="font-semibold">About Lead</h4>
 
@@ -9,3 +11,5 @@
         :entity="$lead"
     />
 </div>
+
+{!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}

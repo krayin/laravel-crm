@@ -4,7 +4,7 @@ namespace Webkul\Admin\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class OrganizationResource extends JsonResource
+class ActivityParticipantResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,11 +15,8 @@ class OrganizationResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id'         => $this->id,
-            'name'       => $this->name,
-            'address'    => $this->address,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
+            'user'   => $this->when($this->user, new UserResource($this->user)),
+            'person' => $this->when($this->person, new PersonResource($this->person)),
         ];
     }
 }
