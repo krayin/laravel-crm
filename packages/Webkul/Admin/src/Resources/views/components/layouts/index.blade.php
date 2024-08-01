@@ -33,7 +33,12 @@
     >
     <meta
         name="currency"
-        {{-- content="{{ core()->getBaseCurrency()->toJson() }}" --}}
+        content="{{
+            json_encode([
+                'code'   => config('app.currency'),
+                'symbol' => core()->currencySymbol(config('app.currency'))])
+            }}
+        "
     >
 
     @stack('meta')

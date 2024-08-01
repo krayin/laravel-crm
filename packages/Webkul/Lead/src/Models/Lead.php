@@ -64,7 +64,7 @@ class Lead extends Model implements LeadContract
      */
     public function type()
     {
-        return $this->belongsTo(TypeProxy::modelClass());
+        return $this->belongsTo(TypeProxy::modelClass(), 'lead_type_id');
     }
 
     /**
@@ -72,7 +72,7 @@ class Lead extends Model implements LeadContract
      */
     public function source()
     {
-        return $this->belongsTo(SourceProxy::modelClass());
+        return $this->belongsTo(SourceProxy::modelClass(), 'lead_source_id');
     }
 
     /**

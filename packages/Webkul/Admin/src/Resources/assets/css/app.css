@@ -34,12 +34,35 @@
 /* -------------------------------- new css end -------------------------------- */  
 
 @layer components {
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 6px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: #555;
+    }
+
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+    }
+
     ::selection {
         background-color: rgba(0, 68, 242, .2);
     }
 
     body {
-        @apply bg-gray-100;
+        @apply bg-gray-100 text-sm text-gray-800;
     }
 
     button:disabled {
@@ -71,9 +94,64 @@
     .box-shadow {
     }
 
-    
+        
     /* -------------------------------- new css -------------------------------- */
-    
+    .icon-bookmark:before {
+        content: "\e92c";
+    }
+
+    .icon-bookmark-active:before {
+        content: "\e92d";
+    }
+
+    .icon-list:before {
+        content: "\e92e";
+    }
+
+    .icon-enter:before {
+        content: "\e92f";
+    }
+
+    .icon-kanban:before {
+        content: "\e930";
+    }
+
+    .icon-tick:before {
+        content: "\e931";
+    }
+
+    .icon-eye-hide:before {
+        content: "\e929";
+    }
+
+    .icon-percentage:before {
+        content: "\e92a";
+    }
+
+    .icon-dollar:before {
+        content: "\e92b";
+    }
+
+    .icon-radio-selected:before {
+        content: "\e924";
+    }
+
+    .icon-radio-normal:before {
+        content: "\e925";
+    }
+
+    .icon-folder:before {
+        content: "\e926";
+    }
+
+    .icon-file:before {
+        content: "\e927";
+    }
+
+    .icon-eye:before {
+        content: "\e928";
+    }
+
     .icon-notification:before {
         content: "\e900";
     }
@@ -85,11 +163,11 @@
     .icon-note:before {
         content: "\e902";
     }
-    
+
     .icon-edit:before {
         content: "\e903";
     }
-    
+
     .icon-calender:before {
         content: "\e904";
     }
@@ -97,125 +175,125 @@
     .icon-delete:before {
         content: "\e905";
     }
-    
+
     .icon-more:before {
         content: "\e906";
     }
-    
+
     .icon-checkbox-multiple:before {
         content: "\e907";
     }
-    
+
     .icon-checkbox-select:before {
         content: "\e908";
     }
-    
+
     .icon-checkbox-outline:before {
         content: "\e909";
     }
-    
+
     .icon-message:before {
         content: "\e90a";
     }
-    
+
     .icon-video:before {
         content: "\e90b";
     }
-    
+
     .icon-attachmetent:before {
         content: "\e90c";
     }
-    
+
     .icon-sent:before {
         content: "\e90d";
     }
-    
+
     .icon-call:before {
         content: "\e90e";
     }
-    
+
     .icon-meeting:before {
         content: "\e90f";
     }
-    
-    .icon-light:before {
+
+    .icon-ligh:before {
         content: "\e910";
     }
-    
+
     .icon-dark:before {
         content: "\e911";
     }
-    
+
     .icon-mail:before {
         content: "\e912";
     }
-    
+
     .icon-leads:before {
         content: "\e913";
     }
-    
+
     .icon-filter:before {
         content: "\e914";
     }
-    
+
     .icon-setting:before {
         content: "\e915";
     }
-    
+
     .icon-product:before {
         content: "\e916";
     }
-    
+
     .icon-contact:before {
         content: "\e917";
     }
-    
+
     .icon-activity:before {
         content: "\e918";
     }
-    
+
     .icon-perosnal:before {
         content: "\e919";
     }
-    
+
     .icon-quote:before {
         content: "\e91a";
     }
-    
+
     .icon-dashboard:before {
         content: "\e91b";
     }
-    
+
     .icon-cross-large:before {
         content: "\e91c";
     }
-    
+
     .icon-left-arrow:before {
         content: "\e91d";
     }
-    
+
     .icon-right-arrow:before {
         content: "\e91e";
     }
-    
+
     .icon-up-arrow:before {
         content: "\e91f";
     }
-    
+
     .icon-down-arrow:before {
         content: "\e920";
     }
-    
+
     .icon-search:before {
         content: "\e921";
     }
-    
+
     .icon-add:before {
         content: "\e922";
     }
-    
+
     .icon-add-2:before {
-        content: "\e923";
+    content: "\e923";
     }
     
     /* -------------------------------- new css end -------------------------------- */  
@@ -348,6 +426,16 @@
         background-size: 1250px 100%;
     }
 
+    .light-shimmer-bg {
+        background: linear-gradient(
+            to right,
+            #fafafa 8%,
+            #f5f5f5 18%,
+            #fafafa 33%
+        );
+        background-size: 1250px 100%;
+    }
+
     .dark .shimmer {
         background: linear-gradient(
             to right,
@@ -355,6 +443,10 @@
             #1a2232 18%,
             #1f2937 33%
         );
+    }
+
+    .draggable-ghost {
+        @apply border border-dashed !border-gray-300;
     }
 
     @keyframes skeleton {
@@ -373,6 +465,20 @@
 
     .CodeMirror {
         @apply !h-[calc(100vh-367px)];
+    }
+
+    .stage::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        right: -10px;
+        width: 24px;
+        height: 24px;
+        z-index: 1;
+        border-radius: 0 0 0 25px;
+        transform: translateY(-50%) rotate(45deg);
+        border-right: 4px solid #f3f4f6;
+        border-top: 4px solid #f3f4f6;
     }
 }
 
@@ -397,6 +503,10 @@
     @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-8px_-5px_0px_1px_rgba(255,255,255,1)] ;
     content: "";
     pointer-events: none;
+}
+
+.tox.tox-silver-sink.tox-tinymce-aux {
+    z-index: 99999;
 }
 
 /* -------------------------------- new css end -------------------------------- */  

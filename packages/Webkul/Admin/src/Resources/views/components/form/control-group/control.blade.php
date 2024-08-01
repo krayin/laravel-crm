@@ -307,6 +307,13 @@
         </v-field>
 
         @break
+
+    @case('tags')
+        <x-admin::form.control-group.controls.tags
+            :name="$name"
+            {{ $attributes}}
+        />
+        @break
 @endswitch
 
 @pushOnce('scripts')

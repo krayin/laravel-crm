@@ -1,0 +1,20 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M26 37.5V3H28L34 9.5V37.5H26Z" fill="#D4EDFB"/>
+<path d="M5 5C5 3.34315 6.34315 2 8 2H26.4122L35 11.527V35C35 36.6569 33.6569 38 32 38H8C6.34315 38 5 36.6569 5 35V5Z" stroke="#546E7A" stroke-width="2" stroke-linecap="round"/>
+<mask id="path-3-inside-1" fill="white">
+<rect x="19" y="11" width="2" height="7" rx="1" transform="rotate(90 19 11)"/>
+</mask>
+<rect x="19" y="11" width="2" height="7" rx="1" transform="rotate(90 19 11)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-3-inside-1)"/>
+<mask id="path-4-inside-2" fill="white">
+<rect x="30" y="16" width="2" height="18" rx="1" transform="rotate(90 30 16)"/>
+</mask>
+<rect x="30" y="16" width="2" height="18" rx="1" transform="rotate(90 30 16)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-4-inside-2)"/>
+<mask id="path-5-inside-3" fill="white">
+<rect x="30" y="22" width="2" height="18" rx="1" transform="rotate(90 30 22)"/>
+</mask>
+<rect x="30" y="22" width="2" height="18" rx="1" transform="rotate(90 30 22)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-5-inside-3)"/>
+<mask id="path-6-inside-4" fill="white">
+<rect x="21" y="28" width="2" height="9" rx="1" transform="rotate(90 21 28)"/>
+</mask>
+<rect x="21" y="28" width="2" height="9" rx="1" transform="rotate(90 21 28)" stroke="#546E7A" stroke-width="2" stroke-linecap="round" mask="url(#path-6-inside-4)"/>
+</svg>

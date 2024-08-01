@@ -12,15 +12,15 @@
         type="text/x-template"
         id="v-tabs-template"
     >
-        <div>
+        <div class="w-full">
             <div
-                class="flex justify-center gap-4 bg-neutral-100 pt-2 max-sm:hidden"
+                class="flex justify-center gap-4 border-b border-gray-200"
                 :style="positionStyles"
             >
                 <div
                     v-for="tab in tabs"
-                    class="cursor-pointer px-2.5 pb-3.5 text-base font-medium text-gray-300"
-                    :class="{'border-navyBlue border-b-2 text-black transition': tab.isActive }"
+                    class="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-800"
+                    :class="{'border-brandColor border-b-2 !text-brandColor transition': tab.isActive }"
                     @click="change(tab)"
                 >
                     @{{ tab.title }}
