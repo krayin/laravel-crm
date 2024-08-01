@@ -223,8 +223,12 @@ return [
 
     'products' => [
         'index' => [
-            'title'      => 'Products',
-            'create-btn' => 'Create Product',
+            'title'          => 'Products',
+            'create-btn'     => 'Create Product',
+            'create-success' => 'Product created successfully.',
+            'update-success' => 'Product updated successfully.',
+            'delete-success' => 'Product deleted successfully.',
+            'delete-failed'  => 'Product can not be deleted.',
 
             'datagrid'   => [
                 'allocated' => 'Allocated',
@@ -238,16 +242,20 @@ return [
                 'sku'       => 'SKU',
                 'view'      => 'View',
             ],
+        ],
 
-            'create' => [
-                'name'     => 'Name',
-                'save-btn' => 'Save Products',
-                'title'    => 'Create Products',
-            ],
+        'create' => [
+            'save-btn'  => 'Save Products',
+            'title'     => 'Create Products',
+            'general'   => 'General',
+            'price'     => 'Price',
+        ],
 
-            'edit' => [
-                'title' => 'Edit Products',
-            ],
+        'edit' => [
+            'title'     => 'Edit Products',
+            'save-btn'  => 'Save Products',
+            'general'   => 'General',
+            'price'     => 'Price',
         ],
     ],
 
