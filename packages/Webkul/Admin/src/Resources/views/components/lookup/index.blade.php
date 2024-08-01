@@ -21,23 +21,23 @@
             class="relative"
             ref="lookup"
         >
-            <!-- Hidden Input Box -->
-            <input 
-                type="hidden"
-                :name="name"
-                :value="selectedItem?.id"
-            />
-        
             <!-- Input Box (Button) -->
             <x-admin::form.control-group.control
                 type="text"
                 ::id="name"
                 ::name="name"
-                ::placeholder="selectedItem ? selectedItem?.name : placeholder"
-                ::value="selectedItem ? selectedItem.name : ''"
-                readonly
+                class="w-full pr-10 cursor-pointer text-gray-800"
+                ::placeholder="selectedItem.name ?? placeholder"
+                v-model="selectedItem.name"
                 @click="toggle"
-                class="w-full pr-10 cursor-pointer"
+                readonly
+            />
+
+            <!-- Hidden Input Box -->
+            <input 
+                type="hidden"
+                :name="name"
+                :value="selectedItem?.id"
             />
 
             <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -82,10 +82,11 @@
                 class="absolute top-full mt-1 w-full border bg-white rounded-lg shadow-lg z-10 transition-transform transform origin-top p-2"
             >
                 <!-- Search Bar -->
-                <x-admin::form.control-group.control
+                <input
                     type="text"
-                    v-model="searchQuery"
-                    class="!mb-2"
+                    v-model.lazy="searchTerm"
+                    v-debounce="500"
+                    class="w-full rounded border border-gray-200 px-2.5 py-2 !mb-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                     placeholder="Search..."
                     ref="searchInput"
                     @keyup="search"
@@ -96,11 +97,12 @@
                     <li 
                         v-for="item in filteredResults" 
                         :key="item.id"
-                        class="px-4 py-2 cursor-pointer hover:bg-blue-100 transition-colors"
+                        class="px-4 py-2 cursor-pointer text-gray-800 hover:bg-blue-100 transition-colors"
                         @click="selectItem(item)"
                     >
                         @{{ item.name }}
                     </li>
+
                     <li v-if="filteredResults.length === 0" class="px-4 py-2 text-gray-500 text-center">
                         @lang('No results found')
                     </li>
@@ -141,13 +143,15 @@
                 return {
                     showPopup: false,
 
-                    searchQuery: '',
+                    searchTerm: '',
 
-                    selectedItem: null,
+                    selectedItem: {},
 
                     searchedResults: [],
 
                     isSearching: false,
+
+                    cancelToken: null,
                 };
             },
 
@@ -159,6 +163,12 @@
                 window.removeEventListener('click', this.handleFocusOut);
             },
 
+            watch: {
+                searchTerm(newVal, oldVal) {
+                    this.search();
+                }
+            },
+
             computed: {
                 /**
                  * Filter the searchedResults based on the search query.
@@ -167,14 +177,19 @@
                  */
                 filteredResults() {
                     return this.searchedResults.filter(item => 
-                        item.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+                        item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
                     );
                 }
             },
             
             methods: {
+                /**
+                 * Toggle the popup.
+                 * 
+                 * @return {void}
+                 */
                 toggle() {
-                    this.showPopup = !this.showPopup;
+                    this.showPopup = ! this.showPopup;
 
                     if (this.showPopup) {
                         this.$nextTick(() => this.$refs.searchInput.focus());
@@ -185,12 +200,13 @@
                  * Select an item from the list.
                  * 
                  * @param {Object} item
+                 * 
                  * @return {void}
                  */
                 selectItem(item) {
                     this.showPopup = false;
 
-                    this.searchQuery = '';
+                    this.searchTerm = '';
 
                     this.selectedItem = item;
 
@@ -202,10 +218,8 @@
                  * 
                  * @return {void}
                  */
-                search(event) {
-                    const searchTerm = event.target.value;
-
-                    if (searchTerm.length <= 2) {
+                search() {
+                    if (this.searchTerm.length <= 2) {
                         this.searchedResults = [];
 
                         this.isSearching = false;
@@ -215,24 +229,35 @@
 
                     this.isSearching = true;
 
+                    if (this.cancelToken) {
+                        this.cancelToken.cancel();
+                    }
+
+                    this.cancelToken = this.$axios.CancelToken.source();
+
                     this.$axios.get(this.endpoint, {
                             params: { 
                                 ...this.params,
-                                query: searchTerm
+                                query: this.searchTerm
+                            },
+                            cancelToken: this.cancelToken.token, 
+                        })
+                        .then(response => {
+                            this.searchedResults = response.data;
+                        })
+                        .catch(error => {
+                            if (! this.$axios.isCancel(error)) {
+                                console.error("Search request failed:", error);
                             }
                         })
-                        .then (response => {
-                            this.searchedResults = response.data;
-
-                            this.isSearching = false;
-                        })
-                        .catch (error => this.isSearching = false);
+                        .finally(() => this.isSearching = false);
                 },
 
                 /**
                  * Handle the focus out event.
                  * 
                  * @param {Event} event
+                 * 
                  * @return {void}
                  */
                 handleFocusOut(event) {
@@ -240,7 +265,7 @@
 
                     if (
                         lookup && 
-                        !lookup.contains(event.target)
+                        ! lookup.contains(event.target)
                     ) {
                         this.showPopup = false;
                     }
