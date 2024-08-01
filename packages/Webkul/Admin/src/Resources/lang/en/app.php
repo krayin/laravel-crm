@@ -689,8 +689,8 @@ return [
 
         'pipelines' => [
             'index' => [
-                'title'      => 'Pipelines',
-                'create-btn' => 'Create Pipeline',
+                'title'                => 'Pipelines',
+                'create-btn'           => 'Create Pipeline',
                 'create-success'       => 'Pipeline created successfully.',
                 'update-success'       => 'Pipeline updated successfully.',
                 'delete-success'       => 'Pipeline deleted successfully.',
@@ -1074,8 +1074,8 @@ return [
                 'expected-close-date' => 'Expected Close Date',
                 'created-at'          => 'Created At',
                 'no'                  => 'No',
-                'yes'                 => 'Yes'
-            ]
+                'yes'                 => 'Yes',
+            ],
         ],
 
         'view' => [

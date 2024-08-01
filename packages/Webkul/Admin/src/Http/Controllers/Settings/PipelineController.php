@@ -2,13 +2,13 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Http\Requests\PipelineForm;
-use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Lead\Repositories\PipelineRepository;
+use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\PipelineDataGrid;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\PipelineForm;
+use Webkul\Lead\Repositories\PipelineRepository;
 
 class PipelineController extends Controller
 {

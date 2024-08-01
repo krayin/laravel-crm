@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Lead\LeadController;
-use Webkul\Admin\Http\Controllers\Lead\TagController;
-use Webkul\Admin\Http\Controllers\Lead\QuoteController;
 use Webkul\Admin\Http\Controllers\Lead\ActivityController;
+use Webkul\Admin\Http\Controllers\Lead\LeadController;
+use Webkul\Admin\Http\Controllers\Lead\QuoteController;
+use Webkul\Admin\Http\Controllers\Lead\TagController;
 
 /**
  * Settings routes.

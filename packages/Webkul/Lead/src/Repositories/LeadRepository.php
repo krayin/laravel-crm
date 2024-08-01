@@ -4,7 +4,6 @@ namespace Webkul\Lead\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
