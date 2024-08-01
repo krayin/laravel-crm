@@ -16,7 +16,7 @@
             @else
                 <img
                     class="w-max" 
-                    src="{{ vite()->asset('images/logo.svg') }}"
+                    src="{{ admin_vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
             @endif

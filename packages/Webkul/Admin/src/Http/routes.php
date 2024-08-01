@@ -33,42 +33,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-            // Leads Routes
-            Route::group([
-                'prefix'    => 'leads',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Lead',
-            ], function () {
-                Route::get('create', 'LeadController@create')->name('admin.leads.create');
-
-                Route::post('create', 'LeadController@store')->name('admin.leads.store');
-
-                Route::get('view/{id?}', 'LeadController@view')->name('admin.leads.view');
-
-                Route::put('edit/{id?}', 'LeadController@update')->name('admin.leads.update');
-
-                Route::get('search', 'LeadController@search')->name('admin.leads.search');
-
-                Route::delete('{id}', 'LeadController@destroy')->name('admin.leads.delete');
-
-                Route::put('mass-update', 'LeadController@massUpdate')->name('admin.leads.mass_update');
-
-                Route::put('mass-destroy', 'LeadController@massDestroy')->name('admin.leads.mass_delete');
-
-                Route::post('tags/{id}', 'TagController@store')->name('admin.leads.tags.store');
-
-                Route::delete('{lead_id}/{tag_id?}', 'TagController@delete')->name('admin.leads.tags.delete');
-
-                Route::get('get/{pipeline_id?}', 'LeadController@get')->name('admin.leads.get');
-
-                Route::get('{pipeline_id?}', 'LeadController@index')->name('admin.leads.index');
-
-                Route::group([
-                    'prefix'    => 'quotes',
-                ], function () {
-                    Route::delete('{lead_id}/{quote_id?}', 'QuoteController@delete')->name('admin.leads.quotes.delete');
-                });
-            });
-
             // Quotes Routes
             Route::group([
                 'prefix'    => 'quotes',
@@ -135,27 +99,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                     Route::put('edit/{id}', 'EmailTemplateController@update')->name('admin.settings.email_templates.update');
 
                     Route::delete('{id}', 'EmailTemplateController@destroy')->name('admin.settings.email_templates.delete');
-                });
-
-                // Warehouses Routes
-                Route::prefix('warehouses')->group(function () {
-                    Route::get('', 'WarehouseController@index')->name('admin.settings.warehouses.index');
-
-                    Route::get('search', 'WarehouseController@search')->name('admin.settings.warehouses.search');
-
-                    Route::get('{id}/products', 'WarehouseController@products')->name('admin.settings.warehouses.products.index');
-
-                    Route::get('create', 'WarehouseController@create')->name('admin.settings.warehouses.create');
-
-                    Route::post('create', 'WarehouseController@store')->name('admin.settings.warehouses.store');
-
-                    Route::get('view/{id}', 'WarehouseController@view')->name('admin.settings.warehouses.view');
-
-                    Route::get('edit/{id?}', 'WarehouseController@edit')->name('admin.settings.warehouses.edit');
-
-                    Route::put('edit/{id}', 'WarehouseController@update')->name('admin.settings.warehouses.update');
-
-                    Route::delete('{id}', 'WarehouseController@destroy')->name('admin.settings.warehouses.delete');
                 });
 
                 // Warehouses Locations Routes

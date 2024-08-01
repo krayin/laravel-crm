@@ -33,13 +33,18 @@
     >
     <meta
         name="currency"
-        {{-- content="{{ core()->getBaseCurrency()->toJson() }}" --}}
+        content="{{
+            json_encode([
+                'code'   => config('app.currency'),
+                'symbol' => core()->currencySymbol(config('app.currency'))])
+            }}
+        "
     >
 
     @stack('meta')
 
     {{
-        vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+        admin_vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
     }}
 
     <link

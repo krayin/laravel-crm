@@ -1,0 +1,21 @@
+<svg width="250" height="250" viewBox="0 0 250 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="125" cy="125" r="125" fill="#EFF0F5"/>
+<rect x="62" y="85" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="107" y="85" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="152" y="85" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect width="131" height="18" transform="translate(62 111)" fill="#EFF0F5"/>
+<rect x="62" y="111" width="41" height="18" rx="3" fill="#EFF0F5"/>
+<rect x="107" y="111" width="41" height="18" rx="3" fill="#EFF0F5"/>
+<rect x="152" y="111" width="41" height="18" rx="3" fill="#EFF0F5"/>
+<rect x="62" y="137" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="107" y="137" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="152" y="137" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="62" y="163" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="107" y="163" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="152" y="163" width="41" height="18" rx="3" fill="#CAD3D9"/>
+<rect x="21" y="111" width="41" height="18" rx="3" fill="white"/>
+<rect x="66" y="111" width="41" height="18" rx="3" fill="white"/>
+<rect x="111" y="111" width="41" height="18" rx="3" fill="white"/>
+<path d="M167.5 120.5H133.5" stroke="#969AAB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M163 116L168 120.5L163 125" stroke="#969AAB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

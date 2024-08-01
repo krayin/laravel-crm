@@ -9,6 +9,17 @@ use Webkul\Core\Eloquent\Repository;
 class WarehouseRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'name',
+        'contact_name',
+        'contact_emails',
+        'contact_numbers',
+        'contact_address',
+    ];
+
+    /**
      * Create a new repository instance.
      *
      * @return void

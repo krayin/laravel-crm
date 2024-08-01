@@ -2,11 +2,24 @@
 
 namespace Webkul\Activity\Repositories;
 
+use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\User\Repositories\UserRepository;
 
 class ActivityRepository extends Repository
 {
+    /**
+     * Create a new repository instance.
+     *
+     * @return void
+     */
+    public function __construct(
+        protected FileRepository $fileRepository,
+        Container $container
+    ) {
+        parent::__construct($container);
+    }
+
     /**
      * Specify Model class name
      *
@@ -15,6 +28,72 @@ class ActivityRepository extends Repository
     public function model()
     {
         return 'Webkul\Activity\Contracts\Activity';
+    }
+
+    /**
+     * Create pipeline.
+     *
+     * @return \Webkul\Activity\Contracts\Activity
+     */
+    public function create(array $data)
+    {
+        $activity = parent::create($data);
+
+        if (isset($data['file'])) {
+            $this->fileRepository->create([
+                'name'        => $data['name'] ?? $data['file']->getClientOriginalName(),
+                'path'        => $data['file']->store('activities/'.$activity->id),
+                'activity_id' => $activity->id,
+            ]);
+        }
+
+        if (! isset($data['participants'])) {
+            return $activity;
+        }
+
+        foreach ($data['participants']['users'] ?? [] as $userId) {
+            $activity->participants()->create([
+                'user_id' => $userId,
+            ]);
+        }
+
+        foreach ($data['participants']['persons'] ?? [] as $personId) {
+            $activity->participants()->create([
+                'person_id' => $personId,
+            ]);
+        }
+
+        return $activity;
+    }
+
+    /**
+     * Update pipeline.
+     *
+     * @param  int  $id
+     * @param  string  $attribute
+     * @return \Webkul\Activity\Contracts\Activity
+     */
+    public function update(array $data, $id, $attribute = 'id')
+    {
+        $activity = parent::update($data, $id);
+
+        if (isset($data['participants'])) {
+            $activity->participants()->delete();
+
+            foreach ($data['participants']['users'] ?? [] as $userId) {
+                $activity->participants()->create([
+                    'user_id' => $userId,
+                ]);
+            }
+
+            foreach ($data['participants']['persons'] ?? [] as $personId) {
+                $activity->participants()->create([
+                    'person_id' => $personId,
+                ]);
+            }
+        }
+
+        return $activity;
     }
 
     /**

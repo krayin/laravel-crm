@@ -1,5 +1,7 @@
 <?php
 
+use Webkul\Admin\Vite as AdminVite;
+
 if (! function_exists('bouncer')) {
     function bouncer()
     {
@@ -7,7 +9,7 @@ if (! function_exists('bouncer')) {
     }
 }
 
-function vite()
+function admin_vite(): AdminVite
 {
-    return app(\Webkul\Core\Vite::class);
+    return app(AdminVite::class);
 }

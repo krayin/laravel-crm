@@ -87,7 +87,8 @@ return [
                 'of'        => 'of',
                 'per-page'  => 'Per Page',
                 'results'   => ':total Results',
-                'selected'  => ':total Selected',
+                'delete'    => 'Delete',
+                'selected'  => ':total Items Selected',
 
                 'mass-actions' => [
                     'submit'        => 'Submit',
@@ -491,6 +492,76 @@ return [
             ],
         ],
 
+        'webforms' => [
+            'index' => [
+                'title'          => 'Webforms',
+                'create-btn'     => 'Create Webform',
+                'create-success' => 'Webform created successfully.',
+                'update-success' => 'Webform updated successfully.',
+                'delete-success' => 'Webform deleted successfully.',
+                'delete-failed'  => 'Webform can not be deleted.',
+                'datagrid'       => [
+                    'id'     => 'ID',
+                    'title'  => 'Title',
+                    'edit'   => 'Edit',
+                    'delete' => 'Delete',
+                ],
+            ],
+
+            'create' => [
+                'title'                    => 'Create Webform',
+                'save-btn'                 => 'Save Webform',
+                'submit-success-action'    => 'Submit Success Action',
+                'general'                  => 'General',
+                'create-lead'              => 'Create Lead',
+                'customize-webform'        => 'Customize Webform',
+                'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
+                'backgroud-color'          => 'Backgroud Color',
+                'form-backgroud-color'     => 'Form Backgroud Color',
+                'form-title-color'         => 'Form Title Color',
+                'form-submit-btn-color'    => 'Form Submit Button Color',
+                'attribute-label-color'    => 'Attribute Label Color',
+                'attributes'               => 'Attributes',
+                'attributes-info'          => 'Add custom attributes to the form.',
+                'add-attribute-btn'        => 'Add Attribute Button',
+                'description'              => 'Description',
+                'submit-button-label'      => 'Submit Button Label',
+                'form-background-color'    => 'Form Backgroud Color',
+                'form-submit-button-color' => 'Form Submit Button Color',
+                'display-custom-message'   => 'Display custom message',
+            ],
+
+            'edit' => [
+                'title'                    => 'Edit Webform',
+                'embed'                    => 'Embded',
+                'preview'                  => 'Preview',
+                'save-btn'                 => 'Save Webform',
+                'submit-success-action'    => 'Submit Success Action',
+                'general'                  => 'General',
+                'create-lead'              => 'Create Lead',
+                'customize-webform'        => 'Customize Webform',
+                'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
+                'backgroud-color'          => 'Backgroud Color',
+                'form-backgroud-color'     => 'Form Backgroud Color',
+                'form-title-color'         => 'Form Title Color',
+                'form-background-color'    => 'Form Backgroud Color',
+                'form-submit-btn-color'    => 'Form Submit Button Color',
+                'attribute-label-color'    => 'Attribute Label Color',
+                'attributes'               => 'Attributes',
+                'attributes-info'          => 'Add custom attributes to the form.',
+                'add-attribute-btn'        => 'Add Attribute Button',
+                'description'              => 'Description',
+                'submit-button-label'      => 'Submit Button Label',
+                'redirect-to-url'          => 'Redirect To URL',
+                'copied'                   => 'Copied',
+                'copy'                     => 'Copy',
+                'public-url'               => 'Public URL',
+                'code-snippet'             => 'Code Snippet',
+                'form-submit-button-color' => 'Form Submit Button Color',
+                'display-custom-message'   => 'Display custom message',
+            ],
+        ],
+
         'email-template' => [
             'index' => [
                 'create-btn'     => 'Create Email Template',
@@ -701,6 +772,40 @@ return [
                 'description'           => 'Description',
                 'json'                  => 'Json',
                 'text'                  => 'Text',
+            ],
+        ],
+
+        'warehouses' => [
+            'index' => [
+                'title'          => 'Warehouses',
+                'create-btn'     => 'Create Warehouse',
+                'create-success' => 'Warehouse created successfully.',
+                'name-exists'    => 'Warehouse name already exists.',
+                'update-success' => 'Warehouse updated successfully.',
+                'delete-success' => 'Warehouse deleted successfully.',
+                'delete-failed'  => 'Warehouse can not be deleted.',
+
+                'datagrid' => [
+                    'delete'          => 'Delete',
+                    'edit'            => 'Edit',
+                    'view'            => 'View',
+                    'created-at'      => 'Created At',
+                    'products'        => 'Products',
+                    'contact-emails'  => 'Contact Emails',
+                    'contact-numbers' => 'Contact Numbers',
+                ],
+            ],
+
+            'create' => [
+                'title'         => 'Create Warehouse',
+                'save-btn'      => 'Save Warehouse',
+                'contact-info'  => 'Contact Information',
+            ],
+
+            'edit' => [
+                'title'         => 'Edit Warehouse',
+                'save-btn'      => 'Save Warehouse',
+                'contact-info'  => 'Contact Information',
             ],
         ],
 
@@ -1016,6 +1121,100 @@ return [
     // ],
 
     'leads' => [
+        'create-success'    => 'Lead created successfully.',
+        'update-success'    => 'Lead updated successfully.',
+        'destroy-success'   => 'Lead deleted successfully.',
+        'delete-failed'     => 'Lead can not be deleted.',
+
+        'index' => [
+            'title'      => 'Leads',
+            'create-btn' => 'Create Lead',
+
+            'datagrid' => [
+                'id'                  => 'ID',
+                'sales-person'        => 'Sales Person',
+                'subject'             => 'Subject',
+                'source'              => 'Source',
+                'lead-value'          => 'Lead Value',
+                'contact-person'      => 'Contact Person',
+                'stage'               => 'Stage',
+                'rotten-lead'         => 'Rotten Lead',
+                'expected-close-date' => 'Expected Close Date',
+                'created-at'          => 'Created At',
+                'no'                  => 'No',
+                'yes'                 => 'Yes'
+            ]
+        ],
+
+        'view' => [
+            'title' => 'Lead: :title',
+
+            'activities' => [
+                'index' => [
+                    'all'      => 'All',
+                    'calls'    => 'Calls',
+                    'meetings' => 'Meetings',
+                    'lunches'  => 'Lunches',
+                    'files'    => 'Files',
+                    'quotes'   => 'Quotes',
+                    'notes'    => 'Notes',
+                    'emails'   => 'Emails',
+                ],
+
+                'actions' => [
+                    'mail' => [
+                        'btn'      => 'Mail',
+                        'title'    => 'Compose Mail',
+                        'to'       => 'To',
+                        'cc'       => 'CC',
+                        'bcc'      => 'BCC',
+                        'subject'  => 'Subject',
+                        'send-btn' => 'Send',
+                        'message'  => 'Message',
+                    ],
+
+                    'file' => [
+                        'btn'         => 'File',
+                        'title'       => 'Add File',
+                        'name'        => 'Name',
+                        'description' => 'Description',
+                        'file'        => 'File',
+                        'save-btn'    => 'Save File',
+                    ],
+
+                    'note' => [
+                        'btn'      => 'Note',
+                        'title'    => 'Add Note',
+                        'note'     => 'Note',
+                        'save-btn' => 'Save Note',
+                    ],
+
+                    'activity' => [
+                        'btn'           => 'Activity',
+                        'title'         => 'Add Activity',
+                        'title-control' => 'Title',
+                        'description'   => 'Description',
+                        'schedule-from' => 'Schedule From',
+                        'schedule-to'   => 'Schedule To',
+                        'location'      => 'Location',
+                        'call'          => 'Call',
+                        'meeting'       => 'Meeting',
+                        'lunch'         => 'Lunch',
+                        'save-btn'      => 'Save Activity',
+                    ],
+                ],
+
+                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+                'create-success'       => 'Activity created successfully.',
+                'update-success'       => 'Activity updated successfully.',
+                'mass-update-success'  => 'Activities updated successfully.',
+                'destroy-success'      => 'Activity deleted successfully.',
+                'delete-failed'        => 'Activity can not be deleted.',
+            ],
+        ],
+    ],
+
+    'leads-old' => [
         'title'                      => 'Leads',
         'lead'                       => 'Lead',
         'create-title'               => 'Create Lead',

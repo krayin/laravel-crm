@@ -347,19 +347,19 @@ Breadcrumbs::for('settings.web_forms.edit', function (BreadcrumbTrail $trail, $w
 // Settings > Warehouse
 Breadcrumbs::for('settings.warehouses', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push(trans('admin::app.settings.warehouses.title'), route('admin.settings.warehouses.index'));
+    $trail->push(trans('admin::app.settings.warehouses.index.title'), route('admin.settings.warehouses.index'));
 });
 
 // Dashboard > Settings > Warehouse > Create Warehouse
 Breadcrumbs::for('settings.warehouses.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.warehouses');
-    $trail->push(trans('admin::app.settings.warehouses.create-title'), route('admin.settings.warehouses.create'));
+    $trail->push(trans('admin::app.settings.warehouses.create.title'), route('admin.settings.warehouses.create'));
 });
 
 // Dashboard > Settings > Warehouse > Edit Warehouse
 Breadcrumbs::for('settings.warehouses.edit', function (BreadcrumbTrail $trail, $warehouse) {
     $trail->parent('settings.warehouses');
-    $trail->push(trans('admin::app.settings.warehouses.edit-title'), route('admin.settings.warehouses.edit', $warehouse->id));
+    $trail->push(trans('admin::app.settings.warehouses.edit.title'), route('admin.settings.warehouses.edit', $warehouse->id));
 });
 
 // Dashboard > Settings > Warehouse > View Warehouse
