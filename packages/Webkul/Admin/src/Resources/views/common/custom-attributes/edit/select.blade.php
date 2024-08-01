@@ -1,9 +1,10 @@
-<select
-    v-validate="'{{$validations}}'"
-    class="control"
+<x-admin::form.control-group.control
+    type="select"
     id="{{ $attribute->code }}"
     name="{{ $attribute->code }}"
-    data-vv-as="&quot;{{ $attribute->name }}&quot;"
+    rules="{{ $validations }}"
+    :label="$attribute->name"
+    :placeholder="$attribute->name"
 >
     @php
         $options = $attribute->lookup_type
@@ -20,4 +21,4 @@
             {{ $option->name }}
         </option>
     @endforeach
-</select>
+</x-admin::form.control-group.control>

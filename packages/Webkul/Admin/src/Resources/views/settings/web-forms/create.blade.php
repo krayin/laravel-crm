@@ -298,7 +298,7 @@
                             handle=".icon-edit"
                             v-bind="{animation: 200}"
                             item-key="id"
-                            :list="addedAttributes"
+                            :list="addedAttributes"z
                         >
                             <template #item="{ element, index }">
                                 <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
