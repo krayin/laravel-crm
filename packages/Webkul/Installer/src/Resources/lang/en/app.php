@@ -70,7 +70,7 @@ return [
             'title'                 => 'Title',
             'type'                  => 'Type',
         ],
-        
+
         'lead' => [
             'pipeline' => [
                 'default' => 'Default Pipeline',

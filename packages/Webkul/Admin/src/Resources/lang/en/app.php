@@ -500,6 +500,7 @@ return [
                 'update-success' => 'Webform updated successfully.',
                 'delete-success' => 'Webform deleted successfully.',
                 'delete-failed'  => 'Webform can not be deleted.',
+
                 'datagrid'       => [
                     'id'     => 'ID',
                     'title'  => 'Title',
@@ -688,8 +689,13 @@ return [
 
         'pipelines' => [
             'index' => [
-                'title'      => 'Pipelines',
-                'create-btn' => 'Create Pipeline',
+                'title'                => 'Pipelines',
+                'create-btn'           => 'Create Pipeline',
+                'create-success'       => 'Pipeline created successfully.',
+                'update-success'       => 'Pipeline updated successfully.',
+                'delete-success'       => 'Pipeline deleted successfully.',
+                'delete-failed'        => 'Pipeline can not be deleted.',
+                'default-delete-error' => 'Default pipeline can not be deleted.',
 
                 'datagrid' => [
                     'delete'      => 'Delete',
@@ -701,6 +707,38 @@ return [
                     'rotten-days' => 'Rotten Days',
                     'yes'         => 'Yes',
                 ],
+            ],
+
+            'create' => [
+                'title'           => 'Create Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
+            ],
+
+            'edit'  => [
+                'title'           => 'Edit Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
             ],
         ],
 
@@ -1036,8 +1074,8 @@ return [
                 'expected-close-date' => 'Expected Close Date',
                 'created-at'          => 'Created At',
                 'no'                  => 'No',
-                'yes'                 => 'Yes'
-            ]
+                'yes'                 => 'Yes',
+            ],
         ],
 
         'view' => [

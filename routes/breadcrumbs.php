@@ -227,13 +227,13 @@ Breadcrumbs::for('settings.pipelines', function (BreadcrumbTrail $trail) {
 // Dashboard > Pipelines > Create Pipeline
 Breadcrumbs::for('settings.pipelines.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.pipelines');
-    $trail->push(trans('admin::app.settings.pipelines.create-title'), route('admin.settings.pipelines.create'));
+    $trail->push(trans('admin::app.settings.pipelines.create.title'), route('admin.settings.pipelines.create'));
 });
 
 // Dashboard > Pipelines > Edit Pipeline
 Breadcrumbs::for('settings.pipelines.edit', function (BreadcrumbTrail $trail, $pipeline) {
     $trail->parent('settings.pipelines');
-    $trail->push(trans('admin::app.settings.pipelines.edit-title'), route('admin.settings.pipelines.edit', $pipeline->id));
+    $trail->push(trans('admin::app.settings.pipelines.edit.title'), route('admin.settings.pipelines.edit', $pipeline->id));
 });
 
 // Settings > Sources

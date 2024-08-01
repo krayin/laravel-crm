@@ -3,12 +3,12 @@
 namespace Webkul\Admin\DataGrids\Lead;
 
 use Illuminate\Support\Facades\DB;
-use Webkul\Lead\Repositories\PipelineRepository;
-use Webkul\Lead\Repositories\StageRepository;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\UserRepository;
+use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
+use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\User\Repositories\UserRepository;
 
 class LeadDataGrid extends DataGrid
 {
