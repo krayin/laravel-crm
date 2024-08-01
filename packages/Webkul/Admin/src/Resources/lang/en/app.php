@@ -900,6 +900,13 @@ return [
                 'users'           => 'Users',
             ],
         ],
+
+        'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+        'create-success'       => 'Activity created successfully.',
+        'update-success'       => 'Activity updated successfully.',
+        'mass-update-success'  => 'Activities updated successfully.',
+        'destroy-success'      => 'Activity deleted successfully.',
+        'delete-failed'        => 'Activity can not be deleted.',
     ],
 
     'mail' => [
@@ -1089,6 +1096,16 @@ return [
         'view' => [
             'title' => 'Lead: :title',
 
+            'stages' => [
+                'won-lost'       => 'Won/Lost',
+                'won'            => 'Won',
+                'lost'           => 'Lost',
+                'need-more-info' => 'Need More Details',
+                'closed-at'      => 'Closed At',
+                'won-value'      => 'Won Value',
+                'lost-reason'    => 'Lost Reason',
+            ],
+
             'activities' => [
                 'index' => [
                     'all'          => 'All',
@@ -1150,13 +1167,6 @@ return [
                         'save-btn'      => 'Save Activity',
                     ],
                 ],
-
-                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
-                'create-success'       => 'Activity created successfully.',
-                'update-success'       => 'Activity updated successfully.',
-                'mass-update-success'  => 'Activities updated successfully.',
-                'destroy-success'      => 'Activity deleted successfully.',
-                'delete-failed'        => 'Activity can not be deleted.',
             ],
         ],
     ],

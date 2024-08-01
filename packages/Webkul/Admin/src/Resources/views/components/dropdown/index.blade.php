@@ -33,7 +33,7 @@
     >
         <div>
             <div
-                class="flex select-none"
+                class="flex select-none items-center"
                 ref="toggleBlock"
                 @click="toggle()"
             >

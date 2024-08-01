@@ -21,7 +21,7 @@
                 <div class="flex gap-4 border-b border-gray-200">
                     <div
                         v-for="type in types"
-                        class="cursor-pointer px-4 py-2.5 text-sm font-medium text-gray-800"
+                        class="cursor-pointer px-4 py-2.5 text-sm font-medium"
                         :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
                         @click="selectedType = type.name"
                     >
@@ -35,7 +35,7 @@
                         <!-- Activity Item -->
                         <div
                             class="flex gap-2"
-                            v-for="(activity, index) in activities"
+                            v-for="(activity, index) in filteredActivities"
                         >
                             <!-- Activity Icon -->
                             <div
@@ -69,7 +69,7 @@
                                             </p>
 
                                             <!-- Activity Participants -->
-                                            <p v-if="activity.participants">
+                                            <p v-if="activity.participants?.length">
                                                 @lang('admin::app.leads.view.activities.index.participants'):
 
                                                 <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
@@ -87,9 +87,7 @@
                                     </div>
 
                                     <!-- Activity Description -->
-                                    <p
-                                        class="text-gray-500"
-                                        v-if="activity.comment"
+                                    <p v-if="activity.comment"
                                     >
                                         @{{ activity.comment }}
                                     </p>
@@ -102,6 +100,7 @@
                                         <a
                                             :href="`{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)"
                                             class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                                            target="_blank"
                                             v-for="(file, index) in activity.files"
                                         >
                                             <span class="icon-attachmetent text-xl"></span>
@@ -123,32 +122,52 @@
                                 <!-- Activity More Options -->
                                 <x-admin::dropdown position="bottom-right">
                                     <x-slot:toggle>
-                                        <button
-                                            class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
-                                        ></button>
+                                        <template v-if="! isUpdating[activity.id]">
+                                            <button
+                                                class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                            ></button>
+                                        </template>
+
+                                        <template v-else>
+                                            <x-admin::spinner />
+                                        </template>
                                     </x-slot>
 
                                     <x-slot:menu>
-                                        <x-admin::dropdown.menu.item>
+                                        <x-admin::dropdown.menu.item 
+                                            v-if="! activity.is_done"
+                                            @click="markAsDone(activity)"
+                                        >
                                             <div class="flex items-center gap-2">
                                                 <span class="icon-tick text-2xl"></span>
+                                                
                                                 @lang('admin::app.leads.view.activities.index.mark-as-done')
                                             </div>
                                         </x-admin::dropdown.menu.item>
 
-                                        <x-admin::dropdown.menu.item>
-                                            <div class="flex items-center gap-2">
-                                                <span class="icon-edit text-2xl"></span>
-                                                @lang('admin::app.leads.view.activities.index.edit')
-                                            </div>
-                                        </x-admin::dropdown.menu.item>
+                                        @if (bouncer()->hasPermission('activities.edit'))
+                                            <x-admin::dropdown.menu.item>
+                                                <a
+                                                    class="flex items-center gap-2"
+                                                    :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
+                                                    target="_blank"
+                                                >
+                                                    <span class="icon-edit text-2xl"></span>
+                                                    
+                                                    @lang('admin::app.leads.view.activities.index.edit')
+                                                </a>
+                                            </x-admin::dropdown.menu.item>
+                                        @endif
 
-                                        <x-admin::dropdown.menu.item>
-                                            <div class="flex items-center gap-2">
-                                                <span class="icon-delete text-2xl"></span>
-                                                @lang('admin::app.leads.view.activities.index.delete')
-                                            </div>
-                                        </x-admin::dropdown.menu.item>
+                                        @if (bouncer()->hasPermission('activities.delete'))
+                                            <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="icon-delete text-2xl"></span>
+
+                                                    @lang('admin::app.leads.view.activities.index.delete')
+                                                </div>
+                                            </x-admin::dropdown.menu.item>
+                                        @endif
                                     </x-slot>
                                 </x-admin::dropdown>
                             </div>
@@ -166,6 +185,8 @@
             data() {
                 return {
                     isLoading: false,
+
+                    isUpdating: {},
                     
                     activities: [],
 
@@ -207,6 +228,16 @@
                 }
             },
 
+            computed: {
+                filteredActivities() {
+                    if (this.selectedType == 'all') {
+                        return this.activities;
+                    }
+
+                    return this.activities.filter(activity => activity.type == this.selectedType);
+                }
+            },
+
             mounted() {
                 this.get();
             },
@@ -224,7 +255,57 @@
                         .catch(error => {
                             console.error(error);
                         });
-                }
+                },
+
+                markAsDone: function(activity) {
+                    let self = this;
+
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            self.isUpdating[activity.id] = true;
+
+                            this.$axios.put("{{ route('admin.activities.update', 'replaceId') }}".replace('replaceId', activity.id), {
+                                    'is_done': 1
+                                })
+                                .then (function(response) {
+                                    self.isUpdating[activity.id] = false;
+
+                                    activity.is_done = 1;
+                                    
+                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch (function (error) {
+                                    self.isUpdating[activity.id] = false;
+
+                                    self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                });
+                        },
+                    });
+                },
+
+                remove: function(activity) {
+                    let self = this;
+                    
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            self.isUpdating[activity.id] = true;
+
+                            this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', activity.id))
+                                .then (function(response) {
+                                    self.isUpdating[activity.id] = false;
+
+                                    self.activities.splice(self.activities.indexOf(activity), 1);
+                                    
+                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch (function (error) {
+                                    self.isUpdating[activity.id] = false;
+                                    
+                                    self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                });
+                        },
+                    });
+                },
             }
         });
     </script>
