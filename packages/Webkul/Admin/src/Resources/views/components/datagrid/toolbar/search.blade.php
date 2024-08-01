@@ -15,9 +15,6 @@
         type="text/x-template"
         id="v-datagrid-search-template"
     >
-        <!-- Empty slot searchbar before -->
-        <slot name="toolbar-left-search-before"></slot>
-        
         <slot
             name="search"
             :available="available"
@@ -81,9 +78,6 @@
                 </div>
             </template>
         </slot>
-
-        <!-- Empty slot searchbar after -->
-        <slot name="toolbar-left-search-after"></slot>
     </script>
 
     <script type="module">
