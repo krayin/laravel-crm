@@ -170,7 +170,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
             Route::get('edit/{id?}', 'edit')->name('admin.settings.pipelines.edit');
 
-            Route::put('edit/{id}', 'update')->name('admin.settings.pipelines.update');
+            Route::post('edit/{id}', 'update')->name('admin.settings.pipelines.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.pipelines.delete');
         });

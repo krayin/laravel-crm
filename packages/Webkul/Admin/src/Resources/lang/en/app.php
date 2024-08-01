@@ -499,6 +499,7 @@ return [
                 'update-success' => 'Webform updated successfully.',
                 'delete-success' => 'Webform deleted successfully.',
                 'delete-failed'  => 'Webform can not be deleted.',
+
                 'datagrid'       => [
                     'id'     => 'ID',
                     'title'  => 'Title',
@@ -700,6 +701,39 @@ return [
                     'rotten-days' => 'Rotten Days',
                     'yes'         => 'Yes',
                 ],
+            ],
+
+            'create' => [
+                'title'           => 'Create Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'Duplicate Name',
+
+            ],
+
+            'edit'  => [
+                'title'           => 'Edit Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'Duplicate Name',
             ],
         ],
 
