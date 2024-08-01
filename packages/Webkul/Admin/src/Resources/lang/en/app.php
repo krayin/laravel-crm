@@ -691,6 +691,11 @@ return [
             'index' => [
                 'title'      => 'Pipelines',
                 'create-btn' => 'Create Pipeline',
+                'create-success'       => 'Pipeline created successfully.',
+                'update-success'       => 'Pipeline updated successfully.',
+                'delete-success'       => 'Pipeline deleted successfully.',
+                'delete-failed'        => 'Pipeline can not be deleted.',
+                'default-delete-error' => 'Default pipeline can not be deleted.',
 
                 'datagrid' => [
                     'delete'      => 'Delete',
@@ -717,8 +722,7 @@ return [
                 'lost-stage'      => 'Lost',
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
-                'duplicate-name'  => 'Duplicate Name',
-
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
             ],
 
             'edit'  => [
@@ -734,7 +738,7 @@ return [
                 'lost-stage'      => 'Lost',
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
-                'duplicate-name'  => 'Duplicate Name',
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
             ],
         ],
 
