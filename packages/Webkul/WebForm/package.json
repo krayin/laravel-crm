@@ -1,28 +1,23 @@
 {
     "private": true,
     "scripts": {
-        "dev": "npm run development",
-        "development": "mix",
-        "watch": "mix watch",
-        "watch-poll": "mix watch -- --watch-options-poll=1000",
-        "hot": "mix watch --hot",
-        "prod": "npm run production",
-        "production": "mix --production"
+      "dev": "vite",
+      "build": "vite build"
     },
     "devDependencies": {
-        "cross-env": "^7.0.3",
-        "jquery": "^3.6.0",
-        "laravel-mix": "^6.0.6",
-        "laravel-mix-merge-manifest": "^2.0.0",
-        "lodash": "^4.17.19",
-        "sass": "^1.32.8",
-        "sass-loader": "^11.0.1",
-        "vue": "^2.6.12",
-        "vue-loader": "^15.9.8",
-        "vue-template-compiler": "^2.6.14"
+      "autoprefixer": "^10.4.16",
+      "axios": "^1.6.4",
+      "laravel-vite-plugin": "^0.7.2",
+      "postcss": "^8.4.23",
+      "tailwindcss": "^3.3.2",
+      "vite": "^4.0.0",
+      "vue": "^3.4.19"
     },
     "dependencies": {
-        "flatpickr": "^4.6.9",
-        "jquery-validation": "^1.19.3"
+      "@vee-validate/i18n": "^4.9.1",
+      "@vee-validate/rules": "^4.9.1",
+      "mitt": "^3.0.0",
+      "vee-validate": "^4.9.1",
+      "vue-flatpickr": "^2.3.0"
     }
-}
+  }

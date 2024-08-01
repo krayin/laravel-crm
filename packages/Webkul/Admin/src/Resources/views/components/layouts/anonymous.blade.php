@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 
 <html
-    lang="{{ app()->getLocale() }}"
-    dir="{{ core()->getCurrentLocale()->direction }}"
+    {{-- lang="{{ app()->getLocale() }}" --}}
+    {{-- dir="{{ core()->getCurrentLocale()->direction }}" --}}
 >
 
 <head>
@@ -16,7 +16,7 @@
     >
     <meta
         http-equiv="content-language"
-        content="{{ app()->getLocale() }}"
+        {{-- content="{{ app()->getLocale() }}" --}}
     >
 
     <meta
@@ -29,13 +29,13 @@
     >
     <meta
         name="currency-code"
-        content="{{ core()->getCurrentCurrencyCode() }}"
+        {{-- content="{{ core()->getCurrentCurrencyCode() }}" --}}
     >
 
     @stack('meta')
 
     {{
-        vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+        admin_vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
     }}
 
     <link

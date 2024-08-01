@@ -6,7 +6,7 @@
         <a href="{{ route('admin.dashboard.index') }}">
             <img
                 class="h-10" 
-                src="{{ asset('vendor/webkul/admin/assets/images/logo.svg') }}" 
+                src="{{ admin_vite()->asset('images/logo.svg') }}" 
                 alt="{{ config('app.name') }}"
             />
         </a>

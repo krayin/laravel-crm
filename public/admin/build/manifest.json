@@ -1,0 +1,634 @@
+{
+  "node_modules/vue-cal/dist/drag-and-drop.es.js": {
+    "file": "assets/drag-and-drop.es-0df93f71.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/drag-and-drop.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ar.es.js": {
+    "file": "assets/ar.es-2968a13f.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ar.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/bg.es.js": {
+    "file": "assets/bg.es-182cdcb3.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/bg.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/bn.es.js": {
+    "file": "assets/bn.es-3f8773a4.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/bn.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/bs.es.js": {
+    "file": "assets/bs.es-47a220af.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/bs.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ca.es.js": {
+    "file": "assets/ca.es-47a49a5a.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ca.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/cs.es.js": {
+    "file": "assets/cs.es-29e50c14.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/cs.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/da.es.js": {
+    "file": "assets/da.es-eecb0b06.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/da.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/de.es.js": {
+    "file": "assets/de.es-83841cfd.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/de.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/el.es.js": {
+    "file": "assets/el.es-b1c0d142.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/el.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/en.es.js": {
+    "file": "assets/en.es-d28ce695.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/en.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/es.es.js": {
+    "file": "assets/es.es-232cf334.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/es.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/et.es.js": {
+    "file": "assets/et.es-7e6a3380.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/et.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/fa.es.js": {
+    "file": "assets/fa.es-b08cd112.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/fa.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/fi.es.js": {
+    "file": "assets/fi.es-d164093c.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/fi.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/fr.es.js": {
+    "file": "assets/fr.es-bb780d19.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/fr.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/he.es.js": {
+    "file": "assets/he.es-38780c8b.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/he.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/hr.es.js": {
+    "file": "assets/hr.es-fdafdc21.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/hr.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/hu.es.js": {
+    "file": "assets/hu.es-3630014a.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/hu.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/id.es.js": {
+    "file": "assets/id.es-3e6a36ce.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/id.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/is.es.js": {
+    "file": "assets/is.es-a5785bf6.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/is.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/it.es.js": {
+    "file": "assets/it.es-a9d8c123.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/it.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ja.es.js": {
+    "file": "assets/ja.es-6a0383c1.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ja.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ka.es.js": {
+    "file": "assets/ka.es-75616353.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ka.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ko.es.js": {
+    "file": "assets/ko.es-52b4fe30.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ko.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/lt.es.js": {
+    "file": "assets/lt.es-fb2fe7b5.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/lt.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/mn.es.js": {
+    "file": "assets/mn.es-fcd02e46.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/mn.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/nl.es.js": {
+    "file": "assets/nl.es-558331c7.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/nl.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/no.es.js": {
+    "file": "assets/no.es-8b33619c.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/no.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/pl.es.js": {
+    "file": "assets/pl.es-631374bd.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/pl.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/pt-br.es.js": {
+    "file": "assets/pt-br.es-a39b3c5f.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/pt-br.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/pt-pt.es.js": {
+    "file": "assets/pt-pt.es-a39b3c5f.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/pt-pt.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ro.es.js": {
+    "file": "assets/ro.es-8080c341.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ro.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/ru.es.js": {
+    "file": "assets/ru.es-9e02a02e.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/ru.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/sk.es.js": {
+    "file": "assets/sk.es-7894e5cb.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/sk.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/sl.es.js": {
+    "file": "assets/sl.es-886c86bd.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/sl.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/sq.es.js": {
+    "file": "assets/sq.es-600bc51c.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/sq.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/sr.es.js": {
+    "file": "assets/sr.es-f3348729.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/sr.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/sv.es.js": {
+    "file": "assets/sv.es-f0a285bd.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/sv.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/tr.es.js": {
+    "file": "assets/tr.es-f57d7128.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/tr.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/uk.es.js": {
+    "file": "assets/uk.es-0afcf35e.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/uk.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/vi.es.js": {
+    "file": "assets/vi.es-c0302793.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/vi.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/zh-cn.es.js": {
+    "file": "assets/zh-cn.es-b584d7c2.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/zh-cn.es.js"
+  },
+  "node_modules/vue-cal/dist/i18n/zh-hk.es.js": {
+    "file": "assets/zh-hk.es-3b3b5fba.js",
+    "isDynamicEntry": true,
+    "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
+  },
+  "src/Resources/assets/css/app.css": {
+    "file": "assets/app-a774323e.css",
+    "isEntry": true,
+    "src": "src/Resources/assets/css/app.css"
+  },
+  "src/Resources/assets/fonts/icomoon.eot": {
+    "file": "assets/icomoon-7afa69e9.eot",
+    "src": "src/Resources/assets/fonts/icomoon.eot"
+  },
+  "src/Resources/assets/fonts/icomoon.svg": {
+    "file": "assets/icomoon-6ac09e78.svg",
+    "src": "src/Resources/assets/fonts/icomoon.svg"
+  },
+  "src/Resources/assets/fonts/icomoon.ttf": {
+    "file": "assets/icomoon-dfe58278.ttf",
+    "src": "src/Resources/assets/fonts/icomoon.ttf"
+  },
+  "src/Resources/assets/fonts/icomoon.woff": {
+    "file": "assets/icomoon-dc246278.woff",
+    "src": "src/Resources/assets/fonts/icomoon.woff"
+  },
+  "src/Resources/assets/images/activities-active-icon.svg": {
+    "file": "assets/activities-active-icon-a9fab3a3.svg",
+    "src": "src/Resources/assets/images/activities-active-icon.svg"
+  },
+  "src/Resources/assets/images/activities-icon.svg": {
+    "file": "assets/activities-icon-8dd4bf93.svg",
+    "src": "src/Resources/assets/images/activities-icon.svg"
+  },
+  "src/Resources/assets/images/attribute-icon.svg": {
+    "file": "assets/attribute-icon-c5004e69.svg",
+    "src": "src/Resources/assets/images/attribute-icon.svg"
+  },
+  "src/Resources/assets/images/avatar-dark-icon.svg": {
+    "file": "assets/avatar-dark-icon-f076ed33.svg",
+    "src": "src/Resources/assets/images/avatar-dark-icon.svg"
+  },
+  "src/Resources/assets/images/avatar-icon.svg": {
+    "file": "assets/avatar-icon-404d242b.svg",
+    "src": "src/Resources/assets/images/avatar-icon.svg"
+  },
+  "src/Resources/assets/images/calendar-line-active-icon.svg": {
+    "file": "assets/calendar-line-active-icon-9e1f35aa.svg",
+    "src": "src/Resources/assets/images/calendar-line-active-icon.svg"
+  },
+  "src/Resources/assets/images/calendar-line-icon.svg": {
+    "file": "assets/calendar-line-icon-cc691263.svg",
+    "src": "src/Resources/assets/images/calendar-line-icon.svg"
+  },
+  "src/Resources/assets/images/call-icon.svg": {
+    "file": "assets/call-icon-dc0be50e.svg",
+    "src": "src/Resources/assets/images/call-icon.svg"
+  },
+  "src/Resources/assets/images/dashboard-active-icon.svg": {
+    "file": "assets/dashboard-active-icon-ff859fc5.svg",
+    "src": "src/Resources/assets/images/dashboard-active-icon.svg"
+  },
+  "src/Resources/assets/images/dashboard-icon.svg": {
+    "file": "assets/dashboard-icon-8bd33f63.svg",
+    "src": "src/Resources/assets/images/dashboard-icon.svg"
+  },
+  "src/Resources/assets/images/dollar-circle-icon.svg": {
+    "file": "assets/dollar-circle-icon-d46a82ae.svg",
+    "src": "src/Resources/assets/images/dollar-circle-icon.svg"
+  },
+  "src/Resources/assets/images/drag-icon.svg": {
+    "file": "assets/drag-icon-c407a423.svg",
+    "src": "src/Resources/assets/images/drag-icon.svg"
+  },
+  "src/Resources/assets/images/ellipsis-icon.svg": {
+    "file": "assets/ellipsis-icon-4802b34e.svg",
+    "src": "src/Resources/assets/images/ellipsis-icon.svg"
+  },
+  "src/Resources/assets/images/email-icon.svg": {
+    "file": "assets/email-icon-44cbf00a.svg",
+    "src": "src/Resources/assets/images/email-icon.svg"
+  },
+  "src/Resources/assets/images/email-send-icon.svg": {
+    "file": "assets/email-send-icon-a0daf50c.svg",
+    "src": "src/Resources/assets/images/email-send-icon.svg"
+  },
+  "src/Resources/assets/images/email-template-icon.svg": {
+    "file": "assets/email-template-icon-0ba9ec60.svg",
+    "src": "src/Resources/assets/images/email-template-icon.svg"
+  },
+  "src/Resources/assets/images/emails-active-icon.svg": {
+    "file": "assets/emails-active-icon-c14519c6.svg",
+    "src": "src/Resources/assets/images/emails-active-icon.svg"
+  },
+  "src/Resources/assets/images/emails-icon.svg": {
+    "file": "assets/emails-icon-82b8c97b.svg",
+    "src": "src/Resources/assets/images/emails-icon.svg"
+  },
+  "src/Resources/assets/images/empty-bar-icon.svg": {
+    "file": "assets/empty-bar-icon-a48c3e6f.svg",
+    "src": "src/Resources/assets/images/empty-bar-icon.svg"
+  },
+  "src/Resources/assets/images/empty-bar-vertical-icon.svg": {
+    "file": "assets/empty-bar-vertical-icon-d25efbb4.svg",
+    "src": "src/Resources/assets/images/empty-bar-vertical-icon.svg"
+  },
+  "src/Resources/assets/images/empty-kanban-icon.svg": {
+    "file": "assets/empty-kanban-icon-1c9b1bdf.svg",
+    "src": "src/Resources/assets/images/empty-kanban-icon.svg"
+  },
+  "src/Resources/assets/images/empty-state-icon.svg": {
+    "file": "assets/empty-state-icon-1ffa1771.svg",
+    "src": "src/Resources/assets/images/empty-state-icon.svg"
+  },
+  "src/Resources/assets/images/empty-table-icon.svg": {
+    "file": "assets/empty-table-icon-117acbe8.svg",
+    "src": "src/Resources/assets/images/empty-table-icon.svg"
+  },
+  "src/Resources/assets/images/error-illustraton.svg": {
+    "file": "assets/error-illustraton-c4b21387.svg",
+    "src": "src/Resources/assets/images/error-illustraton.svg"
+  },
+  "src/Resources/assets/images/favicon/android-icon-144x144.png": {
+    "file": "assets/ms-icon-144x144-f152db00.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-144x144.png"
+  },
+  "src/Resources/assets/images/favicon/android-icon-192x192.png": {
+    "file": "assets/android-icon-192x192-6acde713.png",
+    "src": "src/Resources/assets/images/favicon/android-icon-192x192.png"
+  },
+  "src/Resources/assets/images/favicon/android-icon-36x36.png": {
+    "file": "assets/android-icon-36x36-7abaff6d.png",
+    "src": "src/Resources/assets/images/favicon/android-icon-36x36.png"
+  },
+  "src/Resources/assets/images/favicon/android-icon-48x48.png": {
+    "file": "assets/android-icon-48x48-03adbec2.png",
+    "src": "src/Resources/assets/images/favicon/android-icon-48x48.png"
+  },
+  "src/Resources/assets/images/favicon/android-icon-72x72.png": {
+    "file": "assets/apple-icon-72x72-0eff0853.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-72x72.png"
+  },
+  "src/Resources/assets/images/favicon/android-icon-96x96.png": {
+    "file": "assets/favicon-96x96-c916b175.png",
+    "src": "src/Resources/assets/images/favicon/favicon-96x96.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-114x114.png": {
+    "file": "assets/apple-icon-114x114-b1d7e77e.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-114x114.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-120x120.png": {
+    "file": "assets/apple-icon-120x120-c4077fda.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-120x120.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-144x144.png": {
+    "file": "assets/ms-icon-144x144-f152db00.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-144x144.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-152x152.png": {
+    "file": "assets/apple-icon-152x152-f7ab8897.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-152x152.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-180x180.png": {
+    "file": "assets/apple-icon-180x180-0796ea4e.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-180x180.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-57x57.png": {
+    "file": "assets/apple-icon-57x57-6b7688f4.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-57x57.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-60x60.png": {
+    "file": "assets/apple-icon-60x60-4ed86109.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-60x60.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-72x72.png": {
+    "file": "assets/apple-icon-72x72-0eff0853.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-72x72.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-76x76.png": {
+    "file": "assets/apple-icon-76x76-cec99b53.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon-76x76.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon-precomposed.png": {
+    "file": "assets/apple-icon-11320d35.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon.png"
+  },
+  "src/Resources/assets/images/favicon/apple-icon.png": {
+    "file": "assets/apple-icon-11320d35.png",
+    "src": "src/Resources/assets/images/favicon/apple-icon.png"
+  },
+  "src/Resources/assets/images/favicon/favicon-16x16.png": {
+    "file": "assets/favicon-16x16-eb7238ce.png",
+    "src": "src/Resources/assets/images/favicon/favicon-16x16.png"
+  },
+  "src/Resources/assets/images/favicon/favicon-32x32.png": {
+    "file": "assets/favicon-32x32-b3cb96c8.png",
+    "src": "src/Resources/assets/images/favicon/favicon-32x32.png"
+  },
+  "src/Resources/assets/images/favicon/favicon-96x96.png": {
+    "file": "assets/favicon-96x96-c916b175.png",
+    "src": "src/Resources/assets/images/favicon/favicon-96x96.png"
+  },
+  "src/Resources/assets/images/favicon/favicon.ico": {
+    "file": "assets/favicon-a99d4e55.ico",
+    "src": "src/Resources/assets/images/favicon/favicon.ico"
+  },
+  "src/Resources/assets/images/favicon/ms-icon-144x144.png": {
+    "file": "assets/ms-icon-144x144-f152db00.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-144x144.png"
+  },
+  "src/Resources/assets/images/favicon/ms-icon-150x150.png": {
+    "file": "assets/ms-icon-150x150-422ebe02.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-150x150.png"
+  },
+  "src/Resources/assets/images/favicon/ms-icon-310x310.png": {
+    "file": "assets/ms-icon-310x310-f68815f6.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-310x310.png"
+  },
+  "src/Resources/assets/images/favicon/ms-icon-70x70.png": {
+    "file": "assets/ms-icon-70x70-9815f2f7.png",
+    "src": "src/Resources/assets/images/favicon/ms-icon-70x70.png"
+  },
+  "src/Resources/assets/images/file-icon.svg": {
+    "file": "assets/file-icon-27433b6c.svg",
+    "src": "src/Resources/assets/images/file-icon.svg"
+  },
+  "src/Resources/assets/images/group-icon.svg": {
+    "file": "assets/group-icon-c7efa6db.svg",
+    "src": "src/Resources/assets/images/group-icon.svg"
+  },
+  "src/Resources/assets/images/layout-column-line-active-icon.svg": {
+    "file": "assets/layout-column-line-active-icon-bf1e31f3.svg",
+    "src": "src/Resources/assets/images/layout-column-line-active-icon.svg"
+  },
+  "src/Resources/assets/images/layout-column-line-icon.svg": {
+    "file": "assets/layout-column-line-icon-2baa60ad.svg",
+    "src": "src/Resources/assets/images/layout-column-line-icon.svg"
+  },
+  "src/Resources/assets/images/lead-icon.svg": {
+    "file": "assets/lead-icon-cbef055c.svg",
+    "src": "src/Resources/assets/images/lead-icon.svg"
+  },
+  "src/Resources/assets/images/leads-active-icon.svg": {
+    "file": "assets/leads-active-icon-336c2aab.svg",
+    "src": "src/Resources/assets/images/leads-active-icon.svg"
+  },
+  "src/Resources/assets/images/leads-icon.svg": {
+    "file": "assets/leads-icon-ef803f12.svg",
+    "src": "src/Resources/assets/images/leads-icon.svg"
+  },
+  "src/Resources/assets/images/logo.svg": {
+    "file": "assets/logo-179afdfc.svg",
+    "src": "src/Resources/assets/images/logo.svg"
+  },
+  "src/Resources/assets/images/lunch-icon.svg": {
+    "file": "assets/lunch-icon-becce091.svg",
+    "src": "src/Resources/assets/images/lunch-icon.svg"
+  },
+  "src/Resources/assets/images/mail-icon.svg": {
+    "file": "assets/mail-icon-1a919ea2.svg",
+    "src": "src/Resources/assets/images/mail-icon.svg"
+  },
+  "src/Resources/assets/images/meeting-icon.svg": {
+    "file": "assets/meeting-icon-89b23dc8.svg",
+    "src": "src/Resources/assets/images/meeting-icon.svg"
+  },
+  "src/Resources/assets/images/note-icon.svg": {
+    "file": "assets/note-icon-a09ecb05.svg",
+    "src": "src/Resources/assets/images/note-icon.svg"
+  },
+  "src/Resources/assets/images/organization-icon.svg": {
+    "file": "assets/organization-icon-2b279491.svg",
+    "src": "src/Resources/assets/images/organization-icon.svg"
+  },
+  "src/Resources/assets/images/person-icon.svg": {
+    "file": "assets/person-icon-d79b0d13.svg",
+    "src": "src/Resources/assets/images/person-icon.svg"
+  },
+  "src/Resources/assets/images/phone-active-icon.svg": {
+    "file": "assets/phone-active-icon-31cf0286.svg",
+    "src": "src/Resources/assets/images/phone-active-icon.svg"
+  },
+  "src/Resources/assets/images/phone-icon.svg": {
+    "file": "assets/phone-icon-217ba47a.svg",
+    "src": "src/Resources/assets/images/phone-icon.svg"
+  },
+  "src/Resources/assets/images/pipeline-icon.svg": {
+    "file": "assets/pipeline-icon-e2b7de72.svg",
+    "src": "src/Resources/assets/images/pipeline-icon.svg"
+  },
+  "src/Resources/assets/images/product-icon.svg": {
+    "file": "assets/product-icon-15741a3e.svg",
+    "src": "src/Resources/assets/images/product-icon.svg"
+  },
+  "src/Resources/assets/images/products-active-icon.svg": {
+    "file": "assets/products-active-icon-89470a7b.svg",
+    "src": "src/Resources/assets/images/products-active-icon.svg"
+  },
+  "src/Resources/assets/images/products-icon.svg": {
+    "file": "assets/products-icon-8f598e25.svg",
+    "src": "src/Resources/assets/images/products-icon.svg"
+  },
+  "src/Resources/assets/images/quotation-icon.svg": {
+    "file": "assets/quotation-icon-af222b4e.svg",
+    "src": "src/Resources/assets/images/quotation-icon.svg"
+  },
+  "src/Resources/assets/images/role-icon.svg": {
+    "file": "assets/role-icon-1626bbfc.svg",
+    "src": "src/Resources/assets/images/role-icon.svg"
+  },
+  "src/Resources/assets/images/settings-active-icon.svg": {
+    "file": "assets/settings-active-icon-1bfd8227.svg",
+    "src": "src/Resources/assets/images/settings-active-icon.svg"
+  },
+  "src/Resources/assets/images/settings-icon.svg": {
+    "file": "assets/settings-icon-1a904f1c.svg",
+    "src": "src/Resources/assets/images/settings-icon.svg"
+  },
+  "src/Resources/assets/images/source-icon.svg": {
+    "file": "assets/source-icon-77a14582.svg",
+    "src": "src/Resources/assets/images/source-icon.svg"
+  },
+  "src/Resources/assets/images/sprite-main.svg": {
+    "file": "assets/sprite-main-6df0e1d6.svg",
+    "src": "src/Resources/assets/images/sprite-main.svg"
+  },
+  "src/Resources/assets/images/table-line-active-icon.svg": {
+    "file": "assets/table-line-active-icon-a33f103d.svg",
+    "src": "src/Resources/assets/images/table-line-active-icon.svg"
+  },
+  "src/Resources/assets/images/table-line-icon.svg": {
+    "file": "assets/table-line-icon-17b19e1a.svg",
+    "src": "src/Resources/assets/images/table-line-icon.svg"
+  },
+  "src/Resources/assets/images/tag-icon.svg": {
+    "file": "assets/tag-icon-e4422350.svg",
+    "src": "src/Resources/assets/images/tag-icon.svg"
+  },
+  "src/Resources/assets/images/tools-active-icon.svg": {
+    "file": "assets/tools-active-icon-e968d687.svg",
+    "src": "src/Resources/assets/images/tools-active-icon.svg"
+  },
+  "src/Resources/assets/images/tools-icon.svg": {
+    "file": "assets/tools-icon-a696ca9b.svg",
+    "src": "src/Resources/assets/images/tools-icon.svg"
+  },
+  "src/Resources/assets/images/type-icon.svg": {
+    "file": "assets/type-icon-7300d6f7.svg",
+    "src": "src/Resources/assets/images/type-icon.svg"
+  },
+  "src/Resources/assets/images/user-icon.svg": {
+    "file": "assets/user-icon-4cf854eb.svg",
+    "src": "src/Resources/assets/images/user-icon.svg"
+  },
+  "src/Resources/assets/images/workflow-icon.svg": {
+    "file": "assets/workflow-icon-ccce785b.svg",
+    "src": "src/Resources/assets/images/workflow-icon.svg"
+  },
+  "src/Resources/assets/js/app.css": {
+    "file": "assets/app-06ae2a33.css",
+    "src": "src/Resources/assets/js/app.css"
+  },
+  "src/Resources/assets/js/app.js": {
+    "css": [
+      "assets/app-06ae2a33.css"
+    ],
+    "dynamicImports": [
+      "node_modules/vue-cal/dist/i18n/en.es.js",
+      "node_modules/vue-cal/dist/i18n/ar.es.js",
+      "node_modules/vue-cal/dist/i18n/bg.es.js",
+      "node_modules/vue-cal/dist/i18n/bn.es.js",
+      "node_modules/vue-cal/dist/i18n/bs.es.js",
+      "node_modules/vue-cal/dist/i18n/ca.es.js",
+      "node_modules/vue-cal/dist/i18n/cs.es.js",
+      "node_modules/vue-cal/dist/i18n/da.es.js",
+      "node_modules/vue-cal/dist/i18n/de.es.js",
+      "node_modules/vue-cal/dist/i18n/el.es.js",
+      "node_modules/vue-cal/dist/i18n/en.es.js",
+      "node_modules/vue-cal/dist/i18n/es.es.js",
+      "node_modules/vue-cal/dist/i18n/et.es.js",
+      "node_modules/vue-cal/dist/i18n/fa.es.js",
+      "node_modules/vue-cal/dist/i18n/fi.es.js",
+      "node_modules/vue-cal/dist/i18n/fr.es.js",
+      "node_modules/vue-cal/dist/i18n/he.es.js",
+      "node_modules/vue-cal/dist/i18n/hr.es.js",
+      "node_modules/vue-cal/dist/i18n/hu.es.js",
+      "node_modules/vue-cal/dist/i18n/id.es.js",
+      "node_modules/vue-cal/dist/i18n/is.es.js",
+      "node_modules/vue-cal/dist/i18n/it.es.js",
+      "node_modules/vue-cal/dist/i18n/ja.es.js",
+      "node_modules/vue-cal/dist/i18n/ka.es.js",
+      "node_modules/vue-cal/dist/i18n/ko.es.js",
+      "node_modules/vue-cal/dist/i18n/lt.es.js",
+      "node_modules/vue-cal/dist/i18n/mn.es.js",
+      "node_modules/vue-cal/dist/i18n/nl.es.js",
+      "node_modules/vue-cal/dist/i18n/no.es.js",
+      "node_modules/vue-cal/dist/i18n/pl.es.js",
+      "node_modules/vue-cal/dist/i18n/pt-br.es.js",
+      "node_modules/vue-cal/dist/i18n/pt-pt.es.js",
+      "node_modules/vue-cal/dist/i18n/ro.es.js",
+      "node_modules/vue-cal/dist/i18n/ru.es.js",
+      "node_modules/vue-cal/dist/i18n/sk.es.js",
+      "node_modules/vue-cal/dist/i18n/sl.es.js",
+      "node_modules/vue-cal/dist/i18n/sq.es.js",
+      "node_modules/vue-cal/dist/i18n/sr.es.js",
+      "node_modules/vue-cal/dist/i18n/sv.es.js",
+      "node_modules/vue-cal/dist/i18n/tr.es.js",
+      "node_modules/vue-cal/dist/i18n/uk.es.js",
+      "node_modules/vue-cal/dist/i18n/vi.es.js",
+      "node_modules/vue-cal/dist/i18n/zh-cn.es.js",
+      "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
+      "node_modules/vue-cal/dist/drag-and-drop.es.js"
+    ],
+    "file": "assets/app-9a075a28.js",
+    "isEntry": true,
+    "src": "src/Resources/assets/js/app.js"
+  }
+}

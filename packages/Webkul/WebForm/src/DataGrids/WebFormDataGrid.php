@@ -2,17 +2,16 @@
 
 namespace Webkul\WebForm\DataGrids;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class WebFormDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('web_forms')
             ->addSelect(
@@ -22,26 +21,24 @@ class WebFormDataGrid extends DataGrid
 
         $this->addFilter('id', 'web_forms.id');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
-     * Add columns.
-     *
-     * @return void
+     * Prepare columns.
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
+            'label'    => trans('admin::app.settings.webforms.index.datagrid.id'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'title',
-            'label'    => trans('admin::app.datagrid.title'),
+            'label'    => trans('admin::app.settings.webforms.index.datagrid.title'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -49,31 +46,31 @@ class WebFormDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.view'),
+            'index'  => 'view',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.view'),
             'method' => 'GET',
-            'route'  => 'admin.settings.web_forms.view',
-            'icon'   => 'icon eye-icon',
+            'url'    => fn ($row) => route('admin.settings.web_forms.view', $row->id),
         ]);
 
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.web_forms.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => fn ($row) => route('admin.settings.web_forms.edit', $row->id),
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.web_forms.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'type']),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.webforms.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => fn ($row) => route('admin.settings.web_forms.delete', $row->id),
         ]);
     }
 }

@@ -4,36 +4,39 @@
         @lang('admin::app.settings.roles.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.settings.roles.edit.before', ['role' => $role]) !!}
+    {!! view_render_event('krayin.admin.settings.roles.edit.before', ['role' => $role]) !!}
 
     <x-admin::form
         method="PUT"
         :action="route('admin.settings.roles.update', $role->id)"
     >
 
-        {!! view_render_event('krayin.settings.roles.edit.edit_form_controls.before', ['role' => $role]) !!}
+        {!! view_render_event('krayin.admin.settings.roles.edit.form_controls.before', ['role' => $role]) !!}
 
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('admin::app.settings.roles.edit.title')
-            </p>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs 
+                        name="settings.roles.edit"
+                        :entity="$role"
+                    />
+                </div>
+
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.roles.edit.title')
+                </div>
+            </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.roles.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('admin::app.settings.roles.edit.back-btn')
-                </a>
-
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.roles.edit.save-btn')
-                </button>
+                <!-- Save button for roles -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.roles.edit.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -42,7 +45,7 @@
             <!-- Left sub-component -->
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
 
-                {!! view_render_event('krayin.settings.roles.edit.card.access-control.before', ['role' => $role]) !!}
+                {!! view_render_event('krayin.admin.settings.roles.edit.card.access_control.before', ['role' => $role]) !!}
 
                 <!-- Access Control Input Fields -->
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
@@ -64,14 +67,12 @@
                     </v-access-control>
                 </div>
 
-                {!! view_render_event('krayin.settings.roles.edit.card.access-control.after', ['role' => $role]) !!}
-
+                {!! view_render_event('krayin.admin.settings.roles.edit.card.access_control.after', ['role' => $role]) !!}
             </div>
 
             <!-- Right sub-component -->
             <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-
-                {!! view_render_event('krayin.settings.roles.edit.card.accordion.general.before', ['role' => $role]) !!}
+                {!! view_render_event('krayin.admin.settings.roles.edit.card.accordion.general.before', ['role' => $role]) !!}
 
                 <x-admin::accordion>
                     <x-slot:header>
@@ -123,16 +124,15 @@
                     </x-slot>
                 </x-admin::accordion>
 
-                {!! view_render_event('krayin.settings.roles.edit.card.accordion.general.after', ['role' => $role]) !!}
-
+                {!! view_render_event('krayin.admin.settings.roles.edit.card.accordion.general.after', ['role' => $role]) !!}
             </div>
         </div>
 
-        {!! view_render_event('krayin.settings.roles.edit.edit_form_controls.after', ['role' => $role]) !!}
+        {!! view_render_event('krayin..admin.settings.roles.edit.form_controls.after', ['role' => $role]) !!}
 
     </x-admin::form>
 
-    {!! view_render_event('krayin.settings.roles.edit.after', ['role' => $role]) !!}
+    {!! view_render_event('krayin.admin.settings.roles.edit.after', ['role' => $role]) !!}
 
     @pushOnce('scripts')
         <script

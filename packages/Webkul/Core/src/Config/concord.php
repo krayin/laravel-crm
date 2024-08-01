@@ -15,9 +15,10 @@ return [
         \Webkul\Quote\Providers\ModuleServiceProvider::class,
         \Webkul\Tag\Providers\ModuleServiceProvider::class,
         \Webkul\UI\Providers\ModuleServiceProvider::class,
+        \Webkul\Warehouse\Providers\ModuleServiceProvider::class,
         \Webkul\User\Providers\ModuleServiceProvider::class,
         \Webkul\WebForm\Providers\ModuleServiceProvider::class,
-        \Webkul\Workflow\Providers\ModuleServiceProvider::class,
+        \Webkul\Automation\Providers\ModuleServiceProvider::class,
     ],
     'register_route_models' => true,
 ];

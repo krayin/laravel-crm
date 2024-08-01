@@ -4,33 +4,34 @@
         @lang('admin::app.settings.roles.create.title')
     </x-slot>
 
-    {!! view_render_event('krayin.settings.roles.create.before') !!}
+    {!! view_render_event('krayin.admin.settings.roles.create.before') !!}
 
+    <!-- Create Form -->
     <x-admin::form :action="route('admin.settings.roles.store')">
 
-        {!! view_render_event('krayin.settings.roles.create.create_form_controls.before') !!}
+        {!! view_render_event('krayin.admin.settings.roles.create.form_controls.before') !!}
 
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('admin::app.settings.roles.create.title')
-            </p>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs name="settings.roles.create" />
+                </div>
+
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.roles.create.title')
+                </div>
+            </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.roles.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('admin::app.settings.roles.create.back-btn')
-                </a>
-
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.roles.create.save-btn')
-                </button>
+                <!-- Create button for Roles -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.roles.create.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -38,8 +39,7 @@
          <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             <!-- Left sub-component -->
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-
-                {!! view_render_event('krayin.settings.roles.create.card.access_control.before') !!}
+                {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.before') !!}
 
                 <!-- Access Control Input Fields -->
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
@@ -57,14 +57,13 @@
                     </v-access-control>
                 </div>
 
-                {!! view_render_event('krayin.settings.roles.create.card.access_control.after') !!}
-
+                {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.after') !!}
             </div>
 
             <!-- Right sub-component -->
             <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
 
-                {!! view_render_event('krayin.settings.roles.create.card.accordion.general.before') !!}
+                {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.before') !!}
 
                 <x-admin::accordion>
                     <x-slot:header>
@@ -116,16 +115,14 @@
                     </x-slot>
                 </x-admin::accordion>
 
-                {!! view_render_event('krayin.settings.roles.create.card.accordion.general.after') !!}
-
+                {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.after') !!}
             </div>
         </div>
 
-        {!! view_render_event('krayin.settings.roles.create.create_form_controls.after') !!}
-
+        {!! view_render_event('krayin.admin.settings.roles.create.create_form_controls.after') !!}
     </x-admin::form>
 
-    {!! view_render_event('krayin.settings.roles.create.after') !!}
+    {!! view_render_event('krayin.admin.settings.roles.create.after') !!}
 
     @pushOnce('scripts')
         <script

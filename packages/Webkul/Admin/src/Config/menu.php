@@ -241,6 +241,13 @@ return [
         'sort'       => 2,
         'icon-class' => 'email-template-icon',
     ], [
+        'key'        => 'settings.automation.webhooks',
+        'name'       => 'Webhooks',
+        'info'       => 'Add Edit Delete Webhooks from CRM',
+        'route'      => 'admin.settings.webhooks.index',
+        'sort'       => 2,
+        'icon-class' => 'email-template-icon',
+    ], [
         'key'        => 'settings.automation.workflows',
         'name'       => 'admin::app.layouts.workflows',
         'info'       => 'admin::app.layouts.workflows-info',

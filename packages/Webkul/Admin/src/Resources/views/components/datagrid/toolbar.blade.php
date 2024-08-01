@@ -4,8 +4,12 @@
 
 <template v-else>
     <div class="mt-2 flex h-[58px] items-center justify-between gap-4 rounded-t-lg border border-b-0 border-gray-200 bg-white pl-2 pr-4 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-md:flex-wrap">
+        
+
         <!-- Left Toolbar -->
         <div class="flex gap-x-1">
+            {{ $toolbarLeftBefore }}
+            
             <!-- Mass Actions Panel -->
             <template v-if="applied.massActions.indices.length">
                 <x-admin::datagrid.toolbar.mass-action>
@@ -47,10 +51,14 @@
                     </slot>
                 </template>
             </x-admin::datagrid.toolbar.search>
+
+            {{ $toolbarLeftAfter }}
         </div>
 
         <!-- Right Toolbar -->
-        <div class="flex gap-x-4">   
+        <div class="flex gap-x-4">
+            {{ $toolbarRightBefore }}
+            
             <!-- Pagination Panel -->
             <x-admin::datagrid.toolbar.pagination>
                 <template #pagination="{
@@ -69,6 +77,8 @@
                     </slot>
                 </template>
             </x-admin::datagrid.toolbar.pagination>
+
+            {{ $toolbarRightAfter }}
         </div>
     </div>
 </template>

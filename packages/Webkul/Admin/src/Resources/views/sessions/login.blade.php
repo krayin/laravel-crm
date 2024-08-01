@@ -1,87 +1,113 @@
-@extends('admin::layouts.anonymous-master')
+<x-admin::layouts.anonymous>
+    <!-- Page Title -->
+    <x-slot:title>
+        @lang('admin::app.users.login.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.sessions.login.title') }}
-@stop
+    <div class="flex h-[100vh] items-center justify-center">
+        <div class="flex flex-col items-center gap-5">
+            <!-- Logo -->            
+            @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
+                <img
+                    class="h-10 w-[110px]"
+                    src="{{ Storage::url($logo) }}"
+                    alt="{{ config('app.name') }}"
+                />
+            @else
+                <img
+                    class="w-max" 
+                    src="{{ admin_vite()->asset('images/logo.svg') }}"
+                    alt="{{ config('app.name') }}"
+                />
+            @endif
 
-@section('content')
-    <div class="panel">
-        <div class="panel-body">
-            <div class="form-container">
-                <h1>{{ __('admin::app.sessions.login.welcome') }}</h1>
+            <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
+                <!-- Login Form -->
+                <x-admin::form :action="route('admin.session.store')">
+                    <p class="p-4 text-xl font-bold text-gray-800 dark:text-white">
+                        @lang('admin::app.users.login.title')
+                    </p>
 
-                <form method="POST" action="{{ route('admin.session.store') }}" @submit.prevent="$root.onSubmit">
-                    {!! view_render_event('admin.sessions.login.form_controls.before') !!}
+                    <div class="border-y p-4 dark:border-gray-800">
+                        <!-- Email -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.users.login.email')
+                            </x-admin::form.control-group.label>
 
-                    @csrf
-
-                    <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                        <label for="email">{{ __('admin::app.sessions.login.email') }}</label>
-
-                        <input
-                            type="text"
-                            name="email"
-                            class="control"
-                            id="email"
-                            v-validate.disable="'required|email'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.login.email') }}&quot;"
+                            <x-admin::form.control-group.control 
+                                type="email" 
+                                class="w-[254px] max-w-full" 
+                                id="email"
+                                name="email" 
+                                rules="required|email" 
+                                :label="trans('admin::app.users.login.email')"
+                                :placeholder="trans('admin::app.users.login.email')"
                             />
 
-                        <span class="control-error" v-if="errors.has('email')">
-                            @{{ errors.first('email') }}
-                        </span>
+                            <x-admin::form.control-group.error control-name="email" />
+                        </x-admin::form.control-group>
+
+                        <!-- Password -->
+                        <x-admin::form.control-group class="relative w-full">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.users.login.password')
+                            </x-admin::form.control-group.label>
+                    
+                            <x-admin::form.control-group.control 
+                                type="password" 
+                                class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10" 
+                                id="password"
+                                name="password" 
+                                rules="required|min:6" 
+                                :label="trans('admin::app.users.login.password')"
+                                :placeholder="trans('admin::app.users.login.password')"
+                            />
+                    
+                            <span 
+                                class="icon-view absolute top-[42px] -translate-y-2/4 cursor-pointer text-2xl ltr:right-2 rtl:left-2"
+                                onclick="switchVisibility()"
+                                id="visibilityIcon"
+                                role="presentation"
+                                tabindex="0"
+                            >
+                            </span>
+                    
+                            <x-admin::form.control-group.error control-name="password" />
+                        </x-admin::form.control-group>
                     </div>
 
-                    <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
-                        <label for="password">{{ __('admin::app.sessions.login.password') }}</label>
+                    <div class="flex items-center justify-between p-4">
+                        <!-- Forgot Password Link -->
+                        <a 
+                            class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
+                            href="{{ route('admin.forgot_password.create') }}"
+                        >
+                            @lang('admin::app.users.login.forget-password-link')
+                        </a>
 
-                        <input
-                            type="password"
-                            name="password"
-                            class="control"
-                            id="password"
-                            v-validate.disable="'required|min:6'"
-                            data-vv-as="&quot;{{ __('admin::app.sessions.login.password') }}&quot;"
-                        />
-
-                        <span class="control-error" v-if="errors.has('password')">
-                            @{{ errors.first('password') }}
-                        </span>
-                    </div>
-
-                    {!! view_render_event('admin.sessions.login.form_controls.after') !!}
-
-                    <a href="{{ route('admin.forgot_password.create') }}">{{ __('admin::app.sessions.login.forgot-password') }}</a>
-
-                    <div class="button-group">
-                        {!! view_render_event('admin.sessions.login.form_buttons.before') !!}
-
-                        <button type="submit" class="btn btn-xl btn-primary">
-                            {{ __('admin::app.sessions.login.login') }}
+                        <!-- Submit Button -->
+                        <button
+                            class="primary-button"
+                            aria-label="{{ trans('admin::app.users.login.submit-btn')}}"
+                        >   
+                            @lang('admin::app.users.login.submit-btn')
                         </button>
-
-                        {!! view_render_event('admin.sessions.login.form_buttons.after') !!}
                     </div>
-                </form>
+                </x-admin::form>
             </div>
         </div>
     </div>
-@stop
 
-@push('scripts')
-    <script>
-        $(() => {
-            $('input').keyup(({target}) => {
-                if ($(target).parent('.has-error').length) {
-                    $(target).parent('.has-error').addClass('hide-error');
-                }
-            });
+    @push('scripts')
+        <script>
+            function switchVisibility() {
+                let passwordField = document.getElementById("password");
+                let visibilityIcon = document.getElementById("visibilityIcon");
 
-            $('button').click(() => {
-                $('.hide-error').removeClass('hide-error');
-            });
-
-            $(":input[name=email]").focus();
-        });
-    </script>
-@endpush
+                passwordField.type = passwordField.type === "password" ? "text" : "password";
+                visibilityIcon.classList.toggle("icon-view-close");
+            }
+        </script>
+    @endpush
+</x-admin::layouts.anonymous>

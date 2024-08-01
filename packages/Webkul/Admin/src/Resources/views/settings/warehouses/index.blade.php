@@ -1,31 +1,42 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.settings.warehouses.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.warehouses.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <!-- breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.warehouses" />
+            </div>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.settings.warehouses.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.settings.warehouses.index.header.before') !!}
+            <div class="text-xl font-bold dark:text-gray-300">
+                <!-- title -->
+                @lang('admin::app.settings.warehouses.index.title')
+            </div>
+        </div>
 
-                    {{ Breadcrumbs::render('settings.warehouses') }}
-
-                    {{ __('admin::app.settings.warehouses.title') }}
-
-                    {!! view_render_event('admin.settings.warehouses.index.header.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.settings.warehouses.create') }}" class="btn btn-md btn-primary">
-                        {{ __('admin::app.settings.warehouses.create-title') }}
-                    </a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button For Warehouses -->
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.before') !!}
+                    @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
+                        <a
+                            href="{{ route('admin.settings.warehouses.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.warehouses.index.create-btn')
+                        </a>
+                    @endif
+                {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.after') !!}
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.settings.warehouses.index.datagrid.before') !!}
+
+    <!-- DataGrid -->
+    <x-admin::datagrid src="{{ route('admin.settings.warehouses.index') }}" />
+
+    {!! view_render_event('krayin.admin.settings.warehouses.index.datagrid.after') !!}
+</x-admin::layouts>

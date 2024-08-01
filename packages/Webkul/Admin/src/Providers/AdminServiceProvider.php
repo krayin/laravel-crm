@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Admin\Http\Middleware\Locale;
-use Illuminate\Support\Facades\Route;
 
 class AdminServiceProvider extends ServiceProvider
 {

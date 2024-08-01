@@ -1,4 +1,10 @@
-@props(['isMultiRow' => false])
+@props([
+    'isMultiRow'         => false,
+    'toolbarLeftBefore'  => null,
+    'toolbarLeftAfter'   => null,
+    'toolbarRightBefore' => null,
+    'toolbarRightAfter'  => null,
+])
 
 <v-datagrid {{ $attributes }}>
     {{ $slot }}
@@ -11,7 +17,23 @@
     >
         <div>
             <!-- Toolbar -->
-            <x-admin::datagrid.toolbar />
+            <x-admin::datagrid.toolbar>
+                <x-slot:toolbar-left-before>
+                    {{ $toolbarLeftBefore }}
+                </x-slot>
+                
+                <x-slot:toolbar-left-after>
+                    {{ $toolbarLeftAfter }}
+                </x-slot>
+                
+                <x-slot:toolbar-right-before>
+                    {{ $toolbarRightBefore }}
+                </x-slot>
+                
+                <x-slot:toolbar-right-after>
+                    {{ $toolbarRightAfter }}
+                </x-slot>
+            </x-admin::datagrid.toolbar>
 
             <div class="flex">
                 <x-admin::datagrid.table :isMultiRow="$isMultiRow">

@@ -4,11 +4,16 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Event;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\LeadForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
+use Webkul\User\Repositories\UserRepository;
+use Webkul\Admin\Http\Resources\StageResource;
+use Webkul\Admin\Http\Resources\LeadResource;
+use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 
 class LeadController extends Controller
 {
@@ -32,6 +37,10 @@ class LeadController extends Controller
      */
     public function index()
     {
+        if (request()->ajax()) {
+            return datagrid(LeadDataGrid::class)->process();
+        }
+
         if (request('pipeline_id')) {
             $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
         } else {
@@ -48,79 +57,45 @@ class LeadController extends Controller
      */
     public function get()
     {
-        if (bouncer()->hasPermission('leads.view')) {
-            if (request('view_type')) {
-                return app(\Webkul\Admin\DataGrids\Lead\LeadDataGrid::class)->toJson();
-            } else {
-                $createdAt = request('created_at') ?? null;
-
-                if ($createdAt && isset($createdAt['bw'])) {
-                    $createdAt = explode(',', $createdAt['bw']);
-
-                    $createdAt[0] .= ' 00:01';
-
-                    $createdAt[1] = $createdAt[1]
-                        ? $createdAt[1].' 23:59'
-                        : Carbon::now()->format('Y-m-d 23:59');
-                } else {
-                    $createdAt = null;
-                }
-
-                if (request('pipeline_id')) {
-                    $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
-                } else {
-                    $pipeline = $this->pipelineRepository->getDefaultPipeline();
-                }
-
-                $data = [];
-
-                if ($stageId = request('pipeline_stage_id')) {
-                    $query = $this->leadRepository->getLeadsQuery($pipeline->id, $stageId, request('search') ?? '', $createdAt);
-
-                    $paginator = $query->paginate(10);
-
-                    $data[$stageId] = [
-                        'leads'      => [],
-                        'pagination' => [
-                            'current' => $current = $paginator->currentPage(),
-                            'last'    => $last = $paginator->lastPage(),
-                            'next'    => $current < $last ? $current + 1 : null,
-                        ],
-                        'total' => core()->formatBasePrice($query->getModel()->paginate(request('page') ? request('page') * 10 : 10, ['lead_value'], 'page', 1)->sum('lead_value')),
-                    ];
-
-                    foreach ($paginator as $lead) {
-                        $data[$stageId]['leads'][] = array_merge($lead->toArray(), [
-                            'lead_value' => core()->formatBasePrice($lead->lead_value),
-                        ]);
-                    }
-                } else {
-                    foreach ($pipeline->stages as $stage) {
-                        $query = $this->leadRepository->getLeadsQuery($pipeline->id, $stage->id, request('search') ?? '', $createdAt);
-
-                        $paginator = $query->paginate(10);
-
-                        $data[$stage->id] = [
-                            'leads'      => [],
-                            'pagination' => [
-                                'current' => $current = $paginator->currentPage(),
-                                'last'    => $last = $paginator->lastPage(),
-                                'next'    => $current < $last ? $current + 1 : null,
-                            ],
-                            'total' => core()->formatBasePrice($query->paginate(10)->sum('lead_value')),
-                        ];
-
-                        foreach ($paginator as $lead) {
-                            $data[$stage->id]['leads'][] = array_merge($lead->toArray(), [
-                                'lead_value' => core()->formatBasePrice($lead->lead_value),
-                            ]);
-                        }
-                    }
-                }
-
-                return response()->json($data);
-            }
+        if (request()->query('pipeline_id')) {
+            $pipeline = $this->pipelineRepository->find(request()->query('pipeline_id'));
+        } else {
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
+
+        if ($stageId = request()->query('pipeline_stage_id')) {
+            $stages = $pipeline->stages->where('id', request()->query('pipeline_stage_id'));
+        } else {
+            $stages = $pipeline->stages;
+        }
+
+        foreach ($stages as $stage) {
+            $query = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->where([
+                    'lead_pipeline_id'       => $pipeline->id,
+                    'lead_pipeline_stage_id' => $stage->id,
+                ]);
+
+            $stage->lead_value = (clone $query)->sum('lead_value');
+
+            $data[$stage->id] = (new StageResource($stage))->jsonSerialize();
+
+            $data[$stage->id]['leads'] = [
+                'data' => LeadResource::collection($paginator = $query->paginate(10)),
+
+                'meta' => [
+                    'current_page' => $paginator->currentPage(),
+                    'from'         => $paginator->firstItem(),
+                    'last_page'    => $paginator->lastPage(),
+                    'per_page'     => $paginator->perPage(),
+                    'to'           => $paginator->lastItem(),
+                    'total'        => $paginator->total(),
+                ],
+            ];
+        }
+
+        return response()->json($data);
     }
 
     /**
@@ -187,7 +162,7 @@ class LeadController extends Controller
 
         if ($currentUser->view_permission != 'global') {
             if ($currentUser->view_permission == 'group') {
-                $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+                $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
 
                 if (! in_array($lead->user_id, $userIds)) {
                     return redirect()->route('admin.leads.index');
@@ -266,7 +241,7 @@ class LeadController extends Controller
                 ['user_id', '=', $currentUser->id],
             ]);
         } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
 
             $results = $this->leadRepository->findWhere([
                 ['title', 'like', '%'.urldecode(request()->input('query')).'%'],

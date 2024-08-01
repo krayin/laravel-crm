@@ -1,195 +1,226 @@
-@extends('admin::layouts.master')
 
-@section('page_title')
-    {{ __('admin::app.settings.email-templates.create-title') }}
-@stop
+<x-admin::layouts>
+    <!-- Page Title -->
+    <x-slot:title>
+        @lang('admin::app.settings.email-template.create.title')
+    </x-slot>
 
-@section('content-wrapper')
-    <div class="content full-page adjacent-center">
-        {!! view_render_event('admin.settings.email_templates.create.header.before') !!}
+    {!! view_render_event('krayin.admin.email_template.create.form.before') !!}
 
-        <div class="page-header">
-            
-            {{ Breadcrumbs::render('settings.email_templates.create') }}
+    <x-admin::form
+        :action="route('admin.settings.email_templates.store')"
+        method="POST"
+    >
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs name="settings.email_templates.create" />
+                </div>
 
-            <div class="page-title">
-                <h1>{{ __('admin::app.settings.email-templates.create-title') }}</h1>
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.email-template.create.title')
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-2.5">
+                <!-- Create button for person -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.email-template.create.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
-        {!! view_render_event('admin.settings.email_templates.create.header.after') !!}
+        <v-email-template></v-email-template>
+    </x-admin::form>
 
-        <form method="POST" action="{{ route('admin.settings.email_templates.store') }}" @submit.prevent="onSubmit">
-            <div class="page-content">
-                <div class="form-container">
-                    <div class="panel">
-                        <div class="panel-header">
-                            {!! view_render_event('admin.settings.email_templates.create.form_buttons.before') !!}
+    {!! view_render_event('krayin.admin.email_template.create.form.after') !!}
 
-                            <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.settings.email-templates.save-btn-title') }}
-                            </button>
-
-                            <a href="{{ route('admin.settings.email_templates.index') }}">
-                                {{ __('admin::app.layouts.back') }}
-                            </a>
-
-                            {!! view_render_event('admin.settings.email_templates.create.form_buttons.after') !!}
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-email-template-template"
+        >
+            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+                <!-- Right Component -->
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                    <!-- Title -->
+                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                        <div class="mb-4 flex items-center justify-between gap-4">
+                            <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.settings.email-template.create.email-template')
+                            </p>
                         </div>
 
-                        <div class="panel-body">
-                            {!! view_render_event('admin.settings.email_templates.create.form_controls.before') !!}
+                        {!! view_render_event('krayin.admin.email_template.create.subject.before') !!}
 
-                            @csrf()
+                        <x-admin::form.control-group class="!mb-0">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.email-template.create.subject')
+                            </x-admin::form.control-group.label>
 
-                            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label class="required">
-                                    {{ __('admin::app.settings.email-templates.name') }}
-                                </label>
-
-                                <input
+                            <div class="flex">
+                                <x-admin::form.control-group.control
                                     type="text"
-                                    name="name"
-                                    class="control"
-                                    value="{{ old('name') }}"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.settings.email-templates.name') }}"
+                                    name="subject"
+                                    id="subject"
+                                    class="rounded-r-none"
+                                    :value="old('subject')"
+                                    rules="required"
+                                    :label="trans('admin::app.settings.email-template.create.subject')"
+                                    :placeholder="trans('admin::app.settings.email-template.create.subject')"
+                                    v-model="subject"
+                                    @focusout="saveCursorPosition"
                                 />
 
-                                <span class="control-error" v-if="errors.has('name')">
-                                    @{{ errors.first('name') }}
-                                </span>
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    name="placeholder"
+                                    id="placeholder"
+                                    class="!w-1/3 rounded-l-none"
+                                    :label="trans('admin::app.settings.email-template.create.subject-placeholder')"
+                                    v-model="selectedPlaceholder"
+                                    @change="insertPlaceholder"
+                                >
+                                    <optgroup
+                                        v-for="entity in placeholders"
+                                        :key="entity.text"
+                                        :label="entity.text"
+                                    >
+                                        <option
+                                            v-for="placeholder in entity.menu"
+                                            :key="placeholder.value"
+                                            :value="placeholder.value"
+                                            :text="placeholder.text"
+                                        ></option>
+                                    </optgroup>
+                                </x-admin::form.control-group.control>
                             </div>
+                        </x-admin::form.control-group>
 
-                            <div class="form-group">
-                                <label class="required">
-                                    {{ __('admin::app.settings.email-templates.subject') }}
-                                </label>
+                        <x-admin::form.control-group.error control-name="subject"/>
 
-                                <div>
-                                    <div class="form-group input-group" :class="[errors.has('subject') ? 'has-error' : '']">
-                                        <input
-                                            type="text"
-                                            name="subject"
-                                            class="control"
-                                            id="subject"
-                                            value="{{ old('subject') }}"
-                                            v-validate="'required'"
-                                            data-vv-as="{{ __('admin::app.settings.email-templates.subject') }}"
-                                        />
+                        {!! view_render_event('krayin.admin.email_template.create.subject.after') !!}
 
-                                        <div class="input-group-append">
-                                            <select class="control subject-placeholers" id="subject-placeholders">
-                                                <option value="">{{ __('admin::app.settings.email-templates.placeholders') }}</option>
+                        {!! view_render_event('krayin.admin.email_template.create.content.before') !!}
 
-                                                @foreach ($placeholders as $entity)
-                                                    <optgroup label="{{ $entity['text'] }}">
+                        <!-- Event Name -->
+                        <x-admin::form.control-group class="mt-4">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.email-template.create.content')
+                            </x-admin::form.control-group.label>
 
-                                                        @foreach ($entity['menu'] as $placeholder)
-                                                            <option value="{{ $placeholder['value'] }}">
-                                                                {{ $placeholder['text'] }}
-                                                            </option>
-                                                        @endforeach
-                                                        
-                                                    </optgroup>
-                                                @endforeach
-                                            </select>
-                                        </div>
+                            <x-admin::form.control-group.control
+                                type="textarea"
+                                id="content"
+                                name="content"
+                                rules="required"
+                                :tinymce="true"
+                                :placeholders="json_encode($placeholders)"
+                                :label="trans('admin::app.settings.email-template.create.content')"
+                                :placeholder="trans('admin::app.settings.email-template.create.content')"
+                            />
 
-                                        <span class="control-error" v-if="errors.has('subject')">
-                                            @{{ errors.first('subject') }}
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
+                            <x-admin::form.control-group.error control-name="content" />
+                        </x-admin::form.control-group>
 
-                            <div class="form-group" :class="[errors.has('content') ? 'has-error' : '']">
-                                <label class="required">
-                                    {{ __('admin::app.settings.email-templates.content') }}
-                                </label>
-
-                                <textarea
-                                    name="content"
-                                    class="control"
-                                    id="control"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.settings.email-templates.content') }}"
-                                >{{ old('content') }}</textarea>
-
-                                <span class="control-error" v-if="errors.has('content')">
-                                    @{{ errors.first('content') }}
-                                </span>
-                            </div>
-
-                            {!! view_render_event('admin.settings.email_templates.create.form_controls.after') !!}
-                        </div>
+                        {!! view_render_event('krayin.admin.email_template.create.content.after') !!}
                     </div>
                 </div>
+
+                <!-- Right sub-component -->
+                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    {!! view_render_event('krayin.admin.email_template.create.accordion.general.before') !!}
+
+                    <x-admin::accordion>
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.settings.email-template.create.general')
+                                </p>
+                            </div>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.email-template.create.name')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    name="name"
+                                    id="name"
+                                    :value="old('name')"
+                                    rules="required"
+                                    :label="trans('admin::app.settings.email-template.create.name')"
+                                    :placeholder="trans('admin::app.settings.email-template.create.name')"
+                                />
+                                <x-admin::form.control-group.error control-name="name" />
+                            </x-admin::form.control-group>
+                        </x-slot>
+                    </x-admin::accordion>
+
+                    {!! view_render_event('krayin.admin.email_template.create.accordion.general.after') !!}
+                </div>
             </div>
-        </form>
-    </div>
-@stop
+        </script>
 
-@push('scripts')
-    <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
+        <script type="module">
+            app.component('v-email-template', {
+                template: '#v-email-template-template',
 
-    <script>
-        $('document').ready(function() {
-            var cursorPosition;
+                data() {
+                    return {
+                        subject: '',
 
-            $('#subject').on('focusout', function() {
-                cursorPosition = $(this).prop("selectionStart");
+                        selectedPlaceholder: '',
+
+                        cursorPosition: 0,
+
+                        placeholders: @json($placeholders),
+                    };
+                },
+
+                methods: {
+                    /**
+                     * Save the cursor position when the input is focused.
+                     * 
+                     * @param {Event} event
+                     * @returns {void}
+                     */
+                    saveCursorPosition(event) {
+                        this.cursorPosition = event.target.selectionStart;
+                    },
+
+                    /**
+                     * Insert the selected placeholder into the subject.
+                     * 
+                     * @returns {void}
+                     */
+                    insertPlaceholder() {
+                        const placeholder = this.selectedPlaceholder;
+
+                        if (this.cursorPosition >= 0) {
+                            const before = this.subject.substring(0, this.cursorPosition);
+
+                            const after = this.subject.substring(this.cursorPosition);
+
+                            this.subject = `${before}${placeholder}${after}`;
+
+                            this.cursorPosition += placeholder.length;
+                        } else if (placeholder) {
+                            this.subject += placeholder;
+                        }
+
+                        this.selectedPlaceholder = '';
+                    },
+                },
             });
-
-            $('#subject-placeholders').on('change', function(e) {
-                var subjectControl = $('#subject');
-
-                var placeholder = $(e.target).val();
-
-                $(e.target).val('');
-
-                if (cursorPosition >= 0) {
-                    var newContent = subjectControl.val().substring(0, cursorPosition) + placeholder + subjectControl.val().substring(cursorPosition);
-
-                    subjectControl.val(newContent);
-
-                    cursorPosition = cursorPosition + placeholder.length;
-                } else if (placeholder) {
-                    subjectControl.val(subjectControl.val() + placeholder);
-                }
-            });
-
-            tinymce.init({
-                selector: 'textarea#control',
-
-                height: 200,
-
-                width: "100%",
-
-                menubar: false,
-
-                plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
-
-                toolbar: 'placeholders | formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
-                
-                image_advtab: true,
-
-                setup: function (editor) {
-                    editor.addButton('placeholders', {
-                        type: 'listbox',
-
-                        text: 'Placeholders',
-                        
-                        onselect: function (e) {
-                            editor.insertContent(this.value());
-
-                            this.text('Placeholders');
-                        },
-
-                        values: @json($placeholders)
-                    })
-                }
-            });
-        });
-    </script>
-@endpush
+        </script>
+    @endPushOnce
+</x-admin::layouts>

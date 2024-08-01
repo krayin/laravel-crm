@@ -2,13 +2,17 @@
 
 namespace Webkul\WebForm\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\WebForm\DataGrids\WebFormDataGrid;
 use Webkul\WebForm\Http\Requests\WebForm;
 use Webkul\WebForm\Repositories\WebFormRepository;
 
@@ -30,164 +34,11 @@ class WebFormController extends Controller
     ) {}
 
     /**
-     * Display a listing of the email template.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function index()
-    {
-        if (request()->ajax()) {
-            return app(\Webkul\WebForm\DataGrids\WebFormDataGrid::class)->toJson();
-        }
-
-        return view('web_form::settings.web-forms.index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function create()
-    {
-        $tempAttributes = $this->attributeRepository->findWhereIn('entity_type', ['persons', 'leads']);
-
-        $attributes = [];
-
-        foreach ($tempAttributes as $attribute) {
-            if ($attribute->entity_type == 'persons'
-                && (
-                    $attribute->code == 'name'
-                    || $attribute->code == 'emails'
-                    || $attribute->code == 'contact_numbers'
-                )
-            ) {
-                $attributes['default'][] = $attribute;
-            } else {
-                $attributes['other'][] = $attribute;
-            }
-        }
-
-        return view('web_form::settings.web-forms.create', compact('attributes'));
-    }
-
-    /**
-     * Store a newly created email templates in storage.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function store()
-    {
-        $this->validate(request(), [
-            'title'                  => 'required',
-            'submit_button_label'    => 'required',
-            'submit_success_action'  => 'required',
-            'submit_success_content' => 'required',
-        ]);
-
-        Event::dispatch('settings.web_forms.create.before');
-
-        $data = request()->all();
-
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
-
-        $webForm = $this->webFormRepository->create($data);
-
-        Event::dispatch('settings.web_forms.create.after', $webForm);
-
-        session()->flash('success', trans('admin::app.settings.web-forms.create-success'));
-
-        return redirect()->route('admin.settings.web_forms.index');
-    }
-
-    /**
-     * Show the form for editing the specified email template.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
-     */
-    public function edit($id)
-    {
-        $webForm = $this->webFormRepository->findOrFail($id);
-
-        $attributes = $this->attributeRepository->findWhere([
-            ['entity_type', 'IN', ['persons', 'leads']],
-            ['id', 'NOTIN', $webForm->attributes()->pluck('attribute_id')->toArray()],
-        ]);
-
-        return view('web_form::settings.web-forms.edit', compact('webForm', 'attributes'));
-    }
-
-    /**
-     * Update the specified email template in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update($id)
-    {
-        $this->validate(request(), [
-            'title'                  => 'required',
-            'submit_button_label'    => 'required',
-            'submit_success_action'  => 'required',
-            'submit_success_content' => 'required',
-        ]);
-
-        Event::dispatch('settings.web_forms.update.before', $id);
-
-        $data = request()->all();
-
-        $data['create_lead'] = isset($data['create_lead']) ? 1 : 0;
-
-        $webForm = $this->webFormRepository->update($data, $id);
-
-        Event::dispatch('settings.web_forms.update.after', $webForm);
-
-        session()->flash('success', trans('admin::app.settings.web-forms.update-success'));
-
-        return redirect()->route('admin.settings.web_forms.index');
-    }
-
-    /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function formJS(string $formId): Response
     {
-        $webForm = $this->webFormRepository->findOrFail($id);
-
-        try {
-            Event::dispatch('settings.web_forms.delete.before', $id);
-
-            $this->webFormRepository->delete($id);
-
-            Event::dispatch('settings.web_forms.delete.after', $id);
-
-            return response()->json([
-                'message' => trans('admin::app.settings.web-forms.delete-success'),
-            ], 200);
-        } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.settings.web-forms.delete-failed'),
-            ], 400);
-        }
-
-        return response()->json([
-            'message' => trans('admin::app.settings.web-forms.delete-failed'),
-        ], 400);
-    }
-
-    /**
-     * Remove the specified email template from storage.
-     *
-     * @param  string  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function formJS($id)
-    {
-        $webForm = $this->webFormRepository->findOneByField('form_id', $id);
+        $webForm = $this->webFormRepository->findOneByField('form_id', $formId);
 
         return response()
             ->view('web_form::settings.web-forms.form-js', compact('webForm'))
@@ -196,11 +47,8 @@ class WebFormController extends Controller
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function formStore($id)
+    public function formStore(int $id): JsonResponse
     {
         $person = $this->personRepository
             ->getModel()
@@ -284,11 +132,8 @@ class WebFormController extends Controller
 
     /**
      * Remove the specified email template from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function preview($id)
+    public function preview(string $id): View
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $id);
 
@@ -301,11 +146,8 @@ class WebFormController extends Controller
 
     /**
      * Preview the web form from datagrid.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function view($id)
+    public function view(int $id): View
     {
         $webForm = $this->webFormRepository->findOneByField('id', $id);
 

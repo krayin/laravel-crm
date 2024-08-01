@@ -2,58 +2,45 @@
 
 namespace Webkul\WebForm\Providers;
 
-use Illuminate\Routing\Router;
-use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class WebFormServiceProvider extends ServiceProvider
 {
     /**
      * Bootstrap services.
-     *
-     * @return void
      */
-    public function boot(Router $router)
+    public function boot(): void
     {
-        $this->loadRoutesFrom(__DIR__.'/../Http/routes.php');
+        include __DIR__.'/../Http/helpers.php';
+
+        $this->loadRoutesFrom(__DIR__.'/../Routes/routes.php');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'web_form');
 
-        $this->publishes([
-            __DIR__.'/../../publishable/assets' => public_path('vendor/webkul/web-form/assets'),
-        ], 'public');
-
         $this->loadViewsFrom(__DIR__.'/../Resources/views', 'web_form');
 
-        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+        Blade::anonymousComponentPath(__DIR__.'/../Resources/views/components');
 
-        Event::listen('admin.layout.head', function ($viewRenderEventManager) {
-            $viewRenderEventManager->addTemplate('web_form::layouts.style');
-        });
+        $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
         $this->app->register(ModuleServiceProvider::class);
     }
 
     /**
      * Register services.
-     *
-     * @return void
      */
-    public function register()
+    public function register(): void
     {
         $this->registerConfig();
     }
 
     /**
      * Register package config.
-     *
-     * @return void
      */
-    protected function registerConfig()
+    protected function registerConfig(): void
     {
-        $this->mergeConfigFrom(
-            dirname(__DIR__).'/Config/menu.php', 'menu.admin'
-        );
+        $this->mergeConfigFrom(dirname(__DIR__).'/Config/menu.php', 'menu.admin');
 
         $this->mergeConfigFrom(dirname(__DIR__).'/Config/acl.php', 'acl');
     }
