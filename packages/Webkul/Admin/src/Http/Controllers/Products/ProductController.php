@@ -57,7 +57,7 @@ class ProductController extends Controller
 
         Event::dispatch('product.create.after', $product);
 
-        session()->flash('success', trans('admin::app.products.create-success'));
+        session()->flash('success', trans('admin::app.products.index.create-success'));
 
         return redirect()->route('admin.products.index');
     }
@@ -99,7 +99,7 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttributeForm $request, int $id): JsonResponse
+    public function update(AttributeForm $request, int $id)
     {
         Event::dispatch('product.update.before', $id);
 
@@ -107,10 +107,9 @@ class ProductController extends Controller
 
         Event::dispatch('product.update.after', $product);
 
-        return new JsonResponse([
-            'data'    => $product,
-            'message' => trans('admin::app.products.update-success'),
-        ]);
+        session()->flash('success', trans('admin::app.products.index.update-success'));
+
+        return redirect()->route('admin.products.index');
     }
 
     /**
@@ -137,7 +136,7 @@ class ProductController extends Controller
         Event::dispatch('product.update.after', $product);
 
         return response()->json([
-            'message' => trans('admin::app.products.update-success'),
+            'message' => trans('admin::app.products.index.update-success'),
         ], 200);
     }
 

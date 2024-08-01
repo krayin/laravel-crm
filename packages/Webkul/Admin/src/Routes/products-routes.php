@@ -21,7 +21,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
         Route::get('edit/{id}', 'edit')->name('admin.products.edit');
 
-        Route::put('edit/{id}', 'update')->name('admin.products.update');
+        Route::post('edit/{id}', 'update')->name('admin.products.update');
 
         Route::get('search', 'search')->name('admin.products.search');
 

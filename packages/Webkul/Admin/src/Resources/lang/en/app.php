@@ -223,8 +223,12 @@ return [
 
     'products' => [
         'index' => [
-            'title'      => 'Products',
-            'create-btn' => 'Create Product',
+            'title'          => 'Products',
+            'create-btn'     => 'Create Product',
+            'create-success' => 'Product created successfully.',
+            'update-success' => 'Product updated successfully.',
+            'delete-success' => 'Product deleted successfully.',
+            'delete-failed'  => 'Product can not be deleted.',
 
             'datagrid'   => [
                 'allocated' => 'Allocated',
