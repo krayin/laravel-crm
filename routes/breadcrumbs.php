@@ -35,7 +35,7 @@ Breadcrumbs::for('quotes', function (BreadcrumbTrail $trail) {
 // Dashboard > Quotes > Add Quote
 Breadcrumbs::for('quotes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('quotes');
-    $trail->push(trans('admin::app.quotes.create-title'), route('admin.quotes.create'));
+    $trail->push(trans('admin::app.quotes.create.title'), route('admin.quotes.create'));
 });
 
 // Dashboard > Quotes > Edit Quote
