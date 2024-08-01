@@ -223,8 +223,12 @@ return [
 
     'products' => [
         'index' => [
-            'title'      => 'Products',
-            'create-btn' => 'Create Product',
+            'title'          => 'Products',
+            'create-btn'     => 'Create Product',
+            'create-success' => 'Product created successfully.',
+            'update-success' => 'Product updated successfully.',
+            'delete-success' => 'Product deleted successfully.',
+            'delete-failed'  => 'Product can not be deleted.',
 
             'datagrid'   => [
                 'allocated' => 'Allocated',
@@ -238,16 +242,20 @@ return [
                 'sku'       => 'SKU',
                 'view'      => 'View',
             ],
+        ],
 
-            'create' => [
-                'name'     => 'Name',
-                'save-btn' => 'Save Products',
-                'title'    => 'Create Products',
-            ],
+        'create' => [
+            'save-btn'  => 'Save Products',
+            'title'     => 'Create Products',
+            'general'   => 'General',
+            'price'     => 'Price',
+        ],
 
-            'edit' => [
-                'title' => 'Edit Products',
-            ],
+        'edit' => [
+            'title'     => 'Edit Products',
+            'save-btn'  => 'Save Products',
+            'general'   => 'General',
+            'price'     => 'Price',
         ],
     ],
 
@@ -500,6 +508,7 @@ return [
                 'update-success' => 'Webform updated successfully.',
                 'delete-success' => 'Webform deleted successfully.',
                 'delete-failed'  => 'Webform can not be deleted.',
+
                 'datagrid'       => [
                     'id'     => 'ID',
                     'title'  => 'Title',
@@ -688,8 +697,13 @@ return [
 
         'pipelines' => [
             'index' => [
-                'title'      => 'Pipelines',
-                'create-btn' => 'Create Pipeline',
+                'title'                => 'Pipelines',
+                'create-btn'           => 'Create Pipeline',
+                'create-success'       => 'Pipeline created successfully.',
+                'update-success'       => 'Pipeline updated successfully.',
+                'delete-success'       => 'Pipeline deleted successfully.',
+                'delete-failed'        => 'Pipeline can not be deleted.',
+                'default-delete-error' => 'Default pipeline can not be deleted.',
 
                 'datagrid' => [
                     'delete'      => 'Delete',
@@ -701,6 +715,38 @@ return [
                     'rotten-days' => 'Rotten Days',
                     'yes'         => 'Yes',
                 ],
+            ],
+
+            'create' => [
+                'title'           => 'Create Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
+            ],
+
+            'edit'  => [
+                'title'           => 'Edit Pipeline',
+                'save-btn'        => 'Save Pipeline',
+                'name'            => 'Name',
+                'rotten-days'     => 'Rotten Days',
+                'mark-as-default' => 'Mark as Default',
+                'general'         => 'General',
+                'probability'     => 'Probability(%)',
+                'new-stage'       => 'New',
+                'won-stage'       => 'Won',
+                'lost-stage'      => 'Lost',
+                'stage-btn'       => 'Add Stage',
+                'stages'          => 'Stages',
+                'duplicate-name'  => 'The "Name" field cannot be duplicate',
             ],
         ],
 

@@ -125,7 +125,7 @@ Breadcrumbs::for('products', function (BreadcrumbTrail $trail) {
 // Dashboard > Products > Create Product
 Breadcrumbs::for('products.create', function (BreadcrumbTrail $trail) {
     $trail->parent('products');
-    $trail->push(trans('admin::app.products.create-title'), route('admin.products.create'));
+    $trail->push(trans('admin::app.products.create.title'), route('admin.products.create'));
 });
 
 // Dashboard > Products > View Product
@@ -137,7 +137,7 @@ Breadcrumbs::for('products.view', function (BreadcrumbTrail $trail, $product) {
 // Dashboard > Products > Edit Product
 Breadcrumbs::for('products.edit', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('products');
-    $trail->push(trans('admin::app.products.edit-title'), route('admin.products.edit', $product->id));
+    $trail->push(trans('admin::app.products.edit.title'), route('admin.products.edit', $product->id));
 });
 
 // Settings
@@ -227,13 +227,13 @@ Breadcrumbs::for('settings.pipelines', function (BreadcrumbTrail $trail) {
 // Dashboard > Pipelines > Create Pipeline
 Breadcrumbs::for('settings.pipelines.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.pipelines');
-    $trail->push(trans('admin::app.settings.pipelines.create-title'), route('admin.settings.pipelines.create'));
+    $trail->push(trans('admin::app.settings.pipelines.create.title'), route('admin.settings.pipelines.create'));
 });
 
 // Dashboard > Pipelines > Edit Pipeline
 Breadcrumbs::for('settings.pipelines.edit', function (BreadcrumbTrail $trail, $pipeline) {
     $trail->parent('settings.pipelines');
-    $trail->push(trans('admin::app.settings.pipelines.edit-title'), route('admin.settings.pipelines.edit', $pipeline->id));
+    $trail->push(trans('admin::app.settings.pipelines.edit.title'), route('admin.settings.pipelines.edit', $pipeline->id));
 });
 
 // Settings > Sources
