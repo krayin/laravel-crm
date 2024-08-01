@@ -1043,6 +1043,17 @@ return [
             'title' => 'Lead: :title',
 
             'activities' => [
+                'index' => [
+                    'all'      => 'All',
+                    'calls'    => 'Calls',
+                    'meetings' => 'Meetings',
+                    'lunches'  => 'Lunches',
+                    'files'    => 'Files',
+                    'quotes'   => 'Quotes',
+                    'notes'    => 'Notes',
+                    'emails'   => 'Emails',
+                ],
+
                 'actions' => [
                     'mail' => [
                         'btn'      => 'Mail',
@@ -1085,6 +1096,13 @@ return [
                         'save-btn'      => 'Save Activity',
                     ],
                 ],
+
+                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+                'create-success'       => 'Activity created successfully.',
+                'update-success'       => 'Activity updated successfully.',
+                'mass-update-success'  => 'Activities updated successfully.',
+                'destroy-success'      => 'Activity deleted successfully.',
+                'delete-failed'        => 'Activity can not be deleted.',
             ],
         ],
     ],

@@ -6,7 +6,7 @@
     <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
-        <div class="flex min-w-96 max-w-96 flex-col self-start rounded-lg border border-gray-200 bg-white">
+        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
             <!-- Lead Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
                 <!-- Breadcrums -->
@@ -28,7 +28,7 @@
                 </h1>
 
                 <!-- Activity Actions -->
-                <div class="flex gap-2">
+                <div class="flex flex-wrap gap-2">
                     <!-- Mail Activity Action -->
                     @include ('admin::leads.view.activities.actions.mail')
 

@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Lead\LeadController;
 use Webkul\Admin\Http\Controllers\Lead\TagController;
 use Webkul\Admin\Http\Controllers\Lead\QuoteController;
+use Webkul\Admin\Http\Controllers\Lead\ActivityController;
 
 /**
  * Settings routes.
@@ -33,14 +34,18 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
         Route::get('get/{pipeline_id?}', 'get')->name('admin.leads.get');
 
-        Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
-            Route::post('', 'TagController@store')->name('admin.leads.tags.store');
+        Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
+            Route::get('', 'index')->name('admin.leads.activities.index');
+        });
 
-            Route::delete('{tag_id?}', 'TagController@delete')->name('admin.leads.tags.delete');
+        Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
+            Route::post('', 'store')->name('admin.leads.tags.store');
+
+            Route::delete('{tag_id?}', 'delete')->name('admin.leads.tags.delete');
         });
 
         Route::controller(QuoteController::class)->prefix('{id}/quotes')->group(function () {
-            Route::delete('{quote_id?}', 'QuoteController@delete')->name('admin.leads.quotes.delete');
+            Route::delete('{quote_id?}', 'delete')->name('admin.leads.quotes.delete');
         });
     });
 });

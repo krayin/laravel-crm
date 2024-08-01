@@ -15,21 +15,15 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
         Route::get('get', 'get')->name('admin.activities.get');
 
-        Route::post('is-overlapping', 'checkIfOverlapping')->name('admin.activities.check_overlapping');
-
         Route::post('create', 'store')->name('admin.activities.store');
 
-        Route::get('edit/{id?}', 'edit')->name('admin.activities.edit');
+        Route::get('edit/{id}', 'edit')->name('admin.activities.edit');
 
-        Route::put('edit/{id?}', 'update')->name('admin.activities.update');
+        Route::put('edit/{id}', 'update')->name('admin.activities.update');
 
-        Route::get('search-participants', 'searchParticipants')->name('admin.activities.search_participants');
+        Route::get('download/{id}', 'download')->name('admin.activities.file_download');
 
-        Route::post('file-upload', 'upload')->name('admin.activities.file_upload');
-
-        Route::get('file-download/{id?}', 'download')->name('admin.activities.file_download');
-
-        Route::delete('{id?}', 'destroy')->name('admin.activities.delete');
+        Route::delete('{id}', 'destroy')->name('admin.activities.delete');
 
         Route::put('mass-update', 'massUpdate')->name('admin.activities.mass_update');
 
