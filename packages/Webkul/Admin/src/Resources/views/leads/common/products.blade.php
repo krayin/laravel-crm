@@ -1,135 +1,150 @@
-@push('scripts')
-    <script type="text/x-template" id="product-list-template">
-        <div class="lead-product-list">
-            <product-item
-                v-for='(product, index) in products'
-                :product="product"
-                :key="index"
-                :index="index"
-                @onRemoveProduct="removeProduct($event)"
-            ></product-item>
+<v-product-list></v-product-list>
 
-            <a class="add-more-link" href @click.prevent="addProduct">+ {{ __('admin::app.common.add_more') }}</a>
+@pushOnce('scripts')
+    <script 
+        type="text/x-template" 
+        id="v-product-list-template"
+    >
+        <div class="mb-4">
+             <!-- Table -->
+             <x-admin::table class="w-full table-fixed">
+                <!-- Table Head -->
+                <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    <x-admin::table.thead.tr>
+                        <x-admin::table.th>
+                            @lang('Product Name')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="text-right">
+                            @lang('Quantity')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="text-right">
+                            @lang('Price')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="text-right">
+                            @lang('Amount')
+                        </x-admin::table.th>
+
+                        <x-admin::table.th class="text-right"
+                        >
+                            @lang('Action')
+                        </x-admin::table.th>
+                    </x-admin::table.thead.tr>
+                </x-admin::table.thead>
+
+                <!-- Table Body -->
+                <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    
+                    <!-- Quote Item Vue component -->
+                    <v-product-item
+                        v-for='(product, index) in products'
+                        :product="product"
+                        :key="index"
+                        :index="index"
+                        @onRemoveProduct="removeProduct($event)"
+                    ></v-product-item>
+                </x-admin::table.tbody>
+            </x-admin::table>
         </div>
+        
+        <!-- Add New Qoute Item -->
+        <span
+            class="cursor-pointer text-xs text-brandColor hover:underline dark:text-brandColor"
+            @click="addProduct"
+        >
+            + @lang('Add More')
+        </span>
     </script>
 
-    <script type="text/x-template" id="product-item-template">
-        <div class="lead-product">
-            <div class="top-control-group">
-                <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}' + inputName + '[product_id]') ? 'has-error' : '']">
-                    <label for="email" class="required">{{ __('admin::app.leads.item') }}</label>
-
-                    <input
-                        type="hidden"
-                        :name="[inputName + '[name]']"
-                        v-model="product['name']"
-                    />
-
-                    <input
-                        type="text"
-                        :name="[inputName + '[product_id]']"
-                        class="control"
-                        v-model="product['name']"
-                        v-validate="'required'"
-                        data-vv-as="&quot;{{ __('admin::app.leads.item') }}&quot;"
-                        v-on:keyup="search"
-                        placeholder="{{ __('admin::app.common.start-typing') }}"
+    <script 
+        type="text/x-template" 
+        id="v-product-item-template"
+    >
+        <x-admin::table.thead.tr class="border-b-2">
+            <!-- Quote Name -->
+            <x-admin::table.td>
+                <x-admin::form.control-group class="!mb-0">
+                    <x-admin::lookup 
+                        ::src="src"
+                        ::name="`${inputName}[name]`"
+                        ::params="params"
+                        placeholder="Product Nmae"
+                        @on-selected="(value) => product.product_id = value.id"
                     />
 
                     <input
                         type="hidden"
                         :name="[inputName + '[product_id]']"
                         v-model="product.product_id"
-                        v-validate="'required'"
-                        data-vv-as="&quot;{{ __('admin::app.leads.item') }}&quot;"
                     />
 
-                    <div class="lookup-results" v-if="state == ''">
-                        <ul>
-                            <li v-for='(product, index) in products' @click="addProduct(product)">
-                                <span>@{{ product.name }}</span>
-                            </li>
-
-                            <li v-if="! products.length && product['name'].length && ! is_searching">
-                                <span>{{ __('admin::app.common.no-result-found') }}</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <i class="icon loader-active-icon" v-if="is_searching"></i>
-
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + inputName + '[product_id]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + inputName + '[product_id]') }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="bottom-control-group">
-                <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}' + inputName + '[price]') ? 'has-error' : '']">
-                    <label for="email" class="required">{{ __('admin::app.leads.price') }}</label>
-
-                    <input
-                        type="text"
-                        :name="[inputName + '[price]']"
-                        class="control"
-                        v-model="product.price"
-                        v-validate="'required'"
-                        data-vv-as="&quot;{{ __('admin::app.leads.price') }}&quot;"
+                </x-admin::form.control-group>
+            </x-admin::table.td>
+            
+            <!-- Quantity -->
+            <x-admin::table.td class="text-right">
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="inline"
+                        ::name="`${inputName}[quantity]`"
+                        ::value="product.quantity"
+                        rules="required|decimal:4"
+                        :label="trans('admin::app.quotes.create.quantity')"
+                        :placeholder="trans('admin::app.quotes.create.quantity')"
+                        @on-change="(value) => product.quantity = value"
                     />
-
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + inputName + '[price]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + inputName + '[price]') }}
-                    </span>
-                </div>
-
-                <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}' + inputName + '[quantity]') ? 'has-error' : '']">
-                    <label for="email" class="required">{{ __('admin::app.leads.quantity') }}</label>
-
-                    <input
-                        type="text"
-                        :name="[inputName + '[quantity]']"
-                        class="control"
-                        v-model="product.quantity"
-                        v-validate="'required'"
-                        data-vv-as="&quot;{{ __('admin::app.leads.quantity') }}&quot;"
+                </x-admin::form.control-group>
+            </x-admin::table.td>
+        
+            <!-- Price -->
+            <x-admin::table.td class="text-right">
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="inline"
+                        ::name="`${inputName}[price]`"
+                        ::value="product.price"
+                        rules="required|decimal:4"
+                        :label="trans('admin::app.quotes.create.price')"
+                        :placeholder="trans('admin::app.quotes.create.price')"
+                        @on-change="(value) => product.price = value"
                     />
-
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + inputName + '[quantity]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + inputName + '[quantity]') }}
-                    </span>
-                </div>
-
-                <div class="form-group" :class="[errors.has('{!! $formScope ?? '' !!}' + inputName + '[amount]') ? 'has-error' : '']">
-                    <label for="email" class="required">{{ __('admin::app.leads.amount') }}</label>
-                    
-                    <input
-                        type="text"
-                        :name="[inputName + '[amount]']"
-                        class="control"
-                        v-model="product.price * product.quantity"
-                        v-validate="'required'"
-                        data-vv-as="&quot;{{ __('admin::app.leads.amount') }}&quot;"
-                        disabled
+                </x-admin::form.control-group>
+            </x-admin::table.td>
+        
+            <!-- Total -->
+            <x-admin::table.td class="text-right">
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.control
+                        type="inline"
+                        ::name="`${inputName}[amount]`"
+                        ::value="product.price * product.quantity"
+                        rules="required|decimal:4"
+                        :label="trans('admin::app.quotes.create.total')"
+                        :placeholder="trans('admin::app.quotes.create.total')"
+                        ::allowEdit="false"
                     />
+                </x-admin::form.control-group>
+            </x-admin::table.td>
 
-                    <span class="control-error" v-if="errors.has('{!! $formScope ?? '' !!}' + inputName + '[amount]')">
-                        @{{ errors.first('{!! $formScope ?? '' !!}' + inputName + '[amount]') }}
-                    </span>
-                </div>
-
-                <i class="icon trash-icon" @click="removeProduct"></i>
-            </div>
-        </div>
+            <!-- Action -->
+            <x-admin::table.td class="text-right">
+                <x-admin::form.control-group >
+                    <i  
+                        @click="removeProduct"
+                        class="icon-delete cursor-pointer text-2xl"
+                    ></i>
+                </x-admin::form.control-group>
+            </x-admin::table.td>
+        </x-admin::table.thead.tr>
     </script>
 
-    <script>
-        Vue.component('product-list', {
-
-            template: '#product-list-template',
+    <script type="module">
+        app.component('v-product-list', {
+            template: '#v-product-list-template',
 
             props: ['data'],
-
-            inject: ['$validator'],
 
             data: function () {
                 return {
@@ -138,16 +153,16 @@
             },
 
             methods: {
-                addProduct: function() {
+                addProduct() {
                     this.products.push({
-                        'id': null,
-                        'product_id': null,
-                        'name': '',
-                        'quantity': null,
-                        'price': null,
-                        'amount': null,
+                        id: null,
+                        product_id: null,
+                        name: '',
+                        quantity: 0,
+                        price: 0,
+                        amount: null,
                     })
-                }, 
+                },
 
                 removeProduct: function(product) {
                     const index = this.products.indexOf(product);
@@ -157,18 +172,13 @@
             }
         });
 
-        Vue.component('product-item', {
-
-            template: '#product-item-template',
+        app.component('v-product-item', {
+            template: '#v-product-item-template',
 
             props: ['index', 'product'],
 
-            inject: ['$validator'],
-
-            data: function () {
+            data() {
                 return {
-                    is_searching: false,
-
                     state: this.product['product_id'] ? 'old' : '',
 
                     products: [],
@@ -176,67 +186,79 @@
             },
 
             computed: {
-                inputName: function () {
+                inputName() {
                     if (this.product.id) {
                         return "products[" + this.product.id + "]";
                     }
 
                     return "products[product_" + this.index + "]";
+                },
+
+                src() {
+                    return '{{ route('admin.products.search') }}';
+                },
+
+                params() {
+                    return {
+                        params: {
+                            query: this.product.name
+                        }
+                    }
                 }
             },
 
             methods: {
-                search: debounce(function () {
-                    this.state = '';
+                // search: debounce(function () {
+                //     this.state = '';
 
-                    this.product['product_id'] = null;
+                //     this.product['product_id'] = null;
 
-                    this.is_searching = true;
+                //     this.is_searching = true;
 
-                    if (this.product['name'].length < 2) {
-                        this.products = [];
+                //     if (this.product['name'].length < 2) {
+                //         this.products = [];
 
-                        this.is_searching = false;
+                //         this.is_searching = false;
 
-                        return;
-                    }
+                //         return;
+                //     }
 
-                    var self = this;
+                //     var self = this;
                     
-                    this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
-                        .then (function(response) {
-                            self.$parent.products.forEach(function(addedProduct) {
+                //     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
+                //         .then (function(response) {
+                //             self.$parent.products.forEach(function(addedProduct) {
                                 
-                                response.data.forEach(function(product, index) {
-                                    if (product.id == addedProduct.product_id) {
-                                        response.data.splice(index, 1);
-                                    }
-                                });
+                //                 response.data.forEach(function(product, index) {
+                //                     if (product.id == addedProduct.product_id) {
+                //                         response.data.splice(index, 1);
+                //                     }
+                //                 });
 
-                            });
+                //             });
 
-                            self.products = response.data;
+                //             self.products = response.data;
 
-                            self.is_searching = false;
-                        })
-                        .catch (function (error) {
-                            self.is_searching = false;
-                        })
-                }, 500),
+                //             self.is_searching = false;
+                //         })
+                //         .catch (function (error) {
+                //             self.is_searching = false;
+                //         })
+                // }, 500),
 
-                addProduct: function(result) {
-                    this.state = 'old';
+                addProduct(result) {
+                        this.state = 'old';
 
-                    Vue.set(this.product, 'product_id', result.id)
-                    Vue.set(this.product, 'name', result.name)
-                    Vue.set(this.product, 'price', result.price)
-                    Vue.set(this.product, 'quantity', result.quantity)
+                        this.product.product_id = result.id;
+                        this.product.name = result.name;
+                        this.product.price = result.price;
+                        this.product.quantity = result.quantity;
                 },
-
-                removeProduct: function () {
+                    
+                removeProduct () {
                     this.$emit('onRemoveProduct', this.product)
                 }
             }
         });
     </script>
-@endpush
+@endPushOnce

@@ -1,16 +1,4 @@
-@props([
-    'endPoint'    => null,
-    'params'      => [],
-    'name'        => null,
-    'placeholder' => null,
-])
-
-<v-lookup 
-    endpoint="{{ $endPoint }}"
-    :params="{{ json_encode($params) }}"
-    name="{{ $name }}"
-    placeholder="{{ $placeholder }}"
-></v-lookup>
+<v-lookup {{ $attributes }}></v-lookup>
 
 @pushOnce('scripts')
     <script 
@@ -24,9 +12,9 @@
             <!-- Input Box (Button) -->
             <x-admin::form.control-group.control
                 type="text"
-                ::id="name"
+                id="name"
                 ::name="name"
-                class="w-full pr-10 cursor-pointer text-gray-800"
+                class="w-full cursor-pointer pr-10 text-gray-800"
                 ::placeholder="selectedItem.name ?? placeholder"
                 v-model="selectedItem.name"
                 @click="toggle"
@@ -40,7 +28,7 @@
                 :value="selectedItem?.id"
             />
 
-            <span class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                 <div class="flex items-center justify-center space-x-1">
                     <div
                         class="relative"
@@ -79,31 +67,31 @@
             <!-- Popup Box -->
             <div 
                 v-if="showPopup" 
-                class="absolute top-full mt-1 w-full border bg-white rounded-lg shadow-lg z-10 transition-transform transform origin-top p-2"
+                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
             >
                 <!-- Search Bar -->
                 <input
                     type="text"
                     v-model.lazy="searchTerm"
                     v-debounce="500"
-                    class="w-full rounded border border-gray-200 px-2.5 py-2 !mb-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                    class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                     placeholder="Search..."
                     ref="searchInput"
                     @keyup="search"
                 />
         
                 <!-- Results List -->
-                <ul class="max-h-40 overflow-y-auto divide-y divide-gray-100">
+                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
                     <li 
                         v-for="item in filteredResults" 
                         :key="item.id"
-                        class="px-4 py-2 cursor-pointer text-gray-800 hover:bg-blue-100 transition-colors"
+                        class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100"
                         @click="selectItem(item)"
                     >
                         @{{ item.name }}
                     </li>
 
-                    <li v-if="filteredResults.length === 0" class="px-4 py-2 text-gray-500 text-center">
+                    <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500">
                         @lang('No results found')
                     </li>
                 </ul>
@@ -116,14 +104,14 @@
             template: '#v-lookup-template',
 
             props: {
-                endpoint: {
+                src: {
                     type: String,
                     required: true,
                 },
 
                 params: {
                     type: Object,
-                    required: true,
+                    default: () => ({}),
                 },
 
                 name: {
@@ -134,6 +122,11 @@
                 placeholder: {
                     type: String,
                     required: true,
+                },
+
+                value: {
+                    type: Object,
+                    default: () => ({}),
                 },
             },
 
@@ -153,6 +146,12 @@
 
                     cancelToken: null,
                 };
+            },
+
+            mounted() {
+                if (this.value) {
+                    this.selectedItem = this.value;
+                }
             },
 
             created() {
@@ -235,7 +234,7 @@
 
                     this.cancelToken = this.$axios.CancelToken.source();
 
-                    this.$axios.get(this.endpoint, {
+                    this.$axios.get(this.src, {
                             params: { 
                                 ...this.params,
                                 query: this.searchTerm
