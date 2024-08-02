@@ -14,6 +14,8 @@ use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\User\Repositories\UserRepository;
+use Webkul\Admin\Http\Resources\EmailResource;
 
 class EmailController extends Controller
 {
@@ -73,7 +75,7 @@ class EmailController extends Controller
                 ['user_id', '=', $currentUser->id],
             ]);
         } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds();
+            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
 
             $results = $this->leadRepository->findWhere([
                 ['id', '=', $email->lead_id],
@@ -91,9 +93,9 @@ class EmailController extends Controller
 
         if (request('route') == 'draft') {
             return view('admin::mail.compose', compact('email'));
-        } else {
-            return view('admin::mail.view', compact('email'));
         }
+
+        return view('admin::mail.view', compact('email'));
     }
 
     /**
@@ -110,27 +112,7 @@ class EmailController extends Controller
 
         Event::dispatch('email.create.before');
 
-        $uniqueId = time().'@'.config('mail.domain');
-
-        $referenceIds = [];
-
-        if ($parentId = request('parent_id')) {
-            $parent = $this->emailRepository->findOrFail($parentId);
-
-            $referenceIds = $parent->reference_ids ?? [];
-        }
-
-        $email = $this->emailRepository->create(array_merge(request()->all(), [
-            'source'        => 'web',
-            'from'          => config('mail.from.address'),
-            'user_type'     => 'admin',
-            'folders'       => request('is_draft') ? ['draft'] : ['outbox'],
-            'name'          => auth()->guard('user')->user()->name,
-            'unique_id'     => $uniqueId,
-            'message_id'    => $uniqueId,
-            'reference_ids' => array_merge($referenceIds, [$uniqueId]),
-            'user_id'       => auth()->guard('user')->user()->id,
-        ]));
+        $email = $this->emailRepository->create(request()->all());
 
         if (! request('is_draft')) {
             try {
@@ -144,6 +126,13 @@ class EmailController extends Controller
         }
 
         Event::dispatch('email.create.after', $email);
+
+        if (request()->ajax()) {
+            return response()->json([
+                // 'data'    => new EmailResource($email),
+                'message' => trans('admin::app.activities.create-success'),
+            ]);
+        }
 
         if (request('is_draft')) {
             session()->flash('success', trans('admin::app.mail.saved-to-draft'));
@@ -214,12 +203,11 @@ class EmailController extends Controller
             }
 
             return response()->json($response);
-        } else {
-            session()->flash('success', trans('admin::app.mail.update-success'));
-
-            return redirect()->back();
-
         }
+
+        session()->flash('success', trans('admin::app.mail.update-success'));
+
+        return redirect()->back();
     }
 
     /**
@@ -298,25 +286,25 @@ class EmailController extends Controller
                 return response()->json([
                     'message' => trans('admin::app.mail.delete-success'),
                 ], 200);
-            } else {
-                session()->flash('success', trans('admin::app.mail.delete-success'));
-
-                if ($parentId) {
-                    return redirect()->back();
-                } else {
-                    return redirect()->route('admin.mail.index', ['route' => 'inbox']);
-                }
             }
+
+            session()->flash('success', trans('admin::app.mail.delete-success'));
+
+            if ($parentId) {
+                return redirect()->back();
+            }
+            
+            return redirect()->route('admin.mail.index', ['route' => 'inbox']);
         } catch (\Exception $exception) {
             if (request()->ajax()) {
                 return response()->json([
                     'message' => trans('admin::app.mail.delete-failed'),
                 ], 400);
-            } else {
-                session()->flash('error', trans('admin::app.mail.delete-failed'));
-
-                return redirect()->back();
             }
+
+            session()->flash('error', trans('admin::app.mail.delete-failed'));
+
+            return redirect()->back();
         }
     }
 

@@ -1137,6 +1137,14 @@ return [
                 'lost-reason'    => 'Lost Reason',
             ],
 
+            'tags' => [
+                'title'       => 'Tags',
+                'added-tags'  => 'Added Tags',
+                'save-btn'    => 'Save Tag',
+                'placeholder' => 'Type to search tags',
+                'add-tag'     => 'Add \":term\"...',
+            ],
+
             'activities' => [
                 'index' => [
                     'all'          => 'All',
@@ -1169,18 +1177,19 @@ return [
                     ],
 
                     'file' => [
-                        'btn'         => 'File',
-                        'title'       => 'Add File',
-                        'name'        => 'Name',
-                        'description' => 'Description',
-                        'file'        => 'File',
-                        'save-btn'    => 'Save File',
+                        'btn'           => 'File',
+                        'title'         => 'Add File',
+                        'title-control' => 'Title',
+                        'name'          => 'File Name',
+                        'description'   => 'Description',
+                        'file'          => 'File',
+                        'save-btn'      => 'Save File',
                     ],
 
                     'note' => [
                         'btn'      => 'Note',
                         'title'    => 'Add Note',
-                        'note'     => 'Note',
+                        'comment'  => 'Comment',
                         'save-btn' => 'Save Note',
                     ],
 

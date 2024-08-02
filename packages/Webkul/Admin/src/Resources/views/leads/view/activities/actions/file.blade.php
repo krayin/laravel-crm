@@ -24,7 +24,7 @@
             as="div"
             ref="modalForm"
         >
-            <form @submit="handleSubmit($event, updateOrCreate)">
+            <form @submit="handleSubmit($event, save)">
                 <x-admin::modal ref="mailActivityModal" position="bottom-right">
                     <x-slot:header>
                         <h3 class="text-base font-semibold">
@@ -33,7 +33,45 @@
                     </x-slot>
 
                     <x-slot:content>
+                        <!-- Activity Type -->
+                        <x-admin::form.control-group.control
+                            type="hidden"
+                            name="type"
+                            value="file"
+                        />
+                        
+                        <!-- Lead Id -->
+                        <x-admin::form.control-group.control
+                            type="hidden"
+                            name="lead_id"
+                            :value="$lead->id"
+                        />
+
                         <!-- Title -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.leads.view.activities.actions.file.title-control')
+                            </x-admin::form.control-group.label>
+                            
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="title"
+                            />
+                        </x-admin::form.control-group>
+
+                        <!-- Description -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.leads.view.activities.actions.file.description')
+                            </x-admin::form.control-group.label>
+                            
+                            <x-admin::form.control-group.control
+                                type="textarea"
+                                name="comment"
+                            />
+                        </x-admin::form.control-group>
+                        
+                        <!-- File Name -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
                                 @lang('admin::app.leads.view.activities.actions.file.name')
@@ -45,20 +83,8 @@
                             />
                         </x-admin::form.control-group>
 
-                        <!-- Content -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.file.description')
-                            </x-admin::form.control-group.label>
-                            
-                            <x-admin::form.control-group.control
-                                type="textarea"
-                                name="comment"
-                            />
-                        </x-admin::form.control-group>
-
                         <!-- File -->
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.leads.view.activities.actions.file.file')
                             </x-admin::form.control-group.label>
@@ -76,12 +102,12 @@
                     </x-slot>
 
                     <x-slot:footer>
-                        <button
-                            type="submit"
+                        <x-admin::button
                             class="primary-button"
-                        >
-                            @lang('admin::app.leads.view.activities.actions.file.save-btn')
-                        </button>
+                            :title="trans('admin::app.leads.view.activities.actions.file.save-btn')"
+                            ::loading="isStoring"
+                            ::disabled="isStoring"
+                        />
                     </x-slot>
                 </x-admin::modal>
             </form>
@@ -94,14 +120,47 @@
 
             data: function () {
                 return {
+                    isStoring: false,
                 }
             },
 
             methods: {
                 openModal(type) {
                     this.$refs.mailActivityModal.open();
-                }
-            }
+                },
+
+                save(params, { setErrors }) {
+                    this.isStoring = true;
+
+                    let self = this;
+
+                    this.$axios.post("{{ route('admin.activities.store', $lead->id) }}", params, {
+                            headers: {
+                                'Content-Type': 'multipart/form-data',
+                            }
+                        })
+                        .then (function(response) {
+                            self.isStoring = false;
+
+                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                            self.$emitter.emit('on-activity-added', response.data.data);
+
+                            self.$refs.mailActivityModal.close();
+                        })
+                        .catch (function (error) {
+                            self.isStoring = false;
+
+                            if (error.response.status == 422) {
+                                setErrors(error.response.data.errors);
+                            } else {
+                                self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                                self.$refs.mailActivityModal.close();
+                            }
+                        });
+                },
+            },
         });
     </script>
 @endPushOnce

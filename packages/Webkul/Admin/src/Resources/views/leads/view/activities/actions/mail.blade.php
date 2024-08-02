@@ -70,12 +70,11 @@
                         </x-admin::form.control-group>
 
                         <!-- Content -->
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.control
                                 type="textarea"
                                 id="reply"
                                 name="reply"
-                                tinymce="true"
                                 rules="required"
                                 :label="trans('admin::app.leads.view.activities.actions.mail.message')"
                             />
@@ -115,8 +114,8 @@
             methods: {
                 openModal(type) {
                     this.$refs.mailActivityModal.open();
-                }
-            }
+                },
+            },
         });
     </script>
 @endPushOnce

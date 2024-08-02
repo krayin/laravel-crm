@@ -90,10 +90,6 @@
     html.dark [class*=" icon-"]{
         color: #d1d5db;
     }
-    
-    .box-shadow {
-    }
-
         
     /* -------------------------------- new css -------------------------------- */
     .icon-bookmark:before {
@@ -168,7 +164,7 @@
         content: "\e903";
     }
 
-    .icon-calender:before {
+    .icon-calendar:before {
         content: "\e904";
     }
 

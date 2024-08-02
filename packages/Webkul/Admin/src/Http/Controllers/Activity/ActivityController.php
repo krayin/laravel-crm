@@ -14,6 +14,7 @@ use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Admin\Http\Resources\ActivityResource;
 
 class ActivityController extends Controller
 {
@@ -63,14 +64,21 @@ class ActivityController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(): RedirectResponse
+    public function store(): RedirectResponse|JsonResponse
     {
         $this->validate(request(), [
             'type'          => 'required',
             'comment'       => 'required_if:type,note',
-            'schedule_from' => 'required_unless:type,note',
-            'schedule_to'   => 'required_unless:type,note',
+            'schedule_from' => 'required_unless:type,note,file',
+            'schedule_to'   => 'required_unless:type,note,file',
+            'file'          => 'required_if:type,file'
         ]);
+
+        /**
+         * TODO
+         * 
+         * Check if meeting is overlapping with other meetings 
+         */
 
         Event::dispatch('activity.create.before');
 
@@ -83,13 +91,14 @@ class ActivityController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
+                'data'    => new ActivityResource($activity),
                 'message' => trans('admin::app.activities.create-success'),
             ]);
-        } else {
-            session()->flash('success', trans('admin::app.activities.create-success'));
-
-            return redirect()->back();
         }
+
+        session()->flash('success', trans('admin::app.activities.create-success'));
+
+        return redirect()->back();
     }
 
     /**
@@ -119,13 +128,14 @@ class ActivityController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
+                'data'    => new ActivityResource($activity),
                 'message' => trans('admin::app.activities.update-success'),
             ]);
-        } else {
-            session()->flash('success', trans('admin::app.activities.update-success'));
-
-            return redirect()->route('admin.activities.index');
         }
+
+        session()->flash('success', trans('admin::app.activities.update-success'));
+
+        return redirect()->route('admin.activities.index');
     }
 
     /**

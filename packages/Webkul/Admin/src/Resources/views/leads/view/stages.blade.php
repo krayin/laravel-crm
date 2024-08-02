@@ -2,7 +2,9 @@
 {!! view_render_event('admin.leads.view.stages.before', ['lead' => $lead]) !!}
 
 <!-- Stages Vue Component -->
-<v-lead-stages></v-lead-stages>
+<v-lead-stages>
+    <x-admin::shimmer.leads.view.stages :count="$lead->pipeline->stages->count() - 1" />
+</v-lead-stages>
 
 {!! view_render_event('admin.leads.view.stages.after', ['lead' => $lead]) !!}
 
@@ -16,7 +18,7 @@
             <!-- Stages Item -->
             <template v-for="stage in stages">
                 <div
-                    class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white px-6 first:rounded-l-lg"
+                    class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white pl-7 pr-4 first:rounded-l-lg"
                     :class="{
                         '!bg-green-500 text-white after:bg-green-500': currentStage.sort_order >= stage.sort_order,
                         '!bg-red-500 text-white after:bg-red-500': currentStage.code == 'lost',
@@ -34,7 +36,7 @@
             <x-admin::dropdown position="bottom-right">
                 <x-slot:toggle>
                     <div
-                        class="relative flex h-7 min-w-24 cursor-pointer items-center justify-center rounded-r-lg bg-white px-6"
+                        class="relative flex h-7 min-w-24 cursor-pointer items-center justify-center rounded-r-lg bg-white pl-7 pr-4"
                         :class="{
                             '!bg-green-500 text-white after:bg-green-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'won',
                             '!bg-red-500 text-white after:bg-red-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'lost',
