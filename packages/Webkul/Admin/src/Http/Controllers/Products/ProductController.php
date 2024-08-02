@@ -1,14 +1,15 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Product;
+namespace Webkul\Admin\Http\Controllers\Products;
 
+use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 
 class ProductController extends Controller
 {
@@ -37,9 +38,8 @@ class ProductController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::products.create');
     }
@@ -53,22 +53,19 @@ class ProductController extends Controller
     {
         Event::dispatch('product.create.before');
 
-        $product = $this->productRepository->create(request()->all());
+        $product = $this->productRepository->create($request->all());
 
         Event::dispatch('product.create.after', $product);
 
-        session()->flash('success', trans('admin::app.products.create-success'));
+        session()->flash('success', trans('admin::app.products.index.create-success'));
 
         return redirect()->route('admin.products.index');
     }
 
     /**
      * Show the form for viewing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function view($id)
+    public function view(int $id): View
     {
         $product = $this->productRepository->findOrFail($id);
 
@@ -77,11 +74,8 @@ class ProductController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View|JsonResponse
     {
         $product = $this->productRepository->findOrFail($id);
 
@@ -104,31 +98,26 @@ class ProductController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, $id)
+    public function update(AttributeForm $request, int $id)
     {
         Event::dispatch('product.update.before', $id);
 
-        $product = $this->productRepository->update(request()->all(), $id);
+        $product = $this->productRepository->update($request->all(), $id);
 
         Event::dispatch('product.update.after', $product);
 
-        session()->flash('success', trans('admin::app.products.update-success'));
+        session()->flash('success', trans('admin::app.products.index.update-success'));
 
         return redirect()->route('admin.products.index');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @param  int  $id
-     * @param  int  $warehouseId
+     * 
      * @return \Illuminate\Http\Response
      */
-    public function storeInventories($id, $warehouseId = null)
+    public function storeInventories(int $id, int $warehouseId = null)
     {
         $this->validate(request(), [
             'inventories'                         => 'array',
@@ -147,7 +136,7 @@ class ProductController extends Controller
         Event::dispatch('product.update.after', $product);
 
         return response()->json([
-            'message' => trans('admin::app.products.update-success'),
+            'message' => trans('admin::app.products.index.update-success'),
         ], 200);
     }
 
@@ -180,48 +169,45 @@ class ProductController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
-        $this->productRepository->findOrFail($id);
+        $product = $this->productRepository->findOrFail($id);
 
         try {
             Event::dispatch('settings.products.delete.before', $id);
 
-            $this->productRepository->delete($id);
+            $product->delete($id);
 
             Event::dispatch('settings.products.delete.after', $id);
 
-            return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.products.product')]),
+            return new JsonResponse([
+                'message' => trans('admin::app.response.destroy-success'),
             ], 200);
         } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.products.product')]),
+            return new JsonResponse([
+                'message' => trans('admin::app.response.destroy-failed'),
             ], 400);
         }
     }
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $productId) {
-            Event::dispatch('product.delete.before', $productId);
+        $indices = $massDestroyRequest->input('indices');
 
-            $this->productRepository->delete($productId);
+        foreach ($indices as $index) {
+            Event::dispatch('product.delete.before', $index);
 
-            Event::dispatch('product.delete.after', $productId);
+            $this->productRepository->delete($index);
+
+            Event::dispatch('product.delete.after', $index);
         }
 
-        return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.products.title')]),
+        return new JsonResponse([
+            'message' => trans('admin::app.response.destroy-success'),
         ]);
     }
 }

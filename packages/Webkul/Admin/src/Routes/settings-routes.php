@@ -1,17 +1,17 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\TagController;
+use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
+use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\TagController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
-use Webkul\Admin\Http\Controllers\Settings\GroupController;
-use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\WarehouseController;
 use Webkul\Admin\Http\Controllers\Settings\WebFormController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
-use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
-use Webkul\Admin\Http\Controllers\Settings\WarehouseController;
 use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 
 /**
@@ -171,7 +171,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
             Route::get('edit/{id?}', 'edit')->name('admin.settings.pipelines.edit');
 
-            Route::put('edit/{id}', 'update')->name('admin.settings.pipelines.update');
+            Route::post('edit/{id}', 'update')->name('admin.settings.pipelines.update');
 
             Route::delete('{id}', 'destroy')->name('admin.settings.pipelines.delete');
         });

@@ -73,7 +73,6 @@
                             ::name="attribute['code'] + '[state]'"
                             :placeholder="trans('admin::app.common.custom-attributes.state')"
                             v-model="state"
-                            v-else
                         >
                         </x-admin::form.control-group.control>
                         

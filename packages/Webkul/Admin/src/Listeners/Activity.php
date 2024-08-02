@@ -11,8 +11,7 @@ class Activity
      *
      * @return void
      */
-    public function __construct(protected LeadRepository $leadRepository)
-    {}
+    public function __construct(protected LeadRepository $leadRepository) {}
 
     /**
      * @param  \Webkul\Activity\Contracts\Activity  $activity

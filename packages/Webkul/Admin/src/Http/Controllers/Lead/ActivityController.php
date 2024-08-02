@@ -2,9 +2,8 @@
 
 namespace Webkul\Admin\Http\Controllers\Lead;
 
-use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Activity\Repositories\ActivityRepository;
+use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
 
 class ActivityController extends Controller

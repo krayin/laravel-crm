@@ -2,8 +2,6 @@
 
 use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
-use Illuminate\Database\Schema\Blueprint;
-use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
@@ -21,8 +19,8 @@ return new class extends Migration
                     'name'            => trans('installer::app.seeders.attributes.persons.job-title'),
                     'type'            => 'text',
                     'entity_type'     => 'persons',
-                    'lookup_type'     => NULL,
-                    'validation'      => NULL,
+                    'lookup_type'     => null,
+                    'validation'      => null,
                     'sort_order'      => '4',
                     'is_required'     => '0',
                     'is_unique'       => '0',
@@ -37,7 +35,5 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
-    }
+    public function down(): void {}
 };
