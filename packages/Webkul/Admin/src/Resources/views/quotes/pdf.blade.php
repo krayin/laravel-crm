@@ -1,186 +1,363 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html>
+<html
+    lang="{{ app()->getLocale() }}"
+    dir="{{ app()->getLocale    () }}"
+>
     <head>
+        <!-- meta tags -->
         <meta http-equiv="Cache-control" content="no-cache">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
+        @php
+            $fontPath = [];
+            
+            $fontFamily = [
+                'regular' => 'Arial, sans-serif',
+                'bold'    => 'Arial, sans-serif',
+            ];
+
+            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'tr', 'ru', 'uk'])) {
+                $fontFamily = [
+                    'regular' => 'DejaVu Sans',
+                    'bold'    => 'DejaVu Sans',
+                ];
+            } elseif (app()->getLocale() == 'zh_CN') {
+                $fontPath = [
+                    'regular' => asset('fonts/NotoSansSC-Regular.ttf'),
+                    'bold'    => asset('fonts/NotoSansSC-Bold.ttf'),
+                ];
+                
+                $fontFamily = [
+                    'regular' => 'Noto Sans SC',
+                    'bold'    => 'Noto Sans SC Bold',
+                ];
+            } elseif (app()->getLocale() == 'ja') {
+                $fontPath = [
+                    'regular' => asset('fonts/NotoSansJP-Regular.ttf'),
+                    'bold'    => asset('fonts/NotoSansJP-Bold.ttf'),
+                ];
+                
+                $fontFamily = [
+                    'regular' => 'Noto Sans JP',
+                    'bold'    => 'Noto Sans JP Bold',
+                ];
+            } elseif (app()->getLocale() == 'hi_IN') {
+                $fontPath = [
+                    'regular' => asset('fonts/Hind-Regular.ttf'),
+                    'bold'    => asset('fonts/Hind-Bold.ttf'),
+                ];
+                
+                $fontFamily = [
+                    'regular' => 'Hind',
+                    'bold'    => 'Hind Bold',
+                ];
+            } elseif (app()->getLocale() == 'bn') {
+                $fontPath = [
+                    'regular' => asset('fonts/NotoSansBengali-Regular.ttf'),
+                    'bold'    => asset('fonts/NotoSansBengali-Bold.ttf'),
+                ];
+                
+                $fontFamily = [
+                    'regular' => 'Noto Sans Bengali',
+                    'bold'    => 'Noto Sans Bengali Bold',
+                ];
+            } elseif (app()->getLocale() == 'sin') {
+                $fontPath = [
+                    'regular' => asset('fonts/NotoSansSinhala-Regular.ttf'),
+                    'bold'    => asset('fonts/NotoSansSinhala-Bold.ttf'),
+                ];
+                
+                $fontFamily = [
+                    'regular' => 'Noto Sans Sinhala',
+                    'bold'    => 'Noto Sans Sinhala Bold',
+                ];
+            }
+        @endphp
+
+        <!-- lang supports inclusion -->
         <style type="text/css">
+            @if (! empty($fontPath['regular']))
+                @font-face {
+                    src: url({{ $fontPath['regular'] }}) format('truetype');
+                    font-family: {{ $fontFamily['regular'] }};
+                }
+            @endif
+            
+            @if (! empty($fontPath['bold']))
+                @font-face {
+                    src: url({{ $fontPath['bold'] }}) format('truetype');
+                    font-family: {{ $fontFamily['bold'] }};
+                    font-style: bold;
+                }
+            @endif
+            
             * {
-                font-family: DejaVu Sans;
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: {{ $fontFamily['regular'] }};
             }
 
-            body, th, td, h5 {
-                font-size: 12px;
-                color: #000;
+            body {
+                font-size: 10px;
+                color: #091341;
+                font-family: "{{ $fontFamily['regular'] }}";
             }
 
-            .container {
-                padding: 20px;
-                display: block;
+            b, th {
+                font-family: "{{ $fontFamily['bold'] }}";
             }
 
-            .quote-summary {
-                margin-bottom: 20px;
+            .page-content {
+                padding: 12px;
             }
 
-            .table {
-                margin-top: 20px;
-            }
-
-            .table table {
-                width: 100%;
-                border-collapse: collapse;
-                text-align: left;
-            }
-
-            .table thead th {
-                font-weight: 700;
-                border-top: solid 1px #d3d3d3;
-                border-bottom: solid 1px #d3d3d3;
-                border-left: solid 1px #d3d3d3;
-                padding: 5px 10px;
-                background: #F4F4F4;
-            }
-
-            .table thead th:last-child {
-                border-right: solid 1px #d3d3d3;
-            }
-
-            .table tbody td {
-                padding: 5px 10px;
-                border-bottom: solid 1px #d3d3d3;
-                border-left: solid 1px #d3d3d3;
-                color: #3A3A3A;
-                vertical-align: middle;
-            }
-
-            .table tbody td p {
+            .page-header {
+                border-bottom: 1px solid #E9EFFC;
+                text-align: center;
+                font-size: 24px;
+                text-transform: uppercase;
+                color: #000DBB;
+                padding: 24px 0;
                 margin: 0;
             }
 
-            .table tbody td:last-child {
-                border-right: solid 1px #d3d3d3;
+            .logo-container {
+                position: absolute;
+                top: 20px;
+                left: 20px;
             }
 
-           .sale-summary {
-                margin-top: 40px;
+            .logo-container.rtl {
+                left: auto;
+                right: 20px;
+            }
+
+            .logo-container img {
+                max-width: 100%;
+                height: auto;
+            }
+
+            .page-header b {
+                display: inline-block;
+                vertical-align: middle;
+            }
+
+            .small-text {
+                font-size: 7px;
+            }
+
+            table {
+                width: 100%;
+                border-spacing: 1px 0;
+                border-collapse: separate;
+                margin-bottom: 16px;
+            }
+            
+            table thead th {
+                background-color: #E9EFFC;
+                color: #000DBB;
+                padding: 6px 18px;
+                text-align: left;
+            }
+
+            table.rtl thead tr th {
+                text-align: right;
+            }
+
+            table tbody td {
+                padding: 9px 18px;
+                border-bottom: 1px solid #E9EFFC;
+                text-align: left;
+                vertical-align: top;
+            }
+
+            table.rtl tbody tr td {
+                text-align: right;
+            }
+
+            .summary {
+                width: 100%;
+                display: inline-block;
+            }
+
+            .summary table {
                 float: right;
+                width: 250px;
+                padding-top: 5px;
+                padding-bottom: 5px;
+                background-color: #E9EFFC;
+                white-space: nowrap;
             }
 
-            .sale-summary tr td {
-                padding: 3px 5px;
+            .summary table.rtl {
+                width: 280px;
             }
 
-            .sale-summary tr.bold {
-                font-weight: 600;
+            .summary table.rtl {
+                margin-right: 480px;
             }
 
-            .label {
-                color: #000;
-                font-weight: bold;
+            .summary table td {
+                padding: 5px 10px;
             }
 
-            .logo {
-                height: 70px;
-                width: 70px;
-            }
-
-            .text-center {
+            .summary table td:nth-child(2) {
                 text-align: center;
+            }
+
+            .summary table td:nth-child(3) {
+                text-align: right;
             }
         </style>
     </head>
 
-    <body style="background-image: none; background-color: #fff;">
-        <div class="container">
-            <div class="header">
-                <div class="row">
-                    <div class="col-12">
-                        <h1 class="text-center">{{ __('admin::app.quotes.quote') }}</h1>
-                    </div>
-                </div>
-
-                <div class="image">
-                    {{-- <img class="logo" src="{{ Storage::url(core()->getConfigData('sales.orderSettings.quote_slip_design.logo')) }}"/> --}}
-                </div>
+    <body dir="{{ app()->getLocale() }}">
+        <div class="page">
+            <!-- Header -->
+            <div class="page-header">
+                <b>@lang('Quote')</b>
             </div>
 
-            <div class="quote-summary">
-                <div class="row">
-                    <span class="label">{{ __('admin::app.quotes.quote-id') }} -</span>
-                    <span class="value">#{{ $quote->id }}</span>
-                </div>
+            <div class="page-content">
+                <!-- Invoice Information -->
+                <table class="{{ app()->getLocale   () }}">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('Quote ID'): 
+                                </b>
 
-                <div class="row">
-                    <span class="label">{{ __('admin::app.quotes.quote-date') }} -</span>
-                    <span class="value">{{ $quote->created_at->format('d-m-Y') }}</span>
-                </div>
+                                <span>
+                                    #{{ $quote->id }}
+                                </span>
+                            </td>
+                        </tr>
 
-                <div class="row">
-                    <span class="label">{{ __('admin::app.quotes.valid-until') }} -</span>
-                    <span class="value">{{ $quote->expired_at->format('d-m-Y') }}</span>
-                </div>
+                        <tr>
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('Sale Person'): 
+                                </b>
 
-                <div class="row">
-                    <span class="label">{{ __('admin::app.quotes.sales-person') }} -</span>
-                    <span class="value">{{ $quote->user->name }}</span>
-                </div>
+                                <span>
+                                    {{ $quote->user->name }}
+                                </span>
+                            </td>
+                        </tr>
+                        
+                        <tr>
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('Date'):
+                                </b>
 
-                <div class="table address">
-                    <table>
+                                <span>
+                                    {{ core()->formatDate($quote->created_at, 'd-m-Y') }}
+                                </span>
+                            </td>
+
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('Expired At'):
+                                </b>
+
+                                <span>
+                                    {{ core()->formatDate($quote->expired_at, 'd-m-Y') }}
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Billing & Shipping Address -->
+                <table class="{{ app()->getLocale() }}">
+                    <thead>
+                        <tr>
+                            @if ($quote->billing_address)
+                                <th style="width: 50%;">
+                                    <b>
+                                        @lang('Billing Address')
+                                    </b>
+                                </th>
+                            @endif
+
+                            @if ($quote->shipping_address)
+                                <th style="width: 50%">
+                                    <b>
+                                        @lang('Shipping Address')
+                                    </b>
+                                </th>
+                            @endif
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            @if ($quote->billing_address)
+                                <td style="width: 50%">
+                                    <div>{{ $quote->billing_address['address'] }}</div>
+
+                                    <div>{{ $quote->billing_address['postcode'] . ' ' .$quote->billing_address['city'] }} </div>
+
+                                    <div>{{ $quote->billing_address['state'] }}</div>
+
+                                    <div>{{ core()->country_name($quote->billing_address['country']) }}</div>
+                                </td>
+                            @endif
+                            
+                            @if ($quote->shipping_address)
+                                <td style="width: 50%">
+                                    <div>{{ $quote->shipping_address['address'] }}</div>
+
+                                    <div>{{ $quote->shipping_address['postcode'] . ' ' .$quote->shipping_address['city'] }} </div>
+
+                                    <div>{{ $quote->shipping_address['state'] }}</div>
+
+                                    <div>{{ core()->country_name($quote->shipping_address['country']) }}</div>
+                                </td>
+                            @endif
+                        </tr>
+                    </tbody>
+                </table>
+
+                <!-- Items -->
+                <div class="items">
+                    <table class="{{ app()->getLocale   () }}">
                         <thead>
                             <tr>
-                                <th style="width: 50%">{{ __('admin::app.quotes.bill-to') }}</th>
+                                <th>
+                                    @lang('SKU')
+                                </th>
 
-                                @if ($quote->shipping_address)
-                                    <th>{{ __('admin::app.quotes.ship-to') }}</th>
-                                @endif
-                            </tr>
-                        </thead>
+                                <th>
+                                    @lang('Product Name')
+                                </th>
 
-                        <tbody>
-                            <tr>
-                                @if ($quote->billing_address)
-                                    <td>
-                                        <p>{{ $quote->billing_address['address'] }}</p>
-                                        <p>{{ $quote->billing_address['postcode'] . ' ' .$quote->billing_address['city'] }} </p>
-                                        <p>{{ $quote->billing_address['state'] }}</p>
-                                        <p>{{ core()->country_name($quote->billing_address['country']) }}</p>
-                                    </td>
-                                @endif
+                                <th>
+                                    @lang('Price')
+                                </th>
 
-                                @if ($quote->shipping_address)
-                                    <td>
-                                        <p>{{ $quote->shipping_address['address'] }}</p>
-                                        <p>{{ $quote->shipping_address['postcode'] . ' ' .$quote->shipping_address['city'] }} </p>
-                                        <p>{{ $quote->shipping_address['state'] }}</p>
-                                        <p>{{ core()->country_name($quote->shipping_address['country']) }}</p>
-                                    </td>
-                                @endif
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                <th>
+                                    @lang('Quantity')
+                                </th>
 
-                <div class="table items">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>{{ __('admin::app.quotes.sku') }}</th>
+                                <th>
+                                    @lang('Amount')
+                                </th>
 
-                                <th>{{ __('admin::app.quotes.product-name') }}</th>
+                                <th>
+                                    @lang('Discount')
+                                </th>
 
-                                <th class="text-center">{{ __('admin::app.quotes.price') }}</th>
+                                <th>
+                                    @lang('Tax')
+                                </th>
 
-                                <th class="text-center">{{ __('admin::app.quotes.quantity') }}</th>
-
-                                <th class="text-center">{{ __('admin::app.quotes.amount') }}</th>
-
-                                <th class="text-center">{{ __('admin::app.quotes.discount') }}</th>
-
-                                <th class="text-center">{{ __('admin::app.quotes.tax') }}</th>
-
-                                <th class="text-center">{{ __('admin::app.quotes.grand-total') }}</th>
+                                <th>
+                                    @lang('Grand Total')
+                                </th>
                             </tr>
                         </thead>
 
@@ -210,37 +387,42 @@
                     </table>
                 </div>
 
-                <table class="sale-summary">
-                    <tr>
-                        <td>{{ __('admin::app.quotes.sub-total') }}</td>
-                        <td>-</td>
-                        <td>{!! core()->formatBasePrice($quote->sub_total, true) !!}</td>
-                    </tr>
-
-                    <tr>
-                        <td>{{ __('admin::app.quotes.tax') }}</td>
-                        <td>-</td>
-                        <td>{!! core()->formatBasePrice($quote->tax_amount, true) !!}</td>
-                    </tr>
-
-                    <tr>
-                        <td>{{ __('admin::app.quotes.discount') }}</td>
-                        <td>-</td>
-                        <td>{!! core()->formatBasePrice($quote->discount_amount, true) !!}</td>
-                    </tr>
-
-                    <tr>
-                        <td>{{ __('admin::app.quotes.adjustment') }}</td>
-                        <td>-</td>
-                        <td>{!! core()->formatBasePrice($quote->adjustment_amount, true) !!}</td>
-                    </tr>
-
-                    <tr>
-                        <td><strong>{{ __('admin::app.quotes.grand-total') }}</strong></td>
-                        <td><strong>-</strong></td>
-                        <td><strong>{!! core()->formatBasePrice($quote->grand_total, true) !!}</strong></td>
-                    </tr>
-                </table>
+               <!-- Summary Table -->
+                <div class="summary">
+                    <table class="{{ app()->getLocale   () }}">
+                        <tbody>
+                            <tr>
+                                <td>@lang('Sub Total')</td>
+                                <td>-</td>
+                                <td>{!! core()->formatBasePrice($quote->sub_total, true) !!}</td>
+                            </tr>
+        
+                            <tr>
+                                <td>@lang('Tax')</td>
+                                <td>-</td>
+                                <td>{!! core()->formatBasePrice($quote->tax_amount, true) !!}</td>
+                            </tr>
+        
+                            <tr>
+                                <td>@lang('Discount')</td>
+                                <td>-</td>
+                                <td>{!! core()->formatBasePrice($quote->discount_amount, true) !!}</td>
+                            </tr>
+        
+                            <tr>
+                                <td>@lang('Adjustment')</td>
+                                <td>-</td>
+                                <td>{!! core()->formatBasePrice($quote->adjustment_amount, true) !!}</td>
+                            </tr>
+        
+                            <tr>
+                                <td><strong>@lang('Grand Total')</strong></td>
+                                <td><strong>-</strong></td>
+                                <td><strong>{!! core()->formatBasePrice($quote->grand_total, true) !!}</strong></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </body>
