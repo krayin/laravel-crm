@@ -39,7 +39,7 @@
                             @if ($icon = $child->getIcon())
                                 <img
                                     class="h-[60px] w-[60px] dark:mix-blend-exclusion dark:invert"
-                                    src="{{ asset('images/' . $icon) }}"
+                                    src="{{ admin_vite()->asset('images/' . $icon) }}"
                                 >
                             @endif
 
