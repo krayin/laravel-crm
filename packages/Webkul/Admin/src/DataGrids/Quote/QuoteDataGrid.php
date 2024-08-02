@@ -68,18 +68,20 @@ class QuoteDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'subject',
-            'label'    => trans('admin::app.quotes.index.datagrid.subject'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'subject',
+            'label'      => trans('admin::app.quotes.index.datagrid.subject'),
+            'type'       => 'string',
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'sales_person',
-            'label'    => trans('admin::app.quotes.index.datagrid.sales-person'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'sales_person',
+            'label'      => trans('admin::app.quotes.index.datagrid.sales-person'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
                 return "<a href='".$route."'>".$row->sales_person.'</a>';
@@ -91,14 +93,16 @@ class QuoteDataGrid extends DataGrid
             'label'      => trans('admin::app.quotes.index.datagrid.expired-quotes'),
             'type'       => 'string',
             'searchable' => false,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'person_name',
-            'label'    => trans('admin::app.quotes.index.datagrid.person'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'person_name',
+            'label'      => trans('admin::app.quotes.index.datagrid.person'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
                 return "<a href='".$route."'>".$row->person_name.'</a>';
@@ -106,41 +110,45 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'sub_total',
-            'label'    => trans('admin::app.quotes.index.datagrid.subtotal'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'sub_total',
+            'label'      => trans('admin::app.quotes.index.datagrid.subtotal'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->sub_total, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'discount_amount',
-            'label'    => trans('admin::app.quotes.index.datagrid.discount'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'discount_amount',
+            'label'      => trans('admin::app.quotes.index.datagrid.discount'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->discount_amount, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'tax_amount',
-            'label'    => trans('admin::app.quotes.index.datagrid.tax'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'tax_amount',
+            'label'      => trans('admin::app.quotes.index.datagrid.tax'),
+            'type'       => 'string',
+            'filterable' => true,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->tax_amount, 2);
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'adjustment_amount',
-            'label'    => trans('admin::app.quotes.index.datagrid.adjustment'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'adjustment_amount',
+            'label'      => trans('admin::app.quotes.index.datagrid.adjustment'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => false,
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->adjustment_amount, 2);
             },
         ]);
@@ -150,6 +158,7 @@ class QuoteDataGrid extends DataGrid
             'label'    => trans('admin::app.quotes.index.datagrid.grand-total'),
             'type'     => 'string',
             'sortable' => true,
+            'filterable' => true,
             'closure'  => function ($row) {
                 return core()->formatBasePrice($row->grand_total, 2);
             },
@@ -161,6 +170,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 return core()->formatDate($row->expired_at, 'd M Y');
             },
@@ -172,6 +182,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'date',
             'searchable' => false,
             'sortable'   => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 return core()->formatDate($row->created_at);
             },
