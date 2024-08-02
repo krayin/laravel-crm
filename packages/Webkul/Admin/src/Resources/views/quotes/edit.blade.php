@@ -248,7 +248,7 @@
                     <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
                             <x-admin::table.th>
-                                @lang('admin::app.quotes.create.quote-name')
+                                @lang('admin::app.quotes.create.product-name')
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
@@ -601,24 +601,28 @@
                      * @param {Object} product
                      */
                     removeProduct(product) {
-                        if (this.products.length === 1) {
-                            this.products = [{
-                                id: null,
-                                product_id: null,
-                                name: '',
-                                quantity: null,
-                                total: 0,
-                                price: null,
-                                discount_amount: null,
-                                tax_amount: null,
-                            }];
-                        } else {
-                            const index = this.products.indexOf(product);
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                if (this.products.length === 1) {
+                                    this.products = [{
+                                        id: null,
+                                        product_id: null,
+                                        name: '',
+                                        quantity: null,
+                                        total: 0,
+                                        price: null,
+                                        discount_amount: null,
+                                        tax_amount: null,
+                                    }];
+                                } else {
+                                    const index = this.products.indexOf(product);
 
-                            if (index !== -1) {
-                                this.products.splice(index, 1);
-                            }
-                        }
+                                    if (index !== -1) {
+                                        this.products.splice(index, 1);
+                                    }
+                                }
+                            },
+                        });
                     },
                 },
             });
