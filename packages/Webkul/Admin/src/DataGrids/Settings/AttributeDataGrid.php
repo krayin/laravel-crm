@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\DataGrids\Settings;
 
-use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
@@ -72,13 +72,12 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'type',
-            'label'    => trans('admin::app.settings.attributes.index.datagrid.type'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'type',
+            'label'      => trans('admin::app.settings.attributes.index.datagrid.type'),
+            'type'       => 'string',
+            'sortable'   => true,
             'filterable' => true,
         ]);
-
 
         $this->addColumn([
             'index'      => 'attribute_type',
@@ -88,7 +87,7 @@ class AttributeDataGrid extends DataGrid
             'filterable' => false,
             'sortable'   => true,
             'closure'    => function ($value) {
-                return trans('admin::app.settings.attributes.index.datagrid.' . ($value->attribute_type ? 'no' : 'yes'));
+                return trans('admin::app.settings.attributes.index.datagrid.'.($value->attribute_type ? 'no' : 'yes'));
             },
         ]);
     }

@@ -2,14 +2,14 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
-use Webkul\Core\Contracts\Validations\Code;
-use Webkul\Admin\Http\Controllers\Controller;
+use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
+use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Core\Contracts\Validations\Code;
 
 class AttributeController extends Controller
 {

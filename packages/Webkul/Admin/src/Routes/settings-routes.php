@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
@@ -12,7 +13,6 @@ use Webkul\Admin\Http\Controllers\Settings\WarehouseController;
 use Webkul\Admin\Http\Controllers\Settings\WebFormController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
-use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 
 /**
  * Settings routes.
@@ -218,7 +218,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::get('download', 'download')->name('admin.settings.attributes.download');
         });
 
-        /** 
+        /**
          * Warehouses Routes.
          */
         Route::controller(WarehouseController::class)->prefix('warehouses')->group(function () {
