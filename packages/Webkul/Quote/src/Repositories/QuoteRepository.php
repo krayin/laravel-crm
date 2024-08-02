@@ -66,7 +66,7 @@ class QuoteRepository extends Repository
         if (! isset($data['_method'])) {
             return $quote;
         }
-        
+
         $previousItemIds = $quote->items->pluck('id');
 
         if (isset($data['items'])) {
@@ -79,7 +79,7 @@ class QuoteRepository extends Repository
                     if (is_numeric($index = $previousItemIds->search($itemId))) {
                         $previousItemIds->forget($index);
                     }
-                    
+
                     $this->quoteItemRepository->update($itemData, $itemId);
                 }
             }

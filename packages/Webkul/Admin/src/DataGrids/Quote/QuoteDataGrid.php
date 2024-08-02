@@ -154,12 +154,12 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'grand_total',
-            'label'    => trans('admin::app.quotes.index.datagrid.grand-total'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'grand_total',
+            'label'      => trans('admin::app.quotes.index.datagrid.grand-total'),
+            'type'       => 'string',
+            'sortable'   => true,
             'filterable' => true,
-            'closure'  => function ($row) {
+            'closure'    => function ($row) {
                 return core()->formatBasePrice($row->grand_total, 2);
             },
         ]);

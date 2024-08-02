@@ -11,7 +11,7 @@
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                     <a
                         class="flex gap-2 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
-                        href="{{ $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
+                        href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
                         @mouseleave="!isMenuActive ? hoveringMenu = '' : {}"
                         @mouseover="hoveringMenu='{{$menuItem->getKey()}}'"
                         @click="isMenuActive = !isMenuActive"
@@ -21,14 +21,17 @@
                         <div class="flex-1 flex justify-between items-center text-gray-600 dark:text-gray-300 font-medium whitespace-nowrap group-[.sidebar-collapsed]/container:hidden {{ $menuItem->isActive() ? 'text-white' : ''}} group">
                             <p>{{ $menuItem->getName() }}</p>
                         
-                            @if ($menuItem->haveChildren())
+                            @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren())
                                 <i class="icon-right-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
                             @endif
                         </div>
                     </a>
 
                     <!-- Submenu -->
-                    @if ($menuItem->haveChildren())
+                    @if (
+                        ! in_array($menuItem->getKey(), ['settings', 'configuration'])
+                        && $menuItem->haveChildren()
+                    )
                         <div
                             class="absolute left-[190px] top-0 hidden w-[200px] flex-col bg-gray-100"
                             :class="[isMenuActive && (hoveringMenu == '{{$menuItem->getKey()}}') ? '!flex' : 'hidden']"
