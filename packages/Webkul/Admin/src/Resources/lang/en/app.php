@@ -172,6 +172,31 @@ return [
     ],
 
     'quotes' => [
+        'index' => [
+            'title'          => 'Quotes',
+            'create-btn'     => 'Create Quote',
+            'create-success' => 'Quote created successfully.',
+            'update-success' => 'Quote updated successfully.',
+            'delete-success' => 'Quote deleted successfully.',
+            'delete-failed'  => 'Quote can not be deleted.',
+
+            'datagrid' => [
+                'subject' => 'Subject',
+                'sales-person' => 'Sales Person',
+                'expired-at' => 'Expired At',
+                'created-at' => 'Created At',
+                'expired-quotes' => 'Expired Quote',
+                'person' => 'Person',
+                'subtotal' => 'Subtotal',
+                'discount' => 'Discount',
+                'tax' => 'Tax',
+                'adjustment' => 'Adjustment',
+                'grand-total' => 'Grand Total',
+                'edit' => 'Edit',
+                'delete' => 'Delete',
+                'print' => 'Print',
+            ]
+        ],
         'create' => [
             'title'             => 'Create Quote',
             'save-btn'          => 'Save Quote',
@@ -180,6 +205,7 @@ return [
             'address-info'      => 'Address Information',
             'address-info-info' => 'Information about the address related to quote.',
             'quote-items'       => 'Quote Items',
+            'search-products'   => 'Search Products',
             'link-to-lead'      => 'Link to lead',
             'quote-item-info'   => 'Add Product Request for this quote.',
             'quote-name'        => 'Quote name',
@@ -215,6 +241,7 @@ return [
             'quote-name'        => 'Quote name',
             'quantity'          => 'Quantity',
             'price'             => 'Price',
+            'search-products'   => 'Search Products',
             'discount'          => 'Discount',
             'tax'               => 'Tax',
             'total'             => 'Total',

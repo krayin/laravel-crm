@@ -32,7 +32,7 @@ class QuoteController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(QuoteDataGrid::class)->toJson();
+            return datagrid(QuoteDataGrid::class)->process();
         }
 
         return view('admin::quotes.index');
@@ -69,7 +69,7 @@ class QuoteController extends Controller
 
         Event::dispatch('quote.create.after', $quote);
 
-        session()->flash('success', trans('admin::app.quotes.create-success'));
+        session()->flash('success', trans('admin::app.quotes.index.create-success'));
 
         return redirect()->route('admin.quotes.index');
     }
@@ -109,7 +109,7 @@ class QuoteController extends Controller
 
         Event::dispatch('quote.update.after', $quote);
 
-        session()->flash('success', trans('admin::app.quotes.update-success'));
+        session()->flash('success', trans('admin::app.quotes.index.update-success'));
 
         return redirect()->route('admin.quotes.index');
     }
@@ -146,11 +146,11 @@ class QuoteController extends Controller
             Event::dispatch('quote.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
+                'message' => trans('admin::app.quotes.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
+                'message' => trans('admin::app.quotes.index.delete-failed'),
             ], 400);
         }
     }
@@ -171,7 +171,7 @@ class QuoteController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.title')]),
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.index.title')]),
         ]);
     }
 

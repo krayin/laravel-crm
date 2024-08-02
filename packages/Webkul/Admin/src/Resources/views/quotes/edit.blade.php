@@ -3,7 +3,10 @@
         @lang('admin::app.quotes.create.title')
     </x-slot>
 
-    <x-admin::form :action="route('admin.quotes.store')">
+    <x-admin::form
+        :action="route('admin.quotes.update', $quote->id)"
+        method="PUT"
+    >
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
@@ -225,7 +228,7 @@
                             </div>
 
                             <!-- Quote Item List Vue Component -->
-                            <v-quote-item-list :data='@json($quote->items)'></v-quote-item-list>
+                            <v-quote-item-list></v-quote-item-list>
                         </div>
 
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
@@ -355,7 +358,7 @@
             id="v-quote-item-template"
         >
             <x-admin::table.thead.tr class="border-b-2">
-                <!-- Quote Name -->
+                <!-- Quote Product Name -->
                 <x-admin::table.td>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::lookup 
@@ -363,7 +366,7 @@
                             ::name="`${inputName}[product_id]`"
                             ::params="params"
                             ::value="product"
-                            placeholder="Search Organizations"
+                            placeholder="@lang('admin::app.quotes.create.search-products')"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -509,21 +512,11 @@
             app.component('v-quote-item-list', {
                 template: '#v-quote-item-list-template',
 
-                props: ['data'],
-
                 data() {
                     return {
                         adjustmentAmount: 0,
 
-                        products: this.data ? this.data : [{
-                            'id': null,
-                            'product_id': null,
-                            'name': '',
-                            'quantity': 0,
-                            'price': 0,
-                            'discount_amount': 0,
-                            'tax_amount': 0,
-                        }],
+                        products: @json($quote->items),
                     }
                 },
 
@@ -639,28 +632,9 @@
 
                 data() {
                     return {
-                        is_searching: false,
-
                         state: this.product['product_id'] ? 'old' : '',
 
                         products: [],
-                    }
-                },
-
-                watch: {
-                    /**
-                     * Watch the product changes.
-                     * 
-                     * @param {Object} newValue
-                     */
-                    product: {
-                        handler(newValue, oldValue) {
-                            this.product.amount = this.product.price * this.product.quantity;
-
-                            this.product.total = parseFloat(this.product.price * this.product.quantity) + parseFloat(this.product.tax_amount) - parseFloat(this.product.discount_amount)
-                        },
-
-                        deep: true
                     }
                 },
 
@@ -697,24 +671,6 @@
                 },
 
                 methods: {
-                    /**
-                     * Add the product.
-                     * 
-                     * @param {Object} result
-                     * 
-                     * @return {void}
-                     */
-                    addProduct(result) {
-                        this.state = 'old';
-
-                        this.product.product_id = result.id;
-                        this.product.name = result.name;
-                        this.product.price = result.price;
-                        this.product.quantity = result.quantity;
-                        this.product.discount_amount = 0;
-                        this.product.tax_amount = 0;
-                    },
-
                     /**
                      * Remove the product.
                      * 

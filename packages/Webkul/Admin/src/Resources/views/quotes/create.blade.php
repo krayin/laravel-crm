@@ -366,13 +366,13 @@
             id="v-quote-item-template"
         >
             <x-admin::table.thead.tr class="border-b-2">
-                <!-- Quote Name -->
+                <!-- Quote Product Name -->
                 <x-admin::table.td>
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::lookup 
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
-                            placeholder="Search Organizations"
+                            placeholder="@lang('admin::app.quotes.create.search-products')"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -648,28 +648,9 @@
 
                 data() {
                     return {
-                        is_searching: false,
-
                         state: this.product['product_id'] ? 'old' : '',
 
                         products: [],
-                    }
-                },
-
-                watch: {
-                    /**
-                     * Watch the product changes.
-                     * 
-                     * @param {Object} newValue
-                     */
-                    product: {
-                        handler(newValue, oldValue) {
-                            this.product.amount = this.product.price * this.product.quantity;
-
-                            this.product.total = parseFloat(this.product.price * this.product.quantity) + parseFloat(this.product.tax_amount) - parseFloat(this.product.discount_amount)
-                        },
-
-                        deep: true
                     }
                 },
 
