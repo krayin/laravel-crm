@@ -504,8 +504,6 @@
                      * @returns {void}
                      */
                     scrollToSection(tabId) {
-                        this.activeTab = tabId;
-
                         const section = document.getElementById(tabId);
 
                         if (section) {
