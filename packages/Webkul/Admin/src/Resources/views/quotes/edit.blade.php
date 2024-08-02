@@ -44,7 +44,7 @@
         >
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded bg-white p-2 dark:bg-gray-900">
+                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
                        
                         <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
