@@ -55,20 +55,7 @@
                             @click="save"
                             class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="2"
-                                stroke="currentColor"
-                                class="w-4 h-4 text-green-600"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
+                            <i class="icon-tick text-md font-bold cursor-pointer text-green-600" />
                         </button>
                     
                         <button
