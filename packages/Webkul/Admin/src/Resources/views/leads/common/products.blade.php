@@ -12,24 +12,23 @@
                 <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
-                            @lang('Product Name')
+                            @lang('admin::app.leads.common.products.product-name')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('Quantity')
+                            @lang('admin::app.leads.common.products.quantity')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('Price')
+                            @lang('admin::app.leads.common.products.price')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('Amount')
+                            @lang('admin::app.leads.common.products.amount')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="text-right"
-                        >
-                            @lang('Action')
+                        <x-admin::table.th class="text-right">
+                            @lang('admin::app.leads.common.products.action')
                         </x-admin::table.th>
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
@@ -37,7 +36,7 @@
                 <!-- Table Body -->
                 <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     
-                    <!-- Quote Item Vue component -->
+                    <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
                         :product="product"
@@ -49,12 +48,12 @@
             </x-admin::table>
         </div>
         
-        <!-- Add New Qoute Item -->
+        <!-- Add New Product Item -->
         <span
             class="cursor-pointer text-xs text-brandColor hover:underline dark:text-brandColor"
             @click="addProduct"
         >
-            + @lang('Add More')
+            + @lang('admin::app.leads.common.products.add-more')
         </span>
     </script>
 
@@ -63,27 +62,31 @@
         id="v-product-item-template"
     >
         <x-admin::table.thead.tr class="border-b-2">
-            <!-- Quote Name -->
+            <!-- Product Name -->
             <x-admin::table.td>
                 <x-admin::form.control-group class="!mb-0">
                     <x-admin::lookup 
                         ::src="src"
                         ::name="`${inputName}[name]`"
                         ::params="params"
-                        placeholder="Product Nmae"
+                        :placeholder="trans('admin::app.leads.common.products.product-name')"
                         @on-selected="(value) => product.product_id = value.id"
                     />
 
-                    <input
+                    <x-admin::form.control-group.control
                         type="hidden"
-                        :name="[inputName + '[product_id]']"
+                        name="[inputName + '[product_id]']"
                         v-model="product.product_id"
+                        rules="required"
+                        :label="trans('admin::app.leads.common.products.product-name')"
+                        :placeholder="trans('admin::app.leads.common.products.product-name')"
                     />
-
+            
+                    <x-admin::form.control-group.error control-name="[inputName + '[product_id]']" />
                 </x-admin::form.control-group>
             </x-admin::table.td>
             
-            <!-- Quantity -->
+            <!-- Product Quantity -->
             <x-admin::table.td class="text-right">
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
@@ -91,8 +94,8 @@
                         ::name="`${inputName}[quantity]`"
                         ::value="product.quantity"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.quotes.create.quantity')"
-                        :placeholder="trans('admin::app.quotes.create.quantity')"
+                        :label="trans('admin::app.leads.common.products.quantity')"
+                        :placeholder="trans('admin::app.leads.common.products.quantity')"
                         @on-change="(value) => product.quantity = value"
                     />
                 </x-admin::form.control-group>
@@ -106,8 +109,8 @@
                         ::name="`${inputName}[price]`"
                         ::value="product.price"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.quotes.create.price')"
-                        :placeholder="trans('admin::app.quotes.create.price')"
+                        :label="trans('admin::app.leads.common.products.price')"
+                        :placeholder="trans('admin::app.leads.common.products.price')"
                         @on-change="(value) => product.price = value"
                     />
                 </x-admin::form.control-group>
@@ -121,8 +124,8 @@
                         ::name="`${inputName}[amount]`"
                         ::value="product.price * product.quantity"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.quotes.create.total')"
-                        :placeholder="trans('admin::app.quotes.create.total')"
+                        :label="trans('admin::app.leads.common.products.total')"
+                        :placeholder="trans('admin::app.leads.common.products.total')"
                         ::allowEdit="false"
                     />
                 </x-admin::form.control-group>
@@ -163,13 +166,12 @@
                         amount: null,
                     })
                 },
-
-                removeProduct: function(product) {
+                
+                removeProduct (product) {
                     const index = this.products.indexOf(product);
-
-                    Vue.delete(this.products, index);
-                }
-            }
+                    this.products.splice(index, 1);
+                },
+            },
         });
 
         app.component('v-product-item', {
@@ -208,50 +210,15 @@
             },
 
             methods: {
-                // search: debounce(function () {
-                //     this.state = '';
-
-                //     this.product['product_id'] = null;
-
-                //     this.is_searching = true;
-
-                //     if (this.product['name'].length < 2) {
-                //         this.products = [];
-
-                //         this.is_searching = false;
-
-                //         return;
-                //     }
-
-                //     var self = this;
-                    
-                //     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
-                //         .then (function(response) {
-                //             self.$parent.products.forEach(function(addedProduct) {
-                                
-                //                 response.data.forEach(function(product, index) {
-                //                     if (product.id == addedProduct.product_id) {
-                //                         response.data.splice(index, 1);
-                //                     }
-                //                 });
-
-                //             });
-
-                //             self.products = response.data;
-
-                //             self.is_searching = false;
-                //         })
-                //         .catch (function (error) {
-                //             self.is_searching = false;
-                //         })
-                // }, 500),
-
                 addProduct(result) {
                         this.state = 'old';
 
                         this.product.product_id = result.id;
+
                         this.product.name = result.name;
+                        
                         this.product.price = result.price;
+                        
                         this.product.quantity = result.quantity;
                 },
                     

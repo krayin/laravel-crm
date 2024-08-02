@@ -1066,8 +1066,33 @@ return [
         ],
 
         'create' => [
-            'title'    => 'Create Lead',
-            'save-btn' => 'Save',
+            'title'          => 'Create Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+
+        'common' => [
+            'contact' => [
+                'name'           => 'Name',
+                'email'          => 'Email',
+                'contact-number' => 'contact-number',
+                'organization'   => 'Organization',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                '[total'       => 'Total',
+            ],
         ],
     ],
 

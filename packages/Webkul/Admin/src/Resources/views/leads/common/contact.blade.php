@@ -5,35 +5,37 @@
         type="text/x-template" 
         id="v-contact-component-template"
     >
-    <x-admin::form.control-group>
-        <x-admin::form.control-group.label class="required">
-            @lang('Person')
-        </x-admin::form.control-group.label>
-        
-        <x-admin::lookup
-            ::src="src"
-            name="person[name]"
-            ::params="params"
-            placeholder="Search Person"
-            @on-selected="addPerson"
-        />
-    
-        <x-admin::form.control-group.control
-            type="hidden"
-            name="person[id]"
-            v-model="person.id"
-            v-if="person.id"
-            rules="required"
-            :label="trans('admin::app.settings.groups.index.create.name')"
-            :placeholder="trans('admin::app.settings.groups.index.create.name')"
-        />
-    
-        <x-admin::form.control-group.error control-name="person[id]" />
-    </x-admin::form.control-group>
-
+    <!-- Person Search lookup -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label class="required">
-                @lang('Email')
+                @lang('admin::app.leads.common.contact.name')
+            </x-admin::form.control-group.label>
+            
+            <x-admin::lookup
+                ::src="src"
+                name="person[name]"
+                ::params="params"
+                placeholder="Search Person"
+                @on-selected="addPerson"
+            />
+        
+            <x-admin::form.control-group.control
+                type="hidden"
+                name="person[id]"
+                v-model="person.id"
+                v-if="person.id"
+                rules="required"
+                :label="trans('admin::app.leads.common.contact.name')"
+                :placeholder="trans('admin::app.leads.common.contact.name')"
+            />
+        
+            <x-admin::form.control-group.error control-name="person[id]" />
+        </x-admin::form.control-group>
+
+        <!-- Person Email -->
+        <x-admin::form.control-group>
+            <x-admin::form.control-group.label class="required">
+                @lang('admin::app.leads.common.contact.email')
             </x-admin::form.control-group.label>
 
             @include('admin::common.custom-attributes.edit.email', ['formScope' => $formScope ?? ''])
@@ -45,10 +47,11 @@
             ></v-email-component>
 
         </x-admin::form.control-group>
-        
+            
+        <!-- Person Contact Numbers -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label>
-                @lang('Contact Numbers')
+                @lang('admin::app.leads.common.contact.contact-number')
             </x-admin::form.control-group.label>
 
             @include('admin::common.custom-attributes.edit.phone', ['formScope' => $formScope ?? ''])
@@ -59,9 +62,10 @@
             ></v-phone-component>
         </x-admin::form.control-group>
         
+        <!-- Person Organization -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label>
-                @lang('Organization')
+                @lang('admin::app.leads.common.contact.organization')
             </x-admin::form.control-group.label>
             
             @php
