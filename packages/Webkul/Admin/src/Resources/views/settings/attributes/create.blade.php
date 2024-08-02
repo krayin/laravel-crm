@@ -170,7 +170,7 @@
                                     </x-admin::form.control-group>
                                 </div>
 
-                                <template v-if="this.options?.length">
+                                <template v-if="this.options?.length && optionType == 'options'">
                                     <!-- Table Information -->
                                     <x-admin::table>
                                         <x-admin::table.thead class="text-sm font-medium dark:bg-gray-800">
@@ -180,6 +180,10 @@
                                                 <!-- Admin tables heading -->
                                                 <x-admin::table.th>
                                                     @lang('admin::app.settings.attributes.create.option-name')
+                                                </x-admin::table.th>
+
+                                                <x-admin::table.th>
+                                                    @lang('Actions')
                                                 </x-admin::table.th>
                                             </x-admin::table.thead.tr>
                                         </x-admin::table.thead>
@@ -519,7 +523,7 @@
 
                 computed: {
                     isFilterableDisabled() {
-                        return this.attributeType == 'price' || this.attributeType == 'checkbox'
+                        return this.attributeType == 'lookup' || this.attributeType == 'checkbox'
                             || this.attributeType == 'select' || this.attributeType == 'multiselect'
                             ? false : true;
                     },
