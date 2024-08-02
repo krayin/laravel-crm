@@ -33,28 +33,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-            // Quotes Routes
-            Route::group([
-                'prefix'    => 'quotes',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Quote',
-            ], function () {
-                Route::get('', 'QuoteController@index')->name('admin.quotes.index');
-
-                Route::get('create/{id?}', 'QuoteController@create')->name('admin.quotes.create');
-
-                Route::post('create', 'QuoteController@store')->name('admin.quotes.store');
-
-                Route::get('edit/{id?}', 'QuoteController@edit')->name('admin.quotes.edit');
-
-                Route::put('edit/{id}', 'QuoteController@update')->name('admin.quotes.update');
-
-                Route::get('print/{id?}', 'QuoteController@print')->name('admin.quotes.print');
-
-                Route::delete('{id}', 'QuoteController@destroy')->name('admin.quotes.delete');
-
-                Route::put('mass-destroy', 'QuoteController@massDestroy')->name('admin.quotes.mass_delete');
-            });
-
             Route::group([
                 'prefix'    => 'mail',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Mail',

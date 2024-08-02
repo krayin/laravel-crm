@@ -372,7 +372,7 @@
                         <x-admin::lookup 
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
-                            placeholder="@lang('admin::app.quotes.create.search-products')"
+                            :placeholder="trans('admin::app.quotes.create.search-products')"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>

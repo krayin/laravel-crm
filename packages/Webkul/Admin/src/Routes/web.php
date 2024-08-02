@@ -34,3 +34,9 @@ require 'rest-routes.php';
  * Activities routes.
  */
 require 'activities-routes.php';
+
+
+/**
+ * Quotes Routes.
+ */
+require 'quote-routes.php';

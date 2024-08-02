@@ -165,10 +165,6 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
-
-                value(newVal, oldVal) {
-                    this.selectedItem = newVal;
-                },
             },
 
             computed: {

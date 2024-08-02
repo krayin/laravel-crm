@@ -365,8 +365,8 @@
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
                             ::params="params"
-                            ::value="product"
-                            placeholder="@lang('admin::app.quotes.create.search-products')"
+                            ::value="{ id: product.product_id, name: product.name }"
+                            :placeholder="trans('admin::app.quotes.edit.search-products')"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>

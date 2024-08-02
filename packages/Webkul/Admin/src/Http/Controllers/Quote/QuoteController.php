@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
@@ -160,8 +161,10 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $request)
     {
+        dd($request->all());
+
         foreach (request('rows') as $quoteId) {
             Event::dispatch('quote.delete.before', $quoteId);
 

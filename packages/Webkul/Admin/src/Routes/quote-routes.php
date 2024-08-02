@@ -19,6 +19,6 @@ Route::prefix(config('app.admin_path'))->group(function () {
 
         Route::delete('{id}', 'destroy')->name('admin.quotes.delete');
 
-        Route::put('mass-destroy', 'massDestroy')->name('admin.quotes.mass_delete');
+        Route::post('mass-destroy', 'massDestroy')->name('admin.quotes.mass_delete');
     });
 });

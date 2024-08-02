@@ -219,5 +219,12 @@ class QuoteDataGrid extends DataGrid
             'method' => 'POST',
             'url'    => route('admin.quotes.mass_delete'),
         ]);
+
+        $this->addMassAction([
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.quotes.index.datagrid.delete'),
+            'method' => 'POST',
+            'url'    => route('admin.quotes.mass_delete'),
+        ]);
     }
 }
