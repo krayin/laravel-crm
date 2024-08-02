@@ -216,7 +216,7 @@
         <div class="page">
             <!-- Header -->
             <div class="page-header">
-                <b>@lang('Quote')</b>
+                <b>@lang('admin::app.quotes.index.pdf.title')</b>
             </div>
 
             <div class="page-content">
@@ -226,7 +226,7 @@
                         <tr>
                             <td style="width: 50%; padding: 2px 18px;border:none;">
                                 <b>
-                                    @lang('Quote ID'): 
+                                    @lang('admin::app.quotes.index.pdf.quote-id'): 
                                 </b>
 
                                 <span>
@@ -238,7 +238,7 @@
                         <tr>
                             <td style="width: 50%; padding: 2px 18px;border:none;">
                                 <b>
-                                    @lang('Sale Person'): 
+                                    @lang('admin::app.quotes.index.pdf.sales-person'): 
                                 </b>
 
                                 <span>
@@ -250,7 +250,7 @@
                         <tr>
                             <td style="width: 50%; padding: 2px 18px;border:none;">
                                 <b>
-                                    @lang('Date'):
+                                    @lang('admin::app.quotes.index.pdf.date'):
                                 </b>
 
                                 <span>
@@ -260,7 +260,7 @@
 
                             <td style="width: 50%; padding: 2px 18px;border:none;">
                                 <b>
-                                    @lang('Expired At'):
+                                    @lang('admin::app.quotes.index.pdf.expired-at'):
                                 </b>
 
                                 <span>
@@ -278,7 +278,7 @@
                             @if ($quote->billing_address)
                                 <th style="width: 50%;">
                                     <b>
-                                        @lang('Billing Address')
+                                        @lang('admin::app.quotes.index.pdf.billing-address')
                                     </b>
                                 </th>
                             @endif
@@ -286,7 +286,7 @@
                             @if ($quote->shipping_address)
                                 <th style="width: 50%">
                                     <b>
-                                        @lang('Shipping Address')
+                                        @lang('admin::app.quotes.index.pdf.shipping-address')
                                     </b>
                                 </th>
                             @endif
@@ -328,35 +328,35 @@
                         <thead>
                             <tr>
                                 <th>
-                                    @lang('SKU')
+                                    @lang('admin::app.quotes.index.pdf.sku')
                                 </th>
 
                                 <th>
-                                    @lang('Product Name')
+                                    @lang('admin::app.quotes.index.pdf.product-name')
                                 </th>
 
                                 <th>
-                                    @lang('Price')
+                                    @lang('admin::app.quotes.index.pdf.price')
                                 </th>
 
                                 <th>
-                                    @lang('Quantity')
+                                    @lang('admin::app.quotes.index.pdf.quantity')
                                 </th>
 
                                 <th>
-                                    @lang('Amount')
+                                    @lang('admin::app.quotes.index.pdf.amount')
                                 </th>
 
                                 <th>
-                                    @lang('Discount')
+                                    @lang('admin::app.quotes.index.pdf.discount')
                                 </th>
 
                                 <th>
-                                    @lang('Tax')
+                                    @lang('admin::app.quotes.index.pdf.tax')
                                 </th>
 
                                 <th>
-                                    @lang('Grand Total')
+                                    @lang('admin::app.quotes.index.pdf.grand-total')
                                 </th>
                             </tr>
                         </thead>
@@ -392,31 +392,31 @@
                     <table class="{{ app()->getLocale   () }}">
                         <tbody>
                             <tr>
-                                <td>@lang('Sub Total')</td>
+                                <td>@lang('admin::app.quotes.index.pdf.sub-total')</td>
                                 <td>-</td>
                                 <td>{!! core()->formatBasePrice($quote->sub_total, true) !!}</td>
                             </tr>
         
                             <tr>
-                                <td>@lang('Tax')</td>
+                                <td>@lang('admin::app.quotes.index.pdf.tax')</td>
                                 <td>-</td>
                                 <td>{!! core()->formatBasePrice($quote->tax_amount, true) !!}</td>
                             </tr>
         
                             <tr>
-                                <td>@lang('Discount')</td>
+                                <td>@lang('admin::app.quotes.index.pdf.discount')</td>
                                 <td>-</td>
                                 <td>{!! core()->formatBasePrice($quote->discount_amount, true) !!}</td>
                             </tr>
         
                             <tr>
-                                <td>@lang('Adjustment')</td>
+                                <td>@lang('admin::app.quotes.index.pdf.adjustment')</td>
                                 <td>-</td>
                                 <td>{!! core()->formatBasePrice($quote->adjustment_amount, true) !!}</td>
                             </tr>
         
                             <tr>
-                                <td><strong>@lang('Grand Total')</strong></td>
+                                <td><strong>@lang('admin::app.quotes.index.pdf.grand-total')</strong></td>
                                 <td><strong>-</strong></td>
                                 <td><strong>{!! core()->formatBasePrice($quote->grand_total, true) !!}</strong></td>
                             </tr>

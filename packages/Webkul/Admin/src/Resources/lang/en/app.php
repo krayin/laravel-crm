@@ -195,8 +195,29 @@ return [
                 'edit' => 'Edit',
                 'delete' => 'Delete',
                 'print' => 'Print',
+            ],
+
+            'pdf' => [
+                'title' => 'Quote',
+                'grand-total' => 'Grand Total',
+                'adjustment' => 'Adjustment',
+                'discount' => 'Discount',
+                'tax' => 'Tax',
+                'sub-total' => 'Sub Total',
+                'amount' => 'Amount',
+                'quantity' => 'Quantity',
+                'price' => 'Price',
+                'product-name' => 'Product Name',
+                'sku' => 'SKU',
+                'shipping-address' => 'Shipping Address',
+                'billing-address' => 'Billing Address',
+                'expired-at' => 'Expired At',
+                'sales-person' => 'Sales Person',
+                'date' => 'Date',
+                'quote-id' => 'Quote ID',
             ]
         ],
+
         'create' => [
             'title'             => 'Create Quote',
             'save-btn'          => 'Save Quote',
