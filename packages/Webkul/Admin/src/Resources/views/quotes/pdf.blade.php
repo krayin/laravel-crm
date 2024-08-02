@@ -303,7 +303,7 @@
 
                                     <div>{{ $quote->billing_address['state'] }}</div>
 
-                                    <div>{{ core()->country_name($quote->billing_address['country']) }}</div>
+                                    <div>{{ core()->country_name($quote->billing_address['country'] ?? '') }}</div>
                                 </td>
                             @endif
                             
@@ -315,7 +315,7 @@
 
                                     <div>{{ $quote->shipping_address['state'] }}</div>
 
-                                    <div>{{ core()->country_name($quote->shipping_address['country']) }}</div>
+                                    <div>{{ core()->country_name($quote->shipping_address['country'] ?? '') }}</div>
                                 </td>
                             @endif
                         </tr>
