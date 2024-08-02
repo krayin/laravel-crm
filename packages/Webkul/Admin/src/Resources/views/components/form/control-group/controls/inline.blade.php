@@ -75,20 +75,7 @@
                             @click="cancel"
                             class="flex items-center justify-center rounded-r-md p-1 ml-[1px] bg-red-100 hover:bg-red-200"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="2"
-                                stroke="currentColor"
-                                class="w-4 h-4 text-red-600"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
+                            <i class="icon-cross-large text-md font-bold cursor-pointer text-red-600" />
                         </button>
                     </div>
                 </div>
@@ -111,7 +98,6 @@
                 },
 
                 value: {
-                    type: String,
                     required: true,
                 },
 

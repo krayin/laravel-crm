@@ -182,7 +182,7 @@
                 
                                         <v-lookup-component
                                             :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                            :data='@json($lookUpEntityData)'
+                                            :value='@json($lookUpEntityData)'
                                         ></v-lookup-component>
                                     </x-admin::form.control-group>
                                 </div>
@@ -282,6 +282,13 @@
                             <x-admin::table.th class="text-right">
                                 @lang('admin::app.quotes.create.total')
                             </x-admin::table.th>
+
+                            <x-admin::table.th 
+                                v-if="products.length > 1"
+                                class="text-right"
+                            >
+                                @lang('admin::app.quotes.create.action')
+                            </x-admin::table.th>
                         </x-admin::table.thead.tr>
                     </x-admin::table.thead>
 
@@ -301,7 +308,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-xs cursor-pointer text-brandColor dark:text-brandColor hover:underline"
+                class="text-md cursor-pointer text-brandColor dark:text-brandColor hover:underline"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
@@ -361,22 +368,18 @@
             <x-admin::table.thead.tr class="border-b-2">
                 <!-- Quote Name -->
                 <x-admin::table.td>
-                    <x-admin::form.control-group>
-                        <x-admin::form.control-group.control
-                            type="inline"
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::lookup 
+                            ::src="src"
                             ::name="`${inputName}[product_id]`"
-                            ::value="product.name"
-                            rules="required"
-                            :label="trans('admin::app.quotes.create.product-name')"
-                            :placeholder="trans('admin::app.quotes.create.product-name')"
-                           
+                            placeholder="Search Organizations"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
             
                 <!-- Quantity -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[quantity]`"
@@ -391,7 +394,7 @@
             
                 <!-- Price -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[price]`"
@@ -406,7 +409,7 @@
             
                 <!-- Total -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[total]`"
@@ -421,7 +424,7 @@
             
                 <!-- Discount Amount -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[discount_amount]`"
@@ -436,7 +439,7 @@
             
                 <!-- Tax Amount -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[tax_amount]`"
@@ -451,13 +454,26 @@
             
                 <!-- Total with Discount -->
                 <x-admin::table.td class="text-right">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[final_total]`"
                             ::value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
                             ::allowEdit="false"
                         />
+                    </x-admin::form.control-group>
+                </x-admin::table.td>
+
+                <!-- Action -->
+                <x-admin::table.td
+                    v-if="$parent.products.length > 1"
+                    class="text-right !p-2"
+                >
+                    <x-admin::form.control-group class="!mb-0">
+                        <i  
+                            @click="removeProduct"
+                            class="icon-delete text-2xl cursor-pointer"
+                        ></i>
                     </x-admin::form.control-group>
                 </x-admin::table.td>
             </x-admin::table.thead.tr>
@@ -521,6 +537,11 @@
                 },
 
                 computed: {
+                    /**
+                     * Calculate the sub total of the products.
+                     * 
+                     * @returns {Number}
+                     */
                     subTotal() {
                         let total = 0;
 
@@ -531,26 +552,37 @@
                         return total;
                     },
 
+                    /**
+                     * Calculate the total discount amount of the products.
+                     * 
+                     * @returns {Number}
+                     */
                     discountAmount() {
                         let total = 0;
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.discount_amount);
-                        });
+                        this.products.forEach(product => total += parseFloat(product.discount_amount));
 
                         return total;
                     },
 
+                    /**
+                     * Calculate the total tax amount of the products.
+                     * 
+                     * @returns {Number}
+                     */
                     taxAmount() {
                         let total = 0;
 
-                        this.products.forEach(product => {
-                            total += parseFloat(product.tax_amount);
-                        });
+                        this.products.forEach(product => total += parseFloat(product.tax_amount));
 
                         return total;
                     },
 
+                    /**
+                     * Calculate the grand total of the products.
+                     * 
+                     * @returns {Number}
+                     */
                     grandTotal() {
                         let total = 0;
 
@@ -559,10 +591,15 @@
                         });
 
                         return total;
-                    }
+                    },
                 },
 
                 methods: {
+                    /**
+                     * Add a new product.
+                     * 
+                     * @returns {void}
+                     */
                     addProduct() {
                         this.products.push({
                             id: null,
@@ -573,9 +610,14 @@
                             price: 0,
                             discount_amount: 0,
                             tax_amount: 0,
-                        })
+                        });
                     },
 
+                    /**
+                     * Remove the product.
+                     * 
+                     * @param {Object} product
+                     */
                     removeProduct(product) {
                         if (this.products.length === 1) {
                             this.products = [{
@@ -615,6 +657,11 @@
                 },
 
                 watch: {
+                    /**
+                     * Watch the product changes.
+                     * 
+                     * @param {Object} newValue
+                     */
                     product: {
                         handler(newValue, oldValue) {
                             this.product.amount = this.product.price * this.product.quantity;
@@ -627,6 +674,11 @@
                 },
 
                 computed: {
+                    /**
+                     * Get the input name.
+                     * 
+                     * @returns {String}
+                     */
                     inputName() {
                         if (this.product.id) {
                             return "items[" + this.product.id + "]";
@@ -634,45 +686,25 @@
 
                         return "items[item_" + this.index + "]";
                     },
+
+                    /**
+                     * Get the source URL.
+                     * 
+                     * @returns {String}
+                     */
+                    src() {
+                        return "{{ route('admin.products.search') }}";
+                    },
                 },
 
                 methods: {
-                    // search: debounce(function () {
-                    //     this.state = '';
-
-                    //     this.product['product_id'] = null;
-
-                    //     this.is_searching = true;
-
-                    //     if (this.product['name'].length < 2) {
-                    //         this.products = [];
-
-                    //         this.is_searching = false;
-
-                    //         return;
-                    //     }
-
-                    //     var self = this;
-
-                    //     this.$http.get("{{ route('admin.products.search') }}", {params: {query: this.product['name']}})
-                    //         .then (function(response) {
-                    //             self.$parent.products.forEach(function(addedProduct) {
-                    //                 response.data.forEach(function(product, index) {
-                    //                     if (product.id == addedProduct.product_id) {
-                    //                         response.data.splice(index, 1);
-                    //                     }
-                    //                 });
-                    //             });
-
-                    //             self.products = response.data;
-
-                    //             self.is_searching = false;
-                    //         })
-                    //         .catch (function (error) {
-                    //             self.is_searching = false;
-                    //         })
-                    // }, 500),
-
+                    /**
+                     * Add the product.
+                     * 
+                     * @param {Object} result
+                     * 
+                     * @return {void}
+                     */
                     addProduct(result) {
                         this.state = 'old';
 
@@ -684,7 +716,12 @@
                         this.product.tax_amount = 0;
                     },
 
-                    removeProduct: function () {
+                    /**
+                     * Remove the product.
+                     * 
+                     * @return {void}
+                     */
+                    removeProduct() {
                         this.$emit('onRemoveProduct', this.product);
                     },
                 },

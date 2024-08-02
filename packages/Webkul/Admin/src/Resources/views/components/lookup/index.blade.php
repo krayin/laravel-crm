@@ -1,16 +1,4 @@
-@props([
-    'endPoint'    => null,
-    'params'      => [],
-    'name'        => null,
-    'placeholder' => null,
-])
-
-<v-lookup 
-    endpoint="{{ $endPoint }}"
-    :params="{{ json_encode($params) }}"
-    name="{{ $name }}"
-    placeholder="{{ $placeholder }}"
-></v-lookup>
+<v-lookup {{ $attributes }}></v-lookup>
 
 @pushOnce('scripts')
     <script 
@@ -24,7 +12,7 @@
             <!-- Input Box (Button) -->
             <x-admin::form.control-group.control
                 type="text"
-                ::id="name"
+                id="name"
                 ::name="name"
                 class="w-full pr-10 cursor-pointer text-gray-800"
                 ::placeholder="selectedItem.name ?? placeholder"
@@ -116,14 +104,14 @@
             template: '#v-lookup-template',
 
             props: {
-                endpoint: {
+                src: {
                     type: String,
                     required: true,
                 },
 
                 params: {
                     type: Object,
-                    required: true,
+                    default: () => ({}),
                 },
 
                 name: {
@@ -134,6 +122,11 @@
                 placeholder: {
                     type: String,
                     required: true,
+                },
+
+                value: {
+                    type: Object,
+                    default: () => ({}),
                 },
             },
 
@@ -153,6 +146,12 @@
 
                     cancelToken: null,
                 };
+            },
+
+            mounted() {
+                if (this.value) {
+                    this.selectedItem = this.value;
+                }
             },
 
             created() {
@@ -235,7 +234,7 @@
 
                     this.cancelToken = this.$axios.CancelToken.source();
 
-                    this.$axios.get(this.endpoint, {
+                    this.$axios.get(this.src, {
                             params: { 
                                 ...this.params,
                                 query: this.searchTerm

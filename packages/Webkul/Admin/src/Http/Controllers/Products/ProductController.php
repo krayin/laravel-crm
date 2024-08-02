@@ -2,14 +2,14 @@
 
 namespace Webkul\Admin\Http\Controllers\Products;
 
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Http\Requests\AttributeForm;
-use Webkul\Admin\Http\Requests\MassDestroyRequest;
-use Webkul\Product\Repositories\ProductRepository;
+use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Product\ProductDataGrid;
+use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Product\Repositories\ProductRepository;
 
 class ProductController extends Controller
 {
@@ -37,7 +37,6 @@ class ProductController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
      */
     public function create(): View
     {
@@ -114,10 +113,10 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * 
+     *
      * @return \Illuminate\Http\Response
      */
-    public function storeInventories(int $id, int $warehouseId = null)
+    public function storeInventories(int $id, ?int $warehouseId = null)
     {
         $this->validate(request(), [
             'inventories'                         => 'array',

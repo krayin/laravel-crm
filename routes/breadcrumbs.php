@@ -41,7 +41,7 @@ Breadcrumbs::for('quotes.create', function (BreadcrumbTrail $trail) {
 // Dashboard > Quotes > Edit Quote
 Breadcrumbs::for('quotes.edit', function (BreadcrumbTrail $trail, $quote) {
     $trail->parent('quotes');
-    $trail->push(trans('admin::app.quotes.edit-title'), route('admin.quotes.edit', $quote->id));
+    $trail->push(trans('admin::app.quotes.edit.title'), route('admin.quotes.edit', $quote->id));
 });
 
 // Mail
