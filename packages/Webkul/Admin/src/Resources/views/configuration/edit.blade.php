@@ -25,14 +25,14 @@
                     href="{{ route('admin.configuration.index') }}"
                     class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
                 >
-                    @lang('Back')
+                    @lang('admin::app.configuration.index.back')
                 </a>
 
                 <button
                     type="submit"
                     class="primary-button"
                 >
-                    @lang('Save Configuration')
+                    @lang('admin::app.configuration.index.save-btn')
                 </button>
             </div>
         </div>

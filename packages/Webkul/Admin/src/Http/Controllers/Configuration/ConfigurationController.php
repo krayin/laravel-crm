@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Configuration;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
@@ -18,7 +19,7 @@ class ConfigurationController extends Controller
      * @return void
      */
     public function __construct(protected ConfigurationRepository $configurationRepository) {}
-  
+
     /**
      * Display a listing of the resource.
      */
@@ -64,5 +65,20 @@ class ConfigurationController extends Controller
         $config = $this->configurationRepository->findOneByField('value', $fileName);
 
         return Storage::download($config['value']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function search(): JsonResponse
+    {
+        $results = $this->configurationRepository->search(
+            system_config()->getItems(),
+            request()->query('query')
+        );
+
+        return new JsonResponse([
+            'data' => $results,
+        ]);
     }
 }

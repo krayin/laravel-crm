@@ -26,7 +26,7 @@ class SystemConfig
      * Add Item.
      */
     public function addItem(Item $item): void
-    {   
+    {
         $this->items[] = $item;
     }
 
@@ -103,7 +103,7 @@ class SystemConfig
                     icon: $subConfigItem['icon'] ?? null,
                     key: $subConfigItem['key'],
                     name: trans($subConfigItem['name']),
-                    info: $configItem['info'] ?? null,
+                    info: trans($subConfigItem['info']) ?? null,
                     route: $subConfigItem['route'] ?? null,
                     sort: $subConfigItem['sort'] ?? null,
                 );
@@ -123,6 +123,10 @@ class SystemConfig
 
         if (! $activeItem) {
             return null;
+        }
+
+        if ($slug2 = request()->route('slug2')) {
+            $activeItem = $activeItem->getChildren()[$slug2];
         }
 
         return $activeItem;

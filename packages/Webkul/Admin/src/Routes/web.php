@@ -35,7 +35,6 @@ require 'rest-routes.php';
  */
 require 'activities-routes.php';
 
-
 /**
  * Configuration routes.
  */
