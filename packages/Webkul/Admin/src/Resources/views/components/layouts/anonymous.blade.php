@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 
 <html
-    {{-- lang="{{ app()->getLocale() }}" --}}
-    {{-- dir="{{ core()->getCurrentLocale()->direction }}" --}}
+    class="{{ request()->cookie('dark_mode') ? 'dark' : '' }}"
+    lang="{{ app()->getLocale() }}"
+    dir="{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'rtl' : 'ltr' }}"
 >
 
 <head>
@@ -16,7 +17,7 @@
     >
     <meta
         http-equiv="content-language"
-        {{-- content="{{ app()->getLocale() }}" --}}
+        content="{{ app()->getLocale() }}"
     >
 
     <meta
