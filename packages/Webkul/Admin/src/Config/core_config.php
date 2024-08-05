@@ -13,13 +13,13 @@ return [
         'icon' => 'settings/store.svg',
         'sort' => 1,
     ], [
-        'key'    => 'general.general.locale_options',
+        'key'    => 'general.general.locale_settings',
         'name'   => 'admin::app.configuration.index.general.general.locale-settings.title',
         'info'   => 'admin::app.configuration.index.general.general.locale-settings.title-info',
         'sort'   => 1,
         'fields' => [
             [
-                'name'    => 'weight_unit',
+                'name'    => 'locale',
                 'title'   => 'admin::app.configuration.index.general.general.locale-settings.title',
                 'type'    => 'select',
                 'default' => 'en',
