@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-a774323e.css",
+    "file": "assets/app-b961d1a5.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -398,11 +398,11 @@
   },
   "src/Resources/assets/images/favicon/apple-icon-precomposed.png": {
     "file": "assets/apple-icon-11320d35.png",
-    "src": "src/Resources/assets/images/favicon/apple-icon.png"
+    "src": "src/Resources/assets/images/favicon/apple-icon-precomposed.png"
   },
   "src/Resources/assets/images/favicon/apple-icon.png": {
     "file": "assets/apple-icon-11320d35.png",
-    "src": "src/Resources/assets/images/favicon/apple-icon.png"
+    "src": "src/Resources/assets/images/favicon/apple-icon-precomposed.png"
   },
   "src/Resources/assets/images/favicon/favicon-16x16.png": {
     "file": "assets/favicon-16x16-eb7238ce.png",
@@ -627,7 +627,7 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
-    "file": "assets/app-9a075a28.js",
+    "file": "assets/app-c2c05427.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }
