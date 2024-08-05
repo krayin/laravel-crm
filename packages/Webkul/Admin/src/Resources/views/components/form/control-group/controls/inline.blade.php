@@ -112,6 +112,11 @@
                     type: Boolean,
                     default: true,
                 },
+
+                errors: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -123,6 +128,11 @@
             },
 
             watch: {
+                /**
+                 * Watch the value prop.
+                 * 
+                 * @param {String} newValue 
+                 */
                 value(newValue) {
                     this.inputValue = newValue;
                 },
@@ -149,12 +159,15 @@
             },
 
             methods: {
+                /**
+                 * Toggle the input.
+                 * 
+                 * @return {void}
+                 */
                 toggle() {
                     this.isEditing = true;
 
-                    this.$nextTick(() => {
-                        this.$refs.input.focus();
-                    });
+                    this.$nextTick(() => this.$refs.input.focus());
                 },
 
                 /**
@@ -163,6 +176,10 @@
                  * @return {void}
                  */
                 save() {
+                    if (this.errors[this.name]) {
+                        return;
+                    }
+
                     this.isEditing = false;
 
                     this.$emit('on-change', this.inputValue);

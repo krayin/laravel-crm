@@ -34,7 +34,7 @@
             </div>
         </div>
 
-        <v-quote></v-quote>
+        <v-quote :errors="errors"></v-quote>
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -228,7 +228,7 @@
                             </div>
 
                             <!-- Quote Item List Vue Component -->
-                            <v-quote-item-list></v-quote-item-list>
+                            <v-quote-item-list :errors="errors"></v-quote-item-list>
                         </div>
 
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
@@ -292,6 +292,7 @@
                             :product="product"
                             :key="index"
                             :index="index"
+                            :errors="errors"
                             @onRemoveProduct="removeProduct($event)"
                         ></v-quote-item>
                     </x-admin::table.tbody>
@@ -336,6 +337,7 @@
                                     ::name="`adjustment_amount`"
                                     ::value="adjustmentAmount"
                                     rules="required|decimal:4"
+                                    ::errors="errors"
                                     :label="trans('admin::app.quotes.create.adjustment-amount')"
                                     :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
                                     @on-change="(value) => adjustmentAmount = value"
@@ -379,6 +381,7 @@
                             ::name="`${inputName}[quantity]`"
                             ::value="product.quantity"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.quantity')"
                             :placeholder="trans('admin::app.quotes.create.quantity')"
                             @on-change="(value) => product.quantity = value"
@@ -394,6 +397,7 @@
                             ::name="`${inputName}[price]`"
                             ::value="product.price"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.price')"
                             :placeholder="trans('admin::app.quotes.create.price')"
                             @on-change="(value) => product.price = value"
@@ -409,6 +413,7 @@
                             ::name="`${inputName}[total]`"
                             ::value="product.price * product.quantity"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.total')"
                             :placeholder="trans('admin::app.quotes.create.total')"
                             ::allowEdit="false"
@@ -424,6 +429,7 @@
                             ::name="`${inputName}[discount_amount]`"
                             ::value="product.discount_amount"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.discount-amount')"
                             :placeholder="trans('admin::app.quotes.create.discount-amount')"
                             @on-change="(value) => product.discount_amount = value"
@@ -439,6 +445,7 @@
                             ::name="`${inputName}[tax_amount]`"
                             ::value="product.tax_amount"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.tax-amount')"
                             :placeholder="trans('admin::app.quotes.create.tax-amount')"
                             @on-change="(value) => product.tax_amount = value"
@@ -452,6 +459,7 @@
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[final_total]`"
+                            ::errors="errors"
                             ::value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
                             ::allowEdit="false"
                         />
@@ -476,6 +484,8 @@
         <script type="module">
             app.component('v-quote', {
                 template: '#v-quote-template',
+
+                props: ['errors'],
 
                 data() {
                     return {
@@ -509,6 +519,8 @@
 
             app.component('v-quote-item-list', {
                 template: '#v-quote-item-list-template',
+
+                props: ['errors'],
 
                 data() {
                     return {
@@ -630,7 +642,7 @@
             app.component('v-quote-item', {
                 template: '#v-quote-item-template',
 
-                props: ['index', 'product'],
+                props: ['index', 'product', 'errors'],
 
                 data() {
                     return {
