@@ -19,20 +19,11 @@ return [
         'sort'   => 1,
         'fields' => [
             [
-                'name'          => 'weight_unit',
-                'title'         => 'admin::app.configuration.index.general.general.locale-settings.title',
-                'type'          => 'select',
-                'default'       => 'kgs',
-                'options'       => [
-                    [
-                        'title' => 'lbs',
-                        'value' => 'lbs',
-                    ], [
-                        'title' => 'kgs',
-                        'value' => 'kgs',
-                    ],
-                ],
-                'channel_based' => true,
+                'name'    => 'weight_unit',
+                'title'   => 'admin::app.configuration.index.general.general.locale-settings.title',
+                'type'    => 'select',
+                'default' => 'en',
+                'options' => 'Webkul\Core\Core@locales',
             ],
         ],
     ],
