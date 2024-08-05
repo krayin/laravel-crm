@@ -26,7 +26,7 @@ class SystemConfig
      * Add Item.
      */
     public function addItem(Item $item): void
-    {
+    {   
         $this->items[] = $item;
     }
 
@@ -80,6 +80,7 @@ class SystemConfig
                 key: $configItem['key'],
                 name: trans($configItem['name']),
                 route: $configItem['route'] ?? null,
+                info: trans($configItem['info']) ?? null,
                 sort: $configItem['sort'],
             ));
         }
@@ -102,6 +103,7 @@ class SystemConfig
                     icon: $subConfigItem['icon'] ?? null,
                     key: $subConfigItem['key'],
                     name: trans($subConfigItem['name']),
+                    info: $configItem['info'] ?? null,
                     route: $subConfigItem['route'] ?? null,
                     sort: $subConfigItem['sort'] ?? null,
                 );

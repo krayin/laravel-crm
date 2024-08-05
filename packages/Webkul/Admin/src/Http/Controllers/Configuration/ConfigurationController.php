@@ -18,33 +18,20 @@ class ConfigurationController extends Controller
      * @return void
      */
     public function __construct(protected ConfigurationRepository $configurationRepository) {}
-
+  
     /**
      * Display a listing of the resource.
      */
-    public function index(): RedirectResponse|View
+    public function index(): View
     {
-        $slugs = (array) $this->getDefaultConfigSlugs();
-
-        if (! empty($slugs)) {
-            return redirect()->route('admin.configuration.index', $slugs);
+        if (
+            request()->route('slug')
+            && request()->route('slug2')
+        ) {
+            return view('admin::configuration.edit');
         }
 
         return view('admin::configuration.index');
-    }
-
-    /**
-     * Returns slugs
-     */
-    public function getDefaultConfigSlugs(): array
-    {
-        if (! request()->route('slug')) {
-            $slug = system_config()->getItems()->first()->getKey();
-
-            return ['slug' => $slug];
-        }
-
-        return [];
     }
 
     /**
