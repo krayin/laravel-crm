@@ -42,7 +42,7 @@
             </div>
         </div>
 
-        <v-quote></v-quote>
+        <v-quote :errors="errors"></v-quote>
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -57,19 +57,24 @@
                        
                         <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
                             <ul class="flex flex-wrap">
-                               <li class="me-2" v-for="tab in tabs" :key="tab.id">
-                                    <a
-                                        :href="'#' + tab.id"
-                                        :class="[
-                                            'inline-block p-4 rounded-t-lg border-b-2',
-                                            activeTab === tab.id
-                                            ? 'text-brandColor border-brandColor dark:text-bradColor dark:border-bradColor'
-                                            : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
-                                        ]"
-                                        @click="scrollToSection(tab.id)"
-                                        :text="tab.label"
-                                    ></a>
-                                </li>
+                                <template
+                                    v-for="tab in tabs"
+                                    :key="tab.id"
+                                >
+                                    <li class="me-2">
+                                        <a
+                                            :href="'#' + tab.id"
+                                            :class="[
+                                                'inline-block p-4 rounded-t-lg border-b-2',
+                                                activeTab === tab.id
+                                                ? 'text-brandColor border-brandColor dark:text-bradColor dark:border-bradColor'
+                                                : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+                                            ]"
+                                            @click="scrollToSection(tab.id)"
+                                            :text="tab.label"
+                                        ></a>
+                                    </li>
+                                </template>
                             </ul>
                         </div>
 
@@ -236,7 +241,7 @@
                             </div>
 
                             <!-- Quote Item List Vue Component -->
-                            <v-quote-item-list></v-quote-item-list>
+                            <v-quote-item-list :errors="errors"></v-quote-item-list>
                         </div>
 
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
@@ -295,13 +300,17 @@
                     <!-- Table Body -->
                     <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <!-- Quote Item Vue component -->
-                        <v-quote-item
+                        <template
                             v-for='(product, index) in products'
-                            :product="product"
                             :key="index"
-                            :index="index"
-                            @onRemoveProduct="removeProduct($event)"
-                        ></v-quote-item>
+                        >
+                            <v-quote-item
+                                :product="product"
+                                :index="index"
+                                :errors="errors"
+                                @onRemoveProduct="removeProduct($event)"
+                            ></v-quote-item>
+                        </template>
                     </x-admin::table.tbody>
                 </x-admin::table>
             </div>
@@ -344,6 +353,7 @@
                                     ::name="`adjustment_amount`"
                                     ::value="adjustmentAmount"
                                     rules="required|decimal:4"
+                                    ::errors="errors"
                                     :label="trans('admin::app.quotes.create.adjustment-amount')"
                                     :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
                                     @on-change="(value) => adjustmentAmount = value"
@@ -385,6 +395,7 @@
                             ::name="`${inputName}[quantity]`"
                             ::value="product.quantity"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.quantity')"
                             :placeholder="trans('admin::app.quotes.create.quantity')"
                             @on-change="(value) => product.quantity = value"
@@ -400,6 +411,7 @@
                             ::name="`${inputName}[price]`"
                             ::value="product.price"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.price')"
                             :placeholder="trans('admin::app.quotes.create.price')"
                             @on-change="(value) => product.price = value"
@@ -415,6 +427,7 @@
                             ::name="`${inputName}[total]`"
                             ::value="product.price * product.quantity"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.total')"
                             :placeholder="trans('admin::app.quotes.create.total')"
                             ::allowEdit="false"
@@ -430,6 +443,7 @@
                             ::name="`${inputName}[discount_amount]`"
                             ::value="product.discount_amount"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.discount-amount')"
                             :placeholder="trans('admin::app.quotes.create.discount-amount')"
                             @on-change="(value) => product.discount_amount = value"
@@ -445,6 +459,7 @@
                             ::name="`${inputName}[tax_amount]`"
                             ::value="product.tax_amount"
                             rules="required|decimal:4"
+                            ::errors="errors"
                             :label="trans('admin::app.quotes.create.tax-amount')"
                             :placeholder="trans('admin::app.quotes.create.tax-amount')"
                             @on-change="(value) => product.tax_amount = value"
@@ -458,6 +473,7 @@
                         <x-admin::form.control-group.control
                             type="inline"
                             ::name="`${inputName}[final_total]`"
+                            ::errors="errors"
                             ::value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
                             ::allowEdit="false"
                         />
@@ -482,6 +498,8 @@
         <script type="module">
             app.component('v-quote', {
                 template: '#v-quote-template',
+
+                props: ['errors'],
 
                 data() {
                     return {
@@ -516,8 +534,8 @@
             app.component('v-quote-item-list', {
                 template: '#v-quote-item-list-template',
 
-                props: ['data'],
-
+                props: ['data', 'errors'],
+                
                 data() {
                     return {
                         adjustmentAmount: 0,
@@ -646,7 +664,7 @@
             app.component('v-quote-item', {
                 template: '#v-quote-item-template',
 
-                props: ['index', 'product'],
+                props: ['index', 'product', 'errors'],
 
                 data() {
                     return {

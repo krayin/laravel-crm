@@ -52,15 +52,17 @@
                     <!-- Action Buttons -->
                     <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
                         <button
-                            @click="save"
+                            type="button"
                             class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"
+                            @click="save"
                         >
                             <i class="icon-tick text-md font-bold cursor-pointer text-green-600" />
                         </button>
                     
                         <button
-                            @click="cancel"
+                            type="button"
                             class="flex items-center justify-center rounded-r-md p-1 ml-[1px] bg-red-100 hover:bg-red-200"
+                            @click="cancel"
                         >
                             <i class="icon-cross-large text-md font-bold cursor-pointer text-red-600" />
                         </button>
@@ -114,8 +116,8 @@
                 },
 
                 errors: {
-                    type: String,
-                    default: '',
+                    type: Object,
+                    default: {},
                 },
             },
 
