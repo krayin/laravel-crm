@@ -46,14 +46,15 @@
                     <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                         @lang('admin::app.products.create.general')
                     </p>
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'products',
-                                ['code', 'NOTIN', ['price']],
-                                ['code' , '!=', 'quantity']
-                            ]),
-                            'entity'           => $product,
-                        ])
+                    
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'entity_type' => 'products',
+                            ['code', 'NOTIN', ['price']],
+                            ['code' , '!=', 'quantity']
+                        ])"
+                        :entity="$product"
+                    />
                 </div>
             </div>
 
@@ -69,14 +70,14 @@
                     </x-slot>
 
                     <x-slot:content>
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
                                 ['code', 'IN', ['price']],
                                 ['code' , '!=', 'quantity']
-                            ]),
-                            'entity'           => $product,
-                        ])
+                            ])"
+                            :entity="$product"
+                        />
                     </x-slot>
                 </x-admin::accordion>
             </div>

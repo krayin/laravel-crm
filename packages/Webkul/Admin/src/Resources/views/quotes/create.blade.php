@@ -55,7 +55,7 @@
                     <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
                        
-                        <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                        <div class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
                             <ul class="flex flex-wrap">
                                 <template
                                     v-for="tab in tabs"
@@ -94,88 +94,70 @@
                             </div>
 
                             <div class="w-1/2">
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query) {
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'subject',
-                                                ]);
-                                        })->get(),
-                                    'customValidations'      => [
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['subject']],
+                                    ])"
+
+                                    :custom-validations="[
                                         'expired_at' => [
                                             'required',
                                             'date_format:yyyy-MM-dd',
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
-                                    ],
-                                    'entity'                  => $quote,
-                                ])
+                                    ]"
+                                />
 
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query) {
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'description',
-                                                ]);
-                                        })->get(),
-                                    'customValidations'      => [
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['description']],
+                                        ])"
+                                    :custom-validations="[
                                         'expired_at' => [
                                             'required',
                                             'date_format:yyyy-MM-dd',
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
-                                    ],
-                                    'entity'                  => $quote,
-                                ])
-
+                                    ]"
+                                />
+                                
                                 <div class="flex gap-4">
-                                    @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                            ->scopeQuery(function($query) {
-                                                return $query
-                                                    ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'expired_at',
-                                                        'user_id',
-                                                    ]);
-                                            })->get()->sortBy('sort_order'),
-                                        'customValidations'      => [
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['expired_at', 'user_id']],
+                                        ])->sortBy('sort_order')"
+                                        :custom-validations="[
                                             'expired_at' => [
                                                 'required',
                                                 'date_format:yyyy-MM-dd',
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
-                                        ],
-                                        'entity'                  => $quote,
-                                    ])
+                                        ]"
+                                        :entity="$quote"
+                                    />
                                 </div>
 
                                 <div class="flex gap-4">
-                                    @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                            ->scopeQuery(function($query) {
-                                                return $query
-                                                    ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'person_id',
-                                                    ]);
-                                            })->get()->sortBy('sort_order'),
-                                        'customValidations'      => [
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['person_id']],
+                                        ])->sortBy('sort_order')"
+                                        :custom-validations="[
                                             'expired_at' => [
                                                 'required',
                                                 'date_format:yyyy-MM-dd',
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
-                                        ],
-                                        'entity'                  => $quote,
-                                    ])
-
-                                    @include('admin::common.custom-attributes.edit.lookup')
-
+                                        ]"
+                                        :entity="$quote"
+                                    />
+                                    
+                                    <x-admin::attributes.edit.lookup />
+                                    
                                     @php
                                         $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
                                     @endphp
@@ -210,18 +192,13 @@
                             </div>
 
                             <div class="w-1/2">
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query){
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'billing_address',
-                                                    'shipping_address',
-                                                ]);
-                                        })->get(),
-                                    'entity'           => $quote,
-                                ])
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['billing_address', 'shipping_address']],
+                                        ])"
+                                    :entity="$quote"
+                                />
                             </div>
                         </div>
 
@@ -256,7 +233,7 @@
         >
             <div class="pb-2">
                 <!-- Table -->
-                <x-admin::table class="table-fixed w-full">
+                <x-admin::table class="w-full table-fixed">
                     <!-- Table Head -->
                     <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
@@ -317,16 +294,16 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-md cursor-pointer text-brandColor dark:text-brandColor hover:underline"
+                class="text-md cursor-pointer text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
             </span>
 
-            <div class="mt-8 flex items-start gap-10  max-lg:gap-5">
+            <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
                 <div class="flex-auto">
                     <div class="flex justify-end">
-                        <div class="grid w-[348px] gap-4 text-sm p-4 rounded-lg bg-gray-100">
+                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm">
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
@@ -484,12 +461,12 @@
                 <!-- Action -->
                 <x-admin::table.td
                     v-if="$parent.products.length > 1"
-                    class="text-right !p-2"
+                    class="!p-2 text-right"
                 >
                     <x-admin::form.control-group class="!mb-0">
                         <i  
                             @click="removeProduct"
-                            class="icon-delete text-2xl cursor-pointer"
+                            class="icon-delete cursor-pointer text-2xl"
                         ></i>
                     </x-admin::form.control-group>
                 </x-admin::table.td>

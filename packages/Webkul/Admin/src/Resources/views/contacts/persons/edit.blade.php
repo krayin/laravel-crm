@@ -43,12 +43,12 @@
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                     {!! view_render_event('admin.contacts.persons.edit.form_controls.before') !!}
 
-                    @include('admin::common.custom-attributes.edit', [
-                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             'entity_type' => 'persons',
-                        ]),
-                        'entity'           => $person,
-                    ])
+                        ])"
+                        :entity="$person"
+                    />
                     
                     {!! view_render_event('admin.contacts.persons.edit.form_controls.after') !!}
                 </div>

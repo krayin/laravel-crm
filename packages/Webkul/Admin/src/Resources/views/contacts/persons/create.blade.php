@@ -41,15 +41,15 @@
         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                    {!! view_render_event('bagisto.admin.cms.pages.create.form_controls.before') !!}
+                    {!! view_render_event('krayin.admin.persons.create.form_controls.before') !!}
 
-                    @include('admin::common.custom-attributes.edit', [
-                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             'entity_type' => 'persons',
-                        ]),
-                    ])
-
-                    {!! view_render_event('bagisto.admin.cms.pages.create.form_controls.after') !!}
+                        ])"
+                    />
+                    
+                    {!! view_render_event('krayin.admin.persons.create.form_controls.after') !!}
                 </div>
             </div>
         </div>

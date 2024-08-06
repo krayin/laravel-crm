@@ -44,13 +44,13 @@
                         @lang('admin::app.products.create.general')
                     </p>
 
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'products',
-                                ['code', 'NOTIN', ['price']],
-                                ['code' , '!=', 'quantity']
-                            ]),
-                        ])
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                            'entity_type' => 'products',
+                            ['code', 'NOTIN', ['price']],
+                            ['code' , '!=', 'quantity']
+                        ])"
+                    />
                 </div>
             </div>
 
@@ -66,13 +66,13 @@
                     </x-slot>
 
                     <x-slot:content>
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
                                 ['code', 'IN', ['price']],
                                 ['code' , '!=', 'quantity']
-                            ]),
-                        ])
+                            ])"
+                        />
                     </x-slot>
                 </x-admin::accordion>
             </div>

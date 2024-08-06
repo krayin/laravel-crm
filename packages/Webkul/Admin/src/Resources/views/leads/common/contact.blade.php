@@ -38,8 +38,6 @@
                 @lang('admin::app.leads.common.contact.email')
             </x-admin::form.control-group.label>
 
-            @include('admin::common.custom-attributes.edit.email', ['formScope' => $formScope ?? ''])
-
             <v-email-component
                 :attribute="{'code': 'person[emails]', 'name': 'Email'}"
                 validations="required"
@@ -53,8 +51,6 @@
             <x-admin::form.control-group.label>
                 @lang('admin::app.leads.common.contact.contact-number')
             </x-admin::form.control-group.label>
-
-            @include('admin::common.custom-attributes.edit.phone', ['formScope' => $formScope ?? ''])
 
             <v-phone-component
                 :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}"
@@ -77,7 +73,7 @@
                 $organizationAttribute->code = 'person[' . $organizationAttribute->code . ']';
             @endphp
 
-            @include('admin::common.custom-attributes.edit.lookup')
+            <x-admin::attributes.edit.lookup />
 
             <v-lookup-component
                 :attribute='@json($organizationAttribute)'

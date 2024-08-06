@@ -49,14 +49,13 @@
                     
                     {!! view_render_event('krayin.admin.settings.warehouses.edit.left_card.before', ['warehouse' => $warehouse]) !!}
 
-                    @include('admin::common.custom-attributes.edit', [
-                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             ['code', 'NOTIN', ['name', 'description']],
                             'entity_type' => 'warehouses',
-                        ])->sortBy('sort_order'),
-                        'entity'           => $warehouse,
-                    ])
-
+                        ])->sortBy('sort_order')"
+                        :entity="$warehouse"
+                    />
                     {!! view_render_event('krayin.admin.settings.warehouses.edit.left_card.after', ['warehouse' => $warehouse]) !!}
 
                 </div>
@@ -76,13 +75,13 @@
                     <x-slot:content>
                         {!! view_render_event('krayin.admin.settings.warehouses.edit.right_card.before', ['warehouse' => $warehouse]) !!}
 
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 ['code', 'IN', ['name', 'description']],
                                 'entity_type' => 'warehouses',
-                            ])->sortBy('sort_order'),
-                            'entity'           => $warehouse,
-                        ])
+                            ])->sortBy('sort_order')"
+                            :entity="$warehouse"
+                        />
 
                         {!! view_render_event('krayin.admin.settings.warehouses.edit.right_card.before', ['warehouse' => $warehouse]) !!}
 

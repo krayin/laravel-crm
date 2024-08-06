@@ -44,12 +44,12 @@
                         @lang('admin::app.settings.warehouses.create.contact-info')
                     </p>
                     
-                    @include('admin::common.custom-attributes.edit', [
-                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    <x-admin::attributes
+                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             ['code', 'NOTIN', ['name', 'description']],
                             'entity_type' => 'warehouses',
-                        ])->sortBy('sort_order'),
-                    ])
+                        ])->sortBy('sort_order')"
+                    />
                 </div>
             </div>
 
@@ -65,12 +65,12 @@
                     </x-slot>
 
                     <x-slot:content>
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 ['code', 'IN', ['name', 'description']],
                                 'entity_type' => 'warehouses',
-                            ])->sortBy('sort_order'),
-                        ])
+                            ])->sortBy('sort_order')"
+                        />
                     </x-slot>
                 </x-admin::accordion>
             </div>

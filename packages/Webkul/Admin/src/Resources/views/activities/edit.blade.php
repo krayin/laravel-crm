@@ -113,7 +113,7 @@
                             @lang('admin::app.activities.index.edit.lead')
                         </x-admin::form.control-group.label>
 
-                        @include('admin::common.custom-attributes.edit.lookup')
+                        <x-admin::attributes.edit.lookup/>
 
                         <v-lookup-component
                             :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
@@ -235,7 +235,7 @@
                     >
                 
                     <svg
-                        class="absolute h-5 w-5 animate-spin right-3 top-3 dark:text-gray-300"
+                        class="absolute right-3 top-3 h-5 w-5 animate-spin dark:text-gray-300"
                         xmlns="http://www.w3.org/2000/svg"
                         fill="none" 
                         aria-hidden="true"
@@ -305,7 +305,7 @@
                 >
                     <div class="flex flex-col overflow-y-auto">
                         <div>
-                            <x-admin::form.control-group.label class="font-semibold p-2 !pb-0">
+                            <x-admin::form.control-group.label class="p-2 !pb-0 font-semibold">
                                 @lang('admin::app.activities.index.edit.persons')
                             </x-admin::form.control-group.label>
     
@@ -322,14 +322,14 @@
                                 ! searchedParticipants.persons.length 
                                 && searchTerm.length
                                 && ! isSearching'
-                                class="text-sm px-4"
+                                class="px-4 text-sm"
                             >
                                 @lang('admin::app.activities.index.edit.no-result-found')
                             </span>
                         </div>
                         
                         <div>
-                            <x-admin::form.control-group.label class="font-semibold p-2 !pb-0">
+                            <x-admin::form.control-group.label class="p-2 !pb-0 font-semibold">
                                 @lang('admin::app.activities.index.edit.users')
                             </x-admin::form.control-group.label>
     
@@ -346,7 +346,7 @@
                                 ! searchedParticipants.users.length 
                                 && searchTerm.length
                                 && ! isSearching'
-                                class="text-sm px-4"
+                                class="px-4 text-sm"
                             >
                                 @lang('admin::app.activities.index.edit.no-result-found')
                             </span>
