@@ -12,7 +12,10 @@
             <!-- Tags -->
             <span
                 class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
-                :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                :style="{
+                    'background-color': tag.color,
+                    'color': backgroundColors.find(color => color.background === tag.color).text
+                }"
                 v-for="(tag, index) in tags"
             >
                 @{{ tag.name }}
@@ -101,14 +104,17 @@
                                     <!-- Name -->
                                     <span
                                         class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
-                                        :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                        :style="{
+                                            'background-color': tag.color,
+                                            'color': backgroundColors.find(color => color.background === tag.color).text
+                                        }"
                                     >
                                         @{{ tag.name }}
                                     </span>
 
                                     <!-- Action -->
                                     <div class="flex items-center gap-1">
-                                        <x-admin::dropdown>
+                                        <x-admin::dropdown position="bottom-right">
                                             <x-slot:toggle>
                                                 <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
                                                     <span
@@ -123,16 +129,18 @@
 
                                             <x-slot:menu class="!top-7 !p-0">
                                                 <x-admin::dropdown.menu.item
-                                                    class="top-5"
-                                                    ::class="{ 'bg-gray-100': tag.color === color }"
+                                                    class="top-5 flex gap-2"
+                                                    ::class="{ 'bg-gray-100': tag.color === color.background }"
                                                     v-for="color in backgroundColors"
                                                     @click="update(tag, color)"
                                                 >
                                                     <span
                                                         class="flex h-4 w-4 rounded-full"
-                                                        :style="'background-color: ' + color"
+                                                        :style="'background-color: ' + color.background"
                                                     >
                                                     </span>
+
+                                                    @{{ color.label }}
                                                 </x-admin::dropdown.menu.item>
                                             </x-slot>
                                         </x-admin::dropdown>
@@ -180,14 +188,31 @@
                     searchedTags: [],
 
                     backgroundColors: [
-                        '#FEE2E2',
-                        '#FFEDD5',
-                        '#FEF3C7',
-                        '#FEF9C3',
-                        '#ECFCCB',
-                        '#F0FDF4',
-                        '#DCFCE7',
-                        '#fbcfe8',
+                        {
+                            label: "@lang('admin::app.leads.view.tags.aquarelle-red')",
+                            text: '#DC2626',
+                            background: '#FEE2E2',
+                        }, {
+                            label: "@lang('admin::app.leads.view.tags.crushed-cashew')",
+                            text: '#EA580C',
+                            background: '#FFEDD5',
+                        }, {
+                            label: "@lang('admin::app.leads.view.tags.beeswax')",
+                            text: '#D97706',
+                            background: '#FEF3C7',
+                        }, {
+                            label: "@lang('admin::app.leads.view.tags.lemon-chiffon')",
+                            text: '#CA8A04',
+                            background: '#FEF9C3',
+                        }, {
+                            label: "@lang('admin::app.leads.view.tags.snow-flurry')",
+                            text: '#65A30D',
+                            background: '#ECFCCB',
+                        }, {
+                            label: "@lang('admin::app.leads.view.tags.honeydew')",
+                            text: '#16A34A',
+                            background: '#DCFCE7',
+                        },
                     ],
                 }
             },
@@ -245,7 +270,7 @@
 
                     this.$axios.post("{{ route('admin.settings.tags.store') }}", {
                         name: this.searchTerm,
-                        color: this.backgroundColors[Math.floor(Math.random() * this.backgroundColors.length)]
+                        color: this.backgroundColors[Math.floor(Math.random() * this.backgroundColors.length)].background,
                     })
                         .then(response => {
                             self.add(response.data.data);
@@ -286,10 +311,10 @@
 
                     this.$axios.put("{{ route('admin.settings.tags.update', 'replaceTagId') }}".replace('replaceTagId', tag.id), {
                         name: tag.name,
-                        color: color,
+                        color: color.background,
                     })
                         .then(response => {
-                            tag.color = color;
+                            tag.color = color.background;
 
                             self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })

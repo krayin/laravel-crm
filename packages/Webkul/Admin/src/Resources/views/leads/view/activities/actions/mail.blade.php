@@ -76,6 +76,7 @@
                                 id="reply"
                                 name="reply"
                                 rules="required"
+                                tinymce="true"
                                 :label="trans('admin::app.leads.view.activities.actions.mail.message')"
                             />
 
