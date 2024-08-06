@@ -68,4 +68,11 @@
             :validations="$validations"
         />
         @break
+    @case('date')
+        <x-admin::attributes.edit.date
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+        @break
 @endswitch

@@ -114,7 +114,6 @@
                                             'entity_type' => 'quotes',
                                             ['code', 'IN', ['description']],
                                         ])"
-
                                     :custom-validations="[
                                         'expired_at' => [
                                             'required',
@@ -130,7 +129,6 @@
                                             'entity_type' => 'quotes',
                                             ['code', 'IN', ['expired_at', 'user_id']],
                                         ])->sortBy('sort_order')"
-
                                         :custom-validations="[
                                             'expired_at' => [
                                                 'required',
@@ -138,7 +136,6 @@
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
                                         ]"
-
                                         :entity="$quote"
                                     />
                                 </div>
@@ -149,7 +146,6 @@
                                             'entity_type' => 'quotes',
                                             ['code', 'IN', ['person_id']],
                                         ])->sortBy('sort_order')"
-
                                         :custom-validations="[
                                             'expired_at' => [
                                                 'required',
@@ -157,7 +153,6 @@
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
                                         ]"
-
                                         :entity="$quote"
                                     />
                                     
@@ -202,7 +197,6 @@
                                             'entity_type' => 'quotes',
                                             ['code', 'IN', ['billing_address', 'shipping_address']],
                                         ])"
-                                        
                                     :entity="$quote"
                                 />
                             </div>
