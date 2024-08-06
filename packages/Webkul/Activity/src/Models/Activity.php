@@ -4,6 +4,7 @@ namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Contracts\Activity as ActivityContract;
+use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\User\Models\UserProxy;
 
@@ -80,5 +81,13 @@ class Activity extends Model implements ActivityContract
     public function leads()
     {
         return $this->belongsToMany(LeadProxy::modelClass(), 'lead_activities');
+    }
+
+    /**
+     * The leads that belong to the activity.
+     */
+    public function persons()
+    {
+        return $this->belongsToMany(PersonProxy::modelClass(), 'person_activities');
     }
 }

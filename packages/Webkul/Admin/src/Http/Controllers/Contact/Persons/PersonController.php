@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Contact;
+namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -58,6 +58,16 @@ class PersonController extends Controller
         session()->flash('success', trans('admin::app.contacts.persons.create-success'));
 
         return redirect()->route('admin.contacts.persons.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $id): View
+    {
+        $person = $this->personRepository->findOrFail($id);
+
+        return view('admin::contacts.persons.view', compact('person'));
     }
 
     /**
