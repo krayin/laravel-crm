@@ -13,7 +13,8 @@
                 <div class="font-medium">
                     @include ($typeView, [
                         'attribute' => $attribute,
-                        'value'     => isset($entity) ? $entity[$attribute->code] : null
+                        'value'     => isset($entity) ? $entity[$attribute->code] : null,
+                        'allowEdit' => $allowEdit,
                     ])
                 </div>
             </div>

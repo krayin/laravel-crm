@@ -11,6 +11,7 @@
             ['code', 'NOTIN', ['name', 'jon_title']]
         ])"
         :entity="$person"
+        :allow-edit="true"
     />
 </div>
 
