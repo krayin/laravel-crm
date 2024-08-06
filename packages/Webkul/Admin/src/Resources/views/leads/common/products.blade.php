@@ -70,7 +70,7 @@
                         ::name="`${inputName}[name]`"
                         ::params="params"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
-                        @on-selected="(value) => product.product_id = value.id"
+                        @on-selected="(product) => addProduct(product)"
                     />
 
                     <x-admin::form.control-group.control
@@ -181,8 +181,6 @@
 
             data() {
                 return {
-                    state: this.product['product_id'] ? 'old' : '',
-
                     products: [],
                 }
             },
@@ -205,23 +203,33 @@
                         params: {
                             query: this.product.name
                         }
-                    }
-                }
+                    };
+                },
             },
 
             methods: {
+                /**
+                 * Add the product.
+                 * 
+                 * @param {Object} result
+                 * 
+                 * @return {void}
+                 */
                 addProduct(result) {
-                        this.state = 'old';
+                    this.product.product_id = result.id;
 
-                        this.product.product_id = result.id;
-
-                        this.product.name = result.name;
-                        
-                        this.product.price = result.price;
-                        
-                        this.product.quantity = result.quantity;
-                },
+                    this.product.name = result.name;
                     
+                    this.product.price = result.price;
+                    
+                    this.product.quantity = result.quantity;
+                },
+                  
+                /**
+                 * Remove the product.
+                 * 
+                 * @return {void}
+                 */
                 removeProduct () {
                     this.$emit('onRemoveProduct', this.product)
                 }

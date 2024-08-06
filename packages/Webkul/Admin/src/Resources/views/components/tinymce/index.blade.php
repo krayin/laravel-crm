@@ -36,6 +36,8 @@
             },
 
             mounted() {
+                tinymce.remove(this.selector);
+
                 this.init();
 
                 this.$emitter.on('change-theme', (theme) => {

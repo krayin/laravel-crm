@@ -374,6 +374,7 @@
                             ::name="`${inputName}[product_id]`"
                             ::params="params"
                             ::value="{ id: product.product_id, name: product.name }"
+                            @on-selected="(product) => addProduct(product)"
                             :placeholder="trans('admin::app.quotes.edit.search-products')"
                         />
                     </x-admin::form.control-group>
@@ -691,6 +692,22 @@
                 },
 
                 methods: {
+                    /**
+                     * Add the product.
+                     * 
+                     * @param {Object} result
+                     * 
+                     * @return {void}
+                     */
+                    addProduct(result) {
+                        this.product.product_id = result.id;
+                        this.product.name = result.name;
+                        this.product.price = result.price;
+                        this.product.quantity = result.quantity;
+                        this.product.discount_amount = 0;
+                        this.product.tax_amount = 0;
+                    },
+
                     /**
                      * Remove the product.
                      * 
