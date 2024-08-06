@@ -43,11 +43,11 @@
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                     {!! view_render_event('bagisto.admin.cms.pages.create.form_controls.before') !!}
 
-                    <x-admin::attributes.edit
-                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    @include('admin::common.custom-attributes.edit', [
+                        'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                             'entity_type' => 'persons',
-                        ])"
-                    />
+                        ]),
+                    ])
 
                     {!! view_render_event('bagisto.admin.cms.pages.create.form_controls.after') !!}
                 </div>

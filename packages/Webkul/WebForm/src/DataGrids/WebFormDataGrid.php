@@ -51,7 +51,7 @@ class WebFormDataGrid extends DataGrid
     {
         $this->addAction([
             'index'  => 'view',
-            'icon'   => 'icon-edit',
+            'icon'   => 'icon-eye',
             'title'  => trans('admin::app.settings.webforms.index.datagrid.view'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.settings.web_forms.view', $row->id),

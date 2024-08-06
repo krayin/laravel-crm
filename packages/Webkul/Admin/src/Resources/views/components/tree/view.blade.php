@@ -224,7 +224,7 @@
 
                                     this.generateFolderIconComponent({
                                         class: [
-                                            hasChildren ? 'icon-perosnal' : 'icon-note',
+                                            hasChildren ? 'icon-folder' : 'icon-file',
                                             'text-2xl cursor-pointer'
                                         ],
                                     }),
