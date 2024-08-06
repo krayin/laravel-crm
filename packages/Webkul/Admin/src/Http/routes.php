@@ -84,31 +84,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
 
                 Route::get('', 'SettingController@index')->name('admin.settings.index');
 
-                // Attributes Routes
-                Route::prefix('attributes')->group(function () {
-                    Route::get('', 'AttributeController@index')->name('admin.settings.attributes.index');
-
-                    Route::get('create', 'AttributeController@create')->name('admin.settings.attributes.create');
-
-                    Route::post('create', 'AttributeController@store')->name('admin.settings.attributes.store');
-
-                    Route::get('edit/{id}', 'AttributeController@edit')->name('admin.settings.attributes.edit');
-
-                    Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
-
-                    Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
-
-                    Route::get('lookup-entity/{lookup?}', 'AttributeController@lookupEntity')->name('admin.settings.attributes.lookup_entity');
-
-                    Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
-
-                    Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass_update');
-
-                    Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass_delete');
-
-                    Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
-                });
-
                 // Email Templates Routes
                 Route::prefix('email-templates')->group(function () {
                     Route::get('', 'EmailTemplateController@index')->name('admin.settings.email_templates.index');

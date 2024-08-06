@@ -25,7 +25,7 @@
                             href="{{ route('admin.settings.roles.create') }}"
                             class="primary-button"
                         >
-                            @lang('admin::app.products.index.create-btn')
+                            @lang('admin::app.settings.roles.index.create-btn')
                         </a>
                     @endif
                 {!! view_render_event('krayin.admin.settings.roles.index.create_button.after') !!}

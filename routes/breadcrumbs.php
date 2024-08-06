@@ -209,13 +209,13 @@ Breadcrumbs::for('settings.attributes', function (BreadcrumbTrail $trail) {
 // Dashboard > Attributes > Create Attribute
 Breadcrumbs::for('settings.attributes.create', function (BreadcrumbTrail $trail) {
     $trail->parent('settings.attributes');
-    $trail->push(trans('admin::app.settings.attributes.create-title'), route('admin.settings.attributes.create'));
+    $trail->push(trans('admin::app.settings.attributes.create.title'), route('admin.settings.attributes.create'));
 });
 
 // Dashboard > Attributes > Edit Attribute
 Breadcrumbs::for('settings.attributes.edit', function (BreadcrumbTrail $trail, $attribute) {
     $trail->parent('settings.attributes');
-    $trail->push(trans('admin::app.settings.attributes.edit-title'), route('admin.settings.attributes.edit', $attribute->id));
+    $trail->push(trans('admin::app.settings.attributes.edit.title'), route('admin.settings.attributes.edit', $attribute->id));
 });
 
 // Settings > Pipelines
