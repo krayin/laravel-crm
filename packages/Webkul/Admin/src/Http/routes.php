@@ -122,16 +122,16 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             });
 
             // Configuration Routes
-            Route::group([
-                'prefix'    => 'configuration',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Configuration',
-            ], function () {
-                Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
+            // Route::group([
+            //     'prefix'    => 'configuration',
+            //     'namespace' => 'Webkul\Admin\Http\Controllers\Configuration',
+            // ], function () {
+            //     Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 
-                Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+            //     Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
 
-                Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
-            });
+            //     Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
+            // });
         });
     });
 });

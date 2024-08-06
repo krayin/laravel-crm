@@ -1205,6 +1205,27 @@ return [
         ],
     ],
 
+    'configuration' => [
+        'index' => [
+            'title'    => 'Configuration',
+            'search'   => 'Search',
+            'back'     => 'Back',
+            'save-btn' => 'Save Configuration',
+            'general'  => [
+                'title'   => 'General',
+                'info'    => 'General Configuration',
+                'general' => [
+                    'title'           => 'General',
+                    'info'            => 'Update your general settings here.',
+                    'locale-settings' => [
+                        'title'       => 'Locale Settings',
+                        'title-info'  => 'Defines the language used in the user interface, such as English (en), French (fr), or Japanese (ja).',
+                    ],
+                ],
+            ],
+        ],
+    ],
+
     // ----------------------------------------------------------------Old version locale ----------------------------------
 
     'dashboard' => [
@@ -1943,23 +1964,6 @@ return [
     //         'delete-success' => 'Web form deleted successfully'
     //     ],
     // ],
-
-    'configuration' => [
-        'title'             => 'Configuration',
-        'save-btn-title'    => 'Save',
-        'general'           => 'General',
-        'locale-settings'   => 'Locale Settings',
-        'locale'            => 'Locale',
-        'timezone'          => 'Timezone',
-        'date-time-formats' => 'Date And Time Formats',
-        'save-message'      => 'Configuration updated successfully!',
-        'delete'            => 'Delete',
-        'emails'            => [
-            'email'                 => 'Email',
-            'notification_label'    => 'Notifications',
-            'new_lead'              => 'New lead',
-        ],
-    ],
 
     'datagrid' => [
         'id'                  => 'ID',

@@ -7,12 +7,22 @@ use Illuminate\Support\Str;
 class ItemField
 {
     /**
+     * Laravel to Vee Validation mappings.
+     *
+     * @var array
+     */
+    protected $veeValidateMappings = [
+        'min'=> 'min_value',
+    ];
+
+    /**
      * Create a new ItemField instance.
      */
     public function __construct(
         public string $item_key,
         public string $name,
         public string $title,
+        public ?string $info,
         public string $type,
         public ?string $path,
         public ?string $validation,
@@ -32,6 +42,14 @@ class ItemField
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    /**
+     * Get info of config item.
+     */
+    public function getInfo(): ?string
+    {
+        return $this->info ?? '';
     }
 
     /**
@@ -71,6 +89,14 @@ class ItemField
      */
     public function getValidations(): ?string
     {
+        if (empty($this->validation)) {
+            return '';
+        }
+
+        foreach ($this->veeValidateMappings as $laravelRule => $veeValidateRule) {
+            $this->validation = str_replace($laravelRule, $veeValidateRule, $this->validation);
+        }
+
         return $this->validation;
     }
 
@@ -148,6 +174,7 @@ class ItemField
         return [
             'name'          => $this->getName(),
             'title'         => $this->getTitle(),
+            'info'          => $this->getInfo(),
             'type'          => $this->getType(),
             'path'          => $this->getPath(),
             'depends'       => $this->getDepends(),

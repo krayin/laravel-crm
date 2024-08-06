@@ -31,7 +31,7 @@ class Locale
     public function handle($request, Closure $next)
     {
         app()->setLocale(
-            core()->getConfigData('general.locale_settings.locale')
+            core()->getConfigData('general.general.locale_settings.locale')
                 ?: app()->getLocale()
         );
 
