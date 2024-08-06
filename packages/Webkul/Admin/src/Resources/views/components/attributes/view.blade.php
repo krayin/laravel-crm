@@ -1,3 +1,9 @@
+@props([
+    'customAttributes' => [],
+    'entity'           => null,
+    'allowEdit'        => false,
+])
+
 <div class="flex flex-col gap-2">
     @foreach ($customAttributes as $attribute)
         @if (view()->exists($typeView = 'admin::components.attributes.view.' . $attribute->type))
@@ -5,7 +11,10 @@
                 <div class="label">{{ $attribute->name }}</div>
 
                 <div class="font-medium">
-                    @include ($typeView, ['value' => isset($entity) ? $entity[$attribute->code] : null])
+                    @include ($typeView, [
+                        'attribute' => $attribute,
+                        'value'     => isset($entity) ? $entity[$attribute->code] : null
+                    ])
                 </div>
             </div>
         @endif
