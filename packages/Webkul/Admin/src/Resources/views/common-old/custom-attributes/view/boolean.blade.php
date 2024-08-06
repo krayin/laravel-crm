@@ -1,1 +1,0 @@
-{{ $value ? __('admin::app.common.yes') : __('admin::app.common.no') }}
