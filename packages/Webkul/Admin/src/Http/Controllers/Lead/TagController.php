@@ -21,14 +21,14 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function store($id)
+    public function attach($id)
     {
         Event::dispatch('leads.tag.create.before', $id);
 
         $lead = $this->leadRepository->find($id);
 
-        if (! $lead->tags->contains(request('id'))) {
-            $lead->tags()->attach(request('id'));
+        if (! $lead->tags->contains(request()->input('tag_id'))) {
+            $lead->tags()->attach(request()->input('tag_id'));
         }
 
         Event::dispatch('leads.tag.create.after', $lead);
@@ -42,16 +42,15 @@ class TagController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $leadId
-     * @param  int  $tagId
      * @return \Illuminate\Http\Response
      */
-    public function delete($leadId, $tagId)
+    public function detach($leadId)
     {
         Event::dispatch('leads.tag.delete.before', $leadId);
 
         $lead = $this->leadRepository->find($leadId);
 
-        $lead->tags()->detach($tagId);
+        $lead->tags()->detach(request()->input('tag_id'));
 
         Event::dispatch('leads.tag.delete.after', $lead);
 
