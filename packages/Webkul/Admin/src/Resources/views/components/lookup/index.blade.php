@@ -12,10 +12,9 @@
             <!-- Input Box (Button) -->
             <x-admin::form.control-group.control
                 type="text"
-                id="name"
                 ::name="name"
-                class="w-full cursor-pointer pr-10 text-gray-800"
-                ::placeholder="selectedItem.name ?? placeholder"
+                class="w-full pr-10 cursor-pointer text-gray-800"
+                ::placeholder="placeholder"
                 v-model="selectedItem.name"
                 @click="toggle"
                 readonly
@@ -165,7 +164,7 @@
             watch: {
                 searchTerm(newVal, oldVal) {
                     this.search();
-                }
+                },
             },
 
             computed: {
@@ -248,6 +247,8 @@
                             if (! this.$axios.isCancel(error)) {
                                 console.error("Search request failed:", error);
                             }
+
+                            this.isSearching = false;
                         })
                         .finally(() => this.isSearching = false);
                 },
