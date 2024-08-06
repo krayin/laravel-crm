@@ -29,9 +29,15 @@
                 />
 
                 <!-- Title -->
-                <h3 class="text-lg font-bold">
-                    {{ $person->title }}
-                </h1>
+                <div class="mb-4 flex flex-col gap-0.5">
+                    <h3 class="text-lg font-bold">
+                        {{ $person->name }}
+                    </h3>
+
+                    <p>
+                        {{ $person->job_title }}
+                    </p>
+                </div>
 
                  <!-- Activity Actions -->
                  <div class="flex flex-wrap gap-2">
@@ -64,8 +70,8 @@
             <!-- Person Attributes -->
             @include ('admin::contacts.persons.view.attributes')
 
-            <!-- Contact Person -->
-            @include ('admin::contacts.persons.view.person')
+            <!-- Contact Organization -->
+            @include ('admin::contacts.persons.view.organization')
         </div>
 
         {!! view_render_event('admin.contact.persons.view.left.after', ['person' => $person]) !!}
