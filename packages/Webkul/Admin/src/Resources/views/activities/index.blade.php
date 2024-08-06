@@ -17,9 +17,9 @@
             </div>
 
             <div class="flex gap-2">
-                <i class="icon-calender p-1 rounded cursor-pointer"></i>
+                <i class="icon-calender cursor-pointer rounded p-1"></i>
     
-                <i class="icon-calender p-1 rounded cursor-pointe"></i>
+                <i class="icon-calender cursor-pointe rounded p-1"></i>
             </div>
         </div>
 
@@ -49,13 +49,13 @@
 
                 <div class="flex gap-2">
                     <i
-                        class="icon-calender p-1 text-2xl rounded cursor-pointer"
+                        class="icon-calender cursor-pointer rounded p-1 text-2xl"
                         :class="{'bg-gray-700 text-gray-300': viewType == 'table'}"
                         @click="toggleView('table')"
                     ></i>
         
                     <i
-                        class="icon-calender p-1 text-2xl rounded cursor-pointer"
+                        class="icon-calender cursor-pointer rounded p-1 text-2xl"
                         :class="{'bg-gray-700 text-gray-300': viewType == 'calendor'}"
                         @click="toggleView('calendor')"
                     ></i>
@@ -175,7 +175,7 @@
                                         >
             
                                         <label
-                                            class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 dark:text-gray-300 peer-checked:text-brandColor"
+                                            class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
                                             :for="`mass_action_select_record_${record.id}`"
                                         ></label>
                 

@@ -55,7 +55,7 @@
                     <div class="box-shadow rounded bg-white p-2 dark:bg-gray-900">
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
                        
-                        <div class="text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:text-gray-400 dark:border-gray-700">
+                        <div class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
                             <ul class="flex flex-wrap">
                                <li class="me-2" v-for="tab in tabs" :key="tab.id">
                                     <a
@@ -251,7 +251,7 @@
         >
             <div class="pb-2">
                 <!-- Table -->
-                <x-admin::table class="table-fixed w-full">
+                <x-admin::table class="w-full table-fixed">
                     <!-- Table Head -->
                     <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
@@ -301,16 +301,16 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-xs cursor-pointer text-brandColor dark:text-brandColor hover:underline"
+                class="cursor-pointer text-xs text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
             </span>
 
-            <div class="mt-8 flex items-start gap-10  max-lg:gap-5">
+            <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
                 <div class="flex-auto">
                     <div class="flex justify-end">
-                        <div class="grid w-[348px] gap-4 text-sm p-4 rounded-lg bg-gray-100">
+                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm">
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
