@@ -366,6 +366,7 @@
                             ::src="src"
                             ::name="`${inputName}[product_id]`"
                             :placeholder="trans('admin::app.quotes.create.search-products')"
+                            @on-selected="(product) => addProduct(product)"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -651,8 +652,6 @@
 
                 data() {
                     return {
-                        state: this.product['product_id'] ? 'old' : '',
-
                         products: [],
                     }
                 },
@@ -690,8 +689,6 @@
                      * @return {void}
                      */
                     addProduct(result) {
-                        this.state = 'old';
-
                         this.product.product_id = result.id;
                         this.product.name = result.name;
                         this.product.price = result.price;
