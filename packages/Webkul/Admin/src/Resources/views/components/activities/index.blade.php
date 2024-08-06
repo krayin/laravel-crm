@@ -1,19 +1,22 @@
+@props([
+    'endpoint',
+    'types' => null,
+])
+
 <!-- Lead Activities Vue Component -->
-{!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
-
-<!-- Lead Activities Vue Component -->    
-<v-lead-activities>
+<v-activities
+    endpoint="{{ $endpoint }}"
+    @if($types):types='@json($types)'@endif
+>
     <!-- Shimmer -->
-    <x-admin::shimmer.leads.view.activities />
-</v-lead-activities>
-
-{!! view_render_event('admin.leads.view.activities.after', ['lead' => $lead]) !!}
+    <x-admin::shimmer.activities />
+</v-activities>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-activities-template">
+    <script type="text/x-template" id="v-activities-template">
         <template v-if="isLoading">
             <!-- Shimmer -->
-            <x-admin::shimmer.leads.view.activities />
+            <x-admin::shimmer.activities />
         </template>
 
         <template v-else>
@@ -63,14 +66,14 @@
                                         <template v-else>
                                             <!-- Activity Schedule -->
                                             <p v-if="activity.schedule_from && activity.schedule_from">
-                                                @lang('admin::app.leads.view.activities.index.scheduled-on'):
+                                                @lang('admin::app.components.activities.index.scheduled-on'):
                                                 
                                                 @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                             </p>
 
                                             <!-- Activity Participants -->
                                             <p v-if="activity.participants?.length">
-                                                @lang('admin::app.leads.view.activities.index.participants'):
+                                                @lang('admin::app.components.activities.index.participants'):
 
                                                 <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
                                                     @{{ participant.user?.name ?? participant.person.name }}
@@ -79,7 +82,7 @@
 
                                             <!-- Activity Location -->
                                             <p v-if="activity.location">
-                                                @lang('admin::app.leads.view.activities.index.location'):
+                                                @lang('admin::app.components.activities.index.location'):
 
                                                 @{{ activity.location }}
                                             </p>
@@ -115,7 +118,7 @@
                                     <div class="text-gray-500">
                                         @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
 
-                                        @{{ "@lang('admin::app.leads.view.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
+                                        @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                     </div>
                                 </div>
 
@@ -141,7 +144,7 @@
                                             <div class="flex items-center gap-2">
                                                 <span class="icon-tick text-2xl"></span>
                                                 
-                                                @lang('admin::app.leads.view.activities.index.mark-as-done')
+                                                @lang('admin::app.components.activities.index.mark-as-done')
                                             </div>
                                         </x-admin::dropdown.menu.item>
 
@@ -154,7 +157,7 @@
                                                 >
                                                     <span class="icon-edit text-2xl"></span>
                                                     
-                                                    @lang('admin::app.leads.view.activities.index.edit')
+                                                    @lang('admin::app.components.activities.index.edit')
                                                 </a>
                                             </x-admin::dropdown.menu.item>
                                         @endif
@@ -164,7 +167,7 @@
                                                 <div class="flex items-center gap-2">
                                                     <span class="icon-delete text-2xl"></span>
 
-                                                    @lang('admin::app.leads.view.activities.index.delete')
+                                                    @lang('admin::app.components.activities.index.delete')
                                                 </div>
                                             </x-admin::dropdown.menu.item>
                                         @endif
@@ -179,8 +182,43 @@
     </script>
 
     <script type="module">
-        app.component('v-lead-activities', {
-            template: '#v-lead-activities-template',
+        app.component('v-activities', {
+            template: '#v-activities-template',
+
+            props: {
+                endpoint: {
+                    type: String,
+                    default: '',
+                },
+
+                types: {
+                    type: Array,
+                    default: [
+                        {
+                            name: 'all',
+                            label: "{{ trans('admin::app.components.activities.index.all') }}",
+                        }, {
+                            name: 'note',
+                            label: "{{ trans('admin::app.components.activities.index.notes') }}",
+                        }, {
+                            name: 'call',
+                            label: "{{ trans('admin::app.components.activities.index.calls') }}",
+                        }, {
+                            name: 'meeting',
+                            label: "{{ trans('admin::app.components.activities.index.meetings') }}",
+                        }, {
+                            name: 'lunch',
+                            label: "{{ trans('admin::app.components.activities.index.lunches') }}",
+                        }, {
+                            name: 'file',
+                            label: "{{ trans('admin::app.components.activities.index.files') }}",
+                        }, {
+                            name: 'email',
+                            label: "{{ trans('admin::app.components.activities.index.emails') }}",
+                        },
+                    ],
+                },
+            },
 
             data() {
                 return {
@@ -200,31 +238,6 @@
                         lunch: 'icon-activity bg-blue-200 text-blue-800',
                         file: 'icon-file bg-green-200 text-green-900',
                     },
-
-                    types: [
-                        {
-                            name: 'all',
-                            label: "{{ trans('admin::app.leads.view.activities.index.all') }}",
-                        }, {
-                            name: 'note',
-                            label: "{{ trans('admin::app.leads.view.activities.index.notes') }}",
-                        }, {
-                            name: 'call',
-                            label: "{{ trans('admin::app.leads.view.activities.index.calls') }}",
-                        }, {
-                            name: 'meeting',
-                            label: "{{ trans('admin::app.leads.view.activities.index.meetings') }}",
-                        }, {
-                            name: 'lunch',
-                            label: "{{ trans('admin::app.leads.view.activities.index.lunches') }}",
-                        }, {
-                            name: 'file',
-                            label: "{{ trans('admin::app.leads.view.activities.index.files') }}",
-                        }, {
-                            name: 'email',
-                            label: "{{ trans('admin::app.leads.view.activities.index.emails') }}",
-                        }
-                    ],
                 }
             },
 
@@ -246,7 +259,7 @@
                 get() {
                     this.isLoading = true;
 
-                    this.$axios.get("{{ route('admin.leads.activities.index', $lead->id) }}")
+                    this.$axios.get(this.endpoint)
                         .then(response => {
                             this.activities = response.data.data;
 

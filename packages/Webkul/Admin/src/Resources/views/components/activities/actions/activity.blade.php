@@ -1,24 +1,29 @@
-{!! view_render_event('admin.leads.view.actions.activity.before', ['lead' => $lead]) !!}
+@props([
+    'entity'            => null,
+    'entityControlName' => null,
+])
 
 <!-- Activity Button -->
 <div class="">
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-blue-200 text-blue-800"
-        @click="$refs.leadActionComponent.openModal('mail')"
+        @click="$refs.actionComponent.openModal('mail')"
     >
         <span class="icon-activity text-2xl"></span>
 
-        @lang('admin::app.leads.view.activities.actions.activity.btn')
+        @lang('admin::app.components.activities.actions.activity.btn')
     </button>
 
-    <!-- Lead Note Action Vue Component -->
-    <v-lead-activity ref="leadActionComponent"></v-lead-activity>
+    <!-- Note Action Vue Component -->
+    <v-activity
+        ref="actionComponent"
+        :entity="{{ json_encode($entity) }}"
+        :entity-control-name="{{ $entityControlName }}"
+    ></v-activity>
 </div>
 
-{!! view_render_event('admin.leads.view.actions.activity.after', ['lead' => $lead]) !!}
-
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-activity-template">
+    <script type="text/x-template" id="v-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -30,7 +35,7 @@
                         <x-admin::dropdown>
                             <x-slot:toggle>
                                 <h3 class="flex cursor-pointer items-center gap-1 text-base font-semibold">
-                                    @lang('admin::app.leads.view.activities.actions.activity.title') - @{{ selectedType.label }}
+                                    @lang('admin::app.components.activities.actions.activity.title') - @{{ selectedType.label }}
 
                                     <span class="icon-down-arrow text-2xl"></span>
                                 </h3>
@@ -56,24 +61,24 @@
                             ::value="selectedType.value"
                         />
                         
-                        <!-- Lead Id -->
+                        <!-- Id -->
                         <x-admin::form.control-group.control
                             type="hidden"
-                            name="lead_id"
-                            :value="$lead->id"
+                            ::name="entityControlName"
+                            ::value="entity.id"
                         />
                         
                         <!-- Title -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.leads.view.activities.actions.activity.title-control')
+                                @lang('admin::app.components.activities.actions.activity.title-control')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
                                 type="text"
                                 name="title"
                                 rules="required"
-                                :label="trans('admin::app.leads.view.activities.actions.activity.title-control')"
+                                :label="trans('admin::app.components.activities.actions.activity.title-control')"
                             />
 
                             <x-admin::form.control-group.error control-name="title" />
@@ -82,7 +87,7 @@
                         <!-- Description -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.activity.description')
+                                @lang('admin::app.components.activities.actions.activity.description')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
@@ -96,14 +101,14 @@
                             <!-- Started From -->
                             <x-admin::form.control-group class="w-full">
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.leads.view.activities.actions.activity.schedule-from')
+                                    @lang('admin::app.components.activities.actions.activity.schedule-from')
                                 </x-admin::form.control-group.label>
                                 
                                 <x-admin::form.control-group.control
                                     type="date"
                                     name="schedule_from"
                                     rules="required"
-                                    :label="trans('admin::app.leads.view.activities.actions.activity.schedule-from')"
+                                    :label="trans('admin::app.components.activities.actions.activity.schedule-from')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="schedule_from" />
@@ -112,14 +117,14 @@
                             <!-- Started To -->
                             <x-admin::form.control-group class="w-full">
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.leads.view.activities.actions.activity.schedule-to')
+                                    @lang('admin::app.components.activities.actions.activity.schedule-to')
                                 </x-admin::form.control-group.label>
                                 
                                 <x-admin::form.control-group.control
                                     type="date"
                                     name="schedule_to"
                                     rules="required"
-                                    :label="trans('admin::app.leads.view.activities.actions.activity.schedule-to')"
+                                    :label="trans('admin::app.components.activities.actions.activity.schedule-to')"
                                 />
 
                                 <x-admin::form.control-group.error control-name="schedule_to" />
@@ -129,7 +134,7 @@
                         <!-- Location -->
                         <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.activity.location')
+                                @lang('admin::app.components.activities.actions.activity.location')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
@@ -142,7 +147,7 @@
                     <x-slot:footer>
                         <x-admin::button
                             class="primary-button"
-                            :title="trans('admin::app.leads.view.activities.actions.activity.save-btn')"
+                            :title="trans('admin::app.components.activities.actions.activity.save-btn')"
                             ::loading="isStoring"
                             ::disabled="isStoring"
                         />
@@ -153,27 +158,41 @@
     </script>
 
     <script type="module">
-        app.component('v-lead-activity', {
-            template: '#v-lead-activity-template',
+        app.component('v-activity', {
+            template: '#v-activity-template',
+
+            props: {
+                entity: {
+                    type: Object,
+                    required: true,
+                    default: () => {}
+                },
+
+                entityControlName: {
+                    type: String,
+                    required: true,
+                    default: ''
+                }
+            },
 
             data: function () {
                 return {
                     isStoring: false,
                     
                     selectedType: {
-                        label: "{{ trans('admin::app.leads.view.activities.actions.activity.call') }}",
+                        label: "{{ trans('admin::app.components.activities.actions.activity.call') }}",
                         value: 'call'
                     },
 
                     availableTypes: [
                         {
-                            label: "{{ trans('admin::app.leads.view.activities.actions.activity.call') }}",
+                            label: "{{ trans('admin::app.components.activities.actions.activity.call') }}",
                             value: 'call'
                         }, {
-                            label: "{{ trans('admin::app.leads.view.activities.actions.activity.meeting') }}",
+                            label: "{{ trans('admin::app.components.activities.actions.activity.meeting') }}",
                             value: 'meeting'
                         }, {
-                            label: "{{ trans('admin::app.leads.view.activities.actions.activity.lunch') }}",
+                            label: "{{ trans('admin::app.components.activities.actions.activity.lunch') }}",
                             value: 'task'
                         },
                     ]
@@ -190,7 +209,7 @@
 
                     let self = this;
 
-                    this.$axios.post("{{ route('admin.activities.store', $lead->id) }}", params)
+                    this.$axios.post("{{ route('admin.activities.store') }}", params)
                         .then (function(response) {
                             self.isStoring = false;
 

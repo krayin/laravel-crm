@@ -22,11 +22,15 @@
                 </div>
 
                 <!-- Tags -->
+                {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
+
                 <x-admin::tags
                     :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
                     :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
                     :added-tags="$lead->tags"
                 />
+
+                {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
 
                 <!-- Title -->
                 <h3 class="text-lg font-bold">
@@ -36,16 +40,28 @@
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
                     <!-- Mail Activity Action -->
-                    @include ('admin::leads.view.activities.actions.mail')
+                    <x-admin::activities.actions.mail
+                        :entity="$lead"
+                        entity-control-name="lead_id"
+                    />
 
                     <!-- File Activity Action -->
-                    @include ('admin::leads.view.activities.actions.file')
+                    <x-admin::activities.actions.file
+                        :entity="$lead"
+                        entity-control-name="lead_id"
+                    />
 
                     <!-- Note Activity Action -->
-                    @include ('admin::leads.view.activities.actions.note')
+                    <x-admin::activities.actions.note
+                        :entity="$lead"
+                        entity-control-name="lead_id"
+                    />
 
                     <!-- Activity Action -->
-                    @include ('admin::leads.view.activities.actions.activity')
+                    <x-admin::activities.actions.activity
+                        :entity="$lead"
+                        entity-control-name="lead_id"
+                    />
                 </div>
             </div>
             
@@ -66,7 +82,13 @@
             @include ('admin::leads.view.stages')
 
             <!-- Stages Navigation -->
-            @include ('admin::leads.view.activities.index')
+            
+            <!-- Activities -->
+            {!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
+
+            <x-admin::activities :endpoint="route('admin.leads.activities.index', $lead->id)" />
+
+            {!! view_render_event('admin.leads.view.activities.after', ['lead' => $lead]) !!}
         </div>
 
         {!! view_render_event('admin.leads.view.right.after', ['lead' => $lead]) !!}
