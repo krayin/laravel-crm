@@ -6,6 +6,8 @@
     <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
+        {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
+
         <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
             <!-- Lead Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
@@ -49,6 +51,10 @@
             <!-- Contact Person -->
             @include ('admin::leads.view.person')
         </div>
+
+        {!! view_render_event('admin.leads.view.left.after', ['lead' => $lead]) !!}
+
+        {!! view_render_event('admin.leads.view.right.before', ['lead' => $lead]) !!}
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
@@ -58,5 +64,7 @@
             <!-- Stages Navigation -->
             @include ('admin::leads.view.activities.index')
         </div>
+
+        {!! view_render_event('admin.leads.view.right.after', ['lead' => $lead]) !!}
     </div>    
 </x-admin::layouts>

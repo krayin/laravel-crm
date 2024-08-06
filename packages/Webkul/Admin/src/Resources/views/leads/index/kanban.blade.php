@@ -3,23 +3,26 @@
 <!-- Kanabn Vue Component -->
 <v-leads-kanban>
     <div class="flex flex-col gap-4">
-        <x-admin::shimmer.leads.kanban />
+        <!-- Shimmer -->
+        <x-admin::shimmer.leads.index.kanban />
     </div>
 </v-leads-kanban>
 
 {!! view_render_event('admin.leads.index.kanban.after') !!}
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-leads-kanban-tempalte">
-        <tempalte v-if="isLoading">
+    <script type="text/x-template" id="v-leads-kanban-template">
+        <template v-if="isLoading">
             <div class="flex flex-col gap-4">
-                <x-admin::shimmer.leads.kanban />
+                <x-admin::shimmer.leads.index.kanban />
             </div>
-        </tempalte>
+        </template>
 
         <template v-else>
             <div class="flex flex-col gap-4">
                 @include('admin::leads.index.kanban.toolbar')
+
+                {!! view_render_event('admin.leads.index.kanban.content.before') !!}
 
                 <div class="flex gap-4 overflow-x-auto">
                     <div
@@ -118,13 +121,15 @@
                         </draggable>
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.index.kanban.content.after') !!}
             </div>
         </template>
     </script>
 
     <script type="module">
         app.component('v-leads-kanban', {
-            template: '#v-leads-kanban-tempalte',
+            template: '#v-leads-kanban-template',
 
             data: function () {
                 return {

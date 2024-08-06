@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.index.kanban.toolbar.before') !!}
+
 <div class="flex justify-between">
     <div class="flex w-full items-center gap-x-1.5">
         <!-- Search Panel -->
@@ -24,3 +26,5 @@
 
     @include('admin::leads.index.view-switcher')
 </div>
+                
+{!! view_render_event('admin.leads.index.kanban.toolbar.after') !!}

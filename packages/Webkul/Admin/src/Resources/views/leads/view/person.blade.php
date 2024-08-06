@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.view.person.before', ['lead' => $lead]) !!}
+
 <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4">
     <h4 class="flex items-center justify-between font-semibold">
         About Contact Person
@@ -47,3 +49,5 @@
         </div>
     </div>
 </div>
+
+{!! view_render_event('admin.leads.view.person.after', ['lead' => $lead]) !!}

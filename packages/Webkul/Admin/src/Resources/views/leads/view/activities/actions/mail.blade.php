@@ -1,3 +1,6 @@
+{!! view_render_event('admin.leads.view.actions.mail.before', ['lead' => $lead]) !!}
+
+<!-- Mail Button -->
 <div class="">
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-green-200 text-green-900"
@@ -12,8 +15,10 @@
     <v-lead-mail-activity ref="leadMailActionComponent"></v-lead-mail-activity>
 </div>
 
+{!! view_render_event('admin.leads.view.actions.mail.after', ['lead' => $lead]) !!}
+
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-mail-activity-tempalte">
+    <script type="text/x-template" id="v-lead-mail-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -65,13 +70,13 @@
                         </x-admin::form.control-group>
 
                         <!-- Content -->
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.control
                                 type="textarea"
                                 id="reply"
                                 name="reply"
-                                tinymce="true"
                                 rules="required"
+                                tinymce="true"
                                 :label="trans('admin::app.leads.view.activities.actions.mail.message')"
                             />
 
@@ -100,7 +105,7 @@
 
     <script type="module">
         app.component('v-lead-mail-activity', {
-            template: '#v-lead-mail-activity-tempalte',
+            template: '#v-lead-mail-activity-template',
 
             data: function () {
                 return {
@@ -110,8 +115,8 @@
             methods: {
                 openModal(type) {
                     this.$refs.mailActivityModal.open();
-                }
-            }
+                },
+            },
         });
     </script>
 @endPushOnce

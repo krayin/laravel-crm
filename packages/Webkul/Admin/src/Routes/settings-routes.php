@@ -127,7 +127,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
             Route::post('create', 'store')->name('admin.settings.tags.store');
 
-            Route::get('edit/{id?}', 'edit')->name('admin.settings.tags.edit');
+            Route::get('edit/{id}', 'edit')->name('admin.settings.tags.edit');
 
             Route::put('edit/{id}', 'update')->name('admin.settings.tags.update');
 
