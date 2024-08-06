@@ -75,14 +75,14 @@
 
                     <x-admin::form.control-group.control
                         type="hidden"
-                        name="[inputName + '[product_id]']"
+                        ::name="`${inputName}[product_id]`"
                         v-model="product.product_id"
                         rules="required"
                         :label="trans('admin::app.leads.common.products.product-name')"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
                     />
             
-                    <x-admin::form.control-group.error control-name="[inputName + '[product_id]']" />
+                    <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
                 </x-admin::form.control-group>
             </x-admin::table.td>
             
@@ -202,7 +202,7 @@
                     return {
                         params: {
                             query: this.product.name
-                        }
+                        },
                     };
                 },
             },
@@ -222,7 +222,7 @@
                     
                     this.product.price = result.price;
                     
-                    this.product.quantity = result.quantity;
+                    this.product.quantity = result.quantity ?? 0;
                 },
                   
                 /**
