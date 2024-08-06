@@ -94,88 +94,75 @@
                             </div>
 
                             <div class="w-1/2">
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query) {
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'subject',
-                                                ]);
-                                        })->get(),
-                                    'customValidations'      => [
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['subject']],
+                                    ])"
+
+                                    :custom-validations="[
                                         'expired_at' => [
                                             'required',
                                             'date_format:yyyy-MM-dd',
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
-                                    ],
-                                    'entity'                  => $quote,
-                                ])
+                                    ]"
+                                />
 
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query) {
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'description',
-                                                ]);
-                                        })->get(),
-                                    'customValidations'      => [
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['description']],
+                                        ])"
+
+                                    :custom-validations="[
                                         'expired_at' => [
                                             'required',
                                             'date_format:yyyy-MM-dd',
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
-                                    ],
-                                    'entity'                  => $quote,
-                                ])
-
+                                    ]"
+                                />
+                                
                                 <div class="flex gap-4">
-                                    @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                            ->scopeQuery(function($query) {
-                                                return $query
-                                                    ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'expired_at',
-                                                        'user_id',
-                                                    ]);
-                                            })->get()->sortBy('sort_order'),
-                                        'customValidations'      => [
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['expired_at', 'user_id']],
+                                        ])->sortBy('sort_order')"
+
+                                        :custom-validations="[
                                             'expired_at' => [
                                                 'required',
                                                 'date_format:yyyy-MM-dd',
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
-                                        ],
-                                        'entity'                  => $quote,
-                                    ])
+                                        ]"
+
+                                        :entity="$quote"
+                                    />
                                 </div>
 
                                 <div class="flex gap-4">
-                                    @include('admin::common.custom-attributes.edit', [
-                                        'customAttributes'       => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                            ->scopeQuery(function($query) {
-                                                return $query
-                                                    ->where('entity_type', 'quotes')
-                                                    ->whereIn('code', [
-                                                        'person_id',
-                                                    ]);
-                                            })->get()->sortBy('sort_order'),
-                                        'customValidations'      => [
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['person_id']],
+                                        ])->sortBy('sort_order')"
+
+                                        :custom-validations="[
                                             'expired_at' => [
                                                 'required',
                                                 'date_format:yyyy-MM-dd',
                                                 'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                             ],
-                                        ],
-                                        'entity'                  => $quote,
-                                    ])
+                                        ]"
 
-                                    @include('admin::common.custom-attributes.edit.lookup')
-
+                                        :entity="$quote"
+                                    />
+                                    
+                                    <x-admin::attributes.edit.lookup />
+                                    
                                     @php
                                         $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
                                     @endphp
@@ -210,18 +197,14 @@
                             </div>
 
                             <div class="w-1/2">
-                                @include('admin::common.custom-attributes.edit', [
-                                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')
-                                        ->scopeQuery(function($query){
-                                            return $query
-                                                ->where('entity_type', 'quotes')
-                                                ->whereIn('code', [
-                                                    'billing_address',
-                                                    'shipping_address',
-                                                ]);
-                                        })->get(),
-                                    'entity'           => $quote,
-                                ])
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            'entity_type' => 'quotes',
+                                            ['code', 'IN', ['billing_address', 'shipping_address']],
+                                        ])"
+                                        
+                                    :entity="$quote"
+                                />
                             </div>
                         </div>
 
