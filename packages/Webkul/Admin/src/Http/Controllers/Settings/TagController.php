@@ -9,6 +9,7 @@ use Webkul\Admin\DataGrids\Settings\TagDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Tag\Repositories\TagRepository;
+use Webkul\Admin\Http\Resources\TagResource;
 
 class TagController extends Controller
 {
@@ -52,7 +53,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.create.after', $tag);
 
         return new JsonResponse([
-            'data'    => $tag,
+            'data'    => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.create-success'),
         ]);
     }
@@ -88,7 +89,7 @@ class TagController extends Controller
         Event::dispatch('settings.tag.update.after', $tag);
 
         return new JsonResponse([
-            'data'    => $tag,
+            'data'    => new TagResource($tag),
             'message' => trans('admin::app.settings.tags.index.update-success'),
         ]);
     }

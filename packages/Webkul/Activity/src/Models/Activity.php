@@ -21,10 +21,7 @@ class Activity extends Model implements ActivityContract
      *
      * @var array
      */
-    protected $with = [
-        'file',
-        'user',
-    ];
+    protected $with = ['user'];
 
     /**
      * Cast attributes to date time
@@ -72,9 +69,9 @@ class Activity extends Model implements ActivityContract
     /**
      * Get the file associated with the activity.
      */
-    public function file()
+    public function files()
     {
-        return $this->hasOne(FileProxy::modelClass(), 'activity_id');
+        return $this->hasMany(FileProxy::modelClass(), 'activity_id');
     }
 
     /**

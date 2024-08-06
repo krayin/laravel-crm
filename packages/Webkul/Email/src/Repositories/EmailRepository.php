@@ -38,9 +38,33 @@ class EmailRepository extends Repository
      */
     public function create(array $data)
     {
-        $email = parent::create($this->sanitizeEmails($data));
+        $uniqueId = time().'@'.config('mail.domain');
 
-        $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
+        $referenceIds = [];
+
+        if (isset($data['parent_id'])) {
+            $parent = parent::findOrFail($data['parent_id']);
+
+            $referenceIds = $parent->reference_ids ?? [];
+        }
+
+        $data = $this->sanitizeEmails(array_merge([
+            'source'        => 'web',
+            'from'          => $data['mail.from.address'],
+            'user_type'     => 'admin',
+            'folders'       => $data['is_draft'] ? ['draft'] : ['outbox'],
+            'name'          => auth()->guard('user')->user()->name,
+            'unique_id'     => $uniqueId,
+            'message_id'    => $uniqueId,
+            'reference_ids' => array_merge($referenceIds, [$uniqueId]),
+            'user_id'       => auth()->guard('user')->user()->id,
+        ], $data));
+
+        $email = parent::create($data);
+
+        $this->attachmentRepository
+            ->setEmailParser($this->emailParser)
+            ->uploadAttachments($email, $data);
 
         return $email;
     }
@@ -52,14 +76,15 @@ class EmailRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
-        $email = $this->findOrFail($id);
+        $email = parent::findOrFail($id);
 
         parent::update($this->sanitizeEmails($data), $id);
 
-        $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
+        $this->attachmentRepository
+            ->setEmailParser($this->emailParser)
+            ->uploadAttachments($email, $data);
 
         return $email;
-
     }
 
     /**

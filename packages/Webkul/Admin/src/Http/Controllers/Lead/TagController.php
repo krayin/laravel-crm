@@ -34,9 +34,8 @@ class TagController extends Controller
         Event::dispatch('leads.tag.create.after', $lead);
 
         return response()->json([
-            'status'  => true,
-            'message' => trans('admin::app.leads.tag-create-success'),
-        ], 200);
+            'message' => trans('admin::app.leads.view.tags.create-success'),
+        ]);
     }
 
     /**
@@ -46,19 +45,18 @@ class TagController extends Controller
      * @param  int  $tagId
      * @return \Illuminate\Http\Response
      */
-    public function delete($leadId)
+    public function delete($leadId, $tagId)
     {
         Event::dispatch('leads.tag.delete.before', $leadId);
 
         $lead = $this->leadRepository->find($leadId);
 
-        $lead->tags()->detach(request('tag_id'));
+        $lead->tags()->detach($tagId);
 
         Event::dispatch('leads.tag.delete.after', $lead);
 
         return response()->json([
-            'status'  => true,
-            'message' => trans('admin::app.leads.tag-destroy-success'),
-        ], 200);
+            'message' => trans('admin::app.leads.view.tags.destroy-success'),
+        ]);
     }
 }

@@ -24,6 +24,8 @@ class ActivityResource extends JsonResource
             'schedule_to'   => $this->schedule_to,
             'is_done'       => $this->is_done,
             'user'          => new UserResource($this->user),
+            'files'         => ActivityFileResource::collection($this->files),
+            'participants'  => ActivityParticipantResource::collection($this->participants),
             'location'      => $this->location,
             'created_at'    => $this->created_at,
             'updated_at'    => $this->updated_at,

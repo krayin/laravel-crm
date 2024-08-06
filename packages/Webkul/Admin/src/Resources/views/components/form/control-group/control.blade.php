@@ -41,7 +41,7 @@
                     </span>
                 @else
                     <span class="py-2.5 text-gray-500 ltr:pl-4 rtl:pr-4">
-                        {{ core()->currencySymbol(core()->getBaseCurrencyCode()) }}
+                        {{ config('app.currency') }}
                     </span>
                 @endif
 

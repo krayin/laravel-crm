@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.view.actions.activity.before', ['lead' => $lead]) !!}
+
 <!-- Activity Button -->
 <div class="">
     <button
@@ -13,14 +15,16 @@
     <v-lead-activity ref="leadActionComponent"></v-lead-activity>
 </div>
 
+{!! view_render_event('admin.leads.view.actions.activity.after', ['lead' => $lead]) !!}
+
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-activity-tempalte">
+    <script type="text/x-template" id="v-lead-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
             ref="modalForm"
         >
-            <form @submit="handleSubmit($event, updateOrCreate)">
+            <form @submit="handleSubmit($event, save)">
                 <x-admin::modal ref="mailActivityModal" position="bottom-right">
                     <x-slot:header>
                         <x-admin::dropdown>
@@ -45,7 +49,19 @@
                     </x-slot>
 
                     <x-slot:content>
-                        <input type="hidden" name="type" :value="selectedType.value" />
+                        <!-- Activity Type -->
+                        <x-admin::form.control-group.control
+                            type="hidden"
+                            name="type"
+                            ::value="selectedType.value"
+                        />
+                        
+                        <!-- Lead Id -->
+                        <x-admin::form.control-group.control
+                            type="hidden"
+                            name="lead_id"
+                            :value="$lead->id"
+                        />
                         
                         <!-- Title -->
                         <x-admin::form.control-group>
@@ -111,7 +127,7 @@
                         </div>
 
                         <!-- Location -->
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label>
                                 @lang('admin::app.leads.view.activities.actions.activity.location')
                             </x-admin::form.control-group.label>
@@ -124,12 +140,12 @@
                     </x-slot>
 
                     <x-slot:footer>
-                        <button
-                            type="submit"
+                        <x-admin::button
                             class="primary-button"
-                        >
-                            @lang('admin::app.leads.view.activities.actions.activity.save-btn')
-                        </button>
+                            :title="trans('admin::app.leads.view.activities.actions.activity.save-btn')"
+                            ::loading="isStoring"
+                            ::disabled="isStoring"
+                        />
                     </x-slot>
                 </x-admin::modal>
             </form>
@@ -138,10 +154,12 @@
 
     <script type="module">
         app.component('v-lead-activity', {
-            template: '#v-lead-activity-tempalte',
+            template: '#v-lead-activity-template',
 
             data: function () {
                 return {
+                    isStoring: false,
+                    
                     selectedType: {
                         label: "{{ trans('admin::app.leads.view.activities.actions.activity.call') }}",
                         value: 'call'
@@ -165,8 +183,36 @@
             methods: {
                 openModal(type) {
                     this.$refs.mailActivityModal.open();
-                }
-            }
+                },
+
+                save(params) {
+                    this.isStoring = true;
+
+                    let self = this;
+
+                    this.$axios.post("{{ route('admin.activities.store', $lead->id) }}", params)
+                        .then (function(response) {
+                            self.isStoring = false;
+
+                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                            self.$emitter.emit('on-activity-added', response.data.data);
+
+                            self.$refs.mailActivityModal.close();
+                        })
+                        .catch (function (error) {
+                            self.isStoring = false;
+
+                            if (error.response.status == 422) {
+                                setErrors(error.response.data.errors);
+                            } else {
+                                self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                                self.$refs.mailActivityModal.close();
+                            }
+                        });
+                },
+            },
         });
     </script>
 @endPushOnce

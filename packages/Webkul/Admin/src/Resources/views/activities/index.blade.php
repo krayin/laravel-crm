@@ -269,7 +269,7 @@
 
         <script
             type="text/x-template"
-            id="v-calendar-tempalte"
+            id="v-calendar-template"
         >
             <div class="!rounded-xl py-3">
                 <v-vue-cal
@@ -320,7 +320,7 @@
 
         <script type="module">
             app.component('v-calendar', {
-                template: '#v-calendar-tempalte',
+                template: '#v-calendar-template',
 
                 data() {
                     return {

@@ -1122,6 +1122,13 @@ return [
                 'users'           => 'Users',
             ],
         ],
+
+        'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+        'create-success'       => 'Activity created successfully.',
+        'update-success'       => 'Activity updated successfully.',
+        'mass-update-success'  => 'Activities updated successfully.',
+        'destroy-success'      => 'Activity deleted successfully.',
+        'delete-failed'        => 'Activity can not be deleted.',
     ],
 
     'mail' => [
@@ -1428,7 +1435,156 @@ return [
     //     ],
     // ],
 
+    'leads' => [
+        'create-success'    => 'Lead created successfully.',
+        'update-success'    => 'Lead updated successfully.',
+        'destroy-success'   => 'Lead deleted successfully.',
+        'delete-failed'     => 'Lead can not be deleted.',
 
+        'index' => [
+            'title'      => 'Leads',
+            'create-btn' => 'Create Lead',
+
+            'datagrid' => [
+                'id'                  => 'ID',
+                'sales-person'        => 'Sales Person',
+                'subject'             => 'Subject',
+                'source'              => 'Source',
+                'lead-value'          => 'Lead Value',
+                'contact-person'      => 'Contact Person',
+                'stage'               => 'Stage',
+                'rotten-lead'         => 'Rotten Lead',
+                'expected-close-date' => 'Expected Close Date',
+                'created-at'          => 'Created At',
+                'no'                  => 'No',
+                'yes'                 => 'Yes',
+            ],
+        ],
+
+        'create' => [
+            'title'          => 'Create Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+
+        'common' => [
+            'contact' => [
+                'name'           => 'Name',
+                'email'          => 'Email',
+                'contact-number' => 'contact-number',
+                'organization'   => 'Organization',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                '[total'       => 'Total',
+            ],
+        ],
+
+        'view' => [
+            'title' => 'Lead: :title',
+
+            'stages' => [
+                'won-lost'       => 'Won/Lost',
+                'won'            => 'Won',
+                'lost'           => 'Lost',
+                'need-more-info' => 'Need More Details',
+                'closed-at'      => 'Closed At',
+                'won-value'      => 'Won Value',
+                'lost-reason'    => 'Lost Reason',
+            ],
+
+            'tags' => [
+                'title'           => 'Tags',
+                'added-tags'      => 'Added Tags',
+                'save-btn'        => 'Save Tag',
+                'placeholder'     => 'Type to search tags',
+                'add-tag'         => 'Add \":term\"...',
+                'aquarelle-red'   => 'Aquarelle Red',
+                'crushed-cashew'  => 'Crushed Cashew',
+                'beeswax'         => 'Beeswax',
+                'lemon-chiffon'   => 'Lemon Chiffon',
+                'snow-flurry'     => 'Snow Flurry',
+                'honeydew'        => 'Honeydew',
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
+            ],
+
+            'activities' => [
+                'index' => [
+                    'all'          => 'All',
+                    'calls'        => 'Calls',
+                    'meetings'     => 'Meetings',
+                    'lunches'      => 'Lunches',
+                    'files'        => 'Files',
+                    'quotes'       => 'Quotes',
+                    'notes'        => 'Notes',
+                    'emails'       => 'Emails',
+                    'by-user'      => 'By :user',
+                    'scheduled-on' => 'Scheduled on',
+                    'location'     => 'Location',
+                    'participants' => 'Participants',
+                    'mark-as-done' => 'Mark as Done',
+                    'delete'       => 'Delete',
+                    'edit'         => 'Edit',
+                ],
+
+                'actions' => [
+                    'mail' => [
+                        'btn'      => 'Mail',
+                        'title'    => 'Compose Mail',
+                        'to'       => 'To',
+                        'cc'       => 'CC',
+                        'bcc'      => 'BCC',
+                        'subject'  => 'Subject',
+                        'send-btn' => 'Send',
+                        'message'  => 'Message',
+                    ],
+
+                    'file' => [
+                        'btn'           => 'File',
+                        'title'         => 'Add File',
+                        'title-control' => 'Title',
+                        'name'          => 'File Name',
+                        'description'   => 'Description',
+                        'file'          => 'File',
+                        'save-btn'      => 'Save File',
+                    ],
+
+                    'note' => [
+                        'btn'      => 'Note',
+                        'title'    => 'Add Note',
+                        'comment'  => 'Comment',
+                        'save-btn' => 'Save Note',
+                    ],
+
+                    'activity' => [
+                        'btn'           => 'Activity',
+                        'title'         => 'Add Activity',
+                        'title-control' => 'Title',
+                        'description'   => 'Description',
+                        'schedule-from' => 'Schedule From',
+                        'schedule-to'   => 'Schedule To',
+                        'location'      => 'Location',
+                        'call'          => 'Call',
+                        'meeting'       => 'Meeting',
+                        'lunch'         => 'Lunch',
+                        'save-btn'      => 'Save Activity',
+                    ],
+                ],
+            ],
+        ],
+    ],
 
     'leads-old' => [
         'title'                      => 'Leads',
