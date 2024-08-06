@@ -1,20 +1,26 @@
-{!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
+@props([
+    'attachEndpoint',
+    'detachEndpoint',
+    'addedTags' => [],
+])
 
-<v-lead-tags>
-    <x-admin::shimmer.leads.view.tags count="3" />
-</v-lead-tags>
-
-{!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
+<v-tags
+    attach-endpoint="{{ $attachEndpoint }}"
+    detach-endpoint="{{ $detachEndpoint }}"
+    :added-tags='@json($addedTags)'
+>
+    <x-admin::shimmer.tags count="3" />
+</v-tags>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-tags-template">
+    <script type="text/x-template" id="v-tags-template">
         <div class="flex items-center gap-1">
             <!-- Tags -->
             <span
                 class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                 :style="{
                     'background-color': tag.color,
-                    'color': backgroundColors.find(color => color.background === tag.color).text
+                    'color': backgroundColors.find(color => color.background === tag.color)?.text
                 }"
                 v-for="(tag, index) in tags"
             >
@@ -33,7 +39,7 @@
                         <!-- Search Input -->
                         <div class="flex flex-col gap-1 px-4 py-2">
                             <label class="font-semibold text-gray-600">
-                                @lang('admin::app.leads.view.tags.title')
+                                @lang('admin::app.components.tags.index.title')
                             </label>
 
                             <!-- Search Button -->
@@ -42,7 +48,7 @@
                                     <input
                                         type="text"
                                         class="w-full cursor-pointer pr-6"
-                                        placeholder="@lang('admin::app.leads.view.tags.placeholder')"
+                                        placeholder="@lang('admin::app.components.tags.index.placeholder')"
                                         v-model.lazy="searchTerm"
                                         v-debounce="500"
                                     />
@@ -68,7 +74,7 @@
                                         <li
                                             class="cursor-pointer rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             v-for="tag in searchedTags"
-                                            @click="add(tag)"
+                                            @click="attachToEntity(tag)"
                                         >
                                             @{{ tag.name }}
                                         </li>
@@ -78,7 +84,7 @@
                                                 class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950"
                                                 @click="create"
                                             >
-                                                @{{ "@lang('admin::app.leads.view.tags.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
+                                                @{{ "@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
                                             </li>
                                         </template>
                                     </ul>
@@ -92,7 +98,7 @@
                             v-if="tags.length"
                         >
                             <label class="text-gray-600">
-                                @lang('admin::app.leads.view.tags.added-tags')
+                                @lang('admin::app.components.tags.index.added-tags')
                             </label>
                             
                             <!-- Added Tags List -->
@@ -106,7 +112,7 @@
                                         class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                                         :style="{
                                             'background-color': tag.color,
-                                            'color': backgroundColors.find(color => color.background === tag.color).text
+                                            'color': backgroundColors.find(color => color.background === tag.color)?.text
                                         }"
                                     >
                                         @{{ tag.name }}
@@ -149,7 +155,7 @@
                                             <span
                                                 class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
                                                 v-show="! isRemoving[tag.id]"
-                                                @click="remove(tag)"
+                                                @click="detachFromEntity(tag)"
                                             ></span>
 
                                             <span
@@ -170,8 +176,25 @@
     </script>
 
     <script type="module">
-        app.component('v-lead-tags', {
-            template: '#v-lead-tags-template',
+        app.component('v-tags', {
+            template: '#v-tags-template',
+
+            props: {
+                attachEndpoint: {
+                    type: String,
+                    default: '',
+                },
+
+                detachEndpoint: {
+                    type: String,
+                    default: '',
+                },
+                
+                addedTags: {
+                    type: Array,
+                    default: () => [],
+                },
+            },
 
             data: function () {
                 return {
@@ -183,33 +206,33 @@
 
                     isRemoving: {},
 
-                    tags: @json($lead->tags),
-
+                    tags: [],
+                    
                     searchedTags: [],
 
                     backgroundColors: [
                         {
-                            label: "@lang('admin::app.leads.view.tags.aquarelle-red')",
+                            label: "@lang('admin::app.components.tags.index.aquarelle-red')",
                             text: '#DC2626',
                             background: '#FEE2E2',
                         }, {
-                            label: "@lang('admin::app.leads.view.tags.crushed-cashew')",
+                            label: "@lang('admin::app.components.tags.index.crushed-cashew')",
                             text: '#EA580C',
                             background: '#FFEDD5',
                         }, {
-                            label: "@lang('admin::app.leads.view.tags.beeswax')",
+                            label: "@lang('admin::app.components.tags.index.beeswax')",
                             text: '#D97706',
                             background: '#FEF3C7',
                         }, {
-                            label: "@lang('admin::app.leads.view.tags.lemon-chiffon')",
+                            label: "@lang('admin::app.components.tags.index.lemon-chiffon')",
                             text: '#CA8A04',
                             background: '#FEF9C3',
                         }, {
-                            label: "@lang('admin::app.leads.view.tags.snow-flurry')",
+                            label: "@lang('admin::app.components.tags.index.snow-flurry')",
                             text: '#65A30D',
                             background: '#ECFCCB',
                         }, {
-                            label: "@lang('admin::app.leads.view.tags.honeydew')",
+                            label: "@lang('admin::app.components.tags.index.honeydew')",
                             text: '#16A34A',
                             background: '#DCFCE7',
                         },
@@ -221,6 +244,10 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
+            },
+
+            mounted() {
+                this.tags = this.addedTags;
             },
 
             methods: {
@@ -266,38 +293,13 @@
                     this.isStoring = true;
 
                     var self = this;
-                    console.log(1111)
 
                     this.$axios.post("{{ route('admin.settings.tags.store') }}", {
                         name: this.searchTerm,
                         color: this.backgroundColors[Math.floor(Math.random() * this.backgroundColors.length)].background,
                     })
                         .then(response => {
-                            self.add(response.data.data);
-                        })
-                        .catch(error => {
-                            self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-
-                            self.isStoring = false;
-                        });
-                },
-
-                add(params) {
-                    this.isStoring = true;
-
-                    var self = this;
-
-                    this.$axios.post("{{ route('admin.leads.tags.store', $lead->id) }}", params)
-                        .then(response => {
-                            self.searchedTags = [];
-
-                            self.searchTerm = '';
-
-                            self.isStoring = false;
-
-                            self.tags.push(params);
-
-                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            self.attachToEntity(response.data.data);
                         })
                         .catch(error => {
                             self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
@@ -323,14 +325,44 @@
                         });
                 },
 
-                remove(tag) {
+                attachToEntity(params) {
+                    this.isStoring = true;
+
+                    var self = this;
+
+                    this.$axios.post(this.attachEndpoint, {
+                        tag_id: params.id,
+                    })
+                        .then(response => {
+                            self.searchedTags = [];
+
+                            self.searchTerm = '';
+
+                            self.isStoring = false;
+
+                            self.tags.push(params);
+
+                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                        })
+                        .catch(error => {
+                            self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+
+                            self.isStoring = false;
+                        });
+                },
+
+                detachFromEntity(tag) {
                     var self = this;
                     
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             this.isRemoving[tag.id] = true;
                     
-                            this.$axios.delete("{{ route('admin.leads.tags.delete', ['id' => $lead->id, 'tag_id' => 'replaceTagId']) }}".replace('replaceTagId', tag.id))
+                            this.$axios.delete(this.detachEndpoint, {
+                                    data: {
+                                        tag_id: tag.id,
+                                    }
+                                })
                                 .then(response => {
                                     self.isRemoving[tag.id] = false;
 

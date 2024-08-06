@@ -22,7 +22,11 @@
                 </div>
 
                 <!-- Tags -->
-                @include ('admin::leads.view.tags')
+                <x-admin::tags
+                    :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
+                    :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
+                    :added-tags="$lead->tags"
+                />
 
                 <!-- Title -->
                 <h3 class="text-lg font-bold">

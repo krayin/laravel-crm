@@ -169,6 +169,24 @@ return [
                 'title'        => 'Are you sure?',
             ],
         ],
+
+        'tags' => [
+            'index' => [
+                'title'           => 'Tags',
+                'added-tags'      => 'Added Tags',
+                'save-btn'        => 'Save Tag',
+                'placeholder'     => 'Type to search tags',
+                'add-tag'         => 'Add \":term\"...',
+                'aquarelle-red'   => 'Aquarelle Red',
+                'crushed-cashew'  => 'Crushed Cashew',
+                'beeswax'         => 'Beeswax',
+                'lemon-chiffon'   => 'Lemon Chiffon',
+                'snow-flurry'     => 'Snow Flurry',
+                'honeydew'        => 'Honeydew',
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
+            ]
+        ],
     ],
 
     'quotes' => [
