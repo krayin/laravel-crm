@@ -53,7 +53,7 @@
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.users.login.password')
                             </x-admin::form.control-group.label>
-                    
+                        
                             <x-admin::form.control-group.control 
                                 type="password" 
                                 class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10" 
@@ -65,14 +65,14 @@
                             />
                     
                             <span 
-                                class="icon-view absolute top-[42px] -translate-y-2/4 cursor-pointer text-2xl ltr:right-2 rtl:left-2"
+                                class="icon-eye-hide absolute top-11 -translate-y-2/4 cursor-pointer text-2xl ltr:right-3 rtl:left-3"
                                 onclick="switchVisibility()"
                                 id="visibilityIcon"
                                 role="presentation"
                                 tabindex="0"
                             >
                             </span>
-                    
+                        
                             <x-admin::form.control-group.error control-name="password" />
                         </x-admin::form.control-group>
                     </div>
@@ -106,7 +106,7 @@
                 let visibilityIcon = document.getElementById("visibilityIcon");
 
                 passwordField.type = passwordField.type === "password" ? "text" : "password";
-                visibilityIcon.classList.toggle("icon-view-close");
+                visibilityIcon.classList.toggle("icon-eye");
             }
         </script>
     @endpush

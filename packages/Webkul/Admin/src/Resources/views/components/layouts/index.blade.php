@@ -7,7 +7,7 @@
 >
 
 <head>
-
+    
     {!! view_render_event('bagisto.admin.layout.head.before') !!}
 
     <title>{{ $title ?? '' }}</title>

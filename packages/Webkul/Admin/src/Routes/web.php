@@ -34,3 +34,8 @@ require 'rest-routes.php';
  * Activities routes.
  */
 require 'activities-routes.php';
+
+/**
+ * Configuration routes.
+ */
+require 'configuration-routes.php';

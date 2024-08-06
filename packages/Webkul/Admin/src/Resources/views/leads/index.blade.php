@@ -19,14 +19,14 @@
         </div>
 
         <div class="flex items-center gap-x-2.5">
-            <!-- Create button for person -->
+            <!-- Create button for Leads -->
             <div class="flex items-center gap-x-2.5">
-                <button
-                    type="button"
+                <a
+                    href="{{ route('admin.leads.create') }}"
                     class="primary-button"
                 >
                     @lang('admin::app.leads.index.create-btn')
-                </button>
+                </a>
             </div>
         </div>
     </div>

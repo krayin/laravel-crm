@@ -173,38 +173,41 @@ return [
 
     'quotes' => [
         'create' => [
-            'title' => 'Create Quote',
-            'save-btn' => 'Save Quotes',
-            'quote-info' => 'Quote Information',
-            'quote-info-info' => 'Put the basic information of the quote.',
-            'address-info' => 'Address Information',
+            'title'             => 'Create Quote',
+            'save-btn'          => 'Save Quotes',
+            'quote-info'        => 'Quote Information',
+            'quote-info-info'   => 'Put the basic information of the quote.',
+            'address-info'      => 'Address Information',
             'address-info-info' => 'Information about the address related to quote.',
-            'quote-items' => 'Quote Items',
-            'link-to-lead' => 'Link to lead',
-            'quote-item-info' => 'Add Product Request for this quote.',
-            'quote-name' => 'Quote name',
-            'quantity' => 'Quantity',
-            'price' => 'Price',
-            'discount' => 'Discount',
-            'tax' => 'Tax',
-            'total' => 'Total',
-            'amount' => 'Amount',
-            'add-item' => '+ Add Item',
-            'sub-total' => 'Sub Total (:symbol)',
-            'total-discount' => 'Discount (:symbol)',
-            'total-tax' => 'Tax (:symbol)',
-            'total-adjustment' => 'Adjustment (:symbol)',
-            'grand-total' => 'Grant Total (:symbol)',
-            'discount-amount' => 'Discount amount',
-            'tax-amount' => 'Tax amount',
+            'quote-items'       => 'Quote Items',
+            'link-to-lead'      => 'Link to lead',
+            'quote-item-info'   => 'Add Product Request for this quote.',
+            'quote-name'        => 'Quote name',
+            'quantity'          => 'Quantity',
+            'price'             => 'Price',
+            'discount'          => 'Discount',
+            'tax'               => 'Tax',
+            'total'             => 'Total',
+            'amount'            => 'Amount',
+            'add-item'          => '+ Add Item',
+            'sub-total'         => 'Sub Total (:symbol)',
+            'total-discount'    => 'Discount (:symbol)',
+            'total-tax'         => 'Tax (:symbol)',
+            'total-adjustment'  => 'Adjustment (:symbol)',
+            'grand-total'       => 'Grant Total (:symbol)',
+            'discount-amount'   => 'Discount amount',
+            'tax-amount'        => 'Tax amount',
             'adjustment-amount' => 'Adjustment amount',
-            'product-name' => 'Product Name',
+            'product-name'      => 'Product Name',
         ],
     ],
 
     'contacts' => [
         'persons' => [
             'index' => [
+                'title'       => 'Persons',
+                'create-btn'  => 'Create Person',
+
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
                     'delete'            => 'Delete',
@@ -291,6 +294,8 @@ return [
     ],
 
     'settings' => [
+        'title' => 'Settings',
+
         'groups' => [
             'index' => [
                 'create-btn'        => 'Create Group',
@@ -885,6 +890,112 @@ return [
                 'contact-info'  => 'Contact Information',
             ],
         ],
+
+        'attributes' => [
+            'index' => [
+                'title'      => 'Attributes',
+                'create-btn' => 'Create Attribute',
+
+                'datagrid' => [
+                    'yes'         => 'Yes',
+                    'no'          => 'No',
+                    'id'          => 'ID',
+                    'code'        => 'Code',
+                    'name'        => 'Name',
+                    'entity-type' => 'Entity Type',
+                    'type'        => 'Type',
+                    'is-default'  => 'Is Default',
+                    'edit'        => 'Edit',
+                    'delete'      => 'Delete',
+                ],
+            ],
+
+            'create'  => [
+                'title'                 => 'Create Attribute',
+                'save-btn'              => 'Save Attribute',
+                'code'                  => 'Code',
+                'name'                  => 'Name',
+                'entity-type'           => 'Entity Type',
+                'type'                  => 'Type',
+                'validations'           => 'Validations',
+                'is-required'           => 'Is Required',
+                'input-validation'      => 'Input Validation',
+                'is-unique'             => 'Is Unique',
+                'labels'                => 'Labels',
+                'general'               => 'General',
+                'numeric'               => 'Numeric',
+                'decimal'               => 'Decimal',
+                'url'                   => 'Url',
+                'options'               => 'Options',
+                'option-type'           => 'Option Type',
+                'lookup-type'           => 'Lookup Type',
+                'add-option'            => 'Add Option',
+                'save-option'           => 'Save Option',
+                'option-name'           => 'Option Name',
+                'add-attribute-options' => 'Add Attribute Options',
+                'text'                  => 'Text',
+                'textarea'              => 'Textarea',
+                'price'                 => 'Price',
+                'boolean'               => 'Boolean',
+                'select'                => 'Select',
+                'multiselect'           => 'Multiselect',
+                'email'                 => 'Email',
+                'address'               => 'Address',
+                'phone'                 => 'Phone',
+                'datetime'              => 'Datetime',
+                'date'                  => 'Date',
+                'image'                 => 'Image',
+                'file'                  => 'File',
+                'lookup'                => 'Lookup',
+                'entity_type'           => 'Entity type',
+                'checkbox'              => 'Checkbox',
+                'is_required'           => 'Is Required',
+                'is_unique'             => 'Is Unique',
+            ],
+
+            'edit'  => [
+                'title'                 => 'Edit Attribute',
+                'save-btn'              => 'Save Attribute',
+                'code'                  => 'Code',
+                'name'                  => 'Name',
+                'labels'                => 'Labels',
+                'entity-type'           => 'Entity Type',
+                'type'                  => 'Type',
+                'validations'           => 'Validations',
+                'is-required'           => 'Is Required',
+                'input-validation'      => 'Input Validation',
+                'is-unique'             => 'Is Unique',
+                'general'               => 'General',
+                'numeric'               => 'Numeric',
+                'decimal'               => 'Decimal',
+                'url'                   => 'Url',
+                'options'               => 'Options',
+                'option-type'           => 'Option Type',
+                'lookup-type'           => 'Lookup Type',
+                'add-option'            => 'Add Option',
+                'save-option'           => 'Save Option',
+                'option-name'           => 'Option Name',
+                'add-attribute-options' => 'Add Attribute Options',
+                'text'                  => 'Text',
+                'textarea'              => 'Textarea',
+                'price'                 => 'Price',
+                'boolean'               => 'Boolean',
+                'select'                => 'Select',
+                'multiselect'           => 'Multiselect',
+                'email'                 => 'Email',
+                'address'               => 'Address',
+                'phone'                 => 'Phone',
+                'datetime'              => 'Datetime',
+                'date'                  => 'Date',
+                'image'                 => 'Image',
+                'file'                  => 'File',
+                'lookup'                => 'Lookup',
+                'entity_type'           => 'Entity type',
+                'checkbox'              => 'Checkbox',
+                'is_required'           => 'Is Required',
+                'is_unique'             => 'Is Unique',
+            ],
+        ],
     ],
 
     'activities' => [
@@ -966,6 +1077,152 @@ return [
             'work'           => 'Work',
             'home'           => 'Home',
             'add-more'       => 'Add More',
+            'select'         => 'Select',
+        ],
+    ],
+
+    'leads' => [
+        'create-success'    => 'Lead created successfully.',
+        'update-success'    => 'Lead updated successfully.',
+        'destroy-success'   => 'Lead deleted successfully.',
+        'delete-failed'     => 'Lead can not be deleted.',
+
+        'index' => [
+            'title'      => 'Leads',
+            'create-btn' => 'Create Lead',
+
+            'datagrid' => [
+                'id'                  => 'ID',
+                'sales-person'        => 'Sales Person',
+                'subject'             => 'Subject',
+                'source'              => 'Source',
+                'lead-value'          => 'Lead Value',
+                'contact-person'      => 'Contact Person',
+                'stage'               => 'Stage',
+                'rotten-lead'         => 'Rotten Lead',
+                'expected-close-date' => 'Expected Close Date',
+                'created-at'          => 'Created At',
+                'no'                  => 'No',
+                'yes'                 => 'Yes',
+            ],
+        ],
+
+        'view' => [
+            'title' => 'Lead: :title',
+
+            'activities' => [
+                'index' => [
+                    'all'      => 'All',
+                    'calls'    => 'Calls',
+                    'meetings' => 'Meetings',
+                    'lunches'  => 'Lunches',
+                    'files'    => 'Files',
+                    'quotes'   => 'Quotes',
+                    'notes'    => 'Notes',
+                    'emails'   => 'Emails',
+                ],
+
+                'actions' => [
+                    'mail' => [
+                        'btn'      => 'Mail',
+                        'title'    => 'Compose Mail',
+                        'to'       => 'To',
+                        'cc'       => 'CC',
+                        'bcc'      => 'BCC',
+                        'subject'  => 'Subject',
+                        'send-btn' => 'Send',
+                        'message'  => 'Message',
+                    ],
+
+                    'file' => [
+                        'btn'         => 'File',
+                        'title'       => 'Add File',
+                        'name'        => 'Name',
+                        'description' => 'Description',
+                        'file'        => 'File',
+                        'save-btn'    => 'Save File',
+                    ],
+
+                    'note' => [
+                        'btn'      => 'Note',
+                        'title'    => 'Add Note',
+                        'note'     => 'Note',
+                        'save-btn' => 'Save Note',
+                    ],
+
+                    'activity' => [
+                        'btn'           => 'Activity',
+                        'title'         => 'Add Activity',
+                        'title-control' => 'Title',
+                        'description'   => 'Description',
+                        'schedule-from' => 'Schedule From',
+                        'schedule-to'   => 'Schedule To',
+                        'location'      => 'Location',
+                        'call'          => 'Call',
+                        'meeting'       => 'Meeting',
+                        'lunch'         => 'Lunch',
+                        'save-btn'      => 'Save Activity',
+                    ],
+                ],
+
+                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+                'create-success'       => 'Activity created successfully.',
+                'update-success'       => 'Activity updated successfully.',
+                'mass-update-success'  => 'Activities updated successfully.',
+                'destroy-success'      => 'Activity deleted successfully.',
+                'delete-failed'        => 'Activity can not be deleted.',
+            ],
+        ],
+
+        'create' => [
+            'title'          => 'Create Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+
+        'common' => [
+            'contact' => [
+                'name'           => 'Name',
+                'email'          => 'Email',
+                'contact-number' => 'contact-number',
+                'organization'   => 'Organization',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                '[total'       => 'Total',
+            ],
+        ],
+    ],
+
+    'configuration' => [
+        'index' => [
+            'title'    => 'Configuration',
+            'search'   => 'Search',
+            'back'     => 'Back',
+            'save-btn' => 'Save Configuration',
+            'general'  => [
+                'title'   => 'General',
+                'info'    => 'General Configuration',
+                'general' => [
+                    'title'           => 'General',
+                    'info'            => 'Update your general settings here.',
+                    'locale-settings' => [
+                        'title'       => 'Locale Settings',
+                        'title-info'  => 'Defines the language used in the user interface, such as English (en), French (fr), or Japanese (ja).',
+                    ],
+                ],
+            ],
         ],
     ],
 
@@ -1091,99 +1348,7 @@ return [
     //     ],
     // ],
 
-    'leads' => [
-        'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
-        'destroy-success'   => 'Lead deleted successfully.',
-        'delete-failed'     => 'Lead can not be deleted.',
 
-        'index' => [
-            'title'      => 'Leads',
-            'create-btn' => 'Create Lead',
-
-            'datagrid' => [
-                'id'                  => 'ID',
-                'sales-person'        => 'Sales Person',
-                'subject'             => 'Subject',
-                'source'              => 'Source',
-                'lead-value'          => 'Lead Value',
-                'contact-person'      => 'Contact Person',
-                'stage'               => 'Stage',
-                'rotten-lead'         => 'Rotten Lead',
-                'expected-close-date' => 'Expected Close Date',
-                'created-at'          => 'Created At',
-                'no'                  => 'No',
-                'yes'                 => 'Yes',
-            ],
-        ],
-
-        'view' => [
-            'title' => 'Lead: :title',
-
-            'activities' => [
-                'index' => [
-                    'all'      => 'All',
-                    'calls'    => 'Calls',
-                    'meetings' => 'Meetings',
-                    'lunches'  => 'Lunches',
-                    'files'    => 'Files',
-                    'quotes'   => 'Quotes',
-                    'notes'    => 'Notes',
-                    'emails'   => 'Emails',
-                ],
-
-                'actions' => [
-                    'mail' => [
-                        'btn'      => 'Mail',
-                        'title'    => 'Compose Mail',
-                        'to'       => 'To',
-                        'cc'       => 'CC',
-                        'bcc'      => 'BCC',
-                        'subject'  => 'Subject',
-                        'send-btn' => 'Send',
-                        'message'  => 'Message',
-                    ],
-
-                    'file' => [
-                        'btn'         => 'File',
-                        'title'       => 'Add File',
-                        'name'        => 'Name',
-                        'description' => 'Description',
-                        'file'        => 'File',
-                        'save-btn'    => 'Save File',
-                    ],
-
-                    'note' => [
-                        'btn'      => 'Note',
-                        'title'    => 'Add Note',
-                        'note'     => 'Note',
-                        'save-btn' => 'Save Note',
-                    ],
-
-                    'activity' => [
-                        'btn'           => 'Activity',
-                        'title'         => 'Add Activity',
-                        'title-control' => 'Title',
-                        'description'   => 'Description',
-                        'schedule-from' => 'Schedule From',
-                        'schedule-to'   => 'Schedule To',
-                        'location'      => 'Location',
-                        'call'          => 'Call',
-                        'meeting'       => 'Meeting',
-                        'lunch'         => 'Lunch',
-                        'save-btn'      => 'Save Activity',
-                    ],
-                ],
-
-                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
-                'create-success'       => 'Activity created successfully.',
-                'update-success'       => 'Activity updated successfully.',
-                'mass-update-success'  => 'Activities updated successfully.',
-                'destroy-success'      => 'Activity deleted successfully.',
-                'delete-failed'        => 'Activity can not be deleted.',
-            ],
-        ],
-    ],
 
     'leads-old' => [
         'title'                      => 'Leads',
@@ -1799,23 +1964,6 @@ return [
     //         'delete-success' => 'Web form deleted successfully'
     //     ],
     // ],
-
-    'configuration' => [
-        'title'             => 'Configuration',
-        'save-btn-title'    => 'Save',
-        'general'           => 'General',
-        'locale-settings'   => 'Locale Settings',
-        'locale'            => 'Locale',
-        'timezone'          => 'Timezone',
-        'date-time-formats' => 'Date And Time Formats',
-        'save-message'      => 'Configuration updated successfully!',
-        'delete'            => 'Delete',
-        'emails'            => [
-            'email'                 => 'Email',
-            'notification_label'    => 'Notifications',
-            'new_lead'              => 'New lead',
-        ],
-    ],
 
     'datagrid' => [
         'id'                  => 'ID',

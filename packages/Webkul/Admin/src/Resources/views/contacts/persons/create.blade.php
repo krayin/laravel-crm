@@ -48,7 +48,7 @@
                             'entity_type' => 'persons',
                         ])"
                     />
-
+                    
                     {!! view_render_event('krayin.admin.persons.create.form_controls.after') !!}
                 </div>
             </div>

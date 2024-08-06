@@ -107,7 +107,6 @@ import VeeValidate from "./plugins/vee-validate";
 import CreateElement from "./plugins/createElement";
 import Draggable from "./plugins/draggable";
 import VueCal from "./plugins/vue-cal";
-
 [
     Admin,
     Axios,

@@ -96,7 +96,7 @@ class ProductDataGrid extends DataGrid
     {
         $this->addAction([
             'index'  => 'view',
-            'icon'   => 'icon-dark',
+            'icon'   => 'icon-eye',
             'title'  => trans('admin::app.products.index.datagrid.view'),
             'method' => 'GET',
             'url'    => function ($row) {

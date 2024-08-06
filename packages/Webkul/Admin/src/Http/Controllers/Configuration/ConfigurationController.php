@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Configuration;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
@@ -22,29 +23,16 @@ class ConfigurationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): RedirectResponse|View
+    public function index(): View
     {
-        $slugs = (array) $this->getDefaultConfigSlugs();
-
-        if (! empty($slugs)) {
-            return redirect()->route('admin.configuration.index', $slugs);
+        if (
+            request()->route('slug')
+            && request()->route('slug2')
+        ) {
+            return view('admin::configuration.edit');
         }
 
         return view('admin::configuration.index');
-    }
-
-    /**
-     * Returns slugs
-     */
-    public function getDefaultConfigSlugs(): array
-    {
-        if (! request()->route('slug')) {
-            $slug = system_config()->getItems()->first()->getKey();
-
-            return ['slug' => $slug];
-        }
-
-        return [];
     }
 
     /**
@@ -77,5 +65,20 @@ class ConfigurationController extends Controller
         $config = $this->configurationRepository->findOneByField('value', $fileName);
 
         return Storage::download($config['value']);
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function search(): JsonResponse
+    {
+        $results = $this->configurationRepository->search(
+            system_config()->getItems(),
+            request()->query('query')
+        );
+
+        return new JsonResponse([
+            'data' => $results,
+        ]);
     }
 }
