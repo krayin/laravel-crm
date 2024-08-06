@@ -1138,11 +1138,13 @@ return [
             ],
 
             'tags' => [
-                'title'       => 'Tags',
-                'added-tags'  => 'Added Tags',
-                'save-btn'    => 'Save Tag',
-                'placeholder' => 'Type to search tags',
-                'add-tag'     => 'Add \":term\"...',
+                'title'           => 'Tags',
+                'added-tags'      => 'Added Tags',
+                'save-btn'        => 'Save Tag',
+                'placeholder'     => 'Type to search tags',
+                'add-tag'         => 'Add \":term\"...',
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
             ],
 
             'activities' => [

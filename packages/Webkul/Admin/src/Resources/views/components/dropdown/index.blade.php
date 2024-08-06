@@ -10,16 +10,24 @@
     @endisset
 
     @isset($content)
-        <template v-slot:content>
-            <div {{ $content->attributes->merge(['class' => 'p-5']) }}>
+        <template #content="{ isActive, positionStyles }">
+            <div
+                {{ $content->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-5 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900']) }}
+                :style="positionStyles"
+                v-show="isActive"
+            >
                 {{ $content }}
             </div>
         </template>
     @endisset
 
     @isset($menu)
-        <template v-slot:menu>
-            <ul {{ $menu->attributes->merge(['class' => 'py-4']) }}>
+        <template #menu="{ isActive, positionStyles }">
+            <ul
+                {{ $menu->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-4 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900']) }}
+                :style="positionStyles"
+                v-show="isActive"
+            >
                 {{ $menu }}
             </ul>
         </template>
@@ -37,7 +45,7 @@
                 ref="toggleBlock"
                 @click="toggle()"
             >
-                <slot name="toggle">Toggle</slot>
+                <slot name="toggle"></slot>
             </div>
 
             <transition
@@ -50,14 +58,18 @@
                 leave-from-class="scale-100 transform opacity-100"
                 leave-to-class="scale-95 transform opacity-0"
             >
-                <div
-                    class="absolute z-10 w-max rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900"
-                    :style="positionStyles"
-                    v-show="isActive"
-                >
-                    <slot name="content"></slot>
+                <div>
+                    <slot
+                        name="content"
+                        :position-styles="positionStyles"
+                        :is-active="isActive"
+                    ></slot>
 
-                    <slot name="menu"></slot>
+                    <slot
+                        name="menu"
+                        :position-styles="positionStyles"
+                        :is-active="isActive"
+                    ></slot>
                 </div>
             </transition>
         </div>

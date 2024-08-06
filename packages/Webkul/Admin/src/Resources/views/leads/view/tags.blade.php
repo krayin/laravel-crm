@@ -1,6 +1,8 @@
 {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
 
-<v-lead-tags></v-lead-tags>
+<v-lead-tags>
+    <x-admin::shimmer.leads.view.tags count="3" />
+</v-lead-tags>
 
 {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
 
@@ -82,7 +84,10 @@
                         </div>
 
                         <!-- Tags -->
-                        <div class="flex flex-col gap-2 px-4 py-1.5">
+                        <div
+                            class="flex flex-col gap-2 px-4 py-1.5"
+                            v-if="tags.length"
+                        >
                             <label class="text-gray-600">
                                 @lang('admin::app.leads.view.tags.added-tags')
                             </label>
@@ -90,7 +95,7 @@
                             <!-- Added Tags List -->
                             <ul class="flex flex-col">
                                 <li
-                                    class="group flex items-center justify-between rounded-sm p-2 text-sm text-gray-800"
+                                    class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800"
                                     v-for="tag in tags"
                                 >
                                     <!-- Name -->
@@ -102,10 +107,10 @@
                                     </span>
 
                                     <!-- Action -->
-                                    <div class="relative flex gap-1">
+                                    <div class="flex items-center gap-1">
                                         <x-admin::dropdown>
                                             <x-slot:toggle>
-                                                <div class="relative hidden cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 hover:border-gray-400 focus:border-gray-400 group-hover:flex">
+                                                <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
                                                     <span
                                                         class="h-4 w-4 rounded-full"
                                                         :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
@@ -113,13 +118,15 @@
                                                     </span>
 
                                                     <span class="icon-down-arrow text-xl"></span>
-                                                </div>
+                                                </button>
                                             </x-slot>
 
-                                            <x-slot:menu class="top-5">
+                                            <x-slot:menu class="!top-7 !p-0">
                                                 <x-admin::dropdown.menu.item
                                                     class="top-5"
+                                                    ::class="{ 'bg-gray-100': tag.color === color }"
                                                     v-for="color in backgroundColors"
+                                                    @click="update(tag, color)"
                                                 >
                                                     <span
                                                         class="flex h-4 w-4 rounded-full"
@@ -130,10 +137,20 @@
                                             </x-slot>
                                         </x-admin::dropdown>
                                         
-                                        <span
-                                            class="icon-cross-large ml-2 hidden cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200 group-hover:flex"
-                                            @click="remove(tag)"
-                                        ></span>
+                                        <div class="flex items-center">
+                                            <span
+                                                class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
+                                                v-show="! isRemoving[tag.id]"
+                                                @click="remove(tag)"
+                                            ></span>
+
+                                            <span
+                                                class="p-1"
+                                                v-show="isRemoving[tag.id]"
+                                            >
+                                                <x-admin::spinner />
+                                            </span>
+                                        </div>
                                     </div>
                                 </li>
                             </ul>
@@ -155,6 +172,8 @@
                     isStoring: false,
 
                     isSearching: false,
+
+                    isRemoving: {},
 
                     tags: @json($lead->tags),
 
@@ -262,7 +281,47 @@
                         });
                 },
 
+                update(tag, color) {
+                    var self = this;
+
+                    this.$axios.put("{{ route('admin.settings.tags.update', 'replaceTagId') }}".replace('replaceTagId', tag.id), {
+                        name: tag.name,
+                        color: color,
+                    })
+                        .then(response => {
+                            tag.color = color;
+
+                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                        })
+                        .catch(error => {
+                            self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                        });
+                },
+
                 remove(tag) {
+                    var self = this;
+                    
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            this.isRemoving[tag.id] = true;
+                    
+                            this.$axios.delete("{{ route('admin.leads.tags.delete', ['id' => $lead->id, 'tag_id' => 'replaceTagId']) }}".replace('replaceTagId', tag.id))
+                                .then(response => {
+                                    self.isRemoving[tag.id] = false;
+
+                                    const index = self.tags.indexOf(tag);
+
+                                    self.tags.splice(index, 1);
+
+                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch(error => {
+                                    self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                    
+                                    self.isRemoving[tag.id] = false;
+                                });
+                        },
+                    });
                 },
             },
         });

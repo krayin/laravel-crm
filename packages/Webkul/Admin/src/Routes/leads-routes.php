@@ -41,7 +41,7 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
         Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
             Route::post('', 'store')->name('admin.leads.tags.store');
 
-            Route::delete('{tag_id?}', 'delete')->name('admin.leads.tags.delete');
+            Route::delete('{tag_id}', 'delete')->name('admin.leads.tags.delete');
         });
 
         Route::controller(QuoteController::class)->prefix('{id}/quotes')->group(function () {
