@@ -242,18 +242,6 @@
                                         </draggable>
                                     </x-admin::table>
                                 </template>
-
-                                <!-- For Empty Attribute Options -->
-                                <template v-else>
-                                    <div class="grid justify-items-center gap-3.5 px-2.5 py-10">
-                                        <!-- Add Attribute Options Information -->
-                                        <div class="flex flex-col items-center gap-1.5">
-                                            <p class="text-base font-semibold text-gray-400">
-                                                @lang('admin::app.settings.attributes.create.add-attribute-options')
-                                            </p>
-                                        </div>
-                                    </div>
-                                </template>
                             </div>
                         </div>
                     </div>
