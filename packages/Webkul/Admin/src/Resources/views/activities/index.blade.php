@@ -365,7 +365,7 @@
                      */
                     goToActivity(event) {
                         if (event.id) {
-                            window.location.href = `{{ route('admin.activities.edit') }}/${event.id}`;
+                            window.location.href = `{{ route('admin.activities.edit', ':id') }}`.replace(':id', event.id);
                         }
                     },
                 },
@@ -406,39 +406,39 @@
             }
 
             .vuecal--dark {
-                background-color: #1F2937 !important; /* bg-gray-800 */
-                color: #FFFFFF !important; /* text-white */
-                border-color: #374151 !important; /* border-gray-700 */
+                background-color: #1F2937 !important;
+                color: #FFFFFF !important;
+                border-color: #374151 !important;
             }
 
             .vuecal--dark .vuecal__header,
             .vuecal--dark .vuecal__header-weekdays,
             .vuecal--dark .vuecal__header-months {
-                background-color: #374151 !important; /* bg-gray-700 */
-                color: #FFFFFF !important; /* text-white */
+                background-color: #374151 !important;
+                color: #FFFFFF !important;
             }
 
             .vuecal--dark .vuecal__day,
             .vuecal--dark .vuecal__month-view,
             .vuecal--dark .vuecal__week-view {
-                background-color: #1F2937 !important; /* bg-gray-800 */
-                color: #FFFFFF !important; /* text-white */
-                border-color: #374151 !important; /* border-gray-700 */
+                background-color: #1F2937 !important;
+                color: #FFFFFF !important;
+                border-color: #374151 !important;
             }
 
             .vuecal--dark .vuecal__day--weekend {
-                background-color: #374151 !important; /* bg-gray-700 */
-                color: #FFFFFF !important; /* text-white */
+                background-color: #374151 !important;
+                color: #FFFFFF !important;
             }
 
             .vuecal--dark .vuecal__day--selected {
-                background-color: #374151 !important; /* bg-gray-700 */
-                color: #FFFFFF !important; /* text-white */
+                background-color: #374151 !important;
+                color: #FFFFFF !important;
             }
 
             .vuecal--dark .vuecal__event {
-                background-color: #374151 !important; /* bg-gray-700 */
-                color: #FFFFFF !important; /* text-white */
+                background-color: #374151 !important;
+                color: #FFFFFF !important;
             }
         </style>
     @endPushOnce

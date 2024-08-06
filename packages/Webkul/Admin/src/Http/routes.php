@@ -33,28 +33,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-            // Quotes Routes
-            Route::group([
-                'prefix'    => 'quotes',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Quote',
-            ], function () {
-                Route::get('', 'QuoteController@index')->name('admin.quotes.index');
-
-                Route::get('create/{id?}', 'QuoteController@create')->name('admin.quotes.create');
-
-                Route::post('create', 'QuoteController@store')->name('admin.quotes.store');
-
-                Route::get('edit/{id?}', 'QuoteController@edit')->name('admin.quotes.edit');
-
-                Route::put('edit/{id}', 'QuoteController@update')->name('admin.quotes.update');
-
-                Route::get('print/{id?}', 'QuoteController@print')->name('admin.quotes.print');
-
-                Route::delete('{id}', 'QuoteController@destroy')->name('admin.quotes.delete');
-
-                Route::put('mass-destroy', 'QuoteController@massDestroy')->name('admin.quotes.mass_delete');
-            });
-
             Route::group([
                 'prefix'    => 'mail',
                 'namespace' => 'Webkul\Admin\Http\Controllers\Mail',
@@ -83,31 +61,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             ], function () {
 
                 Route::get('', 'SettingController@index')->name('admin.settings.index');
-
-                // Attributes Routes
-                Route::prefix('attributes')->group(function () {
-                    Route::get('', 'AttributeController@index')->name('admin.settings.attributes.index');
-
-                    Route::get('create', 'AttributeController@create')->name('admin.settings.attributes.create');
-
-                    Route::post('create', 'AttributeController@store')->name('admin.settings.attributes.store');
-
-                    Route::get('edit/{id}', 'AttributeController@edit')->name('admin.settings.attributes.edit');
-
-                    Route::put('edit/{id}', 'AttributeController@update')->name('admin.settings.attributes.update');
-
-                    Route::get('lookup/{lookup?}', 'AttributeController@lookup')->name('admin.settings.attributes.lookup');
-
-                    Route::get('lookup-entity/{lookup?}', 'AttributeController@lookupEntity')->name('admin.settings.attributes.lookup_entity');
-
-                    Route::delete('{id}', 'AttributeController@destroy')->name('admin.settings.attributes.delete');
-
-                    Route::put('mass-update', 'AttributeController@massUpdate')->name('admin.settings.attributes.mass_update');
-
-                    Route::put('mass-destroy', 'AttributeController@massDestroy')->name('admin.settings.attributes.mass_delete');
-
-                    Route::get('download', 'AttributeController@download')->name('admin.settings.attributes.download');
-                });
 
                 // Email Templates Routes
                 Route::prefix('email-templates')->group(function () {
@@ -147,16 +100,16 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
             });
 
             // Configuration Routes
-            Route::group([
-                'prefix'    => 'configuration',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Configuration',
-            ], function () {
-                Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
+            // Route::group([
+            //     'prefix'    => 'configuration',
+            //     'namespace' => 'Webkul\Admin\Http\Controllers\Configuration',
+            // ], function () {
+            //     Route::get('{slug?}', 'ConfigurationController@index')->name('admin.configuration.index');
 
-                Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
+            //     Route::post('{slug?}', 'ConfigurationController@store')->name('admin.configuration.index.store');
 
-                Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
-            });
+            //     Route::get('{slug}/{path}', 'ConfigurationController@download')->name('admin.configuration.download');
+            // });
         });
     });
 });

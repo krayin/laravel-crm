@@ -2,53 +2,18 @@
 
 namespace Webkul\Admin\DataGrids\Settings;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
-    /**
-     * Create datagrid instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->tabFilters = [
-            [
-                'type'      => 'pill',
-                'key'       => 'entity_type',
-                'condition' => 'eq',
-                'values'    => array_merge([
-                    [
-                        'name'     => trans('admin::app.leads.all'),
-                        'isActive' => true,
-                        'key'      => 'all',
-                    ],
-                ],
-                    collect(config('attribute_entity_types'))->map(function ($entityType, $key) {
-                        return [
-                            'name'     => trans($entityType['name']),
-                            'isActive' => false,
-                            'key'      => $key,
-                        ];
-                    })->values()->toArray()
-                ),
-            ],
-        ];
-    }
-
     /**
      * Prepare query builder.
      *
      * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('attributes')
             ->select(
@@ -65,62 +30,64 @@ class AttributeDataGrid extends DataGrid
         $this->addFilter('type', 'attributes.type');
         $this->addFilter('attribute_type', 'attributes.is_user_defined');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'id',
-            'label'    => trans('admin::app.datagrid.id'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'id',
+            'label'      => trans('admin::app.settings.attributes.index.datagrid.id'),
+            'type'       => 'string',
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
             'index'    => 'code',
-            'label'    => trans('admin::app.datagrid.code'),
+            'label'    => trans('admin::app.settings.attributes.index.datagrid.code'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
+            'label'    => trans('admin::app.settings.attributes.index.datagrid.name'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'      => 'entity_type',
-            'label'      => trans('admin::app.datagrid.entity_type'),
+            'label'      => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
             'type'       => 'string',
             'searchable' => false,
+            'filterable' => true,
             'closure'    => function ($row) {
                 return ucfirst($row->entity_type);
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'type',
-            'label'    => trans('admin::app.datagrid.type'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'type',
+            'label'      => trans('admin::app.settings.attributes.index.datagrid.type'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'             => 'attribute_type',
-            'label'             => trans('admin::app.datagrid.attribute_type'),
-            'type'              => 'dropdown',
-            'dropdown_options'  => $this->getAttributeTypeDropdownOptions(),
-            'sortable'          => true,
-            'closure'           => function ($row) {
-                return $row->attribute_type ? trans('admin::app.common.custom_attribute') : trans('admin::app.common.system_attribute');
+            'index'      => 'attribute_type',
+            'label'      => trans('admin::app.settings.attributes.index.datagrid.is-default'),
+            'type'       => 'boolean',
+            'searchable' => true,
+            'filterable' => false,
+            'sortable'   => true,
+            'closure'    => function ($value) {
+                return trans('admin::app.settings.attributes.index.datagrid.'.($value->attribute_type ? 'no' : 'yes'));
             },
         ]);
     }
@@ -133,18 +100,21 @@ class AttributeDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.settings.attributes.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.settings.attributes.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => function ($row) {
+                return route('admin.settings.attributes.edit', $row->id);
+            },
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.settings.attributes.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'attributes']),
-            'icon'         => 'trash-icon',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.attributes.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => function ($row) {
+                return route('admin.settings.attributes.delete', $row->id);
+            },
         ]);
     }
 
@@ -156,10 +126,10 @@ class AttributeDataGrid extends DataGrid
     public function prepareMassActions()
     {
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.settings.attributes.mass_delete'),
-            'method' => 'PUT',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.settings.attributes.index.datagrid.delete'),
+            'method' => 'POST',
+            'url'    => route('admin.settings.attributes.mass_delete'),
         ]);
     }
 }

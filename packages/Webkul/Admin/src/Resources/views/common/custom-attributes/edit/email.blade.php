@@ -88,7 +88,7 @@
             },
 
             watch: { 
-                data(newValue, oldValue) {
+                value(newValue, oldValue) {
                     if (
                         JSON.stringify(newValue)
                         !== JSON.stringify(oldValue)

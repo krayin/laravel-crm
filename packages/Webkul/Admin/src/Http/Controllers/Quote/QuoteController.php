@@ -6,6 +6,7 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Event;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
@@ -32,7 +33,7 @@ class QuoteController extends Controller
     public function index()
     {
         if (request()->ajax()) {
-            return app(QuoteDataGrid::class)->toJson();
+            return datagrid(QuoteDataGrid::class)->process();
         }
 
         return view('admin::quotes.index');
@@ -69,7 +70,7 @@ class QuoteController extends Controller
 
         Event::dispatch('quote.create.after', $quote);
 
-        session()->flash('success', trans('admin::app.quotes.create-success'));
+        session()->flash('success', trans('admin::app.quotes.index.create-success'));
 
         return redirect()->route('admin.quotes.index');
     }
@@ -109,7 +110,7 @@ class QuoteController extends Controller
 
         Event::dispatch('quote.update.after', $quote);
 
-        session()->flash('success', trans('admin::app.quotes.update-success'));
+        session()->flash('success', trans('admin::app.quotes.index.update-success'));
 
         return redirect()->route('admin.quotes.index');
     }
@@ -146,11 +147,11 @@ class QuoteController extends Controller
             Event::dispatch('quote.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.quote')]),
+                'message' => trans('admin::app.quotes.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.quotes.quote')]),
+                'message' => trans('admin::app.quotes.index.delete-failed'),
             ], 400);
         }
     }
@@ -160,8 +161,10 @@ class QuoteController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $request)
     {
+        dd($request->all());
+
         foreach (request('rows') as $quoteId) {
             Event::dispatch('quote.delete.before', $quoteId);
 
@@ -171,7 +174,7 @@ class QuoteController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.title')]),
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.index.title')]),
         ]);
     }
 

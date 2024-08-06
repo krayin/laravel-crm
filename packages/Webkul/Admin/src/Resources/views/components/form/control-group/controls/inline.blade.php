@@ -52,43 +52,19 @@
                     <!-- Action Buttons -->
                     <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
                         <button
-                            @click="save"
+                            type="button"
                             class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"
+                            @click="save"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="2"
-                                stroke="currentColor"
-                                class="w-4 h-4 text-green-600"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M5 13l4 4L19 7"
-                                />
-                            </svg>
+                            <i class="icon-tick text-md font-bold cursor-pointer text-green-600" />
                         </button>
                     
                         <button
-                            @click="cancel"
+                            type="button"
                             class="flex items-center justify-center rounded-r-md p-1 ml-[1px] bg-red-100 hover:bg-red-200"
+                            @click="cancel"
                         >
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                stroke-width="2"
-                                stroke="currentColor"
-                                class="w-4 h-4 text-red-600"
-                            >
-                                <path
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                    d="M6 18L18 6M6 6l12 12"
-                                />
-                            </svg>
+                            <i class="icon-cross-large text-md font-bold cursor-pointer text-red-600" />
                         </button>
                     </div>
                 </div>
@@ -111,7 +87,6 @@
                 },
 
                 value: {
-                    type: String,
                     required: true,
                 },
 
@@ -139,6 +114,11 @@
                     type: Boolean,
                     default: true,
                 },
+
+                errors: {
+                    type: Object,
+                    default: {},
+                },
             },
 
             data() {
@@ -150,6 +130,11 @@
             },
 
             watch: {
+                /**
+                 * Watch the value prop.
+                 * 
+                 * @param {String} newValue 
+                 */
                 value(newValue) {
                     this.inputValue = newValue;
                 },
@@ -176,12 +161,15 @@
             },
 
             methods: {
+                /**
+                 * Toggle the input.
+                 * 
+                 * @return {void}
+                 */
                 toggle() {
                     this.isEditing = true;
 
-                    this.$nextTick(() => {
-                        this.$refs.input.focus();
-                    });
+                    this.$nextTick(() => this.$refs.input.focus());
                 },
 
                 /**
@@ -190,6 +178,10 @@
                  * @return {void}
                  */
                 save() {
+                    if (this.errors[this.name]) {
+                        return;
+                    }
+
                     this.isEditing = false;
 
                     this.$emit('on-change', this.inputValue);
