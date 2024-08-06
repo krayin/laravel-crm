@@ -91,85 +91,85 @@
 
                             <x-admin::form.control-group.error control-name="event" />
                         </x-admin::form.control-group>
-                    </div>
 
-                    <!-- Conditions -->
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        <div class="flex items-center justify-between gap-4">
-                            <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                @lang('admin::app.settings.workflows.create.conditions')
-                            </p>
-
-                            <!-- Condition Type -->
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('admin::app.settings.workflows.create.condition-type')
-                                </x-admin::form.control-group.label>
-
-                                <x-admin::form.control-group.control
-                                    type="select"
-                                    class="ltr:pr-10 rtl:pl-10"
-                                    id="condition_type"
-                                    name="condition_type"
-                                    v-model="conditionType"
-                                    rules="required"
-                                    :label="trans('admin::app.settings.workflows.create.condition-type')"
-                                    :placeholder="trans('admin::app.settings.workflows.create.condition-type')"
-                                >
-                                    <option value="1">
-                                        @lang('admin::app.settings.workflows.create.all-condition-are-true')
-                                    </option>
-
-                                    <option value="2">
-                                        @lang('admin::app.settings.workflows.create.any-condition-are-true')
-                                    </option>
-                                </x-admin::form.control-group.control>
-
-                                <x-admin::form.control-group.error control-name="condition_type" />
-                            </x-admin::form.control-group>
+                        <!-- Conditions -->
+                        <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                            <div class="flex items-center justify-between gap-4">
+                                <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.settings.workflows.create.conditions')
+                                </p>
+    
+                                <!-- Condition Type -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.settings.workflows.create.condition-type')
+                                    </x-admin::form.control-group.label>
+    
+                                    <x-admin::form.control-group.control
+                                        type="select"
+                                        class="ltr:pr-10 rtl:pl-10"
+                                        id="condition_type"
+                                        name="condition_type"
+                                        v-model="conditionType"
+                                        rules="required"
+                                        :label="trans('admin::app.settings.workflows.create.condition-type')"
+                                        :placeholder="trans('admin::app.settings.workflows.create.condition-type')"
+                                    >
+                                        <option value="1">
+                                            @lang('admin::app.settings.workflows.create.all-condition-are-true')
+                                        </option>
+    
+                                        <option value="2">
+                                            @lang('admin::app.settings.workflows.create.any-condition-are-true')
+                                        </option>
+                                    </x-admin::form.control-group.control>
+    
+                                    <x-admin::form.control-group.error control-name="condition_type" />
+                                </x-admin::form.control-group>
+                            </div>
+    
+                            <!-- Workflow Condition Vue Component. -->
+                            <template
+                                v-for='(condition, index) in conditions' 
+                                :key="index"
+                            >
+                                <v-workflow-condition-item
+                                    :entityType="entityType"
+                                    :condition="condition"
+                                    :index="index"
+                                    @onRemoveCondition="removeCondition($event)"
+                                ></v-workflow-condition-item>
+                            </template>
+    
+                            <div
+                                class="secondary-button mt-4 max-w-max"
+                                @click="addCondition"
+                            >
+                                @lang('admin::app.settings.workflows.create.add-condition')
+                            </div>
                         </div>
-
-                        <!-- Workflow Condition Vue Component. -->
-                        <template
-                            v-for='(condition, index) in conditions' 
-                            :key="index"
-                        >
-                            <v-workflow-condition-item
-                                :entityType="entityType"
-                                :condition="condition"
-                                :index="index"
-                                @onRemoveCondition="removeCondition($event)"
-                            ></v-workflow-condition-item>
-                        </template>
-
-                        <div
-                            class="secondary-button mt-4 max-w-max"
-                            @click="addCondition"
-                        >
-                            @lang('admin::app.settings.workflows.create.add-condition')
-                        </div>
-                    </div>
-
-                    <!-- Actions -->
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        <!-- Workflow Condition Vue Component. -->
-                       <template
-                            v-for='(action, index) in actions'
-                            :key="index"
-                        >
-                            <v-workflow-action-item
-                                :entityType="entityType"
-                                :action="action"
-                                :index="index"
-                                @onRemoveAction="removeAction($event)"
-                            ></v-workflow-action-item>
-                       </template>
-
-                        <div
-                            class="secondary-button mt-4 max-w-max"
-                            @click="addAction"
-                        >
-                            @lang('admin::app.settings.workflows.create.add-action')
+    
+                        <!-- Actions -->
+                        <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                            <!-- Workflow Condition Vue Component. -->
+                           <template
+                                v-for='(action, index) in actions'
+                                :key="index"
+                            >
+                                <v-workflow-action-item
+                                    :entityType="entityType"
+                                    :action="action"
+                                    :index="index"
+                                    @onRemoveAction="removeAction($event)"
+                                ></v-workflow-action-item>
+                           </template>
+    
+                            <div
+                                class="secondary-button mt-4 max-w-max"
+                                @click="addAction"
+                            >
+                                @lang('admin::app.settings.workflows.create.add-action')
+                            </div>
                         </div>
                     </div>
                 </div>
