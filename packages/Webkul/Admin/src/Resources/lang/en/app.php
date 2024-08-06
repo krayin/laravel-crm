@@ -291,6 +291,8 @@ return [
     ],
 
     'settings' => [
+        'title' => 'Settings',
+
         'groups' => [
             'index' => [
                 'create-btn'        => 'Create Group',
@@ -966,6 +968,131 @@ return [
             'work'           => 'Work',
             'home'           => 'Home',
             'add-more'       => 'Add More',
+            'select'         => 'Select',
+        ],
+    ],
+
+    'leads' => [
+        'create-success'    => 'Lead created successfully.',
+        'update-success'    => 'Lead updated successfully.',
+        'destroy-success'   => 'Lead deleted successfully.',
+        'delete-failed'     => 'Lead can not be deleted.',
+
+        'index' => [
+            'title'      => 'Leads',
+            'create-btn' => 'Create Lead',
+
+            'datagrid' => [
+                'id'                  => 'ID',
+                'sales-person'        => 'Sales Person',
+                'subject'             => 'Subject',
+                'source'              => 'Source',
+                'lead-value'          => 'Lead Value',
+                'contact-person'      => 'Contact Person',
+                'stage'               => 'Stage',
+                'rotten-lead'         => 'Rotten Lead',
+                'expected-close-date' => 'Expected Close Date',
+                'created-at'          => 'Created At',
+                'no'                  => 'No',
+                'yes'                 => 'Yes',
+            ],
+        ],
+
+        'view' => [
+            'title' => 'Lead: :title',
+
+            'activities' => [
+                'index' => [
+                    'all'      => 'All',
+                    'calls'    => 'Calls',
+                    'meetings' => 'Meetings',
+                    'lunches'  => 'Lunches',
+                    'files'    => 'Files',
+                    'quotes'   => 'Quotes',
+                    'notes'    => 'Notes',
+                    'emails'   => 'Emails',
+                ],
+
+                'actions' => [
+                    'mail' => [
+                        'btn'      => 'Mail',
+                        'title'    => 'Compose Mail',
+                        'to'       => 'To',
+                        'cc'       => 'CC',
+                        'bcc'      => 'BCC',
+                        'subject'  => 'Subject',
+                        'send-btn' => 'Send',
+                        'message'  => 'Message',
+                    ],
+
+                    'file' => [
+                        'btn'         => 'File',
+                        'title'       => 'Add File',
+                        'name'        => 'Name',
+                        'description' => 'Description',
+                        'file'        => 'File',
+                        'save-btn'    => 'Save File',
+                    ],
+
+                    'note' => [
+                        'btn'      => 'Note',
+                        'title'    => 'Add Note',
+                        'note'     => 'Note',
+                        'save-btn' => 'Save Note',
+                    ],
+
+                    'activity' => [
+                        'btn'           => 'Activity',
+                        'title'         => 'Add Activity',
+                        'title-control' => 'Title',
+                        'description'   => 'Description',
+                        'schedule-from' => 'Schedule From',
+                        'schedule-to'   => 'Schedule To',
+                        'location'      => 'Location',
+                        'call'          => 'Call',
+                        'meeting'       => 'Meeting',
+                        'lunch'         => 'Lunch',
+                        'save-btn'      => 'Save Activity',
+                    ],
+                ],
+
+                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
+                'create-success'       => 'Activity created successfully.',
+                'update-success'       => 'Activity updated successfully.',
+                'mass-update-success'  => 'Activities updated successfully.',
+                'destroy-success'      => 'Activity deleted successfully.',
+                'delete-failed'        => 'Activity can not be deleted.',
+            ],
+        ],
+
+        'create' => [
+            'title'          => 'Create Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+
+        'common' => [
+            'contact' => [
+                'name'           => 'Name',
+                'email'          => 'Email',
+                'contact-number' => 'contact-number',
+                'organization'   => 'Organization',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                '[total'       => 'Total',
+            ],
         ],
     ],
 
@@ -1091,99 +1218,7 @@ return [
     //     ],
     // ],
 
-    'leads' => [
-        'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
-        'destroy-success'   => 'Lead deleted successfully.',
-        'delete-failed'     => 'Lead can not be deleted.',
 
-        'index' => [
-            'title'      => 'Leads',
-            'create-btn' => 'Create Lead',
-
-            'datagrid' => [
-                'id'                  => 'ID',
-                'sales-person'        => 'Sales Person',
-                'subject'             => 'Subject',
-                'source'              => 'Source',
-                'lead-value'          => 'Lead Value',
-                'contact-person'      => 'Contact Person',
-                'stage'               => 'Stage',
-                'rotten-lead'         => 'Rotten Lead',
-                'expected-close-date' => 'Expected Close Date',
-                'created-at'          => 'Created At',
-                'no'                  => 'No',
-                'yes'                 => 'Yes',
-            ],
-        ],
-
-        'view' => [
-            'title' => 'Lead: :title',
-
-            'activities' => [
-                'index' => [
-                    'all'      => 'All',
-                    'calls'    => 'Calls',
-                    'meetings' => 'Meetings',
-                    'lunches'  => 'Lunches',
-                    'files'    => 'Files',
-                    'quotes'   => 'Quotes',
-                    'notes'    => 'Notes',
-                    'emails'   => 'Emails',
-                ],
-
-                'actions' => [
-                    'mail' => [
-                        'btn'      => 'Mail',
-                        'title'    => 'Compose Mail',
-                        'to'       => 'To',
-                        'cc'       => 'CC',
-                        'bcc'      => 'BCC',
-                        'subject'  => 'Subject',
-                        'send-btn' => 'Send',
-                        'message'  => 'Message',
-                    ],
-
-                    'file' => [
-                        'btn'         => 'File',
-                        'title'       => 'Add File',
-                        'name'        => 'Name',
-                        'description' => 'Description',
-                        'file'        => 'File',
-                        'save-btn'    => 'Save File',
-                    ],
-
-                    'note' => [
-                        'btn'      => 'Note',
-                        'title'    => 'Add Note',
-                        'note'     => 'Note',
-                        'save-btn' => 'Save Note',
-                    ],
-
-                    'activity' => [
-                        'btn'           => 'Activity',
-                        'title'         => 'Add Activity',
-                        'title-control' => 'Title',
-                        'description'   => 'Description',
-                        'schedule-from' => 'Schedule From',
-                        'schedule-to'   => 'Schedule To',
-                        'location'      => 'Location',
-                        'call'          => 'Call',
-                        'meeting'       => 'Meeting',
-                        'lunch'         => 'Lunch',
-                        'save-btn'      => 'Save Activity',
-                    ],
-                ],
-
-                'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
-                'create-success'       => 'Activity created successfully.',
-                'update-success'       => 'Activity updated successfully.',
-                'mass-update-success'  => 'Activities updated successfully.',
-                'destroy-success'      => 'Activity deleted successfully.',
-                'delete-failed'        => 'Activity can not be deleted.',
-            ],
-        ],
-    ],
 
     'leads-old' => [
         'title'                      => 'Leads',

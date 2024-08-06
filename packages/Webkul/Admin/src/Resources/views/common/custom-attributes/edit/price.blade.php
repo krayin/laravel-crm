@@ -1,9 +1,8 @@
-<input
+<x-admin::form.control-group.control
     type="text"
-    name="{{ $attribute->code }}"
-    class="control"
-    id="{{ $attribute->code }}"
-    value="{{ old($attribute->code) ?: $value}}"
-    v-validate="'{{$validations}}'"
-    data-vv-as="&quot;{{ $attribute->name }}&quot;"
+    :id="$attribute->code"
+    :name="$attribute->code"
+    :value="old($attribute->code) ?? $value"
+    :rules="$validations"
+    :label="$attribute->name"
 />
