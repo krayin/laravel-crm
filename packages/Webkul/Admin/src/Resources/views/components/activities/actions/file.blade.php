@@ -18,7 +18,7 @@
     <v-file-activity
         ref="fileActionComponent"
         :entity="{{ json_encode($entity) }}"
-        :entity-control-name="{{ $entityControlName }}"
+        entity-control-name="{{ $entityControlName }}"
     ></v-file-activity>
 </div>
 

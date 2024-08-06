@@ -18,7 +18,7 @@
     <v-mail-activity
         ref="mailActionComponent"
         :entity="{{ json_encode($entity) }}"
-        :entity-control-name="{{ $entityControlName }}"
+        entity-control-name="{{ $entityControlName }}"
     ></v-mail-activity>
 </div>
 
