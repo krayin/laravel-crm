@@ -33,19 +33,31 @@
                     {{ $person->title }}
                 </h1>
 
-                <!-- Activity Actions -->
-                <div class="flex flex-wrap gap-2">
+                 <!-- Activity Actions -->
+                 <div class="flex flex-wrap gap-2">
                     <!-- Mail Activity Action -->
-                    @include ('admin::contacts.persons.view.activities.actions.mail')
+                    <x-admin::activities.actions.mail
+                        :entity="$person"
+                        entity-control-name="person_id"
+                    />
 
                     <!-- File Activity Action -->
-                    @include ('admin::contacts.persons.view.activities.actions.file')
+                    <x-admin::activities.actions.file
+                        :entity="$person"
+                        entity-control-name="person_id"
+                    />
 
                     <!-- Note Activity Action -->
-                    @include ('admin::contacts.persons.view.activities.actions.note')
+                    <x-admin::activities.actions.note
+                        :entity="$person"
+                        entity-control-name="person_id"
+                    />
 
                     <!-- Activity Action -->
-                    @include ('admin::contacts.persons.view.activities.actions.activity')
+                    <x-admin::activities.actions.activity
+                        :entity="$person"
+                        entity-control-name="person_id"
+                    />
                 </div>
             </div>
             
@@ -63,7 +75,7 @@
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
             <!-- Stages Navigation -->
-            @include ('admin::contacts.persons.view.activities.index')
+            <x-admin::activities :endpoint="route('admin.persons.activities.index', $person->id)" />
         </div>
 
         {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
