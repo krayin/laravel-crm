@@ -254,7 +254,7 @@ class LeadDataGrid extends DataGrid
             $this->addAction([
                 'icon'   => 'icon-delete',
                 'title'  => trans('admin::app.leads.index.datagrid.delete'),
-                'method' => 'POST',
+                'method' => 'delete',
                 'url'    => function ($row) {
                     return route('admin.leads.delete', $row->id);
                 },

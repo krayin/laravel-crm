@@ -1,24 +1,29 @@
-{!! view_render_event('admin.leads.view.actions.file.before', ['lead' => $lead]) !!}
+@props([
+    'entity'            => null,
+    'entityControlName' => null,
+])
 
 <!-- File Button -->
 <div class="">
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-cyan-200 text-cyan-900"
-        @click="$refs.leadFileActionComponent.openModal('mail')"
+        @click="$refs.fileActionComponent.openModal('mail')"
     >
         <span class="icon-note text-2xl"></span>
 
-        @lang('admin::app.leads.view.activities.actions.file.btn')
+        @lang('admin::app.components.activities.actions.file.btn')
     </button>
 
-    <!-- Lead Note Action Vue Component -->
-    <v-lead-file-activity ref="leadFileActionComponent"></v-lead-file-activity>
+    <!-- File Action Vue Component -->
+    <v-file-activity
+        ref="fileActionComponent"
+        :entity="{{ json_encode($entity) }}"
+        :entity-control-name="{{ $entityControlName }}"
+    ></v-file-activity>
 </div>
 
-{!! view_render_event('admin.leads.view.actions.file.after', ['lead' => $lead]) !!}
-
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-file-activity-template">
+    <script type="text/x-template" id="v-file-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -28,7 +33,7 @@
                 <x-admin::modal ref="mailActivityModal" position="bottom-right">
                     <x-slot:header>
                         <h3 class="text-base font-semibold">
-                            @lang('admin::app.leads.view.activities.actions.file.title')
+                            @lang('admin::app.components.activities.actions.file.title')
                         </h3>
                     </x-slot>
 
@@ -40,17 +45,17 @@
                             value="file"
                         />
                         
-                        <!-- Lead Id -->
+                        <!-- Id -->
                         <x-admin::form.control-group.control
                             type="hidden"
-                            name="lead_id"
-                            :value="$lead->id"
+                            ::name="entityControlName"
+                            ::value="entity.id"
                         />
 
                         <!-- Title -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.file.title-control')
+                                @lang('admin::app.components.activities.actions.file.title-control')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
@@ -62,7 +67,7 @@
                         <!-- Description -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.file.description')
+                                @lang('admin::app.components.activities.actions.file.description')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
@@ -74,7 +79,7 @@
                         <!-- File Name -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
-                                @lang('admin::app.leads.view.activities.actions.file.name')
+                                @lang('admin::app.components.activities.actions.file.name')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
@@ -86,7 +91,7 @@
                         <!-- File -->
                         <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.leads.view.activities.actions.file.file')
+                                @lang('admin::app.components.activities.actions.file.file')
                             </x-admin::form.control-group.label>
                             
                             <x-admin::form.control-group.control
@@ -94,7 +99,7 @@
                                 id="file"
                                 name="file"
                                 rules="required"
-                                :label="trans('admin::app.leads.view.activities.actions.file.file')"
+                                :label="trans('admin::app.components.activities.actions.file.file')"
                             />
 
                             <x-admin::form.control-group.error control-name="file" />
@@ -104,7 +109,7 @@
                     <x-slot:footer>
                         <x-admin::button
                             class="primary-button"
-                            :title="trans('admin::app.leads.view.activities.actions.file.save-btn')"
+                            :title="trans('admin::app.components.activities.actions.file.save-btn')"
                             ::loading="isStoring"
                             ::disabled="isStoring"
                         />
@@ -115,8 +120,22 @@
     </script>
 
     <script type="module">
-        app.component('v-lead-file-activity', {
-            template: '#v-lead-file-activity-template',
+        app.component('v-file-activity', {
+            template: '#v-file-activity-template',
+
+            props: {
+                entity: {
+                    type: Object,
+                    required: true,
+                    default: () => {}
+                },
+
+                entityControlName: {
+                    type: String,
+                    required: true,
+                    default: ''
+                }
+            },
 
             data: function () {
                 return {
@@ -134,7 +153,7 @@
 
                     let self = this;
 
-                    this.$axios.post("{{ route('admin.activities.store', $lead->id) }}", params, {
+                    this.$axios.post("{{ route('admin.activities.store') }}", params, {
                             headers: {
                                 'Content-Type': 'multipart/form-data',
                             }

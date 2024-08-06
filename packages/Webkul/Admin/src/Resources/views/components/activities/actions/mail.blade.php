@@ -1,24 +1,29 @@
-{!! view_render_event('admin.leads.view.actions.mail.before', ['lead' => $lead]) !!}
+@props([
+    'entity'            => null,
+    'entityControlName' => null,
+])
 
 <!-- Mail Button -->
 <div class="">
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-green-200 text-green-900"
-        @click="$refs.leadMailActionComponent.openModal('mail')"
+        @click="$refs.mailActionComponent.openModal('mail')"
     >
         <span class="icon-mail text-2xl"></span>
 
-        @lang('admin::app.leads.view.activities.actions.mail.btn')
+        @lang('admin::app.components.activities.actions.mail.btn')
     </button>
 
-    <!-- Lead Mail Activity Action Vue Component -->
-    <v-lead-mail-activity ref="leadMailActionComponent"></v-lead-mail-activity>
+    <!-- Mail Activity Action Vue Component -->
+    <v-mail-activity
+        ref="mailActionComponent"
+        :entity="{{ json_encode($entity) }}"
+        :entity-control-name="{{ $entityControlName }}"
+    ></v-mail-activity>
 </div>
 
-{!! view_render_event('admin.leads.view.actions.mail.after', ['lead' => $lead]) !!}
-
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-lead-mail-activity-template">
+    <script type="text/x-template" id="v-mail-activity-template">
         <x-admin::form
             v-slot="{ meta, errors, handleSubmit }"
             as="div"
@@ -28,7 +33,7 @@
                 <x-admin::modal ref="mailActivityModal" position="bottom-right">
                     <x-slot:header>
                         <h3 class="text-base font-semibold">
-                            @lang('admin::app.leads.view.activities.actions.mail.title')
+                            @lang('admin::app.components.activities.actions.mail.title')
                         </h3>
                     </x-slot>
 
@@ -36,7 +41,7 @@
                         <!-- Emails -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.leads.view.activities.actions.mail.to')
+                                @lang('admin::app.components.activities.actions.mail.to')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
@@ -44,8 +49,8 @@
                                 id="to"
                                 name="to"
                                 rules="required"
-                                :label="trans('admin::app.leads.view.activities.actions.mail.to')"
-                                :placeholder="trans('admin::app.leads.view.activities.actions.mail.to')"
+                                :label="trans('admin::app.components.activities.actions.mail.to')"
+                                :placeholder="trans('admin::app.components.activities.actions.mail.to')"
                             />
 
                             <x-admin::form.control-group.error control-name="to" />
@@ -54,7 +59,7 @@
                         <!-- Subject -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.leads.view.activities.actions.mail.subject')
+                                @lang('admin::app.components.activities.actions.mail.subject')
                             </x-admin::form.control-group.label>
 
                             <x-admin::form.control-group.control
@@ -62,8 +67,8 @@
                                 id="subject"
                                 name="subject"
                                 rules="required"
-                                :label="trans('admin::app.leads.view.activities.actions.mail.subject')"
-                                :placeholder="trans('admin::app.leads.view.activities.actions.mail.subject')"
+                                :label="trans('admin::app.components.activities.actions.mail.subject')"
+                                :placeholder="trans('admin::app.components.activities.actions.mail.subject')"
                             />
 
                             <x-admin::form.control-group.error control-name="subject" />
@@ -77,7 +82,7 @@
                                 name="reply"
                                 rules="required"
                                 tinymce="true"
-                                :label="trans('admin::app.leads.view.activities.actions.mail.message')"
+                                :label="trans('admin::app.components.activities.actions.mail.message')"
                             />
 
                             <x-admin::form.control-group.error control-name="reply" />
@@ -94,7 +99,7 @@
                             >
                                 <span class="icon-sent text-xl"></span>
                                 
-                                @lang('admin::app.leads.view.activities.actions.mail.send-btn')
+                                @lang('admin::app.components.activities.actions.mail.send-btn')
                             </button>
                         </div>
                     </x-slot>
@@ -104,8 +109,22 @@
     </script>
 
     <script type="module">
-        app.component('v-lead-mail-activity', {
-            template: '#v-lead-mail-activity-template',
+        app.component('v-mail-activity', {
+            template: '#v-mail-activity-template',
+
+            props: {
+                entity: {
+                    type: Object,
+                    required: true,
+                    default: () => {}
+                },
+
+                entityControlName: {
+                    type: String,
+                    required: true,
+                    default: ''
+                }
+            },
 
             data: function () {
                 return {
