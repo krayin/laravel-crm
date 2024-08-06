@@ -18,7 +18,7 @@
     <v-note-activity
         ref="noteActionComponent"
         :entity="{{ json_encode($entity) }}"
-        :entity-control-name="{{ $entityControlName }}"
+        entity-control-name="{{ $entityControlName }}"
     ></v-note-activity>
 </div>
 

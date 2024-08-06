@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Person as PersonContract;
+use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Tag\Models\TagProxy;
 use Webkul\Contact\Database\Factories\PersonFactory;
 
 class Person extends Model implements PersonContract
@@ -57,6 +59,22 @@ class Person extends Model implements PersonContract
     public function organization()
     {
         return $this->belongsTo(OrganizationProxy::modelClass());
+    }
+
+    /**
+     * Get the activities.
+     */
+    public function activities()
+    {
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'person_activities');
+    }
+
+    /**
+     * The tags that belong to the person.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(), 'person_tags');
     }
 
     /**

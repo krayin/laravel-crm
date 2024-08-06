@@ -374,8 +374,78 @@ return [
                     'edit'              => 'Edit',
                     'emails'            => 'Emails',
                     'id'                => 'ID',
+                    'view'              => 'View',
                     'name'              => 'Name',
                     'organization-name' => 'Organization Name',
+                ],
+            ],
+
+            'view' => [
+                'title' => ':name',
+                'about-lead' => 'About Lead',
+
+                'activities' => [
+                    'index' => [
+                        'all'          => 'All',
+                        'calls'        => 'Calls',
+                        'meetings'     => 'Meetings',
+                        'lunches'      => 'Lunches',
+                        'files'        => 'Files',
+                        'quotes'       => 'Quotes',
+                        'notes'        => 'Notes',
+                        'emails'       => 'Emails',
+                        'by-user'      => 'By :user',
+                        'scheduled-on' => 'Scheduled on',
+                        'location'     => 'Location',
+                        'participants' => 'Participants',
+                        'mark-as-done' => 'Mark as Done',
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                    ],
+
+                    'actions' => [
+                        'mail' => [
+                            'btn'      => 'Mail',
+                            'title'    => 'Compose Mail',
+                            'to'       => 'To',
+                            'cc'       => 'CC',
+                            'bcc'      => 'BCC',
+                            'subject'  => 'Subject',
+                            'send-btn' => 'Send',
+                            'message'  => 'Message',
+                        ],
+
+                        'file' => [
+                            'btn'           => 'File',
+                            'title'         => 'Add File',
+                            'title-control' => 'Title',
+                            'name'          => 'File Name',
+                            'description'   => 'Description',
+                            'file'          => 'File',
+                            'save-btn'      => 'Save File',
+                        ],
+
+                        'note' => [
+                            'btn'      => 'Note',
+                            'title'    => 'Add Note',
+                            'comment'  => 'Comment',
+                            'save-btn' => 'Save Note',
+                        ],
+
+                        'activity' => [
+                            'btn'           => 'Activity',
+                            'title'         => 'Add Activity',
+                            'title-control' => 'Title',
+                            'description'   => 'Description',
+                            'schedule-from' => 'Schedule From',
+                            'schedule-to'   => 'Schedule To',
+                            'location'      => 'Location',
+                            'call'          => 'Call',
+                            'meeting'       => 'Meeting',
+                            'lunch'         => 'Lunch',
+                            'save-btn'      => 'Save Activity',
+                        ],
+                    ],
                 ],
             ],
 

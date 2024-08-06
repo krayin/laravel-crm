@@ -18,7 +18,7 @@
     <v-activity
         ref="actionComponent"
         :entity="{{ json_encode($entity) }}"
-        :entity-control-name="{{ $entityControlName }}"
+        entity-control-name="{{ $entityControlName }}"
     ></v-activity>
 </div>
 
