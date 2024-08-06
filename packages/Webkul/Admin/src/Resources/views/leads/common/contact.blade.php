@@ -13,20 +13,18 @@
             
             <x-admin::lookup
                 ::src="src"
-                name="person[name]"
+                name="person[id]"
                 ::params="params"
-                placeholder="Search Person"
                 @on-selected="addPerson"
+                :placeholder="trans('admin::app.leads.common.contact.name')"
             />
         
             <x-admin::form.control-group.control
                 type="hidden"
-                name="person[id]"
-                v-model="person.id"
-                v-if="person.id"
+                name="person[name]"
+                v-model="person.name"
+                v-if="person.name"
                 rules="required"
-                :label="trans('admin::app.leads.common.contact.name')"
-                :placeholder="trans('admin::app.leads.common.contact.name')"
             />
         
             <x-admin::form.control-group.error control-name="person[id]" />
@@ -92,8 +90,6 @@
                 return {
                     is_searching: false,
 
-                    state: this.data ? 'old': '',
-
                     person: this.data ? this.data : {
                         'name': ''
                     },
@@ -118,14 +114,8 @@
 
             methods: {
                 addPerson (person) {
-                    this.state = 'old';
-
                     this.person = person;
                 },
-
-                addAsNew () {
-                    this.state = 'new';
-                }
             }
         });
     </script>
