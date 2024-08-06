@@ -382,7 +382,7 @@ return [
 
             'view' => [
                 'title' => ':name',
-                'about-lead' => 'About Lead',
+                'about-person' => 'About Person',
 
                 'activities' => [
                     'index' => [
