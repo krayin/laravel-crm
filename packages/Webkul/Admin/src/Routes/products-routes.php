@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\Products\TagController;
 use Webkul\Admin\Http\Controllers\Products\ProductController;
+use Webkul\Admin\Http\Controllers\Products\ActivityController;
 
 /**
  * Settings routes.
@@ -32,5 +34,15 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
         Route::delete('{id}', 'destroy')->name('admin.products.delete');
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.products.mass_delete');
+
+        Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
+            Route::get('', 'index')->name('admin.products.activities.index');
+        });
+
+        Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
+            Route::post('', 'attach')->name('admin.products.tags.attach');
+
+            Route::delete('', 'detach')->name('admin.products.tags.detach');
+        });
     });
 });

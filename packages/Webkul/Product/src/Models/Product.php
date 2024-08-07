@@ -9,6 +9,8 @@ use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Product\Contracts\Product as ProductContract;
 use Webkul\Warehouse\Models\WarehouseLocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
+use Webkul\Tag\Models\TagProxy;
+use Webkul\Activity\Models\ActivityProxy;
 
 class Product extends Model implements ProductContract
 {
@@ -49,5 +51,21 @@ class Product extends Model implements ProductContract
     public function inventories(): HasMany
     {
         return $this->hasMany(ProductInventoryProxy::modelClass());
+    }
+
+    /**
+     * The tags that belong to the Products.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(), 'product_tags');
+    }
+
+    /**
+     * Get the activities.
+     */
+    public function activities()
+    {
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'product_activities');
     }
 }
