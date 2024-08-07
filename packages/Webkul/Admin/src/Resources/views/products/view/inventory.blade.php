@@ -387,10 +387,9 @@
 
                 params() {
                     return {
-                        params: {
-                            warehouse_id: this.warehouse.id,
-                            query: this.location.name
-                        },
+                        search: 'warehouse_id:' + this.warehouse.id + ';name:' + this.location.name,
+                        searchFields: 'warehouse_id:=;name:like',
+                        searchJoin: 'and'
                     };
                 },
             },
