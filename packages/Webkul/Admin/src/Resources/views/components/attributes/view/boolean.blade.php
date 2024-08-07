@@ -1,1 +1,7 @@
-{{ $value ? __('admin::app.common.yes') : __('admin::app.common.no') }}
+<x-admin::form.control-group.controls.inline.boolean
+    ::name="'{{ $attribute->code }}'"
+    :value="json_encode($value)"
+    rules="required"
+    position="left"
+    @on-change="onChanged"
+/>
