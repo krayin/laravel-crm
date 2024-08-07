@@ -1,9 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Products\TagController;
-use Webkul\Admin\Http\Controllers\Products\ProductController;
 use Webkul\Admin\Http\Controllers\Products\ActivityController;
+use Webkul\Admin\Http\Controllers\Products\ProductController;
+use Webkul\Admin\Http\Controllers\Products\TagController;
 
 /**
  * Settings routes.

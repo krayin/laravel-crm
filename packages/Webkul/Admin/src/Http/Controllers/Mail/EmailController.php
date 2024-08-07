@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Mail\EmailDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\Admin\Http\Resources\EmailResource;
 
 class EmailController extends Controller
 {
@@ -293,7 +293,7 @@ class EmailController extends Controller
             if ($parentId) {
                 return redirect()->back();
             }
-            
+
             return redirect()->route('admin.mail.index', ['route' => 'inbox']);
         } catch (\Exception $exception) {
             if (request()->ajax()) {

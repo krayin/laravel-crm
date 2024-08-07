@@ -3,9 +3,9 @@
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
 use Webkul\Activity\Repositories\ActivityRepository;
-use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
+use Webkul\Email\Repositories\EmailRepository;
 
 class ActivityController extends Controller
 {

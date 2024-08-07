@@ -8,8 +8,8 @@ use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\TagDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
-use Webkul\Tag\Repositories\TagRepository;
 use Webkul\Admin\Http\Resources\TagResource;
+use Webkul\Tag\Repositories\TagRepository;
 
 class TagController extends Controller
 {

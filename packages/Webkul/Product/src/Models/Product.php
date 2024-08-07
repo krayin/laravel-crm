@@ -5,12 +5,12 @@ namespace Webkul\Product\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Product\Contracts\Product as ProductContract;
+use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Models\WarehouseLocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
-use Webkul\Tag\Models\TagProxy;
-use Webkul\Activity\Models\ActivityProxy;
 
 class Product extends Model implements ProductContract
 {

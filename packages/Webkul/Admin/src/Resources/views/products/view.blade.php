@@ -9,7 +9,7 @@
         {!! view_render_event('admin.leads.view.left.before', ['product' => $product]) !!}
 
         <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
-            <!-- pRODUCT Information -->
+            <!-- Product Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
@@ -34,7 +34,7 @@
                 </h3>
                 
                 <p class="text-sm font-normal">
-                    SKU : {{ $product->sku }}
+                    @lang('admin::app.products.view.sku') : {{ $product->sku }}
                 </p>
 
                 <!-- Activity Actions -->
@@ -61,25 +61,22 @@
             <x-admin::activities 
                 :endpoint="route('admin.products.activities.index', $product->id)" 
                 :types="[
-                    ['name' => 'all', 'label' => trans('admin::app.components.activities.index.all')],
-                    ['name' => 'note', 'label' => trans('admin::app.components.activities.index.notes')],
-                    ['name' => 'inventory', 'label' => trans('Inventory')],
+                    ['name' => 'all', 'label' => trans('admin::app.products.view.all')],
+                    ['name' => 'note', 'label' => trans('admin::app.products.view.notes')],
                 ]"
             ></x-admin::activities>
 
             <!-- Inventory Component -->
-            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.before') !!}
-    
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        <!-- Inventory Section -->
-                        @include('admin::products.view.inventory')
-                    </div>
-    
-                    {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.after') !!}
+
+            <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                <div class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                    @lang('admin::app.products.view.inventories')
                 </div>
+                
+                <!-- Inventory Section -->
+                @include('admin::products.view.inventory')
             </div>
+    
         </div>
 
         {!! view_render_event('admin.products.view.right.after', ['product' => $product]) !!}

@@ -13,8 +13,8 @@ use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Admin\Http\Resources\ActivityResource;
+use Webkul\Attribute\Repositories\AttributeRepository;
 
 class ActivityController extends Controller
 {
@@ -71,15 +71,14 @@ class ActivityController extends Controller
             'comment'       => 'required_if:type,note',
             'schedule_from' => 'required_unless:type,note,file',
             'schedule_to'   => 'required_unless:type,note,file',
-            'file'          => 'required_if:type,file'
+            'file'          => 'required_if:type,file',
         ]);
 
         /**
          * TODO
-         * 
-         * Check if meeting is overlapping with other meetings 
+         *
+         * Check if meeting is overlapping with other meetings
          */
-
         Event::dispatch('activity.create.before');
 
         $activity = $this->activityRepository->create(array_merge(request()->all(), [
