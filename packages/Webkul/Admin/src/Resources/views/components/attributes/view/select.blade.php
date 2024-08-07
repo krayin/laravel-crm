@@ -4,4 +4,11 @@
         : $attribute->options()->where('id', $value)->first();
 @endphp
 
-{{ $option ? $option->name : __('admin::app.common.not-available') }}
+<x-admin::form.control-group.controls.inline.select
+    ::name="'{{ $attribute->code }}'"
+    :value="$value"
+    :options="$attribute->options()->get()->toArray()"
+    rules="required"
+    position="left"
+    @on-change="onChanged"
+/>

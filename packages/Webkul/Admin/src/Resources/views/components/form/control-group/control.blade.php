@@ -298,21 +298,6 @@
 
         @break
 
-    @case('lookup')
-        <x-admin::form.control-group.controls.inline.lookup {{ $attributes }}/>
-
-        @break
-
-    @case('phone')
-        <x-admin::form.control-group.controls.inline.phone {{ $attributes }}/>
-
-        @break
-
-    @case('inline-email')
-        <x-admin::form.control-group.controls.inline.email {{ $attributes }}/>
-
-        @break
-
     @case('custom')
         <v-field {{ $attributes }}>
             {{ $slot }}

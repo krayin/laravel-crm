@@ -1,10 +1,7 @@
-<x-admin::form.control-group class="!mb-0">
-    <x-admin::form.control-group.control
-        type="inline-email"
-        ::name="'{{ $attribute->code }}'"
-        :value="$value"
-        rules="required|decimal:4"
-        position="left"
-        @on-save="onChanged"
-    />
-</x-admin::form.control-group>
+<x-admin::form.control-group.controls.inline.email
+    ::name="'{{ $attribute->code }}'"
+    :value="$value"
+    rules="required|decimal:4"
+    position="left"
+    @on-save="onChanged"
+/>
