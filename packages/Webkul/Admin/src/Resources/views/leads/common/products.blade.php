@@ -50,10 +50,10 @@
         
         <!-- Add New Product Item -->
         <span
-            class="cursor-pointer text-xs text-brandColor hover:underline dark:text-brandColor"
+            class="cursor-pointer text-brandColor"
             @click="addProduct"
         >
-            + @lang('admin::app.leads.common.products.add-more')
+            +@lang('admin::app.leads.common.products.add-more')
         </span>
     </script>
 
