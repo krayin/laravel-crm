@@ -101,7 +101,15 @@
 
                 methods: {
                     onChanged(event) {
-                        console.log(event);
+                        this.$axios.post('{{ route('admin.contacts.persons.update', $person->id) }}', {
+                            _method: 'PUT',
+                            [event.name]: event.value,
+                            ...event
+                        })
+                            .then((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch(error => {});
                     },
                 },
             });

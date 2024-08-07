@@ -294,7 +294,22 @@
         @break
     
     @case('inline')
-        <x-admin::form.control-group.controls.inline {{ $attributes }}/>
+        <x-admin::form.control-group.controls.inline.text {{ $attributes }}/>
+
+        @break
+
+    @case('lookup')
+        <x-admin::form.control-group.controls.inline.lookup {{ $attributes }}/>
+
+        @break
+
+    @case('phone')
+        <x-admin::form.control-group.controls.inline.phone {{ $attributes }}/>
+
+        @break
+
+    @case('inline-email')
+        <x-admin::form.control-group.controls.inline.email {{ $attributes }}/>
 
         @break
 

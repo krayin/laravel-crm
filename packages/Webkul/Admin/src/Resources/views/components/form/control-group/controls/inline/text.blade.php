@@ -1,9 +1,9 @@
-<v-inline-edit {{ $attributes }}></v-inline-edit>
+<v-inline-text-edit {{ $attributes }}></v-inline-text-edit>
 
 @pushOnce('scripts')
     <script
         type="text/x-template"
-        id="v-inline-edit-template"
+        id="v-inline-text-edit-template"
     >
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
@@ -75,8 +75,8 @@
     </script>
 
     <script type="module">
-        app.component('v-inline-edit', {
-            template: '#v-inline-edit-template',
+        app.component('v-inline-text-edit', {
+            template: '#v-inline-text-edit-template',
 
             emits: ['on-change', 'on-cancelled'],
 
@@ -184,7 +184,10 @@
 
                     this.isEditing = false;
 
-                    this.$emit('on-change', this.inputValue);
+                    this.$emit('on-change', {
+                        name: this.name,
+                        value: this.inputValue,
+                    });
                 },
 
                 /**
@@ -197,7 +200,10 @@
 
                     this.isEditing = false;
 
-                    this.$emit('on-cancelled', this.inputValue);
+                    this.$emit('on-cancelled', {
+                        name: this.name,
+                        value: this.inputValue,
+                    });
                 },
             },
         });

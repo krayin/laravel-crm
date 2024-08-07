@@ -1,11 +1,10 @@
-@if (is_array($value))
-    @foreach ($value as $item)
-        <span class="multi-value">
-            {{ $item['value'] }}
-
-            <span>{{ ' (' . $item['label'] . ')'}}</span>
-        </span>
-    @endforeach
-@else
-    {{ __('admin::app.common.not-available') }}
-@endif
+<x-admin::form.control-group class="!mb-0">
+    <x-admin::form.control-group.control
+        type="phone"
+        ::name="'{{ $attribute->code }}'"
+        :value="$value"
+        rules="required|decimal:4"
+        position="left"
+        @on-save="onChanged"
+    />
+</x-admin::form.control-group>

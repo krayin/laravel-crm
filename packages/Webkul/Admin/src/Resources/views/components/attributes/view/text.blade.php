@@ -2,7 +2,7 @@
     <x-admin::form.control-group.control
         type="inline"
         ::name="'{{ $attribute->code }}'"
-        :value="$value"
+        ::value="'{{ $value }}'"
         position="left"
         @on-change="onChanged"
     />
