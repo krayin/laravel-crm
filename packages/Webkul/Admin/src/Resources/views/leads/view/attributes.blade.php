@@ -1,7 +1,18 @@
 {!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}
 
 <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4">
-    <h4 class="font-semibold">About Lead</h4>
+    <h4 class="flex items-center justify-between font-semibold">
+        @lang('admin::app.leads.view.attributes.title')
+
+        
+        @if (bouncer()->hasPermission('leads.edit'))
+            <a
+                href="{{ route('admin.leads.edit', $lead->id) }}"
+                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100"
+                target="_blank"
+            ></a>
+        @endif
+    </h4>
 
     <x-admin::attributes.view
         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([

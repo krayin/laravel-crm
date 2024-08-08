@@ -1400,6 +1400,15 @@ return [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Days',
 
+            'attributes' => [
+                'title' => 'About Lead',
+            ],
+
+            'persons' => [
+                'title'     => 'About Persons',
+                'job-title' => ':job_title at :organization',
+            ],
+
             'stages' => [
                 'won-lost'       => 'Won/Lost',
                 'won'            => 'Won',
