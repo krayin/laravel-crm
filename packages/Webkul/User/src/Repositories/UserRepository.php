@@ -7,6 +7,17 @@ use Webkul\Core\Eloquent\Repository;
 class UserRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'name',
+        'email',
+        'status',
+        'view_permission',
+        'role_id',
+    ];
+
+    /**
      * Specify Model class name
      *
      * @return mixed

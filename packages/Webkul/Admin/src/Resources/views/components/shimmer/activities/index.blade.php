@@ -2,7 +2,7 @@
     <!-- Tabs -->
     <div class="flex gap-4 border-b border-gray-200">
         @for ($i = 0; $i < 5; $i++)
-            <div class="px-4 py-[11px]">
+            <div class="px-3 py-[11px]">
                 <div class="shimmer h-5 w-24"></div>
             </div>
         @endfor

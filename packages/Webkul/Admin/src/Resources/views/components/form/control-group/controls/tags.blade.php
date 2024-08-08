@@ -1,4 +1,7 @@
-<v-control-tags {{ $attributes }} :errors="errors"></v-control-tags>
+<v-control-tags
+    :errors="errors"
+    {{ $attributes }}
+></v-control-tags>
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-control-tags-template">
@@ -6,9 +9,13 @@
             <ul class="flex flex-wrap items-center gap-1">
                 <li
                     class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
-                    v-for="tag in tags"
+                    v-for="(tag, index) in tags"
                 >
-                    <input type="hidden" :name="name" :value="tag"/>
+                    <x-admin::form.control-group.control
+                        type="hidden"
+                        ::name="name + '[' + index + ']'"
+                        ::value="tag"
+                    />
 
                     @{{ tag }}
 
@@ -19,38 +26,52 @@
                 </li>
 
                 <li>
-                    <template v-if="! tags.length && input == ''">
+                    <v-field
+                        v-slot="{ field, errors }"
+                        :name="'temp-' + name"
+                        v-model="input"
+                        :rules="inputRules"
+                        :label="label"
+                    >
+                        <input
+                            type="text"
+                            :name="'temp-' + name"
+                            v-bind="field"
+                            :placeholder="placeholder"
+                            :label="label"
+                            @keydown.enter.prevent="addTag"
+                        />
+                    </v-field>
+
+                    <template v-if="! tags.length && input != ''">
                         <v-field
                             v-slot="{ field, errors }"
-                            :name="name"
-                            v-model="input"
-                            ::rules="rules"
+                            :name="name + '[' + 0 +']'"
+                            :value="input"
+                            :rules="rules"
+                            :label="label"
                         >
                             <input
                                 type="hidden"
-                                :name="name"
+                                :name="name + '[0]'"
                                 v-bind="field"
                             />
                         </v-field>
                     </template>
-
-                    <v-field
-                        v-slot="{ field, errors }"
-                        :name="name"
-                        v-model="input"
-                        rules="email"
-                    >
-                        <input
-                            type="text"
-                            :name="name"
-                            v-bind="field"
-                            :placeholder="placeholder"
-                            @keydown.enter.prevent="addTag"
-                        />
-                    </v-field>
                 </li>
             </ul>
         </div>
+
+        <v-error-message
+            :name="'temp-' + name"
+            v-slot="{ message }"
+        >
+            <p
+                class="mt-1 text-xs italic text-red-600"
+                v-text="message"
+            >
+            </p>
+        </v-error-message>
     </script>
 
     <script type="module">
@@ -62,6 +83,7 @@
                 'label',
                 'placeholder',
                 'rules',
+                'inputRules',
                 'data',
                 'errors',
             ],
@@ -76,6 +98,10 @@
 
             methods: {
                 addTag: function() {
+                    if (this.errors['temp-' + this.name]) {
+                        return;
+                    }
+
                     this.tags.push(this.input.trim());
                     
                     this.$emit('tags-updated', this.tags);

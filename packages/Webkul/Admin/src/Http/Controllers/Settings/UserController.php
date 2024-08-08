@@ -2,16 +2,19 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Settings\UserDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\Create;
 use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
+use Webkul\Admin\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
@@ -145,6 +148,18 @@ class UserController extends Controller
             'data'    => $admin,
             'message' => trans('admin::app.settings.users.index.update-success'),
         ]);
+    }
+
+    /**
+     * Search user results.
+     */
+    public function search(): JsonResource
+    {
+        $users = $this->userRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
+
+        return UserResource::collection($users);
     }
 
     /**
