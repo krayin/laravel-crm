@@ -96,7 +96,7 @@
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.common.products.quantity')"
                         :placeholder="trans('admin::app.leads.common.products.quantity')"
-                        @on-change="(value) => product.quantity = value"
+                        @on-change="(event) => product.quantity = event.value"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -111,7 +111,7 @@
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.common.products.price')"
                         :placeholder="trans('admin::app.leads.common.products.price')"
-                        @on-change="(value) => product.price = value"
+                        @on-change="(event) => product.price = event.value"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>

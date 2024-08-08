@@ -88,9 +88,9 @@
             },
 
             watch: { 
-                value(newVal, oldVal) {
-                    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
-                        this.contactNumbers = newVal || [{'value': '', 'label': 'work'}];
+                value(newValue, oldValue) {
+                    if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
+                        this.contactNumbers = newValue || [{'value': '', 'label': 'work'}];
                     }
                 },
             },

@@ -333,7 +333,7 @@
                                     ::errors="errors"
                                     :label="trans('admin::app.quotes.create.adjustment-amount')"
                                     :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
-                                    @on-change="(value) => adjustmentAmount = value"
+                                    @on-change="(event) => adjustmentAmount = event.value"
                                 />
                             </div>
 
@@ -376,7 +376,7 @@
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.quantity')"
                             :placeholder="trans('admin::app.quotes.create.quantity')"
-                            @on-change="(value) => product.quantity = value"
+                            @on-change="(event) => product.quantity = event.value"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -392,7 +392,7 @@
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.price')"
                             :placeholder="trans('admin::app.quotes.create.price')"
-                            @on-change="(value) => product.price = value"
+                            @on-change="(event) => product.price = event.value"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -424,7 +424,7 @@
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.discount-amount')"
                             :placeholder="trans('admin::app.quotes.create.discount-amount')"
-                            @on-change="(value) => product.discount_amount = value"
+                            @on-change="(event) => product.discount_amount = event.value"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -440,7 +440,7 @@
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.tax-amount')"
                             :placeholder="trans('admin::app.quotes.create.tax-amount')"
-                            @on-change="(value) => product.tax_amount = value"
+                            @on-change="(event) => product.tax_amount = event.value"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>

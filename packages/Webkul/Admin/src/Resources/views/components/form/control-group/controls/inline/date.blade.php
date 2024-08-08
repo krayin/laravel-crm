@@ -1,9 +1,9 @@
-<v-inline-edit {{ $attributes }}></v-inline-edit>
+<v-inline-date-edit {{ $attributes }}></v-inline-date-edit>
 
 @pushOnce('scripts')
     <script
         type="text/x-template"
-        id="v-inline-edit-template"
+        id="v-inline-date-edit-template"
     >
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
@@ -37,7 +37,7 @@
             >
                 <div class="relative flex flex-col w-full">
                     <x-admin::form.control-group.control
-                        type="text"
+                        type="date"
                         ::id="name"
                         ::name="name"
                         class="py-1 pr-16 text-normal"
@@ -47,6 +47,7 @@
                         ::style="inputPositionStyle"
                         v-model="inputValue"
                         ref="input"
+                        readonly
                     />
                         
                     <!-- Action Buttons -->
@@ -75,8 +76,8 @@
     </script>
 
     <script type="module">
-        app.component('v-inline-edit', {
-            template: '#v-inline-edit-template',
+        app.component('v-inline-date-edit', {
+            template: '#v-inline-date-edit-template',
 
             emits: ['on-change', 'on-cancelled'],
 
@@ -118,6 +119,11 @@
                 errors: {
                     type: Object,
                     default: {},
+                },
+
+                url: {
+                    type: String,
+                    default: '',
                 },
             },
 
@@ -168,8 +174,6 @@
                  */
                 toggle() {
                     this.isEditing = true;
-
-                    this.$nextTick(() => this.$refs.input.focus());
                 },
 
                 /**
@@ -184,7 +188,22 @@
 
                     this.isEditing = false;
 
-                    this.$emit('on-change', this.inputValue);
+                    if (this.url) {
+                        this.$axios.put(this.url, {
+                                [this.name]: this.inputValue,
+                            })
+                            .then((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch((error) => {
+                                this.inputValue = this.value;
+                            });                        
+                    }
+
+                    this.$emit('on-change', {
+                        name: this.name,
+                        value: this.inputValue,
+                    });
                 },
 
                 /**
@@ -197,7 +216,10 @@
 
                     this.isEditing = false;
 
-                    this.$emit('on-cancelled', this.inputValue);
+                    this.$emit('on-cancelled', {
+                        name: this.name,
+                        value: this.inputValue,
+                    });
                 },
             },
         });

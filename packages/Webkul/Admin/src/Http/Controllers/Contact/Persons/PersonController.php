@@ -58,7 +58,7 @@ class PersonController extends Controller
 
         Event::dispatch('contacts.person.create.after', $person);
 
-        session()->flash('success', trans('admin::app.contacts.persons.create-success'));
+        session()->flash('success', trans('admin::app.contacts.persons.index.create-success'));
 
         return redirect()->route('admin.contacts.persons.index');
     }
@@ -86,7 +86,7 @@ class PersonController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttributeForm $request, int $id): RedirectResponse
+    public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.person.update.before', $id);
 
@@ -94,7 +94,13 @@ class PersonController extends Controller
 
         Event::dispatch('contacts.person.update.after', $person);
 
-        session()->flash('success', trans('admin::app.contacts.persons.update-success'));
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.contacts.persons.index.update-success'),
+            ], 200);
+        }
+
+        session()->flash('success', trans('admin::app.contacts.persons.index.update-success'));
 
         return redirect()->route('admin.contacts.persons.index');
     }
@@ -126,11 +132,11 @@ class PersonController extends Controller
             Event::dispatch('contacts.person.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.person')]),
+                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.index.person')]),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.persons.person')]),
+                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.persons.index.person')]),
             ], 400);
         }
     }
@@ -151,7 +157,7 @@ class PersonController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.title')]),
+            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.index.title')]),
         ]);
     }
 
@@ -160,7 +166,9 @@ class PersonController extends Controller
      */
     private function sanitizeRequestedPersonData(array $data): array
     {
-        $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
+        if (isset($data['contact_numbers'])) {
+            $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
+        }
 
         return $data;
     }

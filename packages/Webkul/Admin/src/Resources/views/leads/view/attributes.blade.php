@@ -14,13 +14,22 @@
         @endif
     </h4>
 
-    <x-admin::attributes.view
-        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-            'entity_type' => 'leads',
-            ['code', 'NOTIN', ['title', 'description']]
-        ])"
-        :entity="$lead"
-    />
+    <x-admin::form
+        v-slot="{ meta, errors, handleSubmit }"
+        as="div"
+        ref="modalForm"
+    >
+        <form @submit="handleSubmit($event, () => {})">
+            <x-admin::attributes.view
+                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    'entity_type' => 'leads',
+                    ['code', 'NOTIN', ['title', 'description']]
+                ])"
+                :entity="$lead"
+                :url="route('admin.leads.update', $lead->id)"
+            />
+        </form>
+    </x-admin::form>
 </div>
 
 {!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}

@@ -381,8 +381,13 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'       => 'Persons',
-                'create-btn'  => 'Create Person',
+                'title'          => 'Persons',
+                'create-btn'     => 'Create Person',
+                'create-success' => 'Person created successfully.',
+                'update-success' => 'Person updated successfully.',
+                'delete-success' => 'Person deleted successfully.',
+                'delete-failed'  => 'Person can not be deleted.',
+    
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -398,7 +403,7 @@ return [
 
             'view' => [
                 'title' => ':name',
-                'about-lead' => 'About Lead',
+                'about-person' => 'About Person',
 
                 'activities' => [
                     'index' => [
