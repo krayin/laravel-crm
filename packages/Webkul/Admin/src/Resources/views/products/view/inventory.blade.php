@@ -124,10 +124,10 @@
     <script type="text/x-template" id="v-warehouse-location-inventories-template">
         <div class="flex flex-col gap-2">
             <!-- Add location header -->
-            <x-admin::table>
+            <x-admin::table class="!min-w-[480px]">
                 <x-admin::table.thead>
                     <x-admin::table.thead.tr>
-                        <x-admin::table.th >
+                        <x-admin::table.th class="!w-56">
                             @lang('admin::app.products.view.inventory.location')
                         </x-admin::table.th>
                         
