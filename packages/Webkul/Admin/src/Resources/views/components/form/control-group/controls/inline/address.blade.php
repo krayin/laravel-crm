@@ -1,7 +1,13 @@
 <v-inline-address-edit
     {{ $attributes->except('value') }}
     :value='@json($attributes->get('value'))'
-></v-inline-address-edit>
+>
+    <div class="group w-full max-w-full hover:rounded-sm">
+        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+            <div class="shimmer h-5 w-48"></div>
+        </div>
+    </div>
+</v-inline-address-edit>
 
 @pushOnce('scripts')
     <script
@@ -11,7 +17,7 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="flex items-center rounded-xs h-[38px] space-x-2"
+                class="flex items-center rounded-xs h-[34px] space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >

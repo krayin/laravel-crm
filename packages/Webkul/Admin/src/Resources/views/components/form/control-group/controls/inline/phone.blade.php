@@ -1,7 +1,13 @@
 <v-inline-phone-edit
     {{ $attributes->except('value') }}
     :value={{ json_encode($attributes->get('value')) }}
-></v-inline-phone-edit>
+>
+    <div class="group w-full max-w-full hover:rounded-sm">
+        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+            <div class="shimmer h-5 w-48"></div>
+        </div>
+    </div>
+</v-inline-phone-edit>
 
 @pushOnce('scripts')
     <script
@@ -11,11 +17,11 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="flex items-center rounded-xs h-[38px] space-x-2"
+                class="flex items-center rounded-xs h-[34px] space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
-                <span class="font-normal text-sm pl-2">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+                <span class="pl-[2px]">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
 
                 <template v-if="allowEdit">
                     <i

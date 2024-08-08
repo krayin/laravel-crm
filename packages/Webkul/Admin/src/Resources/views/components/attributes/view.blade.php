@@ -5,10 +5,10 @@
     'url'              => null,
 ])
 
-<div class="flex flex-col gap-2">
+<div class="flex flex-col gap-1">
     @foreach ($customAttributes as $attribute)
         @if (view()->exists($typeView = 'admin::components.attributes.view.' . $attribute->type))
-            <div class="grid grid-cols-[1fr_2fr] items-center gap-2">
+            <div class="grid grid-cols-[1fr_2fr] items-center gap-1">
                 <div class="label">{{ $attribute->name }}</div>
 
                 <div class="font-medium">
