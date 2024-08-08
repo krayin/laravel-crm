@@ -5,7 +5,7 @@
         type="text/x-template" 
         id="v-product-list-template"
     >
-        <div class="mb-4">
+        <div class="flex flex-col gap-4">
              <!-- Table -->
              <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
@@ -46,15 +46,15 @@
                     ></v-product-item>
                 </x-admin::table.tbody>
             </x-admin::table>
+
+            <!-- Add New Product Item -->
+            <span
+                class="cursor-pointer text-brandColor"
+                @click="addProduct"
+            >
+                + @lang('admin::app.leads.common.products.add-more')
+            </span>
         </div>
-        
-        <!-- Add New Product Item -->
-        <span
-            class="cursor-pointer text-xs text-brandColor hover:underline dark:text-brandColor"
-            @click="addProduct"
-        >
-            + @lang('admin::app.leads.common.products.add-more')
-        </span>
     </script>
 
     <script 
