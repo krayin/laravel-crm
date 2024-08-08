@@ -55,14 +55,15 @@ return [
         'activities' => [
             'actions' => [
                 'mail' => [
-                    'btn'      => 'Mail',
-                    'title'    => 'Compose Mail',
-                    'to'       => 'To',
-                    'cc'       => 'CC',
-                    'bcc'      => 'BCC',
-                    'subject'  => 'Subject',
-                    'send-btn' => 'Send',
-                    'message'  => 'Message',
+                    'btn'          => 'Mail',
+                    'title'        => 'Compose Mail',
+                    'to'           => 'To',
+                    'enter-emails' => 'Press enter to add emails',
+                    'cc'           => 'CC',
+                    'bcc'          => 'BCC',
+                    'subject'      => 'Subject',
+                    'send-btn'     => 'Send',
+                    'message'      => 'Message',
                 ],
 
                 'file' => [
@@ -94,11 +95,24 @@ return [
                     'meeting'       => 'Meeting',
                     'lunch'         => 'Lunch',
                     'save-btn'      => 'Save Activity',
+
+                    'participants' => [
+                        'title'       => 'Participants',
+                        'placeholder' => 'Type to search participants',
+                        'users'       => 'Users',
+                        'persons'     => 'Persons',
+                        'no-results'  => 'No result found...',
+                    ],
                 ],
             ],
 
             'index' => [
+                'from'         => 'From',
+                'to'           => 'To',
+                'cc'           => 'Cc',
+                'bcc'          => 'Bcc',
                 'all'          => 'All',
+                'planned'      => 'Planned',
                 'calls'        => 'Calls',
                 'meetings'     => 'Meetings',
                 'lunches'      => 'Lunches',
@@ -113,6 +127,8 @@ return [
                 'mark-as-done' => 'Mark as Done',
                 'delete'       => 'Delete',
                 'edit'         => 'Edit',
+                'view'         => 'View',
+                'unlink'       => 'Unlink',
             ],
         ],
 
@@ -1326,6 +1342,12 @@ return [
                 'delete'        => 'Delete',
             ],
         ],
+
+        'create-success'      => 'Email sent successfully.',
+        'update-success'      => 'Email updated successfully.',
+        'mass-update-success' => 'Emails updated successfully.',
+        'delete-success'      => 'Email deleted successfully.',
+        'delete-failed'       => 'Email can not be deleted.',
     ],
 
     'common' => [
@@ -1399,7 +1421,8 @@ return [
         ],
 
         'view' => [
-            'title' => 'Lead: :title',
+            'title'       => 'Lead: :title',
+            'rotten-days' => ':days Days',
 
             'stages' => [
                 'won-lost'       => 'Won/Lost',

@@ -129,8 +129,8 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
-                // 'data'    => new EmailResource($email),
-                'message' => trans('admin::app.activities.create-success'),
+                'data'    => new EmailResource($email),
+                'message' => trans('admin::app.mail.create-success'),
             ]);
         }
 
@@ -190,6 +190,7 @@ class EmailController extends Controller
 
         if (request()->ajax()) {
             $response = [
+                'data'    => new EmailResource($email),
                 'message' => trans('admin::app.mail.update-success'),
             ];
 
@@ -330,7 +331,7 @@ class EmailController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.mail.destroy-success'),
+            'message' => trans('admin::app.mail.delete-success'),
         ]);
     }
 }

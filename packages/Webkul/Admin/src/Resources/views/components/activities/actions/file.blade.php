@@ -6,10 +6,10 @@
 <!-- File Button -->
 <div class="">
     <button
-        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-cyan-200 text-cyan-900"
+        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-cyan-200 text-cyan-900 transition-all hover:border-cyan-400"
         @click="$refs.fileActionComponent.openModal('mail')"
     >
-        <span class="icon-note text-2xl"></span>
+        <span class="icon-file text-2xl"></span>
 
         @lang('admin::app.components.activities.actions.file.btn')
     </button>
@@ -30,7 +30,7 @@
             ref="modalForm"
         >
             <form @submit="handleSubmit($event, save)">
-                <x-admin::modal ref="mailActivityModal" position="bottom-right">
+                <x-admin::modal ref="fileActivityModal" position="bottom-right">
                     <x-slot:header>
                         <h3 class="text-base font-semibold">
                             @lang('admin::app.components.activities.actions.file.title')
@@ -145,7 +145,7 @@
 
             methods: {
                 openModal(type) {
-                    this.$refs.mailActivityModal.open();
+                    this.$refs.fileActivityModal.open();
                 },
 
                 save(params, { setErrors }) {
@@ -165,7 +165,7 @@
 
                             self.$emitter.emit('on-activity-added', response.data.data);
 
-                            self.$refs.mailActivityModal.close();
+                            self.$refs.fileActivityModal.close();
                         })
                         .catch (function (error) {
                             self.isStoring = false;
@@ -175,7 +175,7 @@
                             } else {
                                 self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                self.$refs.mailActivityModal.close();
+                                self.$refs.fileActivityModal.close();
                             }
                         });
                 },

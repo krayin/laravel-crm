@@ -9,6 +9,17 @@ use Webkul\Core\Eloquent\Repository;
 class PersonRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'name',
+        'emails',
+        'contact_numbers',
+        'organization_id',
+        'job_title',
+    ];
+
+    /**
      * Create a new repository instance.
      *
      * @return void

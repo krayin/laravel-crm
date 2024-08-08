@@ -4,11 +4,14 @@ namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Resources\PersonResource;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
 
@@ -99,13 +102,13 @@ class PersonController extends Controller
     /**
      * Search person results.
      */
-    public function search(): JsonResponse
+    public function search(): JsonResource
     {
-        $results = $this->personRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
-        ]);
+        $persons = $this->personRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
 
-        return response()->json($results);
+        return PersonResource::collection($persons);
     }
 
     /**

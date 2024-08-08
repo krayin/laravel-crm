@@ -6,7 +6,7 @@
 <!-- Note Button -->
 <div class="">
     <button
-        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-orange-200 text-orange-800"
+        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-orange-200 text-orange-800 transition-all hover:border-orange-400"
         @click="$refs.noteActionComponent.openModal('mail')"
     >
         <span class="icon-note text-2xl"></span>
@@ -30,7 +30,7 @@
             ref="modalForm"
         >
             <form @submit="handleSubmit($event, save)">
-                <x-admin::modal ref="mailActivityModal" position="bottom-right">
+                <x-admin::modal ref="noteActivityModal" position="bottom-right">
                     <x-slot:header>
                         <h3 class="text-base font-semibold">
                             @lang('admin::app.components.activities.actions.note.title')
@@ -108,7 +108,7 @@
 
             methods: {
                 openModal(type) {
-                    this.$refs.mailActivityModal.open();
+                    this.$refs.noteActivityModal.open();
                 },
 
                 save(params) {
@@ -124,7 +124,7 @@
 
                             self.$emitter.emit('on-activity-added', response.data.data);
 
-                            self.$refs.mailActivityModal.close();
+                            self.$refs.noteActivityModal.close();
                         })
                         .catch (function (error) {
                             self.isStoring = false;
@@ -134,7 +134,7 @@
                             } else {
                                 self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                self.$refs.mailActivityModal.close();
+                                self.$refs.noteActivityModal.close();
                             }
                         });
                 },

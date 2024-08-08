@@ -6,7 +6,7 @@
 <!-- Activity Button -->
 <div class="">
     <button
-        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg bg-blue-200 text-blue-800"
+        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-blue-200 text-blue-800 transition-all hover:border-blue-400"
         @click="$refs.actionComponent.openModal('mail')"
     >
         <span class="icon-activity text-2xl"></span>
@@ -30,7 +30,7 @@
             ref="modalForm"
         >
             <form @submit="handleSubmit($event, save)">
-                <x-admin::modal ref="mailActivityModal" position="bottom-right">
+                <x-admin::modal ref="activityModal" position="bottom-right">
                     <x-slot:header>
                         <x-admin::dropdown>
                             <x-slot:toggle>
@@ -94,6 +94,15 @@
                                 type="textarea"
                                 name="comment"
                             />
+                        </x-admin::form.control-group>
+
+                        <!-- Participants -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.components.activities.actions.activity.participants.title')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::activities.actions.activity.participants />
                         </x-admin::form.control-group>
 
                         <!-- Schedule Date -->
@@ -201,7 +210,7 @@
 
             methods: {
                 openModal(type) {
-                    this.$refs.mailActivityModal.open();
+                    this.$refs.activityModal.open();
                 },
 
                 save(params) {
@@ -217,7 +226,7 @@
 
                             self.$emitter.emit('on-activity-added', response.data.data);
 
-                            self.$refs.mailActivityModal.close();
+                            self.$refs.activityModal.close();
                         })
                         .catch (function (error) {
                             self.isStoring = false;
@@ -227,7 +236,7 @@
                             } else {
                                 self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                self.$refs.mailActivityModal.close();
+                                self.$refs.activityModal.close();
                             }
                         });
                 },
