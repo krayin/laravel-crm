@@ -187,6 +187,11 @@
                     type: String,
                     default: 'Search...',
                 },
+
+                url: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -294,6 +299,18 @@
                     }
 
                     this.inputValue = this.selectedItem.name;
+
+                    if (this.url) {
+                        this.$axios.put(this.url, {
+                                [this.name]: this.selectedItem.id,
+                            })
+                            .then((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch((error) => {
+                                this.inputValue = this.value;
+                            });                        
+                    }
 
                     this.$emit('on-change', {
                         name: this.name,

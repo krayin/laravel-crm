@@ -6,5 +6,5 @@
     :label="$attribute->name"
     ::errors="errors"
     :placeholder="$attribute->name"
-    @on-save="onChanged"
+    :url="$url"
 />

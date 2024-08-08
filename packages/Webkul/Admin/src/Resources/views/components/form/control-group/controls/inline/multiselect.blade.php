@@ -149,6 +149,11 @@
                     type: Array,
                     required: true,
                 },
+
+                url: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -223,6 +228,18 @@
                     }
 
                     this.isEditing = false;
+
+                    if (this.url) {
+                        this.$axios.put(this.url, {
+                                [this.name]: this.tempOptions.map((data) => data.id),
+                            })
+                            .then((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch((error) => {
+                                this.inputValue = this.value;
+                            });                        
+                    }
 
                     this.$emit('options-updated', {
                         name: this.name,

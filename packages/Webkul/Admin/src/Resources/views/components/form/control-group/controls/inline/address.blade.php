@@ -199,6 +199,11 @@
                     type: Object,
                     default: {},
                 },
+
+                url: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -284,40 +289,6 @@
                     this.$refs.emailModal.toggle();
                 },
 
-                /**
-                 * Save the input value.
-                 * 
-                 * @return {void}
-                 */
-                save() {
-                    if (this.errors[this.name]) {
-                        return;
-                    }
-
-                    this.isEditing = false;
-
-                    this.$emit('on-change', {
-                        name: this.name,
-                        value: this.inputValue,
-                    });
-                },
-
-                /**
-                 * Cancel the input value.
-                 * 
-                 * @return {void}
-                 */
-                cancel() {
-                    this.inputValue = this.value;
-
-                    this.isEditing = false;
-
-                    this.$emit('on-cancelled', {
-                        name: this.name,
-                        value: this.inputValue,
-                    });
-                },
-
                 add() {
                     this.emails.push({
                         'value': '',
@@ -350,6 +321,18 @@
 
                 updateOrCreate(params) {
                     this.inputValue = params[this.name];
+
+                    if (this.url) {
+                        this.$axios.put(this.url, {
+                                [this.name]: this.inputValue,
+                            })
+                            .then((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch((error) => {
+                                this.inputValue = this.value;
+                            });                        
+                    }
 
                     this.$emit('on-change', {
                         name: this.name,

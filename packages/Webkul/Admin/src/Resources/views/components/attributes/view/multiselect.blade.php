@@ -15,5 +15,5 @@
     :label="$attribute->name"
     ::errors="errors"
     :placeholder="$attribute->name"
-    @options-updated="(value) => console.log(value)"
+    :url="$url"
 />

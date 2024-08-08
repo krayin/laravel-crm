@@ -10,5 +10,5 @@
     :label="$attribute->name"
     ::errors="errors"
     :placeholder="$attribute->name"
-    @on-change="onChanged"
+    :url="$url"
 />

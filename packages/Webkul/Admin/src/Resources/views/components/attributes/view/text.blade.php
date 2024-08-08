@@ -7,5 +7,5 @@
     :label="$attribute->name"
     :placeholder="$attribute->name"
     ::errors="errors"
-    @on-change="onChanged"
+    :url="$url"
 />

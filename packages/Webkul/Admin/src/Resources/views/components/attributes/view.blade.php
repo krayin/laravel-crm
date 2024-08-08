@@ -2,6 +2,7 @@
     'customAttributes' => [],
     'entity'           => null,
     'allowEdit'        => false,
+    'url'              => null,
 ])
 
 <div class="flex flex-col gap-2">
@@ -15,6 +16,7 @@
                         'attribute' => $attribute,
                         'value'     => isset($entity) ? $entity[$attribute->code] : null,
                         'allowEdit' => $allowEdit,
+                        'url'       => $url,
                     ])
                 </div>
             </div>
