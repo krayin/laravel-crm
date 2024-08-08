@@ -17,19 +17,20 @@
         </div>
 
         <div class="flex items-center gap-x-2.5">
-            <!-- Create button for person -->
+            {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
+            
+            <!-- Create button for Group -->
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
-
-                <x-admin::button
-                    button-type="button"
-                    class="primary-button justify-center"
-                    :title="trans('admin::app.settings.groups.index.create-btn')"
-                    @click="selectedGroup=false; $refs.groupSettings.openModal()"
-                />
-
-                {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
+                <button
+                    type="button"
+                    class="primary-button"
+                    @click="$refs.groupSettings.openModal()"
+                >
+                    @lang('admin::app.settings.groups.index.create-btn')
+                </button>
             </div>
+
+            {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
         </div>
     </div>
     
