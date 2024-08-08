@@ -37,7 +37,14 @@
                                     @{{ stage.name }} (@{{ stage.leads.meta.total }})
                                 </span>
 
-                                <span class="icon-add cursor-pointer rounded p-1 text-lg text-slate-600 transition-all hover:bg-slate-100 hover:text-slate-800"></span>
+                                @if (bouncer()->hasPermission('leads.create'))
+                                    <a
+                                        :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + stage.id"
+                                        class="icon-add cursor-pointer rounded p-1 text-lg text-slate-600 transition-all hover:bg-slate-100 hover:text-slate-800"
+                                        target="_blank"
+                                    >
+                                    </a>
+                                @endif
                             </div>
 
                             <!-- Stage Total Leads and Amount -->
@@ -48,7 +55,10 @@
 
                                 <!-- Progress Bar -->
                                 <div class="h-1 w-36 overflow-hidden rounded-full bg-slate-200">
-                                    <div class="h-1 bg-green-500" style="width: 35%"></div>
+                                    <div
+                                        class="h-1 bg-green-500"
+                                        :style="{ width: (stage.lead_value / totalStagesAmount) * 100 + '%' }"
+                                    ></div>
                                 </div>
                             </div>
                         </div>
@@ -63,11 +73,14 @@
                             item-key="id"
                             group="leads"
                             @scroll="handleScroll(stage, $event)"
-                            @change="updateLeadStage(stage, $event)"
+                            @change="updateStage(stage, $event)"
                         >
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
-                                <div class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2">
+                                <a
+                                    class="lead-item flex cursor-grab flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2"
+                                    :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
+                                >
                                     <!-- Header -->
                                     <div class="flex items-start justify-between">
                                         <div class="flex items-center gap-1">
@@ -89,11 +102,10 @@
                                             </div>
                                         </div>
 
-                                        <div class="flex items-center gap-2">
-                                            <span class="icon-notification text-lg"></span>
-                                            
-                                            <span class="icon-bookmark text-lg"></span>
-                                        </div>
+                                        <span
+                                            class="icon-rotten cursor-default text-xl text-rose-600"
+                                            v-if="element.rotten_days > 0"
+                                        ></span>
                                     </div>
                                     
                                     <!-- Lead Title -->
@@ -102,7 +114,18 @@
                                     </p>
 
                                     <div class="flex flex-wrap gap-1">
-                                        <div class="rounded-xl bg-rose-100 px-3 py-1 text-xs font-medium text-rose-700">Urgent</div>
+                                        <!-- Tags -->
+                                        <template v-for="tag in element.tags">
+                                            <div
+                                                class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
+                                                :style="{
+                                                    backgroundColor: tag.color,
+                                                    color: tagTextColor[tag.color]
+                                                }"
+                                            >
+                                                @{{ tag.name }}
+                                            </div>
+                                        </template>
 
                                         <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                             @{{ element.formatted_lead_value }}
@@ -116,7 +139,7 @@
                                             @{{ element.type.name }}
                                         </div>
                                     </div>
-                                </div>
+                                </a>
                             </template>
                         </draggable>
                     </div>
@@ -149,18 +172,39 @@
                         'bg-pink-200',
                         'bg-yellow-400'
                     ],
+
+                    tagTextColor: {
+                        '#FEE2E2': '#DC2626',
+                        '#FFEDD5': '#EA580C',
+                        '#FEF3C7': '#D97706',
+                        '#FEF9C3': '#CA8A04',
+                        '#ECFCCB': '#65A30D',
+                        '#DCFCE7': '#16A34A',
+                    },
+                }
+            },
+
+            computed: {
+                totalStagesAmount() {
+                    let totalAmount = 0;
+
+                    for (let [key, stage] of Object.entries(this.stageLeads)) {
+                        totalAmount += parseFloat(stage.lead_value);
+                    }
+
+                    return totalAmount;
                 }
             },
 
             mounted: function () {
-                this.getLeads({
+                this.get({
                     limit: 10,
                     pileline_id: "{{ request('pipeline_id') }}"
                 });
             },
 
             methods: {
-                getLeads(params) {
+                get(params) {
                     var self = this;
                     
                     this.$axios.get("{{ route('admin.leads.get') }}", {
@@ -184,7 +228,7 @@
                         });
                 },
 
-                updateLeadStage: function (stage, event) {
+                updateStage: function (stage, event) {
                     if (event.removed) {
                         stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
 
@@ -208,6 +252,10 @@
                         });
                 },
 
+                bookmark(lead) {
+                    
+                },
+
                 handleScroll(stage, event) {
                     const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight
                     
@@ -219,7 +267,7 @@
                         return;
                     }
 
-                    this.getLeads({
+                    this.get({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
                         page: this.stageLeads[stage.id].leads.meta.current_page + 1,
