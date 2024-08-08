@@ -51,12 +51,13 @@
                             </x-admin::table.td>
                             
                             <x-admin::table.td>
-                                <a  
-                                    href="#" @click.prevent="selectWarehouse(warehouse)"
+                                <div  
+                                    href="#"
+                                    @click="selectWarehouse(warehouse)"
                                     class="cursor-pointer text-brandColor" 
                                 >
                                     @lang('admin::app.products.view.inventory.assign')
-                                </a>
+                                </div>
                             </x-admin::table.td>
                         </x-admin::table.tbody.tr>
 
