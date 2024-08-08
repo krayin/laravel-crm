@@ -34,10 +34,22 @@
                 <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"> 
                     <template v-for="warehouse in productWarehouses">
                         <x-admin::table.tbody.tr class="border-b-2">
-                            <x-admin::table.td class="font-bold">@{{ warehouse.name }}</x-admin::table.td>
-                            <x-admin::table.td>@{{ warehouse.in_stock }}</x-admin::table.td>
-                            <x-admin::table.td>@{{ warehouse.allocated }}</x-admin::table.td>
-                            <x-admin::table.td>@{{ warehouse.on_hand }}</x-admin::table.td>
+                            <x-admin::table.td class="font-bold">
+                                @{{ warehouse.name }}
+                            </x-admin::table.td>
+                            
+                            <x-admin::table.td>
+                                @{{ warehouse.in_stock }}
+                            </x-admin::table.td>
+                            
+                            <x-admin::table.td>
+                                @{{ warehouse.allocated }}
+                            </x-admin::table.td>
+                            
+                            <x-admin::table.td>
+                                @{{ warehouse.on_hand }}
+                            </x-admin::table.td>
+                            
                             <x-admin::table.td>
                                 <a  
                                     href="#" @click.prevent="selectWarehouse(warehouse)"
@@ -50,10 +62,22 @@
 
                         <template v-for="location in warehouse.locations">
                             <x-admin::table.tbody.tr class="border-b-2">
-                                <x-admin::table.td>@{{ location.name }}</x-admin::table.td>
-                                <x-admin::table.td>@{{ location.in_stock }}</x-admin::table.td>
-                                <x-admin::table.td>@{{ location.allocated }}</x-admin::table.td>
-                                <x-admin::table.td>@{{ location.on_hand }}</x-admin::table.td>
+                                <x-admin::table.td>
+                                    @{{ location.name }}
+                                </x-admin::table.td>
+                                
+                                <x-admin::table.td>
+                                    @{{ location.in_stock }}
+                                </x-admin::table.td>
+                                
+                                <x-admin::table.td>
+                                    @{{ location.allocated }}
+                                </x-admin::table.td>
+                                
+                                <x-admin::table.td>
+                                    @{{ location.on_hand }}
+                                </x-admin::table.td>
+                                
                                 <x-admin::table.td></x-admin::table.td>
                             </x-admin::table.tbody.tr>
                         </template>
@@ -100,7 +124,7 @@
                         <x-slot:header>
                             <div class="flex items-center justify-between">
                                 <p class="text-xl font-medium dark:text-white"> 
-                                    @{{ selectedWarehouse?.name }}
+                                    @{{ selectedWarehouse.name }}
                                 </p>
                                 
                                 <button class="primary-button ltr:mr-11 rtl:ml-11">
@@ -162,7 +186,7 @@
                 class="cursor-pointer text-brandColor"
                 @click="addLocation"
             >
-                +@lang('admin::app.leads.common.products.add-more')
+                +@lang('admin::app.products.view.inventory.add-more')
             </span>
         </div>
     </script>
@@ -177,21 +201,23 @@
                         ::name="`${inputName('warehouse_location_id')}`"
                         ::params="params"
                         v-model="location['name']"
-                        :placeholder="trans('Location')"
+                        :placeholder="trans('admin::app.products.view.inventory.location')"
                         @on-selected="add"
                         ::value="{ id: location.id, name: location.name }"
                     />
 
-                    <input
+                    <x-admin::form.control-group.control
                         type="hidden"
-                        :name="'inventories[inventory_' + index + '][warehouse_location_id]'"
+                        ::name="'inventories[inventory_' + index + '][warehouse_location_id]'"
                         v-model="location.id"
-                        v-validate="'required'"
+                        rules="required"
+                        :label="trans('admin::app.products.view.inventory.location')"
                     />
+                    <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][warehouse_location_id]'" />
 
-                    <input
+                    <x-admin::form.control-group.control
                         type="hidden"
-                        :name="'inventories[inventory_' + index + '][warehouse_id]'"
+                        ::name="'inventories[inventory_' + index + '][warehouse_id]'"
                         v-model="warehouse.id"
                     />
                 </x-admin::form.control-group>
@@ -203,8 +229,8 @@
                     ::name="'inventories[inventory_' + index + '][in_stock]'"
                     v-model="location.in_stock"
                     rules="required|numeric|min_value:0"
-                    :label="trans('InStock')"
-                    :placeholder="trans('InStock')"
+                    :label="trans('admin::app.products.view.inventory.in-stock')"
+                    :placeholder="trans('admin::app.products.view.inventory.in-stock')"
                 />
 
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][in_stock]'"/>
@@ -216,8 +242,8 @@
                     ::name="'inventories[inventory_' + index + '][allocated]'"
                     v-model="location.allocated"
                     rules="required|numeric|min_value:0"
-                    :label="trans('Allocated')"
-                    :placeholder="trans('Allocated')"
+                    :label="trans('admin::app.products.view.inventory.allocated')"
+                    :placeholder="trans('admin::app.products.view.inventory.allocated')"
                 />
 
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][allocated]'"/>
@@ -299,11 +325,9 @@
                 },
 
                 selectWarehouse(warehouse) {
-                    this.selectedWarehouse = null;
+                    this.selectedWarehouse = warehouse;
 
                     setTimeout(() => {
-                        this.selectedWarehouse = warehouse;
-                        
                         this.$refs.assignLocationDrawer.open();
                     }, 0);
                 },
@@ -318,14 +342,10 @@
 
                         this.$refs.assignLocationDrawer.close();
 
-                        window.flashMessages = [{'type': 'success', 'message': response.data.message}];
-
-                        self.$root.addFlashMessages();
+                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                     })
                     .catch(error => {
-                        window.serverErrors = error.response.data.errors;
-
-                        self.$root.addServerErrors();
+                        this.$emitter.emit('add-flash', { type: 'error', message: response.data.message });
                     });
                 },
             },
@@ -343,7 +363,7 @@
             },
             
             created() {
-                if (this.warehouse?.locations?.length) {
+                if (this.warehouse.locations.length) {
                     this.warehouseLocations = JSON.parse(JSON.stringify(this.warehouse.locations));
                 }
             },
