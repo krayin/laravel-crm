@@ -10,9 +10,7 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    <x-admin::breadcrumbs 
-                        name="leads.create" 
-                    />
+                    <x-admin::breadcrumbs name="leads.create" />
                 </div>
 
                 <div class="text-xl font-bold dark:text-gray-300">
@@ -51,18 +49,18 @@
             id="v-lead-create-template"
         >
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        {!! view_render_event('krayin.admin.leads.edit.form_controls.before') !!}
-                       
+                <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    {!! view_render_event('krayin.admin.leads.edit.form_controls.before') !!}
+                    
+                    <div class="flex flex-col gap-5">
                         <!-- Tabs -->
                         <div class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
                             <ul class="flex flex-wrap">
-                               <li class="me-2" v-for="tab in tabs" :key="tab.id">
+                                <li v-for="tab in tabs" :key="tab.id">
                                     <a
                                         :href="'#' + tab.id"
                                         :class="[
-                                            'inline-block p-4 rounded-t-lg border-b-2',
+                                            'inline-block px-4 py-2 rounded-t-lg border-b-2',
                                             activeTab === tab.id
                                             ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
                                             : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
@@ -75,20 +73,15 @@
                         </div>
 
                         <!-- Details section -->
-                        <div 
-                            class="mt-4"
-                            id="lead-details"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.leads.create.details')
-                                    </p>
+                        <div class="flex flex-col gap-4" id="lead-details">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-base font-semibold dark:text-white">
+                                    @lang('admin::app.leads.create.details')
+                                </p>
 
-                                    <p class="text-sm text-gray-600 dark:text-white">
-                                        @lang('admin::app.leads.create.details-info')
-                                    </p>
-                                </div>
+                                <p class="text-gray-600 dark:text-white">
+                                    @lang('admin::app.leads.create.details-info')
+                                </p>
                             </div>
 
                             <div class="w-1/2">
@@ -110,7 +103,7 @@
 
                                 <!-- Lead Details Oter input fields -->
                                 <div class="flex gap-4 max-sm:flex-wrap">
-                                    <div class="mb-4 w-full">
+                                    <div class="w-full">
                                         <x-admin::attributes
                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                 ['code', 'IN', ['lead_value', 'lead_type_id', 'lead_source_id']],
@@ -126,7 +119,7 @@
                                         />
                                     </div>
                                         
-                                    <div class="mb-4 w-full">
+                                    <div class="w-full">
                                         <x-admin::attributes
                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                 ['code', 'IN', ['expected_close_date', 'user_id']],
@@ -146,20 +139,15 @@
                         </div>
 
                         <!-- Contact Person -->
-                        <div
-                            class="mt-4"
-                            id="contact-person"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.leads.create.contact-person')
-                                    </p>
+                        <div class="flex flex-col gap-4" id="contact-person">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-base font-semibold dark:text-white">
+                                    @lang('admin::app.leads.create.contact-person')
+                                </p>
 
-                                    <p class="text-sm text-gray-600 dark:text-white">
-                                        @lang('admin::app.leads.create.contact-info')
-                                    </p>
-                                </div>
+                                <p class="text-gray-600 dark:text-white">
+                                    @lang('admin::app.leads.create.contact-info')
+                                </p>
                             </div>
 
                             <div class="w-1/2">
@@ -169,28 +157,24 @@
                         </div>
 
                         <!-- Product Section -->
-                        <div
-                            class="mt-4"
-                            id="products"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.leads.create.products')
-                                    </p>
+                        <div class="flex flex-col gap-4" id="products">
+                            <div class="flex flex-col gap-1">
+                                <p class="text-base font-semibold dark:text-white">
+                                    @lang('admin::app.leads.create.products')
+                                </p>
 
-                                    <p class="text-sm text-gray-600 dark:text-white">
-                                        @lang('admin::app.leads.create.products-info')
-                                    </p>
-                                </div>
+                                <p class="text-gray-600 dark:text-white">
+                                    @lang('admin::app.leads.create.products-info')
+                                </p>
                             </div>
 
-                            <!-- Product Component -->
-                            @include('admin::leads.common.products')
+                            <div>
+                                <!-- Product Component -->
+                                @include('admin::leads.common.products')
+                            </div>
                         </div>
-
-                        {!! view_render_event('krayin.admin.leads.form_controls.after') !!}
                     </div>
+                    {!! view_render_event('krayin.admin.leads.form_controls.after') !!}
                 </div>
             </div>
         </script>
