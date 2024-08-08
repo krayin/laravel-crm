@@ -47,6 +47,7 @@
                         ::style="inputPositionStyle"
                         v-model="inputValue"
                         ref="input"
+                        readonly
                     />
                         
                     <!-- Action Buttons -->

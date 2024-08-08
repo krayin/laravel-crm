@@ -45,6 +45,15 @@
         />
         @break
 
+    
+    @case('multiselect')
+        <x-admin::attributes.edit.multiselect
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+        @break
+
     @case('price')
         <x-admin::attributes.edit.price
             :attribute="$attribute"

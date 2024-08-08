@@ -166,8 +166,8 @@
                  * 
                  * @param {String} newValue 
                  */
-                value(newValue) {
-                    if (JSON.stringify(newVal) !== JSON.stringify(oldVal)) {
+                value(newValue, oldValue) {
+                    if (JSON.stringify(newValue) !== JSON.stringify(oldValue)) {
                         this.emails = newVal || [{'value': '', 'label': 'work'}];
                     }
                 },

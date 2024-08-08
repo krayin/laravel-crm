@@ -1,13 +1,19 @@
 @php
     $options = $attribute->lookup_type
-        ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity($attribute->lookup_type, explode(',', $value))
-        : $attribute->options()->whereIn('id', explode(',', $value))->get();
+        ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->lookup_type)
+        : $attribute->options()->orderBy('sort_order')->get();
+
+    $selectedOption = old($attribute->code) ?: $value;
 @endphp
 
-@if (count($options))
-    @foreach ($options as $option)
-        <span class="multi-value">{{ $option->name }}</span>
-    @endforeach
-@else
-    {{ __('admin::app.common.not-available') }}
-@endif
+<x-admin::form.control-group.controls.inline.multiselect
+    ::name="'{{ $attribute->code }}'"
+    ::value="'{{ $selectedOption }}'"
+    :data="$options"
+    rules="required"
+    position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
+    @options-updated="(value) => console.log(value)"
+/>

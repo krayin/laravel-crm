@@ -3,5 +3,8 @@
     :value="json_encode($value)"
     rules="required"
     position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
     @on-change="onChanged"
 />

@@ -3,5 +3,8 @@
     :value="$value"
     rules="required|decimal:4"
     position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
     @on-save="onChanged"
 />

@@ -7,5 +7,8 @@
     :value="$lookUpEntity->name"
     :attribute="$attribute"
     position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
     @on-change="onChanged"
 />

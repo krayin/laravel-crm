@@ -1,9 +1,11 @@
-<x-admin::form.control-group class="!mb-0">
-    <x-admin::form.control-group.control
-        type="inline"
-        :name="$attribute->name"
-        :value="$value"
-        rules="required|decimal:4"
-        position="left"
-    />
-</x-admin::form.control-group>
+<x-admin::form.control-group.control
+    type="inline"
+    ::name="'{{ $attribute->code }}'"
+    ::value="'{{ $value }}'"
+    position="left"
+    rules="required"
+    :label="$attribute->name"
+    :placeholder="$attribute->name"
+    ::errors="errors"
+    @on-change="onChanged"
+/>
