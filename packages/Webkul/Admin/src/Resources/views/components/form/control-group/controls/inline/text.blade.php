@@ -1,4 +1,10 @@
-<v-inline-text-edit {{ $attributes }}></v-inline-text-edit>
+<v-inline-text-edit {{ $attributes }}>
+    <div class="group w-full max-w-full hover:rounded-sm">
+        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+            <div class="shimmer h-5 w-48"></div>
+        </div>
+    </div>
+</v-inline-text-edit>
 
 @pushOnce('scripts')
     <script
@@ -9,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[38px] space-x-2"
+                class="flex items-center rounded-xs h-[34px] space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
