@@ -263,7 +263,7 @@ return [
                 'lemon-chiffon'  => 'Lemon Chiffon',
                 'snow-flurry'    => 'Snow Flurry',
                 'honeydew'       => 'Honeydew',
-            ]
+            ],
         ],
     ],
 
@@ -397,7 +397,7 @@ return [
             ],
 
             'view' => [
-                'title' => ':name',
+                'title'      => ':name',
                 'about-lead' => 'About Lead',
 
                 'activities' => [
@@ -536,6 +536,30 @@ return [
             'save-btn'  => 'Save Products',
             'general'   => 'General',
             'price'     => 'Price',
+        ],
+
+        'view' => [
+            'sku'         => 'SKU',
+            'all'         => 'All',
+            'notes'       => 'Notes',
+            'inventories' => 'Inventory',
+
+            'attributes' => [
+                'about-product' => 'About Product',
+            ],
+
+            'inventory' => [
+                'source'     => 'Source',
+                'in-stock'   => 'In Stock',
+                'allocated'  => 'Allocated',
+                'on-hand'    => 'On Hand',
+                'actions'    => 'Actions',
+                'assign'     => 'Assign',
+                'add-source' => 'Add Source',
+                'location'   => 'Location',
+                'add-more'   => 'Add More',
+                'save'       => 'Save',
+            ],
         ],
     ],
 
@@ -1427,9 +1451,11 @@ return [
             'search'   => 'Search',
             'back'     => 'Back',
             'save-btn' => 'Save Configuration',
+
             'general'  => [
                 'title'   => 'General',
                 'info'    => 'General Configuration',
+
                 'general' => [
                     'title'           => 'General',
                     'info'            => 'Update your general settings here.',

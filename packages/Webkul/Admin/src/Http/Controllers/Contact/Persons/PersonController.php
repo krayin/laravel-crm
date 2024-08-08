@@ -2,18 +2,18 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Resources\PersonResource;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Admin\Http\Resources\PersonResource;
 
 class PersonController extends Controller
 {

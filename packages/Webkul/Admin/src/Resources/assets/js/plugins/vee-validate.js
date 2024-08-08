@@ -62,7 +62,7 @@ export default {
 
             return true;
         });
-
+                
         defineRule("address", (value) => {
             if (!value || !value.length) {
                 return true;
@@ -105,6 +105,18 @@ export default {
         });
 
         defineRule("", () => true);
+
+        // @TODO handle this
+        // @suraj-webkul
+        defineRule("date_format", (value) => {
+            return true;
+        });
+
+        // @TODO handle this
+        // @suraj-webkul
+        defineRule("after", (value) => {
+            return true;
+        });
 
         configure({
             /**

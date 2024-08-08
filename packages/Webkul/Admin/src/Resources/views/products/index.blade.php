@@ -16,7 +16,7 @@
         </div>
 
         <div class="flex items-center gap-x-2.5">
-            <!-- Create button for Sources -->
+            <!-- Create button for Product -->
             @if (bouncer()->hasPermission('products.create'))
                 <div class="flex items-center gap-x-2.5">
                     <a

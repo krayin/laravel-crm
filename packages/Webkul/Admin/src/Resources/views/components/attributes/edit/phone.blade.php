@@ -7,11 +7,11 @@
         <div class="mb-2 flex items-center">
             <input
                 type="text"
-                class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                class="w-full rounded rounded-r-none border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
             >
 
             <div class="relative">
-                <select class="custom-select w-full rounded-none border bg-white px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:mr-6 rtl:ml-6">
+                <select class="custom-select w-full rounded rounded-l-none border bg-white px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:mr-6 rtl:ml-6">
                     <option value="work" selected>@lang('admin::app.common.custom-attributes.work')</option>
                     <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
                 </select>
@@ -35,6 +35,7 @@
                     type="text"
                     ::id="attribute.code"
                     ::name="`${attribute['code']}[${index}][value]`"
+                    class="rounded-r-none"
                     ::rules="getValidation"
                     ::label="attribute.name"
                     v-model="contactNumber['value']"
@@ -45,7 +46,7 @@
                         type="select"
                         ::id="attribute.code"
                         ::name="`${attribute['code']}[${index}][label]`"
-                        class="ltr:mr-6 rtl:ml-6"
+                        class="rounded-l-none ltr:mr-6 rtl:ml-6"
                         rules="required"
                         ::label="attribute.name"
                         v-model="contactNumber['label']"
