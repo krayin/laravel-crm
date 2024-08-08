@@ -26,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="font-normal text-sm pl-[2px]">@{{ inputValue }}</span>
+                <span class="pl-[2px]">@{{ inputValue }}</span>
 
                 <template v-if="allowEdit">
                     <i
@@ -46,7 +46,7 @@
                         type="text"
                         ::id="name"
                         ::name="name"
-                        class="py-1 pr-16 text-normal"
+                        class="py-1 pr-16 !h-[34px]"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"

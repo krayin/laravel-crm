@@ -26,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="font-normal text-sm pl-[2px]">@{{ selectedValue?.name }}</span>
+                <span class="pl-[2px]">@{{ selectedValue?.name }}</span>
 
                 <template v-if="allowEdit">
                     <i

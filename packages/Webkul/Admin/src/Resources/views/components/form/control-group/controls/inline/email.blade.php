@@ -21,7 +21,7 @@
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
-                <span class="font-normal text-sm pl-2">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+                <span class="pl-[2px]">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
 
                 <template v-if="allowEdit">
                     <i
