@@ -61,6 +61,22 @@
             :validations="$validations"
         />
         @break
+{{-- 
+    @case('image')
+        <x-admin::attributes.edit.image
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+        @break
+
+    @case('file')
+        <x-admin::attributes.edit.file
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+        @break --}}
 
     @case('textarea')
         <x-admin::attributes.edit.textarea
