@@ -3,32 +3,38 @@
         @lang('admin::app.settings.groups.index.title')
     </x-slot>
 
-    <v-group-settings>
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <!-- Bredcrumbs -->
-                    <x-admin::breadcrumbs name="settings.groups" />
-                </div>
-    
-                <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.settings.groups.index.title')
-                </div>
+    <!-- Header section -->
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <!-- Bredcrumbs -->
+                <x-admin::breadcrumbs name="settings.groups" />
             </div>
-    
-            <div class="flex items-center gap-x-2.5">
-                <!-- Create button for person -->
-                <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.groups.index.create-btn')
-                    </button>
-                </div>
+
+            <div class="text-xl font-bold dark:text-gray-300">
+                @lang('admin::app.settings.groups.index.title')
             </div>
         </div>
+
+        <div class="flex items-center gap-x-2.5">
+            {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
+            
+            <!-- Create button for Group -->
+            <div class="flex items-center gap-x-2.5">
+                <button
+                    type="button"
+                    class="primary-button"
+                    @click="$refs.groupSettings.openModal()"
+                >
+                    @lang('admin::app.settings.groups.index.create-btn')
+                </button>
+            </div>
+
+            {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
+        </div>
+    </div>
     
+    <v-group-settings ref="groupSettings">
         <!-- DataGrid Shimmer -->
         <x-admin::shimmer.datagrid />
     </v-group-settings>
@@ -38,35 +44,6 @@
             type="text/x-template"
             id="group-settings-template"
         >
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        <!-- Bredcrumbs -->
-                        <x-admin::breadcrumbs name="settings.groups" />
-                    </div>
-        
-                    <div class="text-xl font-bold dark:text-gray-300">
-                        @lang('admin::app.settings.groups.index.title')
-                    </div>
-                </div>
-
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for person -->
-                    <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
-        
-                        <x-admin::button
-                            button-type="button"
-                            class="primary-button justify-center"
-                            :title="trans('admin::app.settings.groups.index.create-btn')"
-                            @click="selectedGroup=false; $refs.groupUpdateAndCreateModal.toggle()"
-                        />
-        
-                        {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
-                    </div>
-                </div>
-            </div>
-        
             {!! view_render_event('krayin.admin.settings.groups.index.datagrid.before') !!}
         
             <!-- DataGrid -->
@@ -239,6 +216,10 @@
                 },
 
                 methods: {
+                    openModal() {
+                        this.$refs.groupUpdateAndCreateModal.toggle();
+                    },
+                    
                     updateOrCreate(params, {resetForm, setErrors}) {
                         this.isProcessing = true;
 
