@@ -1364,6 +1364,13 @@ return [
                 'no'                  => 'No',
                 'yes'                 => 'Yes',
             ],
+
+            'kanban' => [
+                'toolbar' => [
+                    'filter'  => 'Filter',
+                    'filters' => 'Filters',
+                ],
+            ],
         ],
 
         'create' => [

@@ -82,7 +82,18 @@ class LeadController extends Controller
             $data[$stage->id] = (new StageResource($stage))->jsonSerialize();
 
             $data[$stage->id]['leads'] = [
-                'data' => LeadResource::collection($paginator = $query->paginate(10)),
+                'data' => LeadResource::collection($paginator = $query->with([
+                    'tags',
+                    'type',
+                    'source',
+                    'user',
+                    'person',
+                    'person.organization',
+                    'pipeline',
+                    'pipeline.stages',
+                    'stage',
+                    'attribute_values'
+                ])->paginate(10)),
 
                 'meta' => [
                     'current_page' => $paginator->currentPage(),
