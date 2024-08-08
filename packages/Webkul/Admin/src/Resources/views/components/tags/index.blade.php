@@ -14,23 +14,23 @@
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-tags-template">
-        <div class="flex items-center gap-1">
+        <div class="flex flex-wrap items-center gap-1">
             <!-- Tags -->
             <span
-                class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                 :style="{
                     'background-color': tag.color,
                     'color': backgroundColors.find(color => color.background === tag.color)?.text
                 }"
                 v-for="(tag, index) in tags"
+                v-html="tag.name"
             >
-                @{{ tag.name }}
             </span>
 
             <!-- Add Button -->
             <x-admin::dropdown ::close-on-click="false">
                 <x-slot:toggle>
-                    <button class="icon-add rounded-md p-1 text-xl transition-all hover:bg-gray-200"></button>
+                    <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200"></button>
                 </x-slot>
 
                 <x-slot:content class="!p-0">
@@ -103,70 +103,72 @@
                             
                             <!-- Added Tags List -->
                             <ul class="flex flex-col">
-                                <li
-                                    class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800"
-                                    v-for="tag in tags"
-                                >
-                                    <!-- Name -->
-                                    <span
-                                        class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
-                                        :style="{
-                                            'background-color': tag.color,
-                                            'color': backgroundColors.find(color => color.background === tag.color)?.text
-                                        }"
+                                <template v-for="tag in tags">
+                                    <li
+                                        class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800"
+                                        v-if="tag.id"
                                     >
-                                        @{{ tag.name }}
-                                    </span>
+                                        <!-- Name -->
+                                        <span
+                                            class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                            :style="{
+                                                'background-color': tag.color,
+                                                'color': backgroundColors.find(color => color.background === tag.color)?.text
+                                            }"
+                                        >
+                                            @{{ tag.name }}
+                                        </span>
 
-                                    <!-- Action -->
-                                    <div class="flex items-center gap-1">
-                                        <x-admin::dropdown position="bottom-right">
-                                            <x-slot:toggle>
-                                                <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
-                                                    <span
-                                                        class="h-4 w-4 rounded-full"
-                                                        :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                        <!-- Action -->
+                                        <div class="flex items-center gap-1">
+                                            <x-admin::dropdown position="bottom-right">
+                                                <x-slot:toggle>
+                                                    <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
+                                                        <span
+                                                            class="h-4 w-4 rounded-full"
+                                                            :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                                        >
+                                                        </span>
+
+                                                        <span class="icon-down-arrow text-xl"></span>
+                                                    </button>
+                                                </x-slot>
+
+                                                <x-slot:menu class="!top-7 !p-0">
+                                                    <x-admin::dropdown.menu.item
+                                                        class="top-5 flex gap-2"
+                                                        ::class="{ 'bg-gray-100': tag.color === color.background }"
+                                                        v-for="color in backgroundColors"
+                                                        @click="update(tag, color)"
                                                     >
-                                                    </span>
+                                                        <span
+                                                            class="flex h-4 w-4 rounded-full"
+                                                            :style="'background-color: ' + color.background"
+                                                        >
+                                                        </span>
 
-                                                    <span class="icon-down-arrow text-xl"></span>
-                                                </button>
-                                            </x-slot>
+                                                        @{{ color.label }}
+                                                    </x-admin::dropdown.menu.item>
+                                                </x-slot>
+                                            </x-admin::dropdown>
+                                            
+                                            <div class="flex items-center">
+                                                <span
+                                                    class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
+                                                    v-show="! isRemoving[tag.id]"
+                                                    @click="detachFromEntity(tag)"
+                                                ></span>
 
-                                            <x-slot:menu class="!top-7 !p-0">
-                                                <x-admin::dropdown.menu.item
-                                                    class="top-5 flex gap-2"
-                                                    ::class="{ 'bg-gray-100': tag.color === color.background }"
-                                                    v-for="color in backgroundColors"
-                                                    @click="update(tag, color)"
+                                                <span
+                                                    class="p-1"
+                                                    v-show="isRemoving[tag.id]"
                                                 >
-                                                    <span
-                                                        class="flex h-4 w-4 rounded-full"
-                                                        :style="'background-color: ' + color.background"
-                                                    >
-                                                    </span>
-
-                                                    @{{ color.label }}
-                                                </x-admin::dropdown.menu.item>
-                                            </x-slot>
-                                        </x-admin::dropdown>
-                                        
-                                        <div class="flex items-center">
-                                            <span
-                                                class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
-                                                v-show="! isRemoving[tag.id]"
-                                                @click="detachFromEntity(tag)"
-                                            ></span>
-
-                                            <span
-                                                class="p-1"
-                                                v-show="isRemoving[tag.id]"
-                                            >
-                                                <x-admin::spinner />
-                                            </span>
+                                                    <x-admin::spinner />
+                                                </span>
+                                            </div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li>
+                                </template>
                             </ul>
                         </div>
                     </div>
@@ -270,17 +272,18 @@
                     
                     this.$axios.get("{{ route('admin.settings.tags.search') }}", {
                             params: {
-                                query: this.searchTerm
+                                search: 'name:' + this.searchTerm,
+                                searchFields: 'name:like',
                             }
                         })
                         .then (function(response) {
                             self.tags.forEach(function(addedTag) {
-                                response.data = response.data.filter(function(tag) {
+                                response.data.data = response.data.data.filter(function(tag) {
                                     return tag.id !== addedTag.id;
                                 });
                             });
 
-                            self.searchedTags = response.data;
+                            self.searchedTags = response.data.data;
 
                             self.isSearching = false;
                         })

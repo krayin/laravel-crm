@@ -24,11 +24,22 @@
                 <!-- Tags -->
                 {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
 
-                <x-admin::tags
-                    :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
-                    :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
-                    :added-tags="$lead->tags"
-                />
+                <div class="mb-2">
+                    @if (($days = $lead->rotten_days) > 0)
+                        @php
+                            $lead->tags->prepend([
+                                'name'  => '<span class="icon-rotten text-base"></span>' . trans('admin::app.leads.view.rotten-days', ['days' => $days]),
+                                'color' => '#FEE2E2'
+                            ]);
+                        @endphp
+                    @endif
+
+                    <x-admin::tags
+                        :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
+                        :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
+                        :added-tags="$lead->tags"
+                    />
+                </div>
 
                 {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
 
@@ -66,7 +77,7 @@
             </div>
             
             <!-- Lead Attributes -->
-            @include ('admin::leads.view.attributes')
+            {{-- @include ('admin::leads.view.attributes') --}}
 
             <!-- Contact Person -->
             @include ('admin::leads.view.person')
@@ -86,7 +97,22 @@
             <!-- Activities -->
             {!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
 
-            <x-admin::activities :endpoint="route('admin.leads.activities.index', $lead->id)" />
+            <x-admin::activities
+                :endpoint="route('admin.leads.activities.index', $lead->id)"
+                :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
+                :extra-types="[
+                    ['name' => 'products', 'label' => 'Products'],
+                    ['name' => 'quotes', 'label' => 'Quotes'],
+                ]"
+            >
+                <x-slot:products>
+                    Testing Products
+                </x-slot>
+
+                <x-slot:quotes>
+                    Testing Quotes
+                </x-slot>
+            </x-admin::activities>
 
             {!! view_render_event('admin.leads.view.activities.after', ['lead' => $lead]) !!}
         </div>

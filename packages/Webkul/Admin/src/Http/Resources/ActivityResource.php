@@ -16,10 +16,11 @@ class ActivityResource extends JsonResource
     {
         return [
             'id'            => $this->id,
+            'parent_id'     => $this->parent_id ?? null,
             'title'         => $this->title,
             'type'          => $this->type,
             'comment'       => $this->comment,
-            'additional'    => $this->additional,
+            'additional'    => $this->resource->additional,
             'schedule_from' => $this->schedule_from,
             'schedule_to'   => $this->schedule_to,
             'is_done'       => $this->is_done,
