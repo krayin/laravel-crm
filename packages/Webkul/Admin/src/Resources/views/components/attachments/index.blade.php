@@ -1,130 +1,184 @@
 @props([
-    'name'          => null,
-    'allowMultiple' => false,
+    'name'                => 'attachments',
+    'validations'         => null,
+    'uploadedAttachments' => [],
+    'allowMultiple'       => false,
+    'hideButton'          => false,
 ])
 
-<v-attachment
+<v-attachments
     name="{{ $name }}"
+    validations="{{ $validations }}"
+    :uploaded-attachments='{{ json_encode($uploadedAttachments) }}'
     :allow-multiple="{{ $allowMultiple }}"
-></v-attachment>
+    :hide-button="{{ $hideButton }}"
+>
+</v-attachments>
 
 @pushOnce('scripts')
     <script
         type="text/x-template"
-        id="v-attachment-template"
+        id="v-attachments-template"
     >
-        <div class="w-full max-w-md mx-auto">
-            <!-- Attachment List -->
-            <div
-                v-if="attachments.length"
-                class="flex flex-wrap gap-2"
+        <!-- File Attachment Input -->
+        <div
+            class="relative items-center"
+            v-show="! hideButton"
+        >
+            <input
+                type="file"
+                class="hidden"
+                id="file-upload"
+                accept="attachment/*"
+                :multiple="allowMultiple"
+                :ref="$.uid + '_attachmentInput'"
+                @change="add"
+            />
+
+            <label
+                class="flex cursor-pointer items-center gap-1"
+                for="file-upload"
             >
-                <div 
-                    v-for="(file, index) in attachments" 
-                    :key="index" 
-                    class="flex gap-2 items-center justify-center bg-gray-100 rounded-md px-4 py-2"
+                <i class="icon-attachmetent text-xl font-medium"></i>
+
+                <span class="font-semibold">
+                    @lang('Add Attachments')
+                </span>
+            </label>
+        </div>
+
+        <!-- Uploaded attachments -->
+        <div
+            v-if="attachments?.length"
+            class="flex flex-wrap gap-2"
+        >
+            <template v-for="(attachment, index) in attachments">
+                <v-attachment-item
+                    :name="name"
+                    :index="index"
+                    :attachment="attachment"
+                    @onRemove="remove($event)"
                 >
-                    <div class="flex gap-1 items-center justify-center">
-                        <span class="mr-2 truncate max-w-xs">@{{ file.name }}</span>
+                </v-attachment-item>
+            </template>
+        </div>
+    </script>
 
-                        <i 
-                            @click="removeAttachment(index)"
-                            class="icon-cross-large !font-semibold cursor-pointer"
-                        ></i>
-                    </div>
-                </div>
-            </div>
+    <script type="text/x-template" id="v-attachment-item-template">
+        <div class="flex items-center gap-2 rounded-md bg-gray-100 px-2.5 py-1">
+            <span class="max-w-xs truncate">
+                @{{ attachment.name }}
+            </span>
 
-            <!-- File Attachment Input -->
-            <div class="mb-4">
-                <div class="relative flex items-center border-gray-300 rounded-lg pt-4 hover:border-gray-400 cursor-pointer">
-                    <input 
-                        id="file-upload" 
-                        type="file" 
-                        :name="name"
-                        class="absolute inset-0 opacity-0 cursor-pointer" 
-                        @change="handleFileUpload" 
-                        ref="fileInput"
-                        :multiple="allowMultiple"
-                    />
+            <x-admin::form.control-group.control
+                type="file"
+                ::name="name + '[]'"
+                class="hidden" 
+                ::ref="$.uid + '_attachmentInput_' + index"
+            />
 
-                    <div class="flex gap-2 items-center justify-center">
-                        <i class="icon-attachmetent text-xl font-medium"></i>
-
-                        <span class="text-base font-medium text-gray-800 my-2">@lang('Add Attachments')</span>
-                    </div>
-                </div>
-            </div>
-        
+            <i 
+                class="icon-cross-large cursor-pointer rounded-md p-0.5 text-xl hover:bg-gray-200"
+                @click="remove"
+            ></i>
         </div>
     </script>
 
     <script type="module">
-        app.component('v-attachment', {
-            template: '#v-attachment-template',
+        app.component('v-attachments', {
+            template: '#v-attachments-template',
 
             props: {
                 name: {
+                    type: String, 
+                    default: 'attachments',
+                },
+
+                validations: {
                     type: String,
-                    default: 'attachments[]',
+                    default: '',
+                },
+
+                uploadedAttachments: {
+                    type: Array,
+                    default: () => []
                 },
 
                 allowMultiple: {
                     type: Boolean,
                     default: false,
                 },
+
+                hideButton: {
+                    type: Boolean,
+                    default: false,
+                },
+
+                errors: {
+                    type: Object,
+                    default: () => {}
+                }
             },
 
             data() {
                 return {
                     attachments: [],
-                };
+                }
+            },
+
+            mounted() {
+                this.attachments = this.uploadedAttachments;
             },
 
             methods: {
-                /**
-                 * Handle file upload event.
-                 * 
-                 * @param {Event} event
-                 * @return {void}
-                 */
-                handleFileUpload(event) {
-                    const files = Array.from(event.target.files);
+                add() {
+                    let attachmentInput = this.$refs[this.$.uid + '_attachmentInput'];
 
-                    if (this.allowMultiple) {
-                        this.attachments.push(...files);
-                    } else {
-                        this.attachments = [files[0]];
+                    if (attachmentInput.files == undefined) {
+                        return;
                     }
 
-                    this.updateFileInput();
+                    attachmentInput.files.forEach((file, index) => {
+                        this.attachments.push({
+                            id: 'attachment_' + this.attachments.length,
+                            name: file.name,
+                            file: file
+                        });
+                    });
                 },
 
-                /**
-                 * Remove attachment from the list.
-                 * 
-                 * @param {Number} index
-                 * @return {void}
-                 */
-                removeAttachment(index) {
+                remove(attachment) {
+                    let index = this.attachments.indexOf(attachment);
+
                     this.attachments.splice(index, 1);
+                },
+            }
+        });
 
-                    this.updateFileInput();
+        app.component('v-attachment-item', {
+            template: '#v-attachment-item-template',
+
+            props: ['index', 'attachment', 'name'],
+
+            mounted() {
+                if (this.attachment.file instanceof File) {
+                    this.setFile(this.attachment.file);
+                }
+            },
+
+            methods: {
+                remove() {
+                    this.$emit('onRemove', this.attachment)
                 },
 
-                /**
-                 * Update file input with the selected files.
-                 *
-                 * @return {void}
-                 */
-                updateFileInput() {
+                setFile(file) {
                     const dataTransfer = new DataTransfer();
 
-                    this.attachments.forEach(file => dataTransfer.items.add(file));
+                    dataTransfer.items.add(file);
 
-                    this.$refs.fileInput.files = dataTransfer.files;
+                    this.$refs[this.$.uid + '_attachmentInput_' + this.index].files = dataTransfer.files;
                 },
-            },
+            }
         });
     </script>
 @endPushOnce

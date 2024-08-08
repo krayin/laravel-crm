@@ -148,15 +148,13 @@
         </v-dark>
         
         <!-- Notification Component -->
-        <v-notifications {{ $attributes }}>
-            <span class="relative flex">
-                <span 
-                    class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950" 
-                    title="@lang('admin::app.components.layouts.header.notifications')"
-                >
-                </span>
+        <span class="relative flex">
+            <span 
+                class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950" 
+                title="@lang('admin::app.components.layouts.header.notifications')"
+            >
             </span>
-        </v-notifications>
+        </span>
             
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-right">

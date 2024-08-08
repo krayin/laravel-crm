@@ -5,6 +5,7 @@ namespace Webkul\Admin\Http\Controllers\Settings;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Settings\TagDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
@@ -125,11 +126,11 @@ class TagController extends Controller
      */
     public function search()
     {
-        $results = $this->tagRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
-        ]);
+        $tags = $this->tagRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
 
-        return response()->json($results);
+        return TagResource::collection($tags);
     }
 
     /**

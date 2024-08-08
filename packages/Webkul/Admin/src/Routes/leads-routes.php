@@ -5,6 +5,7 @@ use Webkul\Admin\Http\Controllers\Lead\ActivityController;
 use Webkul\Admin\Http\Controllers\Lead\LeadController;
 use Webkul\Admin\Http\Controllers\Lead\QuoteController;
 use Webkul\Admin\Http\Controllers\Lead\TagController;
+use Webkul\Admin\Http\Controllers\Lead\EmailController;
 
 /**
  * Settings routes.
@@ -21,6 +22,8 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
         Route::post('create', 'store')->name('admin.leads.store');
 
         Route::get('view/{id}', 'view')->name('admin.leads.view');
+
+        Route::get('edit/{id}', 'edit')->name('admin.leads.edit');
 
         Route::put('edit/{id}', 'update')->name('admin.leads.update');
 
@@ -42,6 +45,12 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
             Route::post('', 'attach')->name('admin.leads.tags.attach');
 
             Route::delete('', 'detach')->name('admin.leads.tags.detach');
+        });
+
+        Route::controller(EmailController::class)->prefix('{id}/emails')->group(function () {
+            Route::post('', 'store')->name('admin.leads.emails.store');
+
+            Route::delete('', 'detach')->name('admin.leads.emails.detach');
         });
 
         Route::controller(QuoteController::class)->prefix('{id}/quotes')->group(function () {

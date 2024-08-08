@@ -152,6 +152,8 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
             Route::put('edit/{id}', 'update')->name('admin.settings.users.update');
 
+            Route::get('search', 'search')->name('admin.settings.users.search');
+
             Route::delete('{id}', 'destroy')->name('admin.settings.users.delete');
 
             Route::put('mass-update', 'massUpdate')->name('admin.settings.users.mass_update');

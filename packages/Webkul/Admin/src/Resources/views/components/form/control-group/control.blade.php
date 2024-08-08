@@ -59,7 +59,7 @@
     @case('file')
         <v-field
             v-slot="{ field, errors, handleChange, handleBlur }"
-            {{ $attributes->only(['name', ':name', 'value', ':value', 'v-model', 'rules', ':rules', ':rules', 'label', ':label']) }}
+            {{ $attributes->only(['name', ':name', 'value', ':value', 'v-model', 'rules', ':rules', 'label', ':label']) }}
             name="{{ $name }}"
         >
             <input

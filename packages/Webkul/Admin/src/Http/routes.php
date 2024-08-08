@@ -33,27 +33,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
                 });
             });
 
-            Route::group([
-                'prefix'    => 'mail',
-                'namespace' => 'Webkul\Admin\Http\Controllers\Mail',
-            ], function () {
-                Route::post('create', 'EmailController@store')->name('admin.mail.store');
-
-                Route::put('edit/{id?}', 'EmailController@update')->name('admin.mail.update');
-
-                Route::get('attachment-download/{id?}', 'EmailController@download')->name('admin.mail.attachment_download');
-
-                Route::get('{route?}', 'EmailController@index')->name('admin.mail.index');
-
-                Route::get('{route?}/{id?}', 'EmailController@view')->name('admin.mail.view');
-
-                Route::delete('{id?}', 'EmailController@destroy')->name('admin.mail.delete');
-
-                Route::put('mass-update', 'EmailController@massUpdate')->name('admin.mail.mass_update');
-
-                Route::put('mass-destroy', 'EmailController@massDestroy')->name('admin.mail.mass_delete');
-            });
-
             // Settings Routes
             Route::group([
                 'prefix'    => 'settings',

@@ -4,7 +4,7 @@
     </x-slot>
 
     <!-- Content -->
-    <div class="flex gap-4">
+    <div class="relative flex gap-4">
         <!-- Left Panel -->
         {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
 
@@ -24,11 +24,22 @@
                 <!-- Tags -->
                 {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
 
-                <x-admin::tags
-                    :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
-                    :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
-                    :added-tags="$lead->tags"
-                />
+                <div class="mb-2">
+                    @if (($days = $lead->rotten_days) > 0)
+                        @php
+                            $lead->tags->prepend([
+                                'name'  => '<span class="icon-rotten text-base"></span>' . trans('admin::app.leads.view.rotten-days', ['days' => $days]),
+                                'color' => '#FEE2E2'
+                            ]);
+                        @endphp
+                    @endif
+
+                    <x-admin::tags
+                        :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
+                        :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
+                        :added-tags="$lead->tags"
+                    />
+                </div>
 
                 {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
 
@@ -39,29 +50,33 @@
 
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
-                    <!-- Mail Activity Action -->
-                    <x-admin::activities.actions.mail
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                    @if (bouncer()->hasPermission('mail.compose'))
+                        <!-- Mail Activity Action -->
+                        <x-admin::activities.actions.mail
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
+                    @endif
 
-                    <!-- File Activity Action -->
-                    <x-admin::activities.actions.file
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                    @if (bouncer()->hasPermission('activities.create'))
+                        <!-- File Activity Action -->
+                        <x-admin::activities.actions.file
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
 
-                    <!-- Note Activity Action -->
-                    <x-admin::activities.actions.note
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                        <!-- Note Activity Action -->
+                        <x-admin::activities.actions.note
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
 
-                    <!-- Activity Action -->
-                    <x-admin::activities.actions.activity
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                        <!-- Activity Action -->
+                        <x-admin::activities.actions.activity
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
+                    @endif
                 </div>
             </div>
             
@@ -86,7 +101,24 @@
             <!-- Activities -->
             {!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
 
-            <x-admin::activities :endpoint="route('admin.leads.activities.index', $lead->id)" />
+            <x-admin::activities
+                :endpoint="route('admin.leads.activities.index', $lead->id)"
+                :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
+                :extra-types="[
+                    ['name' => 'products', 'label' => 'Products'],
+                    ['name' => 'quotes', 'label' => 'Quotes'],
+                ]"
+            >
+                <!-- Products -->
+                <x-slot:products>
+                    @include ('admin::leads.view.products')
+                </x-slot>
+
+                <!-- Quotes -->
+                <x-slot:quotes>
+                    @include ('admin::leads.view.quotes')
+                </x-slot>
+            </x-admin::activities>
 
             {!! view_render_event('admin.leads.view.activities.after', ['lead' => $lead]) !!}
         </div>
