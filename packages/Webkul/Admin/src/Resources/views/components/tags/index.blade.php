@@ -79,14 +79,16 @@
                                             @{{ tag.name }}
                                         </li>
 
-                                        <template v-if="! searchedTags.length && ! isSearching">
-                                            <li
-                                                class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950"
-                                                @click="create"
-                                            >
-                                                @{{ "@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
-                                            </li>
-                                        </template>
+                                        @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
+                                            <template v-if="! searchedTags.length && ! isSearching">
+                                                <li
+                                                    class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950"
+                                                    @click="create"
+                                                >
+                                                    @{{ "@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
+                                                </li>
+                                            </template>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -121,51 +123,55 @@
 
                                         <!-- Action -->
                                         <div class="flex items-center gap-1">
-                                            <x-admin::dropdown position="bottom-right">
-                                                <x-slot:toggle>
-                                                    <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
-                                                        <span
-                                                            class="h-4 w-4 rounded-full"
-                                                            :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                            @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
+                                                <x-admin::dropdown position="bottom-right">
+                                                    <x-slot:toggle>
+                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
+                                                            <span
+                                                                class="h-4 w-4 rounded-full"
+                                                                :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
+                                                            >
+                                                            </span>
+
+                                                            <span class="icon-down-arrow text-xl"></span>
+                                                        </button>
+                                                    </x-slot>
+
+                                                    <x-slot:menu class="!top-7 !p-0">
+                                                        <x-admin::dropdown.menu.item
+                                                            class="top-5 flex gap-2"
+                                                            ::class="{ 'bg-gray-100': tag.color === color.background }"
+                                                            v-for="color in backgroundColors"
+                                                            @click="update(tag, color)"
                                                         >
-                                                        </span>
+                                                            <span
+                                                                class="flex h-4 w-4 rounded-full"
+                                                                :style="'background-color: ' + color.background"
+                                                            >
+                                                            </span>
 
-                                                        <span class="icon-down-arrow text-xl"></span>
-                                                    </button>
-                                                </x-slot>
-
-                                                <x-slot:menu class="!top-7 !p-0">
-                                                    <x-admin::dropdown.menu.item
-                                                        class="top-5 flex gap-2"
-                                                        ::class="{ 'bg-gray-100': tag.color === color.background }"
-                                                        v-for="color in backgroundColors"
-                                                        @click="update(tag, color)"
-                                                    >
-                                                        <span
-                                                            class="flex h-4 w-4 rounded-full"
-                                                            :style="'background-color: ' + color.background"
-                                                        >
-                                                        </span>
-
-                                                        @{{ color.label }}
-                                                    </x-admin::dropdown.menu.item>
-                                                </x-slot>
-                                            </x-admin::dropdown>
+                                                            @{{ color.label }}
+                                                        </x-admin::dropdown.menu.item>
+                                                    </x-slot>
+                                                </x-admin::dropdown>
+                                            @endif
                                             
-                                            <div class="flex items-center">
-                                                <span
-                                                    class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
-                                                    v-show="! isRemoving[tag.id]"
-                                                    @click="detachFromEntity(tag)"
-                                                ></span>
+                                            @if (bouncer()->hasPermission('settings.other_settings.tags.delete'))
+                                                <div class="flex items-center">
+                                                    <span
+                                                        class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
+                                                        v-show="! isRemoving[tag.id]"
+                                                        @click="detachFromEntity(tag)"
+                                                    ></span>
 
-                                                <span
-                                                    class="p-1"
-                                                    v-show="isRemoving[tag.id]"
-                                                >
-                                                    <x-admin::spinner />
-                                                </span>
-                                            </div>
+                                                    <span
+                                                        class="p-1"
+                                                        v-show="isRemoving[tag.id]"
+                                                    >
+                                                        <x-admin::spinner />
+                                                    </span>
+                                                </div>
+                                            @endif
                                         </div>
                                     </li>
                                 </template>

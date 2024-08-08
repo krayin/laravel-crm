@@ -4,7 +4,7 @@
     </x-slot>
 
     <!-- Content -->
-    <div class="flex gap-4">
+    <div class="relative flex gap-4">
         <!-- Left Panel -->
         {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
 
@@ -50,34 +50,38 @@
 
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
-                    <!-- Mail Activity Action -->
-                    <x-admin::activities.actions.mail
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                    @if (bouncer()->hasPermission('mail.compose'))
+                        <!-- Mail Activity Action -->
+                        <x-admin::activities.actions.mail
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
+                    @endif
 
-                    <!-- File Activity Action -->
-                    <x-admin::activities.actions.file
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                    @if (bouncer()->hasPermission('activities.create'))
+                        <!-- File Activity Action -->
+                        <x-admin::activities.actions.file
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
 
-                    <!-- Note Activity Action -->
-                    <x-admin::activities.actions.note
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                        <!-- Note Activity Action -->
+                        <x-admin::activities.actions.note
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
 
-                    <!-- Activity Action -->
-                    <x-admin::activities.actions.activity
-                        :entity="$lead"
-                        entity-control-name="lead_id"
-                    />
+                        <!-- Activity Action -->
+                        <x-admin::activities.actions.activity
+                            :entity="$lead"
+                            entity-control-name="lead_id"
+                        />
+                    @endif
                 </div>
             </div>
             
             <!-- Lead Attributes -->
-            {{-- @include ('admin::leads.view.attributes') --}}
+            @include ('admin::leads.view.attributes')
 
             <!-- Contact Person -->
             @include ('admin::leads.view.person')
@@ -105,12 +109,14 @@
                     ['name' => 'quotes', 'label' => 'Quotes'],
                 ]"
             >
+                <!-- Products -->
                 <x-slot:products>
-                    Testing Products
+                    @include ('admin::leads.view.products')
                 </x-slot>
 
+                <!-- Quotes -->
                 <x-slot:quotes>
-                    Testing Quotes
+                    @include ('admin::leads.view.quotes')
                 </x-slot>
             </x-admin::activities>
 
