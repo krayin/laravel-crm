@@ -57,26 +57,21 @@
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
-            <!-- Stages Navigation -->
-            <x-admin::activities 
+            <!-- Activity Navigation -->
+            <x-admin::activities
                 :endpoint="route('admin.products.activities.index', $product->id)" 
                 :types="[
                     ['name' => 'all', 'label' => trans('admin::app.products.view.all')],
                     ['name' => 'note', 'label' => trans('admin::app.products.view.notes')],
                 ]"
-            ></x-admin::activities>
-
-            <!-- Inventory Component -->
-
-            <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                <div class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                    @lang('admin::app.products.view.inventories')
-                </div>
-                
-                <!-- Inventory Section -->
-                @include('admin::products.view.inventory')
-            </div>
-    
+                :extra-types="[
+                    ['name' => 'inventory', 'label' => 'Inventory'],
+                ]"
+            >
+                <x-slot:inventory>
+                    @include('admin::products.view.inventory')
+                </x-slot>
+            </x-admin::activities>
         </div>
 
         {!! view_render_event('admin.products.view.right.after', ['product' => $product]) !!}

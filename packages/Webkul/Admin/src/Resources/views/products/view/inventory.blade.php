@@ -3,7 +3,7 @@
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-product-inventories-template">
-        <div>
+        <div class="p-4">
             <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
                 <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -128,7 +128,10 @@
                                     @{{ selectedWarehouse.name }}
                                 </p>
                                 
-                                <button class="primary-button ltr:mr-11 rtl:ml-11">
+                                <button
+                                    type="submit"
+                                    class="primary-button ltr:mr-11 rtl:ml-11"
+                                >
                                      @lang('admin::app.products.view.inventory.save')
                                 </button>
                             </div>
@@ -201,26 +204,21 @@
                         ::src="src"
                         ::name="`${inputName('warehouse_location_id')}`"
                         ::params="params"
-                        v-model="location['name']"
+                        v-model="location['id']"
+                        rules="required"
                         :placeholder="trans('admin::app.products.view.inventory.location')"
+                        :label="trans('admin::app.products.view.inventory.location')"
                         @on-selected="add"
                         ::value="{ id: location.id, name: location.name }"
                     />
 
-                    <x-admin::form.control-group.control
+                    <input
                         type="hidden"
-                        ::name="'inventories[inventory_' + index + '][warehouse_location_id]'"
-                        v-model="location.id"
-                        rules="required"
-                        :label="trans('admin::app.products.view.inventory.location')"
-                    />
-                    <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][warehouse_location_id]'" />
-
-                    <x-admin::form.control-group.control
-                        type="hidden"
-                        ::name="'inventories[inventory_' + index + '][warehouse_id]'"
+                        :name="'inventories[inventory_' + index + '][warehouse_id]'"
                         v-model="warehouse.id"
                     />
+
+                    <x-admin::form.control-group.error ::name="`${inputName('warehouse_location_id')}`"/>
                 </x-admin::form.control-group>
             </x-admin::table.td>
 
@@ -333,10 +331,10 @@
                     }, 0);
                 },
 
-                onSubmit() {
-                    let params = new FormData(this.$refs.locationForm);
+                onSubmit(params, { setErrors }) {
+                    let formData = new FormData(this.$refs.locationForm);
 
-                    this.$axios.post("{{ route('admin.products.inventories.store', ['id' => $product->id, 'warehouseId' => 'warehouseId']) }}".replace('warehouseId', this.selectedWarehouse.id), params).then(response => {
+                    this.$axios.post("{{ route('admin.products.inventories.store', ['id' => $product->id, 'warehouseId' => 'warehouseId']) }}".replace('warehouseId', this.selectedWarehouse.id), formData).then(response => {
                         this.getAllWarehouses();
 
                         this.getProductWarehouses();
@@ -346,6 +344,8 @@
                         this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                     })
                     .catch(error => {
+                        setErrors(error.response.data.errors);
+                        
                         this.$emitter.emit('add-flash', { type: 'error', message: response.data.message });
                     });
                 },
