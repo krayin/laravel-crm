@@ -1,3 +1,14 @@
+@php
+    $html = ($email->lead_id && view()->exists($view = 'admin::components.attributes.view'))
+        ? view($view, [
+            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                    'entity_type' => 'leads',
+                ]),
+                'entity' => $email->lead,
+            ])->render() 
+        : '';
+@endphp
+
 <x-admin::layouts>
     <div class="flex flex-col gap-4">
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -19,35 +30,18 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Mail Linking -->
                 <div class="flex items-center gap-x-2.5">
-                   
-                    <x-admin::drawer
-                        width="350px"
-                        ref="filterDrawer"
-                    >
-                        <x-slot:toggle>
-                            <button
-                                type="button"
-                                class="primary-button"
-                            >
-                                @lang('Link Mail')
-                            </button>
-                        </x-slot>
+                    <!-- Link Mail -->
+                    <v-action-email>
+                        <button
+                            type="button"
+                            class="primary-button"
+                        >
+                            @lang('Link Mail')
+                        </button>
+                    </v-action-email>
 
-                        <x-slot:header class="p-3.5">
-                            <!-- Apply Filter Title -->
-                            <div class="flex items-center justify-between">
-                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    @lang('Link Mail')
-                                </p>
-                            </div>
-                        </x-slot>
-                        
-                        <x-slot:content class="p-3.5">
-                        </x-slot>
-
-                        <x-slot:footer class="p-3.5">
-                        </x-slot>
-                    </x-admin::drawer>
+                    <!-- Create Contact Modal -->
+                    <v-create-contact></v-create-contact>
                 </div>
             </div>
         </div>
@@ -58,6 +52,7 @@
     </div>
 
     @pushOnce('scripts')
+        <!-- Email List Template -->
         <script
             type="text/x-template"
             id="v-email-list-template"
@@ -82,6 +77,7 @@
             ></v-email-item>
         </script>
 
+        <!-- Email Item Template -->
         <script
             type="text/x-template"
             id="v-email-item-template"
@@ -98,7 +94,7 @@
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span>@{{ email.name }} @{{ email.id }}</span>
+                                <span>@{{ email.name }}</span>
                                 
                                 <div class="flex flex-col gap-1">
                                     <div class="flex">
@@ -250,6 +246,7 @@
             </div>
         </script>
 
+        <!-- Email Form Template -->
         <script
             type="text/x-template"
             id="v-email-form-template"
@@ -413,6 +410,309 @@
             </div>
         </script>
 
+        <!-- Contact Lookup Template -->
+        <script
+            type="text/x-template"
+            id="v-contact-lookup-template"
+        >
+            <div>
+                <template v-if="email?.person_id">
+                    <div class="flex gap-2">
+                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                            @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
+                        </div>
+                
+                        <!-- Mailer receivers -->
+                        <div class="flex flex-col gap-1">
+                            <!-- Mailer Name -->
+                            <span>@{{ email.person.name }}</span>
+
+                            <!-- Mailer Additional Deatils -->
+                            <div class="flex flex-col gap-1">
+                                <div class="flex flex-col">
+                                    <span class="text-sm">@{{ email.person.job_title }}</span>
+
+                                    <span class="text-sm text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+
+                                    <span class="text-sm text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="flex gap-2">
+                                <button
+                                    type="button"
+                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    @click="unlinkContact('person')"
+                                ></button>
+
+                                <a
+                                    :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', email.person_id)"
+                                    class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    @click="unlinkContact(email)"
+                                ></a>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+
+                <template v-else>
+                    <div
+                        class="relative"
+                        ref="lookup"
+                    >
+                        <!-- Input Box (Button) -->
+                        <div
+                            class="relative inline-block w-full"
+                            @click="toggle"
+                        >
+                            <!-- Input-like div -->
+                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
+                                @{{ selectedItem.name ?? '@lang('Search an existing contact')'}}
+                            </div>
+                            
+                            <!-- Arrow down icon -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            </div>
+                        </div>
+
+                        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <div class="flex items-center justify-center space-x-1">                        
+                                <i 
+                                    class="text-2xl"
+                                    :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                                ></i>
+                            </div>
+                        </span>
+
+                        <!-- Popup Box -->
+                        <div 
+                            v-if="showPopup" 
+                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                        >
+                            <!-- Search Bar -->
+                            <div class="relative">
+                                <!-- Input Box -->
+                                <input
+                                    type="text"
+                                    v-model.lazy="searchTerm"
+                                    v-debounce="500"
+                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
+                                    placeholder="Search..."
+                                    ref="searchInput"
+                                    @keyup="search"
+                                />
+                            
+                                <!-- Search Icon (absolute positioned) -->
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <div class="flex items-center justify-center space-x-1">
+                                        <!-- Loader (optional, based on condition) -->
+                                        <div
+                                            class="relative"
+                                            v-if="isSearching"
+                                        >
+                                            <svg
+                                                class="h-5 w-5 animate-spin"
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                aria-hidden="true"
+                                                viewBox="0 0 24 24"
+                                            >
+                                                <circle
+                                                    class="opacity-25"
+                                                    cx="12"
+                                                    cy="12"
+                                                    r="10"
+                                                    stroke="currentColor"
+                                                    stroke-width="4"
+                                                ></circle>
+                                                <path
+                                                    class="opacity-75"
+                                                    fill="currentColor"
+                                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                                ></path>
+                                            </svg>
+                                        </div>
+                            
+                                        <!-- Search Icon -->
+                                        <i class="fas fa-search text-gray-500"></i>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <!-- Results List -->
+                            <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                <li 
+                                    v-for="person in persons" 
+                                    :key="person.id"
+                                    class="flex gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                                    @click="linkContact('person', person)"
+                                >
+                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                        @{{ person.name.split(' ').map(word => word[0]).join('') }}
+                                    </div>
+                            
+                                    <!-- Mailer receivers -->
+                                    <div class="flex flex-col gap-1">
+                                        <!-- Mailer Name -->
+                                        <span>@{{ person.name }}</span>
+                                        
+                                        <div class="flex flex-col gap-1">
+                                            <div class="flex">
+                                                <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>                       
+                            
+                                <li v-if="persons.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                    @lang('No results found')
+                                </li>
+                            </ul>
+
+                            <!-- Add New Contact Button -->
+                            <div
+                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors hover:bg-gray-100"
+                                @click="toggleContactModal"
+                            >
+                                <span>+ Add Item Contact</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </script>
+
+        <!-- Create Contact Template -->
+        <script
+            type="text/x-template"
+            id="v-create-contact-template"
+        >
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+            >
+                <form
+                    @submit="handleSubmit($event, create)"
+                    ref="modalForm"
+                >
+                    <!-- Add Contact Modal -->
+                    <x-admin::modal ref="contactModal">
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                    @lang('Create Contact')
+                                </p>
+                            </div>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    'entity_type' => 'persons',
+                                ])"
+                            />
+                        </x-slot>
+
+                        <x-slot:footer>
+                            <x-admin::button
+                                class="primary-button"
+                                :title="trans('Save Contact')"
+                                ::loading="isStoring"
+                                ::disabled="isStoring"
+                            />
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
+        </script>
+
+        <script
+            type="text/x-template"
+            id="v-action-email-template"
+        >
+            <x-admin::drawer
+                width="350px"
+                ref="filterDrawer"
+            >
+                <x-slot:toggle>
+                    <button
+                        type="button"
+                        class="primary-button"
+                    >
+                        @lang('Link Mail')
+                    </button>
+                </x-slot>
+
+                <x-slot:header class="p-3.5">
+                    <!-- Apply Filter Title -->
+                    <div class="flex items-center justify-between">
+                        <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                            @lang('Link Mail')
+                        </p>
+                    </div>
+                </x-slot>
+                
+                <x-slot:content class="p-3.5">
+                    <div class="flex flex-col gap-4">
+                        <!-- Link to contact -->
+                        <x-admin::form.control-group class="flex gap-2 !mb-0 items-center">
+                            <label 
+                                for="link-to-contact"
+                                class="flex items-center space-x-2"
+                            >
+                                <input 
+                                    type="radio" 
+                                    name="link"
+                                    id="link-to-contact" 
+                                    value="contact" 
+                                    v-model="link"
+                                    class="form-radio h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
+                                />
+                    
+                                <span class="text-gray-700 cursor-pointer">Link To Contact</span>
+                            </label>
+                        </x-admin::form.control-group>
+                    
+                        <template v-if="link == 'contact'">
+                            <v-contact-lookup
+                                @link-contact="linkContact"
+                                @unlink-contact="unlinkContact"
+                                :email="email"
+                            ></v-contact-lookup>
+                        </template>
+
+                        <!-- Link to contact -->
+                        <x-admin::form.control-group class="flex gap-2 !mb-0 items-center">
+                            <label 
+                                for="link-to-lead"
+                                class="flex items-center space-x-2"
+                            >
+                                <input 
+                                    type="radio" 
+                                    name="link"
+                                    id="link-to-lead" 
+                                    value="lead" 
+                                    v-model="link"
+                                    class="form-radio h-5 w-5 text-blue-600 transition duration-150 ease-in-out"
+                                />
+                    
+                                <span class="text-gray-700 cursor-pointer">Link To Lead</span>
+                            </label>
+                        </x-admin::form.control-group>
+                    
+                        <!-- Contact Lookup -->
+                        <template v-if="link == 'lead'">
+                            <v-contact-lookup></v-contact-lookup>
+                        </template>
+                    </div>
+                </x-slot>
+            </x-admin::drawer>
+        </script>
+
+        <!-- Email List Vue Component -->
         <script type="module">
             app.component('v-email-list', {
                 template: '#v-email-list-template',
@@ -471,6 +771,7 @@
             });
         </script>
 
+        <!-- Email Item Vue Component -->
         <script type="module">
             app.component('v-email-item', {
                 template: '#v-email-item-template',
@@ -508,6 +809,7 @@
             });
         </script>
 
+        <!-- Email Form Vue Component -->
         <script type="module">
             app.component('v-email-form', {
                 template: '#v-email-form-template',
@@ -582,6 +884,8 @@
                     save(params, { resetForm, setErrors  }) {
                         let formData = new FormData(this.$refs.mailActionForm);
 
+                        this.isStoring = true;
+
                         this.$axios.post("{{ route('admin.mail.store') }}", formData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
@@ -605,6 +909,270 @@
                             });
                     },
                 },
+            });
+        </script>
+
+        <!-- Contact Lookup Component -->
+        <script type="module">
+            app.component('v-contact-lookup', {
+                template: '#v-contact-lookup-template',
+
+                props: ['email'],
+
+                emits: ['link-contact', 'unlink-contact'],
+
+                data() {
+                    return {
+                        showPopup: false,
+
+                        searchTerm: '',
+
+                        selectedItem: {},
+
+                        searchedResults: [],
+
+                        isSearching: false,
+
+                        cancelToken: null,
+                    };
+                },
+
+                mounted() {
+                    if (this.value) {
+                        this.selectedItem = this.value;
+                    }
+                },
+
+                created() {
+                    window.addEventListener('click', this.handleFocusOut);
+                },
+
+                beforeDestroy() {
+                    window.removeEventListener('click', this.handleFocusOut);
+                },
+
+                watch: {
+                    searchTerm(newVal, oldVal) {
+                        this.search();
+                    },
+                },
+
+                computed: {
+                    /**
+                     * Filter the searchedResults based on the search query.
+                     * 
+                     * @return {Array}
+                     */
+                    persons() {
+                        return this.searchedResults.filter(item => 
+                            item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                        );
+                    }
+                },
+                
+                methods: {
+                    /**
+                     * Toggle the popup.
+                     * 
+                     * @return {void}
+                     */
+                    toggle() {
+                        this.showPopup = ! this.showPopup;
+
+                        if (this.showPopup) {
+                            this.$nextTick(() => this.$refs.searchInput.focus());
+                        }
+                    },
+
+                    /**
+                     * Select an item from the list.
+                     * 
+                     * @param {Object} item
+                     * 
+                     * @return {void}
+                     */
+                    linkContact(type, person) {
+                        this.showPopup = false;
+
+                        this.searchTerm = '';
+
+                        this.selectedItem = person;
+
+                        this.$emit('link-contact', {
+                            type,
+                            person,
+                        });
+                    },
+
+                    unlinkContact() {
+                        this.selectedItem = {};
+
+                        this.$emit('unlink-contact');
+                    },
+
+                    /**
+                     * Initialize the items.
+                     * 
+                     * @return {void}
+                     */
+                    search() {
+                        if (this.searchTerm.length <= 2) {
+                            this.searchedResults = [];
+
+                            this.isSearching = false;
+
+                            return;
+                        }
+
+                        this.isSearching = true;
+
+                        if (this.cancelToken) {
+                            this.cancelToken.cancel();
+                        }
+
+                        this.cancelToken = this.$axios.CancelToken.source();
+
+                        this.$axios.get('{{ route('admin.contacts.persons.search') }}', {
+                                params: { 
+                                    ...this.params,
+                                    query: this.searchTerm
+                                },
+                                cancelToken: this.cancelToken.token, 
+                            })
+                            .then(response => {
+                                this.searchedResults = response.data.data;
+                            })
+                            .catch(error => {
+                                if (! this.$axios.isCancel(error)) {
+                                    console.error("Search request failed:", error);
+                                }
+
+                                this.isSearching = false;
+                            })
+                            .finally(() => this.isSearching = false);
+                    },
+
+                    /**
+                     * Handle the focus out event.
+                     * 
+                     * @param {Event} event
+                     * 
+                     * @return {void}
+                     */
+                    handleFocusOut(event) {
+                        const lookup = this.$refs.lookup;
+
+                        if (
+                            lookup && 
+                            ! lookup.contains(event.target)
+                        ) {
+                            this.showPopup = false;
+                        }
+                    },
+
+                    toggleContactModal() {
+                        this.showPopup = false;
+
+                        this.$emitter.emit('open-contact-modal');
+                    },
+                },
+            });
+        </script>
+
+        <!-- Create Contact Modal Component -->
+        <script type="module">
+            app.component('v-create-contact', {
+                template: '#v-create-contact-template',
+
+                data() {
+                    return {
+                        isStoring: false,
+                    };
+                },
+
+                mounted() {
+                    this.$emitter.on('open-contact-modal', () => this.$refs.contactModal.toggle());
+                },
+
+                methods: {
+                    create(params, { setErrors }) {
+                        this.isStoring = true;
+
+                        const formData = new FormData(this.$refs.modalForm);
+
+                        this.$axios.post('{{ route('admin.contacts.persons.store') }}', formData)
+                            .then(response => {
+                                this.isStoring = false;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                this.$refs.contactModal.toggle();
+                            })
+                            .catch(error => {
+                                this.isStoring = false;
+
+                                if (error.response.status == 422) {
+                                    setErrors(error.response.data.errors);
+                                } else {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                }
+                            })
+                    },
+                },
+            });
+        </script>
+
+        <!-- Link to mail Component -->
+        <script type="module">
+            app.component('v-action-email', {
+                template: '#v-action-email-template',
+
+                data() {
+                    return {
+                        link: 'contact',
+
+                        email: @json($email->getAttributes()),
+
+                        html: `{!! $html !!}`,
+                    };
+                },
+
+                created() {
+                    @if ($email->person)
+                        this.email.person = @json($email->person);
+                    @endif
+                },
+
+                methods: {
+                    linkContact(contact) {
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            person_id: contact.person.id,
+                        })
+                            .then (response => {                                
+                                this.email['person'] = contact.person;
+
+                                this.email['person_id'] = contact.person.id;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {});
+                    },
+
+                    unlinkContact(contact) {
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            person_id: null,
+                        })
+                            .then (response => {
+                                this.email['person'] = this.email['person_id'] = null;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {})
+                    },
+
+                }
             });
         </script>
     @endPushOnce
