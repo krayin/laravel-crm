@@ -585,6 +585,12 @@
             </div>
         </script>
 
+        <script
+            type="text/x-template"
+            id="v-lead-lookup-template"
+        >
+        </script>
+
         <!-- Create Contact Template -->
         <script
             type="text/x-template"
@@ -705,7 +711,7 @@
                     
                         <!-- Contact Lookup -->
                         <template v-if="link == 'lead'">
-                            <v-contact-lookup></v-contact-lookup>
+                            <v-lead-lookup></v-lead-lookup>
                         </template>
                     </div>
                 </x-slot>
@@ -1079,6 +1085,14 @@
             });
         </script>
 
+        <!-- Contact Lookup Component -->
+        <script type="module">
+            app.component('v-lead-lookup', {
+                template: '#v-lead-lookup-template',
+                
+            });
+        </script>
+
         <!-- Create Contact Modal Component -->
         <script type="module">
             app.component('v-create-contact', {
@@ -1172,6 +1186,37 @@
                             .catch (error => {})
                     },
 
+                    linkLead(lead) {
+                        console.log(lead);
+
+                        return;
+                        
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            lead_id: lead.id,
+                        })
+                            .then (response => {
+                                this.email['lead'] = lead;
+
+                                this.email['lead_id'] = lead.id;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {});
+                    },
+
+                    unlinkLead(lead) {
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            lead_id: null,
+                        })
+                            .then (response => {
+                                this.email['lead'] = this.email['lead_id'] = null;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {})
+                    },
                 }
             });
         </script>
