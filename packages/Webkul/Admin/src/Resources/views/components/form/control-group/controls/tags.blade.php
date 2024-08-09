@@ -96,6 +96,11 @@
                 }
             },
 
+            mounted() {
+                console.log(this.data);
+                
+            },
+
             methods: {
                 addTag: function() {
                     if (this.errors['temp-' + this.name]) {

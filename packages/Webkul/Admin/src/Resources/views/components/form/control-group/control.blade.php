@@ -308,6 +308,7 @@
     @case('tags')
         <x-admin::form.control-group.controls.tags
             :name="$name"
+            :data="$attributes->get(':data') ?? $attributes->get('data')"
             {{ $attributes}}
         />
         @break
