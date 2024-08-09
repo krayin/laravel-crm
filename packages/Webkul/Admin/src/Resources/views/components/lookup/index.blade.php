@@ -13,7 +13,7 @@
             <x-admin::form.control-group.control
                 type="text"
                 ::name="name"
-                class="w-full pr-10 cursor-pointer text-gray-800"
+                class="w-full cursor-pointer pr-10 text-gray-800"
                 ::placeholder="placeholder"
                 v-model="selectedItem.name"
                 @click="toggle"
@@ -241,7 +241,7 @@
                             cancelToken: this.cancelToken.token, 
                         })
                         .then(response => {
-                            this.searchedResults = response.data;
+                            this.searchedResults = response.data.data;
                         })
                         .catch(error => {
                             if (! this.$axios.isCancel(error)) {

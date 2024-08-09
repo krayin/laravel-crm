@@ -1389,6 +1389,17 @@ return [
             'products-info'  => 'Information About the Products',
         ],
 
+        'edit' => [
+            'title'          => 'Edit Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+        
         'common' => [
             'contact' => [
                 'name'           => 'Name',

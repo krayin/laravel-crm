@@ -1,4 +1,4 @@
-<v-product-list></v-product-list>
+<v-product-list :data="products"></v-product-list>
 
 @pushOnce('scripts')
     <script 
@@ -71,6 +71,7 @@
                         ::params="params"
                         :placeholder="trans('admin::app.leads.common.products.product-name')"
                         @on-selected="(product) => addProduct(product)"
+                        ::value="{ id: product.product_id, name: product.name }"
                     />
 
                     <x-admin::form.control-group.control
