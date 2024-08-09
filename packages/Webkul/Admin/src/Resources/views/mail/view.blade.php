@@ -4,7 +4,11 @@
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
                     <!-- Bredcrumbs -->
-                    <x-admin::breadcrumbs name="mail" />
+                    <x-admin::breadcrumbs
+                        name="mail.route.view"
+                        :entity="$email"
+                        :route="request('route')"
+                    />
                 </div>
     
                 <div class="text-xl font-bold dark:text-gray-300">
@@ -13,19 +17,44 @@
             </div>
     
             <div class="flex items-center gap-x-2.5">
-                <!-- Create button for person -->
+                <!-- Mail Linking -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        class="primary-button"
+                   
+                    <x-admin::drawer
+                        width="350px"
+                        ref="filterDrawer"
                     >
-                        @lang('Link Mail')
-                    </button>
+                        <x-slot:toggle>
+                            <button
+                                type="button"
+                                class="primary-button"
+                            >
+                                @lang('Link Mail')
+                            </button>
+                        </x-slot>
+
+                        <x-slot:header class="p-3.5">
+                            <!-- Apply Filter Title -->
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                    @lang('Link Mail')
+                                </p>
+                            </div>
+                        </x-slot>
+                        
+                        <x-slot:content class="p-3.5">
+                        </x-slot>
+
+                        <x-slot:footer class="p-3.5">
+                        </x-slot>
+                    </x-admin::drawer>
                 </div>
             </div>
         </div>
     
-        <v-email-list></v-email-list>
+        <v-email-list>
+           <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
+        </v-email-list>
     </div>
 
     @pushOnce('scripts')
@@ -109,7 +138,7 @@
                         <!-- Time and Actions -->
                         <div class="flex gap-2 items-center justify-center">
                             <div>
-                                2 hours ago
+                                @{{ email.time_ago }}
                             </div>
 
                             <div class="flex select-none items-center">
@@ -227,7 +256,7 @@
         >
             <div class="flex gap-2 w-full">
                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                    SK
+                    @{{ email.name.split(' ').map(word => word[0]).join('') }}
                 </div>
                 
                 <div class="gap-2 w-[926px] border rounded p-4">
@@ -451,7 +480,7 @@
                 data() {
                     return {
                         hovering: '',
-                    }
+                    };
                 },
     
                 methods: {
@@ -475,7 +504,7 @@
                             })
                         }
                     },
-                }
+                },
             });
         </script>
 
@@ -492,7 +521,7 @@
                         showBCC: false,
 
                         isStoring: false,
-                    }
+                    };
                 },
 
                 computed: {
@@ -546,7 +575,7 @@
 
                     getActionType() {
                         return this.action[this.email.id].type;
-                    }
+                    },
                 },
 
                 methods: {
@@ -568,15 +597,10 @@
                             .catch ((error) => {
                                 this.isStoring = false;
 
-                                console.log(error);
-                                
-
                                 if (error.response.status == 422) {
                                     setErrors(error.response.data.errors);
                                 } else {
                                     this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-
-                                    this.$refs.mailActivityModal.close();
                                 }
                             });
                     },
