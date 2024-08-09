@@ -1,11 +1,11 @@
-<v-contact-component></v-contact-component>
+<v-contact-component :data="person"></v-contact-component>
 
 @pushOnce('scripts')
     <script 
         type="text/x-template" 
         id="v-contact-component-template"
     >
-    <!-- Person Search lookup -->
+        <!-- Person Search lookup -->
         <x-admin::form.control-group>
             <x-admin::form.control-group.label class="required">
                 @lang('admin::app.leads.common.contact.name')
@@ -17,6 +17,7 @@
                 ::params="params"
                 @on-selected="addPerson"
                 :placeholder="trans('admin::app.leads.common.contact.name')"
+                ::value="{id: person.id, name: person.name}"
             />
         
             <x-admin::form.control-group.control
@@ -36,6 +37,8 @@
                 @lang('admin::app.leads.common.contact.email')
             </x-admin::form.control-group.label>
 
+            <x-admin::attributes.edit.email />
+            
             <v-email-component
                 :attribute="{'code': 'person[emails]', 'name': 'Email'}"
                 validations="required"
@@ -49,6 +52,8 @@
             <x-admin::form.control-group.label>
                 @lang('admin::app.leads.common.contact.contact-number')
             </x-admin::form.control-group.label>
+
+            <x-admin::attributes.edit.phone />
 
             <v-phone-component
                 :attribute="{'code': 'person[contact_numbers]', 'name': 'Contact Numbers'}"

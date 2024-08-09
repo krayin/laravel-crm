@@ -20,6 +20,12 @@ Breadcrumbs::for('leads.create', function (BreadcrumbTrail $trail) {
     $trail->push(trans('admin::app.leads.create.title'), route('admin.leads.create'));
 });
 
+// Leads Edit
+Breadcrumbs::for('leads.edit', function (BreadcrumbTrail $trail, $lead) {
+    $trail->parent('leads');
+    $trail->push(trans('admin::app.leads.edit.title'), route('admin.leads.edit', $lead->id));
+});
+
 // Dashboard > Leads > Title
 Breadcrumbs::for('leads.view', function (BreadcrumbTrail $trail, $lead) {
     $trail->parent('leads');

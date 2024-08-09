@@ -1,52 +1,58 @@
 <x-admin::layouts>
     <x-slot:title>
-        @lang('admin::app.leads.create.title')
+        @lang('admin::app.leads.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.leads.create.form.before') !!}
+    {!! view_render_event('krayin.admin.leads.edit.form.before') !!}
 
-    <!-- Create Lead Form -->
-    <x-admin::form :action="route('admin.leads.store')">
+    <!-- Edit Lead Form -->
+    <x-admin::form         
+        :action="route('admin.leads.update', $lead->id)"
+        method="PUT"
+    >
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    <x-admin::breadcrumbs name="leads.create" />
+                    <x-admin::breadcrumbs 
+                        name="leads.edit" 
+                        :entity="$lead"
+                    />
                 </div>
 
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.leads.create.title')
+                    @lang('admin::app.leads.edit.title')
                 </div>
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Save button for person -->
+                <!-- Save button for Editing Lead -->
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('krayin.admin.leads.create.form_buttons.before') !!}
+                    {!! view_render_event('krayin.admin.leads.edit.form_buttons.before') !!}
 
                     <button
                         type="submit"
                         class="primary-button"
                     >
-                        @lang('admin::app.leads.create.save-btn')
+                        @lang('admin::app.leads.edit.save-btn')
                     </button>
 
-                    {!! view_render_event('krayin.admin.leads.create.form_buttons.after') !!}
+                    {!! view_render_event('krayin.admin.leads.edit.form_buttons.after') !!}
                 </div>
             </div>
         </div>
 
-        <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ request('stage_id') }}" />
+        <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ $lead->lead_pipeline_stage_id }}" />
 
-        <!-- Lead Create Component -->
-        <v-lead-create></v-lead-create>
+        <!-- Lead Edit Component -->
+        <v-lead-edit :lead="{{ json_encode($lead) }}"></v-lead-edit>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.leads.create.form.after') !!}
+    {!! view_render_event('krayin.admin.leads.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script 
             type="text/x-template"
-            id="v-lead-create-template"
+            id="v-lead-edit-template"
         >
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
@@ -76,11 +82,11 @@
                         <div class="flex flex-col gap-4" id="lead-details">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold dark:text-white">
-                                    @lang('admin::app.leads.create.details')
+                                    @lang('admin::app.leads.edit.details')
                                 </p>
 
                                 <p class="text-gray-600 dark:text-white">
-                                    @lang('admin::app.leads.create.details-info')
+                                    @lang('admin::app.leads.edit.details-info')
                                 </p>
                             </div>
 
@@ -98,9 +104,10 @@
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
                                     ]"
+                                    :entity="$lead"
                                 />
 
-                                <!-- Lead Details Oter input fields -->
+                                <!-- Lead Details Other input fields -->
                                 <div class="flex gap-4 max-sm:flex-wrap">
                                     <div class="w-full">
                                         <x-admin::attributes
@@ -115,6 +122,7 @@
                                                     'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                                 ],
                                             ]"
+                                            :entity="$lead"
                                         />
                                     </div>
                                         
@@ -131,7 +139,8 @@
                                                     'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                                 ],
                                             ]"
-                                        />
+                                            :entity="$lead"
+                                            />
                                     </div>
                                 </div>
                             </div>
@@ -141,11 +150,11 @@
                         <div class="flex flex-col gap-4" id="contact-person">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold dark:text-white">
-                                    @lang('admin::app.leads.create.contact-person')
+                                    @lang('admin::app.leads.edit.contact-person')
                                 </p>
 
                                 <p class="text-gray-600 dark:text-white">
-                                    @lang('admin::app.leads.create.contact-info')
+                                    @lang('admin::app.leads.edit.contact-info')
                                 </p>
                             </div>
 
@@ -159,11 +168,11 @@
                         <div class="flex flex-col gap-4" id="products">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold dark:text-white">
-                                    @lang('admin::app.leads.create.products')
+                                    @lang('admin::app.leads.edit.products')
                                 </p>
 
                                 <p class="text-gray-600 dark:text-white">
-                                    @lang('admin::app.leads.create.products-info')
+                                    @lang('admin::app.leads.edit.products-info')
                                 </p>
                             </div>
 
@@ -179,17 +188,23 @@
         </script>
 
         <script type="module">
-            app.component('v-lead-create', {
-                template: '#v-lead-create-template',
+            app.component('v-lead-edit', {
+                template: '#v-lead-edit-template',
 
                 data() {
                     return {
                         activeTab: 'lead-details',
+                        
+                        lead:  @json($lead),  
+
+                        person:  @json($lead->person),  
+
+                        products: @json($lead->products),
 
                         tabs: [
-                            { id: 'lead-details', label: '@lang('admin::app.leads.create.details')' },
-                            { id: 'contact-person', label: '@lang('admin::app.leads.create.contact-person')' },
-                            { id: 'products', label: '@lang('admin::app.leads.create.products')' }
+                            { id: 'lead-details', label: '@lang('admin::app.leads.edit.details')' },
+                            { id: 'contact-person', label: '@lang('admin::app.leads.edit.contact-person')' },
+                            { id: 'products', label: '@lang('admin::app.leads.edit.products')' }
                         ],
                     };
                 },
@@ -204,7 +219,7 @@
                      */
                     scrollToSection(tabId) {
                         this.activeTab = tabId;
-
+                        
                         const section = document.getElementById(tabId);
 
                         if (section) {
