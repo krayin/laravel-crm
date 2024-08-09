@@ -63,13 +63,13 @@
                         <div class="flex gap-4">
                             <!-- Mailer Sort name -->
                             <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                SK
+                                @{{ email.name.split(' ').map(word => word[0]).join('') }}
                             </div>
                     
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span>@{{ email.name }}</span>
+                                <span>@{{ email.name }} @{{ email.id }}</span>
                                 
                                 <div class="flex flex-col gap-1">
                                     <div class="flex">
@@ -113,7 +113,52 @@
                             </div>
 
                             <div class="flex select-none items-center">
-                                <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"></button>
+                                <x-admin::dropdown position="bottom-right">
+                                    <x-slot:toggle>
+                                        <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"></button>
+                                    </x-slot>
+                        
+                                    <!-- Admin Dropdown -->
+                                    <x-slot:content class="!p-0">
+                                        <div class="flex flex-col gap-2 pb-2.5">
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('reply')"
+                                            >
+                                                <i class="icon-reply text-2xl"></i>
+
+                                                @lang('Reply')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('reply-all')"
+                                            >
+                                                <i class="icon-reply-all text-2xl"></i>
+
+                                                @lang('Reply all')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('forward')"
+                                            >
+                                                <i class="icon-forward text-2xl"></i>
+
+                                                @lang('Forward')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('delete')"
+                                            >
+                                                <i class="icon-delete text-2xl"></i>
+
+                                                @lang('Delete')
+                                            </label>
+                                        </div>
+                                    </x-slot>
+                                </x-admin::dropdown>
                             </div>
                         </div>
                     </div>
@@ -415,10 +460,19 @@
                             this.$emit('onEmailAction', {type, email: this.email});
                         } else {
                             if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
+                            
                                 return;
                             }
-                            
-                            this.$refs['form-' + this.email.id].submit()
+
+                            this.$axios.post(`{{ route('admin.mail.delete', ':id') }}`.replace(':id', this.email.id), {
+                                _method: 'DELETE',
+                                type: 'trash'
+                            })
+                            .then ((response) => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                this.$emit('onDiscard');
+                            })
                         }
                     },
                 }
@@ -449,6 +503,12 @@
 
                         if (this.getActionType == 'reply-all') {
                             console.log(this.action.email);
+                            
+                            console.log([
+                                this.action.email.from,
+                                ...(this.action.email?.cc || []),
+                                ...(this.action.email?.bcc || []),
+                            ]);
                             
                             return [
                                 this.action.email.from,
