@@ -2,9 +2,10 @@
 
 namespace Webkul\Warehouse\Repositories;
 
+use Webkul\Tag\Models\TagProxy;
 use Illuminate\Container\Container;
-use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 
 class WarehouseRepository extends Repository
 {
