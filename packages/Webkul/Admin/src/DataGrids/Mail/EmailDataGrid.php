@@ -97,7 +97,7 @@ class EmailDataGrid extends DataGrid
             'index'  => 'edit',
             'icon'   => request('route') == 'draft'
                 ? 'icon-edit'
-                : 'icon-view',
+                : 'icon-eye',
             'title'  => request('route') == 'draft'
                 ? trans('admin::app.mail.index.datagrid.edit')
                 : trans('admin::app.mail.index.datagrid.view'),
@@ -108,7 +108,7 @@ class EmailDataGrid extends DataGrid
                     : 'trash',
             ],
             'url'    => function ($row) {
-                return route('admin.mail.view', $row->id);
+                return route('admin.mail.view', [request('route'), $row->id]);
             },
         ]);
 

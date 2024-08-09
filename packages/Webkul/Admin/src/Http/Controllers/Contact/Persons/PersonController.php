@@ -50,13 +50,20 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttributeForm $request): RedirectResponse
+    public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create($this->sanitizeRequestedPersonData($request->all()));
 
         Event::dispatch('contacts.person.create.after', $person);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data'    => $person,
+                'message' => trans('admin::app.contacts.persons.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.contacts.persons.index.create-success'));
 

@@ -22,6 +22,15 @@ class Email extends Model implements EmailContract
     ];
 
     /**
+     * The attributes that are appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'time_ago',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array
@@ -85,5 +94,13 @@ class Email extends Model implements EmailContract
     public function attachments()
     {
         return $this->hasMany(AttachmentProxy::modelClass(), 'email_id');
+    }
+
+    /**
+     * Get the time ago.
+     */
+    public function getTimeAgoAttribute(): string
+    {
+        return $this->created_at->diffForHumans();
     }
 }

@@ -274,7 +274,7 @@ class EmailController extends Controller
             $parentId = $email->parent_id;
 
             if (request('type') == 'trash') {
-                $this->emailRepository->update([
+                $data= $this->emailRepository->update([
                     'folders' => ['trash'],
                 ], $id);
             } else {
