@@ -121,6 +121,16 @@
                     <!-- Mail Body -->
                     <div v-html="email.reply"></div>
 
+                    <a
+                        v-for="attachment in email.attachments"
+                        :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                        class="flex items-center text-brandColor cursor-pointer"
+                    >
+                        <i class="icon-attachmetent text-2xl"></i>
+
+                        @{{ attachment.name }}
+                    </a>
+
                     <hr class="h-1">
 
                     <!-- Reply, Reply All and Forward email -->
@@ -275,6 +285,7 @@
                                             name="reply"
                                             id="reply"
                                             rules="required"
+                                            ::value="reply"
                                             tinymce="true"
                                             :label="trans('admin::app.components.activities.actions.mail.message')"
                                         />
@@ -401,8 +412,6 @@
                 methods: {
                     emailAction(type) {
                         if (type != 'delete') {
-                            console.log(type);
-                            
                             this.$emit('onEmailAction', {type, email: this.email});
                         } else {
                             if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
