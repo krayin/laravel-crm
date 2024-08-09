@@ -39,7 +39,7 @@
                 :index="0"
                 :action="action"
                 @on-discard="action = {}"
-                @onEmailAction="emailAction($event)"
+                @on-email-action="emailAction($event)"
             ></v-email-item>
 
             <v-email-item
@@ -49,7 +49,7 @@
                 :index="index + 1"
                 :action="action"
                 @on-discard="action = {}"
-                @onEmailAction="emailAction($event)"
+                @on-email-action="emailAction($event)"
             ></v-email-item>
         </script>
 
@@ -90,8 +90,17 @@
                                         class="flex flex-col"
                                         v-if="email.showMore"
                                     >
-                                        <span>@lang('Cc:') @{{ email.cc.join(', ') }}</span>
-                                        <span>@lang('Bcc:') @{{ email.bcc.join(', ') }}</span>
+                                        <span v-if="email?.cc">
+                                            @lang('Cc:')
+                                            
+                                            @{{ email.cc.join(', ') }}
+                                        </span>
+
+                                        <span v-if="email.bcc">
+                                            @lang('Bcc:')
+
+                                            @{{ email.bcc?.join(', ') }}
+                                        </span>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +128,7 @@
                         <div class="flex gap-4">
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
-                                @click="emailAction({type: 'reply'})"
+                                @click="emailAction('reply')"
                             >
                                 @lang('Reply')
 
@@ -128,7 +137,7 @@
 
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
-                                @click="emailAction({type: 'replyAll'})"
+                                @click="emailAction('reply-all')"
                             >
                                 @lang('Reply All')
 
@@ -137,7 +146,7 @@
 
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
-                                @click="emailAction({type: 'forward'})"
+                                @click="emailAction('forward')"
                             >
                                 @lang('Forward')
 
@@ -149,6 +158,7 @@
                     <template v-else>
                         <v-email-form
                             :action="action"
+                            :email="email"
                             @on-discard="$emit('onDiscard')"
                         ></v-email-form>
                     </template>
@@ -191,14 +201,13 @@
                                         </x-admin::form.control-group.label>
 
                                         <div class="relative">
-                                            <x-admin::form.control-group.control
-                                                type="tags"
+                                            <x-admin::form.control-group.controls.tags
                                                 name="reply_to"
                                                 rules="required"
                                                 input-rules="email"
-                                                ::data=""
-                                                :label="trans('admin::app.components.activities.actions.mail.to')"
-                                                :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
+                                                ::data="reply_to"
+                                                label="@lang('admin::app.components.activities.actions.mail.to')"
+                                                placeholder="@lang('admin::app.components.activities.actions.mail.enter-emails')"
                                             />
 
                                             <div class="absolute right-2 top-[9px] flex items-center gap-2">
@@ -331,16 +340,36 @@
                     };
                 },
                 
+                mounted() {
+                    this.$emitter.on('on-email-save', (email) => {
+                        this.email.emails.push(email);
+
+                        this.action = {};
+
+                        setTimeout(() => this.scrollBottom(), 0);
+                    });
+                },
+
                 methods: {
                     emailAction(action) {
-                        this.action = action;
-
-                        console.log(action);
-                        
+                        this.action[action.email.id] = action;
 
                         if (! this.action.email) {
                             this.action.email = this.lastEmail();
                         }
+                    },
+
+                    scrollBottom() {
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                        const windowHeight = window.innerHeight;
+
+                        const scrollBottom = scrollTop + windowHeight;
+
+                        window.scrollTo({
+                            top: scrollBottom,
+                            behavior: 'smooth',
+                        });
                     },
 
                     lastEmail() {
@@ -372,7 +401,9 @@
                 methods: {
                     emailAction(type) {
                         if (type != 'delete') {
-                            this.$emit('onEmailAction', {'type': type, 'email': this.email});
+                            console.log(type);
+                            
+                            this.$emit('onEmailAction', {type, email: this.email});
                         } else {
                             if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                                 return;
@@ -389,7 +420,7 @@
             app.component('v-email-form', {
                 template: '#v-email-form-template',
 
-                props: ['action'],
+                props: ['action', 'email'],
 
                 data() {
                     return {
@@ -401,21 +432,27 @@
                     }
                 },
 
-                mounted() {
-                    
-                },
-
                 computed: {
                     reply_to() {
-                        if (this.action.type == 'forward') {
+                        if (this.getActionType == 'forward') {
                             return [];
+                        }
+
+                        if (this.getActionType == 'reply-all') {
+                            console.log(this.action.email);
+                            
+                            return [
+                                this.action.email.from,
+                                ...(this.action.email?.cc || []),
+                                ...(this.action.email?.bcc || []),
+                            ];
                         }
 
                         return [this.action.email.from];
                     },
 
                     cc() {
-                        if (this.action.type != 'reply-all') {
+                        if (this.getActionType != 'reply-all') {
                             return [];
                         }
 
@@ -423,19 +460,23 @@
                     },
 
                     bcc() {
-                        if (this.action.type != 'reply-all') {
+                        if (this.getActionType != 'reply-all') {
                             return [];
                         }
 
                         return this.action.email.bcc;
                     },
 
-                    reply: function() {
-                        if (this.action.type == 'forward') {
+                    reply() {
+                        if (this.getActionType == 'forward') {
                             return this.action.email.reply;
                         }
 
                         return '';
+                    },
+
+                    getActionType() {
+                        return this.action[this.email.id].type;
                     }
                 },
 
@@ -443,7 +484,7 @@
                     save(params, { resetForm, setErrors  }) {
                         let formData = new FormData(this.$refs.mailActionForm);
 
-                        this.$axios.post("{{ route('admin.mail.store', 'replaceLeadId') }}", formData, {
+                        this.$axios.post("{{ route('admin.mail.store') }}", formData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data'
                                 }
@@ -451,9 +492,9 @@
                             .then ((response) => {
                                 this.isStoring = false;
 
+                                this.$emitter.emit('on-email-save', response.data.data);
+                                
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-
-                                this.$emitter.emit('on-activity-added', response.data.data);
                             })
                             .catch ((error) => {
                                 this.isStoring = false;
