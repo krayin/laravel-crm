@@ -41,7 +41,7 @@ class WarehouseDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.settings.warehouses.index.datagrid.id'),
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
@@ -49,7 +49,7 @@ class WarehouseDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
+            'label'      => trans('admin::app.settings.warehouses.index.datagrid.name'),
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
@@ -57,7 +57,7 @@ class WarehouseDataGrid extends DataGrid
 
         $this->addColumn([
             'index'    => 'contact_name',
-            'label'    => trans('admin::app.datagrid.contact-name'),
+            'label'    => trans('admin::app.settings.warehouses.index.datagrid.contact-name'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -123,7 +123,7 @@ class WarehouseDataGrid extends DataGrid
     public function prepareActions()
     {
         $this->addAction([
-            'icon'   => 'icon-edit',
+            'icon'   => 'icon-eye',
             'title'  => trans('admin::app.settings.warehouses.index.datagrid.view'),
             'method' => 'GET',
             'url'    => function ($row) {

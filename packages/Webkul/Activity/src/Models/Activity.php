@@ -2,12 +2,12 @@
 
 namespace Webkul\Activity\Models;
 
+use Illuminate\Database\Eloquent\Model;
+use Webkul\Activity\Contracts\Activity as ActivityContract;
+use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\User\Models\UserProxy;
-use Webkul\Contact\Models\PersonProxy;
-use Illuminate\Database\Eloquent\Model;
 use Webkul\Warehouse\Models\WarehouseProxy;
-use Webkul\Activity\Contracts\Activity as ActivityContract;
 
 class Activity extends Model implements ActivityContract
 {

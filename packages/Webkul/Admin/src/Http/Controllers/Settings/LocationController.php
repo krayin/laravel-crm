@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Settings;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -33,10 +34,8 @@ class LocationController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(AttributeForm $request): JsonResponse
     {
         Event::dispatch('settings.location.create.before');
 
@@ -44,18 +43,18 @@ class LocationController extends Controller
 
         Event::dispatch('settings.location.create.after', $location);
 
-        return response()->json([
-            'message' => trans('admin::app.locations.create-success'),
+        return new JsonResponse([
+            'data'    => $location,
+            'message' => trans('admin::app.settings.warehouses.view.locations.create-success'),
         ]);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $this->locationRepository->findOrFail($id);
 
@@ -66,12 +65,12 @@ class LocationController extends Controller
 
             Event::dispatch('settings.location.delete.after', $id);
 
-            return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.locations.location')]),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.warehouses.view.locations.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
-            return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.locations.location')]),
+            return new JsonResponse([
+                'message' => trans('admin::app.settings.warehouses.view.locations.delete-failed'),
             ], 400);
         }
     }

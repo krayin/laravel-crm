@@ -1,21 +1,20 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Settings\TagController;
+use Webkul\Admin\Http\Controllers\Settings\AttributeController;
+use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
+use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\TagController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
-use Webkul\Admin\Http\Controllers\Settings\GroupController;
-use Webkul\Admin\Http\Controllers\Settings\SourceController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\ActivityController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\TagController as WarehouseTagController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\WarehouseController;
 use Webkul\Admin\Http\Controllers\Settings\WebFormController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
-use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
-use Webkul\Admin\Http\Controllers\Settings\AttributeController;
-use Webkul\Admin\Http\Controllers\Settings\Warehouse\ActivityController;
-use Webkul\Admin\Http\Controllers\Settings\Warehouse\WarehouseController;
-use Webkul\Admin\Http\Controllers\Settings\Warehouse\TagController as WarehouseTagController;   
-
 
 /**
  * Settings routes.
@@ -227,6 +226,8 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
          * Warehouses Routes.
          */
         Route::controller(WarehouseController::class)->prefix('warehouses')->group(function () {
+            Route::put('edit/{id}', 'update')->name('admin.settings.warehouses.update');
+
             Route::get('', 'index')->name('admin.settings.warehouses.index');
 
             Route::get('search', 'search')->name('admin.settings.warehouses.search');
@@ -241,13 +242,11 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
 
             Route::get('edit/{id?}', 'edit')->name('admin.settings.warehouses.edit');
 
-            Route::put('edit/{id}', 'update')->name('admin.settings.warehouses.update');
-
             Route::delete('{id}', 'destroy')->name('admin.settings.warehouses.delete');
 
             Route::controller(WarehouseTagController::class)->prefix('{id}/tags')->group(function () {
                 Route::post('', 'attach')->name('admin.settings.warehouses.tags.attach');
-    
+
                 Route::delete('', 'detach')->name('admin.settings.warehouses.tags.detach');
             });
 

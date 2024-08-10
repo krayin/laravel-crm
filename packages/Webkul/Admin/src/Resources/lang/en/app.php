@@ -263,7 +263,7 @@ return [
                 'lemon-chiffon'  => 'Lemon Chiffon',
                 'snow-flurry'    => 'Snow Flurry',
                 'honeydew'       => 'Honeydew',
-            ]
+            ],
         ],
     ],
 
@@ -387,7 +387,6 @@ return [
                 'update-success' => 'Person updated successfully.',
                 'delete-success' => 'Person deleted successfully.',
                 'delete-failed'  => 'Person can not be deleted.',
-    
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -402,7 +401,7 @@ return [
             ],
 
             'view' => [
-                'title' => ':name',
+                'title'        => ':name',
                 'about-person' => 'About Person',
 
                 'activities' => [
@@ -1119,6 +1118,9 @@ return [
                 'delete-failed'  => 'Warehouse can not be deleted.',
 
                 'datagrid' => [
+                    'id'              => 'ID',
+                    'name'            => 'Name',
+                    'contact-name'    => 'Contact Name',
                     'delete'          => 'Delete',
                     'edit'            => 'Edit',
                     'view'            => 'View',
@@ -1139,6 +1141,32 @@ return [
                 'title'         => 'Edit Warehouse',
                 'save-btn'      => 'Save Warehouse',
                 'contact-info'  => 'Contact Information',
+            ],
+
+            'view' => [
+                'all'          => 'All',
+                'notes'        => 'Notes',
+                'files'        => 'Files',
+                'location'     => 'Location',
+
+                'locations' => [
+                    'action'         => 'Action',
+                    'add-location'   => 'Add Location',
+                    'create-success' => 'Location created successfully.',
+                    'delete'         => 'Delete',
+                    'delete-failed'  => 'Location can not be deleted.',
+                    'delete-success' => 'Location deleted successfully.',
+                    'name'           => 'Name',
+                    'save-btn'       => 'Save',
+                ],
+
+                'general-information' => [
+                    'title' => 'General Information',
+                ],
+
+                'contact-information' => [
+                    'title' => 'Contact Information',
+                ],
             ],
         ],
 

@@ -92,7 +92,7 @@ class LeadController extends Controller
                     'pipeline',
                     'pipeline.stages',
                     'stage',
-                    'attribute_values'
+                    'attribute_values',
                 ])->paginate(10)),
 
                 'meta' => [
