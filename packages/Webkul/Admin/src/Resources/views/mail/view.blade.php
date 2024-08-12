@@ -593,7 +593,7 @@
                                         <div class="text-sm">
                                             <span class="font-semibold">@lang('Lead Value'):</span>
                                             
-                                            @{{ email.lead.lead_value }}
+                                            @{{ $admin.formatPrice(email.lead.lead_value) }}
                                         </div>
                                     </div>
                                 </div>
