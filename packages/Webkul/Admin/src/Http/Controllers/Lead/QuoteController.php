@@ -60,7 +60,7 @@ class QuoteController extends Controller
         Event::dispatch('leads.quote.delete.after', $lead);
 
         return response()->json([
-            'message' => trans('admin::app.leads.quote-destroy-success'),
+            'message' => trans('admin::app.leads.view.quotes.destroy-success'),
         ], 200);
     }
 }

@@ -69,27 +69,40 @@
                                         <icon class="icon-more text-2xl"></icon>
                                     </x-slot>
 
-                                    <x-slot:content>
+                                    <x-slot:menu class="!min-w-40">
                                         @if (bouncer()->hasPermission('quotes.edit'))
-                                            <li>
+                                            <x-admin::dropdown.menu.item>
                                                 <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
-                                                    @lang('admin::app.leads.view.quotes.edit') }}
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="icon-edit text-2xl"></span>
+                                                        
+                                                        @lang('admin::app.leads.view.quotes.edit')
+                                                    </div>
                                                 </a>
-                                            </li>
+                                            </x-admin::dropdown.menu.item>
                                         @endif
 
                                         @if (bouncer()->hasPermission('quotes.print'))
-                                            <li>
+                                            <x-admin::dropdown.menu.item>
                                                 <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
-                                                    @lang('admin::app.leads.view.quotes.export-to-pdf') }}
+                                                    <div class="flex items-center gap-2">
+                                                        <span class="icon-sent text-2xl"></span>
+
+                                                        @lang('admin::app.leads.view.quotes.download')
+                                                    </div>
                                                 </a>
-                                            </li>
+
+                                            </x-admin::dropdown.menu.item>
                                         @endif
                                         
                                         @if (bouncer()->hasPermission('quotes.delete'))
-                                            <li @click="removeQuote(quote)">
-                                                @lang('admin::app.leads.view.quotes.remove') }}
-                                            </li>
+                                            <x-admin::dropdown.menu.item @click="removeQuote(quote)">
+                                                <div class="flex items-center gap-2">
+                                                    <span class="icon-delete text-2xl"></span>
+
+                                                    @lang('admin::app.leads.view.quotes.delete')
+                                                </div>
+                                            </x-admin::dropdown.menu.item>
                                         @endif
                                     </x-slot>
                                 </x-admin::dropdown>
@@ -115,6 +128,31 @@
             },
 
             methods: {
+                removeQuote(quote) {
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            this.isLoading = true;
+
+                            this.$axios.delete("{{ route('admin.leads.quotes.delete', $lead->id) }}/" + quote.id)
+                                .then(response => {
+                                    this.isLoading = false;
+
+                                    const index = this.quotes.indexOf(quote);
+                                    
+                                    if (index !== -1) {
+                                        this.quotes.splice(index, 1);
+                                    }
+
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch(error => {
+                                    this.isLoading = false;
+
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                });
+                        }
+                    });
+                }
 
             },
         });
