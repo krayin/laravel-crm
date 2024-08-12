@@ -186,7 +186,7 @@
                         :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
                         class="flex items-center text-brandColor cursor-pointer"
                     >
-                        <i class="icon-attachmetent text-2xl"></i>
+                        <i class="icon-attachment text-2xl"></i>
 
                         @{{ attachment.name }}
                     </a>
@@ -372,7 +372,7 @@
                                         class="flex cursor-pointer items-center gap-1"
                                         for="file-upload"
                                     >
-                                        <i class="icon-attachmetent text-xl font-medium"></i>
+                                        <i class="icon-attachment text-xl font-medium"></i>
                         
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>

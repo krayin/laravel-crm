@@ -194,13 +194,8 @@ class EmailController extends Controller
                 'message' => trans('admin::app.mail.update-success'),
             ];
 
-            if (request('lead_id')) {
-                $response['html'] = view('admin::common.custom-attributes.view', [
-                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                        'entity_type' => 'leads',
-                    ]),
-                    'entity'           => $this->leadRepository->find(request('lead_id')),
-                ])->render();
+            if ($leadId = request('lead_id')) {
+                $response['lead'] = $this->leadRepository->find($leadId);
             }
 
             return response()->json($response);

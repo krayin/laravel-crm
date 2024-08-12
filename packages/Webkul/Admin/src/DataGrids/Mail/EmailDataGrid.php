@@ -5,6 +5,7 @@ namespace Webkul\Admin\DataGrids\Mail;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
+use Illuminate\Support\Str;
 
 class EmailDataGrid extends DataGrid
 {
@@ -43,7 +44,7 @@ class EmailDataGrid extends DataGrid
     {
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => '<span class="icon-leads text-2xl"></span>',
+            'label'      => '<span class="icon-attachment text-2xl"></span>',
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
@@ -68,7 +69,7 @@ class EmailDataGrid extends DataGrid
             'type'     => 'string',
             'sortable' => true,
             'closure'  => function ($row) {
-                return '<div class="subject-wrapper"><span class="subject-content">'.$row->subject.'</span><span class="reply"> - '.substr(strip_tags($row->reply), 0, 225).'<span></div>';
+                return Str::limit(strip_tags($row->reply), 50);
             },
         ]);
 

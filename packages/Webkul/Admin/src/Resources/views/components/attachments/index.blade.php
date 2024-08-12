@@ -39,7 +39,7 @@
                 class="flex cursor-pointer items-center gap-1"
                 for="file-upload"
             >
-                <i class="icon-attachmetent text-xl font-medium"></i>
+                <i class="icon-attachment text-xl font-medium"></i>
 
                 <span class="font-semibold">
                     @lang('Add Attachments')
