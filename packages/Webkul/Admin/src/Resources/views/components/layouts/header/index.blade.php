@@ -484,30 +484,16 @@
 
             data() {
                 return  {
-                    activeTab: 'products',
+                    activeTab: 'leads',
 
                     isDropdownOpen: false,
 
                     tabs: {
-                        products: {
-                            key: 'products',
-                            title: "@lang('Products')",
-                            is_active: true,
-                            endpoint: "{{ route('admin.products.search') }}"
-                        },
-
                         leads: {
                             key: 'leads',
                             title: "@lang('Leads')",
-                            is_active: false,
+                            is_active: true,
                             endpoint: "{{ route('admin.leads.search') }}"
-                        },
-
-                        persons: {
-                            key: 'persons',
-                            title: "@lang('Persons')",
-                            is_active: false,
-                            endpoint: "{{ route('admin.contacts.persons.search') }}"
                         },
 
                         quotes: {
@@ -516,6 +502,20 @@
                             is_active: false,
                             endpoint: "{{ route('admin.quotes.search') }}"
                         },
+
+                        products: {
+                            key: 'products',
+                            title: "@lang('Products')",
+                            is_active: false,
+                            endpoint: "{{ route('admin.products.search') }}"
+                        },
+
+                        persons: {
+                            key: 'persons',
+                            title: "@lang('Persons')",
+                            is_active: false,
+                            endpoint: "{{ route('admin.contacts.persons.search') }}"
+                        },
                     },
 
                     isLoading: false,
@@ -523,7 +523,7 @@
                     searchTerm: '',
 
                     searchedResults: {
-                        products: [],
+                        [this.activeTab]: [],
                     },
                 };
             },
