@@ -15,8 +15,12 @@
                     />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.mail.view.title')
+                <div class="flex items-center gap-2">
+                    <div class="text-xl font-bold dark:text-gray-300">
+                        @lang('admin::app.mail.view.title') 
+                    </div>
+                    
+                    <span class="label-active">{{ request('route') }}</span>
                 </div>
             </div>
     
