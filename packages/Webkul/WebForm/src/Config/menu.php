@@ -7,6 +7,6 @@ return [
         'info'       => 'web_form::app.title-info',
         'route'      => 'admin.settings.web_forms.index',
         'sort'       => 1,
-        'icon-class' => 'web-form-icon',
+        'icon-class' => 'webforms.svg',
     ],
 ];
