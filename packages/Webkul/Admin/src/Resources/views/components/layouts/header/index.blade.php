@@ -92,7 +92,7 @@
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
                                         <a href="{{ route('admin.contacts.persons.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-contact text-2xl text-gray-600"></i>
+                                                <i class="icon-settings-user text-2xl text-gray-600"></i>
                                                 
                                                 <span class="font-medium">@lang('admin::app.layouts.person')</span>
                                             </div>
@@ -105,7 +105,7 @@
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
                                         <a href="{{ route('admin.contacts.organizations.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-meeting text-2xl text-gray-600"></i>
+                                                <i class="icon-organization text-2xl text-gray-600"></i>
                                                 
                                                 <span class="font-medium">@lang('admin::app.layouts.organization')</span>
                                             </div>
@@ -131,7 +131,7 @@
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
                                         <a href="{{ route('admin.settings.attributes.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-filter text-2xl text-gray-600"></i>
+                                                <i class="icon-attribute text-2xl text-gray-600"></i>
                                                 
                                                 <span class="font-medium">@lang('admin::app.layouts.attribute')</span>
                                             </div>
@@ -144,7 +144,7 @@
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
                                         <a href="{{ route('admin.settings.roles.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-video text-2xl text-gray-600"></i>
+                                                <i class="icon-role text-2xl text-gray-600"></i>
                                                 
                                                 <span class="font-medium">@lang('admin::app.layouts.role')</span>
                                             </div>
@@ -157,7 +157,7 @@
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
                                         <a href="{{ route('admin.settings.users.create') }}">
                                             <div class="flex flex-col gap-1">
-                                                <i class="icon-meeting text-2xl text-gray-600"></i>
+                                                <i class="icon-user text-2xl text-gray-600"></i>
                                                 
                                                 <span class="font-medium">@lang('admin::app.layouts.user')</span>
                                             </div>
