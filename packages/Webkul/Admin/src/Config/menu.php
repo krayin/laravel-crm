@@ -218,7 +218,7 @@ return [
         'info'       => 'admin::app.layouts.warehouses-info',
         'route'      => 'admin.settings.warehouses.index',
         'sort'       => 1,
-        'icon-class' => 'logo.svg',
+        'icon-class' => 'warehouses.svg',
     ], [
         'key'        => 'settings.automation',
         'name'       => 'admin::app.layouts.automation',
