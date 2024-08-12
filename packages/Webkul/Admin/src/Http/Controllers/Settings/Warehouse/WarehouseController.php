@@ -133,6 +133,12 @@ class WarehouseController extends Controller
 
         Event::dispatch('settings.warehouse.update.after', $warehouse);
 
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.settings.warehouses.index.update-success'),
+            ]);
+        }
+
         session()->flash('success', trans('admin::app.settings.warehouses.index.update-success'));
 
         return redirect()->route('admin.settings.warehouses.index');
