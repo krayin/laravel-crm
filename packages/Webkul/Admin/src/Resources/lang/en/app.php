@@ -1304,13 +1304,25 @@ return [
 
     'mail' => [
         'index' => [
-            'compose' => 'Compose',
-            'draft'   => 'Draft',
-            'inbox'   => 'Inbox',
-            'outbox'  => 'Outbox',
-            'sent'    => 'Sent',
-            'trash'   => 'Trash',
-
+            'compose'           => 'Compose',
+            'draft'             => 'Draft',
+            'inbox'             => 'Inbox',
+            'outbox'            => 'Outbox',
+            'sent'              => 'Sent',
+            'trash'             => 'Trash',
+            'composer-mail-btn' => 'Composer Mail',
+            'btn'               => 'Mail',
+            'mail' => [
+                'title'         => 'Compose Mail',
+                'to'            => 'To',
+                'enter-emails'  => 'Press enter to add emails',
+                'cc'            => 'CC',
+                'bcc'           => 'BCC',
+                'subject'       => 'Subject',
+                'send-btn'      => 'Send',
+                'message'       => 'Message',
+                'draft'         => 'Draft'
+            ],
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'From',
