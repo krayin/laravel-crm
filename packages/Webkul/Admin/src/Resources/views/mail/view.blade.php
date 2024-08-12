@@ -1047,6 +1047,8 @@
 
                 props: ['index', 'email', 'action'],
 
+                emits: ['on-discard'],
+
                 data() {
                     return {
                         hovering: '',
@@ -1065,9 +1067,11 @@
                                         type: 'trash'
                                     })
                                     .then ((response) => {
-                                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-
-                                        this.$emit('onDiscard');
+                                        if (response.status == 200) {
+                                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+    
+                                            this.$emit('on-discard');
+                                        }
                                     });
                                 }
                             });

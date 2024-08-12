@@ -228,7 +228,13 @@ class EmailController extends Controller
     {
         $attachment = $this->attachmentRepository->findOrFail($id);
 
-        return Storage::download($attachment->path);
+        try {
+            return Storage::download($attachment->path);
+        } catch(\Exception $e) {
+            session()->flash('error', $e->getMessage());
+
+            return redirect()->back();
+        }
     }
 
     /**
