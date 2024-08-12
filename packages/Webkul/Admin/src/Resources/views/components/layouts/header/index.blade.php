@@ -21,7 +21,7 @@
                 <input 
                     type="text" 
                     class="block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                    placeholder="@lang('Search')" 
+                    placeholder="@lang('admin::app.components.layouts.header.mega-search.title')" 
                 >
             </div>
         </v-mega-search>
@@ -298,7 +298,8 @@
                                     :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @{{ `@lang('Explore all products matching ":query" (:count)')`.replace(':query', searchTerm).replace(':count', searchedResults.products.length) }}
+                                
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-products')`.replace(':query', searchTerm).replace(':count', searchedResults.products.length) }}
                                 </a>
                             </template>
 
@@ -307,7 +308,7 @@
                                     href="{{ route('admin.products.index') }}"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @lang('Explore All Products')
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-products')
                                 </a>
                             </template>
                         </div>
@@ -357,7 +358,7 @@
                                     :href="'{{ route('admin.leads.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @{{ `@lang('Explore all leads matching ":query" (:count)')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-leads')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
                                 </a>
                             </template>
 
@@ -366,7 +367,7 @@
                                     href="{{ route('admin.leads.index') }}"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @lang('Explore All Leads')
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-leads')
                                 </a>
                             </template>
                         </div>
@@ -408,7 +409,7 @@
                                     :href="'{{ route('admin.contacts.persons.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @{{ `@lang('Explore all leads matching ":query" (:count)')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.data.length) }}
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-contacts')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.data.length) }}
                                 </a>
                             </template>
 
@@ -417,7 +418,7 @@
                                     href="{{ route('admin.contacts.persons.index') }}"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @lang('Explore All Persons')
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-contacts')
                                 </a>
                             </template>
                         </div>
@@ -459,7 +460,7 @@
                                     :href="'{{ route('admin.quotes.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @{{ `@lang('Explore all quotes matching ":query" (:count)')`.replace(':query', searchTerm).replace(':count', searchedResults.quotes.length) }}
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-quotes')`.replace(':query', searchTerm).replace(':count', searchedResults.quotes.length) }}
                                 </a>
                             </template>
 
@@ -468,7 +469,7 @@
                                     href="{{ route('admin.quotes.index') }}"
                                     class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
                                 >
-                                    @lang('Explore All Quotes')
+                                    @lang('admin::app.components.layouts.header.mega-search.explore-all-quotes')
                                 </a>
                             </template>
                         </div>
@@ -491,28 +492,28 @@
                     tabs: {
                         leads: {
                             key: 'leads',
-                            title: "@lang('Leads')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
                             is_active: true,
                             endpoint: "{{ route('admin.leads.search') }}"
                         },
 
                         quotes: {
                             key: 'quotes',
-                            title: "@lang('Quotes')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
                             is_active: false,
                             endpoint: "{{ route('admin.quotes.search') }}"
                         },
 
                         products: {
                             key: 'products',
-                            title: "@lang('Products')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
                             is_active: false,
                             endpoint: "{{ route('admin.products.search') }}"
                         },
 
                         persons: {
                             key: 'persons',
-                            title: "@lang('Persons')",
+                            title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
                             is_active: false,
                             endpoint: "{{ route('admin.contacts.persons.search') }}"
                         },
