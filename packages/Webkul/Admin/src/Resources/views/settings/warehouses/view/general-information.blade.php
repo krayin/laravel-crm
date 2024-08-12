@@ -19,7 +19,7 @@
                 ])"
                 :allow-edit="true"
                 :entity="$warehouse"
-                :url="route('admin.settings.warehouses.update', $warehouse->id)"           
+                :url="route('admin.settings.warehouses.update', $warehouse->id)"        
             />
         </form>
     </x-admin::form>

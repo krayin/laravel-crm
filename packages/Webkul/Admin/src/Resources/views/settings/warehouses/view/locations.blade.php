@@ -61,10 +61,16 @@
                         <x-slot:content>
                             <x-admin::form.control-group.control
                                 type="hidden"
+                                name="entity_type"
+                                value="Warehouses"
+                            />
+                            
+                            <x-admin::form.control-group.control
+                                type="hidden"
                                 name="warehouse_id"
                                 value="{{ $warehouse->id }}"
                             />
-                        
+
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.warehouses.view.locations.name')
@@ -127,7 +133,7 @@
                 addLocation(params, { resetForm, setErrors }) {
                     this.isProcessing = true;
 
-                    this.$axios.post('{{ route('admin.settings.locations.store', $warehouse->id) }}', params)
+                    this.$axios.post('{{ route('admin.settings.locations.store') }}', params)
                         .then((response) => {
                             this.getLocations();
 
