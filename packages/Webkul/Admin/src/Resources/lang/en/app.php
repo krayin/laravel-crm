@@ -1033,6 +1033,8 @@ return [
                 'title'               => 'Users',
                 'update-success'      => 'User updated successfully.',
                 'user-define-error'   => 'Can not delete system user.',
+                'active'              => 'Active',
+                'inactive'            => 'Inactive',
 
                 'datagrid' => [
                     'active'        => 'Active',
