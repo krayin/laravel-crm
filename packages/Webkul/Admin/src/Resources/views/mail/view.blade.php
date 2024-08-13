@@ -423,23 +423,25 @@
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
                         <div class="flex gap-2">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                            <div class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200">
                                 @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
                             </div>
                     
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span>@{{ email.person.name }}</span>
+                                <span class="text-xs font-medium">
+                                    @{{ email.person?.name }}
+                                </span>
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
                                     <div class="flex flex-col">
-                                        <span class="text-sm">@{{ email.person.job_title }}</span>
+                                        <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                        <span class="text-sm text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                        <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
 
-                                        <span class="text-sm text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                        <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
                                     </div>
                                 </div>
                             </div>
