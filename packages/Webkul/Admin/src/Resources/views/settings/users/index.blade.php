@@ -3,34 +3,39 @@
         @lang('admin::app.settings.users.index.title')
     </x-slot>
 
-    <v-users-settings>
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs name="settings.users" />
-                </div>
-    
-                <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.settings.users.index.title')
-                </div>
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <!-- Breadcrumbs -->
+                <x-admin::breadcrumbs name="settings.users" />
             </div>
-    
-            <div class="flex items-center gap-x-2.5">
-                <!-- Create button for Leads Type -->
-                @if(bouncer()->hasPermission('settings.user.users.create'))
-                    <div class="flex items-center gap-x-2.5">
-                        <button
-                            type="button"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.settings.users.index.create-btn')
-                        </button>
-                    </div>
-                @endif
+
+            <div class="text-xl font-bold dark:text-gray-300">
+                @lang('admin::app.settings.users.index.title')
             </div>
         </div>
-    
+
+        <div class="flex items-center gap-x-2.5">
+            {!! view_render_event('krayin.admin.settings.users.index.create_button.before') !!}
+            
+            <!-- Create button for User -->
+            @if (bouncer()->hasPermission('settings.user.users.create'))
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="button"
+                        class="primary-button"
+                        @click="$refs.userSettings.openModal()"
+                    >
+                        @lang('admin::app.settings.users.index.create-btn')
+                    </button>
+                </div>
+            @endif
+
+            {!! view_render_event('krayin.admin.settings.users.index.create_button.after') !!}
+        </div>
+    </div>
+
+    <v-users-settings ref="userSettings">
         <!-- DataGrid Shimmer -->
         <x-admin::shimmer.datagrid />
     </v-users-settings>
@@ -40,38 +45,6 @@
             type="text/x-template"
             id="users-settings-template"
         >
-            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                <div class="flex flex-col gap-2">
-                    <div class="flex cursor-pointer items-center">
-                        <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs name="settings.users" />
-                    </div>
-        
-                    <div class="text-xl font-bold dark:text-gray-300">
-                        @lang('admin::app.settings.users.index.title')
-                    </div>
-                </div>
-        
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for Leads Type -->
-                    @if(bouncer()->hasPermission('settings.user.users.create'))
-                        <div class="flex items-center gap-x-2.5">
-                            {!! view_render_event('krayin.admin.settings.users.index.create_button.before') !!}
-            
-                            <!-- Create button for Leads Type -->
-                            <x-admin::button
-                                button-type="button"
-                                class="primary-button justify-center"
-                                :title="trans('admin::app.settings.users.index.create-btn')"
-                                @click="selectedType=false; $refs.userUpdateAndCreateModal.toggle()"
-                            />
-            
-                            {!! view_render_event('krayin.admin.settings.users.index.create_button.after') !!}
-                        </div>
-                    @endif
-                </div>
-            </div>
-
             {!! view_render_event('krayin.admin.settings.users.index.datagrid.before') !!}
         
             <!-- Datagrid -->
@@ -156,7 +129,7 @@
                                     'label-active': record.status === 1,
                                 }"
                             >
-                                @{{ record.status ? '@lang('admin::app.datagrid.active')' : '@lang('admin::app.datagrid.inactive')' }}
+                                @{{ record.status ? '@lang('admin::app.settings.users.index.active')' : '@lang('admin::app.settings.users.index.inactive')' }}
                             </span>
 
                             <!-- Users Creation Date -->
@@ -451,6 +424,10 @@
                 },
         
                 methods: {
+                    openModal() {
+                        this.$refs.userUpdateAndCreateModal.toggle();
+                    },
+                    
                     updateOrCreate(params, {resetForm, setErrors}) {
                         this.isProcessing = true;
 
