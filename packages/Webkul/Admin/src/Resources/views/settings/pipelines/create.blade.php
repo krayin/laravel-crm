@@ -13,11 +13,12 @@
         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
+                    <!-- Breadcrumbs -->
                     <div class="flex cursor-pointer items-center">
-                        <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs name="settings.pipelines.create" />
                     </div>
 
+                    <!-- Title -->
                     <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.settings.pipelines.create.title')
                     </div>
@@ -36,10 +37,9 @@
                 </div>
             </div>
 
-            {{-- <span class="border border-gray-200"></span> --}}
-
-            <div class="flex items-center gap-6 border-t px-4 py-2">
-                <x-admin::form.control-group  class="!mb-0">
+            <div class="flex gap-4 border-t px-4 py-2 max-sm:flex-wrap">
+                <!-- Name -->
+                <x-admin::form.control-group  >
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.create.name')
                     </x-admin::form.control-group.label>
@@ -57,7 +57,8 @@
                     <x-admin::form.control-group.error control-name="name" />
                 </x-admin::form.control-group>
 
-                <x-admin::form.control-group  class="!mb-0">
+                <!-- Rotten-Days -->
+                <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.create.rotten-days')
                     </x-admin::form.control-group.label>
@@ -75,7 +76,8 @@
                     <x-admin::form.control-group.error control-name="rotten_days" />
                 </x-admin::form.control-group>
 
-                <x-admin::form.control-group class="mt-10 flex items-center gap-4">
+                <!-- Mark as Default -->
+                <x-admin::form.control-group class="mt-6 flex items-center gap-4">
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.create.mark-as-default')
                     </x-admin::form.control-group.label>
@@ -95,6 +97,7 @@
             </div>
         </div>
 
+        <!-- Stages Component -->
         <div class="flex gap-2.5 overflow-auto py-3.5 max-xl:flex-wrap">
             <v-stages-component>
                 <x-admin::shimmer.pipelines.kanban />
@@ -127,14 +130,15 @@
                             class="flex gap-4 overflow-x-auto"
                         >
                             <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white">
-                                <!-- Stage Header -->
+                                <!-- Stage Crad -->
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
                                         <span class="py-1 font-medium">
-                                            @{{ element.name ? element.name : 'New Added' }} 
+                                            @{{ element.name ? element.name : '@lang('admin::app.settings.pipelines.create.newly-added')                                            ' }} 
                                         </span>
 
+                                        <!-- Drag Icon -->
                                         <i
                                             v-if="isDragable(element)" 
                                             class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
@@ -142,7 +146,7 @@
                                         </i>
                                     </div>
                                     
-                                    <!-- Attribute Name -->
+                                    <!-- Card Body -->
                                     <div>
                                         <input
                                             type="hidden"
@@ -151,6 +155,7 @@
                                             :name="'stages[' + element.id + '][code]'"
                                         />
 
+                                        <!-- Name -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.settings.pipelines.create.name')
@@ -198,13 +203,9 @@
                                     @click="removeStage(element)" 
                                     v-if="isDragable(element)"
                                 >
-                                    <i 
-                                        class="icon-delete text-2xl" 
-                                        @click="removeStage(element)" 
-                                        v-if="isDragable(element)"
-                                    ></i>
+                                    <i class="icon-delete text-2xl"></i>
                                     
-                                    @lang('Delete Stage')
+                                    @lang('admin::app.settings.pipelines.create.delete-stage')
                                 </div>
                             </div>
                         </div>
@@ -217,9 +218,15 @@
                     <div class="flex flex-col gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 py-12">
                             <img src="{{ admin_vite()->asset('images/empty-placeholders/description.svg') }}">
+                            
                             <div class="flex flex-col items-center gap-2">
-                                <p class="text-xl font-semibold">Add New Stages</p>
-                                <p class="text-gray-400">Add new stage for your Pipeline</p>
+                                <p class="text-xl font-semibold">
+                                    @lang('admin::app.settings.pipelines.create.add-new-stages')
+                                </p>
+                                
+                                <p class="text-gray-400">
+                                    @lang('admin::app.settings.pipelines.create.add-stage-info')
+                                </p>
                             </div>
 
                             <!-- Add Stage Button -->

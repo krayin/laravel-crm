@@ -10,6 +10,7 @@
         :action="route('admin.settings.pipelines.update', $pipeline->id)"
         method="POST"
     >
+        <!-- Header section -->
         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
@@ -21,13 +22,14 @@
                         />
                     </div>
 
+                    <!-- Title -->
                     <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.settings.pipelines.edit.title')
                     </div>
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for Pipeline -->
+                    <!-- Save button -->
                     <div class="flex items-center gap-x-2.5">
                         <button
                             type="submit"
@@ -78,6 +80,7 @@
                     <x-admin::form.control-group.error control-name="rotten_days" />
                 </x-admin::form.control-group>
 
+                <!-- Pipeline Default Switcher -->
                 <x-admin::form.control-group class="mt-10 flex items-center gap-4">
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.edit.mark-as-default')
@@ -99,6 +102,7 @@
         </div>
 
         <div class="flex gap-2.5 overflow-auto py-3.5 max-xl:flex-wrap">
+            <!-- Stages Component -->
             <v-stages-component>
                 <x-admin::shimmer.pipelines.kanban />
             </v-stages-component>
@@ -130,7 +134,6 @@
                             class="flex gap-4 overflow-x-auto"
                         >
                             <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white">
-                                <!-- Stage Header -->
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
@@ -145,8 +148,9 @@
                                         </i>
                                     </div>
                                     
-                                    <!-- Attribute Name -->
+                                    <!-- Crads input fiels -->
                                     <div>
+                                        <!-- Name -->
                                         <input
                                             type="hidden"
                                             :value="slugify(element.name)"
@@ -195,22 +199,18 @@
                                     </div>
                                 </div>
                                 
+                                <!-- Remove Stage -->
                                 <div
                                     class="flex cursor-pointer items-center gap-2 border-t p-2 text-red-600" 
                                     @click="removeStage(element)" 
                                     v-if="isDragable(element)"
                                 >
-                                    <i 
-                                        class="icon-delete text-2xl" 
-                                        @click="removeStage(element)" 
-                                        v-if="isDragable(element)"
-                                    ></i>
+                                    <i class="icon-delete text-2xl"></i>
                                     
-                                    @lang('Delete Stage')
+                                    @lang('admin::app.settings.pipelines.edit.delete-stage')
                                 </div>
                             </div>
                         </div>
-
                     </template>
                 </draggable>
 
