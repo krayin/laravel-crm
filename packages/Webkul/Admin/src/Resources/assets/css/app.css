@@ -408,7 +408,16 @@
     .icon-add-2:before {
       content: "\e923";
     }
+
+    .label-active {
+      @apply max-w-max rounded-md bg-emerald-200 px-3 py-1.5 text-xs font-medium text-emerald-900;
+    }
     
+    .label-inactive {
+      @apply max-w-max rounded-md bg-red-200 px-3 py-1.5 text-xs font-medium text-red-800;
+    }
+
+
     /* -------------------------------- new css end -------------------------------- */  
       
     p {
@@ -479,9 +488,9 @@
     .label-fraud,
     .label-pending_payment,
     .label-completed,
-    .label-active {
-        @apply text-[12px] text-white font-semibold py-px px-1.5 max-w-max rounded-[35px];
-    }
+    /* .label-active {
+        @apply text-[12px] text-white font-semibold py-px px-1.5 max-w-max rounded-md;
+    } */
 
 	.label-pending,
     .label-pending_payment {
@@ -492,10 +501,10 @@
 		@apply bg-cyan-600;
     }
 
-	.label-completed,
+	/* .label-completed,
     .label-active {
-		@apply bg-green-600;
-	}
+		@apply bg-emerald-200;
+	} */
 
 	.label-closed {
 		@apply bg-indigo-600;
