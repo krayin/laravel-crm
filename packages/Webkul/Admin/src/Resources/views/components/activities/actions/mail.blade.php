@@ -173,7 +173,7 @@
                     <x-slot:footer>
                         <div class="flex w-full items-center justify-between">
                             <label
-                                class="icon-attachmetent cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200"
+                                class="icon-attachment cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200"
                                 for="file-upload"
                             ></label>
 
