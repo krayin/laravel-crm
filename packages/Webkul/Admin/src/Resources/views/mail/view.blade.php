@@ -423,7 +423,10 @@
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
                         <div class="flex gap-2">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200">
+                            <div
+                                class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                            >
                                 @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
                             </div>
                     
@@ -1001,6 +1004,8 @@
                             @open-contact-modal="openContactModal"
                             :unlinking="unlinking"
                             :email="email"
+                            :tag-text-color="tagTextColor"
+                            :background-colors="backgroundColors"
                         ></v-contact-lookup>
 
                         <!-- Link to Lead -->
@@ -1015,6 +1020,8 @@
                             @open-lead-modal="openLeadModal"
                             :unlinking="unlinking"
                             :email="email"
+                            :tag-text-color="tagTextColor"
+                            :background-colors="backgroundColors"
                         ></v-lead-lookup>
                     </div>
                 </x-slot>
@@ -1235,7 +1242,7 @@
             app.component('v-contact-lookup', {
                 template: '#v-contact-lookup-template',
 
-                props: ['email', 'unlinking'],
+                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
 
                 emits: ['link-contact', 'unlink-contact', 'open-contact-modal'],
 
@@ -1399,7 +1406,7 @@
             app.component('v-lead-lookup', {
                 template: '#v-lead-lookup-template',
 
-                props: ['email', 'unlinking'],
+                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
 
                 emits: ['link-lead', 'unlink-lead', 'open-lead-modal'],
 
@@ -1416,26 +1423,6 @@
                         isSearching: false,
 
                         cancelToken: null,
-
-                        backgroundColors: [
-                            'bg-yellow-200',
-                            'bg-red-200',
-                            'bg-lime-200',
-                            'bg-blue-200',
-                            'bg-orange-200',
-                            'bg-green-200',
-                            'bg-pink-200',
-                            'bg-yellow-400'
-                        ],
-
-                        tagTextColor: {
-                            '#FEE2E2': '#DC2626',
-                            '#FFEDD5': '#EA580C',
-                            '#FEF3C7': '#D97706',
-                            '#FEF9C3': '#CA8A04',
-                            '#ECFCCB': '#65A30D',
-                            '#DCFCE7': '#16A34A',
-                        },
                     };
                 },
 
@@ -1702,6 +1689,26 @@
                         unlinking: {
                             lead: false,
                             contact: false,
+                        },
+
+                        backgroundColors: [
+                            'bg-yellow-200',
+                            'bg-red-200',
+                            'bg-lime-200',
+                            'bg-blue-200',
+                            'bg-orange-200',
+                            'bg-green-200',
+                            'bg-pink-200',
+                            'bg-yellow-400'
+                        ],
+
+                        tagTextColor: {
+                            '#FEE2E2': '#DC2626',
+                            '#FFEDD5': '#EA580C',
+                            '#FEF3C7': '#D97706',
+                            '#FEF9C3': '#CA8A04',
+                            '#ECFCCB': '#65A30D',
+                            '#DCFCE7': '#16A34A',
                         },
                     };
                 },
