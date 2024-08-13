@@ -37,10 +37,9 @@
                             href="{{ $child->getUrl() }}"
                         >
                             @if ($icon = $child->getIcon())
-                                <img
-                                    class="h-[60px] w-[60px] dark:mix-blend-exclusion dark:invert"
-                                    src="{{ admin_vite()->asset('images/' . $icon) }}"
-                                >
+                                <div class="rounded-lg bg-gray-100 p-3">
+                                    <i class="{{ $child->getIcon() }} text-4xl "></i>
+                                </div>
                             @endif
 
                             <div class="grid">
