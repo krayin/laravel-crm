@@ -135,6 +135,12 @@
                 'width'
             ],
 
+            emits: [
+                'toggle',
+                'open',
+                'close',
+            ],
+
             data() {
                 return {
                     isOpen: this.isActive,

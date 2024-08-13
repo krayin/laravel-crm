@@ -2,18 +2,18 @@
 
 namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 
-use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Http\JsonResponse;
-use Prettus\Repository\Criteria\RequestCriteria;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Contact\PersonDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Resources\PersonResource;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Admin\Http\Resources\PersonResource;
 
 class PersonController extends Controller
 {
@@ -50,13 +50,20 @@ class PersonController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(AttributeForm $request): RedirectResponse
+    public function store(AttributeForm $request): RedirectResponse|JsonResponse
     {
         Event::dispatch('contacts.person.create.before');
 
         $person = $this->personRepository->create($this->sanitizeRequestedPersonData($request->all()));
 
         Event::dispatch('contacts.person.create.after', $person);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'data'    => $person,
+                'message' => trans('admin::app.contacts.persons.index.create-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.contacts.persons.index.create-success'));
 

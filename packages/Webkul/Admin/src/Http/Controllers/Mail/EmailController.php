@@ -10,12 +10,12 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Mail\EmailDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\User\Repositories\UserRepository;
-use Webkul\Admin\Http\Resources\EmailResource;
 
 class EmailController extends Controller
 {
@@ -92,7 +92,9 @@ class EmailController extends Controller
         }
 
         if (request('route') == 'draft') {
-            return view('admin::mail.compose', compact('email'));
+            return response()->json([
+                'data' => new EmailResource($email),
+            ]);
         }
 
         return view('admin::mail.view', compact('email'));
@@ -194,13 +196,8 @@ class EmailController extends Controller
                 'message' => trans('admin::app.mail.update-success'),
             ];
 
-            if (request('lead_id')) {
-                $response['html'] = view('admin::common.custom-attributes.view', [
-                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                        'entity_type' => 'leads',
-                    ]),
-                    'entity'           => $this->leadRepository->find(request('lead_id')),
-                ])->render();
+            if ($leadId = request('lead_id')) {
+                $response['lead'] = $this->leadRepository->find($leadId);
             }
 
             return response()->json($response);
@@ -233,7 +230,13 @@ class EmailController extends Controller
     {
         $attachment = $this->attachmentRepository->findOrFail($id);
 
-        return Storage::download($attachment->path);
+        try {
+            return Storage::download($attachment->path);
+        } catch(\Exception $e) {
+            session()->flash('error', $e->getMessage());
+
+            return redirect()->back();
+        }
     }
 
     /**
@@ -274,7 +277,7 @@ class EmailController extends Controller
             $parentId = $email->parent_id;
 
             if (request('type') == 'trash') {
-                $this->emailRepository->update([
+                $data= $this->emailRepository->update([
                     'folders' => ['trash'],
                 ], $id);
             } else {
@@ -294,7 +297,7 @@ class EmailController extends Controller
             if ($parentId) {
                 return redirect()->back();
             }
-            
+
             return redirect()->route('admin.mail.index', ['route' => 'inbox']);
         } catch (\Exception $exception) {
             if (request()->ajax()) {

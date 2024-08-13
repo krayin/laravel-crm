@@ -1,4 +1,10 @@
-<v-inline-text-edit {{ $attributes }}></v-inline-text-edit>
+<v-inline-text-edit {{ $attributes }}>
+    <div class="group w-full max-w-full hover:rounded-sm">
+        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+            <div class="shimmer h-5 w-48"></div>
+        </div>
+    </div>
+</v-inline-text-edit>
 
 @pushOnce('scripts')
     <script
@@ -20,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px] text-sm font-normal">@{{ inputValue }}</span>
+                <span class="pl-[2px]">@{{ inputValue }}</span>
 
                 <template v-if="allowEdit">
                     <i

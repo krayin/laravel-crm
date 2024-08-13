@@ -92,7 +92,7 @@ class LeadController extends Controller
                     'pipeline',
                     'pipeline.stages',
                     'stage',
-                    'attribute_values'
+                    'attribute_values',
                 ])->paginate(10)),
 
                 'meta' => [
@@ -157,6 +157,19 @@ class LeadController extends Controller
         session()->flash('success', trans('admin::app.leads.create-success'));
 
         return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        return view('admin::leads.edit', compact('lead'));
     }
 
     /**

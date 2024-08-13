@@ -3,6 +3,8 @@
 namespace Webkul\Warehouse\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Contracts\Warehouse as WarehouseContract;
 
 class Warehouse extends Model implements WarehouseContract
@@ -38,5 +40,21 @@ class Warehouse extends Model implements WarehouseContract
     public function locations()
     {
         return $this->hasMany(LocationProxy::modelClass());
+    }
+
+    /**
+     * The tags that belong to the lead.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(), 'warehouse_tags');
+    }
+
+    /**
+     * Get the activities.
+     */
+    public function activities()
+    {
+        return $this->belongsToMany(ActivityProxy::modelClass(), 'warehouse_activities');
     }
 }

@@ -4,11 +4,11 @@ namespace Webkul\Contact\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Activity\Models\ActivityProxy;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Person as PersonContract;
-use Webkul\Activity\Models\ActivityProxy;
-use Webkul\Tag\Models\TagProxy;
 use Webkul\Contact\Database\Factories\PersonFactory;
+use Webkul\Tag\Models\TagProxy;
 
 class Person extends Model implements PersonContract
 {

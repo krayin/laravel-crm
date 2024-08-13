@@ -28,7 +28,7 @@ class EmailController extends BaseEmailController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  integer  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function detach($id)
@@ -48,7 +48,7 @@ class EmailController extends BaseEmailController
 
     /**
      * Transform the email data to activity resource.
-     * 
+     *
      * @param  array  $data
      * @return \Webkul\Admin\Http\Resources\ActivityResource
      */
@@ -73,7 +73,7 @@ class EmailController extends BaseEmailController
                 'cc'      => json_decode($data['cc']),
                 'bcc'     => json_decode($data['bcc']),
             ],
-            'files'         => array_map(function($attachment) {
+            'files'         => array_map(function ($attachment) {
                 return (object) $attachment;
             }, $data['attachments']),
             'created_at'    => $data['created_at'],

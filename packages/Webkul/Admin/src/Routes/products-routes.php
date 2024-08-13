@@ -3,10 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Products\ProductController;
 
-/**
- * Settings routes.
- */
-Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Products routes.
      */

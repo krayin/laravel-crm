@@ -1,990 +1,1731 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.mail.view.subject', ['subject' => $email->subject])
+    </x-slot>
 
-@section('page_title')
-    {{ $email->subject }}
-@stop
-
-@push('css')
-    <style>
-        .lead-form .modal-container .modal-header {
-            border: 0;
-        }
-
-        .lead-form .modal-container .modal-body {
-            padding: 0;
-        }
-
-        .width_button{
-            width:100%;
-        }
-    </style>
-@endpush
-
-@section('content-wrapper')
-    @php
-        if (! $email->lead) {
-            $email->lead = app('\Webkul\Lead\Repositories\LeadRepository')->getModel()->fill(['title' => $email->subject]);
-        }
-
-        if (! $email->person) {
-            $email->person = app('\Webkul\Contact\Repositories\PersonRepository')->getModel()->fill(['emails' => [['value' => $email->from, 'label' => 'work']], 'name' => $email->name]);
-        }
-    @endphp
-
-    <div class="content full-page">
-        {!! view_render_event('admin.mail.view.header.before', ['email' => $email]) !!}
-
-        <div class="page-header">
-            {{ Breadcrumbs::render('mail.route.view', request('route'), $email) }}
-
-            <div class="page-title">
-                <h1>{{ $email->subject }}</h1>
-            </div>
-
-            <div class="page-action">
-
-                {!! view_render_event('admin.mail.view.actions.before', ['email' => $email]) !!}
-
-                <email-action-component></email-action-component>
-
-                {!! view_render_event('admin.mail.view.actions.after', ['email' => $email]) !!}
-            </div>
-        </div>
-
-        {!! view_render_event('admin.mail.view.header.after', ['email' => $email]) !!}
-
-
-        <div class="page-content" style="margin-top: 30px; padding-bottom: 30px;">
-            {!! view_render_event('admin.mail.view.list.before', ['email' => $email]) !!}
-
-            <email-list-component></email-list-component>
-
-            {!! view_render_event('admin.mail.view.list.after', ['email' => $email]) !!}
-        </div>
-    </div>
-
-    <form
-        action="{{ route('admin.contacts.persons.store') }}"
-        method="post"
-        data-vv-scope="person-form"
-        @submit.prevent="onSubmit($event, 'person-form')"
-    >
-        <modal id="addPersonModal" :is-open="modalIds.addPersonModal">
-            <h3 slot="header-title">{{ __('admin::app.contacts.persons.create-title') }}</h3>
-            
-            <div slot="header-actions">
-                {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.before', ['email' => $email]) !!}
-
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addPersonModal')">
-                    {{ __('admin::app.contacts.persons.cancel') }}
-                </button>
-
-                <button class="btn btn-sm btn-primary">
-                    {{ __('admin::app.contacts.persons.save-btn-title') }}
-                </button>
-
-                {!! view_render_event('admin.mail.view.actions.persons.create.form_buttons.after', ['email' => $email]) !!}
-            </div>
-
-            <div slot="body">
-                {!! view_render_event('admin.mail.view.actions.persons.create.form_controls.before', ['email' => $email]) !!}
-
-                @csrf()
-                
-                <input type="hidden" name="email_id" value="{{ $email->id }}" />
-                
-                <input type="hidden" name="quick_add" value="1"/>
-
-                @include('admin::common.custom-attributes.edit', [
-                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                        'entity_type' => 'persons',
-                        'quick_add'   => 1
-                    ]),
-                    'entity'           => $email->person,
-                    'formScope'        => 'person-form.',
-                ])
-
-                {!! view_render_event('admin.mail.view.actions.persons.create.form_controls.after', ['email' => $email]) !!}
-            </div>
-        </modal>
-
-    </form>
-
-    <form
-        action="{{ route('admin.leads.store') }}"
-        method="post"
-        class="lead-form"
-        data-vv-scope="lead-form"
-        @submit.prevent="onSubmit($event, 'lead-form')"
-    >
-        <modal id="addLeadModal" :is-open="modalIds.addLeadModal">
-            <h3 slot="header-title">{{ __('admin::app.leads.create-title') }}</h3>
-            
-            <div slot="header-actions">
-                {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.before', ['email' => $email]) !!}
-
-                <button class="btn btn-sm btn-secondary-outline" @click="closeModal('addLeadModal')">
-                    {{ __('admin::app.leads.cancel') }}
-                </button>
-
-                <button class="btn btn-sm btn-primary">
-                    {{ __('admin::app.leads.save-btn-title') }}
-                </button>
-
-                {!! view_render_event('admin.mail.view.actions.leads.create.form_buttons.after', ['email' => $email]) !!}
-            </div>
-
-            <div slot="body" style="padding: 0">
-                {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.before', ['email' => $email]) !!}
-
-                @csrf()
-                
-                <input type="hidden" name="email_id" value="{{ $email->id }}" />
-
-                <input type="hidden" name="quick_add" value="1" />
-
-                <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="1" />
-
-                <tabs>
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.details.before', ['email' => $email]) !!}
-
-                    <tab name="{{ __('admin::app.leads.details') }}" :selected="true">
-                        @include('admin::common.custom-attributes.edit', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'leads',
-                                'quick_add'   => 1
-                            ]),
-                            'formScope'        => 'lead-form.',
-                            'entity'           => $email->lead,
-                        ])
-                    </tab>
-
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.details.after', ['email' => $email]) !!}
-
-
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.contact_person.before', ['email' => $email]) !!}
-
-                    <tab name="{{ __('admin::app.leads.contact-person') }}">
-                        @include('admin::leads.common.contact', ['formScope' => 'lead-form.'])
-
-                        <contact-component :data='@json(old('person'))'></contact-component>
-                    </tab>
-
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.contact_person.after', ['email' => $email]) !!}
-
-
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.products.before', ['email' => $email]) !!}
-
-                    <tab name="{{ __('admin::app.leads.products') }}">
-                        @include('admin::leads.common.products', ['formScope' => 'lead-form.'])
-
-                        <product-list :data='@json(old('products'))'></product-list>
-                    </tab>
-
-                    {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.products.after', ['email' => $email]) !!}
-                </tabs>
-
-                {!! view_render_event('admin.mail.view.actions.leads.create.form_controls.after', ['email' => $email]) !!}
-            </div>
-        </modal>
-    </form>
-@stop
-
-@push('scripts')
-    <script src="{{ asset('vendor/webkul/admin/assets/js/tinyMCE/tinymce.min.js') }}"></script>
-
-    <script type="text/x-template" id="email-action-component-template">
-        <div class="email-action-container">
-            @if (bouncer()->hasPermission('contacts.persons.create') || bouncer()->hasPermission('leads.create') || bouncer()->hasPermission('leads.view') || bouncer()->hasPermission('contacts.persons.edit'))
-                <button class="btn btn-sm btn-secondary-outline" @click="show_filter = ! show_filter">
-                    <i class="icon link-icon"></i>
-
-                    <span>{{ __('admin::app.mail.link-mail') }}</span>
-                </button>
-            @endif
-
-            <div class="sidebar-filter" :class="{show: show_filter}">
-                <header>
-                    <h1>
-                        <span>{{ __('admin::app.mail.link-mail') }}</span>
-
-                        <div class="right">
-                            <i class="icon close-icon" @click="show_filter = ! show_filter"></i>
-                        </div>
-                    </h1>
-                </header>
-
-                <div class="email-action-content">
-                    {!! view_render_event('admin.mail.view.actions.link_person.before', ['email' => $email]) !!}
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <!-- Bredcrumbs -->
+                    <x-admin::breadcrumbs
+                        name="mail.route.view"
+                        :entity="$email"
+                        :route="request('route')"
+                    />
+                </div>
+    
+                <div class="flex items-center gap-2">
+                    <div class="text-xl font-bold dark:text-gray-300">
+                        @lang('admin::app.mail.view.title') 
+                    </div>
                     
-                    @if (bouncer()->hasPermission('contacts.persons.create') || bouncer()->hasPermission('contacts.persons.edit'))
-                        <div class="panel">
-                            <div class="link-lead" v-if="! email.person_id">
-                                <h3>{{ __('admin::app.mail.link-mail') }}</h3>
-
-                                <div class="btn-group">
-                                    @if (bouncer()->hasPermission('contacts.persons.edit')) 
-                                        <button
-                                            class="btn btn-sm btn-primary-outline"
-                                            @click="enabled_search.person = true"
-                                            v-if="! enabled_search.person"
-                                        >
-                                            {{ __('admin::app.mail.add-to-existing-contact') }}
-                                        </button>
-                                    @endif
-                                  
-                                    <div class="form-group" v-else>
-                                        <input
-                                            class="control"
-                                            v-model="search_term.person"
-                                            placeholder="{{ __('admin::app.mail.search-contact') }}"
-                                            v-on:keyup="search('person')"
-                                        />
-
-                                        <div class="lookup-results" v-if="search_term.person.length">
-                                            <ul>
-                                                <li v-for='(result, index) in search_results.person' @click="link('person', result)">
-                                                    <span>@{{ result.name }}</span>
-                                                </li>
-                    
-                                                <li v-if='! search_results.person.length && search_term.person.length && ! is_searching.person'>
-                                                    <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <i class="icon close-icon"  v-if="! is_searching.person" @click="enabled_search.person = false; reset('person')"></i>
-
-                                        <i class="icon loader-active-icon" v-if="is_searching.person"></i>
-                                    </div>
-
-                                    @if (bouncer()->hasPermission('contacts.persons.create')) 
-                                        <button class="btn btn-sm btn-primary" @click="$root.openModal('addPersonModal')">
-                                            {{ __('admin::app.mail.create-new-contact') }}
-                                        </button>
-                                    @endif
-
-                                </div>
-                            </div>
-
-                            <div v-else>
-                                <div class="panel-header">
-                                    {{ __('admin::app.mail.linked-contact') }}
-
-                                    <span class="links">
-                                        <a :href="'{{ route('admin.contacts.persons.edit') }}/' + email.person_id" target="_blank">
-                                            <i class="icon external-link-icon"></i>
-                                        </a>
-
-                                        <i class="icon close-icon" @click="unlink('person')"></i>
-                                    </span>
-                                </div>
-
-                                <div class="contact-details">
-                                    <div class="name">@{{ email.person.name }}</div>
-
-                                    <div class="email">
-                                        <i class="icon emails-icon"></i>
-                                        @{{ email.person.name }}
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    @endif
-
-                    {!! view_render_event('admin.mail.view.actions.link_person.after', ['email' => $email]) !!}
-
-
-                    {!! view_render_event('admin.mail.view.actions.link_lead.before', ['email' => $email]) !!}
-
-                    @if (bouncer()->hasPermission('leads.view') || bouncer()->hasPermission('leads.create'))
-                        <div class="panel">
-                            <div class="link-lead" v-if="! email.lead_id">
-                                <h3>{{ __('admin::app.mail.link-lead') }}</h3>
-
-                                <div class="btn-group">
-                                    @if (bouncer()->hasPermission('leads.view'))
-                                        <button
-                                            class="btn btn-sm btn-primary-outline"
-                                            @click="enabled_search.lead = true"
-                                            v-if="! enabled_search.lead"
-                                        >
-                                            {{ __('admin::app.mail.link-to-existing-lead') }}
-                                        </button>
-                                    @endif
-
-                                    <div class="form-group" v-else>
-                                        <input
-                                            class="control"
-                                            v-model="search_term.lead"
-                                            placeholder="{{ __('admin::app.mail.search-lead') }}"
-                                            v-on:keyup="search('lead')"
-                                        />
-
-                                        <div class="lookup-results" v-if="search_term.lead.length">
-                                            <ul>
-                                                <li v-for='(result, index) in search_results.lead' @click="link('lead', result)">
-                                                    <span>@{{ result.title }}</span>
-                                                </li>
-                    
-                                                <li v-if='! search_results.lead.length && search_term.lead.length && ! is_searching.lead'>
-                                                    <span>{{ __('admin::app.common.no-result-found') }}</span>
-                                                </li>
-                                            </ul>
-                                        </div>
-
-                                        <i
-                                            class="icon close-icon"
-                                            v-if="! is_searching.lead"
-                                            @click="enabled_search.lead = false; reset('lead')"
-                                        ></i>
-
-                                        <i class="icon loader-active-icon" v-if="is_searching.lead"></i>
-                                    </div>
-
-                                    @if (bouncer()->hasPermission('leads.create'))
-                                        <button class="btn btn-sm btn-primary" @click="$root.openModal('addLeadModal')">
-                                            {{ __('admin::app.mail.add-new-lead') }}
-                                        </button>
-                                    @endif
-                                </div>
-                            </div>
-
-                            <div v-else>
-                                @if (bouncer()->hasPermission('leads.view'))
-                                    <div class="panel-header">
-                                        {{ __('admin::app.mail.linked-lead') }}
-
-                                        <span class="links">
-                                            <a :href="'{{ route('admin.leads.view') }}/' + email.lead_id" target="_blank">
-                                                <i class="icon external-link-icon"></i>
-                                            </a>
-
-                                            <i class="icon close-icon" @click="unlink('lead')"></i>
-                                        </span>
-                                    </div>
-
-                                    <div class="panel-body">
-                                        <div class="custom-attribute-view" v-html="html">
-                                        </div>
-                                    </div>
-                                @elseif (bouncer()->hasPermission('leads.create'))
-                                    <h3>{{ __('admin::app.mail.link-lead') }}</h3>
-                                    <button class="btn btn-sm btn-primary width_button" @click="$root.openModal('addLeadModal')">
-                                        {{ __('admin::app.mail.add-new-lead') }}
-                                    </button>
-                                @endif
-                            </div>
-                        </div>
-                    @endif
-                    {!! view_render_event('admin.mail.view.actions.link_lead.after', ['email' => $email]) !!}
+                    <span class="label-active">{{ request('route') }}</span>
+                </div>
+            </div>
+    
+            <div class="flex items-center gap-x-2.5">
+                <!-- Mail Linking -->
+                <div class="flex items-center gap-x-2.5">
+                    <!-- Link Mail -->
+                    <v-action-email>
+                        <button
+                            type="button"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.mail.view.link-mail')
+                        </button>
+                    </v-action-email>
                 </div>
             </div>
         </div>
-    </script>
+    
+        <v-email-list>
+           <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
+        </v-email-list>
+    </div>
 
-    <script type="text/x-template" id="email-list-component-template">
-        <div class="email-list">
-            <email-item-component
+    @pushOnce('scripts')
+        <!-- Email List Template -->
+        <script
+            type="text/x-template"
+            id="v-email-list-template"
+        >  
+            <v-email-item
                 :email="email"
                 :key="0"
                 :index="0"
-                @onEmailAction="emailAction($event)"
-            ></email-item-component>
+                :action="action"
+                @on-discard="action = {}"
+                @on-email-action="emailAction($event)"
+            ></v-email-item>
 
+            <v-email-item
+                v-for='(email, index) in email.emails'
+                :email="email"
+                :key="index + 1"
+                :index="index + 1"
+                :action="action"
+                @on-discard="action = {}"
+                @on-email-action="emailAction($event)"
+            ></v-email-item>
+        </script>
 
-            <div class="email-reply-list">
-                <email-item-component
-                    v-for='(email, index) in email.emails'
-                    :email="email"
-                    :key="index + 1"
-                    :index="index + 1"
-                    @onEmailAction="emailAction($event)"
-                ></email-item-component>
-            </div>
-
-            <div class="email-action" v-if="! action">
-                <span class="reply-button" @click="emailAction({'type': 'reply'})">
-                    <i class="icon reply-icon"></i>
-
-                    {{ __('admin::app.mail.reply') }}
-                </span>
-
-                <span class="forward-button" @click="emailAction({'type': 'forward'})">
-                    <i class="icon forward-icon"></i>
-
-                    {{ __('admin::app.mail.forward') }}
-                </span>
-            </div>
-
-            <div class="email-form-container" id="email-form-container" v-else>
-                <email-form
-                    :action="action"
-                    @onDiscard="discard($event)"
-                ></email-form>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/x-template" id="email-item-component-template">
-        <div class="email-item">
-            <div class="email-header">
-                <div class="row">
-                    <span class="label">
-                        {{ __('admin::app.mail.from-') }}
-                    </span>
-
-                    <span class="value">
-                        @{{ email.name + ' ' + email.from }}
-                    </span>
-
-                    <span class="time">
-                        <timeago :datetime="email.created_at" :auto-update="60" locale="{{ app()->getLocale() }}"></timeago>
-
-                        <span class="icon ellipsis-icon dropdown-toggle"></span>
-
-                        <div class="dropdown-list">
-                            <div class="dropdown-container">
-                                <ul>
-                                    <li
-                                        @mouseover="hovering = 'reply-white-icon'"
-                                        @mouseout="hovering = ''"
-                                        @click="emailAction('reply')"
-                                    >
-                                        <i class="icon reply-icon" :class="{'reply-white-icon': hovering == 'reply-white-icon'}"></i>
-
-                                        {{ __('admin::app.mail.reply') }}
-                                    </li>
-
-                                    <li
-                                        @mouseover="hovering = 'reply-all-white-icon'"
-                                        @mouseout="hovering = ''"
-                                        @click="emailAction('reply-all')"
-                                    >
-                                        <i class="icon reply-all-icon" :class="{'reply-all-white-icon': hovering == 'reply-all-white-icon'}"></i>
-
-                                        {{ __('admin::app.mail.reply-all') }}
-                                    </li>
-
-                                    <li
-                                        @mouseover="hovering = 'forward-white-icon'"
-                                        @mouseout="hovering = ''"
-                                        @click="emailAction('forward')"
-                                    >
-                                        <i class="icon forward-icon" :class="{'forward-white-icon': hovering == 'forward-white-icon'}"></i>
-
-                                        {{ __('admin::app.mail.forward') }}
-                                    </li>
-
-                                    <li
-                                        @mouseover="hovering = 'trash-white-icon'"
-                                        @mouseout="hovering = ''"
-                                        @click="emailAction('delete')"
-                                    >
-                                        <form :action="'{{ route('admin.mail.delete') }}/' + email.id" method="post" :ref="'form-' + email.id">
-                                            @csrf()
-
-                                            <input type="hidden" name="_method" value="DELETE"/>
-                                            <input type="hidden" name="type" value="trash"/>
-
-                                            <i class="icon trash-icon" :class="{'trash-white-icon': hovering == 'trash-white-icon'}"></i>
-
-                                            {{ __('admin::app.mail.delete') }}
-                                        </form>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
-                    </span>
-                </div>
-
-                <div class="row">
-                    <span class="label">
-                        {{ __('admin::app.mail.to-') }}
-                    </span>
-
-                    <span class="value">
-                        @{{ String(email.reply_to) }}
-                    </span>
-                </div>
-                
-                <div class="row" v-if="email.cc && email.cc.length">
-                    <span class="label">
-                        {{ __('admin::app.mail.cc-') }}
-                    </span>
-
-                    <span class="value">
-                        @{{ String(email.cc) }}
-                    </span>
-                </div>
-                
-                <div class="row" v-if="email.bcc && email.bcc.length">
-                    <span class="label">
-                        {{ __('admin::app.mail.bcc-') }}
-                    </span>
-
-                    <span class="value">
-                        @{{ String(email.bcc) }}
-                    </span>
-                </div>
-            </div>
-
-            <div class="email-content">
-                <div v-html="email.reply"></div>
-
-                <div class="attachment-list">
-                    <div class="attachment-item" v-for='(attachment, index) in email.attachments'>
-                        <a :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id">
-                            <i class="icon attachment-icon"></i>
-
-                            @{{ attachment.name }}
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </script>
-
-    <script type="text/x-template" id="email-form-template">
-        <form
-            action="{{ route('admin.mail.store') }}"
-            method="POST"
-            enctype="multipart/form-data"
-            data-vv-scope="email-form"
-            @submit.prevent="$root.onSubmit($event, 'email-form')"
+        <!-- Email Item Template -->
+        <script
+            type="text/x-template"
+            id="v-email-item-template"
         >
-            <div class="form-container">
-                <div class="panel">
-                    <div class="panel-body">
-                        {!! view_render_event('admin.mail.view.email.create.form_controls.before', ['email' => $email]) !!}
+            <div class="flex gap-2.5 box-shadow rounded bg-white p-4 dark:bg-gray-900 max-xl:flex-wrap">
+                <div class="flex flex-col gap-4 w-full">
+                    <div class="flex gap-4 w-full items-center justify-between">
+                        <div class="flex gap-4">
+                            <!-- Mailer Sort name -->
+                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                @{{ email.name.split(' ').map(word => word[0]).join('') }}
+                            </div>
+                    
+                            <!-- Mailer receivers -->
+                            <div class="flex flex-col gap-1">
+                                <!-- Mailer Name -->
+                                <span>@{{ email.name }}</span>
+                                
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex">
+                                        <!-- Mail To -->
+                                        <span>@lang('admin::app.mail.view.to') @{{ email.reply_to.join(', ') }}</span>
 
-                        @csrf()
+                                        <!-- Show More Button -->
+                                        <i
+                                            v-if="email?.cc?.length || email?.bcc?.length"
+                                            class="text-2xl cursor-pointer"
+                                            :class="email.showMore ? 'icon-up-arrow' : 'icon-down-arrow'"
+                                            @click="email.showMore = ! email.showMore"
+                                        ></i>
+                                    </div>
 
-                        <!--<input type="hidden" name="parent_id" :value="action.email.id"/>-->
-                        <input type="hidden" name="parent_id" value="{{ request('id') }}"/>
+                                    <!-- Show more emails -->
+                                    <div
+                                        class="flex flex-col"
+                                        v-if="email.showMore"
+                                    >
+                                        <span v-if="email?.cc">
+                                            @lang('admin::app.mail.view.cc'):
+                                            
+                                            @{{ email.cc.join(', ') }}
+                                        </span>
 
-                        @include ('admin::common.custom-attributes.edit.email-tags')
+                                        <span v-if="email.bcc">
+                                            @lang('admin::app.mail.view.bcc'):
 
-                        <div class="form-group email-control-group" :class="[errors.has('email-form.reply_to[]') ? 'has-error' : '']">
-                            <label for="to" class="required">{{ __('admin::app.leads.to') }}</label>
-    
-                            <email-tags-component
-                                control-name="reply_to[]"
-                                control-label="{{ __('admin::app.leads.to') }}"
-                                :validations="'required'"
-                                :data="reply_to"
-                            ></email-tags-component>
-    
-                            <span class="control-error" v-if="errors.has('email-form.reply_to[]')">
-                                @{{ errors.first('email-form.reply_to[]') }}
-                            </span>
-
-                            <div class="email-address-options">
-                                <label @click="show_cc = ! show_cc">
-                                    {{ __('admin::app.leads.cc') }}
-                                </label>
-
-                                <label @click="show_bcc = ! show_bcc">
-                                    {{ __('admin::app.leads.bcc') }}
-                                </label>
+                                            @{{ email.bcc?.join(', ') }}
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-    
-                        <div
-                            class="form-group email-control-group"
-                            :class="[errors.has('email-form.cc[]') ? 'has-error' : '']"
-                            v-if="show_cc"
-                        >
-                            <label for="cc">{{ __('admin::app.leads.cc') }}</label>
-    
-                            <email-tags-component
-                                control-name="cc[]"
-                                control-label="{{ __('admin::app.leads.cc') }}"
-                                :data='cc'
-                            ></email-tags-component>
-    
-                            <span class="control-error" v-if="errors.has('email-form.cc[]')">
-                                @{{ errors.first('email-form.cc[]') }}
-                            </span>
+
+                        <!-- Time and Actions -->
+                        <div class="flex gap-2 items-center justify-center">
+                            <div>
+                                @{{ email.time_ago }}
+                            </div>
+
+                            <div class="flex select-none items-center">
+                                <x-admin::dropdown position="bottom-right">
+                                    <x-slot:toggle>
+                                        <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"></button>
+                                    </x-slot>
+                        
+                                    <!-- Admin Dropdown -->
+                                    <x-slot:content class="!p-0">
+                                        <div class="flex flex-col gap-2 pb-2.5">
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('reply')"
+                                            >
+                                                <i class="icon-reply text-2xl"></i>
+
+                                                @lang('admin::app.mail.view.reply')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('reply-all')"
+                                            >
+                                                <i class="icon-reply-all text-2xl"></i>
+
+                                                @lang('admin::app.mail.view.reply-all')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('forward')"
+                                            >
+                                                <i class="icon-forward text-2xl"></i>
+
+                                                @lang('admin::app.mail.view.forward')
+                                            </label>
+
+                                            <label
+                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                                @click="emailAction('delete')"
+                                            >
+                                                <i class="icon-delete text-2xl"></i>
+
+                                                @lang('admin::app.mail.view.delete')
+                                            </label>
+                                        </div>
+                                    </x-slot>
+                                </x-admin::dropdown>
+                            </div>
                         </div>
-    
-                        <div
-                            class="form-group email-control-group"
-                            :class="[errors.has('email-form.bcc[]') ? 'has-error' : '']"
-                            v-if="show_bcc"
+                    </div>
+
+                    <!-- Mail Body -->
+                    <div v-html="email.reply"></div>
+
+                    <a
+                        v-for="attachment in email.attachments"
+                        :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                        class="flex items-center text-brandColor cursor-pointer"
+                    >
+                        <i class="icon-attachment text-2xl"></i>
+
+                        @{{ attachment.name }}
+                    </a>
+
+                    <hr class="h-1">
+
+                    <!-- Reply, Reply All and Forward email -->
+                    <template v-if="!action[email.id]">
+                        <div class="flex gap-4">
+                            <label
+                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                @click="emailAction('reply')"
+                            >
+                                @lang('admin::app.mail.view.reply')
+
+                                <i class="icon-reply text-2xl"></i>
+                            </label>
+
+                            <label
+                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                @click="emailAction('reply-all')"
+                            >
+                                @lang('admin::app.mail.view.reply-all')
+
+                                <i class="icon-reply-all text-2xl"></i>
+                            </label>
+
+                            <label
+                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                @click="emailAction('forward')"
+                            >
+                                @lang('admin::app.mail.view.forward')
+
+                                <i class="icon-forward text-2xl"></i>
+                            </label>
+                        </div>
+                    </template>
+
+                    <template v-else>
+                        <v-email-form
+                            :action="action"
+                            :email="email"
+                            @on-discard="$emit('onDiscard')"
+                        ></v-email-form>
+                    </template>
+                </div>
+            </div>
+        </script>
+
+        <!-- Email Form Template -->
+        <script
+            type="text/x-template"
+            id="v-email-form-template"
+        >
+            <div class="flex gap-2 w-full">
+                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                    @{{ email.name.split(' ').map(word => word[0]).join('') }}
+                </div>
+                
+                <div class="gap-2 w-[926px] border rounded p-4">
+                    <x-admin::form
+                        v-slot="{ meta, errors, handleSubmit }"
+                        enctype="multipart/form-data"
+                        as="div"
+                    >
+                        <form
+                            @submit="handleSubmit($event, save)"
+                            ref="mailActionForm"
                         >
-                            <label for="bcc">{{ __('admin::app.leads.bcc') }}</label>
-    
-                            <email-tags-component
-                                control-name="bcc[]"
-                                control-label="{{ __('admin::app.leads.bcc') }}"
-                                :data='bcc'
-                            ></email-tags-component>
-    
-                            <span class="control-error" v-if="errors.has('email-form.bcc[]')">
-                                @{{ errors.first('email-form.bcc[]') }}
-                            </span>
+                            <div class="flex flex-col gap-2">
+                                <div>
+                                    <!-- Activity Type -->
+                                    <x-admin::form.control-group.control
+                                        type="hidden"
+                                        name="parent_id"
+                                        value="{{ request('id') }}"
+                                    />
+
+                                    <!-- To -->
+                                    <x-admin::form.control-group>
+                                        <x-admin::form.control-group.label class="required">
+                                            @lang('admin::app.mail.view.to')
+                                        </x-admin::form.control-group.label>
+
+                                        <div class="relative">
+                                            <x-admin::form.control-group.controls.tags
+                                                name="reply_to"
+                                                rules="required"
+                                                input-rules="email"
+                                                ::data="reply_to"
+                                                :label="trans('admin::app.mail.view.to')"
+                                                :placeholder="trans('admin::app.mail.view.enter-mails')"
+                                            />
+
+                                            <div class="absolute right-2 top-[9px] flex items-center gap-2">
+                                                <span
+                                                    class="cursor-pointer font-medium hover:underline"
+                                                    @click="showCC = ! showCC"
+                                                >
+                                                    @lang('admin::app.mail.view.cc')
+                                                </span>
+
+                                                <span
+                                                    class="cursor-pointer font-medium hover:underline"
+                                                    @click="showBCC = ! showBCC"
+                                                >
+                                                    @lang('admin::app.mail.view.bcc')
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <x-admin::form.control-group.error control-name="reply_to" />
+                                    </x-admin::form.control-group>
+
+                                    <template v-if="showCC">
+                                        <!-- Cc -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.label>
+                                                @lang('admin::app.mail.view.cc')
+                                            </x-admin::form.control-group.label>
+
+                                            <x-admin::form.control-group.control
+                                                type="tags"
+                                                name="cc"
+                                                input-rules="email"
+                                                :label="trans('admin::app.mail.view.cc')"
+                                                :placeholder="trans('admin::app.mail.view.enter-mails')"
+                                            />
+
+                                            <x-admin::form.control-group.error control-name="cc" />
+                                        </x-admin::form.control-group>
+                                    </template>
+
+                                    <template v-if="showBCC">
+                                        <!-- Cc -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.label>
+                                                @lang('admin::app.mail.view.bcc')
+                                            </x-admin::form.control-group.label>
+
+                                            <x-admin::form.control-group.control
+                                                type="tags"
+                                                name="bcc"
+                                                input-rules="email"
+                                                :label="trans('admin::app.mail.view.bcc')"
+                                                :placeholder="trans('admin::app.mail.view.enter-mails')"
+                                            />
+
+                                            <x-admin::form.control-group.error control-name="bcc" />
+                                        </x-admin::form.control-group>
+                                    </template>
+
+                                    <!-- Content -->
+                                    <x-admin::form.control-group>
+                                        <x-admin::form.control-group.control
+                                            type="textarea"
+                                            name="reply"
+                                            id="reply"
+                                            rules="required"
+                                            ::value="reply"
+                                            :tinymce="true"
+                                            :label="trans('admin::app.mail.view.message')"
+                                        />
+
+                                        <x-admin::form.control-group.error control-name="reply" />
+                                    </x-admin::form.control-group>
+
+                                    <!-- Attachments -->
+                                    <x-admin::form.control-group>
+                                        <x-admin::attachments
+                                            allow-multiple="true"
+                                            hide-button="true"
+                                        />
+                                    </x-admin::form.control-group>
+
+                                    <!-- Divider -->
+                                    <hr class="h-1">
+                                </div>
+                            
+                                <!-- Action and Attachement -->
+                                <div class="flex w-full items-center justify-between">
+                                    <label
+                                        class="flex cursor-pointer items-center gap-1"
+                                        for="file-upload"
+                                    >
+                                        <i class="icon-attachment text-xl font-medium"></i>
+                        
+                                        @lang('admin::app.mail.view.add-attachments')
+                                    </label>
+                                                            
+                                    <div class="flex gap-2 items-center justify-center">
+                                        <label
+                                            class="flex cursor-pointer items-center gap-1"
+                                            @click="$emit('onDiscard')"
+                                        >
+                                            @lang('admin::app.mail.view.discard')
+                                        </label>
+
+                                        <x-admin::button
+                                            class="primary-button"
+                                            :title="trans('admin::app.mail.view.send')"
+                                            ::loading="isStoring"
+                                            ::disabled="isStoring"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </x-admin::form>    
+                </div>
+            </div>
+        </script>
+
+        <!-- Contact Lookup Template -->
+        <script
+            type="text/x-template"
+            id="v-contact-lookup-template"
+        >
+            <div>
+                <template v-if="email?.person_id">
+                    <div class="flex justify-between">
+                        <div class="flex gap-2">
+                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
+                            </div>
+                    
+                            <!-- Mailer receivers -->
+                            <div class="flex flex-col gap-1">
+                                <!-- Mailer Name -->
+                                <span>@{{ email.person.name }}</span>
+
+                                <!-- Mailer Additional Deatils -->
+                                <div class="flex flex-col gap-1">
+                                    <div class="flex flex-col">
+                                        <span class="text-sm">@{{ email.person.job_title }}</span>
+
+                                        <span class="text-sm text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+
+                                        <span class="text-sm text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         
-                        <div class="form-group" :class="[errors.has('email-form.reply') ? 'has-error' : '']">
-                            <label for="reply" class="required" style="margin-bottom: 10px">{{ __('admin::app.leads.reply') }}</label>
+                        <div class="flex gap-2">
+                            <template v-if="! unlinking.contact">
+                                <button
+                                    type="button"
+                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    @click="unlinkContact"
+                                ></button>
+                            </template>
 
-                            <textarea
-                                name="reply"
-                                class="control"
-                                id="reply"
-                                v-validate="'required'"
-                                data-vv-as="&quot;{{ __('admin::app.leads.reply') }}&quot;"
-                            >@{{ reply }}</textarea>
+                            <template v-else>
+                                <x-admin::spinner />
+                            </template>
 
-                            <span class="control-error" v-if="errors.has('email-form.reply')">
-                                @{{ errors.first('email-form.reply') }}
-                            </span>
+                            <a
+                                :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', email.person_id)"
+                                target="_blank"
+                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                            ></a>
                         </div>
-    
-                        <div class="form-group">
-                            <attachment-wrapper></attachment-wrapper>
+                    </div>
+                </template>
+
+                <template v-else>
+                    <div
+                        class="relative"
+                        ref="lookup"
+                    >
+                        <!-- Input Box (Button) -->
+                        <div
+                            class="relative inline-block w-full"
+                            @click="toggle"
+                        >
+                            <!-- Input-like div -->
+                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
+                                @{{ selectedItem.name ?? '@lang('Search an existing contact')'}}
+                            </div>
+                            
+                            <!-- Arrow down icon -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            </div>
                         </div>
 
-                        {!! view_render_event('admin.mail.view.email.create.form_controls.after', ['email' => $email]) !!}
+                        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <div class="flex items-center justify-center space-x-1">                        
+                                <i 
+                                    class="text-2xl"
+                                    :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                                ></i>
+                            </div>
+                        </span>
+
+                        <!-- Popup Box -->
+                        <div 
+                            v-if="showPopup" 
+                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                        >
+                            <!-- Search Bar -->
+                            <div class="relative">
+                                <!-- Input Box -->
+                                <input
+                                    type="text"
+                                    v-model.lazy="searchTerm"
+                                    v-debounce="500"
+                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
+                                    placeholder="Search..."
+                                    ref="searchInput"
+                                    @keyup="search"
+                                />
+                            
+                                <!-- Search Icon (absolute positioned) -->
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <div class="flex items-center justify-center space-x-1">
+                                        <!-- Loader (optional, based on condition) -->
+                                        <div
+                                            class="relative"
+                                            v-if="isSearching"
+                                        >
+                                            <x-admin::spinner />
+                                        </div>
+                            
+                                        <!-- Search Icon -->
+                                        <i class="fas fa-search text-gray-500"></i>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <!-- Results List -->
+                            <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                <li 
+                                    v-for="person in persons" 
+                                    :key="person.id"
+                                    class="flex gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                                    @click="linkContact(person)"
+                                >
+                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                        @{{ person.name.split(' ').map(word => word[0]).join('') }}
+                                    </div>
+                            
+                                    <!-- Mailer receivers -->
+                                    <div class="flex flex-col gap-1">
+                                        <!-- Mailer Name -->
+                                        <span>@{{ person.name }}</span>
+                                        
+                                        <div class="flex flex-col gap-1">
+                                            <div class="flex">
+                                                <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>                       
+                            
+                                <li v-if="persons.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                    @lang('admin::app.mail.view.no-result-found')
+                                </li>
+                            </ul>
+
+                            <!-- Add New Contact Button -->
+                            <div
+                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
+                                @click="toggleContactModal"
+                            >
+                                <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
+                            </div>
+                        </div>
                     </div>
-
-                    <div class="panel-bottom">
-                        {!! view_render_event('admin.mail.view.email.create.form_buttons.before', ['email' => $email]) !!}
-
-                        <button type="submit" class="btn btn-md btn-primary">
-                            <i class="icon email-send-icon"></i>
-    
-                            {{ __('admin::app.mail.send') }}
-                        </button>
-    
-                        <label @click="discard">{{ __('admin::app.mail.discard') }}</label>
-
-                        {!! view_render_event('admin.mail.view.email.create.form_buttons.after', ['email' => $email]) !!}
-                    </div>
-                </div>
+                </template>
             </div>
-        </form>
-    </script>
+        </script>
 
-    <script>
-        @php
-            $html = $email->lead_id
-                ? view('admin::common.custom-attributes.view', [
-                    'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                            'entity_type' => 'leads',
-                        ]),
-                        'entity'       => $email->lead,
-                    ])->render() 
-                : '';
-        @endphp
+        <script
+            type="text/x-template"
+            id="v-lead-lookup-template"
+        >
+            <div>
+                <template v-if="email?.lead_id">
+                    <div class="flex justify-between">
+                        <div class="flex gap-2 w-full">
+                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                @{{email.lead.title.split(' ').map(word => word[0]).join('') }}
+                            </div>
+                    
+                            <div class="flex flex-col gap-1">
+                                <!-- Lead Title -->
+                                <span>@{{email.lead.title }}</span>
 
-        Vue.component('email-action-component', {
+                                <!-- Lead Description and Lead Value -->
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex flex-col">
+                                        <div class="text-sm">
+                                            <span class="font-semibold">@lang('admin::app.mail.view.description'):</span>
+                                            
+                                            @{{ email.lead.description }}
+                                        </div>
 
-            template: '#email-action-component-template',
+                                        <div class="text-sm">
+                                            <span class="font-semibold">@lang('Lead Value'):</span>
+                                            
+                                            @{{ $admin.formatPrice(email.lead.lead_value) }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
-            inject: ['$validator'],
+                        <div class="flex gap-2">
+                            <template v-if="! unlinking.lead">
+                                <button
+                                    type="button"
+                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    @click="unlinkLead"
+                                ></button>
+                            </template>
 
-            data: function () {
-                return {
-                    email: @json($email->getAttributes()),
+                            <template v-else>
+                                <x-admin::spinner />
+                            </template>
 
-                    show_filter: false,
+                            <a
+                                :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
+                                target="_blank"
+                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                            ></a>
+                        </div>
+                    </div>
+                </template>
 
-                    html: `{!! $html !!}`,
+                <template v-else>
+                    <div
+                        class="relative"
+                        ref="lookup"
+                    >
+                        <!-- Input Box (Button) -->
+                        <div
+                            class="relative inline-block w-full"
+                            @click="toggle"
+                        >
+                            <!-- Input-like div -->
+                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
+                                @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
+                            </div>
+                            
+                            <!-- Arrow down icon -->
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <i class="fas fa-chevron-down text-gray-400"></i>
+                            </div>
+                        </div>
 
-                    is_searching: {
-                        person: false,
+                        <!-- toggle popup -->
+                        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                            <div class="flex items-center justify-center space-x-1">                        
+                                <i 
+                                    class="text-2xl"
+                                    :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                                ></i>
+                            </div>
+                        </span>
 
-                        lead: false
+                        <!-- Popup Box -->
+                        <div 
+                            v-if="showPopup" 
+                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                        >
+                            <!-- Search Bar -->
+                            <div class="relative">
+                                <!-- Input Box -->
+                                <input
+                                    type="text"
+                                    v-model.lazy="searchTerm"
+                                    v-debounce="500"
+                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
+                                    placeholder="@lang('admin::app.mail.view.search')"
+                                    ref="searchInput"
+                                    @keyup="search"
+                                />
+                            
+                                <!-- Search Icon (absolute positioned) -->
+                                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <div class="flex items-center justify-center space-x-1">
+                                        <!-- Loader (optional, based on condition) -->
+                                        <div
+                                            class="relative"
+                                            v-if="isSearching"
+                                        >
+                                            <x-admin::spinner />
+                                        </div>
+                            
+                                        <!-- Search Icon -->
+                                        <i class="fas fa-search text-gray-500"></i>
+                                    </div>
+                                </span>
+                            </div>
+
+                            <!-- Results List -->
+                            <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                <li 
+                                    v-for="lead in leads" 
+                                    :key="lead.id"
+                                    class="flex items-center gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                                    @click="linkLead(lead)"
+                                >
+                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                        @{{ lead.title.split(' ').map(word => word[0]).join('') }}
+                                    </div>
+                            
+                                    <!-- Lead Title -->
+                                    <div class="flex flex-col gap-1">
+                                        <span>@{{ lead.title }}</span>
+                                    </div>
+                                </li>                       
+                            
+                                <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                    @lang('admin::app.mail.view.no-result-found')
+                                </li>
+                            </ul>
+
+                            <!-- Add New Lead Button -->
+                            <div
+                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
+                                @click="toggleLeadModal"
+                            >
+                                <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
+                            </div>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </script>
+
+        <!-- Create Contact Template -->
+        <script
+            type="text/x-template"
+            id="v-create-contact-template"
+        >
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+            >
+                <form
+                    @submit="handleSubmit($event, create)"
+                    ref="contactForm"
+                >
+                    <!-- Add Contact Modal -->
+                    <x-admin::modal 
+                        ref="contactModal"
+                        @toggle="toggleModal"
+                    >
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.mail.view.create-new-contact')
+                                </p>
+                            </div>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    'entity_type' => 'persons',
+                                ])"
+                            />
+                        </x-slot>
+
+                        <x-slot:footer>
+                            <x-admin::button
+                                class="primary-button"
+                                :title="trans('admin::app.mail.view.save-contact')"
+                                ::loading="isStoring"
+                                ::disabled="isStoring"
+                            />
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
+        </script>
+
+        <script
+            type="text/x-template"
+            id="v-create-lead-template"
+        >
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+            >
+                <form
+                    @submit="handleSubmit($event, create)"
+                    ref="leadForm"
+                >
+                    <!-- Add Contact Modal -->
+                    <x-admin::modal
+                        ref="leadModal"
+                        @toggle="toggleModal"
+                        size="large"
+                    >
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.mail.view.create-lead')
+                                </p>
+                            </div>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <div class="flex flex-col gap-2">
+                                <!-- Tabs -->
+                                <div class="flex gap-4 border-b border-gray-200">
+                                    <div
+                                        v-for="type in types"
+                                        class="cursor-pointer px-3 py-2.5 text-sm font-medium"
+                                        :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
+                                        @click="selectedType = type.name"
+                                    >
+                                        @{{ type.label }}
+                                    </div>
+                                </div>
+
+                                <!-- Container -->
+                                <div>
+                                    <div v-show="selectedType == 'lead'">
+                                        <div class="w-full">
+                                            <!-- Lead Details Title and Description -->
+                                            <x-admin::attributes
+                                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                    ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_value']],
+                                                    'entity_type' => 'leads',
+                                                    'quick_add'   => 1
+                                                ])"
+                                            />
+
+                                            <div class="flex gap-4 max-sm:flex-wrap">
+                                                <div class="w-1/2 mb-4">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_value']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+
+                                                <div class="w-1/2 mb-4">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_source_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="flex gap-4 max-sm:flex-wrap">
+                                                <div class="w-1/2 mb-4">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_type_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+                                                
+                                                <div class="w-1/2 mb-4">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['user_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="flex gap-4 max-sm:flex-wrap">
+                                                <div class="w-1/2 mb-4">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['expected_close_date']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                        :custom-validations="[
+                                                            'expected_close_date' => [
+                                                                'date_format:yyyy-MM-dd',
+                                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                                            ],
+                                                        ]"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                        
+                                    <div v-show="selectedType == 'person'">
+                                        @include('admin::leads.common.contact')
+                                    </div>
+
+                                    <div 
+                                        class="overflow-y-auto"
+                                        v-show="selectedType == 'product'"
+                                    >
+                                        @include('admin::leads.common.products')
+                                    </div>
+                                </div>
+                            </div>
+                        </x-slot>
+
+                        <x-slot:footer>
+                            <x-admin::button
+                                class="primary-button"
+                                :title="trans('Save Lead')"
+                                ::loading="isStoring"
+                                ::disabled="isStoring"
+                            />
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
+        </script>
+
+        <script
+            type="text/x-template"
+            id="v-action-email-template"
+        >
+            <x-admin::drawer
+                width="350px"
+                ref="emailLinkDrawer"
+            >
+                <x-slot:toggle>
+                    <button
+                        type="button"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.mail.view.link-mail')
+                    </button>
+                </x-slot>
+
+                <x-slot:header class="p-3.5">
+                    <!-- Apply Filter Title -->
+                    <div class="flex items-center justify-between">
+                        <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                            @lang('admin::app.mail.view.link-mail')
+                        </p>
+                    </div>
+                </x-slot>
+                
+                <x-slot:content class="p-3.5">
+                    <div class="flex flex-col gap-4">
+                        <!-- Link to contact -->
+                        <label class="font-semibold text-gray-700 cursor-pointer">
+                            @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
+                        </label>
+                
+                        <!-- Contact Lookup -->
+                        <v-contact-lookup
+                            @link-contact="linkContact"
+                            @unlink-contact="unlinkContact"
+                            @open-contact-modal="openContactModal"
+                            :unlinking="unlinking"
+                            :email="email"
+                        ></v-contact-lookup>
+
+                        <!-- Link to Lead -->
+                        <label class="font-semibold text-gray-700 cursor-pointer">
+                            @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
+                        </label>
+                    
+                        <!-- Lead Lookup -->
+                        <v-lead-lookup
+                            @link-lead="linkLead"
+                            @unlink-lead="unlinkLead"
+                            @open-lead-modal="openLeadModal"
+                            :unlinking="unlinking"
+                            :email="email"
+                        ></v-lead-lookup>
+                    </div>
+                </x-slot>
+            </x-admin::drawer>
+
+            <!-- Create Contact Modal -->
+            <v-create-contact ref="createContact"></v-create-contact>
+
+            <!-- Create Lead Modal -->
+            <v-create-lead ref="createLead"></v-create-lead>
+        </script>
+
+        <!-- Email List Vue Component -->
+        <script type="module">
+            app.component('v-email-list', {
+                template: '#v-email-list-template',
+
+                data() {
+                    return {
+                        email: @json($email),
+
+                        action: {},
+                    };
+                },
+                
+                mounted() {
+                    this.$emitter.on('on-email-save', (email) => {
+                        this.email.emails.push(email);
+
+                        this.action = {};
+
+                        setTimeout(() => this.scrollBottom(), 0);
+                    });
+                },
+
+                methods: {
+                    emailAction(action) {
+                        this.action[action.email.id] = action;
+
+                        if (! this.action.email) {
+                            this.action.email = this.lastEmail();
+                        }
                     },
 
-                    search_term: {
-                        person: '',
+                    scrollBottom() {
+                        const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-                        lead: '',
-                    },
+                        const windowHeight = window.innerHeight;
 
-                    search_routes: {
-                        person: "{{ route('admin.contacts.persons.search') }}",
+                        const scrollBottom = scrollTop + windowHeight;
 
-                        lead: "{{ route('admin.leads.search') }}",
-                    },
-
-                    search_results: {
-                        person: [],
-
-                        lead: [],
-                    },
-
-                    enabled_search: {
-                        person: false,
-
-                        lead: false,
-                    }
-                }
-            },
-
-            created: function() {
-                @if ($email->person)
-                    this.email.person = @json($email->person);
-                @endif
-            },
-
-            mounted: function() {
-                if (! Array.isArray(window.serverErrors)) {
-                    var self = this;
-
-                    if (("{{ old('lead_pipeline_stage_id') }}")) {
-                        this.$root.openModal('addLeadModal');
-
-                        setTimeout(() => {
-                            self.$root.addServerErrors('lead-form');
+                        window.scrollTo({
+                            top: scrollBottom,
+                            behavior: 'smooth',
                         });
-                    } else {
-                        this.$root.openModal('addPersonModal');
+                    },
 
-                        setTimeout(() => {
-                            self.$root.addServerErrors('person-form');
-                        });
+                    lastEmail() {
+                        if (
+                            this.email.emails === undefined 
+                            || ! this.email.emails.length
+                        ) {
+                            return this.email;
+                        }
+
+                        return this.email.emails[this.email.emails.length - 1];
+                    },
+                },
+            });
+        </script>
+
+        <!-- Email Item Vue Component -->
+        <script type="module">
+            app.component('v-email-item', {
+                template: '#v-email-item-template',
+
+                props: ['index', 'email', 'action'],
+
+                emits: ['on-discard'],
+
+                data() {
+                    return {
+                        hovering: '',
+                    };
+                },
+    
+                methods: {
+                    emailAction(type) {
+                        if (type != 'delete') {
+                            this.$emit('onEmailAction', {type, email: this.email});
+                        } else {
+                            this.$emitter.emit('open-confirm-modal', {
+                                agree: () => {
+                                    this.$axios.post(`{{ route('admin.mail.delete', ':id') }}`.replace(':id', this.email.id), {
+                                        _method: 'DELETE',
+                                        type: 'trash'
+                                    })
+                                    .then ((response) => {
+                                        if (response.status == 200) {
+                                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+    
+                                            this.$emit('on-discard');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    },
+                },
+            });
+        </script>
+
+        <!-- Email Form Vue Component -->
+        <script type="module">
+            app.component('v-email-form', {
+                template: '#v-email-form-template',
+
+                props: ['action', 'email'],
+
+                data() {
+                    return {
+                        showCC: false,
+
+                        showBCC: false,
+
+                        isStoring: false,
+                    };
+                },
+
+                computed: {
+                    reply_to() {
+                        if (this.getActionType == 'forward') {
+                            return [];
+                        }
+
+                        if (this.getActionType == 'reply-all') {
+                            console.log(this.action.email);
+                            
+                            console.log([
+                                this.action.email.from,
+                                ...(this.action.email?.cc || []),
+                                ...(this.action.email?.bcc || []),
+                            ]);
+                            
+                            return [
+                                this.action.email.from,
+                                ...(this.action.email?.cc || []),
+                                ...(this.action.email?.bcc || []),
+                            ];
+                        }
+
+                        return [this.action.email.from];
+                    },
+
+                    cc() {
+                        if (this.getActionType != 'reply-all') {
+                            return [];
+                        }
+
+                        return this.action.email.cc;
+                    },
+
+                    bcc() {
+                        if (this.getActionType != 'reply-all') {
+                            return [];
+                        }
+
+                        return this.action.email.bcc;
+                    },
+
+                    reply() {
+                        if (this.getActionType == 'forward') {
+                            return this.action.email.reply;
+                        }
+
+                        return '';
+                    },
+
+                    getActionType() {
+                        return this.action[this.email.id].type;
+                    },
+                },
+
+                methods: {
+                    save(params, { resetForm, setErrors  }) {
+                        let formData = new FormData(this.$refs.mailActionForm);
+
+                        this.isStoring = true;
+
+                        this.$axios.post("{{ route('admin.mail.store') }}", formData, {
+                                headers: {
+                                    'Content-Type': 'multipart/form-data'
+                                }
+                            })
+                            .then ((response) => {
+                                this.isStoring = false;
+
+                                this.$emitter.emit('on-email-save', response.data.data);
+                                
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch ((error) => {
+                                this.isStoring = false;
+
+                                if (error.response.status == 422) {
+                                    setErrors(error.response.data.errors);
+                                } else {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                }
+                            });
+                    },
+                },
+            });
+        </script>
+
+        <!-- Contact Lookup Component -->
+        <script type="module">
+            app.component('v-contact-lookup', {
+                template: '#v-contact-lookup-template',
+
+                props: ['email', 'unlinking'],
+
+                emits: ['link-contact', 'unlink-contact', 'open-contact-modal'],
+
+                data() {
+                    return {
+                        showPopup: false,
+
+                        searchTerm: '',
+
+                        selectedItem: {},
+
+                        searchedResults: [],
+
+                        isSearching: false,
+
+                        cancelToken: null,
+                    };
+                },
+
+                mounted() {
+                    if (this.value) {
+                        this.selectedItem = this.value;
                     }
-                }
-            },
+                },
 
-            methods: {
-                search: debounce(function (type) {
-                    this.is_searching[type] = true;
+                created() {
+                    window.addEventListener('click', this.handleFocusOut);
+                },
 
-                    if (this.search_term[type].length < 2) {
-                        this.search_results[type] = [];
+                beforeDestroy() {
+                    window.removeEventListener('click', this.handleFocusOut);
+                },
 
-                        this.is_searching[type] = false;
+                watch: {
+                    searchTerm(newVal, oldVal) {
+                        this.search();
+                    },
+                },
 
-                        return;
+                computed: {
+                    /**
+                     * Filter the searchedResults based on the search query.
+                     * 
+                     * @return {Array}
+                     */
+                    persons() {
+                        return this.searchedResults.filter(item => 
+                            item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
+                        );
                     }
-
-                    this.$http.get(this.search_routes[type], {params: {query: this.search_term[type]}})
-                        .then (response => {
-                            this.search_results[type] = response.data;
-
-                            this.is_searching[type] = false;
-                        })
-                        .catch (error => {
-                            this.is_searching[type] = false;
-                        })
-                }, 500),
-
-                link: function(type, entity) {
-                    var self = this;
-
-                    var data = (type == 'person') ? {'person_id': entity.id} : {'lead_id': entity.id};
-
-                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
-                        .then (response => {
-                            self.email[type] = entity;
-
-                            if (type == 'lead') {
-                                self.html = response.data.html;
-                            }
-
-                            self.email[type + '_id'] = entity.id;
-
-                            self.reset(type);
-
-                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
-
-                            self.$root.addFlashMessages();
-                        })
-                        .catch (error => {})
                 },
+                
+                methods: {
+                    /**
+                     * Toggle the popup.
+                     * 
+                     * @return {void}
+                     */
+                    toggle() {
+                        this.showPopup = ! this.showPopup;
 
-                unlink: function(type) {
-                    var self = this;
+                        if (this.showPopup) {
+                            this.$nextTick(() => this.$refs.searchInput.focus());
+                        }
+                    },
 
-                    var data = (type == 'person') ? {'person_id': null} : {'lead_id': null};
+                    /**
+                     * Select an item from the list.
+                     * 
+                     * @param {Object} item
+                     * 
+                     * @return {void}
+                     */
+                    linkContact(person) {
+                        this.showPopup = false;
 
-                    this.$http.put("{{ route('admin.mail.update', $email->id) }}", data)
-                        .then (response => {
-                            self.email[type] = self.email[type + '_id'] = null;
+                        this.searchTerm = '';
 
-                            window.flashMessages = [{'type': 'success', 'message': response.data.message}];
+                        this.selectedItem = person;
 
-                            self.$root.addFlashMessages();
-                        })
-                        .catch (error => {})
-                },
+                        this.$emit('link-contact', person);
+                    },
 
-                reset: function(type) {
-                    this.search_term[type] = '';
+                    unlinkContact() {
+                        this.selectedItem = {};
 
-                    this.search_results[type] = [];
+                        this.$emit('unlink-contact');
+                    },
 
-                    this.is_searching[type] = false;
-                }
-            }
-        });
+                    /**
+                     * Initialize the items.
+                     * 
+                     * @return {void}
+                     */
+                    search() {
+                        if (this.searchTerm.length <= 2) {
+                            this.searchedResults = [];
 
-        Vue.component('email-list-component', {
+                            this.isSearching = false;
 
-            template: '#email-list-component-template',
-
-            props: ['data'],
-
-            inject: ['$validator'],
-
-            data: function () {
-                return {
-                    email: @json($email),
-
-                    action: null,
-                }
-            },
-
-            methods: {
-                emailAction: function(event) {
-                    this.action = event;
-
-                    if (! this.action.email) {
-                        this.action.email = this.lastEmail();
-                    }
-
-                    var self = this;
-
-                    setTimeout(function() {
-                        self.scrollBottom();
-                    }, 0);
-                },
-
-                scrollBottom: function() {
-                    var scrollBottom = $(window).scrollTop() + $(window).height();
-
-                    $('html, body').scrollTop(scrollBottom);
-                },
-
-                lastEmail: function() {
-                    if (this.email.emails === undefined || ! this.email.emails.length) {
-                        return this.email;
-                    }
-
-                    return this.email.emails[this.email.emails.length - 1];
-                },
-
-                discard: function() {
-                    this.action = null;
-                }
-            },
-        });
-
-        Vue.component('email-item-component', {
-
-            template: '#email-item-component-template',
-
-            props: ['index', 'email'],
-
-            inject: ['$validator'],
-
-            data: function () {
-                return {
-                    hovering: '',
-                }
-            },
-  
-            methods: {
-                emailAction: function(type) {
-                    if (type != 'delete') {
-                        this.$emit('onEmailAction', {'type': type, 'email': this.email});
-                    } else {
-                        if (! confirm('{{ __('admin::app.common.delete-confirm') }}')) {
                             return;
                         }
+
+                        this.isSearching = true;
+
+                        if (this.cancelToken) {
+                            this.cancelToken.cancel();
+                        }
+
+                        this.cancelToken = this.$axios.CancelToken.source();
+
+                        this.$axios.get('{{ route('admin.contacts.persons.search') }}', {
+                                params: { 
+                                    ...this.params,
+                                    query: this.searchTerm
+                                },
+                                cancelToken: this.cancelToken.token, 
+                            })
+                            .then(response => {
+                                this.searchedResults = response.data.data;
+                            })
+                            .catch(error => {
+                                if (! this.$axios.isCancel(error)) {
+                                    console.error("Search request failed:", error);
+                                }
+
+                                this.isSearching = false;
+                            })
+                            .finally(() => this.isSearching = false);
+                    },
+
+                    /**
+                     * Handle the focus out event.
+                     * 
+                     * @param {Event} event
+                     * 
+                     * @return {void}
+                     */
+                    handleFocusOut(event) {
+                        const lookup = this.$refs.lookup;
+
+                        if (
+                            lookup && 
+                            ! lookup.contains(event.target)
+                        ) {
+                            this.showPopup = false;
+                        }
+                    },
+
+                    toggleContactModal() {
+                        this.showPopup = false;
+
+                        this.$emit('open-contact-modal');
+                    },
+                },
+            });
+        </script>
+
+        <!-- Contact Lookup Component -->
+        <script type="module">
+            app.component('v-lead-lookup', {
+                template: '#v-lead-lookup-template',
+
+                props: ['email', 'unlinking'],
+
+                emits: ['link-lead', 'unlink-lead', 'open-lead-modal'],
+
+                data() {
+                    return {
+                        showPopup: false,
+
+                        searchTerm: '',
+
+                        selectedItem: {},
+
+                        searchedResults: [],
+
+                        isSearching: false,
+
+                        cancelToken: null,
+                    };
+                },
+
+                mounted() {
+                    if (this.value) {
+                        this.selectedItem = this.value;
+                    }
+                },
+
+                created() {
+                    window.addEventListener('click', this.handleFocusOut);
+                },
+
+                beforeDestroy() {
+                    window.removeEventListener('click', this.handleFocusOut);
+                },
+
+                watch: {
+                    searchTerm(newVal, oldVal) {
+                        this.search();
+                    },
+                },
+
+                computed: {
+                    /**
+                     * Filter the searchedResults based on the search query.
+                     * 
+                     * @return {Array}
+                     */
+                    leads() {
+                        return this.searchedResults.filter(item => 
+                            item.title.toLowerCase().includes(this.searchTerm.toLowerCase())
+                        );
+                    },
+                },
+                
+                methods: {
+                    /**
+                     * Toggle the popup.
+                     * 
+                     * @return {void}
+                     */
+                    toggle() {
+                        this.showPopup = ! this.showPopup;
+
+                        if (this.showPopup) {
+                            this.$nextTick(() => this.$refs.searchInput.focus());
+                        }
+                    },
+
+                    /**
+                     * Select an item from the list.
+                     * 
+                     * @param {Object} item
+                     * 
+                     * @return {void}
+                     */
+                    linkLead(lead) {
+                        this.showPopup = false;
+
+                        this.searchTerm = '';
+
+                        this.selectedItem = lead;
+
+                        this.$emit('link-lead', lead);
+                    },
+
+                    unlinkLead() {
+                        this.selectedItem = {};
+
+                        this.$emit('unlink-lead');
+                    },
+
+                    /**
+                     * Initialize the items.
+                     * 
+                     * @return {void}
+                     */
+                    search() {
+                        if (this.searchTerm.length <= 2) {
+                            this.searchedResults = [];
+
+                            this.isSearching = false;
+
+                            return;
+                        }
+
+                        this.isSearching = true;
+
+                        if (this.cancelToken) {
+                            this.cancelToken.cancel();
+                        }
+
+                        this.cancelToken = this.$axios.CancelToken.source();
+
+                        this.$axios.get('{{ route('admin.leads.search') }}', {
+                                params: { 
+                                    ...this.params,
+                                    query: this.searchTerm
+                                },
+                                cancelToken: this.cancelToken.token, 
+                            })
+                            .then(response => {
+                                this.searchedResults = response.data;
+                            })
+                            .catch(error => {
+                                if (! this.$axios.isCancel(error)) {
+                                    console.error("Search request failed:", error);
+                                }
+
+                                this.isSearching = false;
+                            })
+                            .finally(() => this.isSearching = false);
+                    },
+
+                    /**
+                     * Handle the focus out event.
+                     * 
+                     * @param {Event} event
+                     * 
+                     * @return {void}
+                     */
+                    handleFocusOut(event) {
+                        const lookup = this.$refs.lookup;
+
+                        if (
+                            lookup && 
+                            ! lookup.contains(event.target)
+                        ) {
+                            this.showPopup = false;
+                        }
+                    },
+
+                    toggleLeadModal() {
+                        this.showPopup = false;
+
+                        this.$emit('open-lead-modal');
+                    },
+                },
+            });
+        </script>
+
+        <!-- Create Contact Modal Component -->
+        <script type="module">
+            app.component('v-create-contact', {
+                template: '#v-create-contact-template',
+
+                data() {
+                    return {
+                        isStoring: false,
+                    };
+                },
+
+                methods: {
+                    toggleModal({ isActive }) {
+                        if (! isActive) {
+                            this.$parent.$refs.emailLinkDrawer.toggle();
+                        }
+                    },
+
+                    create(params, { setErrors }) {
+                        this.isStoring = true;
+
+                        const formData = new FormData(this.$refs.contactForm);
+
+                        this.$axios.post('{{ route('admin.contacts.persons.store') }}', formData)
+                            .then(response => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                this.$refs.contactModal.close();
+                            })
+                            .catch(error => {
+                                if (error.response.status == 422) {
+                                    setErrors(error.response.data.errors);
+                                } else {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                }
+                            })
+                            .finally(() => {
+                                this.isStoring = false;
+
+                                this.$parent.$refs.emailLinkDrawer.open();
+                            });
+                    },
+                },
+            });
+        </script>
+
+        <!-- Create Lead Modal Component -->
+        <script type="module">
+            app.component('v-create-lead', {
+                template: '#v-create-lead-template',
+
+                data() {
+                    return {
+                        isStoring: false,
+
                         
-                        this.$refs['form-' + this.email.id].submit()
-                    }
-                },
-            }
-        });
+                        selectedType: "lead",
 
-        Vue.component('email-form', {
-
-            template: '#email-form-template',
-
-            props: ['action'],
-
-            inject: ['$validator'],
-
-            data: function () {
-                return {
-                    show_cc: false,
-
-                    show_bcc: false,
-                }
-            },
-
-            computed: {
-                reply_to: function() {
-                    if (this.action.type == 'forward') {
-                        return [];
-                    }
-
-                    return [this.action.email.from];
+                        types: [
+                            {
+                                name: 'lead',
+                                label: "{{ trans('admin::app.mail.view.lead-details') }}",
+                            }, {
+                                name: 'person',
+                                label: "{{ trans('admin::app.mail.view.contact-person') }}",
+                            }, {
+                                name: 'product',
+                                label: "{{ trans('admin::app.mail.view.product') }}",
+                            },
+                        ],
+                    };
                 },
 
-                cc: function() {
-                    if (this.action.type != 'reply-all') {
-                        return [];
-                    }
+                methods: {
+                    toggleModal({ isActive }) {
+                        if (! isActive) {
+                            this.$parent.$refs.emailLinkDrawer.toggle();
+                        }
+                    },
 
-                    return this.action.email.cc;
+                    create(params, { setErrors }) {
+                        this.isStoring = true;
+
+                        const formData = new FormData(this.$refs.leadForm);
+
+                        formData.append('lead_pipeline_stage_id', 1)
+
+                        this.$axios.post('{{ route('admin.leads.store') }}', formData)
+                            .then(response => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+
+                                this.$refs.leadModal.close();
+                            })
+                            .catch(error => {
+                                if (error.response.status == 422) {
+                                    setErrors(error.response.data.errors);
+                                } else {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                }
+                            })
+                            .finally(() => {
+                                this.isStoring = false;
+
+                                this.$parent.$refs.emailLinkDrawer.open();
+                            });
+                    },
+                },
+            });
+        </script>
+
+        <!-- Link to mail Component -->
+        <script type="module">
+            app.component('v-action-email', {
+                template: '#v-action-email-template',
+
+                data() {
+                    return {
+                        link: 'contact',
+
+                        email: @json($email->getAttributes()),
+
+                        unlinking: {
+                            lead: false,
+                            contact: false,
+                        },
+                    };
                 },
 
-                bcc: function() {
-                    if (this.action.type != 'reply-all') {
-                        return [];
-                    }
+                created() {
+                    @if ($email->person)
+                        this.email.person = @json($email->person);
+                    @endif
 
-                    return this.action.email.bcc;
+                    @if ($email->lead)
+                        this.email.lead = @json($email->lead);
+                    @endif
                 },
 
-                reply: function() {
-                    if (this.action.type == 'forward') {
-                        return this.action.email.reply;
-                    }
+                methods: {
+                    linkContact(person) {
+                        this.email['person'] = person;
 
-                    return '';
-                }
-            },
+                        this.email['person_id'] = person.id;
 
-            mounted: function() {
-                tinymce.remove('#reply');
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            person_id: person.id,
+                        })
+                            .then (response => {                            
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {});
+                    },
 
-                var self = this;
+                    unlinkContact() {
+                        this.unlinking.contact = true;
 
-                tinymce.init({
-                    selector: 'textarea#reply',
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            person_id: null,
+                        })
+                            .then (response => {
+                                this.email['person'] = this.email['person_id'] = null;
 
-                    height: 200,
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {})
+                            .finally(() => this.unlinking.contact = false);
+                    },
 
-                    width: "100%",
-                    
-                    plugins: 'image imagetools media wordcount save fullscreen code table lists link hr',
+                    linkLead(lead) {
+                        this.email['lead'] = lead;
 
-                    toolbar1: 'formatselect | bold italic strikethrough forecolor backcolor link hr | alignleft aligncenter alignright alignjustify | numlist bullist outdent indent  | removeformat | code | table',
+                        this.email['lead_id'] = lead.id;
 
-                    image_advtab: true,
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            lead_id: lead.id,
+                        })
+                            .then (response => {
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {});
+                    },
 
-                    setup: function(editor) {
-                        editor.on('keyUp', function() {
-                            self.$validator.validate('email-form.reply', this.getContent());
-                        });
-                    }
-                });
-            },
+                    unlinkLead() {
+                        this.unlinking.lead = true;
 
-            methods: {
-                discard: function() {
-                    this.$emit('onDiscard');
-                }
-            }
-        });
-    </script>
-@endpush
+                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                            _method: 'PUT',
+                            lead_id: null,
+                        })
+                            .then (response => {
+                                this.email['lead'] = this.email['lead_id'] = null;
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            })
+                            .catch (error => {})
+                            .finally(() => this.unlinking.lead = false);
+                    },
+
+                    openContactModal() {
+                        this.$refs.emailLinkDrawer.close();
+                        
+                        this.$refs.createContact.$refs.contactModal.open();
+                    },
+
+                    openLeadModal() {
+                        this.$refs.emailLinkDrawer.close();
+
+                        this.$refs.createLead.$refs.leadModal.open();
+                    },
+                },
+            });
+        </script>
+    @endPushOnce
+</x-admin::layouts>
