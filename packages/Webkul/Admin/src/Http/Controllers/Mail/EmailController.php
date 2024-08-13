@@ -64,7 +64,7 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
+            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.tags', 'lead.source', 'lead.type', 'person'])
             ->findOrFail(request('id'));
 
         $currentUser = auth()->guard('user')->user();
@@ -191,16 +191,10 @@ class EmailController extends Controller
         }
 
         if (request()->ajax()) {
-            $response = [
-                'data'    => new EmailResource($email),
+            return response()->json([
+                'data'    => new EmailResource($email->refresh()),
                 'message' => trans('admin::app.mail.update-success'),
-            ];
-
-            if ($leadId = request('lead_id')) {
-                $response['lead'] = $this->leadRepository->find($leadId);
-            }
-
-            return response()->json($response);
+            ]);
         }
 
         session()->flash('success', trans('admin::app.mail.update-success'));
@@ -232,7 +226,7 @@ class EmailController extends Controller
 
         try {
             return Storage::download($attachment->path);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
 
             return redirect()->back();
@@ -277,7 +271,7 @@ class EmailController extends Controller
             $parentId = $email->parent_id;
 
             if (request('type') == 'trash') {
-                $data= $this->emailRepository->update([
+                $data = $this->emailRepository->update([
                     'folders' => ['trash'],
                 ], $id);
             } else {

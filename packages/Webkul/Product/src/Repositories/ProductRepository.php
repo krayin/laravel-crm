@@ -10,6 +10,15 @@ use Webkul\Core\Eloquent\Repository;
 class ProductRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'sku',
+        'name',
+        'description',
+    ];
+
+    /**
      * Create a new repository instance.
      *
      * @return void

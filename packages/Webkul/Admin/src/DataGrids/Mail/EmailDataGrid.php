@@ -4,8 +4,8 @@ namespace Webkul\Admin\DataGrids\Mail;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 use Illuminate\Support\Str;
+use Webkul\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {
@@ -51,7 +51,7 @@ class EmailDataGrid extends DataGrid
             'sortable'   => false,
             'closure'    => function ($row) {
                 if ($row->attachments) {
-                    return '<i class="icon-leads"></i>';
+                    return '<i class="icon-attachment text-2xl"></i>';
                 }
             },
         ]);
@@ -146,7 +146,7 @@ class EmailDataGrid extends DataGrid
 
         $this->addMassAction([
             'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.mail.index.datagrid..delete'),
+            'title'  => trans('admin::app.mail.index.datagrid.delete'),
             'method' => 'POST',
             'url'    => route('admin.mail.mass_delete', [
                 'type' => request('route') == 'trash'
