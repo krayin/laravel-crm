@@ -145,6 +145,10 @@ class Lead extends Model implements LeadContract
      */
     public function getRottenDaysAttribute()
     {
+        if (! $this->stage) {
+            return 0;
+        }
+
         if (in_array($this->stage->code, ['won', 'lost'])) {
             return 0;
         }

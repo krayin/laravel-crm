@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -248,29 +249,29 @@ class LeadController extends Controller
 
     /**
      * Search person results.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(): AnonymousResourceCollection
     {
         $currentUser = auth()->guard('user')->user();
 
         if ($currentUser->view_permission == 'global') {
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-            ]);
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->all();
         } elseif ($currentUser->view_permission == 'individual') {
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-                ['user_id', '=', $currentUser->id],
-            ]);
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhere([
+                    ['user_id', '=', $currentUser->id],
+                ]);
         } elseif ($currentUser->view_permission == 'group') {
             $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
 
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-                ['user_id', 'IN', $userIds],
-            ]);
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhere([
+                    ['user_id', 'IN', $userIds],
+                ]);
         }
 
         return LeadResource::collection($results);

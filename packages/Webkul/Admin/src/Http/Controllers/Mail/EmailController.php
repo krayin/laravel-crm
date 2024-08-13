@@ -226,7 +226,7 @@ class EmailController extends Controller
 
         try {
             return Storage::download($attachment->path);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             session()->flash('error', $e->getMessage());
 
             return redirect()->back();
@@ -271,7 +271,7 @@ class EmailController extends Controller
             $parentId = $email->parent_id;
 
             if (request('type') == 'trash') {
-                $data= $this->emailRepository->update([
+                $data = $this->emailRepository->update([
                     'folders' => ['trash'],
                 ], $id);
             } else {
