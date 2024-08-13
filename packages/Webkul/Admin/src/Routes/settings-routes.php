@@ -2,7 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Settings\AttributeController;
+use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
+use Webkul\Admin\Http\Controllers\Settings\LocationController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\SourceController;
@@ -253,6 +255,36 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
             Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
                 Route::get('', 'index')->name('admin.settings.warehouse.activities.index');
             });
+        });
+
+        /**
+         * Warehouses Location Routes.
+         */
+        Route::controller(LocationController::class)->prefix('locations')->group(function () {
+            Route::get('search', 'search')->name('admin.settings.locations.search');
+
+            Route::post('create', 'store')->name('admin.settings.locations.store');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.locations.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.locations.delete');
+        });
+
+        /**
+         * Email Templates Routes
+         */
+        Route::controller(EmailTemplateController::class)->prefix('email-templates')->group(function () {
+            Route::get('', 'index')->name('admin.settings.email_templates.index');
+
+            Route::get('create', 'create')->name('admin.settings.email_templates.create');
+
+            Route::post('create', 'store')->name('admin.settings.email_templates.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.email_templates.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.email_templates.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.email_templates.delete');
         });
     });
 });

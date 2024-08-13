@@ -1430,6 +1430,7 @@ return [
             'trash'             => 'Trash',
             'composer-mail-btn' => 'Composer Mail',
             'btn'               => 'Mail',
+
             'mail'              => [
                 'title'         => 'Compose Mail',
                 'to'            => 'To',
@@ -1441,6 +1442,7 @@ return [
                 'message'       => 'Message',
                 'draft'         => 'Draft',
             ],
+
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'From',
@@ -1578,7 +1580,7 @@ return [
                 'amount'       => 'Amount',
                 'action'       => 'Action',
                 'add-more'     => 'Add More',
-                '[total'       => 'Total',
+                'total'        => 'Total',
             ],
         ],
 
@@ -1602,6 +1604,21 @@ return [
                 'edit'            => 'Edit',
                 'download'        => 'Download',
                 'destroy-success' => 'Quote deleted successfully.',
+                'empty-title'     => 'No Quotes Found',
+                'empty-info'      => 'No Quotes Found for this Lead',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                'total'        => 'Total',
+                'empty-title'  => 'No Products Found',
+                'empty-info'   => 'No Products Found for this Lead',
+                'add-product'  => 'Add Product',
             ],
 
             'persons' => [
