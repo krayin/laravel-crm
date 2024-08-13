@@ -591,31 +591,51 @@
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
-                                v-if="email.person"
+                                v-if="email.lead?.person"
                             >
                                 <div class="flex items-center gap-1">
                                     <div
                                         class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
                                         :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
                                     >
-                                        @{{ email.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
+                                        @{{ email.lead.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                     </div>
 
                                     <div class="flex flex-col gap-1">
                                         <span class="text-xs font-medium">
-                                            @{{ email.person?.name }}
+                                            @{{ email.lead.person?.name }}
                                         </span>
 
                                         <span class="text-[10px]">
-                                            @{{ email.person?.organization?.name }}
+                                            @{{ email.lead.person?.organization?.name }}
                                         </span>
                                     </div>
                                 </div>
 
-                                <span
-                                    class="icon-rotten cursor-default text-xl text-rose-600"
-                                    v-if="email.lead.rotten_days > 0"
-                                ></span>
+                                <div class="flex gap-2 items-center">
+                                    <span
+                                        class="icon-rotten cursor-default text-xl text-rose-600"
+                                        v-if="email.lead.rotten_days > 0"
+                                    ></span>
+
+                                    <template v-if="! unlinking.lead">
+                                        <button
+                                            type="button"
+                                            class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                            @click="unlinkLead"
+                                        ></button>
+                                    </template>
+
+                                    <template v-else>
+                                        <x-admin::spinner />
+                                    </template>
+
+                                    <a
+                                        :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
+                                        target="_blank"
+                                        class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    ></a>
+                                </div>
                             </div>
                             
                             <!-- Lead Title -->
@@ -656,26 +676,6 @@
                                     @{{ email.lead.type?.name }}
                                 </div>
                             </div>
-                        </div>
-
-                        <div class="flex gap-2">
-                            <template v-if="! unlinking.lead">
-                                <button
-                                    type="button"
-                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
-                                    @click="unlinkLead"
-                                ></button>
-                            </template>
-
-                            <template v-else>
-                                <x-admin::spinner />
-                            </template>
-
-                            <a
-                                :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
-                                target="_blank"
-                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
-                            ></a>
                         </div>
                     </div>
                 </template>
