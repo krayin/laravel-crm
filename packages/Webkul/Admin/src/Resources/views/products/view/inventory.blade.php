@@ -167,9 +167,7 @@
                             @lang('admin::app.products.view.inventory.allocated')
                         </x-admin::table.th>
 
-                        <x-admin::table.th>
-                            @lang('admin::app.products.view.inventory.actions')
-                        </x-admin::table.th>
+                        <x-admin::table.th></x-admin::table.th>
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
@@ -197,9 +195,9 @@
 
     <script type="text/x-template" id="v-warehouse-location-inventory-item-template">
         <!-- Input fields for add locations -->
-        <x-admin::table.thead.tr class="border-b-2">
-            <x-admin::table.td>
-                <x-admin::form.control-group class="!mb-0">
+        <x-admin::table.thead.tr class="border-b-2 align-top">
+            <x-admin::table.td class="!px-2">
+                <x-admin::form.control-group>
                     <x-admin::lookup 
                         ::src="src"
                         ::name="`${inputName('warehouse_location_id')}`"
@@ -222,7 +220,7 @@
                 </x-admin::form.control-group>
             </x-admin::table.td>
 
-            <x-admin::table.td>
+            <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group.control
                     type="text"
                     ::name="'inventories[inventory_' + index + '][in_stock]'"
@@ -235,7 +233,7 @@
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][in_stock]'"/>
             </x-admin::table.td>
 
-            <x-admin::table.td>
+            <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group.control
                     type="text"
                     ::name="'inventories[inventory_' + index + '][allocated]'"
@@ -248,7 +246,7 @@
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][allocated]'"/>
             </x-admin::table.td>
             
-            <x-admin::table.td>
+            <x-admin::table.td class="!px-2">
                 <i  
                     @click="remove"
                     class="icon-delete cursor-pointer text-2xl"
