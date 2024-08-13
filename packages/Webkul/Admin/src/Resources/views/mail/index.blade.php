@@ -264,23 +264,7 @@
                             reply: '',
                             attachments: [],
                         },
-                    }
-                },
-
-                computed: {
-                    gridsCount() {
-                        let count = this.$refs.datagrid.available.columns.length;
-
-                        if (this.$refs.datagrid.available.actions.length) {
-                            ++count;
-                        }
-
-                        if (this.$refs.datagrid.available.massActions.length) {
-                            ++count;
-                        }
-
-                        return count;
-                    },
+                    };
                 },
 
                 methods: {
