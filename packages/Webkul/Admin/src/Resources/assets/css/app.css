@@ -209,11 +209,11 @@
       content: "\e93a";
     }
     
-    .icon-bookmark-not-selected:before {
+    .icon-bookmark:before {
       content: "\e92c";
     }
     
-    .icon-bookmark-selected:before {
+    .icon-bookmark-active:before {
       content: "\e92d";
     }
     
@@ -313,8 +313,8 @@
       content: "\e90b";
     }
     
-    .icon-attachmetent:before {
-      content: "\e90c";
+    .icon-attachment:before {
+        content: "\e90c";
     }
     
     .icon-sent:before {
@@ -330,7 +330,7 @@
     }
     
     .icon-light:before {
-      content: "\e910";
+        content: "\e910";
     }
     
     .icon-dark:before {

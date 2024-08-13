@@ -307,17 +307,37 @@
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
+                                <input
+                                    type="hidden"
+                                    name="sub_total"
+                                    class="control"
+                                    :value="subTotal"
+                                    readonly
+                                >
+
                                 <p>@{{ subTotal }}</p>
                             </div>
 
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.total-discount', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
+                                <input
+                                    type="hidden"
+                                    name="discount_amount"
+                                    :value="discountAmount"
+                                >
+
                                 <p>@{{ discountAmount }}</p>
                             </div>
 
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.total-tax', ['symbol' => core()->currencySymbol(config('app.currency'))])
+
+                                <input
+                                    type="hidden"
+                                    name="tax_amount"
+                                    :value="taxAmount"
+                                >
 
                                 <p>@{{ taxAmount }}</p>
                             </div>
@@ -339,6 +359,12 @@
 
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.grand-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
+
+                                <input
+                                    type="hidden"
+                                    name="grand_total"
+                                    :value="grandTotal"
+                                >
 
                                 <p>@{{ grandTotal }}</p>
                             </div>
