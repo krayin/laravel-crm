@@ -298,7 +298,7 @@
                         <div class="grid max-h-[400px] overflow-y-auto">
                             <template v-for="product in searchedResults.products">
                                 <a
-                                    :href="'{{ route('admin.products.edit', ':id') }}'.replace(':id', product.id)"
+                                    :href="'{{ route('admin.products.view', ':id') }}'.replace(':id', product.id)"
                                     class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
                                 >
                                     <!-- Left Information -->
@@ -359,7 +359,7 @@
                         <div class="grid max-h-[400px] overflow-y-auto">
                             <template v-for="lead in searchedResults.leads">
                                 <a
-                                    :href="'{{ route('admin.leads.edit', ':id') }}'.replace(':id', lead.id)"
+                                    :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', lead.id)"
                                     class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
                                 >
                                     <!-- Left Information -->
@@ -418,7 +418,7 @@
                         <div class="grid max-h-[400px] overflow-y-auto">
                             <template v-for="person in searchedResults.persons">
                                 <a
-                                    :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', person.id)"
+                                    :href="'{{ route('admin.contacts.persons.view', ':id') }}'.replace(':id', person.id)"
                                     class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
                                 >
                                     <!-- Left Information -->
@@ -618,8 +618,6 @@
                     }
 
                     this.isDropdownOpen = true;
-
-                    this.isLoading = true;
 
                     this.$axios.get(this.tabs[this.activeTab].endpoint, {
                             params: this.tabs[this.activeTab]?.query_params
