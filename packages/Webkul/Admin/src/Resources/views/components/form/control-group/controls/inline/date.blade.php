@@ -41,7 +41,7 @@
                 class="relative flex flex-col w-full"
                 v-else
             >
-                <div class="relative flex flex-col w-full">
+                <div class="relative flex flex-col w-full [&>span>i]:right-14">
                     <x-admin::form.control-group.control
                         type="date"
                         ::id="name"
