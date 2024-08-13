@@ -26,8 +26,8 @@
 
                 <div class="shimmer h-40 w-full"></div>
 
-                <div class="flex gap-2 items-center justify-between">
-                    <div class="flex gap-2 items-center">
+                <div class="flex gap-2 items-center justify-between py-2">
+                    <div class="flex gap-6 items-center">
                         <div class="shimmer h-5 w-20"></div>
                         <div class="shimmer h-5 w-20"></div>
                         <div class="shimmer h-5 w-20"></div>
