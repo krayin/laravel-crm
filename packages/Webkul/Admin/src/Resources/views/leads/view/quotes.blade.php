@@ -6,39 +6,39 @@
         id="v-lead-quotes-template"
     >
         @if (bouncer()->hasPermission('quotes'))
-            <div class="p-4">
+            <div class="p-3">
                 <x-admin::table>
-                    <x-admin::table.thead>
+                    <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
-                            <x-admin::table.th>
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.subject')
-                            </x-admin::table.th>
+                            </x-admin::table.th> 
 
-                            <x-admin::table.th>
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.expired-at')
                             </x-admin::table.th>
 
-                            <x-admin::table.th>
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.sub-total')
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </x-admin::table.th>
 
-                            <x-admin::table.th>
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.discount')
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </x-admin::table.th>
 
-                            <x-admin::table.th >
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.tax')
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </x-admin::table.th>
 
-                            <x-admin::table.th class="adjustment">
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.adjustment')
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </x-admin::table.th>
 
-                            <x-admin::table.th class="grand-total">
+                            <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.grand-total')
                                 <span class="currency-code">({{ core()->currencySymbol(config('app.currency')) }})</span>
                             </x-admin::table.th>
@@ -47,23 +47,23 @@
                         </x-admin::table.thead.tr>
                     </x-admin::table.thead>
                     
-                    <x-admin::table.tbody>
-                        <x-admin::table.tbody.tr v-for="quote in quotes">
-                            <x-admin::table.td>@{{ quote.subject }}</x-admin::table.td>
+                    <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                        <x-admin::table.tbody.tr v-for="quote in quotes" class="border-b">
+                            <x-admin::table.td class="!px-2">@{{ quote.subject }}</x-admin::table.td>
 
-                            <x-admin::table.td>@{{ quote.expired_at }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.expired_at }}</x-admin::table.td>
                             
-                            <x-admin::table.td>@{{ quote.sub_total }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.sub_total }}</x-admin::table.td>
 
-                            <x-admin::table.td>@{{ quote.discount_amount }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.discount_amount }}</x-admin::table.td>
 
-                            <x-admin::table.td>@{{ quote.tax_amount }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.tax_amount }}</x-admin::table.td>
 
-                            <x-admin::table.td>@{{ quote.adjustment_amount }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.adjustment_amount }}</x-admin::table.td>
 
-                            <x-admin::table.td>@{{ quote.grand_total }}</x-admin::table.td>
+                            <x-admin::table.td class="!px-2">@{{ quote.grand_total }}</x-admin::table.td>
 
-                            <x-admin::table.td>
+                            <x-admin::table.td class="!px-2">
                                 <x-admin::dropdown position="bottom-right">
                                     <x-slot:toggle>
                                         <icon class="icon-more text-2xl"></icon>
@@ -86,7 +86,7 @@
                                             <x-admin::dropdown.menu.item>
                                                 <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
                                                     <div class="flex items-center gap-2">
-                                                        <span class="icon-sent text-2xl"></span>
+                                                        <span class="icon-download text-2xl"></span>
 
                                                         @lang('admin::app.leads.view.quotes.download')
                                                     </div>

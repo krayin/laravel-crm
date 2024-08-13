@@ -4,8 +4,8 @@ namespace Webkul\Admin\DataGrids\Mail;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\DataGrid\DataGrid;
 use Illuminate\Support\Str;
+use Webkul\DataGrid\DataGrid;
 
 class EmailDataGrid extends DataGrid
 {

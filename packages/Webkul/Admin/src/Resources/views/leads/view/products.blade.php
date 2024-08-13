@@ -6,7 +6,7 @@
         type="text/x-template" 
         id="v-lead-products-template"
     >
-        <div class="flex flex-col gap-4 p-4">
+        <div class="flex flex-col gap-4 p-3">
              <!-- Table -->
              <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
@@ -62,10 +62,10 @@
         type="text/x-template" 
         id="v-product-item-template"
     >
-        <x-admin::table.thead.tr class="border-b-2">
+        <x-admin::table.thead.tr class="border-b">
             <!-- Product Name -->
             <x-admin::table.td>
-                <x-admin::form.control-group class="!mb-0">
+                <x-admin::form.control-group>
                     <x-admin::lookup 
                         ::src="src"
                         ::name="`${inputName}[name]`"
