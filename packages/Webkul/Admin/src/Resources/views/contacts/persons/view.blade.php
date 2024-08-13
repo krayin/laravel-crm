@@ -3,7 +3,7 @@
         @lang('admin::app.contacts.persons.view.title', ['name' => $person->name])
     </x-slot>
 
-     <!-- Content -->
+    <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
         {!! view_render_event('admin.contact.persons.view.left.before', ['person' => $person]) !!}
@@ -39,8 +39,8 @@
                     </p>
                 </div>
 
-                 <!-- Activity Actions -->
-                 <div class="flex flex-wrap gap-2">
+                <!-- Activity Actions -->
+                <div class="flex flex-wrap gap-2">
                     <!-- Mail Activity Action -->
                     <x-admin::activities.actions.mail
                         :entity="$person"
@@ -85,6 +85,5 @@
         </div>
 
         {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
-    </div>   
-
+    </div>
 </x-admin::layouts>

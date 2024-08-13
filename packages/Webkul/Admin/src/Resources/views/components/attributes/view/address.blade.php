@@ -1,8 +1,10 @@
-@if ($value)
-    {{ $value['address'] }}<br>
-    {{ $value['postcode'] . '  ' . $value['city'] }}<br>
-    {{ core()->state_name($value['state']) }}<br>
-    {{ core()->country_name($value['country']) }}<br>
-@else
-    {{ __('admin::app.common.not-available') }}
-@endif
+<x-admin::form.control-group.controls.inline.address
+    ::name="'{{ $attribute->code }}'"
+    :value="$value"
+    rules="required"
+    position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
+    :url="$url"
+/>

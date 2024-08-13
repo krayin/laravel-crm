@@ -8,6 +8,7 @@ use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Product\Models\ProductProxy;
 use Webkul\User\Models\UserProxy;
+use Webkul\Warehouse\Models\WarehouseProxy;
 
 class Activity extends Model implements ActivityContract
 {
@@ -85,7 +86,7 @@ class Activity extends Model implements ActivityContract
     }
 
     /**
-     * The leads that belong to the activity.
+     * The Person that belong to the activity.
      */
     public function persons()
     {
@@ -98,5 +99,13 @@ class Activity extends Model implements ActivityContract
     public function products()
     {
         return $this->belongsToMany(ProductProxy::modelClass(), 'product_activities');
+    }
+
+    /**
+     * The Warehouse that belong to the activity.
+     */
+    public function warehouses()
+    {
+        return $this->belongsToMany(WarehouseProxy::modelClass(), 'warehouse_activities');
     }
 }

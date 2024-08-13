@@ -2,14 +2,17 @@
 
 namespace Webkul\Admin\Http\Controllers\Products;
 
+use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
-use Illuminate\View\View;
-use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Illuminate\Http\Resources\Json\JsonResource;
+use Prettus\Repository\Criteria\RequestCriteria;
+use Webkul\Admin\Http\Resources\ProductResource;
 use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Product\Repositories\ProductRepository;
+use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 
 class ProductController extends Controller
 {
@@ -139,18 +142,16 @@ class ProductController extends Controller
 
     /**
      * Search product results
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(): JsonResource
     {
-        $results = $this->productRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
-        ]);
+        $products = $this->productRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
 
-        return response()->json($results);
+        return ProductResource::collection($products);
     }
-
+    
     /**
      * Returns product inventories grouped by warehouse.
      *

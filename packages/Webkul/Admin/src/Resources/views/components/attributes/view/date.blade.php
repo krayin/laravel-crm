@@ -1,1 +1,10 @@
-{{ $value ?? __('admin::app.common.not-available')}}
+<x-admin::form.control-group.controls.inline.date
+    ::name="'{{ $attribute->code }}'"
+    ::value="'{{ $value }}'"
+    rules="required"
+    position="left"
+    :label="$attribute->name"
+    ::errors="errors"
+    :placeholder="$attribute->name"
+    :url="$url"
+/>

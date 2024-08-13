@@ -220,24 +220,24 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-ca059d98.css",
+    "file": "assets/app-a193aa19.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
   "src/Resources/assets/fonts/icomoon.eot": {
-    "file": "assets/icomoon-989c53cf.eot",
+    "file": "assets/icomoon-1bcfcf1d.eot",
     "src": "src/Resources/assets/fonts/icomoon.eot"
   },
   "src/Resources/assets/fonts/icomoon.svg": {
-    "file": "assets/icomoon-76753c7f.svg",
+    "file": "assets/icomoon-d6a5dae3.svg",
     "src": "src/Resources/assets/fonts/icomoon.svg"
   },
   "src/Resources/assets/fonts/icomoon.ttf": {
-    "file": "assets/icomoon-c3fe0c4b.ttf",
+    "file": "assets/icomoon-c6be70b2.ttf",
     "src": "src/Resources/assets/fonts/icomoon.ttf"
   },
   "src/Resources/assets/fonts/icomoon.woff": {
-    "file": "assets/icomoon-cfa2fd2b.woff",
+    "file": "assets/icomoon-81aea726.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/activities-active-icon.svg": {
@@ -627,7 +627,7 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
-    "file": "assets/app-ce5a40ad.js",
+    "file": "assets/app-6528dc8d.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }

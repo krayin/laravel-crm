@@ -6,11 +6,10 @@ use Webkul\Admin\Http\Controllers\Lead\EmailController;
 use Webkul\Admin\Http\Controllers\Lead\LeadController;
 use Webkul\Admin\Http\Controllers\Lead\QuoteController;
 use Webkul\Admin\Http\Controllers\Lead\TagController;
-
 /**
  * Settings routes.
  */
-Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Leads routes.
      */
@@ -22,6 +21,8 @@ Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_pa
         Route::post('create', 'store')->name('admin.leads.store');
 
         Route::get('view/{id}', 'view')->name('admin.leads.view');
+
+        Route::get('edit/{id}', 'edit')->name('admin.leads.edit');
 
         Route::put('edit/{id}', 'update')->name('admin.leads.update');
 

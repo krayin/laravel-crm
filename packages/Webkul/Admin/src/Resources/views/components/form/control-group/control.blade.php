@@ -294,7 +294,7 @@
         @break
     
     @case('inline')
-        <x-admin::form.control-group.controls.inline {{ $attributes }}/>
+        <x-admin::form.control-group.controls.inline.text {{ $attributes }}/>
 
         @break
 
@@ -308,6 +308,7 @@
     @case('tags')
         <x-admin::form.control-group.controls.tags
             :name="$name"
+            :data="$attributes->get(':data') ?? $attributes->get('data')"
             {{ $attributes}}
         />
         @break

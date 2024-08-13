@@ -82,7 +82,18 @@ class LeadController extends Controller
             $data[$stage->id] = (new StageResource($stage))->jsonSerialize();
 
             $data[$stage->id]['leads'] = [
-                'data' => LeadResource::collection($paginator = $query->paginate(10)),
+                'data' => LeadResource::collection($paginator = $query->with([
+                    'tags',
+                    'type',
+                    'source',
+                    'user',
+                    'person',
+                    'person.organization',
+                    'pipeline',
+                    'pipeline.stages',
+                    'stage',
+                    'attribute_values',
+                ])->paginate(10)),
 
                 'meta' => [
                     'current_page' => $paginator->currentPage(),
@@ -149,6 +160,19 @@ class LeadController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        return view('admin::leads.edit', compact('lead'));
+    }
+
+    /**
      * Display a resource.
      *
      * @param  int  $id
@@ -189,7 +213,7 @@ class LeadController extends Controller
 
         $data = request()->all();
 
-        if ($data['lead_pipeline_stage_id']) {
+        if (isset($data['lead_pipeline_stage_id'])) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
             $data['lead_pipeline_id'] = $stage->lead_pipeline_id;

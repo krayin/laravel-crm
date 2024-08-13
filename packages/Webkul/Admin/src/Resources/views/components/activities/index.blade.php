@@ -225,7 +225,7 @@
                                                 
                                                 <x-admin::dropdown.menu.item @click="unlinkEmail(activity)">
                                                     <div class="flex items-center gap-2">
-                                                        <span class="icon-attachmetent text-2xl"></span>
+                                                        <span class="icon-attachment text-2xl"></span>
 
                                                         @lang('admin::app.components.activities.index.unlink')
                                                     </div>

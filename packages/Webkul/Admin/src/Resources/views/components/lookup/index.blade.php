@@ -253,7 +253,7 @@
                             cancelToken: this.cancelToken.token, 
                         })
                         .then(response => {
-                            this.searchedResults = response.data;
+                            this.searchedResults = response.data.data;
                         })
                         .catch(error => {
                             if (! this.$axios.isCancel(error)) {

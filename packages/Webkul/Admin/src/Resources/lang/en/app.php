@@ -265,6 +265,30 @@ return [
                 'honeydew'       => 'Honeydew',
             ],
         ],
+
+        'layouts' => [
+            'header' => [
+                'mega-search' => [
+                    'title'   => 'Search',
+
+                    'tabs' => [
+                        'leads'    => 'Leads',
+                        'quotes'   => 'Quotes',
+                        'persons'  => 'Persons',
+                        'products' => 'Products',
+                    ],
+
+                    'explore-all-products'          => 'Explore all Products',
+                    'explore-all-leads'             => 'Explore all Leads',
+                    'explore-all-contacts'          => 'Explore all Contacts',
+                    'explore-all-quotes'            => 'Explore all Quotes',
+                    'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explore all leads matching ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
+                    'explore-all-matching-quotes'   => 'Explore all quotes matching ":query" (:count)',
+                ]
+            ]
+        ],
     ],
 
     'quotes' => [
@@ -381,8 +405,12 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'       => 'Persons',
-                'create-btn'  => 'Create Person',
+                'title'          => 'Persons',
+                'create-btn'     => 'Create Person',
+                'create-success' => 'Person created successfully.',
+                'update-success' => 'Person updated successfully.',
+                'delete-success' => 'Person deleted successfully.',
+                'delete-failed'  => 'Person can not be deleted.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -397,8 +425,8 @@ return [
             ],
 
             'view' => [
-                'title'      => ':name',
-                'about-lead' => 'About Lead',
+                'title'        => ':name',
+                'about-person' => 'About Person',
 
                 'activities' => [
                     'index' => [
@@ -831,8 +859,8 @@ return [
                 'create-lead'              => 'Create Lead',
                 'customize-webform'        => 'Customize Webform',
                 'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
-                'backgroud-color'          => 'Backgroud Color',
-                'form-backgroud-color'     => 'Form Backgroud Color',
+                'backgroud-color'          => 'Background Color',
+                'form-backgroud-color'     => 'Form Background Color',
                 'form-title-color'         => 'Form Title Color',
                 'form-submit-btn-color'    => 'Form Submit Button Color',
                 'attribute-label-color'    => 'Attribute Label Color',
@@ -841,14 +869,14 @@ return [
                 'add-attribute-btn'        => 'Add Attribute Button',
                 'description'              => 'Description',
                 'submit-button-label'      => 'Submit Button Label',
-                'form-background-color'    => 'Form Backgroud Color',
+                'form-background-color'    => 'Form Background Color',
                 'form-submit-button-color' => 'Form Submit Button Color',
                 'display-custom-message'   => 'Display custom message',
             ],
 
             'edit' => [
                 'title'                    => 'Edit Webform',
-                'embed'                    => 'Embded',
+                'embed'                    => 'Embed',
                 'preview'                  => 'Preview',
                 'save-btn'                 => 'Save Webform',
                 'submit-success-action'    => 'Submit Success Action',
@@ -856,10 +884,10 @@ return [
                 'create-lead'              => 'Create Lead',
                 'customize-webform'        => 'Customize Webform',
                 'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
-                'backgroud-color'          => 'Backgroud Color',
-                'form-backgroud-color'     => 'Form Backgroud Color',
+                'backgroud-color'          => 'Background Color',
+                'form-backgroud-color'     => 'Form Background Color',
                 'form-title-color'         => 'Form Title Color',
-                'form-background-color'    => 'Form Backgroud Color',
+                'form-background-color'    => 'Form Background Color',
                 'form-submit-btn-color'    => 'Form Submit Button Color',
                 'attribute-label-color'    => 'Attribute Label Color',
                 'attributes'               => 'Attributes',
@@ -1138,6 +1166,9 @@ return [
                 'delete-failed'  => 'Warehouse can not be deleted.',
 
                 'datagrid' => [
+                    'id'              => 'ID',
+                    'name'            => 'Name',
+                    'contact-name'    => 'Contact Name',
                     'delete'          => 'Delete',
                     'edit'            => 'Edit',
                     'view'            => 'View',
@@ -1158,6 +1189,32 @@ return [
                 'title'         => 'Edit Warehouse',
                 'save-btn'      => 'Save Warehouse',
                 'contact-info'  => 'Contact Information',
+            ],
+
+            'view' => [
+                'all'          => 'All',
+                'notes'        => 'Notes',
+                'files'        => 'Files',
+                'location'     => 'Location',
+
+                'locations' => [
+                    'action'         => 'Action',
+                    'add-location'   => 'Add Location',
+                    'create-success' => 'Location created successfully.',
+                    'delete'         => 'Delete',
+                    'delete-failed'  => 'Location can not be deleted.',
+                    'delete-success' => 'Location deleted successfully.',
+                    'name'           => 'Name',
+                    'save-btn'       => 'Save',
+                ],
+
+                'general-information' => [
+                    'title' => 'General Information',
+                ],
+
+                'contact-information' => [
+                    'title' => 'Contact Information',
+                ],
             ],
         ],
 
@@ -1323,13 +1380,25 @@ return [
 
     'mail' => [
         'index' => [
-            'compose' => 'Compose',
-            'draft'   => 'Draft',
-            'inbox'   => 'Inbox',
-            'outbox'  => 'Outbox',
-            'sent'    => 'Sent',
-            'trash'   => 'Trash',
-
+            'compose'           => 'Compose',
+            'draft'             => 'Draft',
+            'inbox'             => 'Inbox',
+            'outbox'            => 'Outbox',
+            'sent'              => 'Sent',
+            'trash'             => 'Trash',
+            'composer-mail-btn' => 'Composer Mail',
+            'btn'               => 'Mail',
+            'mail' => [
+                'title'         => 'Compose Mail',
+                'to'            => 'To',
+                'enter-emails'  => 'Press enter to add emails',
+                'cc'            => 'CC',
+                'bcc'           => 'BCC',
+                'subject'       => 'Subject',
+                'send-btn'      => 'Send',
+                'message'       => 'Message',
+                'draft'         => 'Draft'
+            ],
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'From',
@@ -1348,6 +1417,39 @@ return [
         'mass-update-success' => 'Emails updated successfully.',
         'delete-success'      => 'Email deleted successfully.',
         'delete-failed'       => 'Email can not be deleted.',
+
+        'view' => [
+            'title'   => 'Mails',
+            'subject' => ':subject',
+            'link-mail' => 'Link Mail',
+            'to' => 'To',
+            'cc' => 'CC',
+            'bcc' => 'BCC',
+            'reply' => 'Reply',
+            'reply-all' => 'Reply All',
+            'forward' => 'Forward',
+            'delete' => 'Delete',
+            'enter-mails' => 'Enter email id',
+            'message' => 'Message',
+            'add-attachments' => 'Add Attachments',
+            'discard' => 'Discard',
+            'send' => 'Send',
+            'no-result-found' => 'No Results found',
+            'add-new-contact' => 'Add New Contact',
+            'description' => 'Description', 
+            'search' => 'Search...',
+            'add-new-lead' => 'Add New Lead',
+            'create-new-contact' => 'Create New Contact',
+            'save-contact' => 'Save Contact',
+            'create-lead' => 'Create Lead',
+            'linked-contact' => 'Linked Contact',
+            'link-to-contact' => 'Link To Contact',
+            'link-to-lead' => 'Link To Lead',
+            'linked-lead' => 'Linked Lead',
+            'lead-details' => 'Lead Details',
+            'contact-person' => 'Contact Person',
+            'product' => 'Product',
+        ],
     ],
 
     'common' => [
@@ -1388,6 +1490,13 @@ return [
                 'no'                  => 'No',
                 'yes'                 => 'Yes',
             ],
+
+            'kanban' => [
+                'toolbar' => [
+                    'filter'  => 'Filter',
+                    'filters' => 'Filters',
+                ],
+            ],
         ],
 
         'create' => [
@@ -1401,6 +1510,17 @@ return [
             'products-info'  => 'Information About the Products',
         ],
 
+        'edit' => [
+            'title'          => 'Edit Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+        
         'common' => [
             'contact' => [
                 'name'           => 'Name',
@@ -1423,6 +1543,15 @@ return [
         'view' => [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Days',
+
+            'attributes' => [
+                'title' => 'About Lead',
+            ],
+
+            'persons' => [
+                'title'     => 'About Persons',
+                'job-title' => ':job_title at :organization',
+            ],
 
             'stages' => [
                 'won-lost'       => 'Won/Lost',
