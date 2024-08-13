@@ -38,7 +38,7 @@
                         >
                             @if ($icon = $child->getIcon())
                                 <div class="rounded-lg bg-gray-100 p-3">
-                                    <i class="{{ $child->getIcon() }} text-4xl "></i>
+                                    <i class="{{ $child->getIcon() }} text-3xl "></i>
                                 </div>
                             @endif
 
