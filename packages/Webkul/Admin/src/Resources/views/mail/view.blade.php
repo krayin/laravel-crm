@@ -185,18 +185,17 @@
                     <!-- Mail Body -->
                     <div v-html="email.reply"></div>
 
-                    <div class="flex gap-4 flex-wrap">
-                        <template v-for="attachment in email.attachments">
-                            <a
-                                :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
-                                class="flex cursor-pointer items-center gap-1 rounded-md"
-                                target="_blank"
-                            >
-                                <span class="icon-attached-file text-xl"></span>
+                    <div class="flex gap-2 flex-wrap">
+                        <a
+                            :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                            class="flex cursor-pointer items-center gap-1 rounded-md"
+                            target="_blank"
+                            v-for="attachment in email.attachments"
+                        >
+                            <span class="icon-attached-file text-xl"></span>
 
-                                <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
-                            </a>
-                        </template>
+                            <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
+                        </a>
                     </div>
 
                     <!-- Reply, Reply All and Forward email -->
