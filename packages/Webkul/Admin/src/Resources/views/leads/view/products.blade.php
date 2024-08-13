@@ -6,30 +6,30 @@
         type="text/x-template" 
         id="v-lead-products-template"
     >
-        <div class="flex flex-col gap-4 p-3">
+        <div v-if="products.length" class="flex flex-col gap-4 p-3">
              <!-- Table -->
              <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
                 <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
-                            @lang('admin::app.leads.common.products.product-name')
+                            @lang('admin::app.leads.view.products.product-name')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('admin::app.leads.common.products.quantity')
+                            @lang('admin::app.leads.view.products.quantity')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('admin::app.leads.common.products.price')
+                            @lang('admin::app.leads.view.products.price')
                         </x-admin::table.th>
             
                         <x-admin::table.th class="text-right">
-                            @lang('admin::app.leads.common.products.amount')
+                            @lang('admin::app.leads.view.products.amount')
                         </x-admin::table.th>
 
                         <x-admin::table.th class="text-right">
-                            @lang('admin::app.leads.common.products.action')
+                            @lang('admin::app.leads.view.products.action')
                         </x-admin::table.th>
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
@@ -53,8 +53,26 @@
                 class="cursor-pointer text-brandColor"
                 @click="addProduct"
             >
-                + @lang('admin::app.leads.common.products.add-more')
+                + @lang('admin::app.leads.view.products.add-more')
             </span>
+        </div>
+
+        <div v-else>
+            <div class="grid justify-center justify-items-center gap-3.5 py-12">
+                <img src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}">
+                
+                <div class="flex flex-col items-center gap-2">
+                    <p class="text-xl font-semibold">@lang('admin::app.leads.view.products.empty-title')</p>
+                    <p class="text-gray-400">@lang('admin::app.leads.view.products.empty-info')</p>
+                </div>
+
+                <div
+                    class="secondary-button"
+                    @click="addProduct"
+                >
+                     @lang('admin::app.leads.view.products.add-product')
+                </div>
+            </div>
         </div>
     </script>
 
@@ -70,7 +88,7 @@
                         ::src="src"
                         ::name="`${inputName}[name]`"
                         ::params="params"
-                        :placeholder="trans('admin::app.leads.common.products.product-name')"
+                        :placeholder="trans('admin::app.leads.view.products.product-name')"
                         @on-selected="(product) => addProduct(product)"
                         ::value="{ id: product.product_id, name: product.name }"
                     />
@@ -80,8 +98,8 @@
                         ::name="`${inputName}[product_id]`"
                         v-model="product.product_id"
                         rules="required"
-                        :label="trans('admin::app.leads.common.products.product-name')"
-                        :placeholder="trans('admin::app.leads.common.products.product-name')"
+                        :label="trans('admin::app.leads.view.products.product-name')"
+                        :placeholder="trans('admin::app.leads.view.products.product-name')"
                         ::url="url(product)"
                     />
             
@@ -97,8 +115,8 @@
                         ::name="`${inputName}[quantity]`"
                         ::value="product.quantity"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.leads.common.products.quantity')"
-                        :placeholder="trans('admin::app.leads.common.products.quantity')"
+                        :label="trans('admin::app.leads.view.products.quantity')"
+                        :placeholder="trans('admin::app.leads.view.products.quantity')"
                         @on-change="(event) => product.quantity = event.value"
                         ::url="url(product)"
                     />
@@ -113,8 +131,8 @@
                         ::name="`${inputName}[price]`"
                         ::value="product.price"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.leads.common.products.price')"
-                        :placeholder="trans('admin::app.leads.common.products.price')"
+                        :label="trans('admin::app.leads.view.products.price')"
+                        :placeholder="trans('admin::app.leads.view.products.price')"
                         @on-change="(event) => product.price = event.value"
                         ::url="url(product)"
                     />
@@ -129,8 +147,8 @@
                         ::name="`${inputName}[amount]`"
                         ::value="product.price * product.quantity"
                         rules="required|decimal:4"
-                        :label="trans('admin::app.leads.common.products.total')"
-                        :placeholder="trans('admin::app.leads.common.products.total')"
+                        :label="trans('admin::app.leads.view.products.total')"
+                        :placeholder="trans('admin::app.leads.view.products.total')"
                         ::allowEdit="false"
                         ::url="url(product)"
                     />

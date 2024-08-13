@@ -7,7 +7,7 @@
     >
         @if (bouncer()->hasPermission('quotes'))
             <div class="p-3">
-                <x-admin::table>
+                <x-admin::table v-if="quotes.length">
                     <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
                             <x-admin::table.th class="!px-2">
@@ -110,6 +110,17 @@
                         </x-admin::table.tbody.tr>
                     </x-admin::table.tbody>
                 </x-admin::table>
+                
+                <div v-else>
+                    <div class="grid justify-center justify-items-center gap-3.5 py-12">
+                        <img src="{{ admin_vite()->asset('images/empty-placeholders/description.svg') }}">
+                        
+                        <div class="flex flex-col items-center gap-2">
+                            <p class="text-xl font-semibold">@lang('admin::app.leads.view.quotes.empty-title')</p>
+                            <p class="text-gray-400">@lang('admin::app.leads.view.quotes.empty-info')</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         @endif
     </script>
