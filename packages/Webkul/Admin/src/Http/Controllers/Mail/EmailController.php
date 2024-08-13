@@ -92,7 +92,9 @@ class EmailController extends Controller
         }
 
         if (request('route') == 'draft') {
-            return view('admin::mail.compose', compact('email'));
+            return response()->json([
+                'data' => new EmailResource($email),
+            ]);
         }
 
         return view('admin::mail.view', compact('email'));

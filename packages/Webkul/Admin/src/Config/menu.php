@@ -45,13 +45,6 @@ return [
         'sort'       => 4,
         'icon-class' => 'icon-mail',
     ], [
-        'key'        => 'mail.compose',
-        'name'       => 'admin::app.layouts.mail.compose',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'compose'],
-        'sort'       => 1,
-        'icon-class' => '',
-    ], [
         'key'        => 'mail.inbox',
         'name'       => 'admin::app.layouts.mail.inbox',
         'route'      => 'admin.mail.index',
