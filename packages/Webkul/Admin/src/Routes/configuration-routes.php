@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\Configuration\ConfigurationController;
 /**
  * Configuration routes.
  */
-Route::group(['middleware' => ['user', 'admin_locale'], 'prefix' => config('app.admin_url')], function () {
+Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     Route::get('configuration/search', [ConfigurationController::class, 'search'])->name('admin.configuration.search');
 
     Route::controller(ConfigurationController::class)->prefix('configuration/{slug?}/{slug2?}')->group(function () {

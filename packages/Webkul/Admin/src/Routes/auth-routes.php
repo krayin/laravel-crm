@@ -9,7 +9,7 @@ use Webkul\Admin\Http\Controllers\User\SessionController;
 /**
  * Auth routes.
  */
-Route::group(['prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['web', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Redirect route.
      */

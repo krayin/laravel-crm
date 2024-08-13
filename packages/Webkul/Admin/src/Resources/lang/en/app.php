@@ -265,6 +265,28 @@ return [
                 'honeydew'       => 'Honeydew',
             ],
         ],
+
+        'layouts' => [
+            'header' => [
+                'mega-search' => [
+                    'title' => 'Search',
+                    'tabs' => [
+                        'leads'  => 'Leads',
+                        'quotes' => 'Quotes',
+                        'persons' => 'Persons',
+                        'products' => 'Products',
+                    ],
+                    'explore-all-products' => 'Explore all Products',
+                    'explore-all-leads' => 'Explore all Leads',
+                    'explore-all-contacts' => 'Explore all Contacts',
+                    'explore-all-quotes' => 'Explore all Quotes',
+                    'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
+                    'explore-all-matching-leads' => 'Explore all leads matching ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
+                    'explore-all-matching-quotes' => 'Explore all quotes matching ":query" (:count)',
+                ]
+            ]
+        ],
     ],
 
     'quotes' => [
@@ -1332,13 +1354,25 @@ return [
 
     'mail' => [
         'index' => [
-            'compose' => 'Compose',
-            'draft'   => 'Draft',
-            'inbox'   => 'Inbox',
-            'outbox'  => 'Outbox',
-            'sent'    => 'Sent',
-            'trash'   => 'Trash',
-
+            'compose'           => 'Compose',
+            'draft'             => 'Draft',
+            'inbox'             => 'Inbox',
+            'outbox'            => 'Outbox',
+            'sent'              => 'Sent',
+            'trash'             => 'Trash',
+            'composer-mail-btn' => 'Composer Mail',
+            'btn'               => 'Mail',
+            'mail' => [
+                'title'         => 'Compose Mail',
+                'to'            => 'To',
+                'enter-emails'  => 'Press enter to add emails',
+                'cc'            => 'CC',
+                'bcc'           => 'BCC',
+                'subject'       => 'Subject',
+                'send-btn'      => 'Send',
+                'message'       => 'Message',
+                'draft'         => 'Draft'
+            ],
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'From',
@@ -1357,6 +1391,39 @@ return [
         'mass-update-success' => 'Emails updated successfully.',
         'delete-success'      => 'Email deleted successfully.',
         'delete-failed'       => 'Email can not be deleted.',
+
+        'view' => [
+            'title'   => 'Mails',
+            'subject' => ':subject',
+            'link-mail' => 'Link Mail',
+            'to' => 'To',
+            'cc' => 'CC',
+            'bcc' => 'BCC',
+            'reply' => 'Reply',
+            'reply-all' => 'Reply All',
+            'forward' => 'Forward',
+            'delete' => 'Delete',
+            'enter-mails' => 'Enter email id',
+            'message' => 'Message',
+            'add-attachments' => 'Add Attachments',
+            'discard' => 'Discard',
+            'send' => 'Send',
+            'no-result-found' => 'No Results found',
+            'add-new-contact' => 'Add New Contact',
+            'description' => 'Description', 
+            'search' => 'Search...',
+            'add-new-lead' => 'Add New Lead',
+            'create-new-contact' => 'Create New Contact',
+            'save-contact' => 'Save Contact',
+            'create-lead' => 'Create Lead',
+            'linked-contact' => 'Linked Contact',
+            'link-to-contact' => 'Link To Contact',
+            'link-to-lead' => 'Link To Lead',
+            'linked-lead' => 'Linked Lead',
+            'lead-details' => 'Lead Details',
+            'contact-person' => 'Contact Person',
+            'product' => 'Product',
+        ],
     ],
 
     'common' => [
@@ -1417,6 +1484,17 @@ return [
             'products-info'  => 'Information About the Products',
         ],
 
+        'edit' => [
+            'title'          => 'Edit Lead',
+            'save-btn'       => 'Save',
+            'details'        => 'Details',
+            'details-info'   => 'Put The Basic Information of the Lead',
+            'contact-person' => 'Contact Person',
+            'contact-info'   => 'Information About the Contact Person',
+            'products'       => 'Products',
+            'products-info'  => 'Information About the Products',
+        ],
+        
         'common' => [
             'contact' => [
                 'name'           => 'Name',

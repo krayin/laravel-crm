@@ -1,11 +1,13 @@
 @props([
     'isActive' => false,
     'position' => 'center',
+    'size'     => 'normal',
 ])
 
 <v-modal
     is-active="{{ $isActive }}"
     position="{{ $position }}"
+    size="{{ $size }}"
     {{ $attributes }}
 >
     @isset($toggle)
@@ -89,7 +91,7 @@
                     <div class="flex min-h-full items-end justify-center p-4 sm:items-center sm:p-0">
                         <div
                             class="box-shadow absolute z-[999] w-full max-w-[568px] overflow-hidden rounded-lg bg-white dark:bg-gray-900"
-                            :class="positionClass"
+                            :class="[positionClass, sizeClass]"
                         >
                             <!-- Header Slot -->
                             <slot
@@ -115,7 +117,17 @@
         app.component('v-modal', {
             template: '#v-modal-template',
 
-            props: ['isActive', 'position'],
+            props: [
+                'isActive',
+                'position',
+                'size'
+            ],
+
+            emits: [
+                'toggle',
+                'open',
+                'close',
+            ],
 
             data() {
                 return {
@@ -134,6 +146,14 @@
                         'top-right': 'top-4 right-4',
                         'top-left': 'top-4 left-4',
                     }[this.position];
+                },
+
+                sizeClass() {
+                    return {
+                        'normal': 'max-w-[568px]',
+                        'medium': 'max-w-[768px]',
+                        'large': 'max-w-[950px]',
+                    }[this.size] || 'max-w-[568px]';
                 },
 
                 enterFromLeaveToClasses() {

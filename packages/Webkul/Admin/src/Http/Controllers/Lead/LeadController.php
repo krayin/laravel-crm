@@ -160,6 +160,19 @@ class LeadController extends Controller
     }
 
     /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\View\View
+     */
+    public function edit($id)
+    {
+        $lead = $this->leadRepository->findOrFail($id);
+
+        return view('admin::leads.edit', compact('lead'));
+    }
+
+    /**
      * Display a resource.
      *
      * @param  int  $id

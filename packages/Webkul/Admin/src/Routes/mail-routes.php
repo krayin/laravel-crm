@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\Mail\EmailController;
 /**
  * Settings routes.
  */
-Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Email routes.
      */
