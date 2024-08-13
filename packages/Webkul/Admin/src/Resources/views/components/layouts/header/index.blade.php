@@ -280,7 +280,7 @@
                 <div class="flex border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
                     <div
                         class="cursor-pointer p-4 hover:bg-gray-100 dark:hover:bg-gray-950"
-                        :class="{ 'border-b-2 border-blue-600': activeTab == tab.key }"
+                        :class="{ 'border-b-2 border-brandColor': activeTab == tab.key }"
                         v-for="tab in tabs"
                         @click="activeTab = tab.key; search();"
                     >
@@ -331,7 +331,7 @@
                             <template v-if="searchedResults.products.length">
                                 <a
                                     :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                 
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-products')`.replace(':query', searchTerm).replace(':count', searchedResults.products.length) }}
@@ -341,7 +341,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.products.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-products')
                                 </a>
@@ -391,7 +391,7 @@
                             <template v-if="searchedResults.leads.length">
                                 <a
                                     :href="'{{ route('admin.leads.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-leads')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
                                 </a>
@@ -400,7 +400,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.leads.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-leads')
                                 </a>
@@ -442,7 +442,7 @@
                             <template v-if="searchedResults.persons.data.length">
                                 <a
                                     :href="'{{ route('admin.contacts.persons.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-contacts')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.data.length) }}
                                 </a>
@@ -451,7 +451,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.contacts.persons.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-contacts')
                                 </a>
@@ -493,7 +493,7 @@
                             <template v-if="searchedResults.quotes.length">
                                 <a
                                     :href="'{{ route('admin.quotes.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-quotes')`.replace(':query', searchTerm).replace(':count', searchedResults.quotes.length) }}
                                 </a>
@@ -502,7 +502,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.quotes.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-quotes')
                                 </a>

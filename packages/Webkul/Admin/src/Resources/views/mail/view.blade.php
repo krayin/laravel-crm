@@ -137,44 +137,50 @@
                                     </x-slot>
                         
                                     <!-- Admin Dropdown -->
-                                    <x-slot:content class="!p-0">
-                                        <div class="flex flex-col gap-2 pb-2.5">
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                    <x-slot:menu class="!min-w-40">
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('reply')"
                                             >
                                                 <i class="icon-reply text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.reply')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                                                @click="emailAction('reply-all')"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
+                                                @click="emailAction('reply')"
                                             >
-                                                <i class="icon-reply-all text-2xl"></i>
+                                                <i class="icon-reply text-2xl"></i>
 
-                                                @lang('admin::app.mail.view.reply-all')
-                                            </label>
+                                                @lang('admin::app.mail.view.reply')
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('forward')"
                                             >
                                                 <i class="icon-forward text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.forward')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('delete')"
                                             >
                                                 <i class="icon-delete text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.delete')
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
                                     </x-slot>
                                 </x-admin::dropdown>
                             </div>
@@ -184,7 +190,10 @@
                     <!-- Mail Body -->
                     <div v-html="email.reply"></div>
 
-                    <div class="flex gap-2 flex-wrap">
+                    <div
+                        class="flex gap-2 flex-wrap"
+                        v-if="email.attachments.length"
+                    >
                         <a
                             :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
                             class="flex cursor-pointer items-center gap-1 rounded-md"
@@ -198,7 +207,7 @@
                     </div>
 
                     <!-- Reply, Reply All and Forward email -->
-                    <template v-if="!action[email.id]">
+                    <template v-if="! action[email.id]">
                         <div class="flex gap-6 font-medium py-4 border-t-2">
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
@@ -384,7 +393,7 @@
                                                             
                                     <div class="flex gap-4 items-center justify-center">
                                         <label
-                                            class="flex cursor-pointer items-center gap-1"
+                                            class="flex cursor-pointer font-semibold items-center gap-1"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
