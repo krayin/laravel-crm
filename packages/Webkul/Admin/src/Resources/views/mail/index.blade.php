@@ -46,7 +46,7 @@
             type="text/x-template"
             id="v-mail-template"
         >
-            {!! view_render_event('krayin.admin.settings.roles.index.datagrid.before') !!}
+            {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.before') !!}
 
             <!-- DataGrid -->
             <x-admin::datagrid
@@ -54,7 +54,7 @@
                 src="{{ route('admin.mail.index', request('route')) }}"
             />
 
-            {!! view_render_event('krayin.admin.settings.roles.index.datagrid.after') !!}
+            {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.after') !!}
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
