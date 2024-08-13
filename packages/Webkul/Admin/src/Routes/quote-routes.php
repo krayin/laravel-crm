@@ -19,6 +19,8 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
 
         Route::delete('{id}', 'destroy')->name('admin.quotes.delete');
 
+        Route::get('search', 'search')->name('admin.quotes.search');
+
         Route::post('mass-destroy', 'massDestroy')->name('admin.quotes.mass_delete');
     });
 });

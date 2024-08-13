@@ -265,6 +265,28 @@ return [
                 'honeydew'       => 'Honeydew',
             ]
         ],
+
+        'layouts' => [
+            'header' => [
+                'mega-search' => [
+                    'title' => 'Search',
+                    'tabs' => [
+                        'leads'  => 'Leads',
+                        'quotes' => 'Quotes',
+                        'persons' => 'Persons',
+                        'products' => 'Products',
+                    ],
+                    'explore-all-products' => 'Explore all Products',
+                    'explore-all-leads' => 'Explore all Leads',
+                    'explore-all-contacts' => 'Explore all Contacts',
+                    'explore-all-quotes' => 'Explore all Quotes',
+                    'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
+                    'explore-all-matching-leads' => 'Explore all leads matching ":query" (:count)',
+                    'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
+                    'explore-all-matching-quotes' => 'Explore all quotes matching ":query" (:count)',
+                ]
+            ]
+        ],
     ],
 
     'quotes' => [

@@ -123,7 +123,7 @@ class QuoteController extends Controller
     public function search()
     {
         $results = $this->quoteRepository->findWhere([
-            ['name', 'like', '%'.urldecode(request()->input('query')).'%'],
+            ['subject', 'like', '%'.urldecode(request()->input('query')).'%'],
         ]);
 
         return response()->json($results);
