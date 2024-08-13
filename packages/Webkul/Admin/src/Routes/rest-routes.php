@@ -7,7 +7,7 @@ use Webkul\Admin\Http\Controllers\User\AccountController;
 /**
  * Settings routes.
  */
-Route::group(['middleware' => ['admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Tinymce file upload handler.
      */
