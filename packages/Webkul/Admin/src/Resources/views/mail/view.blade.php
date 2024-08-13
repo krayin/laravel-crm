@@ -15,6 +15,7 @@
                     />
                 </div>
     
+                <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.mail.view.title') 
@@ -24,25 +25,23 @@
                 </div>
             </div>
     
-            <div class="flex items-center gap-x-2.5">
-                <!-- Mail Linking -->
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Link Mail -->
-                    <v-action-email>
-                        <button
-                            type="button"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.mail.view.link-mail')
-                        </button>
-                    </v-action-email>
-                </div>
-            </div>
+            <!-- Link Mail Button -->
+            <button
+                type="button"
+                class="primary-button"
+                @click="$refs.emailAction.openDrawer()"
+            >
+                @lang('admin::app.mail.view.link-mail')
+            </button>
         </div>
-    
+
+        <!-- Email List Vue Component -->
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
+
+        <!-- Email Action Vue Component -->
+        <v-action-email ref="emailAction"></v-action-email>
     </div>
 
     @pushOnce('scripts')
@@ -51,6 +50,7 @@
             type="text/x-template"
             id="v-email-list-template"
         >  
+            <!-- Email Item Vue Component -->
             <v-email-item
                 :email="email"
                 :key="0"
@@ -60,6 +60,7 @@
                 @on-email-action="emailAction($event)"
             ></v-email-item>
 
+            <!-- Email Item Vue Component -->
             <v-email-item
                 v-for='(email, index) in email.emails'
                 :email="email"
@@ -127,9 +128,7 @@
 
                         <!-- Time and Actions -->
                         <div class="flex gap-2 items-center justify-center">
-                            <div>
-                                @{{ email.time_ago }}
-                            </div>
+                            @{{ email.time_ago }}
 
                             <div class="flex select-none items-center">
                                 <x-admin::dropdown position="bottom-right">
@@ -138,44 +137,50 @@
                                     </x-slot>
                         
                                     <!-- Admin Dropdown -->
-                                    <x-slot:content class="!p-0">
-                                        <div class="flex flex-col gap-2 pb-2.5">
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                    <x-slot:menu class="!min-w-40">
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('reply')"
                                             >
                                                 <i class="icon-reply text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.reply')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                                                @click="emailAction('reply-all')"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
+                                                @click="emailAction('reply')"
                                             >
-                                                <i class="icon-reply-all text-2xl"></i>
+                                                <i class="icon-reply text-2xl"></i>
 
-                                                @lang('admin::app.mail.view.reply-all')
-                                            </label>
+                                                @lang('admin::app.mail.view.reply')
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('forward')"
                                             >
                                                 <i class="icon-forward text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.forward')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('delete')"
                                             >
                                                 <i class="icon-delete text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.delete')
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
                                     </x-slot>
                                 </x-admin::dropdown>
                             </div>
@@ -185,21 +190,25 @@
                     <!-- Mail Body -->
                     <div v-html="email.reply"></div>
 
-                    <a
-                        v-for="attachment in email.attachments"
-                        :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
-                        class="flex items-center text-brandColor cursor-pointer"
+                    <div
+                        class="flex gap-2 flex-wrap"
+                        v-if="email.attachments.length"
                     >
-                        <i class="icon-attachment text-2xl"></i>
+                        <a
+                            :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                            class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
+                            target="_blank"
+                            v-for="attachment in email.attachments"
+                        >
+                            <span class="icon-attached-file text-xl"></span>
 
-                        @{{ attachment.name }}
-                    </a>
-
-                    <hr class="h-1">
+                            <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
+                        </a>
+                    </div>
 
                     <!-- Reply, Reply All and Forward email -->
-                    <template v-if="!action[email.id]">
-                        <div class="flex gap-4">
+                    <template v-if="! action[email.id]">
+                        <div class="flex gap-6 font-medium py-4 border-t-2">
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
                                 @click="emailAction('reply')"
@@ -230,6 +239,7 @@
                     </template>
 
                     <template v-else>
+                        <!-- Email Form Vue Component -->
                         <v-email-form
                             :action="action"
                             :email="email"
@@ -381,9 +391,9 @@
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>
                                                             
-                                    <div class="flex gap-2 items-center justify-center">
+                                    <div class="flex gap-4 items-center justify-center">
                                         <label
-                                            class="flex cursor-pointer items-center gap-1"
+                                            class="flex cursor-pointer font-semibold items-center gap-1"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
@@ -413,23 +423,28 @@
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
                         <div class="flex gap-2">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                            <div
+                                class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                            >
                                 @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
                             </div>
                     
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span>@{{ email.person.name }}</span>
+                                <span class="text-xs font-medium">
+                                    @{{ email.person?.name }}
+                                </span>
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
                                     <div class="flex flex-col">
-                                        <span class="text-sm">@{{ email.person.job_title }}</span>
+                                        <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                        <span class="text-sm text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                        <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
 
-                                        <span class="text-sm text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                        <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
                                     </div>
                                 </div>
                             </div>
@@ -571,31 +586,74 @@
         >
             <div>
                 <template v-if="email?.lead_id">
-                    <div class="flex justify-between">
-                        <div class="flex gap-2 w-full">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                @{{email.lead.title.split(' ').map(word => word[0]).join('') }}
-                            </div>
-                    
-                            <div class="flex flex-col gap-1">
-                                <!-- Lead Title -->
-                                <span>@{{email.lead.title }}</span>
-
-                                <!-- Lead Description and Lead Value -->
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex flex-col">
-                                        <div class="text-sm">
-                                            <span class="font-semibold">@lang('admin::app.mail.view.description'):</span>
-                                            
-                                            @{{ email.lead.description }}
-                                        </div>
-
-                                        <div class="text-sm">
-                                            <span class="font-semibold">@lang('Lead Value'):</span>
-                                            
-                                            @{{ $admin.formatPrice(email.lead.lead_value) }}
-                                        </div>
+                    <div class="flex">
+                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 w-full">
+                            <!-- Header -->
+                            <div
+                                class="flex items-start justify-between"
+                                v-if="email.person"
+                            >
+                                <div class="flex items-center gap-1">
+                                    <div
+                                        class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                        :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                                    >
+                                        @{{ email.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                     </div>
+
+                                    <div class="flex flex-col gap-1">
+                                        <span class="text-xs font-medium">
+                                            @{{ email.person?.name }}
+                                        </span>
+
+                                        <span class="text-[10px]">
+                                            @{{ email.person?.organization?.name }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <span
+                                    class="icon-rotten cursor-default text-xl text-rose-600"
+                                    v-if="email.lead.rotten_days > 0"
+                                ></span>
+                            </div>
+                            
+                            <!-- Lead Title -->
+                            <p class="text-xs font-medium">
+                                @{{ email.lead.title }}
+                            </p>
+
+                            <!-- Lead Additional Information -->
+                            <div
+                                class="flex flex-wrap gap-1"
+                                v-if="email.lead"
+                            >
+                                <!-- Tags -->
+                                <template v-for="tag in email.lead.tags">
+                                    <div
+                                        class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
+                                        :style="{
+                                            backgroundColor: tag.color,
+                                            color: tagTextColor[tag.color]
+                                        }"
+                                    >
+                                        @{{ tag?.name }}
+                                    </div>
+                                </template>
+
+                                <!-- Lead Value -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ $admin.formatPrice(email.lead.lead_value) }}
+                                </div>
+                                
+                                <!-- Source Name -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ email.lead.source?.name }}
+                                </div>
+                                
+                                <!-- Lead Type Name -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ email.lead.type?.name }}
                                 </div>
                             </div>
                         </div>
@@ -923,15 +981,6 @@
                 width="350px"
                 ref="emailLinkDrawer"
             >
-                <x-slot:toggle>
-                    <button
-                        type="button"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.mail.view.link-mail')
-                    </button>
-                </x-slot>
-
                 <x-slot:header class="p-3.5">
                     <!-- Apply Filter Title -->
                     <div class="flex items-center justify-between">
@@ -955,6 +1004,8 @@
                             @open-contact-modal="openContactModal"
                             :unlinking="unlinking"
                             :email="email"
+                            :tag-text-color="tagTextColor"
+                            :background-colors="backgroundColors"
                         ></v-contact-lookup>
 
                         <!-- Link to Lead -->
@@ -969,6 +1020,8 @@
                             @open-lead-modal="openLeadModal"
                             :unlinking="unlinking"
                             :email="email"
+                            :tag-text-color="tagTextColor"
+                            :background-colors="backgroundColors"
                         ></v-lead-lookup>
                     </div>
                 </x-slot>
@@ -1189,7 +1242,7 @@
             app.component('v-contact-lookup', {
                 template: '#v-contact-lookup-template',
 
-                props: ['email', 'unlinking'],
+                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
 
                 emits: ['link-contact', 'unlink-contact', 'open-contact-modal'],
 
@@ -1353,7 +1406,7 @@
             app.component('v-lead-lookup', {
                 template: '#v-lead-lookup-template',
 
-                props: ['email', 'unlinking'],
+                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
 
                 emits: ['link-lead', 'unlink-lead', 'open-lead-modal'],
 
@@ -1473,7 +1526,7 @@
                                 cancelToken: this.cancelToken.token, 
                             })
                             .then(response => {
-                                this.searchedResults = response.data;
+                                this.searchedResults = response.data.data;
                             })
                             .catch(error => {
                                 if (! this.$axios.isCancel(error)) {
@@ -1637,6 +1690,26 @@
                             lead: false,
                             contact: false,
                         },
+
+                        backgroundColors: [
+                            'bg-yellow-200',
+                            'bg-red-200',
+                            'bg-lime-200',
+                            'bg-blue-200',
+                            'bg-orange-200',
+                            'bg-green-200',
+                            'bg-pink-200',
+                            'bg-yellow-400'
+                        ],
+
+                        tagTextColor: {
+                            '#FEE2E2': '#DC2626',
+                            '#FFEDD5': '#EA580C',
+                            '#FEF3C7': '#D97706',
+                            '#FEF9C3': '#CA8A04',
+                            '#ECFCCB': '#65A30D',
+                            '#DCFCE7': '#16A34A',
+                        },
                     };
                 },
 
@@ -1651,6 +1724,10 @@
                 },
 
                 methods: {
+                    openDrawer() {
+                        this.$refs.emailLinkDrawer.open();
+                    },
+
                     linkContact(person) {
                         this.email['person'] = person;
 

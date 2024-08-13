@@ -4,7 +4,7 @@
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
-            <div class="shimmer h-5 w-48"></div>
+            <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
 </v-inline-select-edit>
@@ -29,7 +29,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px]">@{{ selectedValue?.name }}</span>
+                <span class="pl-[2px] rounded border border-transparent">@{{ selectedValue?.name }}</span>
 
                 <template v-if="allowEdit">
                     <i
@@ -66,7 +66,9 @@
                     </x-admin::form.control-group.control>
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
+                    <div class="absolute right-2 items-center top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
+                        <i class="icon-down-arrow text-2xl" />
+
                         <button
                             type="button"
                             class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"

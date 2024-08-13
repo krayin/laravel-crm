@@ -280,7 +280,7 @@
                 <div class="flex border-b text-sm text-gray-600 dark:border-gray-800 dark:text-gray-300">
                     <div
                         class="cursor-pointer p-4 hover:bg-gray-100 dark:hover:bg-gray-950"
-                        :class="{ 'border-b-2 border-blue-600': activeTab == tab.key }"
+                        :class="{ 'border-b-2 border-brandColor': activeTab == tab.key }"
                         v-for="tab in tabs"
                         @click="activeTab = tab.key; search();"
                     >
@@ -331,7 +331,7 @@
                             <template v-if="searchedResults.products.length">
                                 <a
                                     :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                 
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-products')`.replace(':query', searchTerm).replace(':count', searchedResults.products.length) }}
@@ -341,7 +341,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.products.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-products')
                                 </a>
@@ -391,7 +391,7 @@
                             <template v-if="searchedResults.leads.length">
                                 <a
                                     :href="'{{ route('admin.leads.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-leads')`.replace(':query', searchTerm).replace(':count', searchedResults.leads.length) }}
                                 </a>
@@ -400,7 +400,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.leads.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-leads')
                                 </a>
@@ -416,7 +416,7 @@
 
                     <template v-else>
                         <div class="grid max-h-[400px] overflow-y-auto">
-                            <template v-for="person in searchedResults.persons.data">
+                            <template v-for="person in searchedResults.persons">
                                 <a
                                     :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', person.id)"
                                     class="flex cursor-pointer justify-between gap-2.5 border-b border-slate-300 p-4 last:border-b-0 hover:bg-gray-100 dark:border-gray-800 dark:hover:bg-gray-950"
@@ -439,19 +439,19 @@
                         </div>
 
                         <div class="flex border-t p-3 dark:border-gray-800">
-                            <template v-if="searchedResults.persons.data.length">
+                            <template v-if="searchedResults.persons.length">
                                 <a
                                     :href="'{{ route('admin.contacts.persons.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
-                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-contacts')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.data.length) }}
+                                    @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-contacts')`.replace(':query', searchTerm).replace(':count', searchedResults.persons.length) }}
                                 </a>
                             </template>
 
                             <template v-else>
                                 <a
                                     href="{{ route('admin.contacts.persons.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-contacts')
                                 </a>
@@ -493,7 +493,7 @@
                             <template v-if="searchedResults.quotes.length">
                                 <a
                                     :href="'{{ route('admin.quotes.index') }}?search=:query'.replace(':query', searchTerm)"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-quotes')`.replace(':query', searchTerm).replace(':count', searchedResults.quotes.length) }}
                                 </a>
@@ -502,7 +502,7 @@
                             <template v-else>
                                 <a
                                     href="{{ route('admin.quotes.index') }}"
-                                    class="cursor-pointer text-xs font-semibold text-blue-600 transition-all hover:underline"
+                                    class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
                                     @lang('admin::app.components.layouts.header.mega-search.explore-all-quotes')
                                 </a>
@@ -529,28 +529,44 @@
                             key: 'leads',
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
                             is_active: true,
-                            endpoint: "{{ route('admin.leads.search') }}"
+                            endpoint: "{{ route('admin.leads.search') }}",
+                            query_params: {
+                                search: 'title:',
+                                searchFields: 'title:like',
+                            }
                         },
 
                         quotes: {
                             key: 'quotes',
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
                             is_active: false,
-                            endpoint: "{{ route('admin.quotes.search') }}"
+                            endpoint: "{{ route('admin.quotes.search') }}",
+                            query_params: {
+                                search: 'subject:',
+                                searchFields: 'subject:like',
+                            }
                         },
 
                         products: {
                             key: 'products',
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
                             is_active: false,
-                            endpoint: "{{ route('admin.products.search') }}"
+                            endpoint: "{{ route('admin.products.search') }}",
+                            query_params: {
+                                search: 'name:',
+                                searchFields: 'name:like',
+                            },
                         },
 
                         persons: {
                             key: 'persons',
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
                             is_active: false,
-                            endpoint: "{{ route('admin.contacts.persons.search') }}"
+                            endpoint: "{{ route('admin.contacts.persons.search') }}",
+                            query_params: {
+                                search: 'name:',
+                                searchFields: 'name:like',
+                            }
                         },
                     },
 
@@ -559,13 +575,26 @@
                     searchTerm: '',
 
                     searchedResults: {
-                        [this.activeTab]: [],
+                        leads: [],
+                        quotes: [],
+                        products: [],
+                        persons: []
                     },
                 };
             },
 
             watch: {
-                searchTerm(newVal, oldVal) {
+                searchTerm(newTerm) {
+                    for (const tabKey in this.tabs) {
+                        if (this.tabs.hasOwnProperty(tabKey)) {
+                            const tab = this.tabs[tabKey];
+
+                            const searchField = tab.query_params.search.split(':')[0];
+
+                            tab.query_params.search = `${searchField}:${newTerm}`;
+                        }
+                    }
+
                     this.search();
                 },
             },
@@ -591,16 +620,15 @@
                     this.isDropdownOpen = true;
 
                     this.isLoading = true;
-                    
+
                     this.$axios.get(this.tabs[this.activeTab].endpoint, {
-                            params: {query: this.searchTerm}
+                            params: this.tabs[this.activeTab]?.query_params
                         })
                         .then((response) => {
-                            this.searchedResults[this.activeTab] = response.data;
-
-                            this.isLoading = false;
+                            this.searchedResults[this.activeTab] = response.data.data;
                         })
-                        .catch((error) => {});
+                        .catch((error) => {})
+                        .finally(() => this.isLoading = false);
                 },
 
                 handleFocusOut(e) {

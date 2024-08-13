@@ -3,10 +3,13 @@
 namespace Webkul\Admin\Http\Controllers\Quote;
 
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Resources\QuoteResource;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
@@ -116,17 +119,15 @@ class QuoteController extends Controller
     }
 
     /**
-     * Search quote results
-     *
-     * @return \Illuminate\Http\Response
+     * Search quotes.
      */
-    public function search()
+    public function search(): AnonymousResourceCollection
     {
-        $results = $this->quoteRepository->findWhere([
-            ['subject', 'like', '%'.urldecode(request()->input('query')).'%'],
-        ]);
+        $quotes = $this->quoteRepository
+            ->pushCriteria(app(RequestCriteria::class))
+            ->all();
 
-        return response()->json($results);
+        return QuoteResource::collection($quotes);
     }
 
     /**
