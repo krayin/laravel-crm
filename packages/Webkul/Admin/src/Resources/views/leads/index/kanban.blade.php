@@ -107,7 +107,7 @@
                                             v-if="element.rotten_days > 0"
                                         ></span>
                                     </div>
-                                    
+
                                     <!-- Lead Title -->
                                     <p class="text-xs font-medium">
                                         @{{ element.title }}
@@ -130,11 +130,11 @@
                                         <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                             @{{ element.formatted_lead_value }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                             @{{ element.source.name }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                             @{{ element.type.name }}
                                         </div>
@@ -156,6 +156,43 @@
 
             data: function () {
                 return {
+                    available: {
+                        columns: [
+                            {
+                                "index": "id",
+                                "label": "ID",
+                                "type": "integer",
+                                "searchable": false,
+                                "search_field": "in",
+                                "filterable": true,
+                                "filterable_type": null,
+                                "filterable_options": [],
+                                "allow_multiple_values": true,
+                                "sortable": true,
+                                "visibility": true
+                            },
+                            {
+                                "index": "title",
+                                "label": "Subject",
+                                "type": "string",
+                                "searchable": true,
+                                "search_field": "in",
+                                "filterable": true,
+                                "filterable_type": null,
+                                "filterable_options": [],
+                                "allow_multiple_values": true,
+                                "sortable": true,
+                                "visibility": true
+                            },
+                        ],
+                    },
+
+                    applied: {
+                        filters: {
+                            columns: [],
+                        }
+                    },
+
                     stages: @json($pipeline->stages->toArray()),
 
                     stageLeads: {},
@@ -181,7 +218,7 @@
                         '#ECFCCB': '#65A30D',
                         '#DCFCE7': '#16A34A',
                     },
-                }
+                };
             },
 
             computed: {
@@ -197,34 +234,92 @@
             },
 
             mounted: function () {
-                this.get({
-                    limit: 10,
-                    pileline_id: "{{ request('pipeline_id') }}"
-                });
+                this.get()
+                    .then(response => {
+                        this.isLoading = false;
+
+                        for (let [stageId, data] of Object.entries(response.data)) {
+                            this.stageLeads[stageId] = data;
+                        }
+                    });
             },
 
             methods: {
-                get(params) {
-                    var self = this;
-                    
-                    this.$axios.get("{{ route('admin.leads.get') }}", {
-                            params: params
-                        })
-                        .then(response => {
-                            self.isLoading = false;
-                            
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                if (! self.stageLeads[stageId]) {
-                                    self.stageLeads[stageId] = data;
-                                } else {
-                                    self.stageLeads[stageId].leads.data = self.stageLeads[stageId].leads.data.concat(data.leads.data);
-                                    
-                                    self.stageLeads[stageId].leads.meta = data.leads.meta;
-                                }
+                get(params = {}) {
+                    let search = '';
+                    let searchFields = '';
+
+                    this.applied.filters.columns.forEach((column) => {
+                        if (column.index === 'all') {
+                            return;
+                        }
+
+                        search += `${column.index}:${column.value.join(',')};`;
+                        searchFields += `${column.index}:${column.search_field};`;
+                    });
+
+                    return this.$axios
+                        .get("{{ route('admin.leads.get') }}", {
+                            params: {
+                                search,
+                                searchFields,
+                                pipeline_id: "{{ request('pipeline_id') }}",
+                                limit: 10,
+
+                                ...params,
                             }
                         })
                         .catch(error => {
                             console.log(error)
+                        });
+                },
+
+                filter(filters) {
+                    this.applied.filters.columns = [
+                        ...(this.applied.filters.columns.filter((column) => column.index === 'all')),
+                        ...filters.columns,
+                    ];
+
+                    this.get()
+                        .then(response => {
+                            this.isLoading = false;
+
+                            for (let [stageId, data] of Object.entries(response.data)) {
+                                this.stageLeads[stageId] = data;
+                            }
+                        });
+                },
+
+                search(filters) {
+                    this.applied.filters.columns = [
+                        ...(this.applied.filters.columns.filter((column) => column.index !== 'all')),
+                        ...filters.columns,
+                    ];
+
+                    this.get()
+                        .then(response => {
+                            this.isLoading = false;
+
+                            for (let [stageId, data] of Object.entries(response.data)) {
+                                this.stageLeads[stageId] = data;
+                            }
+                        });
+                },
+
+                append(params) {
+                    this.get(params)
+                        .then(response => {
+                            this.isLoading = false;
+
+                            for (let [stageId, data] of Object.entries(response.data)) {
+                                if (! this.stageLeads[stageId]) {
+                                    this.stageLeads[stageId] = data;
+                                } else {
+                                    this.stageLeads[stageId].leads.data = this.stageLeads[stageId].leads.data.concat(data.leads.data);
+
+                                    this.stageLeads[stageId].leads.meta = data.leads.meta;
+                                }
+                            }
                         });
                 },
 
@@ -241,7 +336,8 @@
 
                     this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
 
-                    this.$axios.put("{{ route('admin.leads.update', 'replace') }}".replace('replace', event.added.element.id), {
+                    this.$axios
+                        .put("{{ route('admin.leads.update', 'replace') }}".replace('replace', event.added.element.id), {
                             'lead_pipeline_stage_id': stage.id
                         })
                         .then(response => {
@@ -252,13 +348,9 @@
                         });
                 },
 
-                bookmark(lead) {
-                    
-                },
-
                 handleScroll(stage, event) {
                     const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight
-                    
+
                     if (! bottom) {
                         return;
                     }
@@ -267,13 +359,13 @@
                         return;
                     }
 
-                    this.get({
+                    this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
                         page: this.stageLeads[stage.id].leads.meta.current_page + 1,
                         limit: 10,
                     });
-                }
+                },
             }
         });
     </script>
