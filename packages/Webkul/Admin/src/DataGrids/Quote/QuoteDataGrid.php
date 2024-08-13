@@ -204,7 +204,7 @@ class QuoteDataGrid extends DataGrid
 
         $this->addAction([
             'index'  => 'print',
-            'icon'   => 'icon-file',
+            'icon'   => 'icon-print',
             'title'  => trans('admin::app.quotes.index.datagrid.print'),
             'method' => 'GET',
             'url'    => fn ($row) => route('admin.quotes.print', $row->id),

@@ -6,6 +6,11 @@
 require 'auth-routes.php';
 
 /**
+ * Dashboard routes.
+ */
+require 'dashboard-routes.php';
+
+/**
  * Leads routes.
  */
 require 'leads-routes.php';

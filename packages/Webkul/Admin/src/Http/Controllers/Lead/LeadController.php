@@ -211,23 +211,7 @@ class LeadController extends Controller
     {
         Event::dispatch('lead.update.before', $id);
 
-        $data = request()->all();
-
-        if (isset($data['lead_pipeline_stage_id'])) {
-            $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
-
-            $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
-        } else {
-            $pipeline = $this->pipelineRepository->getDefaultPipeline();
-
-            $stage = $pipeline->stages()->first();
-
-            $data['lead_pipeline_id'] = $pipeline->id;
-
-            $data['lead_pipeline_stage_id'] = $stage->id;
-        }
-
-        $lead = $this->leadRepository->update($data, $id);
+        $lead = $this->leadRepository->update(request()->all(), $id);
 
         Event::dispatch('lead.update.after', $lead);
 
@@ -238,11 +222,7 @@ class LeadController extends Controller
         } else {
             session()->flash('success', trans('admin::app.leads.update-success'));
 
-            if (request()->has('closed_at')) {
-                return redirect()->back();
-            } else {
-                return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
-            }
+            return redirect()->route('admin.leads.index', $lead->lead_pipeline_id);
         }
     }
 
@@ -294,11 +274,11 @@ class LeadController extends Controller
             Event::dispatch('lead.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
+                'message' => trans('admin::app.leads.destroy-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.leads.lead')]),
+                'message' => trans('admin::app.leads.destroy-failed'),
             ], 400);
         }
     }
@@ -323,7 +303,7 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')]),
+            'message' => trans('admin::app.leads.update-success'),
         ]);
     }
 
@@ -343,7 +323,7 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.title')]),
+            'message' => trans('admin::app.leads.destroy-success'),
         ]);
     }
 }
