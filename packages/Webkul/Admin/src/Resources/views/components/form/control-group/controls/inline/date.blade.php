@@ -26,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px]">@{{ inputValue }}</span>
+                <span class="pl-[2px] w-full rounded border border-transparent">@{{ inputValue }}</span>
 
                 <template v-if="allowEdit">
                     <i
@@ -41,7 +41,7 @@
                 class="relative flex flex-col w-full"
                 v-else
             >
-                <div class="relative flex flex-col w-full">
+                <div class="relative flex flex-col w-full [&>span>i]:right-14">
                     <x-admin::form.control-group.control
                         type="date"
                         ::id="name"

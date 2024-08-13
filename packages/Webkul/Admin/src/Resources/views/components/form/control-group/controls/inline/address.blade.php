@@ -21,7 +21,7 @@
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
-                <span class="font-normal text-sm pl-2">
+                <span class="font-normal text-sm pl-2 rounded border border-transparent">
                     @{{ inputValue?.address }}<br>
                     @{{ `${inputValue?.postcode} ${inputValue?.city}` }}<br>
                     @{{ `${inputValue?.state}, ${inputValue?.country}` }}<br>

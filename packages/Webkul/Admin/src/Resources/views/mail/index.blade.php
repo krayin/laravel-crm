@@ -264,10 +264,11 @@
                                     for="file-upload"
                                 ></label>
 
-                                <div class="flex gap-2 items-center">
+                                <div class="flex gap-4 items-center">
                                     <x-admin::button
                                         type="submit"
                                         ref="submitBtn"
+                                        class="font-semibold"
                                         :title="trans('admin::app.mail.index.mail.draft')"
                                         ::loading="isStoring.draft"
                                         ::disabled="isStoring.draft"

@@ -10,7 +10,7 @@
         <span class="relative inline-block w-full">
             <slot></slot>
 
-            <i class="icon-calendar pointer-events-none absolute top-1/2 -translate-y-1/2 text-2xl text-gray-400 ltr:right-2 rtl:left-2"></i>
+            <i class="icon-calender pointer-events-none absolute top-1/2 -translate-y-1/2 text-2xl text-gray-400 ltr:right-2 rtl:left-2"></i>
         </span>
     </script>
 

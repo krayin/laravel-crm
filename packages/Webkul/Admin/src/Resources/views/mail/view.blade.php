@@ -15,6 +15,7 @@
                     />
                 </div>
     
+                <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.mail.view.title') 
@@ -24,25 +25,23 @@
                 </div>
             </div>
     
-            <div class="flex items-center gap-x-2.5">
-                <!-- Mail Linking -->
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Link Mail -->
-                    <v-action-email>
-                        <button
-                            type="button"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.mail.view.link-mail')
-                        </button>
-                    </v-action-email>
-                </div>
-            </div>
+            <!-- Link Mail Button -->
+            <button
+                type="button"
+                class="primary-button"
+                @click="$refs.emailAction.openDrawer()"
+            >
+                @lang('admin::app.mail.view.link-mail')
+            </button>
         </div>
-    
+
+        <!-- Email List Vue Component -->
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
+
+        <!-- Email Action Vue Component -->
+        <v-action-email ref="emailAction"></v-action-email>
     </div>
 
     @pushOnce('scripts')
@@ -51,6 +50,7 @@
             type="text/x-template"
             id="v-email-list-template"
         >  
+            <!-- Email Item Vue Component -->
             <v-email-item
                 :email="email"
                 :key="0"
@@ -60,6 +60,7 @@
                 @on-email-action="emailAction($event)"
             ></v-email-item>
 
+            <!-- Email Item Vue Component -->
             <v-email-item
                 v-for='(email, index) in email.emails'
                 :email="email"
@@ -127,9 +128,7 @@
 
                         <!-- Time and Actions -->
                         <div class="flex gap-2 items-center justify-center">
-                            <div>
-                                @{{ email.time_ago }}
-                            </div>
+                            @{{ email.time_ago }}
 
                             <div class="flex select-none items-center">
                                 <x-admin::dropdown position="bottom-right">
@@ -138,44 +137,50 @@
                                     </x-slot>
                         
                                     <!-- Admin Dropdown -->
-                                    <x-slot:content class="!p-0">
-                                        <div class="flex flex-col gap-2 pb-2.5">
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                    <x-slot:menu class="!min-w-40">
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('reply')"
                                             >
                                                 <i class="icon-reply text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.reply')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
-                                                @click="emailAction('reply-all')"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
+                                                @click="emailAction('reply')"
                                             >
-                                                <i class="icon-reply-all text-2xl"></i>
+                                                <i class="icon-reply text-2xl"></i>
 
-                                                @lang('admin::app.mail.view.reply-all')
-                                            </label>
+                                                @lang('admin::app.mail.view.reply')
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('forward')"
                                             >
                                                 <i class="icon-forward text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.forward')
-                                            </label>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
 
-                                            <label
-                                                class="flex gap-2 cursor-pointer px-2 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                        <x-admin::dropdown.menu.item>
+                                            <div
+                                                class="flex items-center gap-2 cursor-pointer"
                                                 @click="emailAction('delete')"
                                             >
                                                 <i class="icon-delete text-2xl"></i>
 
                                                 @lang('admin::app.mail.view.delete')
-                                            </label>
-                                        </div>
+                                            </div>
+                                        </x-admin::dropdown.menu.item>
                                     </x-slot>
                                 </x-admin::dropdown>
                             </div>
@@ -185,21 +190,25 @@
                     <!-- Mail Body -->
                     <div v-html="email.reply"></div>
 
-                    <a
-                        v-for="attachment in email.attachments"
-                        :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
-                        class="flex items-center text-brandColor cursor-pointer"
+                    <div
+                        class="flex gap-2 flex-wrap"
+                        v-if="email.attachments.length"
                     >
-                        <i class="icon-attachment text-2xl"></i>
+                        <a
+                            :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
+                            class="flex cursor-pointer items-center gap-1 rounded-md"
+                            target="_blank"
+                            v-for="attachment in email.attachments"
+                        >
+                            <span class="icon-attached-file text-xl"></span>
 
-                        @{{ attachment.name }}
-                    </a>
-
-                    <hr class="h-1">
+                            <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
+                        </a>
+                    </div>
 
                     <!-- Reply, Reply All and Forward email -->
-                    <template v-if="!action[email.id]">
-                        <div class="flex gap-4">
+                    <template v-if="! action[email.id]">
+                        <div class="flex gap-6 font-medium py-4 border-t-2">
                             <label
                                 class="flex gap-2 items-center text-brandColor cursor-pointer"
                                 @click="emailAction('reply')"
@@ -230,6 +239,7 @@
                     </template>
 
                     <template v-else>
+                        <!-- Email Form Vue Component -->
                         <v-email-form
                             :action="action"
                             :email="email"
@@ -381,9 +391,9 @@
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>
                                                             
-                                    <div class="flex gap-2 items-center justify-center">
+                                    <div class="flex gap-4 items-center justify-center">
                                         <label
-                                            class="flex cursor-pointer items-center gap-1"
+                                            class="flex cursor-pointer font-semibold items-center gap-1"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
@@ -923,15 +933,6 @@
                 width="350px"
                 ref="emailLinkDrawer"
             >
-                <x-slot:toggle>
-                    <button
-                        type="button"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.mail.view.link-mail')
-                    </button>
-                </x-slot>
-
                 <x-slot:header class="p-3.5">
                     <!-- Apply Filter Title -->
                     <div class="flex items-center justify-between">
@@ -1651,6 +1652,10 @@
                 },
 
                 methods: {
+                    openDrawer() {
+                        this.$refs.emailLinkDrawer.open();
+                    },
+
                     linkContact(person) {
                         this.email['person'] = person;
 

@@ -29,7 +29,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px]">@{{ selectedValue }}</span>
+                <span class="pl-[2px] rounded border border-transparent">@{{ selectedValue }}</span>
 
                 <template v-if="allowEdit">
                     <i
