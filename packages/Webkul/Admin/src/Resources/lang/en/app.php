@@ -1580,7 +1580,7 @@ return [
                 'amount'       => 'Amount',
                 'action'       => 'Action',
                 'add-more'     => 'Add More',
-                'total'       => 'Total',
+                'total'        => 'Total',
             ],
         ],
 
@@ -1605,7 +1605,7 @@ return [
                 'download'        => 'Download',
                 'destroy-success' => 'Quote deleted successfully.',
                 'empty-title'     => 'No Quotes Found',
-                'empty-info'      => 'No Quotes Found for this Lead',   
+                'empty-info'      => 'No Quotes Found for this Lead',
             ],
 
             'products' => [
@@ -1618,7 +1618,7 @@ return [
                 'total'        => 'Total',
                 'empty-title'  => 'No Products Found',
                 'empty-info'   => 'No Products Found for this Lead',
-                'add-product'  => 'Add Product',   
+                'add-product'  => 'Add Product',
             ],
 
             'persons' => [
