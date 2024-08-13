@@ -237,7 +237,10 @@
                             </div>
 
                             <!-- Empty Placeholder -->
-                            <div class="grid justify-center justify-items-center gap-3.5 py-12">
+                            <div
+                                class="grid justify-center justify-items-center gap-3.5 py-12"
+                                v-if="! filteredActivities.length"
+                            >
                                 <img :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image">
                                 
                                 <div class="flex flex-col items-center gap-2">
