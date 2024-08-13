@@ -1590,6 +1590,20 @@ return [
                 'title' => 'About Lead',
             ],
 
+            'quotes'=> [
+                'subject'         => 'Subject',
+                'expired-at'      => 'Expired At',
+                'sub-total'       => 'Sub Total',
+                'discount'        => 'Discount',
+                'tax'             => 'Tax',
+                'adjustment'      => 'Adjustment',
+                'grand-total'     => 'Grand Total',
+                'delete'          => 'Delete',
+                'edit'            => 'Edit',
+                'download'        => 'Download',
+                'destroy-success' => 'Quote deleted successfully.',
+             ],
+
             'persons' => [
                 'title'     => 'About Persons',
                 'job-title' => ':job_title at :organization',
