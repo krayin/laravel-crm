@@ -151,7 +151,9 @@
                                     <x-admin::attributes.edit.lookup />
 
                                     @php
-                                        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
+                                        $leadId = old('lead-id') ?? optional($quote->leads->first())->id;
+
+                                        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', $leadId);
                                     @endphp
 
                                     <x-admin::form.control-group class="w-full">
@@ -611,7 +613,7 @@
                             id: null,
                             product_id: null,
                             name: '',
-                            quantity: 0,
+                            quantity: 1,
                             total: 0,
                             price: 0,
                             discount_amount: 0,
@@ -708,7 +710,7 @@
                         this.product.product_id = result.id;
                         this.product.name = result.name;
                         this.product.price = result.price;
-                        this.product.quantity = result.quantity;
+                        this.product.quantity = result.quantity ?? 1;
                         this.product.discount_amount = 0;
                         this.product.tax_amount = 0;
                     },
