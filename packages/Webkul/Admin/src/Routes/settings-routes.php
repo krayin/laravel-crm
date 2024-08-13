@@ -9,7 +9,9 @@ use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TagController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
 use Webkul\Admin\Http\Controllers\Settings\UserController;
-use Webkul\Admin\Http\Controllers\Settings\WarehouseController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\ActivityController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\TagController as WarehouseTagController;
+use Webkul\Admin\Http\Controllers\Settings\Warehouse\WarehouseController;
 use Webkul\Admin\Http\Controllers\Settings\WebFormController;
 use Webkul\Admin\Http\Controllers\Settings\WebhookController;
 use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
@@ -224,6 +226,8 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
          * Warehouses Routes.
          */
         Route::controller(WarehouseController::class)->prefix('warehouses')->group(function () {
+            Route::put('edit/{id}', 'update')->name('admin.settings.warehouses.update');
+
             Route::get('', 'index')->name('admin.settings.warehouses.index');
 
             Route::get('search', 'search')->name('admin.settings.warehouses.search');
@@ -238,9 +242,17 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
 
             Route::get('edit/{id?}', 'edit')->name('admin.settings.warehouses.edit');
 
-            Route::put('edit/{id}', 'update')->name('admin.settings.warehouses.update');
-
             Route::delete('{id}', 'destroy')->name('admin.settings.warehouses.delete');
+
+            Route::controller(WarehouseTagController::class)->prefix('{id}/tags')->group(function () {
+                Route::post('', 'attach')->name('admin.settings.warehouses.tags.attach');
+
+                Route::delete('', 'detach')->name('admin.settings.warehouses.tags.detach');
+            });
+
+            Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
+                Route::get('', 'index')->name('admin.settings.warehouse.activities.index');
+            });
         });
     });
 });

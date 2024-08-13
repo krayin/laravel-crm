@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Settings;
+namespace Webkul\Admin\Http\Controllers\Settings\Warehouse;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Event;
@@ -132,6 +132,12 @@ class WarehouseController extends Controller
         $warehouse = $this->warehouseRepository->update($request->all(), $id);
 
         Event::dispatch('settings.warehouse.update.after', $warehouse);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.settings.warehouses.index.update-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.settings.warehouses.index.update-success'));
 

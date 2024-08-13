@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Contact\Persons;
+namespace Webkul\Admin\Http\Controllers\Settings\Warehouse;
 
 use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -28,8 +28,8 @@ class ActivityController extends Controller
     public function index($id)
     {
         $activities = $this->activityRepository
-            ->leftJoin('person_activities', 'activities.id', '=', 'person_activities.activity_id')
-            ->where('person_activities.person_id', $id)
+            ->leftJoin('warehouse_activities', 'activities.id', '=', 'warehouse_activities.activity_id')
+            ->where('warehouse_activities.warehouse_id', $id)
             ->get();
 
         return ActivityResource::collection($this->concatEmail($activities));

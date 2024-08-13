@@ -4,10 +4,10 @@ namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\Activity\Repositories\ActivityRepository;
-use Webkul\Email\Repositories\EmailRepository;
-use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Resources\ActivityResource;
+use Webkul\Email\Repositories\AttachmentRepository;
+use Webkul\Email\Repositories\EmailRepository;
 
 class ActivityController extends Controller
 {
@@ -70,7 +70,7 @@ class ActivityController extends Controller
                     'cc'      => json_decode($email->cc),
                     'bcc'     => json_decode($email->bcc),
                 ],
-                'files'         => $this->attachmentRepository->findWhere(['email_id' => $email->id])->map(function($attachment) {
+                'files'         => $this->attachmentRepository->findWhere(['email_id' => $email->id])->map(function ($attachment) {
                     return (object) [
                         'id'         => $attachment->id,
                         'name'       => $attachment->name,
