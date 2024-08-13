@@ -10,21 +10,23 @@
             ref="lookup"
         >
             <!-- Input Box (Button) -->
-            <x-admin::form.control-group.control
-                type="text"
-                ::name="name"
-                class="w-full cursor-pointer pr-10 text-gray-800"
-                ::placeholder="placeholder"
-                v-model="selectedItem.name"
+            <div 
+                class="relative h-10 rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400"
                 @click="toggle"
-                readonly
-            />
+            >
+                <div class="w-full cursor-pointer pr-6">
+                    @{{selectedItem.name}}
+                </div>
+            </div>
 
             <!-- Hidden Input Box -->
-            <input 
+            <x-admin::form.control-group.control
                 type="hidden"
-                :name="name"
-                :value="selectedItem?.id"
+                ::name="name"
+                ::rules="rules"
+                class="w-full cursor-pointer pr-10 text-gray-800"
+                ::label="label"
+                v-model="selectedItem.id"
             />
 
             <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
@@ -127,6 +129,16 @@
                     type: Object,
                     default: () => ({}),
                 },
+
+                rules: {
+                    type: String,
+                    default: '',
+                },
+
+                label: {
+                    type: String,
+                    default: '',
+                }
             },
 
             emits: ['on-selected'],

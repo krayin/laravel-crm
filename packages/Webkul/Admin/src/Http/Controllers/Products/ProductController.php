@@ -116,10 +116,8 @@ class ProductController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function storeInventories(int $id, ?int $warehouseId = null)
+    public function storeInventories(int $id, ?int $warehouseId = null): JsonResponse
     {
         $this->validate(request(), [
             'inventories'                         => 'array',
@@ -137,7 +135,7 @@ class ProductController extends Controller
 
         Event::dispatch('product.update.after', $product);
 
-        return response()->json([
+        return new JsonResponse([
             'message' => trans('admin::app.products.index.update-success'),
         ], 200);
     }

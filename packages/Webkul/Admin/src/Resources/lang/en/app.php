@@ -269,21 +269,23 @@ return [
         'layouts' => [
             'header' => [
                 'mega-search' => [
-                    'title' => 'Search',
+                    'title'   => 'Search',
+
                     'tabs' => [
-                        'leads'  => 'Leads',
-                        'quotes' => 'Quotes',
-                        'persons' => 'Persons',
+                        'leads'    => 'Leads',
+                        'quotes'   => 'Quotes',
+                        'persons'  => 'Persons',
                         'products' => 'Products',
                     ],
-                    'explore-all-products' => 'Explore all Products',
-                    'explore-all-leads' => 'Explore all Leads',
-                    'explore-all-contacts' => 'Explore all Contacts',
-                    'explore-all-quotes' => 'Explore all Quotes',
+
+                    'explore-all-products'          => 'Explore all Products',
+                    'explore-all-leads'             => 'Explore all Leads',
+                    'explore-all-contacts'          => 'Explore all Contacts',
+                    'explore-all-quotes'            => 'Explore all Quotes',
                     'explore-all-matching-products' => 'Explore all products matching ":query" (:count)',
-                    'explore-all-matching-leads' => 'Explore all leads matching ":query" (:count)',
+                    'explore-all-matching-leads'    => 'Explore all leads matching ":query" (:count)',
                     'explore-all-matching-contacts' => 'Explore all contacts matching ":query" (:count)',
-                    'explore-all-matching-quotes' => 'Explore all quotes matching ":query" (:count)',
+                    'explore-all-matching-quotes'   => 'Explore all quotes matching ":query" (:count)',
                 ]
             ]
         ],
@@ -563,6 +565,30 @@ return [
             'general'   => 'General',
             'price'     => 'Price',
         ],
+
+        'view' => [
+            'sku'         => 'SKU',
+            'all'         => 'All',
+            'notes'       => 'Notes',
+            'inventories' => 'Inventory',
+
+            'attributes' => [
+                'about-product' => 'About Product',
+            ],
+
+            'inventory' => [
+                'source'     => 'Source',
+                'in-stock'   => 'In Stock',
+                'allocated'  => 'Allocated',
+                'on-hand'    => 'On Hand',
+                'actions'    => 'Actions',
+                'assign'     => 'Assign',
+                'add-source' => 'Add Source',
+                'location'   => 'Location',
+                'add-more'   => 'Add More',
+                'save'       => 'Save',
+            ],
+        ],
     ],
 
     'settings' => [
@@ -833,8 +859,8 @@ return [
                 'create-lead'              => 'Create Lead',
                 'customize-webform'        => 'Customize Webform',
                 'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
-                'backgroud-color'          => 'Backgroud Color',
-                'form-backgroud-color'     => 'Form Backgroud Color',
+                'backgroud-color'          => 'Background Color',
+                'form-backgroud-color'     => 'Form Background Color',
                 'form-title-color'         => 'Form Title Color',
                 'form-submit-btn-color'    => 'Form Submit Button Color',
                 'attribute-label-color'    => 'Attribute Label Color',
@@ -843,14 +869,14 @@ return [
                 'add-attribute-btn'        => 'Add Attribute Button',
                 'description'              => 'Description',
                 'submit-button-label'      => 'Submit Button Label',
-                'form-background-color'    => 'Form Backgroud Color',
+                'form-background-color'    => 'Form Background Color',
                 'form-submit-button-color' => 'Form Submit Button Color',
                 'display-custom-message'   => 'Display custom message',
             ],
 
             'edit' => [
                 'title'                    => 'Edit Webform',
-                'embed'                    => 'Embded',
+                'embed'                    => 'Embed',
                 'preview'                  => 'Preview',
                 'save-btn'                 => 'Save Webform',
                 'submit-success-action'    => 'Submit Success Action',
@@ -858,10 +884,10 @@ return [
                 'create-lead'              => 'Create Lead',
                 'customize-webform'        => 'Customize Webform',
                 'customize-webform-info'   => 'Customize your web form with element colors of your choosing.',
-                'backgroud-color'          => 'Backgroud Color',
-                'form-backgroud-color'     => 'Form Backgroud Color',
+                'backgroud-color'          => 'Background Color',
+                'form-backgroud-color'     => 'Form Background Color',
                 'form-title-color'         => 'Form Title Color',
-                'form-background-color'    => 'Form Backgroud Color',
+                'form-background-color'    => 'Form Background Color',
                 'form-submit-btn-color'    => 'Form Submit Button Color',
                 'attribute-label-color'    => 'Attribute Label Color',
                 'attributes'               => 'Attributes',
@@ -1545,9 +1571,11 @@ return [
             'search'   => 'Search',
             'back'     => 'Back',
             'save-btn' => 'Save Configuration',
+
             'general'  => [
                 'title'   => 'General',
                 'info'    => 'General Configuration',
+
                 'general' => [
                     'title'           => 'General',
                     'info'            => 'Update your general settings here.',
