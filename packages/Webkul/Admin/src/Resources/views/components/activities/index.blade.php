@@ -43,7 +43,7 @@
                 </div>
 
                 <!-- Show Default Activities if selectedType not in extraTypes -->
-                <template v-if="! extraTypes.find(type => type.name == this.selectedType)">
+                <template v-if="! extraTypes.find(type => type.name == selectedType)">
                     <div class="animate-[on-fade_0.5s_ease-in-out] p-4">
                         <!-- Activity List -->
                         <div class="flex flex-col gap-4">
@@ -55,7 +55,7 @@
                                 <!-- Activity Icon -->
                                 <div
                                     class="mt-2 flex h-9 min-h-9 w-9 min-w-9 items-center justify-center rounded-full text-xl"
-                                    :class="typeClasses[activity.type] ?? typeClasses['activity']"
+                                    :class="typeClasses[activity.type] ?? typeClasses['default']"
                                 >
                                 </div>
                                 
@@ -235,6 +235,24 @@
                                     </x-admin::dropdown>
                                 </div>
                             </div>
+
+                            <!-- Empty Placeholder -->
+                            <div
+                                class="grid justify-center justify-items-center gap-3.5 py-12"
+                                v-if="! filteredActivities.length"
+                            >
+                                <img :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image">
+                                
+                                <div class="flex flex-col items-center gap-2">
+                                    <p class="text-xl font-semibold">
+                                        @{{ typeIllustrations[selectedType]?.title ?? typeIllustrations['all'].title }}
+                                    </p>
+
+                                    <p class="text-gray-400">
+                                        @{{ typeIllustrations[selectedType]?.description ?? typeIllustrations['all'].description }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </template>
@@ -319,6 +337,57 @@
                         meeting: 'icon-activity bg-blue-200 text-blue-800',
                         lunch: 'icon-activity bg-blue-200 text-blue-800',
                         file: 'icon-file bg-green-200 text-green-900',
+                        default: 'icon-activity bg-blue-200 text-blue-800',
+                    },
+
+                    typeIllustrations: {
+                        all: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.description') }}",
+                        },
+                        
+                        planned: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/plans.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.description') }}",
+                        },
+                        
+                        note: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/notes.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.description') }}",
+                        },
+                        
+                        call: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/calls.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.description') }}",
+                        },
+                        
+                        meeting: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/meetings.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.description') }}",
+                        },
+                        
+                        lunch: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.description') }}",
+                        },
+                        
+                        file: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/files.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.files.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.files.description') }}",
+                        },
+                        
+                        email: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/emails.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.description') }}",
+                        },
                     },
                 }
             },

@@ -129,6 +129,48 @@ return [
                 'edit'         => 'Edit',
                 'view'         => 'View',
                 'unlink'       => 'Unlink',
+
+                'empty-placeholders' => [
+                    'all' => [
+                        'title'       => 'No Activities Found',
+                        'description' => 'No activities found for this. You can add activities by clicking on the button on the left panel.',
+                    ],
+
+                    'planned' => [
+                        'title'       => 'No Planned Activities Found',
+                        'description' => 'No planned activities found for this. You can add planned activities by clicking on the button on the left panel.',
+                    ],
+
+                    'notes' => [
+                        'title'       => 'No Notes Found',
+                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                    ],
+
+                    'calls' => [
+                        'title'       => 'No Calls Found',
+                        'description' => 'No notes found for this. You can add notes by clicking on the button on the left panel.',
+                    ],
+
+                    'meetings' => [
+                        'title'       => 'No Meetings Found',
+                        'description' => 'No meetings found for this. You can add meetings by clicking on the button on the left panel.',
+                    ],
+
+                    'lunches' => [
+                        'title'       => 'No Lunches Found',
+                        'description' => 'No lunches found for this. You can add lunches by clicking on the button on the left panel.',
+                    ],
+
+                    'files' => [
+                        'title'       => 'No Files Found',
+                        'description' => 'No files found for this. You can add files by clicking on the button on the left panel.',
+                    ],
+
+                    'emails' => [
+                        'title'       => 'No Emails Found',
+                        'description' => 'No emails found for this. You can add email by clicking on the button on the left panel.',
+                    ],
+                ],
             ],
         ],
 
