@@ -52,64 +52,7 @@
             <x-admin::datagrid
                 ref="datagrid"
                 src="{{ route('admin.mail.index', request('route')) }}"
-            >
-                <template #body="{
-                    isLoading,
-                    available,
-                    applied,
-                    selectAll,
-                    sort,
-                    performAction
-                }">
-                    <template v-if="isLoading">
-                        <x-admin::shimmer.datagrid.table.body />
-                    </template>
-        
-                    <template v-else>
-                        <div
-                            v-for="record in available.records"
-                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
-                            :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
-                        >
-                            <!-- Group ID -->
-                            <p>@{{ record.id }}</p>
-
-                            <!-- Attachments -->
-                            <p :class="record.attachments ? 'icon-attachmetent' : ''">
-                                @{{ record.attachments ?? 'N/A'}}
-                            </p>
-
-                            <!-- Name -->
-                            <p>@{{ record.name }}</p>
-        
-                            <!-- Subject -->
-                            <p v-html="record.subject"></p>
-
-                            <!-- Created At -->
-                            <p v-html="record.created_at"></p>
-        
-                            <!-- Actions -->
-                            <div class="flex justify-end">
-                                <a @click="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'edit')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                    >
-                                    </span>
-                                </a>
-
-                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                    >
-                                    </span>
-                                </a>
-                            </div>
-                        </div>
-                    </template>
-                </template>
-            </x-admin::datagrid>
+            />
 
             {!! view_render_event('krayin.admin.settings.roles.index.datagrid.after') !!}
 
