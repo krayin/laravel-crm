@@ -15,6 +15,7 @@
                     />
                 </div>
     
+                <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">
                         @lang('admin::app.mail.view.title') 
@@ -24,25 +25,23 @@
                 </div>
             </div>
     
-            <div class="flex items-center gap-x-2.5">
-                <!-- Mail Linking -->
-                <div class="flex items-center gap-x-2.5">
-                    <!-- Link Mail -->
-                    <v-action-email>
-                        <button
-                            type="button"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.mail.view.link-mail')
-                        </button>
-                    </v-action-email>
-                </div>
-            </div>
+            <!-- Link Mail Button -->
+            <button
+                type="button"
+                class="primary-button"
+                @click="$refs.emailAction.openDrawer()"
+            >
+                @lang('admin::app.mail.view.link-mail')
+            </button>
         </div>
-    
+
+        <!-- Email List Vue Component -->
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
+
+        <!-- Email Action Vue Component -->
+        <v-action-email ref="emailAction"></v-action-email>
     </div>
 
     @pushOnce('scripts')
@@ -51,6 +50,7 @@
             type="text/x-template"
             id="v-email-list-template"
         >  
+            <!-- Email Item Vue Component -->
             <v-email-item
                 :email="email"
                 :key="0"
@@ -60,6 +60,7 @@
                 @on-email-action="emailAction($event)"
             ></v-email-item>
 
+            <!-- Email Item Vue Component -->
             <v-email-item
                 v-for='(email, index) in email.emails'
                 :email="email"
@@ -127,9 +128,7 @@
 
                         <!-- Time and Actions -->
                         <div class="flex gap-2 items-center justify-center">
-                            <div>
-                                @{{ email.time_ago }}
-                            </div>
+                            @{{ email.time_ago }}
 
                             <div class="flex select-none items-center">
                                 <x-admin::dropdown position="bottom-right">
@@ -231,6 +230,7 @@
                     </template>
 
                     <template v-else>
+                        <!-- Email Form Vue Component -->
                         <v-email-form
                             :action="action"
                             :email="email"
@@ -382,7 +382,7 @@
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>
                                                             
-                                    <div class="flex gap-2 items-center justify-center">
+                                    <div class="flex gap-4 items-center justify-center">
                                         <label
                                             class="flex cursor-pointer items-center gap-1"
                                             @click="$emit('onDiscard')"
@@ -924,15 +924,6 @@
                 width="350px"
                 ref="emailLinkDrawer"
             >
-                <x-slot:toggle>
-                    <button
-                        type="button"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.mail.view.link-mail')
-                    </button>
-                </x-slot>
-
                 <x-slot:header class="p-3.5">
                     <!-- Apply Filter Title -->
                     <div class="flex items-center justify-between">
@@ -1652,6 +1643,10 @@
                 },
 
                 methods: {
+                    openDrawer() {
+                        this.$refs.emailLinkDrawer.open();
+                    },
+
                     linkContact(person) {
                         this.email['person'] = person;
 
