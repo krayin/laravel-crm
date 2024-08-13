@@ -23,6 +23,15 @@ class Lead extends Model implements LeadContract
     ];
 
     /**
+     * The attributes that are appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'rotten_days',
+    ];
+
+    /**
      * The attributes that are mass assignable.
      *
      * @var array

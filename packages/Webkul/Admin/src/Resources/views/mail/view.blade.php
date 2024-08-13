@@ -196,7 +196,7 @@
                     >
                         <a
                             :href="'{{ route('admin.mail.attachment_download') }}/' + attachment.id"
-                            class="flex cursor-pointer items-center gap-1 rounded-md"
+                            class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
                             target="_blank"
                             v-for="attachment in email.attachments"
                         >
@@ -581,31 +581,74 @@
         >
             <div>
                 <template v-if="email?.lead_id">
-                    <div class="flex justify-between">
-                        <div class="flex gap-2 w-full">
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                @{{email.lead.title.split(' ').map(word => word[0]).join('') }}
-                            </div>
-                    
-                            <div class="flex flex-col gap-1">
-                                <!-- Lead Title -->
-                                <span>@{{email.lead.title }}</span>
-
-                                <!-- Lead Description and Lead Value -->
-                                <div class="flex flex-col gap-2">
-                                    <div class="flex flex-col">
-                                        <div class="text-sm">
-                                            <span class="font-semibold">@lang('admin::app.mail.view.description'):</span>
-                                            
-                                            @{{ email.lead.description }}
-                                        </div>
-
-                                        <div class="text-sm">
-                                            <span class="font-semibold">@lang('Lead Value'):</span>
-                                            
-                                            @{{ $admin.formatPrice(email.lead.lead_value) }}
-                                        </div>
+                    <div class="flex">
+                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 w-full">
+                            <!-- Header -->
+                            <div
+                                class="flex items-start justify-between"
+                                v-if="email.person"
+                            >
+                                <div class="flex items-center gap-1">
+                                    <div
+                                        class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                        :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                                    >
+                                        @{{ email.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                     </div>
+
+                                    <div class="flex flex-col gap-1">
+                                        <span class="text-xs font-medium">
+                                            @{{ email.person?.name }}
+                                        </span>
+
+                                        <span class="text-[10px]">
+                                            @{{ email.person?.organization?.name }}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <span
+                                    class="icon-rotten cursor-default text-xl text-rose-600"
+                                    v-if="email.lead.rotten_days > 0"
+                                ></span>
+                            </div>
+                            
+                            <!-- Lead Title -->
+                            <p class="text-xs font-medium">
+                                @{{ email.lead.title }}
+                            </p>
+
+                            <!-- Lead Additional Information -->
+                            <div
+                                class="flex flex-wrap gap-1"
+                                v-if="email.lead"
+                            >
+                                <!-- Tags -->
+                                <template v-for="tag in email.lead.tags">
+                                    <div
+                                        class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
+                                        :style="{
+                                            backgroundColor: tag.color,
+                                            color: tagTextColor[tag.color]
+                                        }"
+                                    >
+                                        @{{ tag?.name }}
+                                    </div>
+                                </template>
+
+                                <!-- Lead Value -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ $admin.formatPrice(email.lead.lead_value) }}
+                                </div>
+                                
+                                <!-- Source Name -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ email.lead.source?.name }}
+                                </div>
+                                
+                                <!-- Lead Type Name -->
+                                <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                    @{{ email.lead.type?.name }}
                                 </div>
                             </div>
                         </div>
@@ -1371,6 +1414,26 @@
                         isSearching: false,
 
                         cancelToken: null,
+
+                        backgroundColors: [
+                            'bg-yellow-200',
+                            'bg-red-200',
+                            'bg-lime-200',
+                            'bg-blue-200',
+                            'bg-orange-200',
+                            'bg-green-200',
+                            'bg-pink-200',
+                            'bg-yellow-400'
+                        ],
+
+                        tagTextColor: {
+                            '#FEE2E2': '#DC2626',
+                            '#FFEDD5': '#EA580C',
+                            '#FEF3C7': '#D97706',
+                            '#FEF9C3': '#CA8A04',
+                            '#ECFCCB': '#65A30D',
+                            '#DCFCE7': '#16A34A',
+                        },
                     };
                 },
 
@@ -1474,7 +1537,7 @@
                                 cancelToken: this.cancelToken.token, 
                             })
                             .then(response => {
-                                this.searchedResults = response.data;
+                                this.searchedResults = response.data.data;
                             })
                             .catch(error => {
                                 if (! this.$axios.isCancel(error)) {

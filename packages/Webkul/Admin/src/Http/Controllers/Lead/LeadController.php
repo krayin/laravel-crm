@@ -273,7 +273,7 @@ class LeadController extends Controller
             ]);
         }
 
-        return response()->json($results);
+        return LeadResource::collection($results);
     }
 
     /*
