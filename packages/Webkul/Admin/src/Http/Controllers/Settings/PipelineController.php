@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\PipelineDataGrid;
@@ -41,10 +42,8 @@ class PipelineController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(PipelineForm $request)
+    public function store(PipelineForm $request): RedirectResponse
     {
         $request->validated();
 
@@ -65,11 +64,8 @@ class PipelineController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $pipeline = $this->pipelineRepository->findOrFail($id);
 
@@ -78,11 +74,8 @@ class PipelineController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(PipelineForm $request, $id)
+    public function update(PipelineForm $request, int $id): RedirectResponse
     {
         $request->validated();
 
@@ -103,11 +96,8 @@ class PipelineController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): JsonResponse
     {
         $pipeline = $this->pipelineRepository->findOrFail($id);
 
