@@ -14,7 +14,6 @@ use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
-use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
@@ -183,20 +182,11 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
-                if (! in_array($lead->user_id, $userIds)) {
-                    return redirect()->route('admin.leads.index');
-                }
-            } else {
-                if ($lead->user_id != $currentUser->id) {
-                    return redirect()->route('admin.leads.index');
-                }
-            }
+        if (
+            $userIds = bouncer()->getAuthorizedUserIds()
+            && ! in_array($lead->user_id, $userIds)
+        ) {
+            return redirect()->route('admin.leads.index');
         }
 
         return view('admin::leads.view', compact('lead'));
@@ -232,26 +222,14 @@ class LeadController extends Controller
      */
     public function search(): AnonymousResourceCollection
     {
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission == 'global') {
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhereIn('user_id', $userIds);
+        } else {
             $results = $this->leadRepository
                 ->pushCriteria(app(RequestCriteria::class))
                 ->all();
-        } elseif ($currentUser->view_permission == 'individual') {
-            $results = $this->leadRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->findWhere([
-                    ['user_id', '=', $currentUser->id],
-                ]);
-        } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
-            $results = $this->leadRepository
-                ->pushCriteria(app(RequestCriteria::class))
-                ->findWhere([
-                    ['user_id', 'IN', $userIds],
-                ]);
         }
 
         return LeadResource::collection($results);

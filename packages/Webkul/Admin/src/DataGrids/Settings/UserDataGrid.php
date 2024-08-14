@@ -6,17 +6,9 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\UserRepository;
 
 class UserDataGrid extends DataGrid
 {
-    /**
-     * Constructor for the class.
-     *
-     * @return void
-     */
-    public function __construct(protected UserRepository $userRepository) {}
-
     /**
      * Prepare query builder.
      *
@@ -35,15 +27,9 @@ class UserDataGrid extends DataGrid
                 'users.created_at'
             )
             ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
-
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('users.id', $this->userRepository->getCurrentUserGroupsUserIds());
-            } else {
-                $queryBuilder->where('users.id', $currentUser->id);
-            }
+        
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('users.user_id', $userIds);
         }
 
         $this->addFilter('id', 'users.id');

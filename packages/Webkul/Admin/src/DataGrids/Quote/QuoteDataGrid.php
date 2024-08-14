@@ -5,12 +5,9 @@ namespace Webkul\Admin\DataGrids\Quote;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\UserRepository;
 
 class QuoteDataGrid extends DataGrid
 {
-    public function __construct(protected UserRepository $userRepository) {}
-
     /**
      * Prepare query builder.
      */
@@ -36,14 +33,8 @@ class QuoteDataGrid extends DataGrid
             ->leftJoin('users', 'quotes.user_id', '=', 'users.id')
             ->leftJoin('persons', 'quotes.person_id', '=', 'persons.id');
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('quotes.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
-            } else {
-                $queryBuilder->where('quotes.user_id', $currentUser->id);
-            }
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('quotes.user_id', $userIds);
         }
 
         $this->addFilter('id', 'quotes.id');

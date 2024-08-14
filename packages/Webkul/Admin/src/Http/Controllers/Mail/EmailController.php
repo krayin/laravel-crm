@@ -15,7 +15,6 @@ use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\User\Repositories\UserRepository;
 
 class EmailController extends Controller
 {
@@ -67,21 +66,12 @@ class EmailController extends Controller
             ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.person', 'lead.tags', 'lead.source', 'lead.type', 'person'])
             ->findOrFail(request('id'));
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission == 'individual') {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-                ['user_id', '=', $currentUser->id],
-            ]);
-        } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $results = $this->leadRepository->findWhere([
                 ['id', '=', $email->lead_id],
                 ['user_id', 'IN', $userIds],
             ]);
-        } elseif ($currentUser->view_permission == 'global') {
+        } else {
             $results = $this->leadRepository->findWhere([
                 ['id', '=', $email->lead_id],
             ]);

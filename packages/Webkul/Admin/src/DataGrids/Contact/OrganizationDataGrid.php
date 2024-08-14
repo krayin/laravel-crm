@@ -29,6 +29,10 @@ class OrganizationDataGrid extends DataGrid
                 'organizations.created_at'
             );
 
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('organizations.user_id', $userIds);
+        }
+
         $this->addFilter('id', 'organizations.id');
 
         $this->addFilter('organization', 'organizations.name');

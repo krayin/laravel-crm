@@ -117,9 +117,15 @@ class PersonController extends Controller
      */
     public function search(): JsonResource
     {
-        $persons = $this->personRepository
-            ->pushCriteria(app(RequestCriteria::class))
-            ->all();
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $persons = $this->personRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhereIn('user_id', $userIds);
+        } else {
+            $persons = $this->personRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->all();
+        }
 
         return PersonResource::collection($persons);
     }
