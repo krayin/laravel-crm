@@ -71,7 +71,7 @@ class AdminServiceProvider extends ServiceProvider
         $loader->alias('Bouncer', \Webkul\Admin\Facades\Bouncer::class);
 
         $this->app->singleton('bouncer', function () {
-            return new \Webkul\Admin\Bouncer();
+            return new \Webkul\Admin\Bouncer;
         });
     }
 
