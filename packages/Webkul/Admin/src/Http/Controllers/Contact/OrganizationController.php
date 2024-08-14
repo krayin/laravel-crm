@@ -103,7 +103,7 @@ class OrganizationController extends Controller
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.contacts.organizations.index.delete-failed',),
+                'message' => trans('admin::app.contacts.organizations.index.delete-failed'),
             ], 400);
         }
     }
