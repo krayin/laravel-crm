@@ -9,7 +9,9 @@ if (! function_exists('bouncer')) {
     }
 }
 
-function admin_vite(): AdminVite
-{
-    return app(AdminVite::class);
+if (! function_exists('admin_vite')) {
+    function admin_vite(): AdminVite
+    {
+        return app(AdminVite::class);
+    }
 }
