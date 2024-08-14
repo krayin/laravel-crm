@@ -238,15 +238,18 @@
                                         </div>
 
                                         <div class="flex items-center gap-1.5">
-                                            <a
-                                                v-for="action in record.actions"
-                                                :href="action.url"
+                                            <p
+                                                class="place-self-end"
+                                                v-if="available.actions.length"
                                             >
                                                 <span
-                                                    class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 ltr:ml-1 rtl:mr-1"
+                                                    class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
                                                     :class="action.icon"
+                                                    v-text="! action.icon ? action.title : ''"
+                                                    v-for="action in record.actions"
+                                                    @click="performAction(action)"
                                                 ></span>
-                                            </a>
+                                            </p>
                                         </div>
                                     </div> 
                                 </div>

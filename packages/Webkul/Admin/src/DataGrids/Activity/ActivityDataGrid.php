@@ -184,9 +184,10 @@ class ActivityDataGrid extends DataGrid
     {
 
         $this->addMassAction([
+            'icon'   => 'icon-delete',
             'title'  => trans('admin::app.activities.index.datagrid.mass-delete'),
-            'url'    => route('admin.activities.mass_delete'),
             'method' => 'POST',
+            'url'    => route('admin.activities.mass_delete'),
         ]);
 
         $this->addMassAction([
@@ -195,11 +196,10 @@ class ActivityDataGrid extends DataGrid
             'method'  => 'POST',
             'options' => [
                 [
-                    'label' => trans('admin::app.catalog.products.index.datagrid.active'),
+                    'label' => trans('admin::app.activities.index.datagrid.done'),
                     'value' => 1,
-                ],
-                [
-                    'label' => trans('admin::app.catalog.products.index.datagrid.disable'),
+                ], [
+                    'label' => trans('admin::app.activities.index.datagrid.not-done'),
                     'value' => 0,
                 ],
             ],

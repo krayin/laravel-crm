@@ -13,6 +13,7 @@ use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 
@@ -140,14 +141,16 @@ class ActivityController extends Controller
     /**
      * Mass Update the specified resources.
      */
-    public function massUpdate(): JsonResponse
+    public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        foreach (request()->input('rows') as $activityId) {
-            Event::dispatch('activity.update.before', $activityId);
+        $activities = $this->activityRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+
+        foreach ($activities as $activity) {
+            Event::dispatch('activity.update.before', $activity->id);
 
             $activity = $this->activityRepository->update([
-                'is_done' => request()->input('value'),
-            ], $activityId);
+                'is_done' => $massUpdateRequest->input('value'),
+            ], $activity->id);
 
             Event::dispatch('activity.update.after', $activity);
         }
@@ -177,7 +180,7 @@ class ActivityController extends Controller
         try {
             Event::dispatch('activity.delete.before', $id);
 
-            $this->activityRepository->delete($id);
+            $activity?->delete($id);
 
             Event::dispatch('activity.delete.after', $id);
 
@@ -194,18 +197,26 @@ class ActivityController extends Controller
     /**
      * Mass Delete the specified resources.
      */
-    public function massDestroy(): JsonResponse
+    public function massDestroy(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        foreach (request('rows') as $activityId) {
-            Event::dispatch('activity.delete.before', $activityId);
+        $activities = $this->activityRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
-            $this->activityRepository->delete($activityId);
-
-            Event::dispatch('activity.delete.after', $activityId);
+        try {
+            foreach ($activities as $activity) {
+                Event::dispatch('activity.delete.before', $activity->id);
+    
+                $this->activityRepository->delete($activity->id);
+    
+                Event::dispatch('activity.delete.after', $activity->id);
+            }
+    
+            return response()->json([
+                'message' => trans('admin::app.response.destroy-success'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.response.destroy-failed'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.response.destroy-success'),
-        ]);
     }
 }
