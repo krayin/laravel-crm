@@ -4,9 +4,21 @@
         <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
 
         <a href="{{ route('admin.dashboard.index') }}">
+            {{-- <img
+                src="{{ admin_vite()->asset('images/logo.svg') }}" 
+                alt="{{ config('app.name') }}"
+            /> --}}
+
+            {{-- <img
+                class="h-10"
+                src="{{ Storage::url($logo) }}"
+                alt="{{ config('app.name') }}"
+            /> --}}
+
             <img
                 class="h-10" 
-                src="{{ admin_vite()->asset('images/logo.svg') }}" 
+                src="{{ request()->cookie('dark_mode') ? admin_vite()->asset('images/dark-logo.svg') : admin_vite()->asset('images/logo.svg') }}"
+                id="logo-image"
                 alt="{{ config('app.name') }}"
             />
         </a>
@@ -264,7 +276,7 @@
 
             <input 
                 type="text"
-                class="block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
+                class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 :class="{'border-gray-400': isDropdownOpen}"
                 placeholder="@lang('Search')" 
                 v-model.lazy="searchTerm"
@@ -659,9 +671,9 @@
                 return {
                     isDarkMode: {{ request()->cookie('dark_mode') ?? 0 }},
 
-                    logo: "{{ asset('images/logo.svg') }}",
+                    logo: "{{ admin_vite()->asset('images/logo.svg') }}",
 
-                    dark_logo: "{{ asset('images/dark-logo.svg') }}",
+                    dark_logo: "{{ admin_vite()->asset('images/dark-logo.svg') }}",
                 };
             },
 

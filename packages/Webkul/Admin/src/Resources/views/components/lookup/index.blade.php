@@ -11,10 +11,10 @@
         >
             <!-- Input Box (Button) -->
             <div 
-                class="relative h-10 rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400"
+                class="relative h-10 rounded border p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 @click="toggle"
             >
-                <div class="w-full cursor-pointer pr-6">
+                <div class="w-full cursor-pointer">
                     @{{selectedItem.name}}
                 </div>
             </div>
@@ -24,7 +24,6 @@
                 type="hidden"
                 ::name="name"
                 ::rules="rules"
-                class="w-full cursor-pointer pr-10 text-gray-800"
                 ::label="label"
                 v-model="selectedItem.id"
             />
@@ -68,7 +67,7 @@
             <!-- Popup Box -->
             <div 
                 v-if="showPopup" 
-                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
             >
                 <!-- Search Bar -->
                 <input
@@ -86,7 +85,7 @@
                     <li 
                         v-for="item in filteredResults" 
                         :key="item.id"
-                        class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100"
+                        class="cursor-pointer px-4 py-2 text-gray-300 transition-colors hover:bg-gray-900"
                         @click="selectItem(item)"
                     >
                         @{{ item.name }}
