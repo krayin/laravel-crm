@@ -612,6 +612,7 @@ return [
             'sku'         => 'SKU',
             'all'         => 'All',
             'notes'       => 'Notes',
+            'files'       => 'Files',
             'inventories' => 'Inventory',
 
             'attributes' => [
