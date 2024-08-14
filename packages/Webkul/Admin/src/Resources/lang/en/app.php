@@ -548,14 +548,19 @@ return [
 
         'organizations' => [
             'index' => [
-                'title'      => 'Organizations',
-                'create-btn' => 'Create Organization',
+                'title'          => 'Organizations',
+                'create-btn'     => 'Create Organization',
+                'create-success' => 'Organization created successfully.',
+                'update-success' => 'Organization updated successfully.',
+                'delete-success' => 'Organization deleted successfully.',
+                'delete-failed'  => 'Organization can not be deleted.',
 
                 'datagrid' => [
-                    'delete' => 'Delete',
-                    'edit'   => 'Edit',
-                    'id'     => 'ID',
-                    'name'   => 'Name',
+                    'delete'        => 'Delete',
+                    'edit'          => 'Edit',
+                    'id'            => 'ID',
+                    'name'          => 'Name',
+                    'persons-count' => 'Person Count',
                 ],
             ],
 
