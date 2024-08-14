@@ -10,110 +10,98 @@
         :action="route('admin.settings.pipelines.store')"
         method="POST"
     >
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
+        <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex items-center justify-between px-4 py-2">
+                <div class="flex flex-col gap-2">
                     <!-- Breadcrumbs -->
-                    <x-admin::breadcrumbs name="settings.pipelines.create" />
+                    <div class="flex cursor-pointer items-center">
+                        <x-admin::breadcrumbs name="settings.pipelines.create" />
+                    </div>
+
+                    <!-- Title -->
+                    <div class="text-xl font-bold dark:text-gray-300">
+                        @lang('admin::app.settings.pipelines.create.title')
+                    </div>
                 </div>
 
-                <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.settings.pipelines.create.title')
+                <div class="flex items-center gap-x-2.5">
+                    <!-- Create button for Pipeline -->
+                    <div class="flex items-center gap-x-2.5">
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.pipelines.create.save-btn')
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <div class="flex items-center gap-x-2.5">
-                <!-- Create button for Pipeline -->
-                <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.pipelines.create.save-btn')
-                    </button>
-                </div>
+            <div class="flex gap-4 border-t px-4 py-2 align-top max-sm:flex-wrap">
+                <!-- Name -->
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.label class="required">
+                        @lang('admin::app.settings.pipelines.create.name')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="text"
+                        name="name"
+                        id="name"
+                        rules="required"
+                        :label="trans('admin::app.settings.pipelines.create.name')"
+                        :placeholder="trans('admin::app.settings.pipelines.create.name')"
+                        value="{{ old('name') }}"
+                    />
+
+                    <x-admin::form.control-group.error control-name="name" />
+                </x-admin::form.control-group>
+
+                <!-- Rotten-Days -->
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.label class="required">
+                        @lang('admin::app.settings.pipelines.create.rotten-days')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="text"
+                        name="rotten_days"
+                        id="rotten_days"
+                        rules="required|numeric|min_value:1"
+                        :label="trans('admin::app.settings.pipelines.create.rotten-days')"
+                        :placeholder="trans('admin::app.settings.pipelines.create.rotten-days')"
+                        value="{{ old('rotten_days') ?? 30 }}"
+                    />
+
+                    <x-admin::form.control-group.error control-name="rotten_days" />
+                </x-admin::form.control-group>
+
+                <!-- Mark as Default -->
+                <x-admin::form.control-group class="!mb-0 flex items-center gap-4">
+                    <x-admin::form.control-group.label class="required !mb-0">
+                        @lang('admin::app.settings.pipelines.create.mark-as-default')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="switch"
+                        class="cursor-pointer"
+                        name="is_default"
+                        id="is_default"
+                        value="1"
+                        for="is_default"
+                        :label="trans('admin::app.settings.pipelines.create.mark-as-default')"
+                    />
+
+                    <x-admin::form.control-group.error control-name="is_default" />
+                </x-admin::form.control-group>
             </div>
         </div>
 
-        <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-            <!-- Left sub-component -->
-            <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                    <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                        @lang('Stages')
-                    </p>
-                    
-                    <v-stages-component></v-stages-component>
-                </div>
-            </div>
-
-            <!-- Right sub-component -->
-            <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                <x-admin::accordion>
-                    <x-slot:header>
-                        <div class="flex items-center justify-between">
-                            <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                @lang('admin::app.settings.pipelines.create.general')
-                            </p>
-                        </div>
-                    </x-slot>
-
-                    <x-slot:content>
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.pipelines.create.name')
-                            </x-admin::form.control-group.label>
-        
-                            <x-admin::form.control-group.control
-                                type="text"
-                                name="name"
-                                id="name"
-                                rules="required"
-                                :label="trans('admin::app.settings.pipelines.create.name')"
-                                :placeholder="trans('admin::app.settings.pipelines.create.name')"
-                                value="{{ old('name') }}"
-                            />
-        
-                            <x-admin::form.control-group.error control-name="name" />
-                        </x-admin::form.control-group>
-    
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.pipelines.create.rotten-days')
-                            </x-admin::form.control-group.label>
-        
-                            <x-admin::form.control-group.control
-                                type="text"
-                                name="rotten_days"
-                                id="rotten_days"
-                                rules="required|numeric|min_value:1"
-                                :label="trans('admin::app.settings.pipelines.create.rotten-days')"
-                                :placeholder="trans('admin::app.settings.pipelines.create.rotten-days')"
-                                value="{{ old('rotten_days') ?? 30 }}"
-                            />
-        
-                            <x-admin::form.control-group.error control-name="rotten_days" />
-                        </x-admin::form.control-group>
-    
-                        <x-admin::form.control-group class="!mb-0">
-                            <x-admin::form.control-group.label>
-                                @lang('admin::app.settings.pipelines.create.mark-as-default')
-                            </x-admin::form.control-group.label>
-    
-                            <x-admin::form.control-group.control
-                                type="switch"
-                                class="cursor-pointer"
-                                name="is_default"
-                                id="is_default"
-                                value="1"
-                                :label="trans('admin::app.settings.pipelines.create.mark-as-default')"
-                            />
-    
-                            <x-admin::form.control-group.error control-name="is_default" />
-                        </x-admin::form.control-group>
-                    </x-slot>
-                </x-admin::accordion>
-            </div>
+        <!-- Stages Component -->
+        <div class="flex gap-2.5 overflow-auto py-3.5 max-xl:flex-wrap">
+            <v-stages-component>
+                <x-admin::shimmer.pipelines.kanban />
+            </v-stages-component>
         </div>
     </x-admin::form>
 
@@ -124,112 +112,132 @@
             type="text/x-template"
             id="v-stages-component-template"
         >
-            <div>
-                <x-admin::table>
-                    <x-admin::table.thead class="text-sm font-medium dark:bg-gray-800">
-                        <x-admin::table.thead.tr>
-                            <x-admin::table.th class="!p-0"></x-admin::table.th>
-                            
-                            <x-admin::table.th>
-                                <label class="required">
-                                    @lang('admin::app.settings.pipelines.create.name')
-                                </label>
-                            </x-admin::table.th>
-                            
-                            <x-admin::table.th>
-                                <label class="required">
-                                    @lang('admin::app.settings.pipelines.create.probability')
-                                </label>
-                            </x-admin::table.th> 
-                                                  
-                            <x-admin::table.th></x-admin::table.th>
-                        </x-admin::table.thead.tr>
-                    </x-admin::table.thead>
-
-                    <draggable
-                        tag="tbody"
-                        ghost-class="draggable-ghost"
-                        :handle="isAnyDraggable ? '.icon-edit' : ''"
-                        v-bind="{animation: 200}"
-                        item-key="id"
-                        :list="stages"
-                        :move="handleDragging"
-                    >
-                        <template #item="{ element, index }">
-                            <x-admin::table.thead.tr
-                                class="hover:bg-gray-50 dark:hover:bg-gray-950"
-                                ::class="{ draggable: isDragable(element) }"
-                            >
-                                <!-- Draggable Icon -->
-                                <x-admin::table.td class="!px-0 text-center">
-                                    <i
-                                        v-if="isDragable(element)" 
-                                        class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"
-                                    ></i>
-                                </x-admin::table.td>
-
-                                <!-- Attribute Name -->
-                                <x-admin::table.td>
-                                    <input
-                                        type="hidden"
-                                        id="slug"
-                                        :value="slugify(element.name)"
-                                        :name="'stages[' + element.id + '][code]'"
-                                    />
-
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::name="'stages[' + element.id + '][name]'"
-                                            v-model="element['name']"
-                                            ::rules="getValidation"
-                                            :label="trans('admin::app.settings.pipelines.create.name')"
-                                            ::readonly="! isDragable(element)"
-                                        />
-
-                                        <x-admin::form.control-group.error ::name="'stages[' + element.id + '][name]'" />
-                                    </x-admin::form.control-group>
-
-                                    <input
-                                        type="hidden"
-                                        :value="index + 1"
-                                        :name="'stages[' + element.id + '][sort_order]'"
-                                    />
-                                </x-admin::table.td>
-
-                                <x-admin::table.td>
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::name="'stages[' + element.id + '][probability]'"
-                                            v-model="element['probability']"
-                                            rules="required|numeric|min_value:0|max_value:100"
-                                            ::readonly="element?.code != 'new' && ! isDragable(element)"
-                                            :label="trans('admin::app.settings.pipelines.create.probability')"
-                                        />
-                                        <x-admin::form.control-group.error ::name="'stages[' + element.id + '][probability]'" />
-                                    </x-admin::form.control-group>
-                                </x-admin::table.td>
-
-                                <x-admin::table.td>
-                                    <i 
-                                        class="icon-delete cursor-pointer text-2xl" 
-                                        @click="removeStage(element)" 
-                                        v-if="isDragable(element)"
-                                    ></i>
-                                </x-admin::table.td>
-                            </x-admin::table.thead.tr>
-                        </template>
-                    </draggable>
-                </x-admin::table>
-
-                <button
-                    class="primary-button"
-                    @click="addStage"
-                    type="button"
+            <div class="flex gap-4">
+                <!-- Stages Draggable Component -->
+                <draggable
+                    tag="div"
+                    ghost-class="draggable-ghost"
+                    :handle="isAnyDraggable ? '.icon-move' : ''"
+                    v-bind="{animation: 200}"
+                    item-key="id"
+                    :list="stages"
+                    :move="handleDragging"
+                    class="flex gap-4"
                 >
-                    @lang('admin::app.settings.pipelines.create.stage-btn')
-                </button>
+                    <template #item="{ element, index }">
+                        <div
+                            ::class="{ draggable: isDragable(element) }"
+                            class="flex gap-4 overflow-x-auto"
+                        >
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white">
+                                <!-- Stage Crad -->
+                                <div class="flex flex-col gap-6 px-4 py-3">
+                                    <!-- Stage Title and Action -->
+                                    <div class="flex items-center justify-between">
+                                        <span class="py-1 font-medium">
+                                            @{{ element.name ? element.name : '@lang('admin::app.settings.pipelines.create.newly-added')                                            ' }} 
+                                        </span>
+
+                                        <!-- Drag Icon -->
+                                        <i
+                                            v-if="isDragable(element)" 
+                                            class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        >
+                                        </i>
+                                    </div>
+                                    
+                                    <!-- Card Body -->
+                                    <div>
+                                        <input
+                                            type="hidden"
+                                            id="slug"
+                                            :value="slugify(element.name)"
+                                            :name="'stages[' + element.id + '][code]'"
+                                        />
+
+                                        <!-- Name -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.label class="required">
+                                                @lang('admin::app.settings.pipelines.create.name')
+                                            </x-admin::form.control-group.label>
+                                            
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::name="'stages[' + element.id + '][name]'"
+                                                v-model="element['name']"
+                                                ::rules="getValidation"
+                                                :label="trans('admin::app.settings.pipelines.create.name')"
+                                                ::readonly="! isDragable(element)"
+                                            />
+
+                                            <x-admin::form.control-group.error ::name="'stages[' + element.id + '][name]'" />
+                                        </x-admin::form.control-group>
+
+                                        <input
+                                            type="hidden"
+                                            :value="index + 1"
+                                            :name="'stages[' + element.id + '][sort_order]'"
+                                        />
+
+                                        <!-- Probabilty -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.label class="required">
+                                                @lang('admin::app.settings.pipelines.create.probability')
+                                            </x-admin::form.control-group.label>
+
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::name="'stages[' + element.id + '][probability]'"
+                                                v-model="element['probability']"
+                                                rules="required|numeric|min_value:0|max_value:100"
+                                                ::readonly="element?.code != 'new' && ! isDragable(element)"
+                                                :label="trans('admin::app.settings.pipelines.create.probability')"
+                                            />
+                                            <x-admin::form.control-group.error ::name="'stages[' + element.id + '][probability]'" />
+                                        </x-admin::form.control-group>
+                                    </div>
+                                </div>
+                                
+                                <div
+                                    class="flex cursor-pointer items-center gap-2 border-t p-2 text-red-600" 
+                                    @click="removeStage(element)" 
+                                    v-if="isDragable(element)"
+                                >
+                                    <i class="icon-delete text-2xl"></i>
+                                    
+                                    @lang('admin::app.settings.pipelines.create.delete-stage')
+                                </div>
+                            </div>
+                        </div>
+
+                    </template>
+                </draggable>
+
+                <!-- Add New Stage Card -->
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg bg-white">
+                    <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
+                        <div class="grid justify-center justify-items-center gap-3.5 text-center">
+                            <div class="flex flex-col items-center gap-2">
+                                <p class="text-xl font-semibold">
+                                    @lang('admin::app.settings.pipelines.create.add-new-stages')
+                                </p>
+
+                                <p class="text-gray-400">
+                                    @lang('admin::app.settings.pipelines.create.add-stage-info')
+                                </p>
+                            </div>
+
+                            <!-- Add Stage Button -->
+                            <button
+                                class="secondary-button"
+                                @click="addStage"
+                                type="button"
+                            >
+                                @lang('admin::app.settings.pipelines.create.stage-btn')
+                            </button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </script>
 

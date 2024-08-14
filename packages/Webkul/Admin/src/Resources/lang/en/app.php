@@ -1109,6 +1109,10 @@ return [
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
                 'duplicate-name'  => 'The "Name" field cannot be duplicate',
+                'delete-stage'    => 'Delete Stage',
+                'add-new-stages'  => 'Add New Stages',
+                'add-stage-info'  => 'Add new stage for your Pipeline',
+                'newly-added'     => 'Newly Added',
             ],
 
             'edit'  => [
@@ -1125,6 +1129,9 @@ return [
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
                 'duplicate-name'  => 'The "Name" field cannot be duplicate',
+                'delete-stage'    => 'Delete Stage',
+                'add-new-stages'  => 'Add New Stages',
+                'add-stage-info'  => 'Add new stage for your Pipeline',
             ],
         ],
 
@@ -1431,7 +1438,6 @@ return [
             'trash'             => 'Trash',
             'composer-mail-btn' => 'Composer Mail',
             'btn'               => 'Mail',
-
             'mail'              => [
                 'title'         => 'Compose Mail',
                 'to'            => 'To',
