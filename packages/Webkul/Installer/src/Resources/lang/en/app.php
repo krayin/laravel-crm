@@ -19,11 +19,13 @@ return [
                 'job-title'       => 'Job Title',
                 'name'            => 'Name',
                 'organization'    => 'Organization',
+                'sales-owner'     => 'Sales Owner',
             ],
 
             'organizations' => [
-                'address' => 'Address',
-                'name'    => 'Name',
+                'address'     => 'Address',
+                'name'        => 'Name',
+                'sales-owner' => 'Sales Owner',
             ],
 
             'products' => [

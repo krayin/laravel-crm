@@ -76,14 +76,8 @@ class LeadDataGrid extends DataGrid
             ->groupBy('leads.id')
             ->where('leads.lead_pipeline_id', $this->pipeline->id);
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('leads.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
-            } else {
-                $queryBuilder->where('leads.user_id', $currentUser->id);
-            }
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('leads.user_id', $userIds);
         }
 
         if (! is_null(request()->input('rotten_lead.in'))) {

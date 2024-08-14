@@ -1516,7 +1516,7 @@ return [
         'create-success'    => 'Lead created successfully.',
         'update-success'    => 'Lead updated successfully.',
         'destroy-success'   => 'Lead deleted successfully.',
-        'delete-failed'     => 'Lead can not be deleted.',
+        'destroy-failed'    => 'Lead can not be deleted.',
 
         'index' => [
             'title'      => 'Leads',
