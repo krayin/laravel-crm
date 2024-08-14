@@ -13,7 +13,10 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
+use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
+use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
@@ -23,6 +26,9 @@ class LeadController extends Controller
      * @return void
      */
     public function __construct(
+        protected UserRepository $userRepository,
+        protected SourceRepository $sourceRepository,
+        protected TypeRepository $typeRepository,
         protected LeadRepository $leadRepository,
         protected PipelineRepository $pipelineRepository,
         protected StageRepository $stageRepository
@@ -41,13 +47,107 @@ class LeadController extends Controller
             return datagrid(LeadDataGrid::class)->process();
         }
 
+        $columns = [
+            [
+                'index'                 => 'id',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.id'),
+                'type'                  => 'integer',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => null,
+                'filterable_options'    => [],
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'lead_value',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.lead-value'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => null,
+                'filterable_options'    => [],
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'user_id',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.sales-person'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => 'dropdown',
+                'filterable_options'    => $this->userRepository->all(['name as label', 'id as value'])->toArray(),
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'person.name',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.contact-person'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => null,
+                'filterable_options'    => [],
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'lead_type_id',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.lead-type'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => 'dropdown',
+                'filterable_options'    => $this->typeRepository->all(['name as label', 'id as value'])->toArray(),
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'lead_source_id',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.source'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => 'dropdown',
+                'filterable_options'    => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+            [
+                'index'                 => 'tags.name',
+                'label'                 => trans('admin::app.leads.index.kanban.columns.tags'),
+                'type'                  => 'string',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => null,
+                'filterable_options'    => [],
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+        ];
+
         if (request('pipeline_id')) {
             $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
         } else {
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
 
-        return view('admin::leads.index', compact('pipeline'));
+        return view('admin::leads.index', compact('columns', 'pipeline'));
     }
 
     /**
@@ -70,7 +170,11 @@ class LeadController extends Controller
         }
 
         foreach ($stages as $stage) {
-            $query = $this->leadRepository
+            /**
+             * We have to create a new instance of the lead repository every time, which is
+             * why we're not using the injected one.
+             */
+            $query = app(LeadRepository::class)
                 ->pushCriteria(app(RequestCriteria::class))
                 ->where([
                     'lead_pipeline_id'       => $pipeline->id,

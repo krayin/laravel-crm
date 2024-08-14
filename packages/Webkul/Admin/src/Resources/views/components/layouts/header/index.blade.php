@@ -4,17 +4,6 @@
         <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
 
         <a href="{{ route('admin.dashboard.index') }}">
-            {{-- <img
-                src="{{ admin_vite()->asset('images/logo.svg') }}" 
-                alt="{{ config('app.name') }}"
-            /> --}}
-
-            {{-- <img
-                class="h-10"
-                src="{{ Storage::url($logo) }}"
-                alt="{{ config('app.name') }}"
-            /> --}}
-
             <img
                 class="h-10" 
                 src="{{ request()->cookie('dark_mode') ? admin_vite()->asset('images/dark-logo.svg') : admin_vite()->asset('images/logo.svg') }}"

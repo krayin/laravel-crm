@@ -19,7 +19,7 @@ class WebhookService
      */
     public function __construct(protected PersonRepository $personRepository)
     {
-        $this->client = new Client();
+        $this->client = new Client;
     }
 
     /**

@@ -36,6 +36,8 @@ class OrganizationRepository extends Repository
      */
     public function create(array $data)
     {
+        $data['user_id'] = $data['user_id'] ?: null;
+
         $organization = parent::create($data);
 
         $this->attributeValueRepository->save($data, $organization->id);
@@ -50,6 +52,8 @@ class OrganizationRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
+        $data['user_id'] = $data['user_id'] ?: null;
+
         $organization = parent::update($data, $id);
 
         $this->attributeValueRepository->save($data, $id);
