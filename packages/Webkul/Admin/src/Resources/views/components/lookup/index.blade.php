@@ -85,7 +85,7 @@
                     <li 
                         v-for="item in filteredResults" 
                         :key="item.id"
-                        class="cursor-pointer px-4 py-2 text-gray-300 transition-colors hover:bg-gray-900"
+                        class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                         @click="selectItem(item)"
                     >
                         @{{ item.name }}
