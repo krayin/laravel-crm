@@ -37,9 +37,9 @@
                 </div>
             </div>
 
-            <div class="flex gap-4 border-t px-4 py-2 max-sm:flex-wrap">
+            <div class="flex gap-4 border-t px-4 py-2 align-top max-sm:flex-wrap">
                 <!-- Name -->
-                <x-admin::form.control-group  >
+                <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.create.name')
                     </x-admin::form.control-group.label>
@@ -77,8 +77,8 @@
                 </x-admin::form.control-group>
 
                 <!-- Mark as Default -->
-                <x-admin::form.control-group class="mt-6 flex items-center gap-4">
-                    <x-admin::form.control-group.label class="required">
+                <x-admin::form.control-group class="!mb-0 flex items-center gap-4">
+                    <x-admin::form.control-group.label class="required !mb-0">
                         @lang('admin::app.settings.pipelines.create.mark-as-default')
                     </x-admin::form.control-group.label>
 

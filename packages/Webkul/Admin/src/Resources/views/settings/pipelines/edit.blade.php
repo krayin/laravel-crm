@@ -41,9 +41,9 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-6 border-t px-4 py-2">
+            <div class="flex gap-4 border-t px-4 py-2 align-top max-sm:flex-wrap">
                 <!-- Pipeline Name -->
-                <x-admin::form.control-group  class="!mb-0">
+                <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.edit.name')
                     </x-admin::form.control-group.label>
@@ -62,7 +62,7 @@
                 </x-admin::form.control-group>
                 
                 <!-- Pipeline Rotten Days -->
-                <x-admin::form.control-group class="!mb-0">
+                <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.pipelines.edit.rotten-days')
                     </x-admin::form.control-group.label>
@@ -81,8 +81,8 @@
                 </x-admin::form.control-group>
 
                 <!-- Pipeline Default Switcher -->
-                <x-admin::form.control-group class="mt-10 flex items-center gap-4">
-                    <x-admin::form.control-group.label class="required">
+                <x-admin::form.control-group class="mt-4 flex items-center gap-4">
+                    <x-admin::form.control-group.label class="!required mb-0">
                         @lang('admin::app.settings.pipelines.edit.mark-as-default')
                     </x-admin::form.control-group.label>
 
