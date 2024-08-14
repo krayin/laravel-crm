@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\DataGrids\Lead;
 
+use Illuminate\Contracts\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Lead\Repositories\PipelineRepository;
@@ -40,10 +41,8 @@ class LeadDataGrid extends DataGrid
 
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('leads')
             ->addSelect(
@@ -106,11 +105,9 @@ class LeadDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
-     *
-     * @return void
+     * Prepare columns.
      */
-    public function prepareColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'id',
@@ -234,19 +231,15 @@ class LeadDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         if (bouncer()->hasPermission('leads.view')) {
             $this->addAction([
                 'icon'   => 'icon-eye',
                 'title'  => trans('admin::app.leads.index.datagrid.view'),
                 'method' => 'GET',
-                'url'    => function ($row) {
-                    return route('admin.leads.view', $row->id);
-                },
+                'url'    => fn($row) => route('admin.leads.view', $row->id),
             ]);
         }
 
@@ -255,39 +248,31 @@ class LeadDataGrid extends DataGrid
                 'icon'   => 'icon-delete',
                 'title'  => trans('admin::app.leads.index.datagrid.delete'),
                 'method' => 'delete',
-                'url'    => function ($row) {
-                    return route('admin.leads.delete', $row->id);
-                },
+                'url'    => fn($row) => route('admin.leads.delete', $row->id),
             ]);
         }
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
-        // $stages = [];
+        $this->addMassAction([
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.leads.index.datagrid.mass-delete'),
+            'method' => 'POST',
+            'url'    => route('admin.leads.mass_delete'),
+        ]);
 
-        // foreach ($this->pipeline->stages->toArray() as $stage) {
-        //     $stages[$stage['name']] = $stage['id'];
-        // }
-
-        // $this->addMassAction([
-        //     'type'   => 'delete',
-        //     'label'  => trans('ui::app.datagrid.delete'),
-        //     'action' => route('admin.leads.mass_delete'),
-        //     'method' => 'PUT',
-        // ]);
-
-        // $this->addMassAction([
-        //     'type'    => 'update',
-        //     'label'   => trans('admin::app.leads.index.datagrid.update_stage'),
-        //     'action'  => route('admin.leads.mass_update'),
-        //     'method'  => 'PUT',
-        //     'options' => $stages,
-        // ]);
+        $this->addMassAction([
+            'title'   => trans('admin::app.leads.index.datagrid.mass-update'),
+            'url'     => route('admin.leads.mass_update'),
+            'method'  => 'POST',
+            'options' => $this->pipeline->stages->map(fn ($stage) => [
+                'label' => $stage->name,
+                'value' => $stage->id,
+            ])->toArray(),
+        ]);
     }
 }

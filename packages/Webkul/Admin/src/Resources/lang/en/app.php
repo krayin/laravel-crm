@@ -1535,6 +1535,9 @@ return [
                 'created-at'          => 'Created At',
                 'no'                  => 'No',
                 'yes'                 => 'Yes',
+                'delete'              => 'Delete',
+                'mass-delete'         => 'Mass Delete',
+                'mass-update'         => 'Mass Update',
             ],
 
             'kanban' => [
