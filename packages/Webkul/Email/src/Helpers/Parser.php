@@ -48,7 +48,7 @@ class Parser
     public function __construct(?CharsetManager $charset = null)
     {
         if (is_null($charset)) {
-            $charset = new Charset();
+            $charset = new Charset;
         }
 
         $this->charset = $charset;

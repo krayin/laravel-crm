@@ -30,7 +30,7 @@ class Installer
     {
         $user = $this->userRepository->first();
 
-        $httpClient = new Client();
+        $httpClient = new Client;
 
         try {
             $httpClient->request('POST', self::API_ENDPOINT, [
