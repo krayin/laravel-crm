@@ -612,6 +612,7 @@ return [
             'sku'         => 'SKU',
             'all'         => 'All',
             'notes'       => 'Notes',
+            'files'       => 'Files',
             'inventories' => 'Inventory',
 
             'attributes' => [
@@ -1109,6 +1110,10 @@ return [
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
                 'duplicate-name'  => 'The "Name" field cannot be duplicate',
+                'delete-stage'    => 'Delete Stage',
+                'add-new-stages'  => 'Add New Stages',
+                'add-stage-info'  => 'Add new stage for your Pipeline',
+                'newly-added'     => 'Newly Added',
             ],
 
             'edit'  => [
@@ -1125,6 +1130,9 @@ return [
                 'stage-btn'       => 'Add Stage',
                 'stages'          => 'Stages',
                 'duplicate-name'  => 'The "Name" field cannot be duplicate',
+                'delete-stage'    => 'Delete Stage',
+                'add-new-stages'  => 'Add New Stages',
+                'add-stage-info'  => 'Add new stage for your Pipeline',
             ],
         ],
 
@@ -1391,27 +1399,26 @@ return [
                 'type'          => 'Type',
                 'update'        => 'Update',
             ],
+        ],
 
-            'edit' => [
-                'title'           => 'Edit Activity',
-                'back-btn'        => 'Back',
-                'save-btn'        => 'Save Activity',
-                'title'           => 'Title',
-                'type'            => 'Activity Type',
-                'call'            => 'Call',
-                'meeting'         => 'Meeting',
-                'lunch'           => 'Lunch',
-                'schedule_to'     => 'Schedule To',
-                'schedule_from'   => 'Schedule From',
-                'location'        => 'Location',
-                'comment'         => 'Comment',
-                'lead'            => 'Lead',
-                'participants'    => 'Participants',
-                'general'         => 'General',
-                'persons'         => 'Persons',
-                'no-result-found' => 'Records not found with same name.',
-                'users'           => 'Users',
-            ],
+        'edit' => [
+            'title'           => 'Edit Activity',
+            'back-btn'        => 'Back',
+            'save-btn'        => 'Save Activity',
+            'type'            => 'Activity Type',
+            'call'            => 'Call',
+            'meeting'         => 'Meeting',
+            'lunch'           => 'Lunch',
+            'schedule_to'     => 'Schedule To',
+            'schedule_from'   => 'Schedule From',
+            'location'        => 'Location',
+            'comment'         => 'Comment',
+            'lead'            => 'Lead',
+            'participants'    => 'Participants',
+            'general'         => 'General',
+            'persons'         => 'Persons',
+            'no-result-found' => 'Records not found.',
+            'users'           => 'Users',
         ],
 
         'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
@@ -1432,7 +1439,6 @@ return [
             'trash'             => 'Trash',
             'composer-mail-btn' => 'Composer Mail',
             'btn'               => 'Mail',
-
             'mail'              => [
                 'title'         => 'Compose Mail',
                 'to'            => 'To',
@@ -1516,7 +1522,7 @@ return [
         'create-success'    => 'Lead created successfully.',
         'update-success'    => 'Lead updated successfully.',
         'destroy-success'   => 'Lead deleted successfully.',
-        'delete-failed'     => 'Lead can not be deleted.',
+        'destroy-failed'    => 'Lead can not be deleted.',
 
         'index' => [
             'title'      => 'Leads',

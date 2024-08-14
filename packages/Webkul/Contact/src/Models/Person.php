@@ -9,6 +9,7 @@ use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Contracts\Person as PersonContract;
 use Webkul\Contact\Database\Factories\PersonFactory;
 use Webkul\Tag\Models\TagProxy;
+use Webkul\User\Models\UserProxy;
 
 class Person extends Model implements PersonContract
 {
@@ -48,8 +49,17 @@ class Person extends Model implements PersonContract
         'emails',
         'contact_numbers',
         'job_title',
+        'user_id',
         'organization_id',
     ];
+
+    /**
+     * Get the user that owns the lead.
+     */
+    public function user()
+    {
+        return $this->belongsTo(UserProxy::modelClass());
+    }
 
     /**
      * Get the organization that owns the person.

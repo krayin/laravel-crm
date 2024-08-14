@@ -5,17 +5,9 @@ namespace Webkul\Admin\DataGrids\Settings;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\UserRepository;
 
 class TagDataGrid extends DataGrid
 {
-    /**
-     * Constructor for the class.
-     *
-     * @return void
-     */
-    public function __construct(protected UserRepository $userRepository) {}
-
     /**
      * Prepare query builder.
      *
@@ -33,14 +25,8 @@ class TagDataGrid extends DataGrid
             )
             ->leftJoin('users', 'tags.user_id', '=', 'users.id');
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $queryBuilder->whereIn('tags.user_id', $this->userRepository->getCurrentUserGroupsUserIds());
-            } else {
-                $queryBuilder->where('tags.user_id', $currentUser->id);
-            }
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('tags.user_id', $userIds);
         }
 
         $this->addFilter('id', 'tags.id');

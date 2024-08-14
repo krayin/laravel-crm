@@ -90,14 +90,8 @@ class LeadRepository extends Repository
                     return $query->whereBetween('leads.created_at', $createdAtRange);
                 })
                 ->where(function ($query) {
-                    $currentUser = auth()->guard()->user();
-
-                    if ($currentUser->view_permission != 'global') {
-                        if ($currentUser->view_permission == 'group') {
-                            $query->whereIn('leads.user_id', app('\Webkul\User\Repositories\UserRepository')->getCurrentUserGroupsUserIds());
-                        } else {
-                            $query->where('leads.user_id', $currentUser->id);
-                        }
+                    if ($userIds = bouncer()->getAuthorizedUserIds()) {
+                        $query->whereIn('leads.user_id', $userIds);
                     }
                 });
         });
@@ -200,28 +194,5 @@ class LeadRepository extends Repository
         }
 
         return $lead;
-    }
-
-    /**
-     * Retrieves lead count based on lead stage name
-     *
-     * @return number
-     */
-    public function getLeadsCount($leadStage, $startDate, $endDate)
-    {
-        $query = $this
-            ->whereBetween('leads.created_at', [$startDate, $endDate])
-            ->where(function ($query) {
-                if (($currentUser = auth()->guard('user')->user())->view_permission == 'individual') {
-                    $query->where('leads.user_id', $currentUser->id);
-                }
-            });
-
-        if ($leadStage != 'all') {
-            $query->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
-                ->where('lead_pipeline_stages.name', $leadStage);
-        }
-
-        return $query->get()->count();
     }
 }

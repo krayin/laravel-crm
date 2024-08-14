@@ -4,7 +4,6 @@ namespace Webkul\Activity\Repositories;
 
 use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
-use Webkul\User\Repositories\UserRepository;
 
 class ActivityRepository extends Repository
 {
@@ -116,18 +115,9 @@ class ActivityRepository extends Repository
             ->whereIn('type', ['call', 'meeting', 'lunch'])
             ->whereBetween('activities.schedule_from', $dateRange)
             ->where(function ($query) {
-                $currentUser = auth()->guard()->user();
-
-                if ($currentUser->view_permission != 'global') {
-                    if ($currentUser->view_permission == 'group') {
-                        $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
-                        $query->whereIn('activities.user_id', $userIds)
-                            ->orWhereIn('activity_participants.user_id', $userIds);
-                    } else {
-                        $query->where('activities.user_id', $currentUser->id)
-                            ->orWhere('activity_participants.user_id', $currentUser->id);
-                    }
+                if ($userIds = bouncer()->getAuthorizedUserIds()) {
+                    $query->whereIn('activities.user_id', $userIds)
+                        ->orWhereIn('activity_participants.user_id', $userIds);
                 }
             })
             ->distinct()

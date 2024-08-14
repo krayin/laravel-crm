@@ -44,6 +44,12 @@
                         :entity="$product"
                         entity-control-name="product_id"
                     />
+
+                    <!-- File Activity Action -->
+                    <x-admin::activities.actions.file
+                        :entity="$product"
+                        entity-control-name="product_id"
+                    />
                 </div>
             </div>
             
@@ -63,6 +69,7 @@
                 :types="[
                     ['name' => 'all', 'label' => trans('admin::app.products.view.all')],
                     ['name' => 'note', 'label' => trans('admin::app.products.view.notes')],
+                    ['name' => 'file', 'label' => trans('admin::app.products.view.files')],
                 ]"
                 :extra-types="[
                     ['name' => 'inventory', 'label' => 'Inventory'],

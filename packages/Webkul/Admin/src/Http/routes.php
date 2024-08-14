@@ -13,26 +13,6 @@ Route::group(['middleware' => ['web', 'admin_locale']], function () {
         Route::group(['middleware' => ['user']], function () {
             Route::delete('logout', 'Webkul\Admin\Http\Controllers\User\SessionController@destroy')->name('admin.session.destroy');
 
-            // Dashboard Route
-            Route::get('dashboard', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@index')->name('admin.dashboard.index');
-
-            Route::get('template', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@template')->name('admin.dashboard.template');
-
-            // API routes
-            Route::group([
-                'prefix'    => 'api',
-            ], function () {
-                Route::group([
-                    'prefix'    => 'dashboard',
-                ], function () {
-                    Route::get('/', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@getCardData')->name('admin.api.dashboard.card.index');
-
-                    Route::get('/cards', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@getCards')->name('admin.api.dashboard.cards.index');
-
-                    Route::post('/cards', 'Webkul\Admin\Http\Controllers\Admin\DashboardController@updateCards')->name('admin.api.dashboard.cards.update');
-                });
-            });
-
             // Settings Routes
             Route::group([
                 'prefix'    => 'settings',

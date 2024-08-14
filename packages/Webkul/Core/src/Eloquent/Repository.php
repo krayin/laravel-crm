@@ -133,4 +133,14 @@ abstract class Repository extends BaseRepository implements CacheableInterface
     {
         return $this->model;
     }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function resetModel()
+    {
+        $this->makeModel();
+
+        return $this;
+    }
 }
