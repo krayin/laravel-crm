@@ -10,6 +10,8 @@ use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Settings\UserDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\UserResource;
 use Webkul\Admin\Notifications\User\Create;
 use Webkul\User\Repositories\GroupRepository;
@@ -193,25 +195,25 @@ class UserController extends Controller
 
     /**
      * Mass Update the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massUpdate()
+    public function massUpdate(MassUpdateRequest $massDestroyRequest): JsonResponse
     {
         $count = 0;
 
-        foreach (request('rows') as $userId) {
-            if (auth()->guard('user')->user()->id == $userId) {
+        $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+
+        foreach ($users as $users) {
+            if (auth()->guard('user')->user()->id == $users->id) {
                 continue;
             }
 
-            Event::dispatch('settings.user.update.before', $userId);
+            Event::dispatch('settings.user.update.before', $users->id);
 
             $this->userRepository->update([
-                'status' => request('value'),
-            ], $userId);
+                'status' => $massDestroyRequest->input('value'),
+            ], $users->id);
 
-            Event::dispatch('settings.user.update.after', $userId);
+            Event::dispatch('settings.user.update.after', $users->id);
 
             $count++;
         }
@@ -229,23 +231,23 @@ class UserController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
         $count = 0;
 
-        foreach (request('rows') as $userId) {
-            if (auth()->guard('user')->user()->id == $userId) {
+        $users = $this->userRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
+
+        foreach ($users as $user) {
+            if (auth()->guard('user')->user()->id == $user->id) {
                 continue;
             }
 
-            Event::dispatch('settings.user.delete.before', $userId);
+            Event::dispatch('settings.user.delete.before', $user->id);
 
-            $this->userRepository->delete($userId);
+            $this->userRepository->delete($user->id);
 
-            Event::dispatch('settings.user.delete.after', $userId);
+            Event::dispatch('settings.user.delete.after', $user->id);
 
             $count++;
         }

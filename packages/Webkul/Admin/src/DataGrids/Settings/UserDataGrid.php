@@ -11,8 +11,6 @@ class UserDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
     public function prepareQueryBuilder(): Builder
     {
@@ -85,27 +83,21 @@ class UserDataGrid extends DataGrid
             'filterable'      => true,
             'filterable_type' => 'date_range',
             'sortable'        => true,
-            'closure'         => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
+            'closure'         => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.users.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.users.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.users.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -113,18 +105,14 @@ class UserDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.users.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.users.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.users.delete', $row->id),
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
             'icon'   => 'icon-delete',
