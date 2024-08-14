@@ -207,17 +207,49 @@
             },
 
             mounted: function () {
-                this.get()
-                    .then(response => {
-                        this.isLoading = false;
-
-                        for (let [stageId, data] of Object.entries(response.data)) {
-                            this.stageLeads[stageId] = data;
-                        }
-                    });
+                this.boot();
             },
 
             methods: {
+                /**
+                 * Initialization: This function checks for any previously saved filters in local storage and applies them as needed.
+                 *
+                 * @returns {void}
+                 */
+                 boot() {
+                    let kanbans = this.getKanbans();
+
+                    if (kanbans?.length) {
+                        const currentKanban = kanbans.find(({ src }) => src === this.src);
+
+                        if (currentKanban) {
+                            this.applied.filters = currentKanban.applied.filters;
+
+                            this.get()
+                                .then(response => {
+                                    for (let [stageId, data] of Object.entries(response.data)) {
+                                        this.stageLeads[stageId] = data;
+                                    }
+                                });
+
+                            return;
+                        }
+                    }
+
+                    this.get()
+                        .then(response => {
+                            for (let [stageId, data] of Object.entries(response.data)) {
+                                this.stageLeads[stageId] = data;
+                            }
+                        });
+                },
+
+                /**
+                 * Fetches the leads based on the applied filters.
+                 *
+                 * @param {object} requestedParams - The requested parameters.
+                 * @returns {Promise} The promise object representing the request.
+                 */
                 get(requestedParams = {}) {
                     let params = {
                         search: '',
@@ -250,11 +282,24 @@
                                 ...requestedParams,
                             }
                         })
+                        .then(response => {
+                            this.isLoading = false;
+
+                            this.updateKanbans();
+
+                            return response;
+                        })
                         .catch(error => {
                             console.log(error)
                         });
                 },
 
+                /**
+                 * Filters the leads based on the applied filters.
+                 *
+                 * @param {object} filters - The filters to be applied.
+                 * @returns {void}
+                 */
                 filter(filters) {
                     this.applied.filters.columns = [
                         ...(this.applied.filters.columns.filter((column) => column.index === 'all')),
@@ -263,14 +308,18 @@
 
                     this.get()
                         .then(response => {
-                            this.isLoading = false;
-
                             for (let [stageId, data] of Object.entries(response.data)) {
                                 this.stageLeads[stageId] = data;
                             }
                         });
                 },
 
+                /**
+                 * Searches the leads based on the applied filters.
+                 *
+                 * @param {object} filters - The filters to be applied.
+                 * @returns {void}
+                 */
                 search(filters) {
                     this.applied.filters.columns = [
                         ...(this.applied.filters.columns.filter((column) => column.index !== 'all')),
@@ -279,19 +328,21 @@
 
                     this.get()
                         .then(response => {
-                            this.isLoading = false;
-
                             for (let [stageId, data] of Object.entries(response.data)) {
                                 this.stageLeads[stageId] = data;
                             }
                         });
                 },
 
+                /**
+                 * Appends the leads to the stage.
+                 *
+                 * @param {object} params - The parameters to be appended.
+                 * @returns {void}
+                 */
                 append(params) {
                     this.get(params)
                         .then(response => {
-                            this.isLoading = false;
-
                             for (let [stageId, data] of Object.entries(response.data)) {
                                 if (! this.stageLeads[stageId]) {
                                     this.stageLeads[stageId] = data;
@@ -304,6 +355,13 @@
                         });
                 },
 
+                /**
+                 * Updates the stage with the latest lead data.
+                 *
+                 * @param {object} stage - The stage object.
+                 * @param {object} event - The event object.
+                 * @returns {void}
+                 */
                 updateStage: function (stage, event) {
                     if (event.removed) {
                         stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
@@ -329,6 +387,13 @@
                         });
                 },
 
+                /**
+                 * Handles the scroll event on the stage leads.
+                 *
+                 * @param {object} stage - The stage object.
+                 * @param {object} event - The scroll event.
+                 * @returns {void}
+                 */
                 handleScroll(stage, event) {
                     const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight
 
@@ -346,6 +411,93 @@
                         page: this.stageLeads[stage.id].leads.meta.current_page + 1,
                         limit: 10,
                     });
+                },
+
+                //=======================================================================================
+                // Support for previous applied values in kanbans. All code is based on local storage.
+                //=======================================================================================
+
+                /**
+                 * Updates the kanbans stored in local storage with the latest data.
+                 *
+                 * @returns {void}
+                 */
+                 updateKanbans() {
+                    let kanbans = this.getKanbans();
+
+                    if (kanbans?.length) {
+                        const currentKanban = kanbans.find(({ src }) => src === this.src);
+
+                        if (currentKanban) {
+                            kanbans = kanbans.map(kanban => {
+                                if (kanban.src === this.src) {
+                                    return {
+                                        ...kanban,
+                                        requestCount: ++kanban.requestCount,
+                                        available: this.available,
+                                        applied: this.applied,
+                                    };
+                                }
+
+                                return kanban;
+                            });
+                        } else {
+                            kanbans.push(this.getKanbanInitialProperties());
+                        }
+                    } else {
+                        kanbans = [this.getKanbanInitialProperties()];
+                    }
+
+                    this.setKanbans(kanbans);
+                },
+
+                /**
+                 * Returns the initial properties for a kanban.
+                 *
+                 * @returns {object} Initial properties for a kanban.
+                 */
+                getKanbanInitialProperties() {
+                    return {
+                        src: this.src,
+                        requestCount: 0,
+                        available: this.available,
+                        applied: this.applied,
+                    };
+                },
+
+                /**
+                 * Returns the storage key for kanbans in local storage.
+                 *
+                 * @returns {string} Storage key for kanbans.
+                 */
+                getKanbansStorageKey() {
+                    return 'kanbans';
+                },
+
+                /**
+                 * Retrieves the kanbans stored in local storage.
+                 *
+                 * @returns {Array} Kanbans stored in local storage.
+                 */
+                getKanbans() {
+                    let kanbans = localStorage.getItem(
+                        this.getKanbansStorageKey()
+                    );
+
+                    return JSON.parse(kanbans) ?? [];
+                },
+
+                /**
+                 * Sets the kanbans in local storage.
+                 *
+                 * @param {Array} kanbans - Kanbans to be stored in local storage.
+                 * @returns {void}
+                 */
+                setKanbans(kanbans) {
+                    localStorage.setItem(
+                        this.getKanbansStorageKey(),
+                        JSON.stringify(kanbans)
+                    );
                 },
             }
         });
