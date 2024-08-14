@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings\Warehouse;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -10,6 +11,7 @@ use Webkul\Admin\DataGrids\Settings\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
+use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 
 class WarehouseController extends Controller
 {
@@ -37,10 +39,8 @@ class WarehouseController extends Controller
 
     /**
      * Search location results
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(): JsonResponse
     {
         $results = $this->warehouseRepository
             ->pushCriteria(app(RequestCriteria::class))
@@ -50,15 +50,12 @@ class WarehouseController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
+     * Display a listing of the product resource.
      */
-    public function products($id)
+    public function products(int $id)
     {
         if (request()->ajax()) {
-            return app(\Webkul\Admin\DataGrids\Product\ProductDataGrid::class)->toJson();
+            return datagrid(ProductDataGrid::class)->process();
         }
 
         $warehouse = $this->warehouseRepository->findOrFail($id);
@@ -68,20 +65,16 @@ class WarehouseController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::settings.warehouses.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(AttributeForm $request): RedirectResponse
     {
         Event::dispatch('settings.warehouse.create.before');
 
@@ -96,11 +89,8 @@ class WarehouseController extends Controller
 
     /**
      * Show the form for viewing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function view($id)
+    public function view(int $id): View
     {
         $warehouse = $this->warehouseRepository->findOrFail($id);
 
@@ -122,10 +112,8 @@ class WarehouseController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, int $id)
+    public function update(AttributeForm $request, int $id): RedirectResponse
     {
         Event::dispatch('settings.warehouse.update.before', $id);
 
@@ -146,10 +134,8 @@ class WarehouseController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $this->warehouseRepository->findOrFail($id);
 
@@ -161,11 +147,11 @@ class WarehouseController extends Controller
             Event::dispatch('settings.warehouse.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.settings.warehouses.index.destroy-success'),
+                'message' => trans('admin::app.settings.warehouses.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.settings.warehouses.index.destroy-success'),
+                'message' => trans('admin::app.settings.warehouses.index.delete-success'),
             ], 400);
         }
     }
