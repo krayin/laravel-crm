@@ -46,11 +46,11 @@ class Bouncer
     public function getAuthorizedUserIds()
     {
         $user = auth()->guard('user')->user();
-        
+
         if ($user->view_permission == 'global') {
             return null;
         }
-        
+
         if ($user->view_permission == 'group') {
             return app(UserRepository::class)->getCurrentUserGroupsUserIds();
         } else {

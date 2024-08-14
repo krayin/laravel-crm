@@ -205,7 +205,7 @@ abstract class AbstractReporting
                 $formatter = '?-?-?';
             }
 
-            $groupColumn = 'DATE_FORMAT(' . $dateColumn . ', "'.Str::replaceArray('?', ['%Y', '%m', '%d'], $formatter).'")';
+            $groupColumn = 'DATE_FORMAT('.$dateColumn.', "'.Str::replaceArray('?', ['%Y', '%m', '%d'], $formatter).'")';
 
             $intervals = [];
 

@@ -2,14 +2,12 @@
 
 namespace Webkul\Admin\Helpers;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
-use Webkul\Admin\Helpers\Reporting\Lead;
 use Webkul\Admin\Helpers\Reporting\Activity;
-use Webkul\Admin\Helpers\Reporting\Product;
-use Webkul\Admin\Helpers\Reporting\Person;
+use Webkul\Admin\Helpers\Reporting\Lead;
 use Webkul\Admin\Helpers\Reporting\Organization;
+use Webkul\Admin\Helpers\Reporting\Person;
+use Webkul\Admin\Helpers\Reporting\Product;
 use Webkul\Admin\Helpers\Reporting\Quote;
 
 class Dashboard

@@ -2,6 +2,4 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
-class Product extends AbstractReporting
-{
-}
+class Product extends AbstractReporting {}
