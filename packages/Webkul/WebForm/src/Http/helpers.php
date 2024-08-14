@@ -2,7 +2,9 @@
 
 use Webkul\WebForm\Vite as WebFormVite;
 
-function webform_vite(): WebFormVite
-{
-    return app(WebFormVite::class);
+if (! function_exists('webform_vite')) {
+    function webform_vite(): WebFormVite
+    {
+        return app(WebFormVite::class);
+    }
 }
