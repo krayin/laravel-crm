@@ -1128,6 +1128,8 @@ return [
                 'stages'          => 'Stages',
                 'duplicate-name'  => 'The "Name" field cannot be duplicate',
                 'delete-stage'    => 'Delete Stage',
+                'add-new-stages'  => 'Add New Stages',
+                'add-stage-info'  => 'Add new stage for your Pipeline',
             ],
         ],
 

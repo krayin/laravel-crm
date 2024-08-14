@@ -215,14 +215,17 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg bg-white">
-                    <div class="flex flex-col gap-6 px-4 py-3">
-                        <div class="grid justify-center justify-items-center gap-3.5 py-12">
-                            <img src="{{ admin_vite()->asset('images/empty-placeholders/description.svg') }}">
-                            
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg bg-white">
+                    <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
+                        <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">
-                                <p class="text-xl font-semibold">Add New Stages</p>
-                                <p class="text-gray-400">Add new stage for your Pipeline</p>
+                                <p class="text-xl font-semibold">
+                                    @lang('admin::app.settings.pipelines.edit.add-new-stages')
+                                </p>
+
+                                <p class="text-gray-400">
+                                    @lang('admin::app.settings.pipelines.edit.add-stage-info')
+                                </p>
                             </div>
 
                             <!-- Add Stage Button -->
