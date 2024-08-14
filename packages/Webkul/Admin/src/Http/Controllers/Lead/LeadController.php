@@ -41,13 +41,29 @@ class LeadController extends Controller
             return datagrid(LeadDataGrid::class)->process();
         }
 
+        $columns = [
+            [
+                'index'                 => 'id',
+                'label'                 => 'ID',
+                'type'                  => 'integer',
+                'searchable'            => false,
+                'search_field'          => 'in',
+                'filterable'            => true,
+                'filterable_type'       => null,
+                'filterable_options'    => [],
+                'allow_multiple_values' => true,
+                'sortable'              => true,
+                'visibility'            => true,
+            ],
+        ];
+
         if (request('pipeline_id')) {
             $pipeline = $this->pipelineRepository->find(request('pipeline_id'));
         } else {
             $pipeline = $this->pipelineRepository->getDefaultPipeline();
         }
 
-        return view('admin::leads.index', compact('pipeline'));
+        return view('admin::leads.index', compact('columns', 'pipeline'));
     }
 
     /**

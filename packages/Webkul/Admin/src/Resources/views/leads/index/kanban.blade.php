@@ -157,34 +157,7 @@
             data: function () {
                 return {
                     available: {
-                        columns: [
-                            {
-                                "index": "id",
-                                "label": "ID",
-                                "type": "integer",
-                                "searchable": false,
-                                "search_field": "in",
-                                "filterable": true,
-                                "filterable_type": null,
-                                "filterable_options": [],
-                                "allow_multiple_values": true,
-                                "sortable": true,
-                                "visibility": true
-                            },
-                            {
-                                "index": "title",
-                                "label": "Subject",
-                                "type": "string",
-                                "searchable": true,
-                                "search_field": "in",
-                                "filterable": true,
-                                "filterable_type": null,
-                                "filterable_options": [],
-                                "allow_multiple_values": true,
-                                "sortable": true,
-                                "visibility": true
-                            },
-                        ],
+                        columns: @json($columns),
                     },
 
                     applied: {
@@ -251,6 +224,9 @@
 
                     this.applied.filters.columns.forEach((column) => {
                         if (column.index === 'all') {
+                            search += `title:${column.value.join(',')};`;
+                            searchFields += `title:like;`;
+
                             return;
                         }
 
