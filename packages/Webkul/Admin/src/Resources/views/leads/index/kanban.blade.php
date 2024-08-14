@@ -218,31 +218,36 @@
             },
 
             methods: {
-                get(params = {}) {
-                    let search = '';
-                    let searchFields = '';
+                get(requestedParams = {}) {
+                    let params = {
+                        search: '',
+                        searchFields: '',
+                        pipeline_id: "{{ request('pipeline_id') }}",
+                        limit: 10,
+                    };
 
                     this.applied.filters.columns.forEach((column) => {
                         if (column.index === 'all') {
-                            search += `title:${column.value.join(',')};`;
-                            searchFields += `title:like;`;
+                            if (! column.value.length) {
+                                return;
+                            }
+
+                            params['search'] += `title:${column.value.join(',')};`;
+                            params['searchFields'] += `title:like;`;
 
                             return;
                         }
 
-                        search += `${column.index}:${column.value.join(',')};`;
-                        searchFields += `${column.index}:${column.search_field};`;
+                        params['search'] += `${column.index}:${column.value.join(',')};`;
+                        params['searchFields'] += `${column.index}:${column.search_field};`;
                     });
 
                     return this.$axios
                         .get("{{ route('admin.leads.get') }}", {
                             params: {
-                                search,
-                                searchFields,
-                                pipeline_id: "{{ request('pipeline_id') }}",
-                                limit: 10,
-
                                 ...params,
+
+                                ...requestedParams,
                             }
                         })
                         .catch(error => {

@@ -19,7 +19,7 @@
             <x-slot:toggle>
                 <div class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 hover:text-gray-800 focus:outline-none focus:ring-2 dark:border-gray-800 dark:bg-brandColor dark:text-white dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3">
                     <span>
-                        @lang('admin::app.leads.index.kanban.toolbar.filter')
+                        @lang('admin::app.leads.index.kanban.toolbar.filters.filter')
                     </span>
                 </div>
             </x-slot>
@@ -29,7 +29,7 @@
                 <div class="grid gap-3">
                     <div class="flex items-center justify-between">
                         <p class="text-xl font-semibold dark:text-white">
-                            @lang('admin::app.leads.index.kanban.toolbar.filters')
+                            @lang('admin::app.leads.index.kanban.toolbar.filters.filters')
                         </p>
                     </div>
                 </div>
@@ -59,7 +59,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -74,7 +74,7 @@
                                                     <!-- If Allow Multiple Values -->
                                                     <span
                                                         class="text-sm text-gray-400 dark:text-gray-400"
-                                                        v-text="'@lang('admin::app.components.datagrid.filters.select')'"
+                                                        v-text="'@lang('admin::app.leads.index.kanban.toolbar.filters.select')'"
                                                         v-if="column.allow_multiple_values"
                                                     >
                                                     </span>
@@ -82,7 +82,7 @@
                                                     <!-- If Allow Single Value -->
                                                     <span
                                                         class="text-sm text-gray-400 dark:text-gray-400"
-                                                        v-text="column.filterable_options.find((option => option.value === getAppliedColumnValues(column.index)))?.label ?? '@lang('admin::app.components.datagrid.filters.select')'"
+                                                        v-text="column.filterable_options.find((option => option.value === getAppliedColumnValues(column.index)))?.label ?? '@lang('admin::app.leads.index.kanban.toolbar.filters.select')'"
                                                         v-else
                                                     >
                                                     </span>
@@ -145,7 +145,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -231,7 +231,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -288,7 +288,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -374,7 +374,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -431,7 +431,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -446,7 +446,7 @@
                                                     <!-- If Allow Multiple Values -->
                                                     <span
                                                         class="text-sm text-gray-400 dark:text-gray-400"
-                                                        v-text="'@lang('admin::app.components.datagrid.filters.select')'"
+                                                        v-text="'@lang('admin::app.leads.index.kanban.toolbar.filters.select')'"
                                                         v-if="column.allow_multiple_values"
                                                     >
                                                     </span>
@@ -454,7 +454,7 @@
                                                     <!-- If Allow Single Value -->
                                                     <span
                                                         class="text-sm text-gray-400 dark:text-gray-400"
-                                                        v-text="column.filterable_options.find((option => option.value === getAppliedColumnValues(column.index)))?.label ?? '@lang('admin::app.components.datagrid.filters.select')'"
+                                                        v-text="column.filterable_options.find((option => option.value === getAppliedColumnValues(column.index)))?.label ?? '@lang('admin::app.leads.index.kanban.toolbar.filters.select')'"
                                                         v-else
                                                     >
                                                     </span>
@@ -511,7 +511,7 @@
                                                 class="cursor-pointer text-xs font-medium leading-6 text-brandColor"
                                                 v-if="hasAnyAppliedColumnValues(column.index)"
                                             >
-                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                @lang('admin::app.leads.index.kanban.toolbar.filters.clear-all')
                                             </p>
                                         </div>
                                     </div>
@@ -575,7 +575,7 @@
                         class="primary-button"
                         @click="applyFilters"
                     >
-                        @lang('admin::app.components.datagrid.toolbar.filter.apply-filters-btn')
+                        @lang('admin::app.leads.index.kanban.toolbar.filters.apply-filters')
                     </button>
                 </div>
             </x-slot>

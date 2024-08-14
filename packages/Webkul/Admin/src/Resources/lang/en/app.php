@@ -1544,9 +1544,29 @@ return [
             ],
 
             'kanban' => [
+                'columns' => [
+                    'contact-person'      => 'Contact Person',
+                    'id'                  => 'ID',
+                    'lead-type'           => 'Lead Type',
+                    'lead-value'          => 'Lead Value',
+                    'sales-person'        => 'Sales Person',
+                    'source'              => 'Source',
+                    'title'               => 'Title',
+                    'tags'                => 'Tags',
+                ],
+
                 'toolbar' => [
-                    'filter'  => 'Filter',
-                    'filters' => 'Filters',
+                    'search' => [
+                        'title' => 'Search',
+                    ],
+
+                    'filters' => [
+                        'apply-filters' => 'Apply Filters',
+                        'clear-all'     => 'Clear All',
+                        'filter'        => 'Filter',
+                        'filters'       => 'Filters',
+                        'select'        => 'Select',
+                    ],
                 ],
             ],
         ],
