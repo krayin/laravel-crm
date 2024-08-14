@@ -1151,8 +1151,12 @@ return [
 
         'webhooks' => [
             'index' => [
-                'title'      => 'Webhooks',
-                'create-btn' => 'Create Webhook',
+                'title'          => 'Webhooks',
+                'create-btn'     => 'Create Webhook',
+                'create-success' => 'Webhook created successfully.',
+                'update-success' => 'Webhook updated successfully.',
+                'delete-success' => 'Webhook deleted successfully.',
+                'delete-failed'  => 'Webhook can not be deleted.',
 
                 'datagrid' => [
                     'id'          => 'ID',
