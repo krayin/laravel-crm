@@ -239,7 +239,7 @@ class LeadDataGrid extends DataGrid
                 'icon'   => 'icon-eye',
                 'title'  => trans('admin::app.leads.index.datagrid.view'),
                 'method' => 'GET',
-                'url'    => fn($row) => route('admin.leads.view', $row->id),
+                'url'    => fn ($row) => route('admin.leads.view', $row->id),
             ]);
         }
 
@@ -248,7 +248,7 @@ class LeadDataGrid extends DataGrid
                 'icon'   => 'icon-delete',
                 'title'  => trans('admin::app.leads.index.datagrid.delete'),
                 'method' => 'delete',
-                'url'    => fn($row) => route('admin.leads.delete', $row->id),
+                'url'    => fn ($row) => route('admin.leads.delete', $row->id),
             ]);
         }
     }

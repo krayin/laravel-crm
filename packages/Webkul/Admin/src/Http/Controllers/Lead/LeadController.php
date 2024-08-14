@@ -3,12 +3,11 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
-use Exception;
-use Illuminate\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -300,14 +299,14 @@ class LeadController extends Controller
         try {
             foreach ($leads as $lead) {
                 $lead = $this->leadRepository->find($lead->id);
-    
+
                 Event::dispatch('lead.update.before', $lead->id);
-    
+
                 $lead->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
-    
+
                 Event::dispatch('lead.update.before', $lead->id);
             }
-    
+
             return response()->json([
                 'message' => trans('admin::app.leads.update-success'),
             ]);
@@ -328,16 +327,16 @@ class LeadController extends Controller
         try {
             foreach ($leads as $lead) {
                 Event::dispatch('lead.delete.before', $lead->id);
-    
+
                 $this->leadRepository->delete($lead->id);
-    
+
                 Event::dispatch('lead.delete.after', $lead->id);
             }
-    
+
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-success'),
             ]);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-failed'),
             ]);
