@@ -129,7 +129,7 @@ class EmailDataGrid extends DataGrid
                 'url'     => route('admin.mail.mass_update', ['folders' => ['inbox']]),
                 'options' => [
                     [
-                        'value' => "trash",
+                        'value' => 'trash',
                         'label' => trans('admin::app.mail.index.datagrid.move-to-inbox'),
                     ],
                 ],

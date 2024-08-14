@@ -10,8 +10,6 @@ class AttributeDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
     public function prepareQueryBuilder(): Builder
     {
@@ -34,7 +32,7 @@ class AttributeDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare columns.
      */
     public function prepareColumns(): void
     {
@@ -66,9 +64,7 @@ class AttributeDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return ucfirst($row->entity_type);
-            },
+            'closure'    => fn ($row) => ucfirst($row->entity_type),
         ]);
 
         $this->addColumn([
@@ -86,44 +82,34 @@ class AttributeDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => false,
             'sortable'   => true,
-            'closure'    => function ($value) {
-                return trans('admin::app.settings.attributes.index.datagrid.'.($value->attribute_type ? 'no' : 'yes'));
-            },
+            'closure'    => fn ($value) => trans('admin::app.settings.attributes.index.datagrid.'.($value->attribute_type ? 'no' : 'yes')),
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.attributes.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.attributes.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.attributes.edit', $row->id),
         ]);
 
         $this->addAction([
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.attributes.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.attributes.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.attributes.delete', $row->id),
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
             'icon'   => 'icon-delete',

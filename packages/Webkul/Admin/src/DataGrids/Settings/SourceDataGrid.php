@@ -54,7 +54,7 @@ class SourceDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.sources.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.sources.edit', $row->id)
+            'url'    => fn ($row) => route('admin.settings.sources.edit', $row->id),
         ]);
 
         $this->addAction([

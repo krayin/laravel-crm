@@ -204,12 +204,12 @@ class ActivityController extends Controller
         try {
             foreach ($activities as $activity) {
                 Event::dispatch('activity.delete.before', $activity->id);
-    
+
                 $this->activityRepository->delete($activity->id);
-    
+
                 Event::dispatch('activity.delete.after', $activity->id);
             }
-    
+
             return response()->json([
                 'message' => trans('admin::app.response.destroy-success'),
             ]);

@@ -1277,8 +1277,14 @@ return [
 
         'attributes' => [
             'index' => [
-                'title'      => 'Attributes',
-                'create-btn' => 'Create Attribute',
+                'title'              => 'Attributes',
+                'create-btn'         => 'Create Attribute',
+                'create-success'     => 'Attributes created successfully.',
+                'update-success'     => 'Attributes updated successfully.',
+                'delete-success'     => 'Attributes deleted successfully.',
+                'delete-failed'      => 'Attributes can not be deleted.',
+                'user-define-error'  => 'Can not delete system attribute.',
+                'mass-delete-failed' => 'System attributes can not be deleted.',
 
                 'datagrid' => [
                     'yes'         => 'Yes',

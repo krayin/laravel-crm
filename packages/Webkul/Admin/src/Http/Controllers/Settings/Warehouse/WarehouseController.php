@@ -7,11 +7,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\DataGrids\Settings\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
-use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 
 class WarehouseController extends Controller
 {

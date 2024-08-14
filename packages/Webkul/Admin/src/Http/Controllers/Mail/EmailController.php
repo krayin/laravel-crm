@@ -236,18 +236,18 @@ class EmailController extends Controller
         try {
             foreach ($leads as $lead) {
                 Event::dispatch('email.update.before', $lead->id);
-    
+
                 $this->emailRepository->update([
                     'folders' => request('folders'),
                 ], $lead->id);
-    
+
                 Event::dispatch('email.update.after', $lead->id);
             }
-    
+
             return response()->json([
                 'message' => trans('admin::app.mail.mass-update-success'),
             ]);
-        } catch(Exception) {
+        } catch (Exception) {
             return response()->json([
                 'message' => trans('admin::app.mail.mass-update-success'),
             ], 400);
@@ -312,20 +312,20 @@ class EmailController extends Controller
         try {
             foreach ($mails as $email) {
                 Event::dispatch('email.'.$massDestroyRequest->input('type').'.before', $email->id);
-    
+
                 if ($massDestroyRequest->input('type') == 'trash') {
                     $this->emailRepository->update(['folders' => ['trash']], $email->id);
                 } else {
                     $this->emailRepository->delete($email->id);
                 }
-    
+
                 Event::dispatch('email.'.$massDestroyRequest->input('type').'.after', $email->id);
             }
-    
+
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);
-        } catch(\Exception $e) {
+        } catch (\Exception $e) {
             return response()->json([
                 'message' => trans('admin::app.mail.delete-success'),
             ]);
