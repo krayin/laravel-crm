@@ -1,6 +1,6 @@
 @unless ($breadcrumbs->isEmpty())
     <nav aria-label="">
-        <ol class="flex">
+        <ol class="flex flex-wrap">
             @foreach ($breadcrumbs as $breadcrumb)
                 @if (
                     $breadcrumb->url 

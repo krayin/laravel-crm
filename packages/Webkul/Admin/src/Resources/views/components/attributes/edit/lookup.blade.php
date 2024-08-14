@@ -10,7 +10,7 @@
     >
         <x-admin::form.control-group.control
             type="text"
-            placeholder="@lang('admin::app.common.start-typing')"
+            placeholder="@lang('admin::app.components.attributes.lookup.click-to-add')"
         />
     </v-lookup-component>
 @endif
@@ -27,7 +27,7 @@
             >
                 <!-- Input-like div -->
                 <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
-                    @{{ selectedItem ? selectedItem : "@lang('Start Typing...')" }}
+                    @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
                 </div>
                 
                 <!-- Arrow down icon -->
@@ -64,7 +64,7 @@
                         v-model.lazy="searchTerm"
                         v-debounce="500"
                         class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
-                        placeholder="@lang('Search...')"
+                        placeholder="@lang('admin::app.components.attributes.lookup.search')"
                         ref="searchInput"
                         @keyup="search"
                     />
@@ -102,7 +102,7 @@
                         v-if="searchedResults.length === 0"
                         class="px-4 py-2 text-center text-gray-500"
                     >
-                        @lang('admin::app.mail.view.no-result-found')
+                        @lang('admin::app.components.attributes.lookup.no-result-found')
                     </li>
                 </ul>
             </div>

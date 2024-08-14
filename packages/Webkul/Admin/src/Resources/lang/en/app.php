@@ -331,6 +331,14 @@ return [
                 ],
             ],
         ],
+
+        'attributes' => [
+            'lookup' => [
+                'click-to-add'    => 'Click to add',
+                'search'          => 'Search',
+                'no-result-found' => 'No result found',
+            ],
+        ]
     ],
 
     'quotes' => [
@@ -1408,8 +1416,12 @@ return [
                 'schedule_from' => 'Schedule From',
                 'schedule_to'   => 'Schedule To',
                 'title'         => 'Title',
+                'is_done'       => 'Is Done',
                 'type'          => 'Type',
                 'update'        => 'Update',
+                'call'         => 'Call',
+                'meeting'      => 'Meeting',
+                'lunch'        => 'Lunch',
             ],
         ],
 

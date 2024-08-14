@@ -14,11 +14,6 @@
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
                     <x-admin::breadcrumbs name="leads" />
-
-                    <div class="flex gap-1">
-                        <button class="icon-left-arrow rtl:icon-right-arrow rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
-                        <button class="icon-right-arrow rtl:icon-right-arrow rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
-                    </div>
                 </div>
 
                 <!-- Tags -->

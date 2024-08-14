@@ -12,12 +12,10 @@
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
-                    <x-admin::breadcrumbs name="settings.warehouses.view" :entity="$warehouse" />
-
-                    <div class="flex gap-1">
-                        <button class="icon-left-arrow rtl:icon-right-arrow rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
-                        <button class="icon-right-arrow rtl:icon-right-arrow rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
-                    </div>
+                    <x-admin::breadcrumbs
+                        name="settings.warehouses.view"
+                        :entity="$warehouse"
+                    />
                 </div>
 
                 <!-- Tags -->

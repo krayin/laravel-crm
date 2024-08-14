@@ -124,7 +124,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'closure'    => fn ($row) => trans('admin::app.activities.'.$row->type),
+            'closure'    => fn ($row) => trans('admin::app.activities.index.datagrid.'.$row->type),
         ]);
 
         $this->addColumn([
