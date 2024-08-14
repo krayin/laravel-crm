@@ -62,7 +62,7 @@
                                         :class="[
                                             'inline-block px-4 py-2 rounded-t-lg border-b-2',
                                             activeTab === tab.id
-                                            ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
+                                            ? 'text-brandColor border-brandColor dark:text-blue-500 dark:border-brandColor'
                                             : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
                                         ]"
                                         @click="scrollToSection(tab.id)"
@@ -203,8 +203,6 @@
                      * @returns {void}
                      */
                     scrollToSection(tabId) {
-                        this.activeTab = tabId;
-
                         const section = document.getElementById(tabId);
 
                         if (section) {
