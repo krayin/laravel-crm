@@ -146,9 +146,7 @@ class LeadDataGrid extends DataGrid
             'label'    => trans('admin::app.leads.index.datagrid.lead-value'),
             'type'     => 'string',
             'sortable' => true,
-            'closure'  => function ($row) {
-                return core()->formatBasePrice($row->lead_value, 2);
-            },
+            'closure'  => fn ($row) => core()->formatBasePrice($row->lead_value, 2),
         ]);
 
         $this->addColumn([

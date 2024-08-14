@@ -106,9 +106,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return core()->formatBasePrice($row->sub_total, 2);
-            },
+            'closure'    => fn ($row) => core()->formatBasePrice($row->sub_total, 2),
         ]);
 
         $this->addColumn([
@@ -117,9 +115,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return core()->formatBasePrice($row->discount_amount, 2);
-            },
+            'closure'    => fn ($row) => core()->formatBasePrice($row->discount_amount, 2),
         ]);
 
         $this->addColumn([
@@ -128,9 +124,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
-            'closure'    => function ($row) {
-                return core()->formatBasePrice($row->tax_amount, 2);
-            },
+            'closure'    => fn ($row) => core()->formatBasePrice($row->tax_amount, 2),
         ]);
 
         $this->addColumn([
@@ -139,9 +133,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => false,
-            'closure'    => function ($row) {
-                return core()->formatBasePrice($row->adjustment_amount, 2);
-            },
+            'closure'    => fn ($row) => core()->formatBasePrice($row->adjustment_amount, 2),
         ]);
 
         $this->addColumn([
@@ -150,9 +142,7 @@ class QuoteDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return core()->formatBasePrice($row->grand_total, 2);
-            },
+            'closure'    => fn ($row) => core()->formatBasePrice($row->grand_total, 2),
         ]);
 
         $this->addColumn([
@@ -162,9 +152,7 @@ class QuoteDataGrid extends DataGrid
             'searchable' => false,
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->expired_at, 'd M Y');
-            },
+            'closure'    => fn ($row) => core()->formatDate($row->expired_at, 'd M Y'),
         ]);
 
         $this->addColumn([
@@ -174,9 +162,7 @@ class QuoteDataGrid extends DataGrid
             'searchable' => false,
             'sortable'   => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
+            'closure'    => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 
