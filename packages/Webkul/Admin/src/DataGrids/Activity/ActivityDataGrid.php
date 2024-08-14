@@ -6,18 +6,10 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\DataGrid\DataGrid;
-use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
 {
     use ProvideDropdownOptions;
-
-    /**
-     * Create class instance.
-     *
-     * @return void
-     */
-    public function __construct(protected UserRepository $userRepository) {}
 
     /**
      * Prepare query builder.
@@ -38,29 +30,13 @@ class ActivityDataGrid extends DataGrid
             ->leftJoin('lead_activities', 'activities.id', '=', 'lead_activities.activity_id')
             ->leftJoin('leads', 'lead_activities.lead_id', '=', 'leads.id')
             ->leftJoin('users', 'activities.user_id', '=', 'users.id')
-            ->whereIn('type', ['call', 'meeting', 'lunch']);
-
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $queryBuilder->where(function ($query) {
-                    $userIds = $this->userRepository->getCurrentUserGroupsUserIds();
-
+            ->whereIn('type', ['call', 'meeting', 'lunch'])
+            ->where(function ($query) {
+                if ($userIds = bouncer()->getAuthorizedUserIds()) {
                     $query->whereIn('activities.user_id', $userIds)
                         ->orWhereIn('activity_participants.user_id', $userIds);
-
-                    return $query;
-                });
-            } else {
-                $queryBuilder->where(function ($query) use ($currentUser) {
-                    $query->where('activities.user_id', $currentUser->id)
-                        ->orWhere('activity_participants.user_id', $currentUser->id);
-
-                    return $query;
-                });
-            }
-        }
+                }
+            });
 
         $this->addFilter('id', 'activities.id');
         $this->addFilter('title', 'activities.title');

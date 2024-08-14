@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-6f73b4ea.css",
+    "file": "assets/app-295c3d5f.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -239,14 +239,6 @@
   "src/Resources/assets/fonts/icomoon.woff": {
     "file": "assets/icomoon-81aea726.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
-  },
-  "src/Resources/assets/images/attributes.svg": {
-    "file": "assets/attributes-533b76da.svg",
-    "src": "src/Resources/assets/images/attributes.svg"
-  },
-  "src/Resources/assets/images/email-template.svg": {
-    "file": "assets/email-template-477fa9ca.svg",
-    "src": "src/Resources/assets/images/email-template.svg"
   },
   "src/Resources/assets/images/empty-placeholders/activities.svg": {
     "file": "assets/activities-94382bdd.svg",
@@ -284,53 +276,9 @@
     "file": "assets/products-0ca7baa4.svg",
     "src": "src/Resources/assets/images/empty-placeholders/products.svg"
   },
-  "src/Resources/assets/images/groups.svg": {
-    "file": "assets/groups-f6b706ad.svg",
-    "src": "src/Resources/assets/images/groups.svg"
-  },
   "src/Resources/assets/images/logo.svg": {
     "file": "assets/logo-179afdfc.svg",
     "src": "src/Resources/assets/images/logo.svg"
-  },
-  "src/Resources/assets/images/pipelines.svg": {
-    "file": "assets/pipelines-616800fc.svg",
-    "src": "src/Resources/assets/images/pipelines.svg"
-  },
-  "src/Resources/assets/images/roles.svg": {
-    "file": "assets/roles-60db8071.svg",
-    "src": "src/Resources/assets/images/roles.svg"
-  },
-  "src/Resources/assets/images/sources.svg": {
-    "file": "assets/sources-2a2b0097.svg",
-    "src": "src/Resources/assets/images/sources.svg"
-  },
-  "src/Resources/assets/images/tags.svg": {
-    "file": "assets/tags-52bec914.svg",
-    "src": "src/Resources/assets/images/tags.svg"
-  },
-  "src/Resources/assets/images/types.svg": {
-    "file": "assets/types-942b9769.svg",
-    "src": "src/Resources/assets/images/types.svg"
-  },
-  "src/Resources/assets/images/user.svg": {
-    "file": "assets/user-7f73a800.svg",
-    "src": "src/Resources/assets/images/user.svg"
-  },
-  "src/Resources/assets/images/warehouses.svg": {
-    "file": "assets/warehouses-b4dc8711.svg",
-    "src": "src/Resources/assets/images/warehouses.svg"
-  },
-  "src/Resources/assets/images/webforms.svg": {
-    "file": "assets/webforms-5a291d8f.svg",
-    "src": "src/Resources/assets/images/webforms.svg"
-  },
-  "src/Resources/assets/images/webhooks.svg": {
-    "file": "assets/webhooks-aac73200.svg",
-    "src": "src/Resources/assets/images/webhooks.svg"
-  },
-  "src/Resources/assets/images/workflow.svg": {
-    "file": "assets/workflow-4b99c85c.svg",
-    "src": "src/Resources/assets/images/workflow.svg"
   },
   "src/Resources/assets/js/app.css": {
     "file": "assets/app-06ae2a33.css",
@@ -387,7 +335,7 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
-    "file": "assets/app-c4c7bd3b.js",
+    "file": "assets/app-df64e7ea.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }

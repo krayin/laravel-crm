@@ -15,7 +15,6 @@ use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Lead\Repositories\LeadRepository;
-use Webkul\User\Repositories\UserRepository;
 
 class EmailController extends Controller
 {
@@ -64,24 +63,15 @@ class EmailController extends Controller
     public function view()
     {
         $email = $this->emailRepository
-            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'person'])
+            ->with(['emails', 'attachments', 'emails.attachments', 'lead', 'lead.person', 'lead.tags', 'lead.source', 'lead.type', 'person'])
             ->findOrFail(request('id'));
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission == 'individual') {
-            $results = $this->leadRepository->findWhere([
-                ['id', '=', $email->lead_id],
-                ['user_id', '=', $currentUser->id],
-            ]);
-        } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
             $results = $this->leadRepository->findWhere([
                 ['id', '=', $email->lead_id],
                 ['user_id', 'IN', $userIds],
             ]);
-        } elseif ($currentUser->view_permission == 'global') {
+        } else {
             $results = $this->leadRepository->findWhere([
                 ['id', '=', $email->lead_id],
             ]);
@@ -191,16 +181,10 @@ class EmailController extends Controller
         }
 
         if (request()->ajax()) {
-            $response = [
-                'data'    => new EmailResource($email),
+            return response()->json([
+                'data'    => new EmailResource($email->refresh()),
                 'message' => trans('admin::app.mail.update-success'),
-            ];
-
-            if ($leadId = request('lead_id')) {
-                $response['lead'] = $this->leadRepository->find($leadId);
-            }
-
-            return response()->json($response);
+            ]);
         }
 
         session()->flash('success', trans('admin::app.mail.update-success'));

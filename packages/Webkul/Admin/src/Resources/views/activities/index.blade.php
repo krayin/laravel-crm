@@ -17,9 +17,9 @@
             </div>
 
             <div class="flex gap-2">
-                <i class="icon-calender cursor-pointer rounded p-1"></i>
+                <i class="icon-kanban cursor-pointer rounded p-2 text-2xl"></i>
     
-                <i class="icon-calender cursor-pointe rounded p-1"></i>
+                <i class="icon-calender cursor-pointe rounded p-2 text-2xl"></i>
             </div>
         </div>
 
@@ -49,14 +49,14 @@
 
                 <div class="flex gap-2">
                     <i
-                        class="icon-calender cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-700 text-gray-300': viewType == 'table'}"
+                        class="icon-kanban p-1 text-2xl cursor-pointer rounded"
+                        :class="{'bg-gray-200 text-gray-800': viewType == 'table'}"
                         @click="toggleView('table')"
                     ></i>
         
                     <i
-                        class="icon-calender cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-700 text-gray-300': viewType == 'calendor'}"
+                        class="icon-calender p-1 text-2xl cursor-pointer rounded"
+                        :class="{'bg-gray-200 text-gray-800': viewType == 'calendor'}"
                         @click="toggleView('calendor')"
                     ></i>
                 </div>

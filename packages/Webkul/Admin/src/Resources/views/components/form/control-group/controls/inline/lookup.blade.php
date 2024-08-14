@@ -8,7 +8,7 @@
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
-            <div class="shimmer h-5 w-48"></div>
+            <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
 </v-inline-look-edit>

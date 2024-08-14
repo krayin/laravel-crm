@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
+use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -13,7 +14,6 @@ use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\StageRepository;
-use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
 {
@@ -182,20 +182,11 @@ class LeadController extends Controller
     {
         $lead = $this->leadRepository->findOrFail($id);
 
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission != 'global') {
-            if ($currentUser->view_permission == 'group') {
-                $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
-                if (! in_array($lead->user_id, $userIds)) {
-                    return redirect()->route('admin.leads.index');
-                }
-            } else {
-                if ($lead->user_id != $currentUser->id) {
-                    return redirect()->route('admin.leads.index');
-                }
-            }
+        if (
+            $userIds = bouncer()->getAuthorizedUserIds()
+            && ! in_array($lead->user_id, $userIds)
+        ) {
+            return redirect()->route('admin.leads.index');
         }
 
         return view('admin::leads.view', compact('lead'));
@@ -211,23 +202,7 @@ class LeadController extends Controller
     {
         Event::dispatch('lead.update.before', $id);
 
-        $data = request()->all();
-
-        if (isset($data['lead_pipeline_stage_id'])) {
-            $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
-
-            $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
-        } else {
-            $pipeline = $this->pipelineRepository->getDefaultPipeline();
-
-            $stage = $pipeline->stages()->first();
-
-            $data['lead_pipeline_id'] = $pipeline->id;
-
-            $data['lead_pipeline_stage_id'] = $stage->id;
-        }
-
-        $lead = $this->leadRepository->update($data, $id);
+        $lead = $this->leadRepository->update(request()->all(), $id);
 
         Event::dispatch('lead.update.after', $lead);
 
@@ -238,42 +213,26 @@ class LeadController extends Controller
         } else {
             session()->flash('success', trans('admin::app.leads.update-success'));
 
-            if (request()->has('closed_at')) {
-                return redirect()->back();
-            } else {
-                return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
-            }
+            return redirect()->route('admin.leads.index', $lead->lead_pipeline_id);
         }
     }
 
     /**
      * Search person results.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function search()
+    public function search(): AnonymousResourceCollection
     {
-        $currentUser = auth()->guard('user')->user();
-
-        if ($currentUser->view_permission == 'global') {
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-            ]);
-        } elseif ($currentUser->view_permission == 'individual') {
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-                ['user_id', '=', $currentUser->id],
-            ]);
-        } elseif ($currentUser->view_permission == 'group') {
-            $userIds = app(UserRepository::class)->getCurrentUserGroupsUserIds();
-
-            $results = $this->leadRepository->findWhere([
-                ['title', 'like', '%'.urldecode(request()->input('query')).'%'],
-                ['user_id', 'IN', $userIds],
-            ]);
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhereIn('user_id', $userIds);
+        } else {
+            $results = $this->leadRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->all();
         }
 
-        return response()->json($results);
+        return LeadResource::collection($results);
     }
 
     /*
@@ -294,11 +253,11 @@ class LeadController extends Controller
             Event::dispatch('lead.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.lead')]),
+                'message' => trans('admin::app.leads.destroy-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.leads.lead')]),
+                'message' => trans('admin::app.leads.destroy-failed'),
             ], 400);
         }
     }
@@ -323,7 +282,7 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.update-success', ['name' => trans('admin::app.leads.title')]),
+            'message' => trans('admin::app.leads.update-success'),
         ]);
     }
 
@@ -343,7 +302,7 @@ class LeadController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.leads.title')]),
+            'message' => trans('admin::app.leads.destroy-success'),
         ]);
     }
 }

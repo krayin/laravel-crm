@@ -10,6 +10,14 @@ use Webkul\Core\Eloquent\Repository;
 class QuoteRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'subject',
+        'description',
+    ];
+
+    /**
      * Create a new repository instance.
      *
      * @return void

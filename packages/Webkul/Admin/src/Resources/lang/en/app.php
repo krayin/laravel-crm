@@ -1033,6 +1033,8 @@ return [
                 'title'               => 'Users',
                 'update-success'      => 'User updated successfully.',
                 'user-define-error'   => 'Can not delete system user.',
+                'active'              => 'Active',
+                'inactive'            => 'Inactive',
 
                 'datagrid' => [
                     'active'        => 'Active',
@@ -1396,27 +1398,26 @@ return [
                 'type'          => 'Type',
                 'update'        => 'Update',
             ],
+        ],
 
-            'edit' => [
-                'title'           => 'Edit Activity',
-                'back-btn'        => 'Back',
-                'save-btn'        => 'Save Activity',
-                'title'           => 'Title',
-                'type'            => 'Activity Type',
-                'call'            => 'Call',
-                'meeting'         => 'Meeting',
-                'lunch'           => 'Lunch',
-                'schedule_to'     => 'Schedule To',
-                'schedule_from'   => 'Schedule From',
-                'location'        => 'Location',
-                'comment'         => 'Comment',
-                'lead'            => 'Lead',
-                'participants'    => 'Participants',
-                'general'         => 'General',
-                'persons'         => 'Persons',
-                'no-result-found' => 'Records not found with same name.',
-                'users'           => 'Users',
-            ],
+        'edit' => [
+            'title'           => 'Edit Activity',
+            'back-btn'        => 'Back',
+            'save-btn'        => 'Save Activity',
+            'type'            => 'Activity Type',
+            'call'            => 'Call',
+            'meeting'         => 'Meeting',
+            'lunch'           => 'Lunch',
+            'schedule_to'     => 'Schedule To',
+            'schedule_from'   => 'Schedule From',
+            'location'        => 'Location',
+            'comment'         => 'Comment',
+            'lead'            => 'Lead',
+            'participants'    => 'Participants',
+            'general'         => 'General',
+            'persons'         => 'Persons',
+            'no-result-found' => 'Records not found.',
+            'users'           => 'Users',
         ],
 
         'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
@@ -1448,6 +1449,7 @@ return [
                 'message'       => 'Message',
                 'draft'         => 'Draft',
             ],
+
             'datagrid' => [
                 'id'            => 'ID',
                 'from'          => 'From',
@@ -1519,7 +1521,7 @@ return [
         'create-success'    => 'Lead created successfully.',
         'update-success'    => 'Lead updated successfully.',
         'destroy-success'   => 'Lead deleted successfully.',
-        'delete-failed'     => 'Lead can not be deleted.',
+        'destroy-failed'    => 'Lead can not be deleted.',
 
         'index' => [
             'title'      => 'Leads',
@@ -1585,7 +1587,7 @@ return [
                 'amount'       => 'Amount',
                 'action'       => 'Action',
                 'add-more'     => 'Add More',
-                '[total'       => 'Total',
+                'total'        => 'Total',
             ],
         ],
 
@@ -1609,6 +1611,21 @@ return [
                 'edit'            => 'Edit',
                 'download'        => 'Download',
                 'destroy-success' => 'Quote deleted successfully.',
+                'empty-title'     => 'No Quotes Found',
+                'empty-info'      => 'No Quotes Found for this Lead',
+            ],
+
+            'products' => [
+                'product-name' => 'Product Name',
+                'quantity'     => 'quantity',
+                'price'        => 'Price',
+                'amount'       => 'Amount',
+                'action'       => 'Action',
+                'add-more'     => 'Add More',
+                'total'        => 'Total',
+                'empty-title'  => 'No Products Found',
+                'empty-info'   => 'No Products Found for this Lead',
+                'add-product'  => 'Add Product',
             ],
 
             'persons' => [
