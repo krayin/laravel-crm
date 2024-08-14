@@ -77,7 +77,7 @@ Breadcrumbs::for('activities', function (BreadcrumbTrail $trail) {
 // Dashboard > activities > Edit Activity
 Breadcrumbs::for('activities.edit', function (BreadcrumbTrail $trail, $activity) {
     $trail->parent('activities');
-    $trail->push(trans('admin::app.activities.edit-title'), route('admin.activities.edit', $activity->id));
+    $trail->push(trans('admin::app.activities.edit.title'), route('admin.activities.edit', $activity->id));
 });
 
 // Dashboard > Contacts
