@@ -3,12 +3,15 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\LeadForm;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -277,13 +280,10 @@ class LeadController extends Controller
         return LeadResource::collection($results);
     }
 
-    /*
+    /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $this->leadRepository->findOrFail($id);
 
@@ -306,21 +306,19 @@ class LeadController extends Controller
 
     /**
      * Mass Update the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massUpdate()
+    public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $data = request()->all();
+        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
-        foreach ($data['rows'] as $leadId) {
-            $lead = $this->leadRepository->find($leadId);
+        foreach ($leads as $lead) {
+            $lead = $this->leadRepository->find($lead->id);
 
-            Event::dispatch('lead.update.before', $leadId);
+            Event::dispatch('lead.update.before', $lead->id);
 
-            $lead->update(['lead_pipeline_stage_id' => $data['value']]);
+            $lead->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
 
-            Event::dispatch('lead.update.before', $leadId);
+            Event::dispatch('lead.update.before', $lead->id);
         }
 
         return response()->json([
@@ -330,17 +328,17 @@ class LeadController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $leadId) {
-            Event::dispatch('lead.delete.before', $leadId);
+        $leads = $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-            $this->leadRepository->delete($leadId);
+        foreach ($leads as $lead) {
+            Event::dispatch('lead.delete.before', $lead->id);
 
-            Event::dispatch('lead.delete.after', $leadId);
+            $this->leadRepository->delete($lead->id);
+
+            Event::dispatch('lead.delete.after', $lead->id);
         }
 
         return response()->json([
