@@ -96,6 +96,7 @@
                             :label="trans('admin::app.activities.edit.comment')"
                             :placeholder="trans('admin::app.activities.edit.comment')"
                         />
+                        
                         <x-admin::form.control-group.error control-name="comment" />
                     </x-admin::form.control-group>
 
@@ -174,6 +175,7 @@
                                 :label="trans('admin::app.activities.edit.title')"
                                 :placeholder="trans('admin::app.activities.edit.title')"
                             />
+
                             <x-admin::form.control-group.error control-name="title" />
                         </x-admin::form.control-group>
     
@@ -223,6 +225,7 @@
                                 :label="trans('admin::app.activities.edit.location')"
                                 :placeholder="trans('admin::app.activities.edit.location')"
                             />
+
                             <x-admin::form.control-group.error control-name="location" />
                         </x-admin::form.control-group>
                     </x-slot>
