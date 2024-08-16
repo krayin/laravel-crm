@@ -443,6 +443,10 @@
                 background-color: #374151 !important;
                 color: #FFFFFF !important;
             }
+
+            .vuecal__event {
+                height: auto !important;
+            }
         </style>
     @endPushOnce
 </x-admin::layouts>

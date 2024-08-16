@@ -10,7 +10,7 @@
     >
         <x-admin::form.control-group.control
             type="text"
-            placeholder="@lang('admin::app.components.attributes.lookup.click-to-add')"
+            :placeholder="trans('admin::app.components.attributes.lookup.click-to-add')"
         />
     </v-lookup-component>
 @endif
@@ -27,7 +27,7 @@
             >
                 <!-- Input Container -->
                 <div class="relative h-10 rounded border p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
-                    @{{ selectedItem ? selectedItem : "@lang('Start Typing...')" }}
+                    @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
                 </div>
                 
                 <!-- Arrow down icon -->

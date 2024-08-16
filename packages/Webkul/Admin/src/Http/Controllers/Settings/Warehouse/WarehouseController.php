@@ -113,7 +113,7 @@ class WarehouseController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(AttributeForm $request, int $id): RedirectResponse
+    public function update(AttributeForm $request, int $id): RedirectResponse|JsonResponse
     {
         Event::dispatch('settings.warehouse.update.before', $id);
 

@@ -338,7 +338,7 @@ return [
                 'search'          => 'Search',
                 'no-result-found' => 'No result found',
             ],
-        ]
+        ],
     ],
 
     'quotes' => [
@@ -1423,9 +1423,9 @@ return [
                 'is_done'       => 'Is Done',
                 'type'          => 'Type',
                 'update'        => 'Update',
-                'call'         => 'Call',
-                'meeting'      => 'Meeting',
-                'lunch'        => 'Lunch',
+                'call'          => 'Call',
+                'meeting'       => 'Meeting',
+                'lunch'         => 'Lunch',
             ],
         ],
 
