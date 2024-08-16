@@ -1,12 +1,24 @@
 {
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-1183b73e.css",
+    "file": "assets/app-ddc49d46.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
-  "src/Resources/assets/fonts/bagisto-installer.woff": {
-    "file": "assets/bagisto-installer-974e4842.woff",
-    "src": "src/Resources/assets/fonts/bagisto-installer.woff"
+  "src/Resources/assets/fonts/icomoon.eot": {
+    "file": "assets/icomoon-1bcfcf1d.eot",
+    "src": "src/Resources/assets/fonts/icomoon.eot"
+  },
+  "src/Resources/assets/fonts/icomoon.svg": {
+    "file": "assets/icomoon-c96ab384.svg",
+    "src": "src/Resources/assets/fonts/icomoon.svg"
+  },
+  "src/Resources/assets/fonts/icomoon.ttf": {
+    "file": "assets/icomoon-c6be70b2.ttf",
+    "src": "src/Resources/assets/fonts/icomoon.ttf"
+  },
+  "src/Resources/assets/fonts/icomoon.woff": {
+    "file": "assets/icomoon-81aea726.woff",
+    "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/installer/favicon.ico": {
     "file": "assets/favicon-a4003609.ico",

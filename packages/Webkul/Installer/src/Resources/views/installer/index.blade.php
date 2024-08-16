@@ -114,10 +114,10 @@
         ];
     @endphp
 
-    <body>
+    <body class="h-full font-inter dark:bg-gray-950">
         <div
             id="app"
-            class="container-fluide fixed w-full"
+            class="fixed w-full"
         >
             <div class="flex [&amp;>*]:w-[50%] gap-12 justify-center items-center">
                 <!-- Vue Component -->
@@ -155,7 +155,7 @@
                                     <template v-if="stepStates.start !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.start === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.start === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -168,11 +168,14 @@
                                 </div>
 
                                 <!-- Server Environment -->
-                                <div :class="[stepStates.systemRequirements == 'active' ? 'font-bold' : '']">
+                                <div 
+                                    class="flex items-center"
+                                    :class="[stepStates.systemRequirements == 'active' ? 'font-bold' : '']"
+                                >
                                     <template v-if="stepStates.systemRequirements !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.systemRequirements === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.systemRequirements === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -189,7 +192,7 @@
                                     <template v-if="stepStates.envDatabase !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.envDatabase === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.envDatabase === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -208,7 +211,7 @@
                                     <template v-if="stepStates.readyForInstallation !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.readyForInstallation === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.readyForInstallation === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -225,7 +228,7 @@
                                     <template v-if="stepStates.createAdmin !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.createAdmin === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.createAdmin === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -242,7 +245,7 @@
                                     <template v-if="stepStates.installationCompleted !== 'complete'">
                                         <span
                                             class="text-xl"
-                                            :class="stepStates.installationCompleted === 'pending' ? 'icon-checkbox-normal' : 'icon-right'"
+                                            :class="stepStates.installationCompleted === 'pending' ? 'icon-checkbox-outline' : 'icon-right-arrow'"
                                         >
                                         </span>
                                     </template>
@@ -258,8 +261,9 @@
 
                         <p class="mb-6 w-full place-self-end text-left">
                             <a
-                                class="bg-white text-blue-600 underline"
-                                href="https://krayin.com/en/"
+                                class="bg-white text-brandColor underline"
+                                href="https://krayincrm.com/"
+                                target="_blank"
                             >
                                 @lang('installer::app.installer.index.krayin')
                             </a>
@@ -267,8 +271,9 @@
                             <span>@lang('installer::app.installer.index.krayin-info')</span>
 
                             <a
-                                class="bg-white text-blue-600 underline"
+                                class="bg-white text-brandColor underline"
                                 href="https://webkul.com/"
+                                target="_blank"
                             >
                                 @lang('installer::app.installer.index.webkul')
                             </a>
@@ -279,7 +284,7 @@
                 <!-- Right Side Components -->
                 <!-- Start -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white"
                     v-if="currentStep == 'start'"
                 >
                     <x-installer::form
@@ -357,7 +362,7 @@
 
                 <!-- Systme Requirements -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"   
+                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"   
                     v-if="currentStep == 'systemRequirements'"
                 >
                     <div class="flex items-center justify-between gap-2.5 border-b border-gray-300 px-4 py-3">
@@ -378,7 +383,7 @@
                         @foreach ($requirements['requirements'] as $requirement)
                             @foreach ($requirement as $key => $item)
                                 <div class="flex items-center gap-1">
-                                    <span class="{{ $item ? 'icon-tick text-green-500' : 'icon-cross text-red-500' }} text-xl"></span>
+                                    <span class="{{ $item ? 'icon-tick text-green-500' : 'icon-cross-large text-red-500' }} text-xl"></span>
 
                                     <p class="text-sm font-semibold text-gray-600">
                                         @lang('installer::app.installer.index.server-requirements.' . $key)
@@ -401,7 +406,7 @@
 
                     <div class="flex items-center justify-between px-4 py-2.5">
                         <div
-                            class="cursor-pointer text-base font-semibold text-blue-600"
+                            class="cursor-pointer text-base font-semibold text-brandColor"
                             role="button"
                             aria-label="@lang('installer::app.installer.index.back')"
                             tabindex="0"
@@ -411,7 +416,7 @@
                         </div>
 
                         <div
-                            class="{{ $hasRequirement ? 'opacity-50 cursor-not-allowed' : ''}} px-3 py-1.5 bg-blue-600 border border-blue-700 rounded-md text-gray-50 font-semibold cursor-pointer {{ $hasRequirement ?: 'hover:opacity-90' }}"
+                            class="{{ $hasRequirement ? 'opacity-50 cursor-not-allowed' : ''}} px-3 py-1.5 bg-brandColor border border-brandColor rounded-md text-gray-50 font-semibold cursor-pointer {{ $hasRequirement ?: 'hover:opacity-90' }}"
                             @click="nextForm"
                             tabindex="0"
                         >
@@ -422,7 +427,7 @@
 
                 <!-- Environment Configuration Database -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white"
                     v-if="currentStep == 'envDatabase'"
                 >
                     <x-installer::form
@@ -575,7 +580,7 @@
 
                             <div class="flex items-center justify-between px-4 py-2.5">
                                 <div
-                                    class="cursor-pointer text-base font-semibold text-blue-600"
+                                    class="cursor-pointer text-base font-semibold text-brandColor"
                                     role="button"
                                     :aria-label="@lang('installer::app.installer.index.back')"
                                     tabindex="0"
@@ -598,7 +603,7 @@
 
                 <!-- Ready For Installation -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white"
                     v-if="currentStep == 'readyForInstallation'"
                 >
                     <x-installer::form
@@ -629,13 +634,13 @@
 
                                         <div class="grid gap-3">
                                             <div class="flex items-center gap-1 text-sm text-gray-600">
-                                                <span class="icon-right text-xl"></span>
+                                                <span class="icon-right-arrow text-xl"></span>
 
                                                 <p>@lang('installer::app.installer.index.ready-for-installation.create-databsae-table')</p>
                                             </div>
 
                                             <div class="flex items-center gap-1 text-sm text-gray-600">
-                                                <span class="icon-right text-xl"></span>
+                                                <span class="icon-right-arrow text-xl"></span>
 
                                                 <p>@lang('installer::app.installer.index.ready-for-installation.populate-database-table')</p>
                                             </div>
@@ -646,7 +651,7 @@
 
                             <div class="flex items-center justify-between px-4 py-2.5">
                                 <div
-                                    class="cursor-pointer text-base font-semibold text-blue-600"
+                                    class="cursor-pointer text-base font-semibold text-brandColor"
                                     role="button"
                                     :aria-label="@lang('installer::app.installer.index.back')"
                                     tabindex="0"
@@ -657,7 +662,7 @@
 
                                 <button
                                     type="submit"
-                                    class="cursor-pointer rounded-md border border-blue-700 bg-blue-600 px-3 py-1.5 font-semibold text-gray-50 hover:opacity-90"
+                                    class="cursor-pointer rounded-md border border-brandColor bg-brandColor px-3 py-1.5 font-semibold text-gray-50 hover:opacity-90"
                                 >
                                     @lang('installer::app.installer.index.ready-for-installation.start-installation')
                                 </button>
@@ -668,7 +673,7 @@
 
                 <!-- Installation Processing -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white"
                     v-if="currentStep == 'installProgress'"
                 >
                     <div class="flex items-center justify-between gap-2.5 border-b border-gray-300 px-4 py-3">
@@ -686,7 +691,7 @@
                             <div class="grid gap-2.5">
                                 <!-- Spinner -->
                                 <img
-                                    class="text-navyBlue h-5 w-5 animate-spin"
+                                    class="text-brandColor h-5 w-5 animate-spin"
                                     src="{{ installer_vite()->asset('images/installer/spinner.svg', 'installer') }}"
                                     alt="Loading"
                                 />
@@ -701,7 +706,7 @@
 
                 <!-- Environment Configuration .ENV -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border-[1px] border-gray-300 bg-white"
                     v-if="currentStep == 'envConfiguration'"
                 >
                     <x-installer::form
@@ -876,7 +881,7 @@
 
                 <!-- Create Administrator -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"
                     v-if="currentStep == 'createAdmin'"
                 >
                     <x-installer::form
@@ -982,7 +987,7 @@
 
                 <!-- Installation Completed -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white shadow-[0px_8px_10px_0px_rgba(0,0,0,0.05)]"
+                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"
                     v-if="currentStep == 'installationCompleted'"
                 >
                     <div class="flex items-center justify-between gap-2.5 border-b border-gray-300 px-4 py-3">
@@ -1010,7 +1015,7 @@
                                 <div class="flex items-center gap-4">
                                     <a
                                         href="{{ URL('/admin/login')}}"
-                                        class="cursor-pointer rounded-md border border-blue-700 bg-white px-3 py-1.5 font-semibold text-blue-600 hover:opacity-90"
+                                        class="cursor-pointer rounded-md border border-brandColor bg-white px-3 py-1.5 font-semibold text-brandColor hover:opacity-90"
                                     >
                                         @lang('installer::app.installer.index.installation-completed.admin-panel')
                                     </a>
@@ -1022,14 +1027,14 @@
                     <div class="flex items-center justify-between px-4 py-2.5">
                         <a
                             href="https://forums.krayincrm.com/"
-                            class="cursor-pointer text-xs font-semibold text-blue-600"
+                            class="cursor-pointer text-xs font-semibold text-brandColor"
                         >
                             @lang('installer::app.installer.index.installation-completed.krayin-forums')
                         </a>
 
                         <a
                             href="https://krayincrm.com/extensions/"
-                            class="cursor-pointer rounded-md border border-blue-700 bg-white px-3 py-1.5 font-semibold text-blue-600 hover:opacity-90"
+                            class="cursor-pointer rounded-md border border-brandColor bg-white px-3 py-1.5 font-semibold text-brandColor hover:opacity-90"
                         >
                             @lang('installer::app.installer.index.installation-completed.explore-krayin-extensions')
                         </a>
