@@ -1,6 +1,6 @@
 <v-inline-text-edit {{ $attributes }}>
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -15,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center space-x-2"
+                class="flex items-center rounded-xs h-[34px]"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
@@ -26,7 +26,20 @@
                     v-model="inputValue"
                 />
 
-                <span class="rounded border border-transparent pl-[2px]">@{{ inputValue }}</span>
+                <div class="relative flex flex-col items-center group !w-full">
+                    <span class="pl-[2px] rounded border border-transparent truncate w-40">@{{ inputValue }}</span>
+
+                    <div
+                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        v-if="inputValue.length > 20"
+                    >
+                        <span class="relative rounded-md z-10 p-4 text-xs leading-none whitespace-no-wrap text-white bg-black shadow-lg">
+                            @{{ inputValue }}
+                        </span>
+
+                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                    </div>
+                </div>
 
                 <template v-if="allowEdit">
                     <i
@@ -46,7 +59,7 @@
                         type="text"
                         ::id="name"
                         ::name="name"
-                        class="text-normal py-1 pr-16"
+                        class="!py-0 !h-[34px]"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"

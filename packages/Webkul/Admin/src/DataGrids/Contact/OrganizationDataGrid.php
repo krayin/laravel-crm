@@ -61,7 +61,7 @@ class OrganizationDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'persons_count',
-            'label'      => trans('admin::app.datagrid.persons_count'),
+            'label'      => trans('admin::app.contacts.organizations.index.datagrid.persons-count'),
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => false,
@@ -83,9 +83,7 @@ class OrganizationDataGrid extends DataGrid
             'filterable'      => true,
             'filterable_type' => 'date_range',
             'sortable'        => true,
-            'closure'         => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
+            'closure'         => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 
@@ -98,18 +96,14 @@ class OrganizationDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.contacts.organizations.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.contacts.organizations.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.contacts.organizations.edit', $row->id),
         ]);
 
         $this->addAction([
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.contacts.organizations.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.contacts.organizations.delete', $row->id),
         ]);
     }
 

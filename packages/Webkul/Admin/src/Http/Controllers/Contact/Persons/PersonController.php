@@ -145,11 +145,11 @@ class PersonController extends Controller
             Event::dispatch('contacts.person.delete.after', $id);
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.index.person')]),
+                'message' => trans('admin::app.contacts.persons.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed', ['name' => trans('admin::app.contacts.persons.index.person')]),
+                'message' => trans('admin::app.contacts.persons.index.delete-failed'),
             ], 400);
         }
     }
@@ -170,7 +170,7 @@ class PersonController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.contacts.persons.index.title')]),
+            'message' => trans('admin::app.contacts.persons.index.delete-success'),
         ]);
     }
 

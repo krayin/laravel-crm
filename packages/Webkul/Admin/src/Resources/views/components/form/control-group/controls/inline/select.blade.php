@@ -18,7 +18,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[34px] space-x-2"
+                class="flex items-center rounded-xs h-[34px]"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
@@ -29,7 +29,20 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px] rounded border border-transparent">@{{ selectedValue?.name }}</span>
+                <div class="relative flex flex-col items-center group !w-full">
+                    <span class="pl-[2px] rounded border border-transparent truncate w-40">@{{ selectedValue?.name }}</span>
+
+                    <div
+                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        v-if="selectedValue?.name > 20"
+                    >
+                        <span class="relative rounded-md z-10 p-4 text-xs leading-none whitespace-no-wrap text-white bg-black shadow-lg">
+                            @{{ selectedValue?.name }}
+                        </span>
+
+                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                    </div>
+                </div>
 
                 <template v-if="allowEdit">
                     <i

@@ -31,9 +31,9 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
 
         Route::delete('{id}', 'destroy')->name('admin.leads.delete');
 
-        Route::put('mass-update', 'massUpdate')->name('admin.leads.mass_update');
+        Route::post('mass-update', 'massUpdate')->name('admin.leads.mass_update');
 
-        Route::put('mass-destroy', 'massDestroy')->name('admin.leads.mass_delete');
+        Route::post('mass-destroy', 'massDestroy')->name('admin.leads.mass_delete');
 
         Route::get('get/{pipeline_id?}', 'get')->name('admin.leads.get');
 

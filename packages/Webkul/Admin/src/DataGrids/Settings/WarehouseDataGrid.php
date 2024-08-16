@@ -56,18 +56,22 @@ class WarehouseDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'contact_name',
-            'label'    => trans('admin::app.settings.warehouses.index.datagrid.contact-name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'contact_name',
+            'label'      => trans('admin::app.settings.warehouses.index.datagrid.contact-name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'contact_emails',
-            'label'    => trans('admin::app.settings.warehouses.index.datagrid.contact-emails'),
-            'type'     => 'string',
-            'sortable' => false,
-            'closure'  => function ($row) {
+            'index'      => 'contact_emails',
+            'label'      => trans('admin::app.settings.warehouses.index.datagrid.contact-emails'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
+            'closure'    => function ($row) {
                 $emails = json_decode($row->contact_emails, true);
 
                 if ($emails) {

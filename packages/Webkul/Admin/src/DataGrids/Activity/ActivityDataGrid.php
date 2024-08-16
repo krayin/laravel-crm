@@ -87,6 +87,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
@@ -124,15 +125,17 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'closure'    => fn ($row) => trans('admin::app.activities.'.$row->type),
+            'sortable'   => true,
+            'closure'    => fn ($row) => trans('admin::app.activities.index.datagrid.'.$row->type),
         ]);
 
         $this->addColumn([
             'index'      => 'schedule_from',
             'label'      => trans('admin::app.activities.index.datagrid.schedule_from'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->schedule_from),
         ]);
 
@@ -140,8 +143,9 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'schedule_to',
             'label'      => trans('admin::app.activities.index.datagrid.schedule_to'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->schedule_to),
         ]);
 
@@ -149,8 +153,9 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'created_at',
             'label'      => trans('admin::app.activities.index.datagrid.created_at'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
@@ -184,9 +189,10 @@ class ActivityDataGrid extends DataGrid
     {
 
         $this->addMassAction([
+            'icon'   => 'icon-delete',
             'title'  => trans('admin::app.activities.index.datagrid.mass-delete'),
-            'url'    => route('admin.activities.mass_delete'),
             'method' => 'POST',
+            'url'    => route('admin.activities.mass_delete'),
         ]);
 
         $this->addMassAction([
@@ -195,11 +201,10 @@ class ActivityDataGrid extends DataGrid
             'method'  => 'POST',
             'options' => [
                 [
-                    'label' => trans('admin::app.catalog.products.index.datagrid.active'),
+                    'label' => trans('admin::app.activities.index.datagrid.done'),
                     'value' => 1,
-                ],
-                [
-                    'label' => trans('admin::app.catalog.products.index.datagrid.disable'),
+                ], [
+                    'label' => trans('admin::app.activities.index.datagrid.not-done'),
                     'value' => 0,
                 ],
             ],

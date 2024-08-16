@@ -28,7 +28,7 @@ class RoleDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare Columns.
      */
     public function prepareColumns(): void
     {
@@ -85,18 +85,14 @@ class RoleDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.roles.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.roles.edit', $row->id),
         ]);
 
         $this->addAction([
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.roles.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.roles.delete', $row->id),
         ]);
     }
 }

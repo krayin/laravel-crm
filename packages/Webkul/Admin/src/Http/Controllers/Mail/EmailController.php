@@ -2,6 +2,7 @@
 
 namespace Webkul\Admin\Http\Controllers\Mail;
 
+use Exception;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
@@ -10,6 +11,8 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Mail\EmailDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\Email\Mails\Email;
 use Webkul\Email\Repositories\AttachmentRepository;
@@ -225,33 +228,36 @@ class EmailController extends Controller
 
     /**
      * Mass Update the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massUpdate()
+    public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        foreach (request('rows') as $emailId) {
-            Event::dispatch('email.update.before', $emailId);
+        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
-            $this->emailRepository->update([
-                'folders' => request('folders'),
-            ], $emailId);
+        try {
+            foreach ($leads as $lead) {
+                Event::dispatch('email.update.before', $lead->id);
 
-            Event::dispatch('email.update.after', $emailId);
+                $this->emailRepository->update([
+                    'folders' => request('folders'),
+                ], $lead->id);
+
+                Event::dispatch('email.update.after', $lead->id);
+            }
+
+            return response()->json([
+                'message' => trans('admin::app.mail.mass-update-success'),
+            ]);
+        } catch (Exception) {
+            return response()->json([
+                'message' => trans('admin::app.mail.mass-update-success'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.mail.mass-update-success'),
-        ]);
     }
 
-    /*
+    /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse|RedirectResponse
     {
         $email = $this->emailRepository->findOrFail($id);
 
@@ -261,7 +267,7 @@ class EmailController extends Controller
             $parentId = $email->parent_id;
 
             if (request('type') == 'trash') {
-                $data = $this->emailRepository->update([
+                $this->emailRepository->update([
                     'folders' => ['trash'],
                 ], $id);
             } else {
@@ -298,27 +304,31 @@ class EmailController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $emailId) {
-            Event::dispatch('email.'.request('type').'.before', $emailId);
+        $mails = $this->emailRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-            if (request('type') == 'trash') {
-                $this->emailRepository->update([
-                    'folders' => ['trash'],
-                ], $emailId);
-            } else {
-                $this->emailRepository->delete($emailId);
+        try {
+            foreach ($mails as $email) {
+                Event::dispatch('email.'.$massDestroyRequest->input('type').'.before', $email->id);
+
+                if ($massDestroyRequest->input('type') == 'trash') {
+                    $this->emailRepository->update(['folders' => ['trash']], $email->id);
+                } else {
+                    $this->emailRepository->delete($email->id);
+                }
+
+                Event::dispatch('email.'.$massDestroyRequest->input('type').'.after', $email->id);
             }
 
-            Event::dispatch('email.'.request('type').'.after', $emailId);
+            return response()->json([
+                'message' => trans('admin::app.mail.delete-success'),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => trans('admin::app.mail.delete-success'),
+            ]);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.mail.delete-success'),
-        ]);
     }
 }

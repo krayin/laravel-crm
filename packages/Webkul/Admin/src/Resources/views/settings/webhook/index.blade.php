@@ -29,7 +29,7 @@
 
     {!! view_render_event('krayin.admin.settings.webhooks.index.datagrid.before') !!}
 
-    <x-admin::datagrid src="{{ route('admin.settings.webhooks.index') }}" />
+    <x-admin::datagrid :src="route('admin.settings.webhooks.index')" />
 
     {!! view_render_event('krayin.admin.settings.webhooks.index.datagrid.after') !!}
 </x-admin::layouts>

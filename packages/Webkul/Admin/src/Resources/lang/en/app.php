@@ -331,6 +331,14 @@ return [
                 ],
             ],
         ],
+
+        'attributes' => [
+            'lookup' => [
+                'click-to-add'    => 'Click to add',
+                'search'          => 'Search',
+                'no-result-found' => 'No result found',
+            ],
+        ],
     ],
 
     'quotes' => [
@@ -548,14 +556,19 @@ return [
 
         'organizations' => [
             'index' => [
-                'title'      => 'Organizations',
-                'create-btn' => 'Create Organization',
+                'title'          => 'Organizations',
+                'create-btn'     => 'Create Organization',
+                'create-success' => 'Organization created successfully.',
+                'update-success' => 'Organization updated successfully.',
+                'delete-success' => 'Organization deleted successfully.',
+                'delete-failed'  => 'Organization can not be deleted.',
 
                 'datagrid' => [
-                    'delete' => 'Delete',
-                    'edit'   => 'Edit',
-                    'id'     => 'ID',
-                    'name'   => 'Name',
+                    'delete'        => 'Delete',
+                    'edit'          => 'Edit',
+                    'id'            => 'ID',
+                    'name'          => 'Name',
+                    'persons-count' => 'Person Count',
                 ],
             ],
 
@@ -1138,8 +1151,12 @@ return [
 
         'webhooks' => [
             'index' => [
-                'title'      => 'Webhooks',
-                'create-btn' => 'Create Webhook',
+                'title'          => 'Webhooks',
+                'create-btn'     => 'Create Webhook',
+                'create-success' => 'Webhook created successfully.',
+                'update-success' => 'Webhook updated successfully.',
+                'delete-success' => 'Webhook deleted successfully.',
+                'delete-failed'  => 'Webhook can not be deleted.',
 
                 'datagrid' => [
                     'id'          => 'ID',
@@ -1272,8 +1289,14 @@ return [
 
         'attributes' => [
             'index' => [
-                'title'      => 'Attributes',
-                'create-btn' => 'Create Attribute',
+                'title'              => 'Attributes',
+                'create-btn'         => 'Create Attribute',
+                'create-success'     => 'Attributes created successfully.',
+                'update-success'     => 'Attributes updated successfully.',
+                'delete-success'     => 'Attributes deleted successfully.',
+                'delete-failed'      => 'Attributes can not be deleted.',
+                'user-define-error'  => 'Can not delete system attribute.',
+                'mass-delete-failed' => 'System attributes can not be deleted.',
 
                 'datagrid' => [
                     'yes'         => 'Yes',
@@ -1387,7 +1410,8 @@ return [
                 'created_by'    => 'Created By',
                 'edit'          => 'Edit',
                 'id'            => 'ID',
-                'is_done'       => 'Is Done',
+                'done'          => 'Is Done',
+                'not-done'      => 'Not Done',
                 'lead'          => 'Lead',
                 'mass-delete'   => 'Mass Delete',
                 'mass-update'   => 'Mass Update',
@@ -1396,8 +1420,12 @@ return [
                 'schedule_from' => 'Schedule From',
                 'schedule_to'   => 'Schedule To',
                 'title'         => 'Title',
+                'is_done'       => 'Is Done',
                 'type'          => 'Type',
                 'update'        => 'Update',
+                'call'          => 'Call',
+                'meeting'       => 'Meeting',
+                'lunch'         => 'Lunch',
             ],
         ],
 
@@ -1541,6 +1569,9 @@ return [
                 'created-at'          => 'Created At',
                 'no'                  => 'No',
                 'yes'                 => 'Yes',
+                'delete'              => 'Delete',
+                'mass-delete'         => 'Mass Delete',
+                'mass-update'         => 'Mass Update',
             ],
 
             'kanban' => [

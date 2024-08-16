@@ -240,23 +240,23 @@
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
-                                @lang('admin::app.quotes.create.price')
+                                @lang('admin::app.quotes.create.price') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
-                                @lang('admin::app.quotes.create.amount')
+                                @lang('admin::app.quotes.create.amount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
-                                @lang('admin::app.quotes.create.discount')
+                                @lang('admin::app.quotes.create.discount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
-                                @lang('admin::app.quotes.create.tax')
+                                @lang('admin::app.quotes.create.tax') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
                             <x-admin::table.th class="text-right">
-                                @lang('admin::app.quotes.create.total')
+                                @lang('admin::app.quotes.create.total') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
 
                             <x-admin::table.th 
