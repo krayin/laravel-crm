@@ -1,13 +1,13 @@
 {!! view_render_event('admin.leads.view.person.before', ['lead' => $lead]) !!}
 
-<div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4">
+<div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
     <h4 class="flex items-center justify-between font-semibold">
         @lang('admin::app.leads.view.persons.title')
 
         @if (bouncer()->hasPermission('contacts.persons.edit'))
             <a
                 href="{{ route('admin.contacts.persons.edit', $lead->person->id) }}"
-                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100"
+                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                 target="_blank"
             ></a>
         @endif
@@ -48,7 +48,7 @@
                         {{ $email['value'] }}
                     </span>
 
-                    <span class="text-gray-500">
+                    <span class="text-gray-500 dark:text-gray-300">
                         ({{ $email['label'] }})
                     </span>
                 </div>
@@ -60,7 +60,7 @@
                         {{ $contactNumber['value'] }}
                     </span>
 
-                    <span class="text-gray-500">
+                    <span class="text-gray-500 dark:text-gray-300">
                         ({{ $contactNumber['label'] }})
                     </span>
                 </div>
