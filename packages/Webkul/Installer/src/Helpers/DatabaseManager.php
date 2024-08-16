@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
-use Webkul\Installer\Database\Seeders\ProductTableSeeder;
 
 class DatabaseManager
 {
@@ -75,13 +74,11 @@ class DatabaseManager
      */
     public function seeder($data)
     {
-        $data['parameter'] = [
-            'locale'     => $data['parameter']['default_locales'],
-            'currency'    => $data['parameter']['allowed_locales'],
-        ];
-
         try {
-            app(KrayinDatabaseSeeder::class)->run($data['parameter']);
+            app(KrayinDatabaseSeeder::class)->run([
+                'default_locale'     => $data['parameter']['default_locales'],
+                'default_currency'   => $data['parameter']['default_currency'],
+            ]);
 
             $this->storageLink();
         } catch (Exception $e) {

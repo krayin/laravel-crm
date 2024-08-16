@@ -79,32 +79,12 @@ class InstallerController extends Controller
      */
     public function runSeeder()
     {
-        $selectedParameters = request()->selectedParameters;
         $allParameters = request()->allParameters;
-
-        $appLocale = $allParameters['app_locale'] ?? null;
-        $appCurrency = $allParameters['app_currency'] ?? null;
-
-        $allowedLocales = array_unique(
-            array_merge(
-                [($appLocale ?? 'en')],
-                $selectedParameters['allowed_locales']
-            )
-        );
-
-        $allowedCurrencies = array_unique(
-            array_merge(
-                [($appCurrency ?? 'USD')],
-                $selectedParameters['allowed_currencies']
-            )
-        );
 
         $parameter = [
             'parameter' => [
-                'default_locales'    => $appLocale,
-                'default_currency'   => $appCurrency,
-                'allowed_locales'    => $allowedLocales,
-                'allowed_currencies' => $allowedCurrencies,
+                'default_locales'    => $allParameters['app_locale'] ?? null,
+                'default_currency'   => $allParameters['app_currency'] ?? null,
             ],
         ];
 
@@ -119,10 +99,8 @@ class InstallerController extends Controller
 
     /**
      * Admin Configuration Setup.
-     *
-     * @return bool
      */
-    public function adminConfigSetup()
+    public function adminConfigSetup(): bool
     {
         $password = password_hash(request()->input('password'), PASSWORD_BCRYPT, ['cost' => 10]);
 
@@ -139,6 +117,8 @@ class InstallerController extends Controller
                 ]
             );
 
+            $this->smtpConfigSetup();
+
             return true;
         } catch (\Throwable $th) {
             report($th);
@@ -150,10 +130,8 @@ class InstallerController extends Controller
     /**
      * SMTP connection setup for Mail
      */
-    public function smtpConfigSetup()
+    private function smtpConfigSetup()
     {
-        $this->environmentManager->setEnvConfiguration(request()->input());
-
         $filePath = storage_path('installed');
 
         File::put($filePath, 'Your Bagisto App is Successfully Installed');

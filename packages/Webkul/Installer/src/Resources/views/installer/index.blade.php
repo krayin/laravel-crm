@@ -136,7 +136,7 @@
                         <div class="grid gap-4">
                             <img
                                 src="{{ installer_vite()->asset('images/installer/krayin-logo.svg', 'installer') }}"
-                                alt="@lang('installer::app.installer.index.bagisto-logo')"
+                                alt="@lang('installer::app.installer.index.krayin-logo')"
                             >
 
                             <div class="grid gap-1.5">
@@ -259,12 +259,12 @@
                         <p class="mb-6 w-full place-self-end text-left">
                             <a
                                 class="bg-white text-blue-600 underline"
-                                href="https://bagisto.com/en/"
+                                href="https://krayin.com/en/"
                             >
-                                @lang('installer::app.installer.index.bagisto')
+                                @lang('installer::app.installer.index.krayin')
                             </a>
 
-                            <span>@lang('installer::app.installer.index.bagisto-info')</span>
+                            <span>@lang('installer::app.installer.index.krayin-info')</span>
 
                             <a
                                 class="bg-white text-blue-600 underline"
@@ -680,7 +680,7 @@
                     <div class="flex h-[484px] flex-col justify-center gap-4 overflow-y-auto px-7 py-4">
                         <div class="flex flex-col gap-4">
                             <p class="text-lg font-bold text-gray-800">
-                                @lang('installer::app.installer.index.installation-processing.bagisto')
+                                @lang('installer::app.installer.index.installation-processing.krayin')
                             </p>
 
                             <div class="grid gap-2.5">
@@ -692,7 +692,7 @@
                                 />
 
                                 <p class="text-sm text-gray-600">
-                                    @lang('installer::app.installer.index.installation-processing.bagisto-info')
+                                    @lang('installer::app.installer.index.installation-processing.krayin-info')
                                 </p>
                             </div>
                         </div>
@@ -729,10 +729,10 @@
                                     <x-installer::form.control-group.control
                                         type="text"
                                         name="app_name"
-                                        ::value="envData.app_name ?? 'Bagisto'"
+                                        ::value="envData.app_name ?? 'Krayin'"
                                         rules="required"
                                         :label="trans('installer::app.installer.index.environment-configuration.application-name')"
-                                        :placeholder="trans('installer::app.installer.index.environment-configuration.bagisto')"
+                                        :placeholder="trans('installer::app.installer.index.environment-configuration.krayin')"
                                     />
 
                                     <x-installer::form.control-group.error control-name="app_name" />
@@ -858,86 +858,6 @@
                                         <x-installer::form.control-group.error control-name="app_currency" />
                                     </x-installer::form.control-group>
                                 </div>
-
-                                <div class="grid grid-cols-2 gap-2.5">
-                                    <!-- Allowed Locales -->
-                                    <x-installer::form.control-group class="w-full">
-                                        <x-installer::form.control-group.label class="required">
-                                            @lang('installer::app.installer.index.environment-configuration.allowed-locales')
-                                        </x-installer::form.control-group.label>
-
-                                        @foreach ($locales as $key => $locale)
-                                            <x-installer::form.control-group class="!mb-0 flex w-max cursor-pointer select-none items-center gap-1">
-                                                @php
-                                                    $selectedOption = ($key == config('app.locale'));
-                                                @endphp
-
-                                                <x-installer::form.control-group.control
-                                                    type="hidden"
-                                                    :name="$key"
-                                                    :value="(bool) $selectedOption"
-                                                />
-
-                                                <x-installer::form.control-group.control
-                                                    type="checkbox"
-                                                    :id="'allowed_locale[' . $key . ']'"
-                                                    :name="$key"
-                                                    :for="'allowed_locale[' . $key . ']'"
-                                                    value="1"
-                                                    :checked="(bool) $selectedOption"
-                                                    :disabled="(bool) $selectedOption"
-                                                    @change="pushAllowedLocales"
-                                                />
-
-                                                <x-installer::form.control-group.label
-                                                    for="allowed_locale[{{ $key }}]"
-                                                    class="cursor-pointer !text-sm !font-semibold"
-                                                >
-                                                    @lang("installer::app.installer.index.$locale")
-                                                </x-installer::form.control-group.label>
-                                            </x-installer::form.control-group>
-                                        @endforeach
-                                    </x-installer::form.control-group>
-
-                                    <!-- Allowed Currencies -->
-                                    <x-installer::form.control-group class="w-full">
-                                        <x-installer::form.control-group.label class="required">
-                                            @lang('installer::app.installer.index.environment-configuration.allowed-currencies')
-                                        </x-installer::form.control-group.label>
-    
-                                        @foreach ($currencies as $key => $currency)
-                                            <x-installer::form.control-group class="!mb-0 flex w-max cursor-pointer select-none items-center gap-1">
-                                                @php
-                                                    $selectedOption = $key == config('app.currency');
-                                                @endphp
-
-                                                <x-installer::form.control-group.control
-                                                    type="hidden"
-                                                    :name="$key"
-                                                    :value="$selectedOption"
-                                                />
-
-                                                <x-installer::form.control-group.control
-                                                    type="checkbox"
-                                                    :id="'currency[' . $key . ']'"
-                                                    :name="$key"
-                                                    value="1"
-                                                    :for="'currency[' . $key . ']'"
-                                                    :checked="$selectedOption"
-                                                    :disabled="$selectedOption"
-                                                    @change="pushAllowedCurrency"
-                                                />
-
-                                                <x-installer::form.control-group.label
-                                                    for="currency[{{ $key }}]"
-                                                    class="cursor-pointer !text-sm !font-semibold"
-                                                >
-                                                    @lang("installer::app.installer.index.environment-configuration.$currency")
-                                                </x-installer::form.control-group.label>
-                                            </x-installer::form.control-group>
-                                        @endforeach
-                                    </x-installer::form.control-group>
-                                </div>
                             </div>
 
                             <div class="flex items-center justify-end px-4 py-2.5">
@@ -987,7 +907,7 @@
                                         rules="required"
                                         value="Admin"
                                         :label="trans('installer::app.installer.index.create-administrator.admin')"
-                                        :placeholder="trans('installer::app.installer.index.create-administrator.bagisto')"
+                                        :placeholder="trans('installer::app.installer.index.create-administrator.krayin')"
                                     />
 
                                     <x-installer::form.control-group.error control-name="admin" />
@@ -1101,17 +1021,17 @@
 
                     <div class="flex items-center justify-between px-4 py-2.5">
                         <a
-                            href="https://forums.bagisto.com"
+                            href="https://forums.krayincrm.com/"
                             class="cursor-pointer text-xs font-semibold text-blue-600"
                         >
-                            @lang('installer::app.installer.index.installation-completed.bagisto-forums')
+                            @lang('installer::app.installer.index.installation-completed.krayin-forums')
                         </a>
 
                         <a
-                            href="https://bagisto.com/en/extensions"
+                            href="https://krayincrm.com/extensions/"
                             class="cursor-pointer rounded-md border border-blue-700 bg-white px-3 py-1.5 font-semibold text-blue-600 hover:opacity-90"
                         >
-                            @lang('installer::app.installer.index.installation-completed.explore-bagisto-extensions')
+                            @lang('installer::app.installer.index.installation-completed.explore-krayin-extensions')
                         </a>
                     </div>
                 </div>
@@ -1128,14 +1048,6 @@
                             currentStep: 'start',
 
                             envData: {},
-
-                            locales: {
-                                allowed: [],
-                            },
-
-                            currencies: {
-                                allowed: [],
-                            },
 
                             stepStates: {
                                 start: 'active',
@@ -1185,7 +1097,7 @@
 
                                         this.envData = { ...this.envData, ...params };
                                     } else {
-                                        setErrors({ 'db_connection': ["Bagisto currently supports MySQL only."] });
+                                        setErrors({ 'db_connection': ["Krayin currently supports MySQL only."] });
                                     }
                                 },
 
@@ -1224,12 +1136,7 @@
                                 envConfiguration: () => {
                                     this.envData = { ...params };
 
-                                    let data = {
-                                        allowed_locales: this.locales.allowed,
-                                        allowed_currencies: this.currencies.allowed,
-                                    };
-
-                                    this.startSeeding(data, this.envData);
+                                    this.startSeeding(this.envData);
                                 },
 
                             };
@@ -1238,34 +1145,6 @@
 
                             if (stepActions[index]) {
                                 stepActions[index]();
-                            }
-                        },
-
-                        pushAllowedCurrency() {
-                            const currencyName = event.target.name;
-
-                            const index = this.currencies.allowed.indexOf(currencyName);
-
-                            if (index === -1) {
-                                this.currencies.allowed.push(currencyName);
-                            } else {
-                                this.currencies.allowed.splice(index, 1);
-                            }
-                        },
-
-                        pushAllowedLocales() {
-                            const localeName = event.target.name;
-
-                            if (! Array.isArray(this.locales.allowed)) {
-                            this.locales.allowed = [];
-                            }
-
-                            const index = this.locales.allowed.indexOf(localeName);
-
-                            if (index === -1) {
-                                this.locales.allowed.push(localeName);
-                            } else {
-                                this.locales.allowed.splice(index, 1);
                             }
                         },
 
@@ -1303,10 +1182,9 @@
                                 });
                         },
 
-                        startSeeding(selectedParams, allParameters) {
+                        startSeeding(allParameters) {
                             this.$axios.post("{{ route('installer.run_seeder') }}", {
                                 'allParameters': allParameters,
-                                'selectedParameters': selectedParams
                             })
                                 .then((response) => {
                                     this.completeStep('readyForInstallation', 'createAdmin', 'active', 'complete');

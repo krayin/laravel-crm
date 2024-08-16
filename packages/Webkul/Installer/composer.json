@@ -1,11 +1,11 @@
 {
-    "name": "bagisto/laravel-installer",
+    "name": "krayin/laravel-installer",
     "license": "MIT",
     "description": "Installer package",
     "authors": [
         {
-            "name": "Bagisto",
-            "email": "support@bagisto.com"
+            "name": "krayin",
+            "email": "support@krayin.com"
         }
     ],
     "require": {},
