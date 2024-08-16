@@ -29,7 +29,7 @@ class Vite
     }
 
     /**
-     * Set bagisto vite.
+     * Set krayin vite.
      *
      * @param  mixed  $entryPoints
      * @return mixed

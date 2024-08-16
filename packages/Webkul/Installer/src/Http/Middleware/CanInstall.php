@@ -40,7 +40,7 @@ class CanInstall
         if (app(DatabaseManager::class)->isInstalled()) {
             touch(storage_path('installed'));
 
-            Event::dispatch('bagisto.installed');
+            Event::dispatch('krayin.installed');
 
             return true;
         }

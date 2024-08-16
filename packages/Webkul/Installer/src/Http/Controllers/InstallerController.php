@@ -136,7 +136,7 @@ class InstallerController extends Controller
 
         File::put($filePath, 'Your Krayin App is Successfully Installed');
 
-        Event::dispatch('bagisto.installed');
+        Event::dispatch('krayin.installed');
 
         return $filePath;
     }

@@ -13,8 +13,8 @@
 	}
 
 	@font-face {
-		font-family: 'bagisto-installer';
-		src: url('../fonts/bagisto-installer.woff') format('woff');
+		font-family: 'krayin-installer';
+		src: url('../fonts/krayin-installer.woff.woff') format('woff');
 		font-weight: normal;
 		font-style: normal;
 		font-display: block;
@@ -23,7 +23,7 @@
 	[class^="icon-"],
 	[class*=" icon-"] {
 		/* use !important to prevent issues with browser extensions that change fonts */
-		font-family: 'bagisto-installer' !important;
+		font-family: 'krayin-installer' !important;
 		speak: never;
 		font-style: normal;
 		font-weight: normal;
