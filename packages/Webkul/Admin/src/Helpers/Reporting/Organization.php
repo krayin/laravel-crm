@@ -2,6 +2,9 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Webkul\Contact\Repositories\OrganizationRepository;
 
 class Organization extends AbstractReporting
@@ -40,5 +43,37 @@ class Organization extends AbstractReporting
             ->resetModel()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
+    }
+
+    /**
+     * Gets top customers by revenue.
+     *
+     * @param  int  $limit
+     */
+    public function getTopOrganizationsByRevenue($limit = null): Collection
+    {
+        $items = $this->organizationRepository
+            ->resetModel()
+            ->leftJoin('persons', 'organizations.id', '=', 'persons.organization_id')
+            ->leftJoin('leads', 'persons.id', '=', 'leads.person_id')
+            ->select('*', 'persons.id as id')
+            ->addSelect(DB::raw('SUM(leads.lead_value) as revenue'))
+            ->whereBetween('leads.closed_at', [$this->startDate, $this->endDate])
+            ->having(DB::raw('SUM(leads.lead_value)'), '>', 0)
+            ->groupBy('organization_id')
+            ->orderBy('revenue', 'DESC')
+            ->limit($limit)
+            ->get();
+
+        $items = $items->map(function ($item) {
+            return [
+                'id'                => $item->id,
+                'name'              => $item->name,
+                'revenue'           => $item->revenue,
+                'formatted_revenue' => core()->formatBasePrice($item->revenue),
+            ];
+        });
+
+        return $items;
     }
 }

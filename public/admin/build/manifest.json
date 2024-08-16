@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-295c3d5f.css",
+    "file": "assets/app-7c3caeff.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -229,7 +229,7 @@
     "src": "src/Resources/assets/fonts/icomoon.eot"
   },
   "src/Resources/assets/fonts/icomoon.svg": {
-    "file": "assets/icomoon-d6a5dae3.svg",
+    "file": "assets/icomoon-c96ab384.svg",
     "src": "src/Resources/assets/fonts/icomoon.svg"
   },
   "src/Resources/assets/fonts/icomoon.ttf": {
@@ -239,6 +239,10 @@
   "src/Resources/assets/fonts/icomoon.woff": {
     "file": "assets/icomoon-81aea726.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
+  },
+  "src/Resources/assets/images/dark-logo.svg": {
+    "file": "assets/dark-logo-efbc17e1.svg",
+    "src": "src/Resources/assets/images/dark-logo.svg"
   },
   "src/Resources/assets/images/empty-placeholders/activities.svg": {
     "file": "assets/activities-94382bdd.svg",
@@ -277,7 +281,7 @@
     "src": "src/Resources/assets/images/empty-placeholders/products.svg"
   },
   "src/Resources/assets/images/logo.svg": {
-    "file": "assets/logo-179afdfc.svg",
+    "file": "assets/logo-0db24d41.svg",
     "src": "src/Resources/assets/images/logo.svg"
   },
   "src/Resources/assets/js/app.css": {
@@ -338,5 +342,10 @@
     "file": "assets/app-df64e7ea.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
+  },
+  "src/Resources/assets/js/chart.js": {
+    "file": "assets/chart-1d2144fe.js",
+    "isEntry": true,
+    "src": "src/Resources/assets/js/chart.js"
   }
 }

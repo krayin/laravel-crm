@@ -157,6 +157,28 @@ class Core
     }
 
     /**
+     * Week range.
+     *
+     * @param  string  $date
+     * @param  int  $day
+     * @return string
+     */
+    public function xWeekRange($date, $day)
+    {
+        $ts = strtotime($date);
+
+        if (! $day) {
+            $start = (date('D', $ts) == 'Sun') ? $ts : strtotime('last sunday', $ts);
+
+            return date('Y-m-d', $start);
+        } else {
+            $end = (date('D', $ts) == 'Sat') ? $ts : strtotime('next saturday', $ts);
+
+            return date('Y-m-d', $end);
+        }
+    }
+
+    /**
      * Return currency symbol from currency code.
      *
      * @param  float  $price

@@ -2,7 +2,9 @@
 
 namespace Webkul\Admin\Helpers\Reporting;
 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Collection;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Webkul\Lead\Repositories\ProductRepository;
 
 class Product extends AbstractReporting

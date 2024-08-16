@@ -30,7 +30,7 @@
             <!-- Add Button -->
             <x-admin::dropdown ::close-on-click="false">
                 <x-slot:toggle>
-                    <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200"></button>
+                    <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200 dark:hover:bg-gray-950"></button>
                 </x-slot>
 
                 <x-slot:content class="!p-0">
@@ -38,16 +38,16 @@
                     <div class="flex flex-col gap-2">
                         <!-- Search Input -->
                         <div class="flex flex-col gap-1 px-4 py-2">
-                            <label class="font-semibold text-gray-600">
+                            <label class="font-semibold text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.components.tags.index.title')
                             </label>
 
                             <!-- Search Button -->
                             <div class="relative">
-                                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400" role="button">
+                                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
                                     <input
                                         type="text"
-                                        class="w-full cursor-pointer pr-6"
+                                        class="w-full cursor-pointer pr-6 dark:bg-gray-900 dark:text-gray-300"
                                         placeholder="@lang('admin::app.components.tags.index.placeholder')"
                                         v-model.lazy="searchTerm"
                                         v-debounce="500"
@@ -67,12 +67,12 @@
 
                                 <!-- Search Tags Dropdown -->
                                 <div
-                                    class="absolute z-10 w-full rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900"
+                                    class="absolute z-10 w-full rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-800"
                                     v-if="searchTerm.length >= 2"
                                 >
                                     <ul class="p-2">
                                         <li
-                                            class="cursor-pointer rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                            class="cursor-pointer rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
                                             v-for="tag in searchedTags"
                                             @click="attachToEntity(tag)"
                                         >
@@ -82,7 +82,7 @@
                                         @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
                                             <template v-if="! searchedTags.length && ! isSearching">
                                                 <li
-                                                    class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950"
+                                                    class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950 dark:text-white"
                                                     @click="create"
                                                 >
                                                     @{{ "@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
@@ -99,7 +99,7 @@
                             class="flex flex-col gap-2 px-4 py-1.5"
                             v-if="tags.length"
                         >
-                            <label class="text-gray-600">
+                            <label class="text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.components.tags.index.added-tags')
                             </label>
                             
@@ -107,7 +107,7 @@
                             <ul class="flex flex-col">
                                 <template v-for="tag in tags">
                                     <li
-                                        class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800"
+                                        class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800 dark:text-white"
                                         v-if="tag.id"
                                     >
                                         <!-- Name -->
@@ -126,7 +126,7 @@
                                             @if (bouncer()->hasPermission('settings.other_settings.tags.edit'))
                                                 <x-admin::dropdown position="bottom-right">
                                                     <x-slot:toggle>
-                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400">
+                                                        <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                                             <span
                                                                 class="h-4 w-4 rounded-full"
                                                                 :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
@@ -140,7 +140,7 @@
                                                     <x-slot:menu class="!top-7 !p-0">
                                                         <x-admin::dropdown.menu.item
                                                             class="top-5 flex gap-2"
-                                                            ::class="{ 'bg-gray-100': tag.color === color.background }"
+                                                            ::class="{ 'bg-gray-100 dark:bg-gray-950': tag.color === color.background }"
                                                             v-for="color in backgroundColors"
                                                             @click="update(tag, color)"
                                                         >
@@ -159,7 +159,7 @@
                                             @if (bouncer()->hasPermission('settings.other_settings.tags.delete'))
                                                 <div class="flex items-center">
                                                     <span
-                                                        class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200"
+                                                        class="icon-cross-large flex cursor-pointer rounded-md p-1 text-xl text-gray-600 transition-all hover:bg-gray-200 dark:text-gray-300 dark:hover:bg-gray-800"
                                                         v-show="! isRemoving[tag.id]"
                                                         @click="detachFromEntity(tag)"
                                                     ></span>

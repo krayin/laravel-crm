@@ -13,7 +13,7 @@
                     <x-admin::breadcrumbs name="leads.create" />
                 </div>
 
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.leads.create.title')
                 </div>
             </div>
@@ -54,7 +54,7 @@
                     
                     <div class="flex flex-col gap-5">
                         <!-- Tabs -->
-                        <div class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                        <div class="border-b border-gray-200 text-center text-sm font-medium dark:border-gray-700">
                             <ul class="flex flex-wrap">
                                 <li v-for="tab in tabs" :key="tab.id">
                                     <a
@@ -63,7 +63,7 @@
                                             'inline-block px-4 py-2 rounded-t-lg border-b-2',
                                             activeTab === tab.id
                                             ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
-                                            : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+                                            : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
                                         ]"
                                         @click="scrollToSection(tab.id)"
                                         :text="tab.label"
