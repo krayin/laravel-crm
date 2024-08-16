@@ -87,6 +87,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
@@ -124,6 +125,7 @@ class ActivityDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
+            'sortable'   => true,
             'closure'    => fn ($row) => trans('admin::app.activities.index.datagrid.'.$row->type),
         ]);
 
@@ -131,8 +133,9 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'schedule_from',
             'label'      => trans('admin::app.activities.index.datagrid.schedule_from'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->schedule_from),
         ]);
 
@@ -140,8 +143,9 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'schedule_to',
             'label'      => trans('admin::app.activities.index.datagrid.schedule_to'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->schedule_to),
         ]);
 
@@ -149,8 +153,9 @@ class ActivityDataGrid extends DataGrid
             'index'      => 'created_at',
             'label'      => trans('admin::app.activities.index.datagrid.created_at'),
             'type'       => 'date',
-            'searchable' => false,
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }

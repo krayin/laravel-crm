@@ -37,10 +37,12 @@ class SourceDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.sources.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.sources.index.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
     }
 

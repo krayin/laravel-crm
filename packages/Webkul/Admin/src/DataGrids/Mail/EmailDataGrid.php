@@ -47,26 +47,26 @@ class EmailDataGrid extends DataGrid
             'searchable' => false,
             'filterable' => false,
             'sortable'   => false,
-            'closure'    => function ($row) {
-                if ($row->attachments) {
-                    return '<i class="icon-attachment text-2xl"></i>';
-                }
-            },
+            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : 'N/A',
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.mail.index.datagrid.from'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.mail.index.datagrid.from'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'subject',
-            'label'    => trans('admin::app.mail.index.datagrid.subject'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => fn ($row) => Str::limit(strip_tags($row->reply), 50),
+            'index'      => 'subject',
+            'label'      => trans('admin::app.mail.index.datagrid.subject'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
+            'closure'    => fn ($row) => Str::limit(strip_tags($row->reply), 50),
         ]);
 
         $this->addColumn([

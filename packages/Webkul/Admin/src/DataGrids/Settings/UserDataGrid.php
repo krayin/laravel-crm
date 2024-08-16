@@ -52,6 +52,8 @@ class UserDataGrid extends DataGrid
             'label'      => trans('admin::app.settings.users.index.datagrid.name'),
             'type'       => 'string',
             'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 return [
                     'image' => $row->image ? Storage::url($row->image) : null,
@@ -61,10 +63,12 @@ class UserDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'email',
-            'label'    => trans('admin::app.settings.users.index.datagrid.email'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'email',
+            'label'      => trans('admin::app.settings.users.index.datagrid.email'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -73,6 +77,7 @@ class UserDataGrid extends DataGrid
             'type'       => 'boolean',
             'filterable' => true,
             'sortable'   => true,
+            'searchable' => true,
         ]);
 
         $this->addColumn([
@@ -81,8 +86,8 @@ class UserDataGrid extends DataGrid
             'type'            => 'date',
             'searchable'      => true,
             'filterable'      => true,
-            'filterable_type' => 'date_range',
             'sortable'        => true,
+            'filterable_type' => 'date_range',
             'closure'         => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }

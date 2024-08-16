@@ -39,10 +39,12 @@ class PipelineDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.pipelines.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.pipelines.index.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
