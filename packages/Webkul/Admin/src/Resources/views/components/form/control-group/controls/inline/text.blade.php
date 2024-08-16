@@ -1,6 +1,6 @@
 <v-inline-text-edit {{ $attributes }}>
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -15,8 +15,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[34px] space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
+                class="rounded-xs flex h-[34px] items-center space-x-2"
+                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
@@ -26,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px] rounded border border-transparent">@{{ inputValue }}</span>
+                <span class="rounded border border-transparent pl-[2px]">@{{ inputValue }}</span>
 
                 <template v-if="allowEdit">
                     <i

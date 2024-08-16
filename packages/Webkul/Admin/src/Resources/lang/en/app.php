@@ -1600,6 +1600,11 @@ return [
                     ],
                 ],
             ],
+
+            'view-switcher' => [
+                'all-pipelines'       => 'All Pipelines',
+                'create-new-pipeline' => 'Create New Pipeline',
+            ],
         ],
 
         'create' => [

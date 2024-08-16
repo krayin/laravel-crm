@@ -18,15 +18,15 @@
             <!-- Stages Item -->
             <template v-for="stage in stages">
                 <div
-                    class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white pl-7 pr-4 first:rounded-l-lg"
+                    class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white pl-7 pr-4 first:rounded-l-lg dark:bg-gray-900"
                     :class="{
-                        '!bg-green-500 text-white after:bg-green-500': currentStage.sort_order >= stage.sort_order,
-                        '!bg-red-500 text-white after:bg-red-500': currentStage.code == 'lost',
+                        '!bg-green-500 text-white dark:text-gray-900 after:bg-green-500': currentStage.sort_order >= stage.sort_order,
+                        '!bg-red-500 text-white dark:text-gray-900 after:bg-red-500': currentStage.code == 'lost',
                     }"
                     v-if="! ['won', 'lost'].includes(stage.code)"
                     @click="update(stage)"
                 >
-                    <span class="z-20 whitespace-nowrap text-sm font-medium">
+                    <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
                         @{{ stage.name }}
                     </span>
                 </div>
@@ -36,17 +36,17 @@
             <x-admin::dropdown position="bottom-right">
                 <x-slot:toggle>
                     <div
-                        class="relative flex h-7 min-w-24 cursor-pointer items-center justify-center rounded-r-lg bg-white pl-7 pr-4"
+                        class="relative flex h-7 min-w-24 cursor-pointer items-center justify-center rounded-r-lg bg-white pl-7 pr-4 dark:bg-gray-900"
                         :class="{
-                            '!bg-green-500 text-white after:bg-green-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'won',
-                            '!bg-red-500 text-white after:bg-red-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'lost',
+                            '!bg-green-500 text-white dark:text-gray-900 after:bg-green-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'won',
+                            '!bg-red-500 text-white dark:text-gray-900 after:bg-red-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'lost',
                         }"
                     >
-                        <span class="z-20 whitespace-nowrap text-sm font-medium">
+                        <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
                             {{ __('admin::app.leads.view.stages.won-lost') }}
                         </span>
 
-                        <span class="icon-down-arrow text-2xl"></span>
+                        <span class="icon-down-arrow text-2xl dark:text-gray-900"></span>
                     </div>
                 </x-slot>
 

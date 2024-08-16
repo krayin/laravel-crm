@@ -18,7 +18,9 @@
         <x-slot:content class="!p-0">
             <!-- Header -->
             <div class="flex items-center justify-between px-3 py-2.5">
-                <span class="text-xs font-medium text-gray-400">All Pipelines</span>
+                <span class="text-xs font-medium text-gray-500 dark:text-gray-300">
+                    @lang('admin::app.leads.index.view-switcher.all-pipelines')
+                </span>
             </div>
             
             <!-- Pipeline Links -->
@@ -28,7 +30,7 @@
                         'pipeline_id' => $tempPipeline->id,
                         'view_type'   => request('view_type')
                     ]) }}"
-                    class="block px-3 py-2.5 pl-4 text-gray-600 transition-all hover:bg-gray-100 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100' : '' }}"
+                    class="block px-3 py-2.5 pl-4 text-gray-600 transition-all hover:bg-gray-100 dark:hover:bg-gray-950 dark:text-gray-300 {{ $pipeline->id == $tempPipeline->id ? 'bg-gray-100 dark:bg-gray-950' : '' }}"
                 >
                     {{ $tempPipeline->name }}
                 </a>
@@ -38,9 +40,11 @@
             <a
                 href="{{ route('admin.settings.pipelines.create') }}"
                 target="_blank"
-                class="flex items-center justify-between border-t border-gray-300 px-3 py-2.5 text-brandColor"
+                class="flex items-center justify-between border-t border-gray-300 px-3 py-2.5 text-brandColor dark:border-gray-800"
             >
-                <span class="font-medium">Create New Pipeline</span>
+                <span class="font-medium">                    
+                    @lang('admin::app.leads.index.view-switcher.create-new-pipeline')
+                </span>
             </a>
         </x-slot>
     </x-admin::dropdown>
@@ -51,9 +55,9 @@
                 <span class="icon-kanban p-2 text-2xl"></span>
             </a>
 
-            <span class="icon-list rounded-md bg-white p-2 text-2xl"></span>
+            <span class="icon-list rounded-md bg-white p-2 text-2xl dark:bg-gray-900"></span>
         @else
-            <span class="icon-kanban rounded-md bg-white p-2 text-2xl"></span>
+            <span class="icon-kanban rounded-md bg-white p-2 text-2xl dark:bg-gray-900"></span>
 
             <a
                 href="{{ route('admin.leads.index', ['view_type' => 'table']) }}"

@@ -26,21 +26,21 @@
 
                 <div class="flex gap-4 overflow-x-auto">
                     <div
-                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg bg-white"
+                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg bg-white dark:bg-gray-900"
                         v-for="(stage, index) in stageLeads"
                     >
                         <!-- Stage Header -->
                         <div class="flex flex-col px-2 py-3">
                             <!-- Stage Title and Action -->
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-medium">
+                                <span class="text-xs font-medium dark:text-white">
                                     @{{ stage.name }} (@{{ stage.leads.meta.total }})
                                 </span>
 
                                 @if (bouncer()->hasPermission('leads.create'))
                                     <a
                                         :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + stage.id"
-                                        class="icon-add cursor-pointer rounded p-1 text-lg text-slate-600 transition-all hover:bg-slate-100 hover:text-slate-800"
+                                        class="icon-add cursor-pointer rounded p-1 text-lg text-gray-600 transition-all hover:bg-gray-200 hover:text-gray-800 dark:text-gray-600 dark:hover:bg-gray-800 dark:hover:text-white"
                                         target="_blank"
                                     >
                                     </a>
@@ -49,12 +49,12 @@
 
                             <!-- Stage Total Leads and Amount -->
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-xs">
+                                <span class="text-xs dark:text-white">
                                     @{{ $admin.formatPrice(stage.lead_value) }}
                                 </span>
 
                                 <!-- Progress Bar -->
-                                <div class="h-1 w-36 overflow-hidden rounded-full bg-slate-200">
+                                <div class="h-1 w-36 overflow-hidden rounded-full bg-gray-200 dark:bg-gray-800">
                                     <div
                                         class="h-1 bg-green-500"
                                         :style="{ width: (stage.lead_value / totalStagesAmount) * 100 + '%' }"
@@ -78,7 +78,7 @@
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
                                 <a
-                                    class="lead-item flex cursor-grab flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2"
+                                    class="lead-item flex cursor-grab flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
                                     <!-- Header -->
@@ -117,7 +117,7 @@
                                         <!-- Tags -->
                                         <template v-for="tag in element.tags">
                                             <div
-                                                class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium"
+                                                class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800"
                                                 :style="{
                                                     backgroundColor: tag.color,
                                                     color: tagTextColor[tag.color]
@@ -127,15 +127,15 @@
                                             </div>
                                         </template>
 
-                                        <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.formatted_lead_value }}
                                         </div>
-
-                                        <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                        
+                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.source.name }}
                                         </div>
-
-                                        <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
+                                        
+                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.type.name }}
                                         </div>
                                     </div>

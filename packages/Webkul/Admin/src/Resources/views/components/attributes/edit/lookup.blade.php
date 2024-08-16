@@ -25,13 +25,13 @@
                 class="relative inline-block w-full"
                 @click="toggle"
             >
-                <!-- Input-like div -->
-                <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
-                    @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
+                <!-- Input Container -->
+                <div class="relative h-10 rounded border p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                    @{{ selectedItem ? selectedItem : "@lang('Start Typing...')" }}
                 </div>
                 
                 <!-- Arrow down icon -->
-                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                     <i class="fas fa-chevron-down text-gray-400"></i>
                 </div>
             </div>
@@ -54,7 +54,7 @@
             
             <div 
                 v-if="showPopup" 
-                class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
             >
                 <!-- Search Bar -->
                 <div class="relative">
@@ -63,8 +63,8 @@
                         type="text"
                         v-model.lazy="searchTerm"
                         v-debounce="500"
-                        class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
-                        placeholder="@lang('admin::app.components.attributes.lookup.search')"
+                        class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                        placeholder="@lang('Search...')"
                         ref="searchInput"
                         @keyup="search"
                     />
@@ -90,7 +90,7 @@
                 <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
                     <template v-for="result in searchedResults"> 
                         <li
-                            class="flex gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                            class="flex cursor-pointer gap-2 p-2 transition-colors hover:bg-blue-100 dark:text-gray-300 dark:hover:bg-gray-900"
                             @click="handleResult(result)"
                         >
                             <!-- Entity Name -->
