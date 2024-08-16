@@ -59,7 +59,7 @@ class DatabaseManager
             return response()->json([
                 'success' => true,
                 'message' => 'Tables is migrated successfully.',
-            ]); 
+            ]);
         } catch (Exception $e) {
             return response()->json([
                 'error' => $e->getMessage(),

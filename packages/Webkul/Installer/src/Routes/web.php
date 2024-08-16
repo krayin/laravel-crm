@@ -11,7 +11,7 @@ Route::middleware(['web', 'installer_locale'])->group(function () {
         Route::middleware(StartSession::class)->prefix('install/api')->group(function () {
             Route::post('env-file-setup', 'envFileSetup')->name('installer.env_file_setup');
 
-            Route::withoutMiddleware('web')->group(function() {
+            Route::withoutMiddleware('web')->group(function () {
                 Route::post('run-migration', 'runMigration')->name('installer.run_migration');
 
                 Route::post('run-seeder', 'runSeeder')->name('installer.run_seeder');

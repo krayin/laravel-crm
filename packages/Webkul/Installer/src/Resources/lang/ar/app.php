@@ -2,7 +2,7 @@
 
 return [
     'seeders' => [
-       'attributes' => [
+        'attributes' => [
             'leads' => [
                 'description'         => 'الوصف',
                 'expected-close-date' => 'تاريخ الإغلاق المتوقع',
@@ -118,7 +118,7 @@ return [
         'index' => [
             'create-administrator' => [
                 'admin'            => 'مدير',
-                'krayin'          => 'Krayin',
+                'krayin'           => 'Krayin',
                 'confirm-password' => 'تأكيد كلمة المرور',
                 'email'            => 'البريد الإلكتروني',
                 'email-address'    => 'admin@example.com',
@@ -133,7 +133,7 @@ return [
                 'application-name'            => 'اسم التطبيق',
                 'argentine-peso'              => 'البيزو الأرجنتيني (ARS)',
                 'australian-dollar'           => 'الدولار الأسترالي (AUD)',
-                'krayin'                     => 'Krayin',
+                'krayin'                      => 'Krayin',
                 'bangladeshi-taka'            => 'التاكا البنغلاديشي (BDT)',
                 'brazilian-real'              => 'الريال البرازيلي (BRL)',
                 'british-pound-sterling'      => 'الجنيه الإسترليني البريطاني (GBP)',
@@ -216,16 +216,16 @@ return [
             ],
 
             'installation-processing' => [
-                'krayin'      => 'تثبيت Krayin',
-                'krayin-info' => 'إنشاء جداول قاعدة البيانات، وقد يستغرق ذلك بضع دقائق',
+                'krayin'       => 'تثبيت Krayin',
+                'krayin-info'  => 'إنشاء جداول قاعدة البيانات، وقد يستغرق ذلك بضع دقائق',
                 'title'        => 'التثبيت',
             ],
 
             'installation-completed' => [
                 'admin-panel'                => 'لوحة المشرف',
-                'krayin-forums'             => 'منتديات Krayin',
+                'krayin-forums'              => 'منتديات Krayin',
                 'customer-panel'             => 'لوحة العميل',
-                'explore-krayin-extensions' => 'استكشاف امتدادات Krayin',
+                'explore-krayin-extensions'  => 'استكشاف امتدادات Krayin',
                 'title'                      => 'اكتمال التثبيت',
                 'title-info'                 => 'تم تثبيت Krayin بنجاح على نظامك.',
             ],
@@ -273,9 +273,9 @@ return [
 
             'arabic'                   => 'العربية',
             'back'                     => 'رجوع',
-            'krayin'                  => 'Krayin',
-            'krayin-info'             => 'مشروع مجتمعي من قبل',
-            'krayin-logo'             => 'شعار Krayin',
+            'krayin'                   => 'Krayin',
+            'krayin-info'              => 'مشروع مجتمعي من قبل',
+            'krayin-logo'              => 'شعار Krayin',
             'bengali'                  => 'البنغالية',
             'chinese'                  => 'الصينية',
             'continue'                 => 'متابعة',

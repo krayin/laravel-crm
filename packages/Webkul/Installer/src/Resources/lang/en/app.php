@@ -118,7 +118,7 @@ return [
         'index' => [
             'create-administrator' => [
                 'admin'            => 'Admin',
-                'krayin'          => 'Krayin',
+                'krayin'           => 'Krayin',
                 'confirm-password' => 'Confirm Password',
                 'email'            => 'Email',
                 'email-address'    => 'admin@example.com',
@@ -133,7 +133,7 @@ return [
                 'application-name'            => 'Application Name',
                 'argentine-peso'              => 'Argentine Peso (ARS)',
                 'australian-dollar'           => 'Australian Dollar (AUD)',
-                'krayin'                     => 'Krayin',
+                'krayin'                      => 'Krayin',
                 'bangladeshi-taka'            => 'Bangladeshi Taka (BDT)',
                 'brazilian-real'              => 'Brazilian Real (BRL)',
                 'british-pound-sterling'      => 'British Pound Sterling (GBP)',
@@ -216,16 +216,16 @@ return [
             ],
 
             'installation-processing' => [
-                'krayin'      => 'Installation Krayin',
-                'krayin-info' => 'Creating the database tables, this can take a few moments',
+                'krayin'       => 'Installation Krayin',
+                'krayin-info'  => 'Creating the database tables, this can take a few moments',
                 'title'        => 'Installation',
             ],
 
             'installation-completed' => [
                 'admin-panel'                => 'Admin Panel',
-                'krayin-forums'             => 'Krayin Forum',
+                'krayin-forums'              => 'Krayin Forum',
                 'customer-panel'             => 'Customer Panel',
-                'explore-krayin-extensions' => 'Explore Krayin Extension',
+                'explore-krayin-extensions'  => 'Explore Krayin Extension',
                 'title'                      => 'Installation Completed',
                 'title-info'                 => 'Krayin is Successfully installed on your system.',
             ],
@@ -273,9 +273,9 @@ return [
 
             'arabic'                   => 'Arabic',
             'back'                     => 'Back',
-            'krayin'                  => 'Krayin',
-            'krayin-info'             => 'a Community Project by',
-            'krayin-logo'             => 'Krayin Logo',
+            'krayin'                   => 'Krayin',
+            'krayin-info'              => 'a Community Project by',
+            'krayin-logo'              => 'Krayin Logo',
             'bengali'                  => 'Bengali',
             'chinese'                  => 'Chinese',
             'continue'                 => 'Continue',

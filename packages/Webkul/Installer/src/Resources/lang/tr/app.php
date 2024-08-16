@@ -118,7 +118,7 @@ return [
         'index' => [
             'create-administrator' => [
                 'admin'            => 'Yönetici',
-                'krayin'          => 'Krayin',
+                'krayin'           => 'Krayin',
                 'confirm-password' => 'Şifreyi Onayla',
                 'email'            => 'E-posta',
                 'email-address'    => 'admin@ornek.com',
@@ -133,7 +133,7 @@ return [
                 'application-name'            => 'Uygulama Adı',
                 'argentine-peso'              => 'Arjantin Pezosu (ARS)',
                 'australian-dollar'           => 'Avustralya Doları (AUD)',
-                'krayin'                     => 'Krayin',
+                'krayin'                      => 'Krayin',
                 'bangladeshi-taka'            => 'Bangladeş Takası (BDT)',
                 'brazilian-real'              => 'Brezilya Reali (BRL)',
                 'british-pound-sterling'      => 'İngiliz Sterlini (GBP)',
@@ -216,16 +216,16 @@ return [
             ],
 
             'installation-processing' => [
-                'krayin'      => 'Krayin Kurulumu',
-                'krayin-info' => 'Veritabanı tabloları oluşturuluyor, bu birkaç dakika sürebilir',
+                'krayin'       => 'Krayin Kurulumu',
+                'krayin-info'  => 'Veritabanı tabloları oluşturuluyor, bu birkaç dakika sürebilir',
                 'title'        => 'Kurulum',
             ],
 
             'installation-completed' => [
                 'admin-panel'                => 'Yönetici Paneli',
-                'krayin-forums'             => 'Krayin Forumu',
+                'krayin-forums'              => 'Krayin Forumu',
                 'customer-panel'             => 'Müşteri Paneli',
-                'explore-krayin-extensions' => 'Krayin Uzantılarını Keşfedin',
+                'explore-krayin-extensions'  => 'Krayin Uzantılarını Keşfedin',
                 'title'                      => 'Kurulum Tamamlandı',
                 'title-info'                 => 'Krayin sisteminize başarıyla kuruldu.',
             ],
@@ -273,9 +273,9 @@ return [
 
             'arabic'                   => 'Arapça',
             'back'                     => 'Geri',
-            'krayin'                  => 'Krayin',
-            'krayin-info'             => 'Webkul tarafından geliştirilen bir Topluluk Projesi',
-            'krayin-logo'             => 'Krayin Logosu',
+            'krayin'                   => 'Krayin',
+            'krayin-info'              => 'Webkul tarafından geliştirilen bir Topluluk Projesi',
+            'krayin-logo'              => 'Krayin Logosu',
             'bengali'                  => 'Bengalce',
             'chinese'                  => 'Çince',
             'continue'                 => 'Devam Et',
