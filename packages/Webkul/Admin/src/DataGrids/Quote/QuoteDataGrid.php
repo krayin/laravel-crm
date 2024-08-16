@@ -96,7 +96,7 @@ class QuoteDataGrid extends DataGrid
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
-                return "<a href='".$route."'>".$row->person_name.'</a>';
+                return "<a href='".$route."'>".$row->person_name."</a>";
             },
         ]);
 

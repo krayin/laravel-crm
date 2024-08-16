@@ -103,9 +103,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-eye',
             'title'  => trans('admin::app.products.index.datagrid.view'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.products.view', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.view', $row->id),
         ]);
 
         $this->addAction([
@@ -113,9 +111,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.products.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.products.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -123,9 +119,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.products.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.products.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.delete', $row->id),
         ]);
     }
 
