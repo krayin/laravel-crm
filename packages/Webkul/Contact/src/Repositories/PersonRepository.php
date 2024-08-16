@@ -47,7 +47,7 @@ class PersonRepository extends Repository
     public function create(array $data)
     {
         $data['user_id'] = $data['user_id'] ?? null;
-        
+
         $person = parent::create($data);
 
         $this->attributeValueRepository->save($data, $person->id);

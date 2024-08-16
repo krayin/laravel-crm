@@ -31,8 +31,7 @@ class Lead extends AbstractReporting
     public function __construct(
         protected LeadRepository $leadRepository,
         protected StageRepository $stageRepository
-    )
-    {
+    ) {
         $this->wonStageIds = $this->stageRepository->where('code', 'won')->pluck('id')->toArray();
 
         $this->lostStageIds = $this->stageRepository->where('code', 'lost')->pluck('id')->toArray();

@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Helpers;
 
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Webkul\Admin\Helpers\Reporting\Activity;
@@ -33,7 +32,7 @@ class Dashboard
      */
     public function getRevenueStats(): array
     {
-        return  [
+        return [
             'total_won_revenue'  => $this->leadReporting->getTotalWonLeadValueProgress(),
             'total_lost_revenue' => $this->leadReporting->getTotalLostLeadValueProgress(),
         ];
@@ -60,14 +59,14 @@ class Dashboard
     {
         return [
             'all'  => [
-                'over_time' => $this->leadReporting->getTotalLeadsOverTime()
+                'over_time' => $this->leadReporting->getTotalLeadsOverTime(),
             ],
 
             'won'  => [
-                'over_time' => $this->leadReporting->getTotalWonLeadsOverTime()
+                'over_time' => $this->leadReporting->getTotalWonLeadsOverTime(),
             ],
             'lost' => [
-                'over_time' => $this->leadReporting->getTotalLostLeadsOverTime()
+                'over_time' => $this->leadReporting->getTotalLostLeadsOverTime(),
             ],
         ];
     }
