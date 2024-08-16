@@ -59,7 +59,7 @@
                         type="text"
                         ::id="name"
                         ::name="name"
-                        class="text-normal py-1 pr-16"
+                        class="!py-0 !h-[34px]"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"

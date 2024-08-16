@@ -18,7 +18,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[34px] space-x-2"
+                class="flex items-center rounded-xs h-[34px]"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
