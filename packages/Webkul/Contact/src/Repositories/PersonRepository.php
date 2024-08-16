@@ -46,7 +46,7 @@ class PersonRepository extends Repository
      */
     public function create(array $data)
     {
-        $data['user_id'] = $data['user_id'] ?: null;
+        $data['user_id'] = $data['user_id'] ?? null;
         
         $person = parent::create($data);
 
@@ -62,7 +62,7 @@ class PersonRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
-        $data['user_id'] = $data['user_id'] ?: null;
+        $data['user_id'] = $data['user_id'] ?? null;
 
         $person = parent::update($data, $id);
 

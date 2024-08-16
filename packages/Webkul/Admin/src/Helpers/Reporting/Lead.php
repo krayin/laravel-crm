@@ -4,6 +4,7 @@ namespace Webkul\Admin\Helpers\Reporting;
 
 use Illuminate\Support\Facades\DB;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Lead\Repositories\StageRepository;
 
 class Lead extends AbstractReporting
 {
@@ -13,12 +14,29 @@ class Lead extends AbstractReporting
     protected array $stageIds;
 
     /**
+     * The channel ids.
+     */
+    protected array $wonStageIds;
+
+    /**
+     * The channel ids.
+     */
+    protected array $lostStageIds;
+
+    /**
      * Create a helper instance.
      *
      * @return void
      */
-    public function __construct(protected LeadRepository $leadRepository)
+    public function __construct(
+        protected LeadRepository $leadRepository,
+        protected StageRepository $stageRepository
+    )
     {
+        $this->wonStageIds = $this->stageRepository->where('code', 'won')->pluck('id')->toArray();
+
+        $this->lostStageIds = $this->stageRepository->where('code', 'lost')->pluck('id')->toArray();
+
         parent::__construct();
     }
 
@@ -46,6 +64,119 @@ class Lead extends AbstractReporting
             ->resetModel()
             ->whereBetween('created_at', [$startDate, $endDate])
             ->count();
+    }
+
+    /**
+     * Retrieves total lead value and their progress.
+     */
+    public function getTotalLeadValueProgress(): array
+    {
+        return [
+            'previous'        => $previous = $this->getTotalLeadValue($this->lastStartDate, $this->lastEndDate),
+            'current'         => $current = $this->getTotalLeadValue($this->startDate, $this->endDate),
+            'formatted_total' => core()->formatBasePrice($current),
+            'progress'        => $this->getPercentageChange($previous, $current),
+        ];
+    }
+
+    /**
+     * Retrieves total lead value
+     *
+     * @param  \Carbon\Carbon  $startDate
+     * @param  \Carbon\Carbon  $endDate
+     */
+    public function getTotalLeadValue($startDate, $endDate): float
+    {
+        return $this->orderRepository
+            ->resetModel()
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->sum('lead_value');
+    }
+
+    /**
+     * Retrieves average lead value and their progress.
+     */
+    public function getAverageLeadValueProgress(): array
+    {
+        return [
+            'previous'        => $previous = $this->getAverageLeadValue($this->lastStartDate, $this->lastEndDate),
+            'current'         => $current = $this->getAverageLeadValue($this->startDate, $this->endDate),
+            'formatted_total' => core()->formatBasePrice($current),
+            'progress'        => $this->getPercentageChange($previous, $current),
+        ];
+    }
+
+    /**
+     * Retrieves average lead value
+     *
+     * @param  \Carbon\Carbon  $startDate
+     * @param  \Carbon\Carbon  $endDate
+     */
+    public function getAverageLeadValue($startDate, $endDate): float
+    {
+        return $this->orderRepository
+            ->resetModel()
+            ->whereIn('channel_id', $this->channelIds)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->avg('lead_value');
+    }
+
+    /**
+     * Retrieves average won lead value and their progress.
+     */
+    public function getAverageWonLeadValueProgress(): array
+    {
+        return [
+            'previous'        => $previous = $this->getAverageWonLeadValue($this->lastStartDate, $this->lastEndDate),
+            'current'         => $current = $this->getAverageWonLeadValue($this->startDate, $this->endDate),
+            'formatted_total' => core()->formatBasePrice($current),
+            'progress'        => $this->getPercentageChange($previous, $current),
+        ];
+    }
+
+    /**
+     * Retrieves average won lead value
+     *
+     * @param  \Carbon\Carbon  $startDate
+     * @param  \Carbon\Carbon  $endDate
+     * @return array
+     */
+    public function getAverageWonLeadValue($startDate, $endDate): ?float
+    {
+        return $this->orderRepository
+            ->resetModel()
+            ->whereIn('lead_pipeline_stage_id', $this->wonStageIds)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->avg('lead_value');
+    }
+
+    /**
+     * Retrieves average lost lead value and their progress.
+     */
+    public function getAverageLostLeadValueProgress(): array
+    {
+        return [
+            'previous'        => $previous = $this->getAverageLostLeadValue($this->lastStartDate, $this->lastEndDate),
+            'current'         => $current = $this->getAverageLostLeadValue($this->startDate, $this->endDate),
+            'formatted_total' => core()->formatBasePrice($current),
+            'progress'        => $this->getPercentageChange($previous, $current),
+        ];
+    }
+
+    /**
+     * Retrieves average lost lead value
+     *
+     * @param  \Carbon\Carbon  $startDate
+     * @param  \Carbon\Carbon  $endDate
+     * @return array
+     */
+    public function getAverageLostLeadValue($startDate, $endDate): ?float
+    {
+        return $this->orderRepository
+            ->resetModel()
+            ->whereIn('lead_pipeline_stage_id', $this->lostStageIds)
+            ->whereBetween('created_at', [$startDate, $endDate])
+            ->avg('lead_value');
     }
 
     /**
