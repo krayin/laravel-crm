@@ -37,10 +37,13 @@ class WebFormDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'title',
-            'label'    => trans('admin::app.settings.webforms.index.datagrid.title'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'title',
+            'label'      => trans('admin::app.settings.webforms.index.datagrid.title'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
     }
 

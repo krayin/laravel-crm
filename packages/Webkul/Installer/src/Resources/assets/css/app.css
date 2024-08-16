@@ -1,0 +1,182 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* -------------------------------- new css -------------------------------- */
+@font-face {
+	font-family: "icomoon";
+	src: url("../fonts/icomoon.eot?w2trdd");
+	src: url("../fonts/icomoon.eot?w2trdd#iefix") format("embedded-opentype"),
+		url("../fonts/icomoon.ttf?w2trdd") format("truetype"),
+		url("../fonts/icomoon.woff?w2trdd") format("woff"),
+		url("../fonts/icomoon.svg?w2trdd#icomoon") format("svg");
+	font-weight: normal;
+	font-style: normal;
+	font-display: block;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+	/* use !important to prevent issues with browser extensions that change fonts */
+	font-family: "icomoon" !important;
+	speak: never;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+/* -------------------------------- new css end -------------------------------- */
+
+@layer components {
+	::-webkit-scrollbar {
+		width: 12px;
+	}
+
+	::-webkit-scrollbar-track {
+		background: #f1f1f1;
+	}
+
+	::-webkit-scrollbar-thumb {
+		background: #888;
+		border-radius: 6px;
+	}
+
+	::-webkit-scrollbar-thumb:hover {
+		background: #555;
+	}
+
+	/* Firefox */
+	* {
+		scrollbar-width: thin;
+		scrollbar-color: #888 #f1f1f1;
+	}
+
+	::selection {
+		background-color: rgba(0, 68, 242, 0.2);
+	}
+
+	body {
+		@apply bg-gray-100 text-sm text-gray-800;
+	}
+
+	button:disabled {
+		@apply cursor-not-allowed opacity-50;
+	}
+
+	button:disabled:hover {
+		@apply cursor-not-allowed opacity-50;
+	}
+
+	.direction-ltr {
+		direction: ltr;
+	}
+
+	.direction-rtl {
+		direction: rtl;
+	}
+
+	.draggable-ghost {
+		opacity: 0.5;
+		background: #e0e7ff;
+	}
+
+	html.dark [class^="icon-"],
+	html.dark [class*=" icon-"] {
+		color: #d1d5db;
+	}
+
+	/* -------------------------------- new css -------------------------------- */
+	.icon-tick:before {
+		content: "\e931";
+	}
+
+	.icon-cross-large:before {
+		content: "\e91c";
+	}
+
+	.icon-left-arrow:before {
+		content: "\e91d";
+	}
+
+	.icon-right-arrow:before {
+		content: "\e91e";
+	}
+
+	.icon-up-arrow:before {
+		content: "\e91f";
+	}
+
+	.icon-down-arrow:before {
+		content: "\e920";
+	}
+
+	/* -------------------------------- new css end -------------------------------- */
+
+	p {
+		@apply text-[14px] !leading-[17px];
+	}
+
+	input,
+	textarea,
+	select {
+		@apply outline-none;
+	}
+
+	.primary-button {
+		@apply bg-brandColor border border-brandColor cursor-pointer flex focus: opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all;
+	}
+
+	.secondary-button {
+		@apply flex cursor-pointer place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-brandColor bg-white px-3 py-1.5 font-semibold text-brandColor transition-all hover: bg-[#eff6ff61] focus:bg-[#eff6ff61] dark:border-gray-400 dark:bg-gray-800 dark:text-white dark:hover:opacity-80;
+	}
+
+	.transparent-button {
+		@apply flex cursor-pointer appearance-none place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-transparent px-3 py-1.5 font-semibold text-gray-600 transition-all marker: shadow hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-950;
+	}
+
+	.journal-scroll::-webkit-scrollbar {
+		width: 14px;
+		cursor: pointer;
+		display: none;
+	}
+
+	.journal-scroll::-webkit-scrollbar-track {
+		background-color: #fff;
+		cursor: pointer;
+		border-radius: 12px;
+		border: 1px solid #e9e9e9;
+	}
+
+	.journal-scroll::-webkit-scrollbar-thumb {
+		cursor: pointer;
+		background-color: #e9e9e9;
+		border-radius: 12px;
+		border: 3px solid transparent;
+		background-clip: content-box;
+	}
+
+	.custom-select {
+		-webkit-appearance: none;
+		-moz-appearance: none;
+		background: transparent;
+		background-image: url("data:image/svg+xml;utf8,<svg fill='black' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+		background-repeat: no-repeat;
+		background-position-x: calc(100% - 10px);
+		background-position-y: 50%;
+	}
+
+	.dark .custom-select {
+		background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
+	}
+
+	[dir="rtl"] .custom-select {
+		background-position-x: calc(100% - (100% - 10px));
+	}
+}
+/* -------------------------------- new css end -------------------------------- */

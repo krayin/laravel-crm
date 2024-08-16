@@ -25,7 +25,7 @@ class TypeDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare Columns.
      */
     public function prepareColumns(): void
     {
@@ -39,7 +39,7 @@ class TypeDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'name',
-            'label'      => trans('admin::app.datagrid.name'),
+            'label'      => trans('admin::app.settings.types.index.datagrid.name'),
             'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
@@ -47,7 +47,7 @@ class TypeDataGrid extends DataGrid
     }
 
     /**
-     * Prepare actions.
+     * Prepare Actions.
      */
     public function prepareActions(): void
     {
@@ -56,9 +56,7 @@ class TypeDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.types.update', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.types.update', $row->id),
         ]);
 
         $this->addAction([
@@ -66,9 +64,7 @@ class TypeDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.types.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.types.delete', $row->id),
         ]);
     }
 }

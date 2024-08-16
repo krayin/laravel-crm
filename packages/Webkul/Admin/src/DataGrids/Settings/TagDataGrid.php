@@ -10,8 +10,6 @@ class TagDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
     public function prepareQueryBuilder(): Builder
     {
@@ -38,7 +36,7 @@ class TagDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare Columns.
      */
     public function prepareColumns(): void
     {
@@ -48,6 +46,9 @@ class TagDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'sortable'   => true,
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -56,6 +57,9 @@ class TagDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => true,
             'sortable'   => false,
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
             'closure'    => function ($row) {
                 $color = $row->color ?? 'gray-500';
                 $html = "<div class=\"flex items-center gap-2\">
@@ -68,11 +72,13 @@ class TagDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'            => 'user_name',
-            'label'            => trans('admin::app.settings.tags.index.datagrid.users'),
-            'type'             => 'string',
-            'searchable'       => false,
-            'sortable'         => true,
+            'index'      => 'user_name',
+            'label'      => trans('admin::app.settings.tags.index.datagrid.users'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -81,11 +87,9 @@ class TagDataGrid extends DataGrid
             'type'            => 'date',
             'searchable'      => true,
             'filterable'      => true,
-            'filterable_type' => 'date_range',
             'sortable'        => true,
-            'closure'         => function ($row) {
-                return core()->formatDate($row->created_at);
-            },
+            'filterable_type' => 'date_range',
+            'closure'         => fn ($row) => core()->formatDate($row->created_at),
         ]);
     }
 

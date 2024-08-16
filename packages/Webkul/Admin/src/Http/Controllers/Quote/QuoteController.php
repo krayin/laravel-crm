@@ -3,8 +3,12 @@
 namespace Webkul\Admin\Http\Controllers\Quote;
 
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
@@ -30,10 +34,8 @@ class QuoteController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
             return datagrid(QuoteDataGrid::class)->process();
@@ -44,10 +46,8 @@ class QuoteController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         $lead = $this->leadRepository->find(request('id'));
 
@@ -56,14 +56,12 @@ class QuoteController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(AttributeForm $request)
+    public function store(AttributeForm $request): RedirectResponse
     {
         Event::dispatch('quote.create.before');
 
-        $quote = $this->quoteRepository->create(request()->all());
+        $quote = $this->quoteRepository->create($request->all());
 
         if (request('lead_id')) {
             $lead = $this->leadRepository->find(request('lead_id'));
@@ -80,11 +78,8 @@ class QuoteController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
@@ -93,15 +88,12 @@ class QuoteController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(AttributeForm $request, $id)
+    public function update(AttributeForm $request, int $id): RedirectResponse
     {
         Event::dispatch('quote.update.before', $id);
 
-        $quote = $this->quoteRepository->update(request()->all(), $id);
+        $quote = $this->quoteRepository->update($request->all(), $id);
 
         $quote->leads()->detach();
 
@@ -119,7 +111,7 @@ class QuoteController extends Controller
     }
 
     /**
-     * Search quotes.
+     * Search the quotes.
      */
     public function search(): AnonymousResourceCollection
     {
@@ -132,11 +124,8 @@ class QuoteController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $this->quoteRepository->findOrFail($id);
 
@@ -159,33 +148,34 @@ class QuoteController extends Controller
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy(MassDestroyRequest $request)
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        dd($request->all());
+        $quotes = $this->quoteRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-        foreach (request('rows') as $quoteId) {
-            Event::dispatch('quote.delete.before', $quoteId);
+        try {
+            foreach ($quotes as $quotes) {
+                Event::dispatch('quote.delete.before', $quotes->id);
 
-            $this->quoteRepository->delete($quoteId);
+                $this->quoteRepository->delete($quotes->id);
 
-            Event::dispatch('quote.delete.after', $quoteId);
+                Event::dispatch('quote.delete.after', $quotes->id);
+            }
+
+            return response()->json([
+                'message' => trans('admin::app.quotes.index.delete-success'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.quotes.index.delete-failed'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.response.destroy-success', ['name' => trans('admin::app.quotes.index.title')]),
-        ]);
     }
 
     /**
      * Print and download the for the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function print($id)
+    public function print($id): Response
     {
         $quote = $this->quoteRepository->findOrFail($id);
 

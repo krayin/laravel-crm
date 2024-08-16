@@ -154,11 +154,8 @@ class ProductController extends Controller
 
     /**
      * Returns product inventories grouped by warehouse.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function warehouses($id)
+    public function warehouses(int $id): JsonResponse
     {
         $warehouses = $this->productRepository->getInventoriesGroupedByWarehouse($id);
 
@@ -180,11 +177,11 @@ class ProductController extends Controller
             Event::dispatch('settings.products.delete.after', $id);
 
             return new JsonResponse([
-                'message' => trans('admin::app.response.destroy-success'),
+                'message' => trans('admin::app.products.index.delete-success'),
             ], 200);
         } catch (\Exception $exception) {
             return new JsonResponse([
-                'message' => trans('admin::app.response.destroy-failed'),
+                'message' => trans('admin::app.products.index.delete-failed'),
             ], 400);
         }
     }
@@ -205,7 +202,7 @@ class ProductController extends Controller
         }
 
         return new JsonResponse([
-            'message' => trans('admin::app.response.destroy-success'),
+            'message' => trans('admin::app.products.index.delete-success'),
         ]);
     }
 }

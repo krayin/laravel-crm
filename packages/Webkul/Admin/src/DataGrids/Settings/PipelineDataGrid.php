@@ -27,7 +27,7 @@ class PipelineDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare columns.
      */
     public function prepareColumns(): void
     {
@@ -39,10 +39,12 @@ class PipelineDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.pipelines.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.pipelines.index.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
 
         $this->addColumn([
@@ -59,27 +61,21 @@ class PipelineDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => true,
             'sortable'   => true,
-            'closure'    => function ($value) {
-                return trans('admin::app.settings.pipelines.index.datagrid.'.($value->is_default ? 'yes' : 'no'));
-            },
+            'closure'    => fn ($value) => trans('admin::app.settings.pipelines.index.datagrid.'.($value->is_default ? 'yes' : 'no')),
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
             'index'  => 'edit',
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.pipelines.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.pipelines.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.pipelines.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -87,9 +83,7 @@ class PipelineDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.pipelines.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.pipelines.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.pipelines.delete', $row->id),
         ]);
     }
 }

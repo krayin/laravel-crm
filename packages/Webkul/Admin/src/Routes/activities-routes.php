@@ -25,8 +25,8 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
 
         Route::delete('{id}', 'destroy')->name('admin.activities.delete');
 
-        Route::put('mass-update', 'massUpdate')->name('admin.activities.mass_update');
+        Route::post('mass-update', 'massUpdate')->name('admin.activities.mass_update');
 
-        Route::put('mass-destroy', 'massDestroy')->name('admin.activities.mass_delete');
+        Route::post('mass-destroy', 'massDestroy')->name('admin.activities.mass_delete');
     });
 });

@@ -2,31 +2,44 @@
 
 namespace Webkul\Installer\Providers;
 
+use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\ServiceProvider;
 use Webkul\Installer\Console\Commands\Installer as InstallerCommand;
+use Webkul\Installer\Http\Middleware\CanInstall;
+use Webkul\Installer\Http\Middleware\Locale;
 
 class InstallerServiceProvider extends ServiceProvider
 {
     /**
      * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
      */
-    protected $defer = false;
+    protected bool $defer = false;
 
     /**
      * Bootstrap the application events.
-     *
-     * @return void
      */
-    public function boot()
+    public function boot(Router $router): void
     {
+        include __DIR__.'/../Http/helpers.php';
+
+        $router->middlewareGroup('install', [CanInstall::class]);
+
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
+
+        $this->loadRoutesFrom(__DIR__.'/../Routes/web.php');
+
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
 
+        $this->loadViewsFrom(__DIR__.'/../Resources/views', 'installer');
+
+        $router->aliasMiddleware('installer_locale', Locale::class);
+
         Event::listen('krayin.installed', 'Webkul\Installer\Listeners\Installer@installed');
+
+        $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
 
         /**
          * Route to access template applied image file
@@ -38,11 +51,9 @@ class InstallerServiceProvider extends ServiceProvider
     }
 
     /**
-     * Register the service provider
-     *
-     * @return void
+     * Register the service provider.
      */
-    public function register()
+    public function register(): void
     {
         if (! $this->app->runningInConsole()) {
             return;

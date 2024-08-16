@@ -26,8 +26,21 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px] w-full rounded border border-transparent">@{{ inputValue }}</span>
+                <div class="relative flex flex-col items-center group !w-full">
+                    <span class="pl-[2px] rounded border border-transparent truncate w-40">@{{ inputValue }}</span>
 
+                    <div
+                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        v-if="inputValue.length > 20"
+                    >
+                        <span class="relative rounded-md z-10 p-4 text-xs leading-none whitespace-no-wrap text-white bg-black shadow-lg">
+                            @{{ inputValue }}
+                        </span>
+
+                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                    </div>
+                </div>
+                
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"

@@ -17,11 +17,24 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="flex items-center rounded-xs h-[34px] space-x-2"
+                class="flex items-center rounded-xs h-[34px]"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
                 :style="textPositionStyle"
             >
-                <span class="pl-[2px] rounded border border-transparent">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+                <div class="relative flex flex-col items-center group !w-full">
+                    <span class="pl-[2px] rounded border border-transparent truncate w-40">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+
+                    <div
+                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
+                    >
+                        <span class="relative rounded-md z-10 p-4 text-xs text-white leading-none max-w-60 whitespace-no-wrap bg-black shadow-lg">
+                            @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
+                        </span>
+
+                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                    </div>
+                </div>
 
                 <template v-if="allowEdit">
                     <i
@@ -111,7 +124,7 @@
         app.component('v-inline-email-edit', {
             template: '#v-inline-email-edit-template',
 
-            emits: ['on-change', 'on-cancelled'],
+            emits: ['on-save'],
 
             props: {
                 name: {
@@ -271,7 +284,7 @@
                 },
 
                 updateOrCreate(params) {
-                    this.inputValue = params.emails;
+                    this.inputValue = params.contact_emails;
 
                     if (this.url) {
                         this.$axios.put(this.url, {

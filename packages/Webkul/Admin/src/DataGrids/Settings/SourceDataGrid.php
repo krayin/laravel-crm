@@ -25,7 +25,7 @@ class SourceDataGrid extends DataGrid
     }
 
     /**
-     * Add columns.
+     * Prepare Columns.
      */
     public function prepareColumns(): void
     {
@@ -37,10 +37,12 @@ class SourceDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.settings.sources.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.settings.sources.index.datagrid.name'),
+            'type'       => 'string',
+            'searchable' => true,
+            'filterable' => true,
+            'sortable'   => true,
         ]);
     }
 
@@ -54,9 +56,7 @@ class SourceDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.sources.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.settings.sources.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.sources.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -64,9 +64,7 @@ class SourceDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.sources.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.settings.sources.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.settings.sources.delete', $row->id),
         ]);
     }
 }

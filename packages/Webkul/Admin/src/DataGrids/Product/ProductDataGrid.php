@@ -44,27 +44,31 @@ class ProductDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'sku',
-            'label'    => trans('admin::app.products.index.datagrid.sku'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'sku',
+            'label'      => trans('admin::app.products.index.datagrid.sku'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.products.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.products.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'price',
-            'label'    => trans('admin::app.products.index.datagrid.price'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
-                return round($row->price, 2);
-            },
+            'index'      => 'price',
+            'label'      => trans('admin::app.products.index.datagrid.price'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
+            'closure'    => fn ($row) => round($row->price, 2),
         ]);
 
         $this->addColumn([
@@ -99,9 +103,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-eye',
             'title'  => trans('admin::app.products.index.datagrid.view'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.products.view', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.view', $row->id),
         ]);
 
         $this->addAction([
@@ -109,9 +111,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.products.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.products.edit', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -119,9 +119,7 @@ class ProductDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.products.index.datagrid.delete'),
             'method' => 'DELETE',
-            'url'    => function ($row) {
-                return route('admin.products.delete', $row->id);
-            },
+            'url'    => fn ($row) => route('admin.products.delete', $row->id),
         ]);
     }
 

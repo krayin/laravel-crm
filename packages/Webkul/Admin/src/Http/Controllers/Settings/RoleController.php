@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Http\Controllers\Settings;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\RoleDataGrid;
@@ -32,20 +33,16 @@ class RoleController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::settings.roles.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $this->validate(request(), [
             'name'            => 'required',
@@ -89,10 +86,8 @@ class RoleController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(int $id)
+    public function update(int $id): RedirectResponse
     {
         $this->validate(request(), [
             'name'            => 'required',
@@ -121,10 +116,8 @@ class RoleController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id)
+    public function destroy(int $id): JsonResponse
     {
         $response = [
             'responseCode' => 400,

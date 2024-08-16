@@ -29,7 +29,7 @@
 
     {!! view_render_event('krayin.admin.settings.workflows.index.datagrid.before') !!}
 
-    <x-admin::datagrid src="{{ route('admin.settings.workflows.index') }}" />
+    <x-admin::datagrid :src="route('admin.settings.workflows.index')" />
 
     {!! view_render_event('krayin.admin.settings.workflows.index.datagrid.after') !!}
 </x-admin::layouts>

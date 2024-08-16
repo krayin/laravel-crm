@@ -72,7 +72,7 @@ class WebhookController extends Controller
 
         Event::dispatch('settings.webhook.update.after', $webhook);
 
-        session()->flash('success', trans('admin::app.settings.webhooks.index.create-success'));
+        session()->flash('success', trans('admin::app.settings.webhooks.index.update-success'));
 
         return redirect()->route('admin.settings.webhooks.index');
     }
@@ -80,16 +80,18 @@ class WebhookController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(int $id): RedirectResponse
+    public function destroy(int $id): JsonResponse
     {
+        $webhook = $this->webhookRepository->findOrFail($id);
+
         Event::dispatch('settings.webhook.delete.before', $id);
 
-        $this->webhookRepository->delete($id);
+        $webhook?->delete();
 
         Event::dispatch('settings.webhook.delete.after', $id);
 
-        session()->flash('success', trans('admin::app.settings.webhooks.index.destroy-success'));
-
-        return redirect()->route('admin.settings.webhooks.index');
+        return response()->json([
+            'message' => trans('admin::app.settings.webhooks.index.delete-success'),
+        ]);
     }
 }

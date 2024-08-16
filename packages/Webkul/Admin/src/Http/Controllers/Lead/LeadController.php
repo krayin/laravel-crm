@@ -3,12 +3,17 @@
 namespace Webkul\Admin\Http\Controllers\Lead;
 
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\LeadForm;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
@@ -38,10 +43,8 @@ class LeadController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
             return datagrid(LeadDataGrid::class)->process();
@@ -152,10 +155,8 @@ class LeadController extends Controller
 
     /**
      * Returns a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function get()
+    public function get(): JsonResponse
     {
         if (request()->query('pipeline_id')) {
             $pipeline = $this->pipelineRepository->find(request()->query('pipeline_id'));
@@ -215,24 +216,20 @@ class LeadController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::leads.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store(LeadForm $request)
+    public function store(LeadForm $request): RedirectResponse
     {
         Event::dispatch('lead.create.before');
 
-        $data = request()->all();
+        $data = $request->all();
 
         $data['status'] = 1;
 
@@ -265,11 +262,8 @@ class LeadController extends Controller
 
     /**
      * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function edit($id)
+    public function edit(int $id): View
     {
         $lead = $this->leadRepository->findOrFail($id);
 
@@ -278,11 +272,8 @@ class LeadController extends Controller
 
     /**
      * Display a resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\View\View
      */
-    public function view($id)
+    public function view(int $id): View
     {
         $lead = $this->leadRepository->findOrFail($id);
 
@@ -298,15 +289,28 @@ class LeadController extends Controller
 
     /**
      * Update the specified resource in storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function update(LeadForm $request, $id)
+    public function update(LeadForm $request, int $id): RedirectResponse|JsonResponse
     {
         Event::dispatch('lead.update.before', $id);
 
-        $lead = $this->leadRepository->update(request()->all(), $id);
+        $data = $request->all();
+
+        if (isset($data['lead_pipeline_stage_id'])) {
+            $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
+
+            $data['lead_pipeline_id'] = $stage->lead_pipeline_id;
+        } else {
+            $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+            $stage = $pipeline->stages()->first();
+
+            $data['lead_pipeline_id'] = $pipeline->id;
+
+            $data['lead_pipeline_stage_id'] = $stage->id;
+        }
+
+        $lead = $this->leadRepository->update($data, $id);
 
         Event::dispatch('lead.update.after', $lead);
 
@@ -314,10 +318,14 @@ class LeadController extends Controller
             return response()->json([
                 'message' => trans('admin::app.leads.update-success'),
             ]);
-        } else {
-            session()->flash('success', trans('admin::app.leads.update-success'));
+        }
 
-            return redirect()->route('admin.leads.index', $lead->lead_pipeline_id);
+        session()->flash('success', trans('admin::app.leads.update-success'));
+
+        if (request()->has('closed_at')) {
+            return redirect()->back();
+        } else {
+            return redirect()->route('admin.leads.index', $data['lead_pipeline_id']);
         }
     }
 
@@ -339,13 +347,10 @@ class LeadController extends Controller
         return LeadResource::collection($results);
     }
 
-    /*
+    /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $this->leadRepository->findOrFail($id);
 
@@ -368,45 +373,55 @@ class LeadController extends Controller
 
     /**
      * Mass Update the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massUpdate()
+    public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $data = request()->all();
+        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
-        foreach ($data['rows'] as $leadId) {
-            $lead = $this->leadRepository->find($leadId);
+        try {
+            foreach ($leads as $lead) {
+                $lead = $this->leadRepository->find($lead->id);
 
-            Event::dispatch('lead.update.before', $leadId);
+                Event::dispatch('lead.update.before', $lead->id);
 
-            $lead->update(['lead_pipeline_stage_id' => $data['value']]);
+                $lead->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
 
-            Event::dispatch('lead.update.before', $leadId);
+                Event::dispatch('lead.update.before', $lead->id);
+            }
+
+            return response()->json([
+                'message' => trans('admin::app.leads.update-success'),
+            ]);
+        } catch (\Exception $th) {
+            return response()->json([
+                'message' => trans('admin::app.leads.destroy-failed'),
+            ], 400);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.leads.update-success'),
-        ]);
     }
 
     /**
      * Mass Delete the specified resources.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function massDestroy()
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        foreach (request('rows') as $leadId) {
-            Event::dispatch('lead.delete.before', $leadId);
+        $leads = $this->leadRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-            $this->leadRepository->delete($leadId);
+        try {
+            foreach ($leads as $lead) {
+                Event::dispatch('lead.delete.before', $lead->id);
 
-            Event::dispatch('lead.delete.after', $leadId);
+                $this->leadRepository->delete($lead->id);
+
+                Event::dispatch('lead.delete.after', $lead->id);
+            }
+
+            return response()->json([
+                'message' => trans('admin::app.leads.destroy-success'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.leads.destroy-failed'),
+            ]);
         }
-
-        return response()->json([
-            'message' => trans('admin::app.leads.destroy-success'),
-        ]);
     }
 }

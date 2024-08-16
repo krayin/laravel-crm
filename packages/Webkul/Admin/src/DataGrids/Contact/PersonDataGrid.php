@@ -54,14 +54,17 @@ class PersonDataGrid extends DataGrid
             'type'       => 'integer',
             'filterable' => true,
             'sortable'   => true,
+            'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'person_name',
-            'label'    => trans('admin::app.contacts.persons.index.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
+            'index'      => 'person_name',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => function ($row) {
                 [$bgColorClass, $textColorClass] = $this->generateRandomColorClasses();
 
                 $nameParts = explode(' ', $row->person_name);
@@ -82,23 +85,25 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'emails',
-            'label'    => trans('admin::app.contacts.persons.index.datagrid.emails'),
-            'type'     => 'string',
-            'sortable' => false,
-            'closure'  => function ($row) {
+            'index'      => 'emails',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.emails'),
+            'type'       => 'string',
+            'sortable'   => false,
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => function ($row) {
                 return collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', ');
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'contact_numbers',
-            'label'    => trans('admin::app.contacts.persons.index.datagrid.contact-numbers'),
-            'type'     => 'string',
-            'sortable' => false,
-            'closure'  => function ($row) {
-                return collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', ');
-            },
+            'index'      => 'contact_numbers',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.contact-numbers'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => fn ($row) => collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', '),
         ]);
 
         $this->addColumn([
