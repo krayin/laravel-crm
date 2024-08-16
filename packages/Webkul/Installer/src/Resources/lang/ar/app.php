@@ -2,33 +2,64 @@
 
 return [
     'seeders' => [
-        'attributes' => [
-            'address'             => 'العنوان',
-            'adjustment-amount'   => 'مبلغ التعديل',
-            'billing-address'     => 'عنوان الفاتورة',
-            'contact-numbers'     => 'أرقام الاتصال',
-            'description'         => 'الوصف',
-            'discount-amount'     => 'مبلغ الخصم',
-            'discount-percent'    => 'نسبة الخصم',
-            'emails'              => 'البريد الإلكتروني',
-            'expected-close-date' => 'تاريخ الإغلاق المتوقع',
-            'expired-at'          => 'تاريخ الانتهاء',
-            'grand-total'         => 'المجموع الكلي',
-            'lead-value'          => 'قيمة العميل المحتمل',
-            'name'                => 'الاسم',
-            'organization'        => 'المؤسسة',
-            'person'              => 'الشخص',
-            'price'               => 'السعر',
-            'quantity'            => 'الكمية',
-            'sales-owner'         => 'مالك المبيعات',
-            'shipping-address'    => 'عنوان الشحن',
-            'sku'                 => 'SKU',
-            'source'              => 'المصدر',
-            'sub-total'           => 'المجموع الفرعي',
-            'subject'             => 'الموضوع',
-            'tax-amount'          => 'مبلغ الضريبة',
-            'title'               => 'العنوان',
-            'type'                => 'النوع',
+       'attributes' => [
+            'leads' => [
+                'description'         => 'الوصف',
+                'expected-close-date' => 'تاريخ الإغلاق المتوقع',
+                'lead-value'          => 'قيمة العميل المحتمل',
+                'sales-owner'         => 'مالك المبيعات',
+                'source'              => 'المصدر',
+                'title'               => 'العنوان',
+                'type'                => 'النوع',
+            ],
+
+            'persons' => [
+                'contact-numbers' => 'أرقام الاتصال',
+                'emails'          => 'البريد الإلكتروني',
+                'job-title'       => 'المسمى الوظيفي',
+                'name'            => 'الاسم',
+                'organization'    => 'المنظمة',
+                'sales-owner'     => 'مالك المبيعات',
+            ],
+
+            'organizations' => [
+                'address'     => 'العنوان',
+                'name'        => 'الاسم',
+                'sales-owner' => 'مالك المبيعات',
+            ],
+
+            'products' => [
+                'description' => 'الوصف',
+                'name'        => 'الاسم',
+                'price'       => 'السعر',
+                'quantity'    => 'الكمية',
+                'sku'         => 'رمز المخزون',
+            ],
+
+            'quotes' => [
+                'adjustment-amount' => 'مبلغ التعديل',
+                'billing-address'   => 'عنوان الفواتير',
+                'description'       => 'الوصف',
+                'discount-amount'   => 'مبلغ الخصم',
+                'discount-percent'  => 'نسبة الخصم',
+                'expired-at'        => 'تنتهي في',
+                'grand-total'       => 'الإجمالي النهائي',
+                'person'            => 'الشخص',
+                'sales-owner'       => 'مالك المبيعات',
+                'shipping-address'  => 'عنوان الشحن',
+                'sub-total'         => 'الإجمالي الفرعي',
+                'subject'           => 'الموضوع',
+                'tax-amount'        => 'قيمة الضريبة',
+            ],
+
+            'warehouses' => [
+                'contact-address' => 'عنوان الاتصال',
+                'contact-emails'  => 'البريد الإلكتروني للاتصال',
+                'contact-name'    => 'اسم جهة الاتصال',
+                'contact-numbers' => 'أرقام الاتصال',
+                'description'     => 'الوصف',
+                'name'            => 'الاسم',
+            ],
         ],
 
         'email' => [
@@ -36,7 +67,7 @@ return [
             'activity-modified'     => 'تم تعديل النشاط',
             'date'                  => 'التاريخ',
             'new-activity'          => 'لديك نشاط جديد، يرجى العثور على التفاصيل أدناه',
-            'new-activity-modified' => 'لديك نشاط جديد معدل، يرجى العثور على التفاصيل أدناه',
+            'new-activity-modified' => 'تم تعديل نشاط جديد، يرجى العثور على التفاصيل أدناه',
             'participants'          => 'المشاركون',
             'title'                 => 'العنوان',
             'type'                  => 'النوع',
@@ -44,24 +75,24 @@ return [
 
         'lead' => [
             'pipeline' => [
-                'default' => 'المسار الافتراضي',
+                'default' => 'مجرى العمل الافتراضي',
 
                 'pipeline-stages' => [
                     'follow-up'   => 'متابعة',
-                    'lost'        => 'مفقود',
-                    'negotiation' => 'تفاوض',
+                    'lost'        => 'خسارة',
+                    'negotiation' => 'مفاوضات',
                     'new'         => 'جديد',
-                    'prospect'    => 'احتمال',
-                    'won'         => 'مكتسب',
+                    'prospect'    => 'فرصة محتملة',
+                    'won'         => 'ربح',
                 ],
             ],
 
             'source' => [
-                'direct'    => 'مباشر',
-                'email'     => 'البريد الإلكتروني',
-                'phone'     => 'الهاتف',
-                'web'       => 'الويب',
-                'web-form'  => 'نموذج الويب',
+                'direct'   => 'مباشر',
+                'email'    => 'البريد الإلكتروني',
+                'phone'    => 'الهاتف',
+                'web'      => 'الويب',
+                'web-form' => 'نموذج الويب',
             ],
 
             'type' => [
@@ -80,15 +111,6 @@ return [
         'workflow' => [
             'email-to-participants-after-activity-updation' => 'إرسال بريد إلكتروني للمشاركين بعد تحديث النشاط',
             'email-to-participants-after-activity-creation' => 'إرسال بريد إلكتروني للمشاركين بعد إنشاء النشاط',
-        ],
-
-        'warehouses' => [
-            'contact-name'    => 'اسم جهة الاتصال',
-            'contact-emails'  => 'البريد الإلكتروني لجهة الاتصال',
-            'contact-numbers' => 'أرقام جهة الاتصال',
-            'contact-address' => 'عنوان جهة الاتصال',
-            'description'     => 'الوصف',
-            'name'            => 'الاسم',
         ],
     ],
 
