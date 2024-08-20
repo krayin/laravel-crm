@@ -615,7 +615,6 @@
             border-right: 4px solid #f3f4f6;
             border-top: 4px solid #f3f4f6;
         }
-    }
 
     .dark .stage::after {
         content: '';
@@ -630,6 +629,7 @@
             border-right: 4px solid #030712;
             border-top: 4px solid #030712;
     }
+}
 
 .tox .tox-toolbar__group:last-child button {
     padding: 6px 8px;
