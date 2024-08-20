@@ -21,6 +21,7 @@ use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
@@ -36,7 +37,8 @@ class LeadController extends Controller
         protected TypeRepository $typeRepository,
         protected LeadRepository $leadRepository,
         protected PipelineRepository $pipelineRepository,
-        protected StageRepository $stageRepository
+        protected StageRepository $stageRepository,
+        protected ProductRepository $productRepository,
     ) {
         request()->request->add(['entity_type' => 'leads']);
     }
@@ -414,6 +416,57 @@ class LeadController extends Controller
 
                 Event::dispatch('lead.delete.after', $lead->id);
             }
+
+            return response()->json([
+                'message' => trans('admin::app.leads.destroy-success'),
+            ]);
+        } catch (\Exception $exception) {
+            return response()->json([
+                'message' => trans('admin::app.leads.destroy-failed'),
+            ]);
+        }
+    }
+
+    /**
+     * Attach product to lead.
+     *
+     * @return void
+     */
+    public function addProduct($leadId) {
+        $product = $this->productRepository->updateOrCreate(
+            [
+                'lead_id'    => $leadId,
+                'product_id' => request()->input('product_id'),
+            ],
+            array_merge(
+                request()->all(),
+                [
+                    'lead_id' => $leadId,
+                    'amount'  => request()->input('price') * request()->input('quantity'),
+                ],
+            )
+        );
+
+        return response()->json([
+            'data' => $product,
+            'message' => trans('admin::app.leads.update-success'),
+        ]);
+    }
+
+    /**
+     * Remove product attached to lead.
+     */
+    public function removeProduct(int $id): JsonResponse
+    {
+        try {
+            Event::dispatch('lead.product.delete.before', $id);
+
+            $this->productRepository->deleteWhere([
+                'lead_id'    => $id,
+                'product_id' => request()->input('product_id'),
+            ]);
+
+            Event::dispatch('lead.product.delete.after', $id);
 
             return response()->json([
                 'message' => trans('admin::app.leads.destroy-success'),

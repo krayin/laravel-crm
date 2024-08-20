@@ -143,6 +143,11 @@
                     type: String,
                     default: '',
                 },
+
+                params: {
+                    type: Object,
+                    default: () => ({}),
+                },
             },
 
             data() {
@@ -215,7 +220,10 @@
 
                         formData.append('_method', 'PUT');
 
-                        this.$axios.post(this.url, formData)
+                        this.$axios.post(this.url, {
+                            ...this.params,
+                            ...Object.fromEntries(formData),
+                        })
                             .then((response) => {
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })

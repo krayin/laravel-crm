@@ -37,6 +37,10 @@ Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => confi
 
         Route::get('get/{pipeline_id?}', 'get')->name('admin.leads.get');
 
+        Route::delete('product/{lead_id}', 'removeProduct')->name('admin.leads.product.remove');
+
+        Route::put('product/{lead_id}', 'addProduct')->name('admin.leads.product.add');
+
         Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
             Route::get('', 'index')->name('admin.leads.activities.index');
         });

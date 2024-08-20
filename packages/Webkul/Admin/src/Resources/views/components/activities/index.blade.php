@@ -328,7 +328,7 @@
                     
                     activities: [],
 
-                    selectedType: 'all',
+                    selectedType: 'products',
 
                     typeClasses: {
                         email: 'icon-mail bg-green-200 text-green-900',
