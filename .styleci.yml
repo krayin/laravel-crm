@@ -5,9 +5,5 @@ php:
   finder:
     not-name:
       - index.php
-      - server.php
-js:
-  finder:
-    not-name:
-      - webpack.mix.js
+js: true
 css: true

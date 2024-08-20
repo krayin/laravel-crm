@@ -2,17 +2,16 @@
 
 namespace Webkul\Admin\DataGrids\Product;
 
-use Webkul\UI\DataGrid\DataGrid;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Webkul\DataGrid\DataGrid;
 
 class ProductDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('products')
             ->leftJoin('product_inventories', 'products.id', '=', 'product_inventories.product_id')
@@ -36,57 +35,59 @@ class ProductDataGrid extends DataGrid
         $this->addFilter('total_allocated', DB::raw('SUM(product_inventories.allocated'));
         $this->addFilter('total_on_hand', DB::raw('SUM(product_inventories.in_stock - product_inventories.allocated'));
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'    => 'sku',
-            'label'    => trans('admin::app.datagrid.sku'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'sku',
+            'label'      => trans('admin::app.products.index.datagrid.sku'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
+            'index'      => 'name',
+            'label'      => trans('admin::app.products.index.datagrid.name'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'    => 'price',
-            'label'    => trans('admin::app.datagrid.price'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => function ($row) {
-                return round($row->price, 2);
-            },
+            'index'      => 'price',
+            'label'      => trans('admin::app.products.index.datagrid.price'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
+            'closure'    => fn ($row) => round($row->price, 2),
         ]);
 
         $this->addColumn([
             'index'    => 'total_in_stock',
-            'label'    => trans('admin::app.datagrid.in-stock'),
+            'label'    => trans('admin::app.products.index.datagrid.in-stock'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'total_allocated',
-            'label'    => trans('admin::app.datagrid.allocated'),
+            'label'    => trans('admin::app.products.index.datagrid.allocated'),
             'type'     => 'string',
             'sortable' => true,
         ]);
 
         $this->addColumn([
             'index'    => 'total_on_hand',
-            'label'    => trans('admin::app.datagrid.on-hand'),
+            'label'    => trans('admin::app.products.index.datagrid.on-hand'),
             'type'     => 'string',
             'sortable' => true,
         ]);
@@ -94,46 +95,44 @@ class ProductDataGrid extends DataGrid
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.view'),
+            'index'  => 'view',
+            'icon'   => 'icon-eye',
+            'title'  => trans('admin::app.products.index.datagrid.view'),
             'method' => 'GET',
-            'route'  => 'admin.products.view',
-            'icon'   => 'eye-icon',
+            'url'    => fn ($row) => route('admin.products.view', $row->id),
         ]);
 
         $this->addAction([
-            'title'  => trans('ui::app.datagrid.edit'),
+            'index'  => 'edit',
+            'icon'   => 'icon-edit',
+            'title'  => trans('admin::app.products.index.datagrid.edit'),
             'method' => 'GET',
-            'route'  => 'admin.products.edit',
-            'icon'   => 'pencil-icon',
+            'url'    => fn ($row) => route('admin.products.edit', $row->id),
         ]);
 
         $this->addAction([
-            'title'        => trans('ui::app.datagrid.delete'),
-            'method'       => 'DELETE',
-            'route'        => 'admin.products.delete',
-            'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => 'user']),
-            'icon'         => 'trash-icon',
+            'index'  => 'delete',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.products.index.datagrid.delete'),
+            'method' => 'DELETE',
+            'url'    => fn ($row) => route('admin.products.delete', $row->id),
         ]);
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
         $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.products.mass_delete'),
-            'method' => 'PUT',
+            'icon'   => 'icon-delete',
+            'title'  => trans('admin::app.products.index.datagrid.delete'),
+            'method' => 'POST',
+            'url'    => route('admin.products.mass_delete'),
         ]);
     }
 }

@@ -3,10 +3,9 @@
 namespace Webkul\Email\Repositories;
 
 use Illuminate\Container\Container;
-use Illuminate\Support\Facades\Event;
-use Webkul\Email\Helpers\Parser;
-use Webkul\Email\Helpers\Htmlfilter;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Email\Helpers\Htmlfilter;
+use Webkul\Email\Helpers\Parser;
 
 class EmailRepository extends Repository
 {
@@ -29,44 +28,67 @@ class EmailRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Email\Contracts\Email';
     }
 
     /**
-     * @param  array  $data
      * @return \Webkul\Email\Contracts\Email
      */
     public function create(array $data)
     {
-        $email = parent::create($this->sanitizeEmails($data));
+        $uniqueId = time().'@'.config('mail.domain');
 
-        $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
+        $referenceIds = [];
+
+        if (isset($data['parent_id'])) {
+            $parent = parent::findOrFail($data['parent_id']);
+
+            $referenceIds = $parent->reference_ids ?? [];
+        }
+
+        $data = $this->sanitizeEmails(array_merge([
+            'source'        => 'web',
+            'from'          => config('mail.from.address'),
+            'user_type'     => 'admin',
+            'folders'       => isset($data['is_draft']) ? ['draft'] : ['outbox'],
+            'name'          => auth()->guard('user')->user()->name,
+            'unique_id'     => $uniqueId,
+            'message_id'    => $uniqueId,
+            'reference_ids' => array_merge($referenceIds, [$uniqueId]),
+            'user_id'       => auth()->guard('user')->user()->id,
+        ], $data));
+
+        $email = parent::create($data);
+
+        $this->attachmentRepository
+            ->setEmailParser($this->emailParser)
+            ->uploadAttachments($email, $data);
 
         return $email;
     }
 
     /**
-     * @param array  $data
-     * @param int    $id
-     * @param string $attribute
+     * @param  int  $id
+     * @param  string  $attribute
      * @return \Webkul\Email\Contracts\Email
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
-        $email = $this->findOrFail($id);
+        $email = parent::findOrFail($id);
 
         parent::update($this->sanitizeEmails($data), $id);
 
-        $this->attachmentRepository->setEmailParser($this->emailParser)->uploadAttachments($email, $data);
+        $this->attachmentRepository
+            ->setEmailParser($this->emailParser)
+            ->uploadAttachments($email, $data);
 
         return $email;
-
     }
 
     /**
-     * @param string $content
+     * @param  string  $content
      * @return void
      */
     public function processInboundParseMail($content)
@@ -95,7 +117,7 @@ class EmailRepository extends Repository
                                ? current(explode('@', $fromNameParts[0]['display']))
                                : $fromNameParts[0]['display'],
             'user_type'     => 'person',
-            'message_id'    => $this->emailParser->getHeader('message-id') ?? time() . '@' . config('mail.domain'),
+            'message_id'    => $this->emailParser->getHeader('message-id') ?? time().'@'.config('mail.domain'),
             'reference_ids' => htmlspecialchars_decode($this->emailParser->getHeader('references')),
             'in_reply_to'   => htmlspecialchars_decode($this->emailParser->getHeader('in-reply-to')),
         ];
@@ -110,15 +132,15 @@ class EmailRepository extends Repository
             $email = $this->findOneWhere(['message_id' => $headers['in_reply_to']]);
 
             if (! $email) {
-                $email = $this->findOneWhere([['reference_ids', 'like',  '%' . $headers['in_reply_to'] . '%']]);
+                $email = $this->findOneWhere([['reference_ids', 'like',  '%'.$headers['in_reply_to'].'%']]);
             }
         }
-        
+
         if (! isset($email) && $headers['reference_ids']) {
             $referenceIds = explode(' ', $headers['reference_ids']);
 
             foreach ($referenceIds as $referenceId) {
-                if ($email = $this->findOneWhere([['reference_ids', 'like', '%' . $referenceId . '%']])) {
+                if ($email = $this->findOneWhere([['reference_ids', 'like', '%'.$referenceId.'%']])) {
                     break;
                 }
             }
@@ -132,7 +154,7 @@ class EmailRepository extends Repository
             $email = $this->create(array_merge($headers, [
                 'folders'       => ['inbox'],
                 'reply'         => $reply, //$this->htmlFilter->HTMLFilter($reply, ''),
-                'unique_id'     => time() . '@' . config('mail.domain'),
+                'unique_id'     => time().'@'.config('mail.domain'),
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',
             ]));
@@ -151,7 +173,7 @@ class EmailRepository extends Repository
     }
 
     /**
-     * @param string $type
+     * @param  string  $type
      * @return array
      */
     public function parseEmailAddress($type)
@@ -166,7 +188,7 @@ class EmailRepository extends Repository
                     $emails[] = $address['address'];
                 }
             }
-        } else if ($addresses) {
+        } elseif ($addresses) {
             $emails[] = $addresses[0]['address'];
         }
 
@@ -174,7 +196,6 @@ class EmailRepository extends Repository
     }
 
     /**
-     * @param  array  $data
      * @return array
      */
     public function sanitizeEmails(array $data)

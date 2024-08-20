@@ -25,7 +25,7 @@ class PipelineRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Lead\Contracts\Pipeline';
     }
@@ -33,7 +33,6 @@ class PipelineRepository extends Repository
     /**
      * Create pipeline.
      *
-     * @param  array  $data
      * @return \Webkul\Lead\Contracts\Pipeline
      */
     public function create(array $data)
@@ -56,12 +55,11 @@ class PipelineRepository extends Repository
     /**
      * Update pipeline.
      *
-     * @param  array  $data
      * @param  int  $id
      * @param  string  $attribute
      * @return \Webkul\Lead\Contracts\Pipeline
      */
-    public function update(array $data, $id, $attribute = "id")
+    public function update(array $data, $id, $attribute = 'id')
     {
         $pipeline = $this->find($id);
 

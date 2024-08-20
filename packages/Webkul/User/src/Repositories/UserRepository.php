@@ -7,18 +7,29 @@ use Webkul\Core\Eloquent\Repository;
 class UserRepository extends Repository
 {
     /**
+     * Searchable fields
+     */
+    protected $fieldSearchable = [
+        'name',
+        'email',
+        'status',
+        'view_permission',
+        'role_id',
+    ];
+
+    /**
      * Specify Model class name
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\User\Contracts\User';
     }
 
     /**
      * This function will return user ids of current user's groups
-     * 
+     *
      * @return array
      */
     public function getCurrentUserGroupsUserIds()

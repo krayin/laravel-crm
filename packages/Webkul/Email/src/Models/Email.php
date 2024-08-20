@@ -4,8 +4,8 @@ namespace Webkul\Email\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
-use Webkul\Lead\Models\LeadProxy;
 use Webkul\Email\Contracts\Email as EmailContract;
+use Webkul\Lead\Models\LeadProxy;
 
 class Email extends Model implements EmailContract
 {
@@ -19,6 +19,15 @@ class Email extends Model implements EmailContract
         'cc'            => 'array',
         'bcc'           => 'array',
         'reference_ids' => 'array',
+    ];
+
+    /**
+     * The attributes that are appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'time_ago',
     ];
 
     /**
@@ -85,5 +94,13 @@ class Email extends Model implements EmailContract
     public function attachments()
     {
         return $this->hasMany(AttachmentProxy::modelClass(), 'email_id');
+    }
+
+    /**
+     * Get the time ago.
+     */
+    public function getTimeAgoAttribute(): string
+    {
+        return $this->created_at->diffForHumans();
     }
 }

@@ -3,16 +3,14 @@
 namespace Webkul\Admin\Http\Middleware;
 
 use Closure;
-use Illuminate\Http\Request;
 use Illuminate\Foundation\Application;
+use Illuminate\Http\Request;
 
 class Locale
 {
     /**
      * The middleware instance.
-     * 
-     * @param  \Illuminate\Foundation\Application  $app
-     * @param  \Illuminate\Http\Request  $request
+     *
      * @return void
      */
     public function __construct(
@@ -28,13 +26,12 @@ class Locale
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \Closure  $next
      * @return mixed
      */
     public function handle($request, Closure $next)
     {
         app()->setLocale(
-            core()->getConfigData('general.locale_settings.locale')
+            core()->getConfigData('general.general.locale_settings.locale')
                 ?: app()->getLocale()
         );
 

@@ -3,9 +3,12 @@
 namespace Webkul\Activity\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Webkul\User\Models\UserProxy;
-use Webkul\Lead\Models\LeadProxy;
 use Webkul\Activity\Contracts\Activity as ActivityContract;
+use Webkul\Contact\Models\PersonProxy;
+use Webkul\Lead\Models\LeadProxy;
+use Webkul\Product\Models\ProductProxy;
+use Webkul\User\Models\UserProxy;
+use Webkul\Warehouse\Models\WarehouseProxy;
 
 class Activity extends Model implements ActivityContract
 {
@@ -21,10 +24,7 @@ class Activity extends Model implements ActivityContract
      *
      * @var array
      */
-    protected $with = [
-        'file',
-        'user',
-    ];
+    protected $with = ['user'];
 
     /**
      * Cast attributes to date time
@@ -72,9 +72,9 @@ class Activity extends Model implements ActivityContract
     /**
      * Get the file associated with the activity.
      */
-    public function file()
+    public function files()
     {
-        return $this->hasOne(FileProxy::modelClass(), 'activity_id');
+        return $this->hasMany(FileProxy::modelClass(), 'activity_id');
     }
 
     /**
@@ -83,5 +83,29 @@ class Activity extends Model implements ActivityContract
     public function leads()
     {
         return $this->belongsToMany(LeadProxy::modelClass(), 'lead_activities');
+    }
+
+    /**
+     * The Person that belong to the activity.
+     */
+    public function persons()
+    {
+        return $this->belongsToMany(PersonProxy::modelClass(), 'person_activities');
+    }
+
+    /**
+     * The leads that belong to the activity.
+     */
+    public function products()
+    {
+        return $this->belongsToMany(ProductProxy::modelClass(), 'product_activities');
+    }
+
+    /**
+     * The Warehouse that belong to the activity.
+     */
+    public function warehouses()
+    {
+        return $this->belongsToMany(WarehouseProxy::modelClass(), 'warehouse_activities');
     }
 }

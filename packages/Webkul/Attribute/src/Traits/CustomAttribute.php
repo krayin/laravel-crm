@@ -1,10 +1,10 @@
 <?php
- 
+
 namespace Webkul\Attribute\Traits;
 
 use Webkul\Attribute\Models\AttributeValueProxy;
 use Webkul\Attribute\Repositories\AttributeRepository;
- 
+
 trait CustomAttribute
 {
     /**
@@ -39,7 +39,7 @@ trait CustomAttribute
     /**
      * Get an attribute from the model.
      *
-     * @param string $key
+     * @param  string  $key
      * @return mixed
      */
     public function getAttribute($key)
@@ -123,7 +123,7 @@ trait CustomAttribute
      */
     public function getLookUpAttributes($attributes)
     {
-        $attributes = app(AttributeRepository::class)->scopeQuery(function ($query) use($attributes) {
+        $attributes = app(AttributeRepository::class)->scopeQuery(function ($query) use ($attributes) {
             return $query->distinct()
                 ->where('type', 'lookup')
                 ->where('entity_type', request('entity_type'))
@@ -152,7 +152,6 @@ trait CustomAttribute
     /**
      * Fill the model with an array of attributes.
      *
-     * @param  array  $attributes
      * @return $this
      *
      * @throws \Illuminate\Database\Eloquent\MassAssignmentException

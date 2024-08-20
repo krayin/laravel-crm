@@ -1,29 +1,35 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.contacts.persons.index.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.contacts.persons.title') }}
-@stop
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                <x-admin::breadcrumbs name="contacts.persons" />
+            </div>
 
-@section('content-wrapper')
-    <div class="content full-page">
-        <table-component data-src="{{ route('admin.contacts.persons.index') }}">
-            <template v-slot:table-header>
-                <h1>
-                    {!! view_render_event('admin.contacts.persons.index.persons.before') !!}
+            <div class="text-xl font-bold dark:text-white">
+                @lang('admin::app.contacts.persons.index.title')
+            </div>
+        </div>
 
-                    {{ Breadcrumbs::render('contacts.persons') }}
-
-                    {{ __('admin::app.contacts.persons.title') }}
-
-                    {!! view_render_event('admin.contacts.persons.index.persons.after') !!}
-                </h1>
-            </template>
-
-            @if (bouncer()->hasPermission('contacts.persons.create'))
-                <template v-slot:table-action>
-                    <a href="{{ route('admin.contacts.persons.create') }}" class="btn btn-md btn-primary">{{ __('admin::app.contacts.persons.create-title') }}</a>
-                </template>
-            @endif
-        <table-component>
+        <div class="flex items-center gap-x-2.5">
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                <a
+                    href="{{ route('admin.contacts.persons.create') }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.contacts.persons.index.create-btn')
+                </a>
+            </div>
+        </div>
     </div>
-@stop
+
+    {!! view_render_event('krayin.admin.person.datagrid.index.before') !!}
+
+    <x-admin::datagrid src="{{ route('admin.contacts.persons.index') }}" />
+
+    {!! view_render_event('krayin.admin.person.datagrid.index.after') !!}
+</x-admin::layouts>

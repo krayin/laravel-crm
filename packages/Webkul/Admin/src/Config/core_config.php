@@ -3,18 +3,27 @@
 return [
     [
         'key'  => 'general',
-        'name' => 'admin::app.configuration.general',
+        'name' => 'admin::app.configuration.index.general.title',
+        'info' => 'admin::app.configuration.index.general.info',
         'sort' => 1,
     ], [
-        'key'    => 'general.locale_settings',
-        'name'   => 'admin::app.configuration.locale-settings',
+        'key'  => 'general.general',
+        'name' => 'admin::app.configuration.index.general.general.title',
+        'info' => 'admin::app.configuration.index.general.general.info',
+        'icon' => 'settings/store.svg',
+        'sort' => 1,
+    ], [
+        'key'    => 'general.general.locale_settings',
+        'name'   => 'admin::app.configuration.index.general.general.locale-settings.title',
+        'info'   => 'admin::app.configuration.index.general.general.locale-settings.title-info',
         'sort'   => 1,
         'fields' => [
             [
-                'name'          => 'locale',
-                'title'         => 'admin::app.configuration.locale',
-                'type'          => 'select',
-                'data_source'   => 'Webkul\Core\Core@locales'
+                'name'    => 'locale',
+                'title'   => 'admin::app.configuration.index.general.general.locale-settings.title',
+                'type'    => 'select',
+                'default' => 'en',
+                'options' => 'Webkul\Core\Core@locales',
             ],
         ],
     ],

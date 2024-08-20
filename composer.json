@@ -17,7 +17,6 @@
         "laravel/framework": "^10.0",
         "laravel/sanctum": "^3.2",
         "laravel/tinker": "^2.5",
-        "laravel/ui": "^4.0",
         "maatwebsite/excel": "^3.1",
         "prettus/l5-repository": "^2.7.9"
     },
@@ -25,6 +24,7 @@
         "barryvdh/laravel-debugbar": "^3.6",
         "fakerphp/faker": "^1.9.1",
         "krayin/krayin-package-generator": "dev-master",
+        "laravel/pint": "^1.16",
         "laravel/sail": "^1.0.1",
         "mockery/mockery": "^1.4.2",
         "nunomaduro/collision": "^7.0",
@@ -63,11 +63,11 @@
             "Webkul\\Product\\": "packages/Webkul/Product/src",
             "Webkul\\Quote\\": "packages/Webkul/Quote/src",
             "Webkul\\Tag\\": "packages/Webkul/Tag/src",
-            "Webkul\\UI\\": "packages/Webkul/UI/src",
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Workflow\\": "packages/Webkul/Workflow/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
         }
     },
     "autoload-dev": {

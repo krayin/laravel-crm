@@ -4,6 +4,7 @@ namespace Webkul\Admin\Http\Controllers\User;
 
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Support\Facades\Password;
+use Illuminate\View\View;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Notifications\User\UserResetPassword;
 
@@ -13,11 +14,9 @@ class ForgotPasswordController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
-    {        
+    public function create(): View
+    {
         if (auth()->guard('user')->check()) {
             return redirect()->route('admin.dashboard.index');
         } else {
@@ -45,7 +44,7 @@ class ForgotPasswordController extends Controller
                 'email' => 'required|email',
             ]);
 
-            $response = $this->broker()->sendResetLink(request(['email']), function($user, $token) {
+            $response = $this->broker()->sendResetLink(request(['email']), function ($user, $token) {
                 $user->notify(new UserResetPassword($token));
             });
 
@@ -60,7 +59,7 @@ class ForgotPasswordController extends Controller
                 ->withErrors([
                     'email' => trans('admin::app.sessions.forgot-password.email-not-exist'),
                 ]);
-        } catch(\Exception $exception) {
+        } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
 
             return redirect()->back();

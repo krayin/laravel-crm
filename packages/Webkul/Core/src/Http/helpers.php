@@ -1,9 +1,10 @@
 <?php
-use Webkul\Core\ViewRenderEventManager;
 
+use Webkul\Core\Acl;
 use Webkul\Core\Core;
 use Webkul\Core\Menu;
-use Webkul\Core\Acl;
+use Webkul\Core\SystemConfig;
+use Webkul\Core\ViewRenderEventManager;
 
 if (! function_exists('core')) {
     function core(): Core
@@ -29,6 +30,16 @@ if (! function_exists('acl')) {
     }
 }
 
+if (! function_exists('system_config')) {
+    /**
+     * System Config helper.
+     */
+    function system_config(): SystemConfig
+    {
+        return app('system_config');
+    }
+}
+
 if (! function_exists('view_render_event')) {
     function view_render_event($eventName, $params = null)
     {
@@ -41,4 +52,3 @@ if (! function_exists('view_render_event')) {
         return $viewEventManager->render();
     }
 }
-?>

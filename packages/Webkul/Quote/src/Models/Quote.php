@@ -4,10 +4,10 @@ namespace Webkul\Quote\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Attribute\Traits\CustomAttribute;
-use Webkul\User\Models\UserProxy;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Lead\Models\LeadProxy;
 use Webkul\Quote\Contracts\Quote as QuoteContract;
+use Webkul\User\Models\UserProxy;
 
 class Quote extends Model implements QuoteContract
 {

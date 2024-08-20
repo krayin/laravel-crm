@@ -2,16 +2,16 @@
 
 namespace Webkul\Lead\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Models\PersonProxy;
-use Webkul\User\Models\UserProxy;
 use Webkul\Email\Models\EmailProxy;
+use Webkul\Lead\Contracts\Lead as LeadContract;
 use Webkul\Quote\Models\QuoteProxy;
 use Webkul\Tag\Models\TagProxy;
-use Webkul\Attribute\Traits\CustomAttribute;
-use Webkul\Lead\Contracts\Lead as LeadContract;
+use Webkul\User\Models\UserProxy;
 
 class Lead extends Model implements LeadContract
 {
@@ -20,6 +20,15 @@ class Lead extends Model implements LeadContract
     protected $casts = [
         'closed_at'           => 'datetime',
         'expected_close_date' => 'date',
+    ];
+
+    /**
+     * The attributes that are appended.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'rotten_days',
     ];
 
     /**
@@ -64,7 +73,7 @@ class Lead extends Model implements LeadContract
      */
     public function type()
     {
-        return $this->belongsTo(TypeProxy::modelClass());
+        return $this->belongsTo(TypeProxy::modelClass(), 'lead_type_id');
     }
 
     /**
@@ -72,7 +81,7 @@ class Lead extends Model implements LeadContract
      */
     public function source()
     {
-        return $this->belongsTo(SourceProxy::modelClass());
+        return $this->belongsTo(SourceProxy::modelClass(), 'lead_source_id');
     }
 
     /**
@@ -132,10 +141,14 @@ class Lead extends Model implements LeadContract
     }
 
     /**
-     * Returns the rotten days 
+     * Returns the rotten days
      */
     public function getRottenDaysAttribute()
     {
+        if (! $this->stage) {
+            return 0;
+        }
+
         if (in_array($this->stage->code, ['won', 'lost'])) {
             return 0;
         }

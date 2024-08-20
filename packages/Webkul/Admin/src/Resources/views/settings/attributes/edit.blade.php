@@ -1,368 +1,632 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang('admin::app.settings.attributes.edit.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.attributes.edit-title') }}
-@stop
+    {!! view_render_event('bagisto.admin.catalog.attributes.edit.before', ['attribute' => $attribute]) !!}
 
-@push('css')
-    <style>
-        #options > div {
-            padding: 10px;
-            box-shadow: rgb(0 0 0 / 24%) 0px 3px 8px;
-        }
-    </style>
-@endpush
+    <!-- Input Form -->
+    <x-admin::form
+        :action="route('admin.settings.attributes.update', $attribute->id)"
+        enctype="multipart/form-data"
+        method="PUT"
+    >
+        <!-- actions buttons -->
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs 
+                        name="settings.attributes.edit" 
+                        :entity="$attribute"
+                    />
+                </div>
 
-@section('content-wrapper')
-    <div class="content full-page adjacent-center">
-        {!! view_render_event('admin.settings.attributes.edit.header.before', ['attribute' => $attribute]) !!}
+                <div class="text-xl font-bold dark:text-white">
+                    @lang('admin::app.settings.attributes.edit.title')
+                </div>
+            </div>
 
-        <div class="page-header">
-
-            {{ Breadcrumbs::render('settings.attributes.edit', $attribute) }}
-
-            <div class="page-title">
-                <h1>{{ __('admin::app.settings.attributes.edit-title') }}</h1>
+            <div class="flex items-center gap-x-2.5">
+                <!-- Create button for Attributes -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.attributes.edit.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
-        {!! view_render_event('admin.settings.attributes.edit.header.after', ['attribute' => $attribute]) !!}
+        <!-- Edit Attributes Vue Components -->
+        <v-edit-attributes>
+            <!-- Shimmer Effect -->
+        </v-edit-attributes>
+    </x-admin::form>
 
-        <form method="POST" action="{{ route('admin.settings.attributes.update', $attribute->id) }}" @submit.prevent="onSubmit">
-            <div class="page-content">
-                <div class="form-container">
-                    <div class="panel">
-                        <div class="panel-header">
-                            {!! view_render_event('admin.settings.attributes.edit.form_buttons.before', ['attribute' => $attribute]) !!}
+    {!! view_render_event('bagisto.admin.catalog.attributes.edit.after', ['attribute' => $attribute]) !!}
 
-                            <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.settings.attributes.save-btn-title') }}
-                            </button>
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-edit-attributes-template"
+        >
+            <!-- body content -->
+            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+                <!-- Left sub Component -->
+                <div class="flex flex-1 flex-col gap-2 overflow-auto max-xl:flex-auto">
 
-                            <a href="{{ route('admin.settings.attributes.index') }}">{{ __('admin::app.settings.attributes.back') }}</a>
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
 
-                            {!! view_render_event('admin.settings.attributes.edit.form_buttons.after', ['attribute' => $attribute]) !!}
-                        </div>
+                    <!-- Label -->
+                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                        <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                            @lang('admin::app.settings.attributes.edit.labels')
+                        </p>
 
-                        <div class="panel-body">
-                            {!! view_render_event('admin.settings.attributes.edit.form_controls.before', ['attribute' => $attribute]) !!}
+                        <!-- Admin name -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.attributes.edit.name')
+                            </x-admin::form.control-group.label>
 
-                            @csrf()
+                            <x-admin::form.control-group.control
+                                type="text"
+                                name="name"
+                                rules="required"
+                                :value="old('name') ?: $attribute->name"
+                                :label="trans('admin::app.settings.attributes.edit.name')"
+                                :placeholder="trans('admin::app.settings.attributes.edit.name')"
+                            />
 
-                            <input name="_method" type="hidden" value="PUT">
+                            <x-admin::form.control-group.error control-name="name" />
+                        </x-admin::form.control-group>
 
-                            <div class="form-group" :class="[errors.has('code') ? 'has-error' : '']">
-                                <label for="code" class="required">{{ __('admin::app.settings.attributes.code') }}</label>
+                        <!-- Options -->
+                        <div
+                            class=" {{ in_array($attribute->type, ['select', 'multiselect', 'checkbox', 'lookup']) ?: 'hidden' }}"
+                            v-if="showSwatch"
+                        >
+                            <div class="mb-3 flex items-center justify-between">
+                                <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.settings.attributes.edit.options')
+                                </p>
 
-                                <input
-                                    type="text"
-                                    name="code"
-                                    class="control"
-                                    id="code"
-                                    value="{{ old('code') ?: $attribute->code }}"
-                                    v-validate="'required'"
-                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.code') }}&quot;"
-                                    disabled="disabled"
-                                    v-code
-                                />
-
-                                <input type="hidden" name="code" value="{{ $attribute->code }}"/>
-
-                                <span class="control-error" v-if="errors.has('code')">
-                                    @{{ errors.first('code') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label for="name" class="required">{{ __('admin::app.settings.attributes.name') }}</label>
-
-                                <input
-                                    type="text"
-                                    name="name"
-                                    class="control"
-                                    id="name"
-                                    value="{{ old('name') ?: $attribute->name }}"
-                                    v-validate="'required'"
-                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
-                                />
-
-                                <span class="control-error" v-if="errors.has('name')">
-                                    @{{ errors.first('name') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="entity_type" class="required">{{ __('admin::app.settings.attributes.entity-type') }}</label>
-
-                                <?php $selectedOption = old('type') ?: $attribute->entity_type ?>
-
-                                <select class="control" id="entity_type" name="entity_type">
-                                    @foreach (config('attribute_entity_types') as $key => $entityType)
-                                        <option value="{{ $key }}" {{ $selectedOption == $key ? 'selected' : '' }}>
-                                            {{ trans($entityType['name']) }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <?php $selectedOption = old('type') ?: $attribute->type ?>
-
-                                <label for="type">{{ __('admin::app.settings.attributes.type') }}</label>
-
-                                <select class="control" id="type" disabled="disabled">
-                                    <option value="text" {{ $selectedOption == 'text' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.text') }}
-                                    </option>
-
-                                    <option value="textarea" {{ $selectedOption == 'textarea' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.textarea') }}
-                                    </option>
-
-                                    <option value="price" {{ $selectedOption == 'price' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.price') }}
-                                    </option>
-
-                                    <option value="boolean" {{ $selectedOption == 'boolean' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.boolean') }}
-                                    </option>
-
-                                    <option value="select" {{ $selectedOption == 'select' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.select') }}
-                                    </option>
-
-                                    <option value="multiselect" {{ $selectedOption == 'multiselect' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.multiselect') }}
-                                    </option>
-
-                                    <option value="checkbox" {{ $selectedOption == 'checkbox' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.checkbox') }}
-                                    </option>
-
-                                    <option value="email" {{ $selectedOption == 'email' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.email') }}
-                                    </option>
-
-                                    <option value="address" {{ $selectedOption == 'address' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.address') }}
-                                    </option>
-
-                                    <option value="phone" {{ $selectedOption == 'phone' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.phone') }}
-                                    </option>
-
-                                    <option value="datetime" {{ $selectedOption == 'datetime' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.datetime') }}
-                                    </option>
-
-                                    <option value="date" {{ $selectedOption == 'date' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.date') }}
-                                    </option>
-
-                                    <option value="image" {{ $selectedOption == 'image' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.image') }}
-                                    </option>
-
-                                    <option value="file" {{ $selectedOption == 'file' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.file') }}
-                                    </option>
-
-                                    <option value="lookup" {{ $selectedOption == 'lookup' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.lookup') }}
-                                    </option>
-                                </select>
-                                <input type="hidden" name="type" value="{{ $attribute->type }}"/>
-                            </div>
-
-                            <div id="options" class="{{ in_array($attribute->type, ['select', 'multiselect', 'checkbox', 'lookup']) ?: 'hide' }}">
-
-                                <option-wrapper></option-wrapper>
-
-                            </div>
-
-                            <div class="form-group">
-                                <label for="is_required">{{ __('admin::app.settings.attributes.is_required') }}</label>
-
-                                <select class="control" id="is_required" name="is_required" {{ ! (bool) $attribute->is_user_defined ? 'disabled' : ''}}>
-                                    <option value="0" {{ $attribute->is_required ? '' : 'selected' }}>
-                                        {{ __('admin::app.settings.attributes.no') }}
-                                    </option>
-
-                                    <option value="1" {{ $attribute->is_required ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.yes') }}
-                                    </option>
-                                </select>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="is_unique">{{ __('admin::app.settings.attributes.is_unique') }}</label>
-
-                                <select class="control" id="is_unique" name="is_unique" disabled>
-                                    <option value="0" {{ $attribute->is_unique ? '' : 'selected' }}>
-                                        {{ __('admin::app.settings.attributes.no') }}
-                                    </option>
-
-                                    <option value="1" {{ $attribute->is_unique ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.attributes.yes') }}
-                                    </option>
-                                </select>
-
-                                <input type="hidden" name="is_unique" value="{{ $attribute->is_unique }}"/>
-                            </div>
-
-                            @if ($attribute->type == 'text')
-                                <div class="form-group">
-                                    <?php $selectedValidation = old('validation') ?: $attribute->validation ?>
-
-                                    <label for="validation">{{ __('admin::app.settings.attributes.input_validation') }}</label>
-
-                                    <select class="control" id="validation" name="validation">
-                                        <option value=""></option>
-
-                                        <option value="numeric" {{ $selectedValidation == 'numeric' ? 'selected' : '' }}>
-                                            {{ __('admin::app.settings.attributes.number') }}
-                                        </option>
-
-                                        <option value="decimal" {{ $selectedValidation == 'decimal' ? 'selected' : '' }}>
-                                            {{ __('admin::app.settings.attributes.decimal') }}
-                                        </option>
-
-                                        <option value="email" {{ $selectedValidation == 'email' ? 'selected' : '' }}>
-                                            {{ __('admin::app.settings.attributes.email') }}
-                                        </option>
-
-                                        <option value="url" {{ $selectedValidation == 'url' ? 'selected' : '' }}>
-                                            {{ __('admin::app.settings.attributes.url') }}
-                                        </option>
-                                    </select>
+                                <!-- Add Row Button -->
+                                <div
+                                    v-if="optionType == 'options' && attributeType != 'lookup'"
+                                    class="secondary-button text-sm"
+                                    @click="$refs.addOptionsRow.toggle();swatchValue=''"
+                                >
+                                    @lang('admin::app.settings.attributes.edit.add-option')
                                 </div>
-                            @endif
+                            </div>
 
-                            {!! view_render_event('admin.settings.attributes.edit.form_controls.after', ['attribute' => $attribute]) !!}
+                            <!-- For Attribute Options If Data Exist -->
+                            <div class="mt-4 overflow-x-auto">
+                                <div class="flex gap-4 max-sm:flex-wrap">
+                                    <!-- Input Option Type -->
+                                    <x-admin::form.control-group v-if="attributeType != 'lookup'" class="mb-2.5 w-1/2">
+                                        <x-admin::form.control-group.label>
+                                            @lang('admin::app.settings.attributes.create.option-type')
+                                        </x-admin::form.control-group.label>
+                                
+                                        <x-admin::form.control-group.control
+                                            type="select"
+                                            id="optionType"
+                                            name="option_type"
+                                            :value="old('optionType')"
+                                            v-model="optionType"
+                                            @change="showSwatch=true"
+                                        >
+                                            <option value="lookup">
+                                                @lang('admin::app.settings.attributes.create.lookup')
+                                            </option>
+                                            <option value="options">
+                                                @lang('admin::app.settings.attributes.create.options')
+                                            </option>
+                                        </x-admin::form.control-group.control>
+                                
+                                        <x-admin::form.control-group.error
+                                            class="mt-3"
+                                            control-name="admin"
+                                        />
+                                    </x-admin::form.control-group>
+                                
+                                    <!-- Input Lookup Type -->
+                                    <x-admin::form.control-group v-if="attributeType == 'lookup' || (optionType == 'lookup')" class="mb-2.5 w-1/2">
+                                        <x-admin::form.control-group.label>
+                                            @lang('admin::app.settings.attributes.create.lookup-type')
+                                        </x-admin::form.control-group.label>
+                                
+                                        <x-admin::form.control-group.control
+                                            type="select"
+                                            id="lookup_type"
+                                            name="lookup_type"
+                                            :value="$attribute->lookup_type"
+                                            @change="showSwatch=true"
+                                        >
+                                            <option
+                                                :key="index"
+                                                :value="index"
+                                                v-text="entityType.name"
+                                                v-for="(entityType, index) in lookupEntityTypes"
+                                            ></option>
+                                        </x-admin::form.control-group.control>
+                                
+                                        <x-admin::form.control-group.error
+                                            class="mt-3"
+                                            control-name="admin"
+                                        />
+                                    </x-admin::form.control-group>
+                                </div>
+                                    
+                                <template v-if="optionsData?.length">
+                                    @if (
+                                        $attribute->type == 'select'
+                                        || $attribute->type == 'multiselect'
+                                        || $attribute->type == 'checkbox'
+                                        || $attribute->type == 'lookup'
+                                    )
+                                        <!-- Table Information -->
+                                        <x-admin::table>
+                                            <x-admin::table.thead class="text-sm font-medium dark:bg-gray-800">
+                                                <x-admin::table.thead.tr>
+                                                    <x-admin::table.th class="!p-0"></x-admin::table.th>
+                                                    <!-- Admin tables heading -->
+                                                    <x-admin::table.th>
+                                                        @lang('admin::app.settings.attributes.edit.option-name')
+                                                    </x-admin::table.th>
+
+                                                </x-admin::table.thead.tr>
+                                            </x-admin::table.thead>
+
+                                            <!-- Draggable Component -->
+                                            <draggable
+                                                tag="tbody"
+                                                ghost-class="draggable-ghost"
+                                                handle=".icon-edit"
+                                                v-bind="{animation: 200}"
+                                                :list="optionsData"
+                                                item-key="id"
+                                            >
+                                                <template #item="{ element, index }">
+                                                    <x-admin::table.thead.tr
+                                                        class="hover:bg-gray-50 dark:hover:bg-gray-950"
+                                                        v-show="! element.isDelete"
+                                                    >
+                                                        <input
+                                                            type="hidden"
+                                                            :name="'options[' + element.id + '][isNew]'"
+                                                            :value="element.isNew"
+                                                        >
+
+                                                        <input
+                                                            type="hidden"
+                                                            :name="'options[' + element.id + '][isDelete]'"
+                                                            :value="element.isDelete"
+                                                        >
+
+                                                        <!-- Draggable Icon -->
+                                                        <x-admin::table.td class="!px-0 text-center">
+                                                            <i class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
+
+                                                            <input
+                                                                type="hidden"
+                                                                :name="'options[' + element.id + '][sort_order]'"
+                                                                :value="index"
+                                                            />
+                                                        </x-admin::table.td>
+
+                                                        <!-- Admin-->
+                                                        <x-admin::table.td>
+                                                            <p class="dark:text-white">
+                                                                @{{ element.name }}
+                                                            </p>
+
+                                                            <input
+                                                                type="hidden"
+                                                                :name="'options[' + element.id + '][name]'"
+                                                                v-model="element.name"
+                                                            />
+                                                        </x-admin::table.td>
+
+                                                        <!-- Actions Button -->
+                                                        <x-admin::table.td class="!px-0">
+                                                            <span
+                                                                class="icon-edit cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                                                @click="editOptions(element)"
+                                                            >
+                                                            </span>
+
+                                                            <span
+                                                                class="icon-delete cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                                                @click="removeOption(element.id)"
+                                                            >
+                                                            </span>
+                                                        </x-admin::table.td>
+                                                    </x-admin::table.thead.tr>
+                                                </template>
+                                            </draggable>
+                                        </x-admin::table>
+                                    @endif
+                                </template>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </form>
-    </div>
-@stop
 
-@push('scripts')
-    <script type="text/x-template" id="options-template">
-        <div class="form-group dragable-container">
-            <template v-if="typeValue != 'lookup'">
-                <div class="form-group">
-                    <label>{{ __('admin::app.settings.attributes.options-type') }}</label>
-
-                    <select class="control" name="option_type" v-model="optionType">
-                        <option value="lookup">
-                            {{ __('admin::app.settings.attributes.lookup') }}
-                        </option>
-
-                        <option value="options">
-                            {{ __('admin::app.settings.attributes.options') }}
-                        </option>
-                    </select>
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.after', ['attribute' => $attribute]) !!}
                 </div>
 
-                <template v-if="optionType == 'options'">
-                    <draggable tag="ul" :list="optionRows" class="list-group dragable-list">
-                        <li
-                            class="list-group-item"
-                            v-for="(row, index) in optionRows"
-                            :key="row.id"
-                        >
-                            <div class="form-group" :class="[errors.has('options[' + row.id + '][name]') ? 'has-error' : '']">
-                                <input
+                <!-- Right sub-component -->
+                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.general.before', ['attribute' => $attribute]) !!}
+
+                    <!-- General -->
+                    <x-admin::accordion>
+                        <x-slot:header>
+                            <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.settings.attributes.edit.general')
+                            </p>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <!-- Attribute Code -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.attributes.edit.code')
+                                </x-admin::form.control-group.label>
+
+                                @php
+                                    $selectedOption = old('type') ?: $attribute->code;
+                                @endphp
+
+                                <x-admin::form.control-group.control
                                     type="text"
-                                    :name="'options[' + row.id + '][name]'"
-                                    class="control"
-                                    v-model="row['name']"
-                                    v-validate="'required'"
-                                    data-vv-as="&quot;{{ __('admin::app.settings.attributes.name') }}&quot;"
+                                    class="cursor-not-allowed"
+                                    name="code"
+                                    rules="required"
+                                    :value="$selectedOption"
+                                    :disabled="(boolean) $selectedOption"
+                                    readonly
+                                    :label="trans('admin::app.settings.attributes.edit.code')"
+                                    :placeholder="trans('admin::app.settings.attributes.edit.code')"
                                 />
 
-                                <span class="control-error" v-if="errors.has('options[' + row.id + '][name]')">
-                                    @{{ errors.first('options[' + row.id + '][name]') }}
-                                </span>
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    name="code"
+                                    :value="$selectedOption"
+                                />
 
-                                <i class="icon align-justify-icon"></i>
-                            </div>
+                                <x-admin::form.control-group.error control-name="code" />
+                            </x-admin::form.control-group>
 
-                            <i class="icon trash-icon" @click="removeRow(row)"></i>
-                        </li>
-                    </draggable>
+                            <!-- Attribute Type -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.attributes.edit.type')
+                                </x-admin::form.control-group.label>
 
-                    <button type="button" class="btn btn-md btn-primary mt-20" id="add-option-btn" @click="addOptionRow">
-                        {{ __('admin::app.settings.attributes.add-option-btn-title') }}
-                    </button>
-                </template>
+                                @php
+                                    $selectedOption = old('type') ?: $attribute->type;
+                                @endphp
 
-                <div v-else>
-                    <label for="lookup_type" class="required">
-                        {{ __('admin::app.settings.attributes.lookup-type') }}
-                    </label>
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    id="type"
+                                    class="cursor-not-allowed"
+                                    name="type"
+                                    rules="required"
+                                    :value="$selectedOption"
+                                    :disabled="(boolean) $selectedOption"
+                                    :label="trans('admin::app.settings.attributes.edit.type')"
+                                >
+                                    <!-- Here! All Needed types are defined -->
+                                    @foreach(['text', 'textarea', 'price', 'boolean', 'select', 'multiselect', 'checkbox', 'email', 'address', 'phone', 'lookup', 'datetime', 'date', 'image', 'file'] as $type)
+                                        <option
+                                            value="{{ $type }}"
+                                            {{ $selectedOption == $type ? 'selected' : '' }}
+                                        >
+                                            @lang('admin::app.settings.attributes.edit.'. $type)
+                                        </option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
 
-                    <select class="control" id="lookup_type" name="lookup_type" :value="'{{ $attribute->lookup_type }}'">
-                        <option
-                            :key="index"
-                            :value="index"
-                            v-text="entityType.name"
-                            v-for="(entityType, index) in lookupEntityTypes"
-                        ></option>
-                    </select>
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    name="type"
+                                    :value="$attribute->type"
+                                />
+
+                                <x-admin::form.control-group.error control-name="type" />
+                            </x-admin::form.control-group>
+
+                            <!-- Entity Type -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.attributes.create.entity-type')
+                                </x-admin::form.control-group.label>
+
+                                <x-admin::form.control-group.control
+                                    type="select"
+                                    id="entity_type"
+                                    name="entity_type"
+                                    rules="required"
+                                    :value="$attribute->entity_type"
+                                    :label="trans('admin::app.settings.attributes.create.entity-type')"
+                                    :placeholder="trans('admin::app.settings.attributes.create.entity-type')"
+                                >
+
+                                    @foreach (config('attribute_entity_types') as $key => $entityType)
+                                        <option value="{{ $key }}">{{ trans($entityType['name']) }}</option>
+                                    @endforeach
+                                </x-admin::form.control-group.control>
+                                    
+                                <x-admin::form.control-group.error control-name="entity_type" />
+                            </x-admin::form.control-group>
+                        </x-slot>
+                    </x-admin::accordion>
+                    
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.general.after', ['attribute' => $attribute]) !!}
+
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.validations.before', ['attribute' => $attribute]) !!}
+
+                    <!-- Validations -->
+                    <x-admin::accordion>
+                        <x-slot:header>
+                            <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.settings.attributes.edit.validations')
+                            </p>
+                        </x-slot>
+
+                        <x-slot:content>
+                            <!-- Input Validation -->
+                            @if($attribute->type == 'text')
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.settings.attributes.edit.input-validation')
+                                    </x-admin::form.control-group.label>
+
+                                    <x-admin::form.control-group.control
+                                        type="select"
+                                        class="cursor-not-allowed"
+                                        name="validation"
+                                        :value="$attribute->validation"
+                                        disabled="disabled"
+                                    >
+                                        <!-- Here! All Needed types are defined -->
+                                        @foreach(['number', 'email', 'decimal', 'url'] as $type)
+                                            <option value="{{ $type }}" {{ $attribute->validation == $type ? 'selected' : '' }}>
+                                                @lang('admin::app.settings.attributes.edit.' . $type)
+                                            </option>
+                                        @endforeach
+                                    </x-admin::form.control-group.control>
+                                </x-admin::form.control-group>
+                            @endif
+
+                            <!-- Is Required -->
+                            <x-admin::form.control-group class="!mb-2 flex select-none items-center gap-2.5">
+                                @php
+                                    $selectedOption = old('is_required') ?? $attribute->is_required
+                                @endphp
+
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    name="is_required"
+                                    :value="(boolean) $selectedOption"
+                                />
+
+                                <x-admin::form.control-group.control
+                                    type="checkbox"
+                                    name="is_required"
+                                    id="is_required"
+                                    for="is_required"
+                                    value="1"
+                                    :checked="(boolean) $selectedOption"
+                                />
+
+                                <label
+                                    class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300"
+                                    for="is_required"
+                                >
+                                    @lang('admin::app.settings.attributes.edit.is-required')
+                                </label>
+                            </x-admin::form.control-group>
+
+                            <!-- Is Unique -->
+                            <x-admin::form.control-group class="!mb-0 flex select-none items-center gap-2.5">
+                                <x-admin::form.control-group.control
+                                    type="checkbox"
+                                    id="is_unique"
+                                    name="is_unique"
+                                    value="1"
+                                    for="is_unique"
+                                    :checked="(boolean) $attribute->is_unique"
+                                    :disabled="(boolean) $attribute->is_unique"
+                                />
+
+                                <label
+                                    class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300"
+                                    for="is_unique"
+                                >
+                                    @lang('admin::app.settings.attributes.edit.is-unique')
+                                </label>    
+
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    :name="$type"
+                                    :value="$attribute->is_unique"
+                                />
+                            </x-admin::form.control-group>
+                        </x-slot>
+                    </x-admin::accordion>
+
+                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.validations.after', ['attribute' => $attribute]) !!}
                 </div>
-            </template>
-
-            <div v-else>
-                <label for="lookup_type" class="required">
-                    {{ __('admin::app.settings.attributes.lookup-type') }}
-                </label>
-
-                <select class="control" id="lookup_type" name="lookup_type" :value="'{{ $attribute->lookup_type }}'">
-                    <option
-                        :key="index"
-                        :value="index"
-                        v-text="entityType.name"
-                        v-for="(entityType, index) in lookupEntityTypes"
-                    ></option>
-                </select>
             </div>
-        </div>
-    </script>
 
-    <script>
-        Vue.component('option-wrapper', {
+            <!-- Add Options Model Form -->
+            <x-admin::form
+                v-slot="{ meta, errors, handleSubmit }"
+                as="div"
+                ref="modelForm"
+            >
+                <form
+                    @submit.prevent="handleSubmit($event, storeOptions)"
+                    enctype="multipart/form-data"
+                    ref="editOptionsForm"
+                >
+                    <x-admin::modal
+                        @toggle="listenModel"
+                        ref="addOptionsRow"
+                    >
+                        <!-- Modal Header !-->
+                        <x-slot:header>
+                            <p class="text-lg font-bold text-gray-800 dark:text-white">
+                                @lang('admin::app.settings.attributes.edit.add-option')
+                            </p>
+                        </x-slot>
 
-            template: '#options-template',
+                        <!-- Modal Content !-->
+                        <x-slot:content>
+                                <!-- Hidden Id Input -->
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    name="id"
+                                />
 
-            inject: ['$validator'],
+                                <x-admin::form.control-group.control
+                                    type="hidden"
+                                    name="isNew"
+                                    ::value="optionIsNew"
+                                />
 
-            data: function() {
-                return {
-                    optionRowCount: 1,
+                                <!-- Admin Input -->
+                                <x-admin::form.control-group class="mb-2.5 w-full">
+                                    <x-admin::form.control-group.label class="required">
+                                        @lang('admin::app.settings.attributes.edit.option-name')
+                                    </x-admin::form.control-group.label>
 
-                    typeValue: "{{ $selectedOption }}",
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        name="name"
+                                        rules="required"
+                                        :label="trans('admin::app.settings.attributes.edit.option-name')"
+                                        :placeholder="trans('admin::app.settings.attributes.edit.option-name')"
+                                        ref="inputAdmin"
+                                    />
 
-                    optionType: "{{ $attribute->lookup_type ? 'lookup' : 'options' }}",
+                                    <x-admin::form.control-group.error control-name="name" />
+                                </x-admin::form.control-group>
+                            </div>
+                        </x-slot>
 
-                    optionRows: @json($attribute->options()->orderBy('sort_order')->get()),
+                        <!-- Modal Footer -->
+                        <x-slot:footer>
+                            <!-- Save Button -->
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                @lang('admin::app.settings.attributes.edit.save-btn')
+                            </button>
+                        </x-slot>
+                    </x-admin::modal>
+                </form>
+            </x-admin::form>
+        </script>
 
-                    lookupEntityTypes: @json(config('attribute_lookups')),
-                }
-            },
+        <script type="module">
+            app.component('v-edit-attributes', {
+                template: '#v-edit-attributes-template',
 
-            methods: {
-                addOptionRow: function () {
-                    this.optionRows.push({'id': 'option_' + this.optionRowCount++});
+                data() {
+                    return {
+                        showSwatch: {{ in_array($attribute->type, ['select', 'checkbox', 'lookup', 'multiselect']) ? 'true' : 'false' }},
+
+                        isNullOptionChecked: false,
+
+                        swatchValue: [],
+
+                        optionsData: @json($attribute->options()->orderBy('sort_order')->get()),
+
+                        optionIsNew: true,
+
+                        optionId: 0,
+
+                        lookupEntityTypes: @json(config('attribute_lookups')),
+
+                        optionType: "{{ $attribute->lookup_type ? 'lookup' : 'options' }}",
+                    }
                 },
 
-                removeRow: function (row) {
-                    const index = this.optionRows.indexOf(row);
+                methods: {
+                    storeOptions(params, { resetForm, setValues }) {
+                        if (! params.id) {
+                            params.id = 'option_' + this.optionId;
+                            this.optionId++;
+                        }
 
-                    Vue.delete(this.optionRows, index);
+                        let foundIndex = this.optionsData.findIndex(item => item.id === params.id);
+
+                        if (foundIndex !== -1) {
+                            this.optionsData.splice(foundIndex, 1, params);
+                        } else {
+                            this.optionsData.push(params);
+                        }
+
+                        let formData = new FormData(this.$refs.editOptionsForm);
+
+                        this.$refs.addOptionsRow.toggle();
+
+                        if (params.swatch_value instanceof File) {
+                            this.setFile(sliderImage, params.id);
+                        }
+
+                        resetForm();
+                    },
+
+                    editOptions(value) {
+                        this.optionIsNew = false;
+
+                        this.$refs.modelForm.setValues(value);
+
+                        this.$refs.addOptionsRow.toggle();
+                    },
+
+                    removeOption(id) {
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                let foundIndex = this.optionsData.findIndex(item => item.id === id);
+
+                                if (foundIndex !== -1) {
+                                    if (this.optionsData[foundIndex].isNew) {
+                                        this.optionsData.splice(foundIndex, 1);
+                                    } else {
+                                        this.optionsData[foundIndex].isDelete = true;
+                                    }
+                                }
+
+                                this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.attributes.edit.option-deleted')" });
+                            }
+                        });
+                    },
+
+                    listenModel(event) {
+                        if (! event.isActive) {
+                            this.isNullOptionChecked = false;
+                        }
+                    },
+
+                    setFile(file, id) {
+                        let dataTransfer = new DataTransfer();
+
+                        dataTransfer.items.add(file);
+                    }
                 },
-            },
-        });
-    </script>
-@endpush
+            });
+        </script>
+    @endPushOnce
+</x-admin::layouts>

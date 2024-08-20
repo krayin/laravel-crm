@@ -2,6 +2,4 @@
 
 namespace Webkul\WebForm\Contracts;
 
-interface WebForm
-{
-}
+interface WebForm {}

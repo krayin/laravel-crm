@@ -2,6 +2,4 @@
 
 namespace Webkul\Tag\Contracts;
 
-interface Tag
-{
-}
+interface Tag {}

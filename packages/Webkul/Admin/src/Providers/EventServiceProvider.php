@@ -13,11 +13,19 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         'contacts.person.create.after' => [
-            'Webkul\Admin\Listeners\Person@linkToEmail'
+            'Webkul\Admin\Listeners\Person@linkToEmail',
         ],
 
         'lead.create.after' => [
-            'Webkul\Admin\Listeners\Lead@linkToEmail'
+            'Webkul\Admin\Listeners\Lead@linkToEmail',
+        ],
+
+        'activity.create.after' => [
+            'Webkul\Admin\Listeners\Activity@afterUpdateOrCreate',
+        ],
+
+        'activity.update.after' => [
+            'Webkul\Admin\Listeners\Activity@afterUpdateOrCreate',
         ],
     ];
 }

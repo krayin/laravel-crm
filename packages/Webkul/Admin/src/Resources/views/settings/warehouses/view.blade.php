@@ -1,241 +1,89 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <x-slot:title>
+        @lang ($warehouse->name)
+    </x-slot>
 
-@section('page_title')
-    {{ $warehouse->name }}
-@stop
+    <div class="flex gap-4">
+        <!-- Left Panel -->
+        {!! view_render_event('krayin.admin.settings.warehouses.view.left.before', ['warehouse' => $warehouse]) !!}
 
-@section('content-wrapper')
-    <div class="content full-page">
-        {!! view_render_event('admin.settings.warehouses.view.header.before', ['warehouse' => $warehouse]) !!}
+        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
+            <!-- Product Information -->
+            <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
+                <!-- Breadcrums -->
+                <div class="flex items-center justify-between">
+                    <x-admin::breadcrumbs
+                        name="settings.warehouses.view"
+                        :entity="$warehouse"
+                    />
+                </div>
 
-        <div class="page-header">
-            {{ Breadcrumbs::render('settings.warehouses.view', $warehouse) }}
+                <!-- Tags -->
+                <x-admin::tags
+                    :attach-endpoint="route('admin.settings.warehouses.tags.attach', $warehouse->id)"
+                    :detach-endpoint="route('admin.settings.warehouses.tags.detach', $warehouse->id)"
+                    :added-tags="$warehouse->tags"
+                />
 
-            <div class="page-title">
-                <h1>
+                <!-- Title -->
+                <h3 class="text-lg font-bold">
                     {{ $warehouse->name }}
-                </h1>
-            </div>
+                </h3>
 
-            <div class="page-action">
-            </div>
-        </div>
+                <!-- Activity Actions -->
+                <div class="flex flex-wrap gap-2">
+                    <!-- File Activity Action -->
+                    <x-admin::activities.actions.file
+                        :entity="$warehouse"
+                        entity-control-name="warehouse_id"
+                    />
 
-        {!! view_render_event('admin.settings.warehouses.view.content.after', ['warehouse' => $warehouse]) !!}
+                    <!-- Note Activity Action -->
+                    <x-admin::activities.actions.note
+                        :entity="$warehouse"
+                        entity-control-name="warehouse_id"
+                    />
 
-        <div class="page-content warehouse-view">
-            {!! view_render_event('admin.settings.warehouses.view.informations.before', ['warehouse' => $warehouse]) !!}
-
-            <div class="panel">
-                <div class="panel-header">
-                    {{ __('admin::app.settings.warehouses.information') }}
-                </div>
-
-                <div class="panel-body">
-                    <div class="custom-attribute-view">
-                        <h3>
-                            {{ __('admin::app.settings.warehouses.general-information') }}
-                        </h3>
-
-                        @include('admin::common.custom-attributes.view', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'warehouses',
-                                ['code', 'NOTIN', ['contact_name', 'contact_emails', 'contact_numbers', 'contact_address']]
-                            ])->sortBy('sort_order'),
-                            'entity'           => $warehouse,
-                        ])
-                    </div>
-
-                    <div class="custom-attribute-view">
-                        <h3>
-                            {{ __('admin::app.settings.warehouses.contact-information') }}
-                        </h3>
-
-                        @include('admin::common.custom-attributes.view', [
-                            'customAttributes' => app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'warehouses',
-                                ['code', 'IN', ['contact_name', 'contact_emails', 'contact_numbers', 'contact_address']]
-                            ])->sortBy('sort_order'),
-                            'entity'           => $warehouse,
-                        ])
-                    </div>
+                    <!-- Activity Action -->
+                    <x-admin::activities.actions.activity
+                        :entity="$warehouse"
+                        entity-control-name="warehouse_id"
+                    />
                 </div>
             </div>
-
-            {!! view_render_event('admin.settings.warehouses.view.informations.after', ['warehouse' => $warehouse]) !!}
-
-
-            {!! view_render_event('admin.settings.warehouses.view.locations.after', ['warehouse' => $warehouse]) !!}
             
-            <div class="panel warehouse-locations">
-                <div class="panel-header">
-                    {{ __('admin::app.settings.warehouses.locations') }}
-                </div>
+            <!-- General Information -->
+            @include ('admin::settings.warehouses.view.general-information')
 
-                <div class="panel-body">
-                    <v-locations></v-locations>
-                </div>
-            </div>
-
-            {!! view_render_event('admin.settings.warehouses.view.locations.after', ['warehouse' => $warehouse]) !!}
-
-            {!! view_render_event('admin.settings.warehouses.view.content.after', ['warehouse' => $warehouse]) !!}
+            <!-- Contact Information -->
+            @include ('admin::settings.warehouses.view.contact-information')
         </div>
-    </div>
-@stop
 
-@push('scripts')
-    <script type="text/x-template" id="v-locations-template">
-        <div class="table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>{{ __('admin::app.settings.warehouses.name') }}</th>
-                        <th>{{ __('admin::app.settings.warehouses.action') }}</th>
-                    </tr>
-                </thead>
+        {!! view_render_event('krayin.admin.settings.warehouses.view.left.after', ['warehouse' => $warehouse]) !!}
 
-                <tbody>
-                    <tr v-for="location in locations">
-                        <td>@{{ location.name }}</td>
-
-                        <td>
-                            <a href="#" @click.prevent="remove(location)">{{ __('admin::app.settings.warehouses.delete') }}</a>
-                        </td>
-                    </tr>
-                </tbody>
-
-                <tfoot>
-                    <tr>
-                        <td colspan="2">
-                            <span @click="$root.openModal('addLocationModal')">
-                                {{ __('admin::app.settings.warehouses.add-location') }}
-                            </span>
-                        </td>
-                    </tr>
-                </tfoot>
-            </table>
-
-            <form
-                action="{{ route('admin.settings.warehouses.create', $warehouse->id) }}"
-                method="post"
-                @submit.prevent="create"
-                enctype="multipart/form-data"
+        {!! view_render_event('krayin.admin.settings.warehouses.view.right.before', ['warehouse' => $warehouse]) !!}
+        
+        <!-- Right Panel -->
+        <div class="flex w-full flex-col gap-4 rounded-lg">
+            <!-- Activity Navigation -->
+            <x-admin::activities
+                :endpoint="route('admin.settings.warehouse.activities.index', $warehouse->id)" 
+                :types="[
+                    ['name' => 'all', 'label' => trans('admin::app.settings.warehouses.view.all')],
+                    ['name' => 'note', 'label' => trans('admin::app.settings.warehouses.view.notes')],
+                    ['name' => 'file', 'label' => trans('admin::app.settings.warehouses.view.files')],
+                ]"
+                :extra-types="[
+                    ['name' => 'location', 'label' => trans('admin::app.settings.warehouses.view.location')],
+                ]"
             >
-                <modal id="addLocationModal" :is-open="$root.modalIds.addLocationModal">
-                    <h3 slot="header-title">
-                        {{ __('admin::app.settings.warehouses.add-location') }}
-                    </h3>
-
-                    <div slot="header-actions">
-                        <button
-                            class="btn btn-sm btn-secondary-outline"
-                            @click="$root.closeModal('addLocationModal')"
-                        >
-                            {{ __('admin::app.settings.warehouses.cancel') }}
-                        </button>
-
-                        <button class="btn btn-sm btn-primary">{{ __('admin::app.settings.warehouses.save-btn') }}</button>
-                    </div>
-
-                    <div slot="body">
-                        {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.before', ['warehouse' => $warehouse]) !!}
-
-                        <input type="hidden" name="warehouse_id" value="{{ $warehouse->id }}" />
-
-                        <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                            <label class="required">
-                                {{ __('admin::app.settings.warehouses.name') }}
-                            </label>
-
-                            <input
-                                type="text"
-                                name="name"
-                                class="control"
-                                value="{{ old('name') }}"
-                                placeholder="{{ __('admin::app.settings.warehouses.name') }}"
-                                v-validate="'required'"
-                                data-vv-as="{{ __('admin::app.settings.warehouses.name') }}"
-                            />
-
-                            <span class="control-error" v-if="errors.has('name')">
-                                @{{ errors.first('name') }}
-                            </span>
-                        </div>
-
-                        {!! view_render_event('admin.settings.warehouses.view.locations.create.form_controls.after', ['warehouse' => $warehouse]) !!}
-                    </div>
-                </modal>
-            </form>
+                <x-slot:location>
+                    @include ('admin::settings.warehouses.view.locations')
+                </x-slot>
+            </x-admin::activities>
         </div>
-    </script>
 
-    <script>
-        Vue.component('v-locations', {
-            template: '#v-locations-template',
+        {!! view_render_event('admin.warehouse.view.right.after', ['warehouse' => $warehouse]) !!}
+    </div>    
 
-            inject: ['$validator'],
-
-            data: function () {
-                return {
-                    locations: [],
-                }
-            },
-
-            mounted() {
-                this.get();
-            },
-
-            methods: {
-                get: function() {
-                    let self = this;
-
-                    this.$http.get("{{ route('admin.settings.locations.search') }}")
-                        .then(response => {
-                            self.locations = response.data;
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                },
-
-                create: function(e) {
-                    var self = this;
-
-                    let params = new FormData(e.target);
-
-                    this.$validator.validateAll().then((result) => {
-                        if (result) {
-                            self.$http.post(`{{ route('admin.settings.locations.store') }}`, params).then(response => {
-                                self.get();
-
-                                self.$root.closeModal('addLocationModal');
-                            })
-                            .catch(error => {
-                                window.serverErrors = error.response.data.errors;
-
-                                self.$root.addServerErrors();
-                            });
-                        }
-                    });
-                },
-
-                remove(location) {
-                    if (! confirm("{{ __('admin::app.settings.warehouses.confirm-delete') }}")) {
-                        return;
-                    }
-
-                    let self = this;
-
-                    this.$http.delete("{{ route('admin.settings.locations.delete', 'locationId') }}".replace('locationId', location.id))
-                        .then(response => {
-                            self.get();
-                        })
-                        .catch(error => {
-                            console.log(error);
-                        });
-                }
-            },
-        });
-    </script>
-@endpush
+</x-admin::layouts>

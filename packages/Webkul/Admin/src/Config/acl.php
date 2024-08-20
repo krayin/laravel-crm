@@ -27,7 +27,7 @@ return [
         'route' => ['admin.leads.edit', 'admin.leads.update', 'admin.leads.mass_update'],
         'sort'  => 3,
     ], [
-        'key' => 'leads.delete',
+        'key'   => 'leads.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.leads.delete', 'admin.leads.mass_delete'],
         'sort'  => 4,
@@ -409,9 +409,9 @@ return [
     ], [
         'key'   => 'settings.other_settings.tags.create',
         'name'  => 'admin::app.acl.create',
-        'route' => ['admin.settings.tags.create', 'admin.settings.tags.store', 'admin.leads.tags.store'],
+        'route' => ['admin.settings.tags.create', 'admin.settings.tags.store', 'admin.leads.tags.attach'],
         'sort'  => 1,
-    ], [ 
+    ], [
         'key'   => 'settings.other_settings.tags.edit',
         'name'  => 'admin::app.acl.edit',
         'route' => ['admin.settings.tags.edit', 'admin.settings.tags.update'],
@@ -419,12 +419,12 @@ return [
     ], [
         'key'   => 'settings.other_settings.tags.delete',
         'name'  => 'admin::app.acl.delete',
-        'route' => ['admin.settings.tags.delete', 'admin.settings.tags.mass_delete', 'admin.leads.tags.delete'],
+        'route' => ['admin.settings.tags.delete', 'admin.settings.tags.mass_delete', 'admin.leads.tags.detach'],
         'sort'  => 2,
     ], [
         'key'   => 'configuration',
         'name'  => 'admin::app.acl.configuration',
         'route' => 'admin.configuration.index',
         'sort'  => 9,
-    ]
+    ],
 ];

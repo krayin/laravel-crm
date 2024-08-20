@@ -9,7 +9,7 @@ return [
         'name'       => 'admin::app.layouts.dashboard',
         'route'      => 'admin.dashboard.index',
         'sort'       => 1,
-        'icon-class' => 'dashboard-icon',
+        'icon-class' => 'icon-dashboard',
     ],
 
     /**
@@ -20,7 +20,7 @@ return [
         'name'       => 'admin::app.layouts.leads',
         'route'      => 'admin.leads.index',
         'sort'       => 2,
-        'icon-class' => 'leads-icon',
+        'icon-class' => 'icon-leads',
     ],
 
     /**
@@ -31,7 +31,7 @@ return [
         'name'       => 'admin::app.layouts.quotes',
         'route'      => 'admin.quotes.index',
         'sort'       => 3,
-        'icon-class' => 'quotes-icon',
+        'icon-class' => 'icon-quote',
     ],
 
     /**
@@ -43,14 +43,7 @@ return [
         'route'      => 'admin.mail.index',
         'params'     => ['route' => 'compose'],
         'sort'       => 4,
-        'icon-class' => 'emails-icon',
-    ], [
-        'key'        => 'mail.compose',
-        'name'       => 'admin::app.layouts.mail.compose',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'compose'],
-        'sort'       => 1,
-        'icon-class' => '',
+        'icon-class' => 'icon-mail',
     ], [
         'key'        => 'mail.inbox',
         'name'       => 'admin::app.layouts.mail.inbox',
@@ -103,7 +96,7 @@ return [
         'name'       => 'admin::app.layouts.activities',
         'route'      => 'admin.activities.index',
         'sort'       => 5,
-        'icon-class' => 'activities-icon',
+        'icon-class' => 'icon-activity',
     ],
 
     /**
@@ -114,7 +107,7 @@ return [
         'name'       => 'admin::app.layouts.contacts',
         'route'      => 'admin.contacts.persons.index',
         'sort'       => 6,
-        'icon-class' => 'phone-icon',
+        'icon-class' => 'icon-contact',
     ], [
         'key'        => 'contacts.persons',
         'name'       => 'admin::app.layouts.persons',
@@ -137,7 +130,7 @@ return [
         'name'       => 'admin::app.layouts.products',
         'route'      => 'admin.products.index',
         'sort'       => 7,
-        'icon-class' => 'products-icon',
+        'icon-class' => 'icon-product',
     ],
 
     /**
@@ -148,35 +141,35 @@ return [
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.index',
         'sort'       => 8,
-        'icon-class' => 'settings-icon',
+        'icon-class' => 'icon-setting',
     ], [
         'key'        => 'settings.user',
         'name'       => 'admin::app.layouts.user',
         'route'      => 'admin.settings.groups.index',
         'info'       => 'admin::app.layouts.user-info',
         'sort'       => 1,
-        'icon-class' => 'group-icon',
+        'icon-class' => 'icon-settings-group',
     ], [
         'key'        => 'settings.user.groups',
         'name'       => 'admin::app.layouts.groups',
         'info'       => 'admin::app.layouts.groups-info',
         'route'      => 'admin.settings.groups.index',
         'sort'       => 1,
-        'icon-class' => 'group-icon',
+        'icon-class' => 'icon-settings-group',
     ], [
         'key'        => 'settings.user.roles',
         'name'       => 'admin::app.layouts.roles',
         'info'       => 'admin::app.layouts.roles-info',
         'route'      => 'admin.settings.roles.index',
         'sort'       => 2,
-        'icon-class' => 'role-icon',
+        'icon-class' => 'icon-role',
     ], [
         'key'        => 'settings.user.users',
         'name'       => 'admin::app.layouts.users',
         'info'       => 'admin::app.layouts.users-info',
         'route'      => 'admin.settings.users.index',
         'sort'       => 3,
-        'icon-class' => 'user-icon',
+        'icon-class' => 'icon-user',
     ], [
         'key'        => 'settings.lead',
         'name'       => 'admin::app.layouts.lead',
@@ -190,21 +183,21 @@ return [
         'info'       => 'admin::app.layouts.pipelines-info',
         'route'      => 'admin.settings.pipelines.index',
         'sort'       => 1,
-        'icon-class' => 'pipeline-icon',
+        'icon-class' => 'icon-settings-pipeline',
     ], [
         'key'        => 'settings.lead.sources',
         'name'       => 'admin::app.layouts.sources',
         'info'       => 'admin::app.layouts.sources-info',
         'route'      => 'admin.settings.sources.index',
         'sort'       => 2,
-        'icon-class' => 'source-icon',
+        'icon-class' => 'icon-settings-sources',
     ], [
         'key'        => 'settings.lead.types',
         'name'       => 'admin::app.layouts.types',
         'info'       => 'admin::app.layouts.types-info',
         'route'      => 'admin.settings.types.index',
         'sort'       => 3,
-        'icon-class' => 'type-icon',
+        'icon-class' => 'icon-settings-type',
     ], [
         'key'        => 'settings.warehouse',
         'name'       => 'admin::app.layouts.warehouse',
@@ -218,7 +211,7 @@ return [
         'info'       => 'admin::app.layouts.warehouses-info',
         'route'      => 'admin.settings.warehouses.index',
         'sort'       => 1,
-        'icon-class' => 'pipeline-icon',
+        'icon-class' => 'icon-icon-settings-warehouse',
     ], [
         'key'        => 'settings.automation',
         'name'       => 'admin::app.layouts.automation',
@@ -232,35 +225,42 @@ return [
         'info'       => 'admin::app.layouts.attributes-info',
         'route'      => 'admin.settings.attributes.index',
         'sort'       => 1,
-        'icon-class' => 'attribute-icon',
+        'icon-class' => 'icon-attribute',
     ], [
         'key'        => 'settings.automation.email_templates',
         'name'       => 'admin::app.layouts.email-templates',
         'info'       => 'admin::app.layouts.email-templates-info',
         'route'      => 'admin.settings.email_templates.index',
         'sort'       => 2,
-        'icon-class' => 'email-template-icon',
+        'icon-class' => 'icon-settings-mail',
+    ], [
+        'key'        => 'settings.automation.webhooks',
+        'name'       => 'Webhooks',
+        'info'       => 'Add Edit Delete Webhooks from CRM',
+        'route'      => 'admin.settings.webhooks.index',
+        'sort'       => 2,
+        'icon-class' => 'icon-settings-webhooks',
     ], [
         'key'        => 'settings.automation.workflows',
         'name'       => 'admin::app.layouts.workflows',
         'info'       => 'admin::app.layouts.workflows-info',
         'route'      => 'admin.settings.workflows.index',
         'sort'       => 3,
-        'icon-class' => 'workflow-icon',
+        'icon-class' => 'icon-settings-flow',
     ], [
         'key'        => 'settings.other_settings',
         'name'       => 'admin::app.layouts.other-settings',
         'info'       => 'admin::app.layouts.other-settings-info',
         'route'      => 'admin.settings.tags.index',
         'sort'       => 4,
-        'icon-class' => 'settings-icon',
+        'icon-class' => 'icon-settings',
     ], [
         'key'        => 'settings.other_settings.tags',
         'name'       => 'admin::app.layouts.tags',
         'info'       => 'admin::app.layouts.tags-info',
         'route'      => 'admin.settings.tags.index',
         'sort'       => 1,
-        'icon-class' => 'tag-icon',
+        'icon-class' => 'icon-settings-tag',
     ],
 
     /**
@@ -271,6 +271,6 @@ return [
         'name'       => 'admin::app.layouts.configuration',
         'route'      => 'admin.configuration.index',
         'sort'       => 9,
-        'icon-class' => 'tools-icon',
-    ]
+        'icon-class' => 'icon-configuration',
+    ],
 ];

@@ -80,7 +80,7 @@ class Menu
             $this->prepareMenuItems();
         }
 
-        $items = collect($this->items)->sortBy(fn($item) => $item->getPosition());
+        $items = collect($this->items)->sortBy(fn ($item) => $item->getPosition());
 
         return $items;
     }
@@ -93,9 +93,9 @@ class Menu
         $items = $this->getItems('admin');
 
         $keysArray = (array) $keys;
-    
-        $filteredItems = $items->filter(fn($item) => in_array($item->getKey(), $keysArray));
-    
+
+        $filteredItems = $items->filter(fn ($item) => in_array($item->getKey(), $keysArray));
+
         return is_array($keys) ? $filteredItems : $filteredItems->first();
     }
 

@@ -1,0 +1,10 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "binary_operator_spaces": {
+            "operators": {
+                "=>": "align"
+            }
+        }
+    }
+}

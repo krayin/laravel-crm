@@ -2,14 +2,12 @@
 
 namespace Webkul\Core\Eloquent;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Container\Container as App;
+use Prettus\Repository\Contracts\CacheableInterface;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Traits\CacheableRepository;
-use Prettus\Repository\Contracts\CacheableInterface;
 
-abstract class Repository extends BaseRepository implements CacheableInterface {
-
+abstract class Repository extends BaseRepository implements CacheableInterface
+{
     use CacheableRepository;
 
     /**
@@ -76,10 +74,9 @@ abstract class Repository extends BaseRepository implements CacheableInterface {
         return $this->parserResult($model);
     }
 
-     /**
+    /**
      * Count results of repository
      *
-     * @param  array  $where
      * @param  string  $columns
      * @return int
      */
@@ -135,5 +132,15 @@ abstract class Repository extends BaseRepository implements CacheableInterface {
     public function getModel($data = [])
     {
         return $this->model;
+    }
+
+    /**
+     * @throws RepositoryException
+     */
+    public function resetModel()
+    {
+        $this->makeModel();
+
+        return $this;
     }
 }

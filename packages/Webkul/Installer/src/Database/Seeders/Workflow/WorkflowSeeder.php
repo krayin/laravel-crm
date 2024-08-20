@@ -17,7 +17,7 @@ class WorkflowSeeder extends Seeder
     public function run($parameters = [])
     {
         DB::table('workflows')->delete();
-        
+
         $now = Carbon::now();
 
         $defaultLocale = $parameters['locale'] ?? config('app.locale');
@@ -45,7 +45,7 @@ class WorkflowSeeder extends Seeder
                 'actions'        => '[{"id": "send_email_to_participants", "value": "2"}]',
                 'created_at'     => $now,
                 'updated_at'     => $now,
-            ]
+            ],
         ]);
     }
 }

@@ -2,39 +2,24 @@
 
 namespace Webkul\Admin\DataGrids\Contact;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Webkul\Admin\Traits\ProvideDropdownOptions;
-use Webkul\UI\DataGrid\DataGrid;
+use Webkul\Contact\Repositories\OrganizationRepository;
+use Webkul\DataGrid\DataGrid;
 
 class PersonDataGrid extends DataGrid
 {
-    use ProvideDropdownOptions;
-
     /**
-     * Export option.
-     *
-     * @var boolean
-     */
-    protected $export;
-
-    /**
-     * Create datagrid instance.
+     * Create a new class instance.
      *
      * @return void
      */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->export = bouncer()->hasPermission('contacts.persons.export') ? true : false;
-    }
+    public function __construct(protected OrganizationRepository $organizationRepository) {}
 
     /**
      * Prepare query builder.
-     *
-     * @return void
      */
-    public function prepareQueryBuilder()
+    public function prepareQueryBuilder(): Builder
     {
         $queryBuilder = DB::table('persons')
             ->addSelect(
@@ -47,113 +32,161 @@ class PersonDataGrid extends DataGrid
             )
             ->leftJoin('organizations', 'persons.organization_id', '=', 'organizations.id');
 
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $queryBuilder->whereIn('persons.user_id', $userIds);
+        }
+
         $this->addFilter('id', 'persons.id');
         $this->addFilter('person_name', 'persons.name');
-        $this->addFilter('organization', 'organizations.id');
+        $this->addFilter('organization', 'organizations.name');
 
-        $this->setQueryBuilder($queryBuilder);
+        return $queryBuilder;
     }
 
     /**
      * Add columns.
-     *
-     * @return void
      */
-    public function addColumns()
+    public function prepareColumns(): void
     {
         $this->addColumn([
             'index'      => 'id',
-            'label'      => trans('admin::app.datagrid.id'),
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.id'),
+            'type'       => 'integer',
+            'filterable' => true,
+            'sortable'   => true,
+            'searchable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'person_name',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.name'),
             'type'       => 'string',
             'sortable'   => true,
-        ]);
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => function ($row) {
+                [$bgColorClass, $textColorClass] = $this->generateRandomColorClasses();
 
-        $this->addColumn([
-            'index'    => 'person_name',
-            'label'    => trans('admin::app.datagrid.name'),
-            'type'     => 'string',
-            'sortable' => true,
-        ]);
+                $nameParts = explode(' ', $row->person_name);
 
-        $this->addColumn([
-            'index'    => 'emails',
-            'label'    => trans('admin::app.datagrid.emails'),
-            'type'     => 'string',
-            'sortable' => false,
-            'closure'  => function ($row) {
-                $emails = json_decode($row->emails, true);
+                $sortName = '';
 
-                if ($emails) {
-                    return collect($emails)->pluck('value')->join(', ');
+                if (count($nameParts) >= 2) {
+                    $sortName = ($nameParts[0][0].$nameParts[1][0]);
+                } elseif (count($nameParts) === 1) {
+                    $sortName = substr($nameParts[0], 0, 2);
                 }
+
+                return "<div class='flex items-center gap-3'>
+                            <div class='$bgColorClass $textColorClass flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-sm'>$sortName</div>
+                            <p class='text-sm text-black dark:bg-gray-900 dark:text-gray-300'>$row->person_name</p>
+                        </div>";
             },
         ]);
 
         $this->addColumn([
-            'index'    => 'contact_numbers',
-            'label'    => trans('admin::app.datagrid.contact_numbers'),
-            'type'     => 'string',
-            'sortable' => false,
-            'closure'  => function ($row) {
-                $contactNumbers = json_decode($row->contact_numbers, true);
-
-                if ($contactNumbers) {
-                    return collect($contactNumbers)->pluck('value')->join(', ');
-                }
+            'index'      => 'emails',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.emails'),
+            'type'       => 'string',
+            'sortable'   => false,
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => function ($row) {
+                return collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', ');
             },
         ]);
 
         $this->addColumn([
-            'index'            => 'organization',
-            'label'            => trans('admin::app.datagrid.organization_name'),
-            'type'             => 'dropdown',
-            'dropdown_options' => $this->getOrganizationDropdownOptions(),
-            'sortable'         => false,
-            'closure'  => function ($row) {
-                return "<a href='" . route('admin.contacts.organizations.edit', $row->organization_id) . "' target='_blank'>" . $row->organization . "</a>";
-            },
+            'index'      => 'contact_numbers',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.contact-numbers'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'filterable' => true,
+            'searchable' => true,
+            'closure'    => fn ($row) => collect(json_decode($row->contact_numbers, true) ?? [])->pluck('value')->join(', '),
+        ]);
+
+        $this->addColumn([
+            'index'              => 'organization',
+            'label'              => trans('admin::app.contacts.persons.index.datagrid.organization-name'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'filterable'         => true,
+            'sortable'           => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => OrganizationRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
     }
 
     /**
      * Prepare actions.
-     *
-     * @return void
      */
-    public function prepareActions()
+    public function prepareActions(): void
     {
+        $this->addAction([
+            'icon'   => 'icon-eye',
+            'title'  => trans('admin::app.contacts.persons.index.datagrid.view'),
+            'method' => 'GET',
+            'url'    => function ($row) {
+                return route('admin.contacts.persons.view', $row->id);
+            },
+        ]);
+
         if (bouncer()->hasPermission('contacts.persons.edit')) {
             $this->addAction([
-                'title'  => trans('ui::app.datagrid.edit'),
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.edit'),
                 'method' => 'GET',
-                'route'  => 'admin.contacts.persons.edit',
-                'icon'   => 'pencil-icon',
+                'url'    => function ($row) {
+                    return route('admin.contacts.persons.edit', $row->id);
+                },
             ]);
         }
 
         if (bouncer()->hasPermission('contacts.persons.delete')) {
             $this->addAction([
-                'title'        => trans('ui::app.datagrid.delete'),
-                'method'       => 'DELETE',
-                'route'        => 'admin.contacts.persons.delete',
-                'confirm_text' => trans('ui::app.datagrid.mass-action.delete', ['resource' => trans('admin::app.contacts.persons.person')]),
-                'icon'         => 'trash-icon',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => function ($row) {
+                    return route('admin.contacts.persons.delete', $row->id);
+                },
             ]);
         }
     }
 
     /**
      * Prepare mass actions.
-     *
-     * @return void
      */
-    public function prepareMassActions()
+    public function prepareMassActions(): void
     {
-        $this->addMassAction([
-            'type'   => 'delete',
-            'label'  => trans('ui::app.datagrid.delete'),
-            'action' => route('admin.contacts.persons.mass_delete'),
-            'method' => 'PUT',
-        ]);
+        if (bouncer()->hasPermission('contacts.persons.delete')) {
+            $this->addMassAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.delete'),
+                'method' => 'POST',
+                'url'    => route('admin.contacts.persons.mass_delete'),
+            ]);
+        }
+    }
+
+    /**
+     * Generate random color classes.
+     */
+    public function generateRandomColorClasses(): array
+    {
+        return collect([
+            ['bg-orange-100', 'text-orange-800'],
+            ['bg-red-100', 'text-red-800'],
+            ['bg-green-100', 'text-green-800'],
+            ['bg-blue-100', 'text-blue-800'],
+            ['bg-purple-100', 'text-purple-800'],
+        ])->random();
     }
 }

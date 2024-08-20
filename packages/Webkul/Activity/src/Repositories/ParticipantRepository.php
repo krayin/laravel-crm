@@ -11,7 +11,7 @@ class ParticipantRepository extends Repository
      *
      * @return mixed
      */
-    function model()
+    public function model()
     {
         return 'Webkul\Activity\Contracts\Participant';
     }

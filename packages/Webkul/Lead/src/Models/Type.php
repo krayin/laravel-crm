@@ -15,7 +15,7 @@ class Type extends Model implements TypeContract
      * @var array
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
     /**

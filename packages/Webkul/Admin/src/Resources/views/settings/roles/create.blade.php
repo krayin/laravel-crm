@@ -1,135 +1,184 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <!-- Page Title -->
+    <x-slot:title>
+        @lang('admin::app.settings.roles.create.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.settings.roles.create-title') }}
-@stop
+    {!! view_render_event('krayin.admin.settings.roles.create.before') !!}
 
-@section('content-wrapper')
-    <div class="content full-page adjacent-center">
-        {!! view_render_event('admin.settings.roles.create.header.before') !!}
+    <!-- Create Form -->
+    <x-admin::form :action="route('admin.settings.roles.store')">
 
-        <div class="page-header">
-            
-            {{ Breadcrumbs::render('settings.roles.create') }}
+        {!! view_render_event('krayin.admin.settings.roles.create.form_controls.before') !!}
 
-            <div class="page-title">
-                <h1>{{ __('admin::app.settings.roles.create-title') }}</h1>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <x-admin::breadcrumbs name="settings.roles.create" />
+                </div>
+
+                <div class="text-xl font-bold dark:text-gray-300">
+                    @lang('admin::app.settings.roles.create.title')
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-2.5">
+                <!-- Create button for Roles -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.roles.create.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
 
-        {!! view_render_event('admin.settings.roles.create.header.after') !!}
+         <!-- body content -->
+         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+            <!-- Left sub-component -->
+            <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.before') !!}
 
-        <form method="POST" action="{{ route('admin.settings.roles.store') }}" @submit.prevent="onSubmit">
-            <div class="page-content">
-                <div class="form-container">
-                    <div class="panel">
-                        <div class="panel-header">
-                            {!! view_render_event('admin.settings.roles.create.form_buttons.before') !!}
+                <!-- Access Control Input Fields -->
+                <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    <!-- Create Role for -->
+                    <v-access-control>
+                        <!-- Shimmer Effect -->
+                        <div class="mb-4">
+                            <div class="shimmer mb-1.5 h-4 w-24"></div>
 
-                            <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.settings.roles.save-btn-title') }}
-                            </button>
-
-                            <a href="{{ route('admin.settings.roles.index') }}">
-                                {{ __('admin::app.layouts.back') }}
-                            </a>
-
-                            {!! view_render_event('admin.settings.roles.create.form_buttons.after') !!}
+                            <div class="custom-select h-11 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"></div>
                         </div>
 
-                        <div class="panel-body">
-                            {!! view_render_event('admin.settings.roles.create.form_controls.before') !!}
+                        <!-- Roles Checkbox -->
+                        <x-admin::shimmer.tree />
+                    </v-access-control>
+                </div>
 
-                            @csrf()
-                            
-                            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label class="required">
-                                    {{ __('admin::app.layouts.name') }}
-                                </label>
+                {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.after') !!}
+            </div>
 
-                                <input
-                                    type="text"
-                                    name="name"
-                                    class="control"
-                                    value="{{ old('name') }}"
-                                    placeholder="{{ __('admin::app.layouts.name') }}"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.layouts.name') }}"
-                                />
+            <!-- Right sub-component -->
+            <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
 
-                                <span class="control-error" v-if="errors.has('name')">
-                                    @{{ errors.first('name') }}
-                                </span>
-                            </div>
+                {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.before') !!}
 
-                            <div class="form-group" :class="[errors.has('description') ? 'has-error' : '']">
-                                <label class="required">
-                                    {{ __('admin::app.settings.roles.description') }}
-                                </label>
-
-                                <textarea
-                                    class="control"
-                                    name="description"
-                                    placeholder="{{ __('admin::app.settings.roles.description') }}"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.settings.roles.description') }}"
-                                >{{ old('description') }}</textarea>
-
-                                <span class="control-error" v-if="errors.has('description')">
-                                    @{{ errors.first('description') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('permission_type') ? 'has-error' : '']">
-                                <label class="required">
-                                    {{ __('admin::app.settings.roles.permission_type') }}
-                                </label>
-
-                                <select
-                                    class="control"
-                                    id="permission_type"
-                                    name="permission_type"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.settings.roles.role') }}"
-                                >
-                                    <option value="custom" {{ old('permission_type') == 'custom' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.roles.custom') }}
-                                    </option>
-
-                                    <option value="all" {{ old('permission_type') == 'all' ? 'selected' : '' }}>
-                                        {{ __('admin::app.settings.roles.all') }}
-                                    </option>
-                                </select>
-
-                                <span class="control-error" v-if="errors.has('permission_type')">
-                                    @{{ errors.first('permission_type') }}
-                                </span>
-                            </div>
-
-                            <div class="control-group tree-wrapper {{ old('permission_type') == 'all' ? 'hide' : '' }}">
-                                <tree-view value-field="key" id-field="key" items='@json(acl()->getItems())'></tree-view>
-                            </div>
-
-                            {!! view_render_event('admin.settings.roles.create.form_controls.after') !!}
+                <x-admin::accordion>
+                    <x-slot:header>
+                        <div class="flex items-center justify-between">
+                            <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.settings.roles.create.general')
+                            </p>
                         </div>
-                    </div>
+                    </x-slot>
+
+                    <x-slot:content>
+                        <!-- Name -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.roles.create.name')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="text"
+                                id="name"
+                                name="name"
+                                rules="required"
+                                value="{{ old('name') }}"
+                                :label="trans('admin::app.settings.roles.create.name')"
+                                :placeholder="trans('admin::app.settings.roles.create.name')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="name" />
+                        </x-admin::form.control-group>
+
+                        <!-- Description -->
+                        <x-admin::form.control-group class="!mb-0">
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.settings.roles.create.description')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="textarea"
+                                id="description"
+                                name="description"
+                                rules="required"
+                                :value="old('description')"
+                                :label="trans('admin::app.settings.roles.create.description')"
+                                :placeholder="trans('admin::app.settings.roles.create.description')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="description" />
+                        </x-admin::form.control-group>
+                    </x-slot>
+                </x-admin::accordion>
+
+                {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.after') !!}
+            </div>
+        </div>
+
+        {!! view_render_event('krayin.admin.settings.roles.create.create_form_controls.after') !!}
+    </x-admin::form>
+
+    {!! view_render_event('krayin.admin.settings.roles.create.after') !!}
+
+    @pushOnce('scripts')
+        <script
+            type="text/x-template"
+            id="v-access-control-template"
+        >
+            <div>
+                <!-- Permission Type -->
+                <x-admin::form.control-group>
+                    <x-admin::form.control-group.label class="required">
+                        @lang('admin::app.settings.roles.create.permissions')
+                    </x-admin::form.control-group.label>
+
+                    <x-admin::form.control-group.control
+                        type="select"
+                        name="permission_type"
+                        id="permission_type"
+                        rules="required"
+                        :label="trans('admin::app.settings.roles.create.permissions')"
+                        :placeholder="trans('admin::app.settings.roles.create.permissions')"
+                        v-model="permission_type"
+                    >
+                        <option value="custom">
+                            @lang('admin::app.settings.roles.create.custom')
+                        </option>
+
+                        <option value="all">
+                            @lang('admin::app.settings.roles.create.all')
+                        </option>
+                    </x-admin::form.control-group.control>
+
+                    <x-admin::form.control-group.error control-name="permission_type" />
+                </x-admin::form.control-group>
+
+                <div v-if="permission_type == 'custom'">
+                    <x-admin::tree.view
+                        input-type="checkbox"
+                        value-field="key"
+                        id-field="key"
+                        :items="json_encode(acl()->getItems())"
+                        :fallback-locale="config('app.fallback_locale')"
+                    />
                 </div>
             </div>
-        </form>
-    </div>
-@stop
+        </script>
 
-@push('scripts')
-    <script>
-        $(document).ready(function () {
-            $('#permission_type').on('change', function(event) {
-                if ($(event.target).val() == 'custom') {
-                    $('.tree-wrapper').removeClass('hide')
-                } else {
-                    $('.tree-wrapper').addClass('hide')
+        <script type="module">
+            app.component('v-access-control', {
+                template: '#v-access-control-template',
+
+                data() {
+                    return {
+                        permission_type: 'custom'
+                    };
                 }
-
             })
-        });
-    </script>
-@endpush
+        </script>
+    @endPushOnce
+</x-admin::layouts>

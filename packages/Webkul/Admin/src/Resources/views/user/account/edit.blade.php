@@ -1,227 +1,168 @@
-@extends('admin::layouts.master')
+<x-admin::layouts>
+    <!-- Page title -->
+    <x-slot:title>
+        @lang('admin::app.account.edit.title')
+    </x-slot>
 
-@section('page_title')
-    {{ __('admin::app.user.account.my_account') }}
-@stop
+    <!-- Input Form -->
+    <x-admin::form
+        :action="route('admin.user.account.update')"
+        enctype="multipart/form-data"
+        method="PUT"
+    >
+    
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs 
+                        name="dashboard.account.edit" 
+                        :entity="$user"
+                    />
+                </div>
 
-@push('css')
-    <style>
-        .panel-header,
-        .panel-body {
-            margin: 0 auto;
-            max-width: 800px;
-        }
-    </style>
-@endpush
-
-@section('content-wrapper')
-    <div class="content full-page adjacent-center">
-
-        <form method="POST" action="{{ route('admin.user.account.update') }}" enctype="multipart/form-data" @submit.prevent="onSubmit">
-            <div class="page-content">
-                <div class="form-container">
-
-                    <div class="panel">
-                        <div class="panel-header">
-                            {!! view_render_event('admin.user_profile.edit.form_buttons.before', ['user' => $user]) !!}
-
-                            <button type="submit" class="btn btn-md btn-primary">
-                                {{ __('admin::app.user.account.update_details') }}
-                            </button>
-
-                            <a href="{{ route('admin.dashboard.index') }}">{{ __('admin::app.common.back') }}</a>
-
-                            {!! view_render_event('admin.user_profile.edit.form_buttons.after', ['user' => $user]) !!}
-                        </div>
-
-                        <div class="panel-body">
-                            {!! view_render_event('admin.user_profile.edit.form_controls.before', ['user' => $user]) !!}
-
-                            @csrf()
-
-                            <input name="_method" type="hidden" value="PUT">
-
-                            <upload-profile-image></upload-profile-image>
-
-                            @if(isset($user->image_url) && $user->image_url != NULL)
-                                <input
-                                    type="checkbox"
-                                    name="remove_image"
-                                    id="remove"
-                                    value="1"
-                                />
-
-                                <label for="remove" class="">
-                                    {{ __('admin::app.user.account.remove-image') }}
-                                </label>
-                            @endif
-
-                            <div class="form-group" :class="[errors.has('name') ? 'has-error' : '']">
-                                <label for="name" class="required">
-                                    {{ __('admin::app.user.account.name') }}
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="name"
-                                    class="control"
-                                    id="name"
-                                    value="{{ old('name') ?: $user->name }}"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.user.account.name') }}"
-                                />
-
-                                <span class="control-error" v-if="errors.has('name')">
-                                    @{{ errors.first('name') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('email') ? 'has-error' : '']">
-                                <label for="email" class="required">
-                                    {{ __('admin::app.user.account.email') }}
-                                </label>
-
-                                <input
-                                    type="text"
-                                    name="email"
-                                    class="control"
-                                    id="email"
-                                    value="{{ old('email') ?: $user->email }}"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.user.account.email') }}"
-                                />
-
-                                <span class="control-error" v-if="errors.has('email')">
-                                    @{{ errors.first('email') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('current_password') ? 'has-error' : '']">
-                                <label for="current_password" class="required">
-                                    {{ __('admin::app.user.account.current_password') }}
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="current_password"
-                                    class="control"
-                                    id="current_password"
-                                    v-validate="'required'"
-                                    data-vv-as="{{ __('admin::app.user.account.current_password') }}"
-                                />
-
-                                <span class="control-error" v-if="errors.has('current_password')">
-                                    @{{ errors.first('current_password') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('password') ? 'has-error' : '']">
-                                <label for="password">
-                                    {{ __('admin::app.user.account.password') }}
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="password"
-                                    class="control"
-                                    id="password"
-                                    ref="password"
-                                    v-validate="'min:6'"
-                                    data-vv-as="{{ __('admin::app.user.account.password') }}"
-                                />
-
-                                <span class="control-error" v-if="errors.has('password')">
-                                    @{{ errors.first('password') }}
-                                </span>
-                            </div>
-
-                            <div class="form-group" :class="[errors.has('password_confirmation') ? 'has-error' : '']">
-                                <label for="confirm_password">
-                                    {{ __('admin::app.user.account.confirm_password') }}
-                                </label>
-
-                                <input
-                                    type="password"
-                                    name="password_confirmation"
-                                    class="control"
-                                    id="confirm_password"
-                                    v-validate="'min:6|confirmed:password'"
-                                    data-vv-as="{{ __('admin::app.user.account.confirm_password') }}"
-                                />
-
-                                <span class="control-error" v-if="errors.has('password_confirmation')">
-                                    @{{ errors.first('password_confirmation') }}
-                                </span>
-                            </div>
-
-                            {!! view_render_event('admin.user_profile.edit.form_controls.after', ['user' => $user]) !!}
-                        </div>
-                    </div>
+                <div class="text-xl font-bold dark:text-white">
+                    @lang('admin::app.account.edit.title')
                 </div>
             </div>
-        </form>
-    </div>
-@stop
 
-@push('scripts')
-    <script type="text/x-template" id="upload-profile-image-template">
-        <div class="form-group">
-            <div class="image-upload-brick">
-                <input
-                    type="file"
-                    name="image"
-                    id="upload-profile"
-                    ref="imageInput"
-                    v-validate="'ext:jpeg,jpg,png'"
-                    accept="image/*"
-                    @change="addImageView($event)"
-                >
-
-                <i class="icon upload-icon"></i>
-
-                <img class="preview" :src="imageData" v-if="imageData.length > 0">
-            </div>
-
-            <div class="image-info-brick">
-                <span class="field-info">
-                {{ __('admin::app.user.account.upload_image_pix') }} <br>
-                {{ __('admin::app.user.account.upload_image_format') }}
-                </span>
+            <div class="flex items-center gap-x-2.5">
+                <!-- Create button for Roles -->
+                <div class="flex items-center gap-x-2.5">
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.account.edit.save-btn')
+                    </button>
+                </div>
             </div>
         </div>
-    </script>
+        
+        <!-- Full Pannel -->
+        <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+             <!-- Left sub Component -->
+             <div class="flex flex-1 flex-col gap-2">
+                 <!-- General -->
+                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
+                        @lang('admin::app.account.edit.general')
+                    </p>
 
-    <script>
-        Vue.component('upload-profile-image', {
-            template: '#upload-profile-image-template',
+                    <!-- Image -->
+                    <x-admin::form.control-group>
+                        <x-admin::media.images
+                            name="image"
+                            :uploaded-images="$user->image ? [['id' => 'image', 'url' => $user->image_url]] : []"
+                        />
+                    </x-admin::form.control-group>
 
-            data: function() {
-                return {
-                    imageData: "{{ $user->image_url }}",
-                }
-            },
+                    <p class="mb-4 text-xs text-gray-600 dark:text-gray-300">
+                        @lang('admin::app.account.edit.upload-image-info')
+                    </p>
 
-            methods: {
-                addImageView () {
-                    var imageInput = this.$refs.imageInput;
+                    <!-- Name -->
+                    <x-admin::form.control-group>
+                        <x-admin::form.control-group.label class="required">
+                            @lang('admin::app.account.edit.name')
+                        </x-admin::form.control-group.label>
 
-                    if (imageInput.files && imageInput.files[0]) {
-                        if (imageInput.files[0].type.includes('image/')) {
-                            var reader = new FileReader();
+                        <x-admin::form.control-group.control
+                            type="text"
+                            name="name"
+                            rules="required"
+                            :value="old('name') ?: $user->name"
+                            :label="trans('admin::app.account.edit.name')"
+                            :placeholder="trans('admin::app.account.edit.name')"
+                        />
 
-                            reader.onload = (e) => {
-                                this.imageData = e.target.result;
-                            }
+                        <x-admin::form.control-group.error control-name="name" />
+                    </x-admin::form.control-group>
 
-                            reader.readAsDataURL(imageInput.files[0]);
-                        } else {
-                            imageInput.value = '';
+                    <!-- Email -->
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group.label class="required">
+                            @lang('admin::app.account.edit.email')
+                        </x-admin::form.control-group.label>
 
-                            alert('{{ __('admin::app.user.account.image_upload_message') }}');
-                        }
-                    }
-                }
-            }
-        });
-    </script>
-@endpush
+                        <x-admin::form.control-group.control
+                            type="email"
+                            name="email"
+                            id="email"
+                            rules="required"
+                            :value="old('email') ?: $user->email"
+                            :label="trans('admin::app.account.edit.email')"
+                        />
+
+                        <x-admin::form.control-group.error control-name="email" />
+                    </x-admin::form.control-group>
+                </div>
+             </div>
+
+             <!-- Right sub-component -->
+             <div class="flex w-[360px] max-w-full flex-col gap-2 max-md:w-full">
+                <x-admin::accordion>
+                    <x-slot:header>
+                        <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                            @lang('admin::app.account.edit.change-password')
+                        </p>
+                    </x-slot>
+
+                     <!-- Change Account Password -->
+                    <x-slot:content>
+                        <!-- Current Password -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label class="required">
+                                @lang('admin::app.account.edit.current-password')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                name="current_password"
+                                rules="required|min:6"
+                                :label="trans('admin::app.account.edit.current-password')"
+                                :placeholder="trans('admin::app.account.edit.current-password')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="current_password" />
+                        </x-admin::form.control-group>
+
+                        <!-- Password -->
+                        <x-admin::form.control-group>
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.account.edit.password')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                name="password"
+                                rules="min:6"
+                                :placeholder="trans('admin::app.account.edit.password')"
+                                ref="password"
+                            />
+
+                            <x-admin::form.control-group.error control-name="password" />
+                        </x-admin::form.control-group>
+
+                        <!-- Confirm Password -->
+                        <x-admin::form.control-group class="!mb-0">
+                            <x-admin::form.control-group.label>
+                                @lang('admin::app.account.edit.confirm-password')
+                            </x-admin::form.control-group.label>
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                name="password_confirmation"
+                                rules="confirmed:@password"
+                                :label="trans('admin::app.account.edit.confirm-password')"
+                                :placeholder="trans('admin::app.account.edit.confirm-password')"
+                            />
+
+                            <x-admin::form.control-group.error control-name="password_confirmation" />
+                        </x-admin::form.control-group>
+                    </x-slot>
+                </x-admin::accordion>
+             </div>
+        </div>
+    </x-admin::form>
+</x-admin::layouts>
