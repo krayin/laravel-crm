@@ -13,12 +13,10 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: krayin_testing
-          MYSQL_USER: krayin
-          MYSQL_PASSWORD: secret
+          MYSQL_DATABASE: krayin
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -44,7 +42,7 @@ jobs:
           set -e
           sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env.testing
           sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env.testing
-          sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin_testing|" .env.testing
+          sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin|" .env.testing
           sed -i "s|^\(DB_USERNAME=\s*\).*$|\1krayin|" .env.testing
           sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1secret|" .env.testing
 
@@ -63,7 +61,7 @@ jobs:
         run: set -e && php artisan db:seed --env=testing
 
       - name: Vendor Publish
-        run: set -e && php artisan vendor:publish --all --force --env=testing
+        run: set -e && php artisan vendor:publish --provider=Webkul\\Core\\Providers\\CoreServiceProvider --force --env=testing
 
       - name: Optimize Stuffs
         run: set -e && php artisan optimize:clear --env=testing
