@@ -12,7 +12,14 @@ class DashboardController extends Controller
      * @var array
      */
     protected $typeFunctions = [
-        'over-all' => 'getOverAllStats',
+        'over-all'             => 'getOverAllStats',
+        'revenue-stats'        => 'getRevenueStats',
+        'total-leads'          => 'getTotalLeadsStats',
+        'revenue-by-sources'   => 'getLeadsStatsBySources',
+        'revenue-by-types'     => 'getLeadsStatsByTypes',
+        'top-selling-products' => 'getTopSellingProducts',
+        'top-persons'          => 'getTopPersons',
+        'open-leads-by-states' => 'getOpenLeadsByStates',
     ];
 
     /**
