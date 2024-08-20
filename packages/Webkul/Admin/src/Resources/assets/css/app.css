@@ -622,10 +622,11 @@
 /*--------------------------------- New UI CSS --------------------------------------------------------------- */
 
 .sidebar-rounded::after {
-    @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-8px_-5px_0px_1px_rgba(255,255,255,1)] ;
-    content: "";
-    pointer-events: none;
+  @apply w-[30px] h-[30px] top-[5px] right-[-30px] absolute rounded-tl-[58%] shadow-[-8px_-5px_0px_1px_rgba(255,255,255,1)] dark:shadow-[-8px_-5px_0px_1px_rgba(17,24,39,1)] ;
+  content: "";
+  pointer-events: none;
 }
+
 
 .tox.tox-silver-sink.tox-tinymce-aux {
     z-index: 99999;

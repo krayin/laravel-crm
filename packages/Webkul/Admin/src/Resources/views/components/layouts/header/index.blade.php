@@ -80,7 +80,7 @@
                                 <!-- Link to send new Mail-->
                                 @if (bouncer()->hasPermission('mail.create'))
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
-                                        <a href="{{ route('admin.mail.index', ['route' => 'compose']) }}">
+                                        <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-mail text-2xl text-gray-600"></i>
                                                 
@@ -158,7 +158,7 @@
                                 <!-- Link to create new User-->
                                 @if (bouncer()->hasPermission('settings.user.users.create'))
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
-                                        <a href="{{ route('admin.settings.users.create') }}">
+                                        <a href="{{ route('admin.settings.users.index') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-user text-2xl text-gray-600"></i>
                                                 
