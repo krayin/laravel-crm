@@ -85,8 +85,8 @@ class LeadDataGrid extends DataGrid
 
         $this->addFilter('id', 'leads.id');
         $this->addFilter('user', 'leads.user_id');
-        $this->addFilter('sales_person', 'leads.user_id');
-        $this->addFilter('lead_source_name', 'lead_sources.id');
+        $this->addFilter('sales_person', 'users.name');
+        $this->addFilter('lead_source_name', 'lead_sources.name');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.id');
@@ -118,8 +118,14 @@ class LeadDataGrid extends DataGrid
             'searchable'         => false,
             'sortable'           => true,
             'filterable'         => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->userRepository->all(['name as label', 'id as value'])->toArray(),
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([
@@ -137,8 +143,14 @@ class LeadDataGrid extends DataGrid
             'searchable'         => false,
             'sortable'           => true,
             'filterable'         => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => SourceRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([
@@ -150,12 +162,20 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'person_name',
-            'label'      => trans('admin::app.leads.index.datagrid.contact-person'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'filterable' => true,
+            'index'              => 'person_name',
+            'label'              => trans('admin::app.leads.index.datagrid.contact-person'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([

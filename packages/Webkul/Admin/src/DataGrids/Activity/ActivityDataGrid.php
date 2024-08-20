@@ -6,6 +6,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\Admin\Traits\ProvideDropdownOptions;
 use Webkul\DataGrid\DataGrid;
+use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\User\Repositories\UserRepository;
 
 class ActivityDataGrid extends DataGrid
 {
@@ -42,7 +44,7 @@ class ActivityDataGrid extends DataGrid
         $this->addFilter('title', 'activities.title');
         $this->addFilter('schedule_from', 'activities.schedule_from');
         $this->addFilter('created_by', 'users.name');
-        $this->addFilter('created_by_id', 'activities.user_id');
+        $this->addFilter('created_by_id', 'users.name');
         $this->addFilter('created_at', 'activities.created_at');
         $this->addFilter('lead_title', 'leads.title');
 
@@ -82,12 +84,21 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'created_by_id',
-            'label'      => trans('admin::app.activities.index.datagrid.created_by'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'filterable' => true,
+            'index'              => 'created_by_id',
+            'label'              => trans('admin::app.activities.index.datagrid.created_by'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => UserRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->created_by_id]));
 
@@ -102,12 +113,20 @@ class ActivityDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'lead_title',
-            'label'      => trans('admin::app.activities.index.datagrid.lead'),
-            'type'       => 'string',
-            'searchable' => true,
-            'filterable' => true,
-            'sortable'   => true,
+            'index'              => 'lead_title',
+            'label'              => trans('admin::app.activities.index.datagrid.lead'),
+            'type'               => 'string',
+            'searchable'         => true,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => LeadRepository::class,
+                'column'     => [
+                    'label' => 'title',
+                    'value' => 'title',
+                ],
+            ],
             'closure'    => function ($row) {
                 if ($row->lead_title == null) {
                     return "<span class='text-gray-800 dark:text-gray-300'>N/A</span>";

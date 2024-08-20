@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\DataGridController;
 use Webkul\Admin\Http\Controllers\TinyMCEController;
 use Webkul\Admin\Http\Controllers\User\AccountController;
 
@@ -8,6 +9,11 @@ use Webkul\Admin\Http\Controllers\User\AccountController;
  * Settings routes.
  */
 Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+    /**
+     * Datagrid lookup routes.
+     */
+    Route::get('datagrid/look-up', [DataGridController::class, 'lookUp'])->name('admin.datagrid.look_up');
+
     /**
      * Tinymce file upload handler.
      */
