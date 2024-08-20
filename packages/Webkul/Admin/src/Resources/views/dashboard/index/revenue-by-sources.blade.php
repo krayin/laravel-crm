@@ -24,7 +24,10 @@
                 </div>
 
                 <!-- Doughnut Chart -->
-                <div class="flex w-full max-w-full flex-col gap-4 p-8">
+                <div
+                    class="flex w-full max-w-full flex-col gap-4 p-8"
+                    v-if="report.statistics.length"
+                >
                     <x-admin::charts.doughnut
                         ::labels="chartLabels"
                         ::datasets="chartDatasets"
@@ -42,6 +45,31 @@
                             
                             <p class="text-xs">
                                 @{{ stat.name }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Empty Product Design -->
+                <div
+                    class="flex flex-col gap-8 p-4"
+                    v-else
+                >
+                    <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
+                        <!-- Placeholder Image -->
+                        <img
+                            src="{{ admin_vite()->asset('images/empty-placeholders/default.svg') }}"
+                            class="h-20 w-20 dark:mix-blend-exclusion dark:invert"
+                        >
+
+                        <!-- Add Variants Information -->
+                        <div class="flex flex-col items-center">
+                            <p class="text-base font-semibold text-gray-400">
+                                @lang('admin::app.dashboard.index.revenue-by-sources.empty-title')
+                            </p>
+
+                            <p class="text-gray-400">
+                                @lang('admin::app.dashboard.index.revenue-by-sources.empty-info')
                             </p>
                         </div>
                     </div>

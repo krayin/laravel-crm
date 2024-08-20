@@ -1753,23 +1753,27 @@ return [
             ],
 
             'revenue-by-sources' => [
-                'title' => 'Revenue By Sources',
+                'title'       => 'Revenue By Sources',
+                'empty-title' => 'No Data Available',
+                'empty-info'  => 'No data available for selected interval',
             ],
 
             'revenue-by-types' => [
-                'title' => 'Revenue By Types',
+                'title'       => 'Revenue By Types',
+                'empty-title' => 'No Data Available',
+                'empty-info'  => 'No data available for selected interval',
             ],
 
             'top-selling-products' => [
                 'title'       => 'Top Products',
                 'empty-title' => 'No Products Found',
-                'empty-info'  => 'No products found for reports',
+                'empty-info'  => 'No products available for selected interval',
             ],
 
             'top-persons' => [
                 'title'       => 'Top Persons',
                 'empty-title' => 'No Persons Found',
-                'empty-info'  => 'No persons found for reports',
+                'empty-info'  => 'No persons available for selected interval',
             ],
 
             'open-leads-by-states' => [
