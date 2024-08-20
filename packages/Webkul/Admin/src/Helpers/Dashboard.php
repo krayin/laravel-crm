@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Helpers;
 
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Webkul\Admin\Helpers\Reporting\Activity;
 use Webkul\Admin\Helpers\Reporting\Lead;
 use Webkul\Admin\Helpers\Reporting\Organization;
@@ -27,16 +28,88 @@ class Dashboard
     ) {}
 
     /**
+     * Returns the overall revenue statistics.
+     */
+    public function getRevenueStats(): array
+    {
+        return [
+            'total_won_revenue'  => $this->leadReporting->getTotalWonLeadValueProgress(),
+            'total_lost_revenue' => $this->leadReporting->getTotalLostLeadValueProgress(),
+        ];
+    }
+
+    /**
      * Returns the overall statistics.
      */
     public function getOverAllStats(): array
     {
         return [
-            'total_leads'         => $this->leadReporting->getTotalLeadsProgress(),
-            'total_quotations'    => $this->quoteReporting->getTotalQuotesProgress(),
-            'total_persons'       => $this->personReporting->getTotalPersonsProgress(),
-            'total_organizations' => $this->organizationReporting->getTotalOrganizationsProgress(),
+            'total_leads'           => $this->leadReporting->getTotalLeadsProgress(),
+            'average_lead_value'    => $this->leadReporting->getAverageLeadValueProgress(),
+            'average_leads_per_day' => $this->leadReporting->getAverageLeadsPerDayProgress(),
+            'total_quotations'      => $this->quoteReporting->getTotalQuotesProgress(),
+            'total_persons'         => $this->personReporting->getTotalPersonsProgress(),
+            'total_organizations'   => $this->organizationReporting->getTotalOrganizationsProgress(),
         ];
+    }
+
+    /**
+     * Returns leads statistics.
+     */
+    public function getTotalLeadsStats(): array
+    {
+        return [
+            'all'  => [
+                'over_time' => $this->leadReporting->getTotalLeadsOverTime(),
+            ],
+
+            'won'  => [
+                'over_time' => $this->leadReporting->getTotalWonLeadsOverTime(),
+            ],
+            'lost' => [
+                'over_time' => $this->leadReporting->getTotalLostLeadsOverTime(),
+            ],
+        ];
+    }
+
+    /**
+     * Returns leads revenue statistics by sources.
+     */
+    public function getLeadsStatsBySources(): mixed
+    {
+        return $this->leadReporting->getTotalWonLeadValueBySources();
+    }
+
+    /**
+     * Returns leads revenue statistics by types.
+     */
+    public function getLeadsStatsByTypes(): mixed
+    {
+        return $this->leadReporting->getTotalWonLeadValueByTypes();
+    }
+
+    /**
+     * Returns open leads statistics by states.
+     */
+    public function getOpenLeadsByStates(): mixed
+    {
+        return $this->leadReporting->getOpenLeadsByStates();
+    }
+
+    /**
+     * Returns top selling products statistics.
+     */
+    public function getTopSellingProducts(): Collection
+    {
+        return $this->productReporting->getTopSellingProductsByRevenue(5);
+    }
+
+    /**
+     * Returns top selling products statistics.
+     */
+    public function getTopPersons(): Collection
+    {
+        return $this->personReporting->getTopCustomersByRevenue(5);
     }
 
     /**
