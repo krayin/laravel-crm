@@ -104,11 +104,6 @@
                     gradient.addColorStop(0, 'rgba(144, 247, 236, 1)');
                     gradient.addColorStop(1, 'rgba(50, 204, 188, 1)');
 
-                    const data = [1200, 800, 400, 200, 100];
-                    const labels = ['New', 'Follow Up', 'Prospect', 'Negotiation', 'Won'];
-
-                    console.log(this.report.statistics.map(stat => stat.name))
-
                     this.chart = new Chart(ctx, {
                         type: 'funnel',
                         
