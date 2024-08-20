@@ -73,7 +73,7 @@ class WebhookDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        if (bouncer()->hasPermission('admin.settings.webhooks.edit')) {
+        if (bouncer()->hasPermission('settings.automation.webhooks.edit')) {
             $this->addAction([
                 'index'  => 'edit',
                 'icon'   => 'icon-edit',
@@ -83,7 +83,7 @@ class WebhookDataGrid extends DataGrid
             ]);
         }
 
-        if (bouncer()->hasPermission('admin.settings.webhooks.delete')) {
+        if (bouncer()->hasPermission('settings.automation.webhooks.delete')) {
             $this->addAction([
                 'index'  => 'delete',
                 'icon'   => 'icon-delete',

@@ -408,22 +408,22 @@ return [
         'sort'  => 3,
     ],
     [
-        'key'   => 'settings.automation.webhook',
+        'key'   => 'settings.automation.webhooks',
         'name'  => 'admin::app.acl.webhook',
         'route' => 'admin.settings.webhooks.index',
         'sort'  => 1,
     ], [
-        'key'   => 'settings.automation.webhook.create',
+        'key'   => 'settings.automation.webhooks.create',
         'name'  => 'admin::app.acl.create',
         'route' => ['admin.settings.webhooks.create', 'admin.settings.webhooks.store'],
         'sort'  => 1,
     ], [
-        'key'   => 'settings.automation.webhook.edit',
+        'key'   => 'settings.automation.webhooks.edit',
         'name'  => 'admin::app.acl.edit',
         'route' => ['admin.settings.webhooks.edit', 'admin.settings.webhooks.update'],
         'sort'  => 2,
     ], [
-        'key'   => 'settings.automation.webhook.delete',
+        'key'   => 'settings.automation.webhooks.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.webhooks.delete',
         'sort'  => 3,
