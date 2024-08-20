@@ -16,9 +16,9 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-4">
+            <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex flex-col justify-between gap-1">
-                    <p class="text-base font-semibold">
+                    <p class="text-base font-semibold dark:text-gray-300">
                         @lang('admin::app.dashboard.index.revenue-by-sources.title')
                     </p>
                 </div>
@@ -40,7 +40,7 @@
                                 :style="{ backgroundColor: colors[index] }"
                             ></span>
                             
-                            <p class="text-xs">
+                            <p class="text-xs dark:text-gray-300">
                                 @{{ stat.name }}
                             </p>
                         </div>

@@ -16,13 +16,13 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+            <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex gap-4">
                     <!-- Total Revenue -->
                     <div class="flex flex-col gap-2">
                         <!-- Won Reveneue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
-                            <p class="text-xs text-gray-600">
+                            <p class="text-xs text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')
                             </p>
 
@@ -49,7 +49,7 @@
 
                         <!-- Lost Reveneue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
-                            <p class="text-xs text-gray-600">
+                            <p class="text-xs text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.lost-revenue')
                             </p>
 
@@ -86,7 +86,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="h-3.5 w-3.5 rounded-sm bg-green-500 opacity-80"></span>
                                 
-                                <p class="text-xs">
+                                <p class="text-xs dark:text-gray-300">
                                     @lang('admin::app.dashboard.index.revenue.won-revenue')
                                 </p>
                             </div>
@@ -94,7 +94,7 @@
                             <div class="flex items-center gap-2">
                                 <span class="h-3.5 w-3.5 rounded-sm bg-red-500 opacity-80"></span>
                                 
-                                <p class="text-xs">
+                                <p class="text-xs dark:text-gray-300">
                                     @lang('admin::app.dashboard.index.revenue.lost-revenue')
                                 </p>
                             </div>

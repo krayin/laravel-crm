@@ -23,8 +23,8 @@
         <v-dashboard-filters>
             <!-- Shimmer -->
             <div class="flex gap-1.5">
-                <div class="light-shimmer-bg h-[39px] w-[140px] rounded-md"></div>
-                <div class="light-shimmer-bg h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
             </div>
         </v-dashboard-filters>
         
