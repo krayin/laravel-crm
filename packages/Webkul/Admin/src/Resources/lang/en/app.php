@@ -1771,6 +1771,10 @@ return [
                 'empty-title' => 'No Persons Found',
                 'empty-info'  => 'No persons found for reports',
             ],
+
+            'open-leads-by-states' => [
+                'title' => 'Open Leads By States',
+            ],
         ],
     ],
 

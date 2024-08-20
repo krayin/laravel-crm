@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-30ee1e9b.css",
+    "file": "assets/app-dfcde4a5.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -342,6 +342,11 @@
     "file": "assets/app-df64e7ea.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
+  },
+  "src/Resources/assets/js/chart-funnel.js": {
+    "file": "assets/chart-funnel-d0c9d6b2.js",
+    "isEntry": true,
+    "src": "src/Resources/assets/js/chart-funnel.js"
   },
   "src/Resources/assets/js/chart.js": {
     "file": "assets/chart-1d2144fe.js",

@@ -102,6 +102,31 @@ class Lead extends AbstractReporting
     }
 
     /**
+     * Retrieves average leads per day and their progress.
+     */
+    public function getAverageLeadsPerDayProgress(): array
+    {
+        return [
+            'previous' => $previous = $this->getAverageLeadsPerDay($this->lastStartDate, $this->lastEndDate),
+            'current'  => $current = $this->getAverageLeadsPerDay($this->startDate, $this->endDate),
+            'progress' => $this->getPercentageChange($previous, $current),
+        ];
+    }
+
+    /**
+     * Retrieves average leads per day
+     *
+     * @param  \Carbon\Carbon  $startDate
+     * @param  \Carbon\Carbon  $endDate
+     */
+    public function getAverageLeadsPerDay($startDate, $endDate): float
+    {
+        $days = $startDate->diffInDays($endDate);
+
+        return $this->getTotalLeads($startDate, $endDate) / $days;
+    }
+
+    /**
      * Retrieves total lead value and their progress.
      */
     public function getTotalLeadValueProgress(): array
@@ -246,6 +271,26 @@ class Lead extends AbstractReporting
             ->whereIn('lead_pipeline_stage_id', $this->wonStageIds)
             ->whereBetween('leads.created_at', [$this->startDate, $this->endDate])
             ->groupBy('lead_type_id')
+            ->get();
+    }
+
+    /**
+     * Retrieves open leads by states.
+     */
+    public function getOpenLeadsByStates()
+    {
+        return $this->leadRepository
+            ->resetModel()
+            ->select(
+                'lead_pipeline_stages.name',
+                DB::raw('COUNT(lead_value) as total')
+            )
+            ->leftJoin('lead_pipeline_stages', 'leads.lead_pipeline_stage_id', '=', 'lead_pipeline_stages.id')
+            ->whereNotIn('lead_pipeline_stage_id', $this->wonStageIds)
+            ->whereNotIn('lead_pipeline_stage_id', $this->lostStageIds)
+            ->whereBetween('leads.created_at', [$this->startDate, $this->endDate])
+            ->groupBy('lead_pipeline_stage_id')
+            ->orderByDesc('total')
             ->get();
     }
 

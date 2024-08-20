@@ -70,6 +70,9 @@
 
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.revenue-by-types')
+
+            <!-- Revenue by Types -->
+            @include('admin::dashboard.index.open-leads-by-states')
         </div>
 
         {!! view_render_event('admin.dashboard.index.content.left.after') !!}
@@ -81,6 +84,12 @@
         <script
             type="module"
             src="{{ admin_vite()->asset('js/chart.js') }}"
+        >
+        </script>
+
+        <script
+            type="module"
+            src="{{ admin_vite()->asset('js/chart-funnel.js') }}"
         >
         </script>
 

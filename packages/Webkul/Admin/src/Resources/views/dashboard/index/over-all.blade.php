@@ -80,20 +80,20 @@
 
                     <div class="flex gap-2">
                         <p class="text-xl font-bold">
-                            @{{ report.statistics.total_leads.current }}
+                            @{{ report.statistics.average_leads_per_day.current.toFixed(2) }}
                         </p>
 
                         <div class="flex items-center gap-0.5">
                             <span
                                 class="text-base text-green-500"
-                                :class="[report.statistics.total_leads.progress < 0 ? 'icon-down-stat text-red-500 dark:!text-red-500' : 'icon-up-stat text-green-500 dark:!text-green-500']"
+                                :class="[report.statistics.average_leads_per_day.progress < 0 ? 'icon-down-stat text-red-500 dark:!text-red-500' : 'icon-up-stat text-green-500 dark:!text-green-500']"
                             ></span>
 
                             <p
                                 class="text-xs font-semibold text-green-500"
-                                :class="[report.statistics.total_leads.progress < 0 ?  'text-red-500' : 'text-green-500']"
+                                :class="[report.statistics.average_leads_per_day.progress < 0 ?  'text-red-500' : 'text-green-500']"
                             >
-                                @{{ Math.abs(report.statistics.total_leads.progress.toFixed(2)) }}%
+                                @{{ Math.abs(report.statistics.average_leads_per_day.progress.toFixed(2)) }}%
                             </p>
                         </div>
                     </div>

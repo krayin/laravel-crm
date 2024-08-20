@@ -44,11 +44,12 @@ class Dashboard
     public function getOverAllStats(): array
     {
         return [
-            'total_leads'         => $this->leadReporting->getTotalLeadsProgress(),
-            'average_lead_value'  => $this->leadReporting->getAverageLeadValueProgress(),
-            'total_quotations'    => $this->quoteReporting->getTotalQuotesProgress(),
-            'total_persons'       => $this->personReporting->getTotalPersonsProgress(),
-            'total_organizations' => $this->organizationReporting->getTotalOrganizationsProgress(),
+            'total_leads'           => $this->leadReporting->getTotalLeadsProgress(),
+            'average_lead_value'    => $this->leadReporting->getAverageLeadValueProgress(),
+            'average_leads_per_day' => $this->leadReporting->getAverageLeadsPerDayProgress(),
+            'total_quotations'      => $this->quoteReporting->getTotalQuotesProgress(),
+            'total_persons'         => $this->personReporting->getTotalPersonsProgress(),
+            'total_organizations'   => $this->organizationReporting->getTotalOrganizationsProgress(),
         ];
     }
 
@@ -85,6 +86,14 @@ class Dashboard
     public function getLeadsStatsByTypes(): mixed
     {
         return $this->leadReporting->getTotalWonLeadValueByTypes();
+    }
+
+    /**
+     * Returns open leads statistics by states.
+     */
+    public function getOpenLeadsByStates(): mixed
+    {
+        return $this->leadReporting->getOpenLeadsByStates();
     }
 
     /**

@@ -19,6 +19,7 @@ class DashboardController extends Controller
         'revenue-by-types'     => 'getLeadsStatsByTypes',
         'top-selling-products' => 'getTopSellingProducts',
         'top-persons'          => 'getTopPersons',
+        'open-leads-by-states' => 'getOpenLeadsByStates',
     ];
 
     /**
