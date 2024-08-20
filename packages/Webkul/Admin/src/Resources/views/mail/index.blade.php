@@ -15,7 +15,7 @@
                 />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 <!-- title -->
                 @lang('admin::app.mail.index.' . request('route'))
             </div>

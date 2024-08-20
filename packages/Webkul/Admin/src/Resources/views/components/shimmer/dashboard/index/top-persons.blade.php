@@ -1,4 +1,4 @@
-<div class="w-full rounded-lg border border-gray-200 bg-white dark:border-gray-800">
+<div class="w-full rounded-lg border border-gray-200 bg-white dark:bg-gray-900 dark:border-gray-800">
     <div class="flex items-center justify-between p-4">
         <div class="shimmer h-[17px] w-28"></div>
     </div>

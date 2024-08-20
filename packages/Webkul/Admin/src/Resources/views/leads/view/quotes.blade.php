@@ -113,7 +113,10 @@
                 
                 <div v-else>
                     <div class="grid justify-center justify-items-center gap-3.5 py-12">
-                        <img src="{{ admin_vite()->asset('images/empty-placeholders/quotes.svg') }}">
+                        <img 
+                            class="dark:mix-blend-exclusion dark:invert"
+                            src="{{ admin_vite()->asset('images/empty-placeholders/quotes.svg') }}"
+                        >
                         
                         <div class="flex flex-col items-center gap-2">
                             <p class="text-xl font-semibold dark:text-white">

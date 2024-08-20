@@ -16,9 +16,9 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-4">
+            <div class="grid gap-4 rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex flex-col justify-between gap-1">
-                    <p class="text-base font-semibold">
+                    <p class="text-base font-semibold dark:text-gray-300">
                         @lang('admin::app.dashboard.index.open-leads-by-states.title')
                     </p>
                 </div>
@@ -39,11 +39,11 @@
                             class="flex w-full flex-col border-b border-gray-200 pb-[9px] pt-2.5 last:border-none"
                             v-for="(stat, index) in report.statistics"
                         >
-                            <span class="text-sm font-semibold">
+                            <span class="text-sm font-semibold dark:text-gray-300">
                                 @{{ stat.total }}
                             </span>
 
-                            <span class="text-sm font-semibold">
+                            <span class="text-sm font-semibold dark:text-gray-300">
                                 @{{ stat.name }}
                             </span>
                         </li>

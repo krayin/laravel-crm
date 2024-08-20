@@ -1,4 +1,4 @@
-<div class="grid gap-4 rounded-lg border border-gray-200 bg-white px-4 py-2">
+<div class="grid gap-4 rounded-lg border border-gray-200 bg-white px-4 py-2 dark:border-gray-800 dark:bg-gray-900">
     <div class="shimmer h-[17px] w-40"></div>
     
     <!-- Bar Chart -->

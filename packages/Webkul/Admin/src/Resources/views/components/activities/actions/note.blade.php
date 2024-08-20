@@ -9,7 +9,7 @@
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-orange-200 text-orange-800 transition-all hover:border-orange-400"
         @click="$refs.noteActionComponent.openModal('mail')"
     >
-        <span class="icon-note text-2xl"></span>
+        <span class="icon-note text-2xl dark:!text-orange-800"></span>
 
         @lang('admin::app.components.activities.actions.note.btn')
     </button>

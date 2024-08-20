@@ -11,7 +11,7 @@
                     <x-admin::breadcrumbs name="quotes" />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.quotes.index.title')
                 </div>
             </div>
@@ -45,7 +45,7 @@
                         <x-admin::breadcrumbs name="quotes" />
                     </div>
         
-                    <div class="text-xl font-bold dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.quotes.index.title')
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 <v-inline-image-edit {{ $attributes }}>
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -15,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[38px] space-x-2"
+                class="rounded-xs flex h-[38px] items-center space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
@@ -26,7 +26,7 @@
                     v-model="inputValue"
                 />
 
-                <span class="font-normal text-sm pl-[2px]">
+                <span class="pl-[2px] text-sm font-normal">
                     <a 
                         :href="inputValue" 
                         target="_blank"
@@ -42,17 +42,17 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden text-xl pr-2 group-hover:block"
+                        class="icon-edit hidden pr-2 text-xl group-hover:block"
                     ></i>
                 </template>
             </div>
         
             <!-- Editing view -->
             <div
-                class="relative flex flex-col w-full"
+                class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex flex-col w-full">
+                <div class="relative flex w-full flex-col">
                     <input
                         type="file"
                         :name="name"
@@ -64,21 +64,21 @@
                     />
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
+                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px] bg-white">
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"
+                            class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
                             @click="save"
                         >
-                            <i class="icon-tick text-md font-bold cursor-pointer text-green-600" />
+                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                         </button>
                     
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-r-md p-1 ml-[1px] bg-red-100 hover:bg-red-200"
+                            class="ml-[1px] flex items-center justify-center rounded-r-md bg-red-100 p-1 hover:bg-red-200"
                             @click="cancel"
                         >
-                            <i class="icon-cross-large text-md font-bold cursor-pointer text-red-600" />
+                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
                         </button>
                     </div>
                 </div>
