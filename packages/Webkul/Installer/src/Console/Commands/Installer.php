@@ -6,6 +6,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\File;
+use Webkul\Core\Providers\CoreServiceProvider;
 use Webkul\Installer\Database\Seeders\DatabaseSeeder as KrayinDatabaseSeeder;
 use Webkul\Installer\Events\ComposerEvents;
 
@@ -138,7 +139,7 @@ class Installer extends Command
         ]));
 
         $this->warn('Step: Publishing assets and configurations...');
-        $result = $this->call('vendor:publish', ['--all' => true, '--force' => true]);
+        $result = $this->call('vendor:publish', ['--provider' => CoreServiceProvider::class, '--force' => true]);
         $this->info($result);
 
         $this->warn('Step: Linking storage directory...');
