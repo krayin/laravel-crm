@@ -62,9 +62,7 @@ class PersonRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
-        if (! isset($data['user_id'])) {
-            $data['user_id'] = null;
-        }
+        $data['user_id'] = $data['user_id'] ?? null;
 
         $person = parent::update($data, $id);
 
