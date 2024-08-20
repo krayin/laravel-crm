@@ -11,7 +11,7 @@
                 <x-admin::breadcrumbs name="settings.sources" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 @lang('admin::app.settings.sources.index.title')
             </div>
         </div>

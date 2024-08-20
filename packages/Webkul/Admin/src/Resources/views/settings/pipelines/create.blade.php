@@ -19,7 +19,7 @@
                     </div>
 
                     <!-- Title -->
-                    <div class="text-xl font-bold dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.pipelines.create.title')
                     </div>
                 </div>

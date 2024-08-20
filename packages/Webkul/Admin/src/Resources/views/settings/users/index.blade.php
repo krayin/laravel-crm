@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="settings.users" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 @lang('admin::app.settings.users.index.title')
             </div>
         </div>
