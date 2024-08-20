@@ -27,7 +27,7 @@
         <div class="flex w-full max-w-full flex-col gap-11">
             <div class="flex flex-col gap-4 p-2">
                 <div class="shimmer h-[49px] w-full"></div>
-                <div class="shimmer h-[50px] w-3/4"></div>
+                <div class="shimmer h-12 w-3/4"></div>
             </div>
 
             <div class="flex justify-center gap-5">

@@ -1,6 +1,7 @@
 <!-- Total Leads Vue Component -->
 <v-dashboard-open-leads-by-states>
     <!-- Shimmer -->
+    <x-admin::shimmer.dashboard.index.open-leads-by-states />
 </v-dashboard-open-leads-by-states>
 
 @pushOnce('scripts')
@@ -10,6 +11,7 @@
     >
         <!-- Shimmer -->
         <template v-if="isLoading">
+            <x-admin::shimmer.dashboard.index.open-leads-by-states />
         </template>
 
         <!-- Total Sales Section -->
@@ -22,7 +24,10 @@
                 </div>
 
                 <!-- Doughnut Chart -->
-                <div class="relative flex w-full max-w-full flex-col gap-4">
+                <div
+                    class="relative flex w-full max-w-full flex-col gap-4"
+                    v-if="report.statistics.length"
+                >
                     <canvas
                         :id="$.uid + '_chart'"
                         class="w-full max-w-full items-end px-12"
@@ -43,6 +48,31 @@
                             </span>
                         </li>
                     </ul>
+                </div>
+
+                <!-- Empty Product Design -->
+                <div
+                    class="flex flex-col gap-8 p-4"
+                    v-else
+                >
+                    <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
+                        <!-- Placeholder Image -->
+                        <img
+                            src="{{ admin_vite()->asset('images/empty-placeholders/default.svg') }}"
+                            class="h-20 w-20 dark:mix-blend-exclusion dark:invert"
+                        >
+
+                        <!-- Add Variants Information -->
+                        <div class="flex flex-col items-center">
+                            <p class="text-base font-semibold text-gray-400">
+                                @lang('admin::app.dashboard.index.open-leads-by-states.empty-title')
+                            </p>
+
+                            <p class="text-gray-400">
+                                @lang('admin::app.dashboard.index.open-leads-by-states.empty-info')
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </template>
