@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="products" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 @lang('admin::app.products.index.title')
             </div>
         </div>

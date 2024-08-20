@@ -37,7 +37,7 @@
                             href="{{ $child->getUrl() }}"
                         >
                             @if ($icon = $child->getIcon())
-                                <div class="rounded-lg bg-gray-100 p-3">
+                                <div class="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
                                     <i class="{{ $child->getIcon() }} text-3xl "></i>
                                 </div>
                             @endif

@@ -24,7 +24,7 @@
                     />
                 </div>
 
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.quotes.create.title')
                 </div>
             </div>
@@ -55,7 +55,7 @@
                     <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
                         {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
                        
-                        <div class="border-b border-gray-200 text-center text-sm font-medium text-gray-500 dark:border-gray-700 dark:text-gray-400">
+                        <div class="border-b border-gray-200 text-center text-sm font-medium dark:border-gray-700">
                             <ul class="flex flex-wrap">
                                 <template
                                     v-for="tab in tabs"
@@ -67,8 +67,8 @@
                                             :class="[
                                                 'inline-block p-4 rounded-t-lg border-b-2',
                                                 activeTab === tab.id
-                                                ? 'text-brandColor border-brandColor dark:text-bradColor dark:border-bradColor'
-                                                : 'text-gray-600 border-transparent hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300'
+                                                ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
+                                                : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
                                             ]"
                                             @click="scrollToSection(tab.id)"
                                             :text="tab.label"
@@ -303,7 +303,7 @@
             <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
                 <div class="flex-auto">
                     <div class="flex justify-end">
-                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm">
+                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 

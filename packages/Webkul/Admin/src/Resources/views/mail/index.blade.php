@@ -70,7 +70,7 @@
                         position="bottom-right"
                     >
                         <x-slot:header>
-                            <h3 class="text-base font-semibold">
+                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                                 @lang('admin::app.mail.index.mail.title')
                             </h3>
                         </x-slot>
@@ -98,17 +98,18 @@
                                         :label="trans('admin::app.mail.index.mail.to')"
                                         :placeholder="trans('admin::app.mail.index.mail.enter-emails')"
                                     />
+                                    
 
                                     <div class="absolute right-2 top-[9px] flex items-center gap-2">
                                         <span
-                                            class="cursor-pointer font-medium hover:underline"
+                                            class="cursor-pointer font-medium hover:underline dark:text-white"
                                             @click="showCC = ! showCC"
                                         >
                                             @lang('admin::app.mail.index.mail.cc')
                                         </span>
 
                                         <span
-                                            class="cursor-pointer font-medium hover:underline"
+                                            class="cursor-pointer font-medium hover:underline dark:text-white"
                                             @click="showBCC = ! showBCC"
                                         >
                                             @lang('admin::app.mail.index.mail.bcc')
@@ -203,15 +204,15 @@
                         <x-slot:footer>
                             <div class="flex w-full items-center justify-between">
                                 <label
-                                    class="icon-attachment cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200"
+                                    class="icon-attachment cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
                                     for="file-upload"
                                 ></label>
 
-                                <div class="flex gap-4 items-center">
+                                <div class="flex items-center gap-4">
                                     <x-admin::button
                                         type="submit"
                                         ref="submitBtn"
-                                        class="font-semibold"
+                                        class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
                                         :title="trans('admin::app.mail.index.mail.draft')"
                                         ::loading="isStoring.draft"
                                         ::disabled="isStoring.draft"

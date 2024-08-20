@@ -18,28 +18,28 @@
             <!-- Non-editing view -->
             <div
                 class="rounded-xs flex h-[34px] items-center space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
+                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
-                <div class="relative flex flex-col items-center group !w-full">
-                    <span class="rounded border border-transparent pl-[2px] truncate w-40">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+                <div class="group relative flex !w-full flex-col items-center">
+                    <span class="w-40 truncate rounded border border-transparent pl-[2px]">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
 
                     <div
-                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
                     >
-                        <span class="relative rounded-md z-10 p-4 text-xs text-white leading-none max-w-60 whitespace-no-wrap bg-black shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg">
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 
-                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
                     </div>
                 </div>
 
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden text-xl pr-2 group-hover:block"
+                        class="icon-edit hidden pr-2 text-xl group-hover:block"
                     ></i>
                 </template>
             </div>

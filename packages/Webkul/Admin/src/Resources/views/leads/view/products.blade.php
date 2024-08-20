@@ -62,8 +62,13 @@
                 <img src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}">
                 
                 <div class="flex flex-col items-center gap-2">
-                    <p class="text-xl font-semibold">@lang('admin::app.leads.view.products.empty-title')</p>
-                    <p class="text-gray-400">@lang('admin::app.leads.view.products.empty-info')</p>
+                    <p class="text-xl font-semibold dark:text-white">
+                        @lang('admin::app.leads.view.products.empty-title')
+                    </p>
+                    
+                    <p class="text-gray-400 dark:text-gray-400">
+                        @lang('admin::app.leads.view.products.empty-info')
+                    </p>
                 </div>
 
                 <div

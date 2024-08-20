@@ -1,7 +1,7 @@
 {!! view_render_event('admin.leads.view.person.before', ['lead' => $lead]) !!}
 
 <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
-    <h4 class="flex items-center justify-between font-semibold">
+    <h4 class="flex items-center justify-between font-semibold dark:text-white">
         @lang('admin::app.leads.view.persons.title')
 
         @if (bouncer()->hasPermission('contacts.persons.edit'))
@@ -30,7 +30,7 @@
             </a>
 
             @if ($lead->person->job_title)
-                <span>
+                <span class="dark:text-white">
                     @if ($lead->person->organization)
                         @lang('admin::app.leads.view.persons.job-title', [
                             'job_title'    => $lead->person->job_title,

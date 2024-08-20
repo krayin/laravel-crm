@@ -1,10 +1,10 @@
 {!! view_render_event('admin.contacts.persons.view.organization.before', ['person' => $person]) !!}
 
-<div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4">
-    <h4 class="flex items-center justify-between font-semibold">
+<div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
+    <h4 class="flex items-center justify-between font-semibold dark:text-white">
         About Organization
 
-        <button class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100"></button>
+        <button class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></button>
     </h4>
 
     <div class="flex gap-2">
@@ -20,7 +20,7 @@
             </span>
 
             @if ($person->organization->address)
-                <div class="flex flex-col gap-0.5">
+                <div class="flex flex-col gap-0.5 dark:text-white">
                     <span>
                         {{ $person->organization->address['address'] }}
                     </span>
