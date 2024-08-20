@@ -18,10 +18,10 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
+use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
-use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
@@ -432,7 +432,8 @@ class LeadController extends Controller
      *
      * @return void
      */
-    public function addProduct($leadId) {
+    public function addProduct($leadId)
+    {
         $product = $this->productRepository->updateOrCreate(
             [
                 'lead_id'    => $leadId,
@@ -448,7 +449,7 @@ class LeadController extends Controller
         );
 
         return response()->json([
-            'data' => $product,
+            'data'    => $product,
             'message' => trans('admin::app.leads.update-success'),
         ]);
     }
