@@ -591,6 +591,52 @@
                                                     </div>
                                                 </template>
 
+                                                <template v-if="column.filterable_type === 'searchable_dropdown'">
+                                                    <div class="flex items-center justify-between">
+                                                        <p
+                                                            class="text-sm font-medium leading-6 dark:text-white text-gray-800"
+                                                            v-text="column.label"
+                                                        >
+                                                        </p>
+                                    
+                                                        <div
+                                                            class="flex items-center gap-x-1.5"
+                                                            @click="removeAppliedColumnAllValues(column.index)"
+                                                        >
+                                                            <p
+                                                                class="cursor-pointer text-xs font-medium leading-6 text-blue-600"
+                                                                v-if="hasAnyAppliedColumnValues(column.index)"
+                                                            >
+                                                                @lang('admin::app.components.datagrid.filters.custom-filters.clear-all')
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                    
+                                                    <div class="mb-2 mt-1.5">
+                                                        <v-datagrid-searchable-dropdown
+                                                            :datagrid-id="available.id"
+                                                            :column="column"
+                                                            @select-option="addFilter($event.target.value, column)"
+                                                        >
+                                                        </v-datagrid-searchable-dropdown>
+                                                    </div>
+                                    
+                                                    <div class="mb-4 flex gap-2 flex-wrap">
+                                                        <p
+                                                            class="flex items-center rounded bg-gray-600 px-2 py-1 font-semibold text-white"
+                                                            v-for="appliedColumnValue in getAppliedColumnValues(column.index)"
+                                                        >
+                                                            <span v-text="appliedColumnValue"></span>
+                                    
+                                                            <span
+                                                                class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                @click="removeAppliedColumnValue(column.index, appliedColumnValue)"
+                                                            >
+                                                            </span>
+                                                        </p>
+                                                    </div>
+                                                </template>
+
                                                 <!-- Basic -->
                                                 <template v-else>
                                                     <div class="flex items-center justify-between">
@@ -1369,6 +1415,128 @@
                     this.isFilterDirty = true;
                 },
             },
+        });
+    </script>
+
+    <script type="text/x-template" id="v-datagrid-searchable-dropdown-template">
+        <x-admin::dropdown ::close-on-click="false">
+            <!-- Dropdown Toggler -->
+            <x-slot:toggle>
+                <button
+                    type="button"
+                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border h-[38px] dark:border-gray-800 bg-white dark:bg-gray-900 px-2.5 py-1.5 text-center leading-6 text-gray-600 dark:text-gray-300 transition-all marker:shadow hover:border-gray-400 dark:hover:border-gray-400 focus:border-gray-400 dark:focus:border-gray-400"
+                >
+                    <span
+                        class="text-sm text-gray-400 dark:text-gray-400" 
+                        v-text="'@lang('admin::app.components.datagrid.filters.select')'"
+                    >
+                    </span>
+
+                    <span class="icon-down-arrow text-2xl"></span>
+                </button>
+            </x-slot>
+
+            <!-- Dropdown Content -->
+            <x-slot:menu>
+                <div class="relative">
+                    <div class="relative rounded">
+                        <ul class="list-reset">
+                            <li class="p-2">
+                                <input
+                                    class="block w-full rounded-md border dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-1.5 text-sm leading-6 text-gray-600 dark:text-gray-300 transition-all hover:border-gray-400 dark:hover:border-gray-400 focus:border-gray-400 dark:focus:border-gray-400"
+                                    @keyup="lookUp($event)"
+                                >
+                            </li>
+
+                            <ul class="p-2">
+                                <li v-if="!isMinimumCharacters">
+                                    <p
+                                        class="block p-2 text-gray-600 dark:text-gray-300"
+                                        v-text="'@lang('admin::app.components.datagrid.filters.dropdown.searchable.at-least-two-chars')'"
+                                    >
+                                    </p>
+                                </li>
+
+                                <li v-else-if="!searchedOptions.length">
+                                    <p
+                                        class="block p-2 text-gray-600 dark:text-gray-300"
+                                        v-text="'@lang('admin::app.components.datagrid.filters.dropdown.searchable.no-results')'"
+                                    >
+                                    </p>
+                                </li>
+
+                                <li
+                                    v-for="option in searchedOptions"
+                                    v-else
+                                >
+                                    <p
+                                        class="text-sm text-gray-600 dark:text-gray-300 p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        v-text="option.label"
+                                        @click="selectOption(option)"
+                                    >
+                                    </p>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+            </x-slot>
+        </x-admin::dropdown>
+    </script>
+
+    <script type="module">
+        app.component('v-datagrid-searchable-dropdown', {
+            template: '#v-datagrid-searchable-dropdown-template',
+
+            props: ['datagridId', 'column'],
+
+            data() {
+                return {
+                    isMinimumCharacters: false,
+
+                    searchedOptions: [],
+                };
+            },
+
+            methods: {
+                lookUp($event) {
+                    let params = {
+                        datagrid_id: this.datagridId,
+                        column: this.column.index,
+                        search: $event.target.value,
+                    };
+
+                    if (! (params['search'].length > 1)) {
+                        this.searchedOptions = [];
+
+                        this.isMinimumCharacters = false;
+
+                        return;
+                    }
+
+                    this.$axios
+                        .get('{{ route('admin.datagrid.look_up') }}', {
+                            params
+                        })
+                        .then(({
+                            data
+                        }) => {
+                            this.isMinimumCharacters = true;
+
+                            this.searchedOptions = data;
+                        });
+                },
+
+                selectOption(option) {
+                    this.searchedOptions = [];
+
+                    this.$emit('select-option', {
+                        target: {
+                            value: option.value
+                        }
+                    });
+                },
+            }
         });
     </script>
 @endpushOnce

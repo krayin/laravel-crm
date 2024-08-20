@@ -1728,25 +1728,54 @@ return [
     // ----------------------------------------------------------------Old version locale ----------------------------------
 
     'dashboard' => [
-        'title'             => 'Dashboard',
-        'cards'             => 'Cards',
-        'column'            => 'Column',
-        'done'              => 'Done',
-        'activity'          => 'Activity',
-        'activities'        => 'Activities',
-        'top_leads'         => 'Top Leads',
-        'pipelines'         => 'Pipelines',
-        'quotes'            => 'Quotes',
-        'emails'            => 'Emails',
-        'custom_card'       => 'Custom Card',
-        'customers'         => 'Customers',
-        'top_customers'     => 'Top Customers',
-        'products'          => 'Products',
-        'top_products'      => 'Top Products',
-        'leads_started'     => 'Leads started',
-        'leads_over_time'   => 'Leads over time',
-        'no_record_found'   => 'No record found',
-        'week'              => 'Week',
+        'index' => [
+            'title' => 'Dashboard',
+
+            'revenue' => [
+                'lost-revenue' => 'Lost Revenue',
+                'won-revenue'  => 'Won Revenue',
+            ],
+
+            'over-all' => [
+                'average-lead-value'    => 'Average Lead Value',
+                'total-leads'           => 'Total Leads',
+                'average-leads-per-day' => 'Average Leads Per Day',
+                'total-quotations'      => 'Total Quotations',
+                'total-persons'         => 'Total Persons',
+                'total-organizations'   => 'Total Organizations',
+            ],
+
+            'total-leads' => [
+                'title' => 'Leads',
+                'total' => 'Total Leads',
+                'won'   => 'Won Leads',
+                'lost'  => 'Lost Leads',
+            ],
+
+            'revenue-by-sources' => [
+                'title' => 'Revenue By Sources',
+            ],
+
+            'revenue-by-types' => [
+                'title' => 'Revenue By Types',
+            ],
+
+            'top-selling-products' => [
+                'title'       => 'Top Products',
+                'empty-title' => 'No Products Found',
+                'empty-info'  => 'No products found for reports',
+            ],
+
+            'top-persons' => [
+                'title'       => 'Top Persons',
+                'empty-title' => 'No Persons Found',
+                'empty-info'  => 'No persons found for reports',
+            ],
+
+            'open-leads-by-states' => [
+                'title' => 'Open Leads By States',
+            ],
+        ],
     ],
 
     'layouts' => [

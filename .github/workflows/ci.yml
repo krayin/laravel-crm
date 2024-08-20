@@ -13,12 +13,10 @@ jobs:
 
     services:
       mysql:
-        image: mysql:5.7
+        image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: krayin_testing
-          MYSQL_USER: krayin
-          MYSQL_PASSWORD: secret
+          MYSQL_DATABASE: krayin
         ports:
           - 3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=5
@@ -34,39 +32,37 @@ jobs:
           extensions: curl, gd, intl, mbstring, openssl, pdo, pdo_mysql, tokenizer, zip
 
       - name: Composer Install
-        run: |
-          set -e
-          composer install --no-cache
+        run: composer install
 
       - name: Set Testing Environment
         run: |
-          cp .env.example .env.testing
-          set -e
-          sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env.testing
-          sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env.testing
-          sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin_testing|" .env.testing
-          sed -i "s|^\(DB_USERNAME=\s*\).*$|\1krayin|" .env.testing
-          sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1secret|" .env.testing
+          cp .env.example .env
+          sed -i "s|^\(APP_ENV=\s*\).*$|\1testing|" .env
+          sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env
+          sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env
+          sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin|" .env
+          sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
+          sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
 
       - name: Key Generate
-        run: set -e && php artisan key:generate --env=testing
+        run: php artisan key:generate
 
-      - name: Complete Testing Env File
+      - name: Complete ENV File
         run: |
-          printf "The complete `.env.testing` ... \n\n"
-          cat .env.testing
+          printf "The complete `.env` ... \n\n"
+          cat .env
 
       - name: Migrate Database
-        run: set -e && php artisan migrate --env=testing
+        run: php artisan migrate
 
       - name: Seed Database
-        run: set -e && php artisan db:seed --env=testing
+        run: php artisan db:seed
 
       - name: Vendor Publish
-        run: set -e && php artisan vendor:publish --all --force --env=testing
+        run: php artisan vendor:publish --provider=Webkul\\Core\\Providers\\CoreServiceProvider --force
 
       - name: Optimize Stuffs
-        run: set -e && php artisan optimize:clear --env=testing
+        run: php artisan optimize:clear
 
       - name: Run Tests
-        run: set -e && vendor/bin/pest
+        run: vendor/bin/pest

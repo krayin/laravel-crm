@@ -374,7 +374,7 @@
                         },
                         
                         lunch: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/lunches.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.description') }}",
                         },

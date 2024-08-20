@@ -113,8 +113,14 @@ class PersonDataGrid extends DataGrid
             'searchable'         => true,
             'filterable'         => true,
             'sortable'           => true,
-            'filterable_type'    => 'dropdown',
-            'filterable_options' => $this->organizationRepository->all(['name as label', 'name as value'])->toArray(),
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => OrganizationRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
     }
 
