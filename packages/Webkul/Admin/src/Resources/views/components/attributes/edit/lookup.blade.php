@@ -70,8 +70,15 @@
                     />
                 
                     <!-- Search Icon (absolute positioned) -->
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                    <span class="absolute bottom-1 top-2 right-0 flex items-center pr-3">
                         <div class="flex items-center justify-center space-x-1">
+                            <!-- Loader (optional, based on condition) -->
+                            <i 
+                                v-if="entityId && ! isSearching"
+                                class="icon-cross-large cursor-pointer text-2xl"
+                                @click="remove"
+                            ></i>
+
                             <!-- Loader (optional, based on condition) -->
                             <div
                                 class="relative"
@@ -79,9 +86,6 @@
                             >
                                 <x-admin::spinner />
                             </div>
-                
-                            <!-- Search Icon -->
-                            <i class="fas fa-search text-gray-500"></i>
                         </div>
                     </span>
                 </div>
@@ -222,6 +226,18 @@
                         this.showPopup = false;
                     }
                 },
+
+                remove() {
+                    this.entityId = null;
+
+                    this.selectedItem = null;
+
+                    this.searchTerm = '';
+
+                    this.searchedResults = [];
+
+                    this.$emit('lookup-removed');
+                }
             }
         });
     </script>
