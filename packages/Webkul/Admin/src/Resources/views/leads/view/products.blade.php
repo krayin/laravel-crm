@@ -94,7 +94,7 @@
                 <x-admin::form.control-group>
                     <x-admin::lookup 
                         ::src="src"
-                        ::name="`${inputName}[name]`"
+                        name="name"
                         ::params="params"
                         :placeholder="trans('admin::app.leads.view.products.product-name')"
                         @on-selected="(product) => addProduct(product)"
@@ -103,7 +103,7 @@
 
                     <x-admin::form.control-group.control
                         type="hidden"
-                        ::name="`${inputName}[product_id]`"
+                        name="product_id"
                         v-model="product.product_id"
                         rules="required"
                         :label="trans('admin::app.leads.view.products.product-name')"
@@ -120,13 +120,15 @@
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="inline"
-                        ::name="`${inputName}[quantity]`"
+                        ::name="'quantity'"
                         ::value="product.quantity"
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.view.products.quantity')"
                         :placeholder="trans('admin::app.leads.view.products.quantity')"
                         @on-change="(event) => product.quantity = event.value"
                         ::url="url(product)"
+                        ::params="{product_id: product.product_id}"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -136,13 +138,15 @@
                 <x-admin::form.control-group>
                 <x-admin::form.control-group.control
                         type="inline"
-                        ::name="`${inputName}[price]`"
+                        ::name="'price'"
                         ::value="product.price"
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.view.products.price')"
                         :placeholder="trans('admin::app.leads.view.products.price')"
                         @on-change="(event) => product.price = event.value"
                         ::url="url(product)"
+                        ::params="{product_id: product.product_id}"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -152,25 +156,44 @@
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.control
                         type="inline"
-                        ::name="`${inputName}[amount]`"
+                        ::name="'amount'"
                         ::value="product.price * product.quantity"
                         rules="required|decimal:4"
                         :label="trans('admin::app.leads.view.products.total')"
                         :placeholder="trans('admin::app.leads.view.products.total')"
                         ::allowEdit="false"
                         ::url="url(product)"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
 
             <!-- Action -->
             <x-admin::table.td class="text-right">
-                <x-admin::form.control-group >
-                    <i  
-                        @click="removeProduct"
-                        class="icon-delete cursor-pointer text-2xl"
-                    ></i>
-                </x-admin::form.control-group>
+                <template v-if="product.is_new">
+                    <x-admin::form.control-group>
+                        <div class="flex gap-4 items-center justify-end">
+                            <i  
+                                @click="attachProduct(product)"
+                                class="icon-enter text-black cursor-pointer text-2xl"
+                            ></i>
+
+                            <i  
+                                @click="removeProduct"
+                                class="icon-cross-large text-black cursor-pointer text-2xl"
+                            ></i>
+                        </div>
+                    </x-admin::form.control-group>
+                </template>
+
+                <template v-else>
+                    <x-admin::form.control-group>
+                        <i  
+                            @click="removeProduct"
+                            class="icon-delete cursor-pointer text-2xl"
+                        ></i>
+                    </x-admin::form.control-group>
+                </template>
             </x-admin::table.td>
         </x-admin::table.thead.tr>
     </script>
@@ -190,6 +213,7 @@
             methods: {
                 addProduct() {
                     this.products.push({
+                        is_new: true,
                         id: null,
                         product_id: null,
                         name: '',
@@ -256,18 +280,60 @@
                     
                     this.product.quantity = result.quantity ?? 0;
                 },
+
+                /**
+                 * Attach Product.
+                 * 
+                 * @return {void}
+                 */
+                attachProduct(product) {
+                    this.$axios.post('{{ route('admin.leads.product.add', $lead->id) }}', {
+                        _method: 'PUT',
+                        ...product,
+                    })
+                        .then(response => {
+                            this.product.is_new = false;
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                        })
+                        .catch(error => {});
+                },
                   
                 /**
                  * Remove the product.
                  * 
                  * @return {void}
                  */
-                removeProduct () {
-                    this.$emit('onRemoveProduct', this.product)
+                removeProduct() {
+                    this.$emitter.emit('open-confirm-modal', {
+                        agree: () => {
+                            this.$axios.post('{{ route('admin.leads.product.remove', $lead->id) }}', {
+                                _method: 'DELETE',
+                                product_id: this.product.product_id,
+                            })
+                                .then(response => {
+                                    this.$emit('onRemoveProduct', this.product);
+
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                })
+                                .catch(error => {});
+                        },
+                    });
                 },
                 
+                /**
+                 * Get the product URL.
+                 * 
+                 * @param {Object} product
+                 * 
+                 * @return {String}
+                 */
                 url(product) {
-                    return '{{ route('admin.leads.update', $lead->id) }}';
+                    if (product.is_new) {
+                        return;
+                    }
+
+                    return '{{ route('admin.leads.product.add', $lead->id) }}';
                 }
             }
         });

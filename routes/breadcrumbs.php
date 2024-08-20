@@ -29,7 +29,7 @@ Breadcrumbs::for('leads.edit', function (BreadcrumbTrail $trail, $lead) {
 // Dashboard > Leads > Title
 Breadcrumbs::for('leads.view', function (BreadcrumbTrail $trail, $lead) {
     $trail->parent('leads');
-    $trail->push($lead->title, route('admin.leads.view', $lead->id));
+    $trail->push('#'.$lead->id, route('admin.leads.view', $lead->id));
 });
 
 // Dashboard > Quotes
@@ -104,6 +104,12 @@ Breadcrumbs::for('contacts.persons.edit', function (BreadcrumbTrail $trail, $per
     $trail->push(trans('admin::app.contacts.persons.edit.title'), route('admin.contacts.persons.edit', $person->id));
 });
 
+// Dashboard > Contacts > Persons > View
+Breadcrumbs::for('contacts.persons.view', function (BreadcrumbTrail $trail, $person) {
+    $trail->parent('contacts.persons');
+    $trail->push('#'.$person->id, route('admin.contacts.persons.index'));
+});
+
 // Dashboard > Contacts > Organizations
 Breadcrumbs::for('contacts.organizations', function (BreadcrumbTrail $trail) {
     $trail->parent('contacts');
@@ -137,7 +143,7 @@ Breadcrumbs::for('products.create', function (BreadcrumbTrail $trail) {
 // Dashboard > Products > View Product
 Breadcrumbs::for('products.view', function (BreadcrumbTrail $trail, $product) {
     $trail->parent('products');
-    $trail->push($product->name, route('admin.products.view', $product->id));
+    $trail->push('#'.$product->id, route('admin.products.view', $product->id));
 });
 
 // Dashboard > Products > Edit Product
@@ -371,7 +377,7 @@ Breadcrumbs::for('settings.warehouses.edit', function (BreadcrumbTrail $trail, $
 // Dashboard > Settings > Warehouse > View Warehouse
 Breadcrumbs::for('settings.warehouses.view', function (BreadcrumbTrail $trail, $warehouse) {
     $trail->parent('settings.warehouses');
-    $trail->push($warehouse->name, route('admin.settings.warehouses.view', $warehouse->id));
+    $trail->push('#'.$warehouse->id, route('admin.settings.warehouses.view', $warehouse->id));
 });
 
 // Dashboard > Settings > Warehouse > View Warehouse > Products
