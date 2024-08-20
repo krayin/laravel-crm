@@ -53,12 +53,12 @@
                             <div class="grid grid-cols-3 gap-2 text-center">
                                 <!-- Link to create new Lead -->
                                 @if (bouncer()->hasPermission('leads.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.leads.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-leads text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.lead')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.lead')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -66,12 +66,12 @@
                     
                                 <!-- Link to create new Quotes -->
                                 @if (bouncer()->hasPermission('quotes.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.quotes.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-quote text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.quote')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.quote')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -79,12 +79,12 @@
                     
                                 <!-- Link to send new Mail-->
                                 @if (bouncer()->hasPermission('mail.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-mail text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.email')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.email')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -92,12 +92,12 @@
                     
                                 <!-- Link to create new Person-->
                                 @if (bouncer()->hasPermission('contacts.persons.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.contacts.persons.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-settings-user text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.person')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.person')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -105,12 +105,12 @@
                     
                                 <!-- Link to create new Organizations -->
                                 @if (bouncer()->hasPermission('contacts.organizations.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.contacts.organizations.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-organization text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.organization')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.organization')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -118,12 +118,12 @@
                     
                                 <!-- Link to create new Products -->
                                 @if (bouncer()->hasPermission('products.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.products.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-product text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.product')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.product')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -131,12 +131,12 @@
                                 
                                 <!-- Link to create new Attributes -->
                                 @if (bouncer()->hasPermission('settings.automation.attributes.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.attributes.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-attribute text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.attribute')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.attribute')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -144,12 +144,12 @@
                     
                                 <!-- Link to create new Role -->
                                 @if (bouncer()->hasPermission('settings.user.roles.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.roles.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-role text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.role')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.role')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -157,12 +157,12 @@
                     
                                 <!-- Link to create new User-->
                                 @if (bouncer()->hasPermission('settings.user.users.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.users.index') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-user text-2xl text-gray-600"></i>
                                                 
-                                                <span class="font-medium">@lang('admin::app.layouts.user')</span>
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.user')</span>
                                             </div>
                                         </a>
                                     </div>

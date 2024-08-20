@@ -9,7 +9,7 @@
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-cyan-200 text-cyan-900 transition-all hover:border-cyan-400"
         @click="$refs.fileActionComponent.openModal('mail')"
     >
-        <span class="icon-file text-2xl"></span>
+        <span class="icon-file text-2xl dark:!text-cyan-900"></span>
 
         @lang('admin::app.components.activities.actions.file.btn')
     </button>

@@ -48,10 +48,9 @@
                             href="{{ route('admin.configuration.index', ($item->getKey() . '/' . $key)) }}"
                         >
                             @if ($icon = $child->getIcon())
-                                <img
-                                    class="h-[60px] w-[60px] dark:mix-blend-exclusion dark:invert"
-                                    {{-- src="{{ admin_vite()->set('images/' . $icon) }}" --}}
-                                >
+                                <div class="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+                                    <i class="{{ $child->getIcon() }} text-3xl "></i>
+                                </div>
                             @endif
 
                             <div class="grid">

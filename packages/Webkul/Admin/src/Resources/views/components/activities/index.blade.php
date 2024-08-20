@@ -72,25 +72,31 @@
                                             </p>
 
                                             <template v-if="activity.type == 'email'">
-                                                <p>
+                                                <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.from'):
 
                                                     @{{ activity.additional.from }}
                                                 </p>
 
-                                                <p>
+                                                <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.to'):
 
                                                     @{{ activity.additional.to.join(', ') }}
                                                 </p>
 
-                                                <p v-if="activity.additional.cc">
+                                                <p 
+                                                    v-if="activity.additional.cc"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.cc'):
 
                                                     @{{ activity.additional.cc.join(', ') }}
                                                 </p>
 
-                                                <p v-if="activity.additional.bcc">
+                                                <p 
+                                                    v-if="activity.additional.bcc"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.bcc'):
 
                                                     @{{ activity.additional.bcc.join(', ') }}
@@ -243,7 +249,10 @@
                                 class="grid justify-center justify-items-center gap-3.5 py-12"
                                 v-if="! filteredActivities.length"
                             >
-                                <img :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image">
+                                <img
+                                    class="dark:mix-blend-exclusion dark:invert" 
+                                    :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image"
+                                >
                                 
                                 <div class="flex flex-col items-center gap-2">
                                     <p class="text-xl font-semibold dark:text-white">
@@ -333,13 +342,13 @@
                     selectedType: 'all',
 
                     typeClasses: {
-                        email: 'icon-mail bg-green-200 text-green-900',
-                        note: 'icon-note bg-orange-200 text-orange-800',
-                        call: 'icon-call bg-cyan-200 text-cyan-800',
-                        meeting: 'icon-activity bg-blue-200 text-blue-800',
-                        lunch: 'icon-activity bg-blue-200 text-blue-800',
-                        file: 'icon-file bg-green-200 text-green-900',
-                        default: 'icon-activity bg-blue-200 text-blue-800',
+                        email: 'icon-mail bg-green-200 text-green-900 dark:!text-green-900',
+                        note: 'icon-note bg-orange-200 text-orange-800 dark:!text-orange-800',
+                        call: 'icon-call bg-cyan-200 text-cyan-800 dark:!text-cyan-800',
+                        meeting: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
+                        lunch: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
+                        file: 'icon-file bg-green-200 text-green-900 dark:!text-green-900',
+                        default: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                     },
 
                     typeIllustrations: {
