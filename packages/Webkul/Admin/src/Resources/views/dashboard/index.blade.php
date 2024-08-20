@@ -65,14 +65,14 @@
         {!! view_render_event('admin.dashboard.index.content.right.before') !!}
 
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
+            <!-- Revenue by Types -->
+            @include('admin::dashboard.index.open-leads-by-states')
+
             <!-- Revenue by Sources -->
             @include('admin::dashboard.index.revenue-by-sources')
 
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.revenue-by-types')
-
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.open-leads-by-states')
         </div>
 
         {!! view_render_event('admin.dashboard.index.content.left.after') !!}
