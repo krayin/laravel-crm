@@ -116,8 +116,13 @@
                         <img src="{{ admin_vite()->asset('images/empty-placeholders/quotes.svg') }}">
                         
                         <div class="flex flex-col items-center gap-2">
-                            <p class="text-xl font-semibold">@lang('admin::app.leads.view.quotes.empty-title')</p>
-                            <p class="text-gray-400">@lang('admin::app.leads.view.quotes.empty-info')</p>
+                            <p class="text-xl font-semibold dark:text-white">
+                                @lang('admin::app.leads.view.quotes.empty-title')
+                            </p>
+                            
+                            <p class="text-gray-400">
+                                @lang('admin::app.leads.view.quotes.empty-info')
+                            </p>
                         </div>
                     </div>
                 </div>

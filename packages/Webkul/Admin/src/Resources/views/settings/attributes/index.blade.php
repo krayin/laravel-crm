@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="settings.attributes" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 <!-- Title -->
                 @lang('admin::app.settings.attributes.index.title')
             </div>

@@ -65,8 +65,8 @@
     </script>
 
     <script type="text/x-template" id="v-attachment-item-template">
-        <div class="flex items-center gap-2 rounded-md bg-gray-100 px-2.5 py-1">
-            <span class="max-w-xs truncate">
+        <div class="flex items-center gap-2 rounded-md bg-gray-100 px-2.5 py-1 dark:bg-gray-950">
+            <span class="max-w-xs truncate dark:text-white">
                 @{{ attachment.name }}
             </span>
 
@@ -78,7 +78,7 @@
             />
 
             <i 
-                class="icon-cross-large cursor-pointer rounded-md p-0.5 text-xl hover:bg-gray-200"
+                class="icon-cross-large cursor-pointer rounded-md p-0.5 text-xl hover:bg-gray-200 dark:hover:bg-gray-800"
                 @click="remove"
             ></i>
         </div>

@@ -30,11 +30,11 @@
         </template>
 
         <template v-else>
-            <div class="w-full bg-white">
-                <div class="flex gap-4 border-b border-gray-200">
+            <div class="w-full bg-white dark:bg-gray-900">
+                <div class="flex gap-4 border-b border-gray-200 dark:border-gray-800">
                     <div
                         v-for="type in types"
-                        class="cursor-pointer px-3 py-2.5 text-sm font-medium"
+                        class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
                         :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
                         @click="selectedType = type.name"
                     >
@@ -62,12 +62,12 @@
                                 <!-- Activity Details -->
                                 <div
                                     class="flex w-full justify-between gap-4 rounded-md p-4"
-                                    :class="{'bg-gray-100': index % 2 != 0 }"
+                                    :class="{'bg-gray-100 dark:bg-gray-950': index % 2 != 0 }"
                                 >
                                     <div class="flex flex-col gap-2">
                                         <!-- Activity Title -->
                                         <div class="flex flex-col gap-1">
-                                            <p class="font-medium">
+                                            <p class="font-medium dark:text-white">
                                                 @{{ activity.title }}
                                             </p>
 
@@ -124,7 +124,9 @@
                                         </div>
 
                                         <!-- Activity Description -->
-                                        <p v-if="activity.comment"
+                                        <p 
+                                            class="dark:text-white"
+                                            v-if="activity.comment"
                                         >
                                             @{{ activity.comment }}
                                         </p>
@@ -149,7 +151,7 @@
                                         </div>
 
                                         <!-- Activity Time and User -->
-                                        <div class="text-gray-500">
+                                        <div class="text-gray-500 dark:text-gray-300">
                                             @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
 
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
@@ -161,7 +163,7 @@
                                         <x-slot:toggle>
                                             <template v-if="! isUpdating[activity.id]">
                                                 <button
-                                                    class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                                    class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
                                                 ></button>
                                             </template>
 
@@ -244,11 +246,11 @@
                                 <img :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image">
                                 
                                 <div class="flex flex-col items-center gap-2">
-                                    <p class="text-xl font-semibold">
+                                    <p class="text-xl font-semibold dark:text-white">
                                         @{{ typeIllustrations[selectedType]?.title ?? typeIllustrations['all'].title }}
                                     </p>
 
-                                    <p class="text-gray-400">
+                                    <p class="text-gray-400 dark:text-gray-400">
                                         @{{ typeIllustrations[selectedType]?.description ?? typeIllustrations['all'].description }}
                                     </p>
                                 </div>

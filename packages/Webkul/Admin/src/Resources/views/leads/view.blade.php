@@ -91,8 +91,6 @@
             <!-- Stages Navigation -->
             @include ('admin::leads.view.stages')
 
-            <!-- Stages Navigation -->
-            
             <!-- Activities -->
             {!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
 

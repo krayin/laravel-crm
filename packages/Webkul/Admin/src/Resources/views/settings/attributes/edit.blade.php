@@ -21,7 +21,7 @@
                     />
                 </div>
 
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.attributes.edit.title')
                 </div>
             </div>
@@ -42,7 +42,6 @@
         <!-- Edit Attributes Vue Components -->
         <v-edit-attributes>
             <!-- Shimmer Effect -->
-            {{-- <x-admin::shimmer.catalog.attributes /> --}}
         </v-edit-attributes>
     </x-admin::form>
 

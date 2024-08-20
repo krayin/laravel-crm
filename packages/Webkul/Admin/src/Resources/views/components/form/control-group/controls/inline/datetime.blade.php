@@ -16,7 +16,7 @@
             <div
                 v-if="! isEditing"
                 class="flex items-center rounded-xs h-[34px] space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50' : ''"
+                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control

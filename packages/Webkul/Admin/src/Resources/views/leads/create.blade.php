@@ -35,7 +35,12 @@
             </div>
         </div>
 
-        <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ request('stage_id') }}" />
+        <input 
+            type="hidden" 
+            id="lead_pipeline_stage_id" 
+            name="lead_pipeline_stage_id" 
+            value="{{ request('stage_id') }}" 
+        />
 
         <!-- Lead Create Component -->
         <v-lead-create></v-lead-create>

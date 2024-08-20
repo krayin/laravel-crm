@@ -4,11 +4,14 @@
 ></v-control-tags>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-control-tags-template">
-        <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400">
+    <script 
+        type="text/x-template" 
+        id="v-control-tags-template"
+    >
+        <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400">
             <ul class="flex flex-wrap items-center gap-1">
                 <li
-                    class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
+                    class="flex items-center gap-1 rounded-md bg-gray-100 pl-2 dark:bg-gray-950"
                     v-for="(tag, index) in tags"
                 >
                     <x-admin::form.control-group.control
