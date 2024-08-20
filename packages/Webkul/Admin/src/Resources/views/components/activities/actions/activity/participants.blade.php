@@ -5,11 +5,14 @@
     <script type="text/x-template" id="v-activity-participants-template">
         <!-- Search Button -->
         <div class="relative">
-            <div class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400" role="button">
+            <div 
+                class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400" 
+                role="button"
+            >
                 <ul class="flex flex-wrap items-center gap-1">
                     <template v-for="userType in ['users', 'persons']">
                         <li
-                            class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
+                            class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-gray-950"
                             v-for="(user, index) in addedParticipants[userType]"
                         >
                             <!-- User Id -->
@@ -64,7 +67,7 @@
                         class="flex flex-col gap-2"
                         v-for="userType in ['users', 'persons']"
                     >
-                        <h3 class="text-sm font-bold text-gray-600 dark:text-gray-400">
+                        <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">
                             <template v-if="userType === 'users'">
                                 @lang('admin::app.components.activities.actions.activity.participants.users')
                             </template>
@@ -76,7 +79,7 @@
 
                         <ul>
                             <li
-                                class="rounded-sm px-5 py-2 text-sm text-gray-800 dark:text-gray-300"
+                                class="rounded-sm px-5 py-2 text-sm text-gray-800 dark:text-white"
                                 v-if="! searchedParticipants[userType].length && ! isSearching[userType]"
                             >
                                 <p class="text-sm text-gray-500 dark:text-gray-400">
@@ -85,7 +88,7 @@
                             </li>
 
                             <li
-                                class="cursor-pointer rounded-sm px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                class="cursor-pointer rounded-sm px-3 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
                                 v-for="user in searchedParticipants[userType]"
                                 @click="add(userType, user)"
                             >

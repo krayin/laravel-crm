@@ -9,7 +9,7 @@
                 <x-admin::breadcrumbs name="contacts.persons" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 @lang('admin::app.contacts.persons.index.title')
             </div>
         </div>

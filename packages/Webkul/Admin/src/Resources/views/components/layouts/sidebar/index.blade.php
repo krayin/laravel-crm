@@ -36,7 +36,7 @@
                             class="absolute left-[190px] top-0 hidden w-[200px] flex-col bg-gray-100"
                             :class="[isMenuActive && (hoveringMenu == '{{$menuItem->getKey()}}') ? '!flex' : 'hidden']"
                         >
-                            <div class="sidebar-rounded fixed top-14 z-[1000] h-full w-[140px] border bg-white pt-4 dark:bg-gray-900 max-lg:hidden">
+                            <div class="sidebar-rounded fixed top-14 z-[1000] h-full w-[140px] border bg-white pt-4 dark:border-gray-800 dark:bg-gray-900 max-lg:hidden">
                                 <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto">
                                     <nav class="grid w-full gap-2">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)

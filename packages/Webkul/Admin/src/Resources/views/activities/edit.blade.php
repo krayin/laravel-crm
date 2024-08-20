@@ -108,7 +108,7 @@
 
                         <!-- Participants Multilookup Vue Component -->
                         <v-multi-lookup-component>
-                            <div class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400" role="button">
+                            <div class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" role="button">
                                 <ul class="flex flex-wrap items-center gap-1">
                                     <li>
                                         <input
@@ -245,12 +245,12 @@
         >
             <!-- Search Button -->
             <div class="relative">
-                <div class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400" role="button">
+                <div class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800" role="button">
                     <ul class="flex flex-wrap items-center gap-1">
                         <!-- Added Participants -->
                         <template v-for="userType in ['users', 'persons']">
                             <li
-                                class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
+                                class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-slate-950"
                                 v-for="(user, index) in addedParticipants[userType]"
                             >
                                 <!-- Person and User Hidden Input Field -->

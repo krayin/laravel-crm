@@ -8,9 +8,9 @@
         <!-- Left Panel -->
         {!! view_render_event('admin.contact.persons.view.left.before', ['person' => $person]) !!}
 
-        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
+        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Person Information -->
-            <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
+            <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
                     <x-admin::breadcrumbs name="contacts.persons" />
@@ -25,11 +25,11 @@
 
                 <!-- Title -->
                 <div class="mb-4 flex flex-col gap-0.5">
-                    <h3 class="text-lg font-bold">
+                    <h3 class="text-lg font-bold dark:text-white">
                         {{ $person->name }}
                     </h3>
 
-                    <p>
+                    <p class="dark:text-white">
                         {{ $person->job_title }}
                     </p>
                 </div>

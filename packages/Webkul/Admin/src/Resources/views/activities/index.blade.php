@@ -11,7 +11,7 @@
                     <x-admin::breadcrumbs name="activities" />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.activities.index.title')
                 </div>
             </div>
@@ -40,7 +40,7 @@
                         <x-admin::breadcrumbs name="activities" />
                     </div>
         
-                    <div class="text-xl font-bold dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.activities.index.title')
                     </div>
                 </div>
@@ -50,13 +50,13 @@
                 <div class="flex gap-2">
                     <i
                         class="icon-kanban cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-200 text-gray-800': viewType == 'table'}"
+                        :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
                         @click="toggleView('table')"
                     ></i>
         
                     <i
                         class="icon-calender cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-200 text-gray-800': viewType == 'calendor'}"
+                        :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
                         @click="toggleView('calendor')"
                     ></i>
                 </div>

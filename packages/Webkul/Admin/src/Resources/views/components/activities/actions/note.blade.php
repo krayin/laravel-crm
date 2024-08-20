@@ -32,7 +32,7 @@
             <form @submit="handleSubmit($event, save)">
                 <x-admin::modal ref="noteActivityModal" position="bottom-right">
                     <x-slot:header>
-                        <h3 class="text-base font-semibold">
+                        <h3 class="text-base font-semibold dark:text-white">
                             @lang('admin::app.components.activities.actions.note.title')
                         </h3>
                     </x-slot>
