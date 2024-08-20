@@ -26,13 +26,20 @@
             </div>
     
             <!-- Link Mail Button -->
-            <button
-                type="button"
-                class="primary-button"
-                @click="$refs.emailAction.openDrawer()"
-            >
-                @lang('admin::app.mail.view.link-mail')
-            </button>
+            @if (
+                bouncer()->hasPermission('contacts.persons.create')
+                || bouncer()->hasPermission('leads.create')
+                || bouncer()->hasPermission('leads.view')
+                || bouncer()->hasPermission('contacts.persons.edit')
+            )
+                <button
+                    type="button"
+                    class="primary-button"
+                    @click="$refs.emailAction.openDrawer()"
+                >
+                    @lang('admin::app.mail.view.link-mail')
+                </button>
+            @endif
         </div>
 
         <!-- Email List Vue Component -->
@@ -568,12 +575,14 @@
                             </ul>
 
                             <!-- Add New Contact Button -->
-                            <div
-                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
-                                @click="toggleContactModal"
-                            >
-                                <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
-                            </div>
+                            @if (bouncer()->hasPermission('contacts.persons.create'))
+                                <div
+                                    class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
+                                    @click="toggleContactModal"
+                                >
+                                    <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </template>
@@ -680,105 +689,109 @@
                     </div>
                 </template>
 
-                <template v-else>
-                    <div
-                        class="relative"
-                        ref="lookup"
-                    >
-                        <!-- Input Box (Button) -->
+                @if (bouncer()->hasPermission('leads.view'))
+                    <template v-else>
                         <div
-                            class="relative inline-block w-full"
-                            @click="toggle"
+                            class="relative"
+                            ref="lookup"
                         >
-                            <!-- Input-like div -->
-                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
-                                @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
-                            </div>
-                            
-                            <!-- Arrow down icon -->
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <i class="fas fa-chevron-down text-gray-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- toggle popup -->
-                        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                            <div class="flex items-center justify-center space-x-1">                        
-                                <i 
-                                    class="text-2xl"
-                                    :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
-                                ></i>
-                            </div>
-                        </span>
-
-                        <!-- Popup Box -->
-                        <div 
-                            v-if="showPopup" 
-                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
-                        >
-                            <!-- Search Bar -->
-                            <div class="relative">
-                                <!-- Input Box -->
-                                <input
-                                    type="text"
-                                    v-model.lazy="searchTerm"
-                                    v-debounce="500"
-                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
-                                    placeholder="@lang('admin::app.mail.view.search')"
-                                    ref="searchInput"
-                                    @keyup="search"
-                                />
-                            
-                                <!-- Search Icon (absolute positioned) -->
-                                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <div class="flex items-center justify-center space-x-1">
-                                        <!-- Loader (optional, based on condition) -->
-                                        <div
-                                            class="relative"
-                                            v-if="isSearching"
-                                        >
-                                            <x-admin::spinner />
-                                        </div>
-                            
-                                        <!-- Search Icon -->
-                                        <i class="fas fa-search text-gray-500"></i>
-                                    </div>
-                                </span>
-                            </div>
-
-                            <!-- Results List -->
-                            <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                                <li 
-                                    v-for="lead in leads" 
-                                    :key="lead.id"
-                                    class="flex items-center gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
-                                    @click="linkLead(lead)"
-                                >
-                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                        @{{ lead.title.split(' ').map(word => word[0]).join('') }}
-                                    </div>
-                            
-                                    <!-- Lead Title -->
-                                    <div class="flex flex-col gap-1">
-                                        <span>@{{ lead.title }}</span>
-                                    </div>
-                                </li>                       
-                            
-                                <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
-                                    @lang('admin::app.mail.view.no-result-found')
-                                </li>
-                            </ul>
-
-                            <!-- Add New Lead Button -->
+                            <!-- Input Box (Button) -->
                             <div
-                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
-                                @click="toggleLeadModal"
+                                class="relative inline-block w-full"
+                                @click="toggle"
                             >
-                                <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
+                                <!-- Input-like div -->
+                                <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
+                                    @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
+                                </div>
+                                
+                                <!-- Arrow down icon -->
+                                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- toggle popup -->
+                            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <div class="flex items-center justify-center space-x-1">                        
+                                    <i 
+                                        class="text-2xl"
+                                        :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                                    ></i>
+                                </div>
+                            </span>
+
+                            <!-- Popup Box -->
+                            <div 
+                                v-if="showPopup" 
+                                class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                            >
+                                <!-- Search Bar -->
+                                <div class="relative">
+                                    <!-- Input Box -->
+                                    <input
+                                        type="text"
+                                        v-model.lazy="searchTerm"
+                                        v-debounce="500"
+                                        class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
+                                        placeholder="@lang('admin::app.mail.view.search')"
+                                        ref="searchInput"
+                                        @keyup="search"
+                                    />
+                                
+                                    <!-- Search Icon (absolute positioned) -->
+                                    <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <!-- Loader (optional, based on condition) -->
+                                            <div
+                                                class="relative"
+                                                v-if="isSearching"
+                                            >
+                                                <x-admin::spinner />
+                                            </div>
+                                
+                                            <!-- Search Icon -->
+                                            <i class="fas fa-search text-gray-500"></i>
+                                        </div>
+                                    </span>
+                                </div>
+
+                                <!-- Results List -->
+                                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                    <li 
+                                        v-for="lead in leads" 
+                                        :key="lead.id"
+                                        class="flex items-center gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                                        @click="linkLead(lead)"
+                                    >
+                                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                            @{{ lead.title.split(' ').map(word => word[0]).join('') }}
+                                        </div>
+                                
+                                        <!-- Lead Title -->
+                                        <div class="flex flex-col gap-1">
+                                            <span>@{{ lead.title }}</span>
+                                        </div>
+                                    </li>                       
+                                
+                                    <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                        @lang('admin::app.mail.view.no-result-found')
+                                    </li>
+                                </ul>
+
+                                <!-- Add New Lead Button -->
+                                @if (bouncer()->hasPermission('leads.create'))
+                                    <div
+                                        class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
+                                        @click="toggleLeadModal"
+                                    >
+                                        <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                @endif
             </div>
         </script>
 
@@ -992,37 +1005,48 @@
                 
                 <x-slot:content class="p-3.5">
                     <div class="flex flex-col gap-4">
-                        <!-- Link to contact -->
-                        <label class="font-semibold text-gray-700 cursor-pointer">
-                            @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
-                        </label>
-                
                         <!-- Contact Lookup -->
-                        <v-contact-lookup
-                            @link-contact="linkContact"
-                            @unlink-contact="unlinkContact"
-                            @open-contact-modal="openContactModal"
-                            :unlinking="unlinking"
-                            :email="email"
-                            :tag-text-color="tagTextColor"
-                            :background-colors="backgroundColors"
-                        ></v-contact-lookup>
+                        @if (
+                            bouncer()->hasPermission('contacts.persons.create') 
+                            || bouncer()->hasPermission('contacts.persons.edit')
+                        )
+                          <!-- Link to contact -->
+                            <label class="font-semibold text-gray-700 cursor-pointer">
+                                @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
+                            </label>
 
-                        <!-- Link to Lead -->
-                        <label class="font-semibold text-gray-700 cursor-pointer">
-                            @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
-                        </label>
-                    
+                            <v-contact-lookup
+                                @link-contact="linkContact"
+                                @unlink-contact="unlinkContact"
+                                @open-contact-modal="openContactModal"
+                                :unlinking="unlinking"
+                                :email="email"
+                                :tag-text-color="tagTextColor"
+                                :background-colors="backgroundColors"
+                            ></v-contact-lookup>
+                        @endif
+
+                     
                         <!-- Lead Lookup -->
-                        <v-lead-lookup
-                            @link-lead="linkLead"
-                            @unlink-lead="unlinkLead"
-                            @open-lead-modal="openLeadModal"
-                            :unlinking="unlinking"
-                            :email="email"
-                            :tag-text-color="tagTextColor"
-                            :background-colors="backgroundColors"
-                        ></v-lead-lookup>
+                        @if (
+                            bouncer()->hasPermission('leads.view') 
+                            || bouncer()->hasPermission('leads.create')
+                        )
+                            <!-- Link to Lead -->
+                            <label class="font-semibold text-gray-700 cursor-pointer">
+                                @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
+                            </label>
+                        
+                            <v-lead-lookup
+                                @link-lead="linkLead"
+                                @unlink-lead="unlinkLead"
+                                @open-lead-modal="openLeadModal"
+                                :unlinking="unlinking"
+                                :email="email"
+                                :tag-text-color="tagTextColor"
+                                :background-colors="backgroundColors"
+                            ></v-lead-lookup>
+                        @endif
                     </div>
                 </x-slot>
             </x-admin::drawer>
