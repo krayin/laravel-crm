@@ -41,8 +41,8 @@ jobs:
           sed -i "s|^\(DB_HOST=\s*\).*$|\1127.0.0.1|" .env
           sed -i "s|^\(DB_PORT=\s*\).*$|\1${{ job.services.mysql.ports['3306'] }}|" .env
           sed -i "s|^\(DB_DATABASE=\s*\).*$|\1krayin|" .env
-          sed -i "s|^\(DB_USERNAME=\s*\).*$|\1krayin|" .env
-          sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1secret|" .env
+          sed -i "s|^\(DB_USERNAME=\s*\).*$|\1root|" .env
+          sed -i "s|^\(DB_PASSWORD=\s*\).*$|\1root|" .env
 
       - name: Key Generate
         run: php artisan key:generate
