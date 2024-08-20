@@ -36,7 +36,7 @@
 
                     <ul class="absolute flex w-full flex-col">
                         <li
-                            class="flex w-full flex-col border-b border-gray-200 pb-[9px] pt-2.5 last:border-none"
+                            class="flex w-full flex-col border-b border-gray-200 pb-[9px] pt-2.5 last:border-none dark:border-gray-800"
                             v-for="(stat, index) in report.statistics"
                         >
                             <span class="text-sm font-semibold dark:text-gray-300">

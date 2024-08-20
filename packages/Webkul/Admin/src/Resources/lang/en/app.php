@@ -1709,6 +1709,7 @@ return [
                 'destroy-success' => 'Quote deleted successfully.',
                 'empty-title'     => 'No Quotes Found',
                 'empty-info'      => 'No Quotes Found for this Lead',
+                'add-btn'         => 'Add Quote',
             ],
 
             'products' => [
