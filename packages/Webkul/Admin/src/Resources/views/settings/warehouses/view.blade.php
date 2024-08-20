@@ -7,9 +7,9 @@
         <!-- Left Panel -->
         {!! view_render_event('krayin.admin.settings.warehouses.view.left.before', ['warehouse' => $warehouse]) !!}
 
-        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white">
+        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Product Information -->
-            <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4">
+            <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
                     <x-admin::breadcrumbs
@@ -26,7 +26,7 @@
                 />
 
                 <!-- Title -->
-                <h3 class="text-lg font-bold">
+                <h3 class="text-lg font-bold dark:text-white">
                     {{ $warehouse->name }}
                 </h3>
 

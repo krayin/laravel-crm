@@ -43,11 +43,11 @@
                             </p>
 
                             <div class="flex justify-between">
-                                <p class="font-semibold text-gray-600 dark:text-gray-300">
+                                <p class="font-medium text-gray-800 dark:text-white">
                                     @{{ item.formatted_price }}
                                 </p>
 
-                                <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                <p class="font-normal text-gray-800 dark:text-white">
                                     @{{ item.formatted_revenue }}
                                 </p>
                             </div>
