@@ -17,12 +17,14 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                <a
-                    href="{{ route('admin.contacts.persons.create') }}"
-                    class="primary-button"
-                >
-                    @lang('admin::app.contacts.persons.index.create-btn')
-                </a>
+                @if (bouncer()->hasPermission('admin.contacts.persons.view'))
+                    <a
+                        href="{{ route('admin.contacts.persons.create') }}"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.contacts.persons.index.create-btn')
+                    </a>
+                @endif
             </div>
         </div>
     </div>

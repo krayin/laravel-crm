@@ -89,7 +89,7 @@ return [
     ], [
         'key'   => 'mail.compose',
         'name'  => 'admin::app.acl.create',
-        'route' => ['admin.mail.index', 'admin.mail.store'],
+        'route' => ['admin.mail.store'],
         'sort'  => 6,
     ], [
         'key'   => 'mail.view',
@@ -157,6 +157,11 @@ return [
         'route' => 'ui.datagrid.export',
         'sort'  => 4,
     ],  [
+        'key'   => 'contacts.persons.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.contacts.persons.view',
+        'sort'  => 5,
+    ],[
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',
         'route' => 'admin.contacts.organizations.index',
@@ -195,6 +200,11 @@ return [
         'key'   => 'products.delete',
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.products.delete', 'admin.products.mass_delete'],
+        'sort'  => 3,
+    ],[
+        'key'   => 'products.view',
+        'name'  => 'admin::app.acl.view',
+        'route' => 'admin.products.view',
         'sort'  => 3,
     ], [
         'key'   => 'settings',

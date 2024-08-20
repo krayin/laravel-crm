@@ -98,29 +98,35 @@ class ProductDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'view',
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.products.index.datagrid.view'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.products.view', $row->id),
-        ]);
+        if (bouncer()->hasPermission('products.view')) {
+            $this->addAction([
+                'index'  => 'view',
+                'icon'   => 'icon-eye',
+                'title'  => trans('admin::app.products.index.datagrid.view'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.products.view', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.products.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.products.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('products.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.products.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.products.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.products.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.products.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('products.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.products.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.products.delete', $row->id),
+            ]);
+        }
     }
 
     /**

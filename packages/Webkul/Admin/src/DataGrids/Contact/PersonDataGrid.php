@@ -129,14 +129,16 @@ class PersonDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.contacts.persons.index.datagrid.view'),
-            'method' => 'GET',
-            'url'    => function ($row) {
-                return route('admin.contacts.persons.view', $row->id);
-            },
-        ]);
+        if (bouncer()->hasPermission('contacts.persons.view')) {
+            $this->addAction([
+                'icon'   => 'icon-eye',
+                'title'  => trans('admin::app.contacts.persons.index.datagrid.view'),
+                'method' => 'GET',
+                'url'    => function ($row) {
+                    return route('admin.contacts.persons.view', $row->id);
+                },
+            ]);
+        }
 
         if (bouncer()->hasPermission('contacts.persons.edit')) {
             $this->addAction([
