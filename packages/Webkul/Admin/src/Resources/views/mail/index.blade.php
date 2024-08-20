@@ -29,7 +29,7 @@
                     class="primary-button"
                     @click="$refs.composeMail.toggleModal()"
                 >
-                    @lang('admin::app.mail.index.composer-mail-btn')
+                    @lang('admin::app.mail.index.compose-mail-btn')
                 </button>
             </div>
         </div>

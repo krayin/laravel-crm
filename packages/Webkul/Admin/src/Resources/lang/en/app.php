@@ -1465,7 +1465,7 @@ return [
             'outbox'            => 'Outbox',
             'sent'              => 'Sent',
             'trash'             => 'Trash',
-            'composer-mail-btn' => 'Composer Mail',
+            'compose-mail-btn'  => 'Compose Mail',
             'btn'               => 'Mail',
             'mail'              => [
                 'title'         => 'Compose Mail',

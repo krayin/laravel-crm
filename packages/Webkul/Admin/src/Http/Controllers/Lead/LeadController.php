@@ -430,7 +430,7 @@ class LeadController extends Controller
     /**
      * Attach product to lead.
      */
-    public function addProduct(int$leadId): JsonResponse
+    public function addProduct(int $leadId): JsonResponse
     {
         $product = $this->productRepository->updateOrCreate(
             [

@@ -296,7 +296,7 @@
                  * 
                  * @return {void}
                  */
-                removeProduct () {
+                removeProduct() {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             this.$axios.post('{{ route('admin.leads.product.remove', $lead->id) }}', {
