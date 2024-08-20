@@ -1744,10 +1744,11 @@ return [
 
     'configuration' => [
         'index' => [
-            'title'    => 'Configuration',
-            'search'   => 'Search',
-            'back'     => 'Back',
-            'save-btn' => 'Save Configuration',
+            'back'         => 'Back',
+            'save-btn'     => 'Save Configuration',
+            'save-success' => 'Configuration Saved Successfully.',
+            'search'       => 'Search',
+            'title'        => 'Configuration',
 
             'general'  => [
                 'title'   => 'General',

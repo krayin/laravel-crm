@@ -73,14 +73,14 @@
 
                                 <div class="absolute right-2 top-[9px] flex items-center gap-2">
                                     <span
-                                        class="cursor-pointer font-medium hover:underline"
+                                        class="cursor-pointer font-medium hover:underline dark:text-white"
                                         @click="showCC = ! showCC"
                                     >
                                         @lang('admin::app.components.activities.actions.mail.cc')
                                     </span>
 
                                     <span
-                                        class="cursor-pointer font-medium hover:underline"
+                                        class="cursor-pointer font-medium hover:underline dark:text-white"
                                         @click="showBCC = ! showBCC"
                                     >
                                         @lang('admin::app.components.activities.actions.mail.bcc')
