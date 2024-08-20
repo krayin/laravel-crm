@@ -89,7 +89,7 @@
 
         <script
             type="module"
-            src="{{ admin_vite()->asset('js/chart-funnel.js') }}"
+            src="https://cdn.jsdelivr.net/npm/chartjs-chart-funnel@4.2.1/build/index.umd.min.js"
         >
         </script>
 
