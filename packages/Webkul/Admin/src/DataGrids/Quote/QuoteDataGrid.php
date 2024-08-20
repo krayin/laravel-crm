@@ -187,29 +187,35 @@ class QuoteDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.quotes.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.quotes.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('quotes.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.quotes.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.quotes.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'print',
-            'icon'   => 'icon-print',
-            'title'  => trans('admin::app.quotes.index.datagrid.print'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.quotes.print', $row->id),
-        ]);
+        if (bouncer()->hasPermission('quotes.print')) {
+            $this->addAction([
+                'index'  => 'print',
+                'icon'   => 'icon-print',
+                'title'  => trans('admin::app.quotes.index.datagrid.print'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.quotes.print', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.quotes.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.quotes.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('quotes.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.quotes.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.quotes.delete', $row->id),
+            ]);
+        }
     }
 
     /**
