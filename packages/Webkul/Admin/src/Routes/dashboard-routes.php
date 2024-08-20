@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\DashboardController;
 /**
  * Extra routes.
  */
-Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Dashboard routes.
      */

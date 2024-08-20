@@ -9,7 +9,7 @@ use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
 /**
  * Settings routes.
  */
-Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
     Route::prefix('contacts')->group(function () {
         /**
          * Persons routes.

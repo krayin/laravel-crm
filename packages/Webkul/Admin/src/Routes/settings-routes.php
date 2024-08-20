@@ -7,6 +7,7 @@ use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
+use Webkul\Admin\Http\Controllers\Settings\SettingController;
 use Webkul\Admin\Http\Controllers\Settings\SourceController;
 use Webkul\Admin\Http\Controllers\Settings\TagController;
 use Webkul\Admin\Http\Controllers\Settings\TypeController;
@@ -21,8 +22,10 @@ use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 /**
  * Settings routes.
  */
-Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
     Route::prefix('settings')->group(function () {
+        Route::get('', [SettingController::class, 'index'])->name('admin.settings.index');
+
         /**
          * Groups routes.
          */

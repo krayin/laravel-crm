@@ -1,18 +1,37 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController;
 use Webkul\Admin\Http\Controllers\DataGridController;
 use Webkul\Admin\Http\Controllers\TinyMCEController;
 use Webkul\Admin\Http\Controllers\User\AccountController;
 
 /**
- * Settings routes.
+ * Rest routes.
  */
-Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
     /**
-     * Datagrid lookup routes.
+     * DataGrid routes.
      */
-    Route::get('datagrid/look-up', [DataGridController::class, 'lookUp'])->name('admin.datagrid.look_up');
+    Route::prefix('datagrid')->group(function () {
+        /**
+         * Saved filter routes.
+         */
+        Route::controller(SavedFilterController::class)->prefix('datagrid/saved-filters')->group(function () {
+            Route::post('', 'store')->name('admin.datagrid.saved_filters.store');
+
+            Route::get('', 'get')->name('admin.datagrid.saved_filters.index');
+
+            Route::put('{id}', 'update')->name('admin.datagrid.saved_filters.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.datagrid.saved_filters.destroy');
+        });
+
+        /**
+         * Lookup routes.
+         */
+        Route::get('datagrid/look-up', [DataGridController::class, 'lookUp'])->name('admin.datagrid.look_up');
+    });
 
     /**
      * Tinymce file upload handler.

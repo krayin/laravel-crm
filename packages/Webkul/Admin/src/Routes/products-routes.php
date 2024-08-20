@@ -5,7 +5,7 @@ use Webkul\Admin\Http\Controllers\Products\ActivityController;
 use Webkul\Admin\Http\Controllers\Products\ProductController;
 use Webkul\Admin\Http\Controllers\Products\TagController;
 
-Route::group(['middleware' => ['web', 'user', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
     /**
      * Products routes.
      */

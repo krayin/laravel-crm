@@ -7,24 +7,32 @@ use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
 use Webkul\Admin\Http\Controllers\User\SessionController;
 
 /**
+ * Home routes.
+ */
+Route::get('/', [Controller::class, 'redirectToLogin'])->name('krayin.home');
+
+/**
  * Auth routes.
  */
-Route::group(['middleware' => ['web', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::group(['prefix' => config('app.admin_path')], function () {
     /**
      * Redirect route.
      */
     Route::get('/', [Controller::class, 'redirectToLogin']);
 
-    Route::controller(SessionController::class)->prefix('login')->group(function () {
-        /**
-         * Login routes.
-         */
-        Route::get('', 'create')->name('admin.session.create');
+    /**
+     * Session routes.
+     */
+    Route::controller(SessionController::class)->group(function () {
+        Route::prefix('login')->group(function () {
+            Route::get('', 'create')->name('admin.session.create');
 
-        /**
-         * Login post route to admin auth controller.
-         */
-        Route::post('', 'store')->name('admin.session.store');
+            Route::post('', 'store')->name('admin.session.store');
+        });
+
+        Route::group(['middleware' => ['user']], function () {
+            Route::delete('logout', 'destroy')->name('admin.session.destroy');
+        });
     });
 
     /**
