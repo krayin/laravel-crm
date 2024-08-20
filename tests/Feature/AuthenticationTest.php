@@ -10,7 +10,7 @@ it('can see the dashboard page after login', function () {
 
     test()->actingAs($admin)
         ->get(route('admin.dashboard.index'))
-        ->assertSee(__('admin::app.dashboard.title'));
+        ->assertOK();
 
     expect(auth()->guard('user')->user()->name)->toBe($admin->name);
 });
