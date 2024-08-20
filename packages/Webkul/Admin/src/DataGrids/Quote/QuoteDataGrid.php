@@ -39,7 +39,7 @@ class QuoteDataGrid extends DataGrid
 
         $this->addFilter('id', 'quotes.id');
         $this->addFilter('user', 'quotes.user_id');
-        $this->addFilter('sales_person', 'quotes.user_id');
+        $this->addFilter('sales_person', 'users.name');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('expired_at', 'quotes.expired_at');
         $this->addFilter('created_at', 'quotes.created_at');
@@ -67,11 +67,19 @@ class QuoteDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'sales_person',
-            'label'      => trans('admin::app.quotes.index.datagrid.sales-person'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'filterable' => true,
+            'index'              => 'sales_person',
+            'label'              => trans('admin::app.quotes.index.datagrid.sales-person'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => \Webkul\User\Repositories\UserRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
 
@@ -82,21 +90,29 @@ class QuoteDataGrid extends DataGrid
         $this->addColumn([
             'index'      => 'expired_quotes',
             'label'      => trans('admin::app.quotes.index.datagrid.expired-quotes'),
-            'type'       => 'string',
+            'type'       => 'date',
             'searchable' => false,
             'filterable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'person_name',
-            'label'      => trans('admin::app.quotes.index.datagrid.person'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'filterable' => true,
+            'index'              => 'person_name',
+            'label'              => trans('admin::app.quotes.index.datagrid.person'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
             'closure'    => function ($row) {
                 $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
 
-                return "<a href='".$route."'>".$row->person_name."</a>";
+                return "<a href='".$route."'>".$row->person_name.'</a>';
             },
         ]);
 

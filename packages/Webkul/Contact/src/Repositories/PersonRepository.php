@@ -46,7 +46,7 @@ class PersonRepository extends Repository
      */
     public function create(array $data)
     {
-        $data['user_id'] = $data['user_id'] ?: null;
+        $data['user_id'] = $data['user_id'] ?? null;
 
         $person = parent::create($data);
 

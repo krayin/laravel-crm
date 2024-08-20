@@ -3,7 +3,6 @@
 namespace Webkul\Core;
 
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Config;
 use Webkul\Core\Repositories\CoreConfigRepository;
 use Webkul\Core\Repositories\CountryRepository;
 use Webkul\Core\Repositories\CountryStateRepository;
@@ -154,6 +153,28 @@ class Core
     public function formatDate($date, $format = 'd M Y h:iA')
     {
         return Carbon::parse($date)->format($format);
+    }
+
+    /**
+     * Week range.
+     *
+     * @param  string  $date
+     * @param  int  $day
+     * @return string
+     */
+    public function xWeekRange($date, $day)
+    {
+        $ts = strtotime($date);
+
+        if (! $day) {
+            $start = (date('D', $ts) == 'Sun') ? $ts : strtotime('last sunday', $ts);
+
+            return date('Y-m-d', $start);
+        } else {
+            $end = (date('D', $ts) == 'Sat') ? $ts : strtotime('next saturday', $ts);
+
+            return date('Y-m-d', $end);
+        }
     }
 
     /**

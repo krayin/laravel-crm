@@ -220,7 +220,11 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-33668914.css",
+=======
+    "file": "assets/app-06e3cf02.css",
+>>>>>>> origin/2.x
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -252,6 +256,10 @@
     "file": "assets/calls-ee670a2e.svg",
     "src": "src/Resources/assets/images/empty-placeholders/calls.svg"
   },
+  "src/Resources/assets/images/empty-placeholders/default.svg": {
+    "file": "assets/default-fa0d440c.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/default.svg"
+  },
   "src/Resources/assets/images/empty-placeholders/description.svg": {
     "file": "assets/description-ffed9c3f.svg",
     "src": "src/Resources/assets/images/empty-placeholders/description.svg"
@@ -264,6 +272,10 @@
     "file": "assets/files-45076c3b.svg",
     "src": "src/Resources/assets/images/empty-placeholders/files.svg"
   },
+  "src/Resources/assets/images/empty-placeholders/lunches.svg": {
+    "file": "assets/lunches-ffce3ada.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/lunches.svg"
+  },
   "src/Resources/assets/images/empty-placeholders/meetings.svg": {
     "file": "assets/meetings-665b3d77.svg",
     "src": "src/Resources/assets/images/empty-placeholders/meetings.svg"
@@ -272,6 +284,10 @@
     "file": "assets/notes-7c655bcd.svg",
     "src": "src/Resources/assets/images/empty-placeholders/notes.svg"
   },
+  "src/Resources/assets/images/empty-placeholders/organizations.svg": {
+    "file": "assets/organizations-7a7c8cfb.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/organizations.svg"
+  },
   "src/Resources/assets/images/empty-placeholders/plans.svg": {
     "file": "assets/plans-d1b57159.svg",
     "src": "src/Resources/assets/images/empty-placeholders/plans.svg"
@@ -279,6 +295,14 @@
   "src/Resources/assets/images/empty-placeholders/products.svg": {
     "file": "assets/products-0ca7baa4.svg",
     "src": "src/Resources/assets/images/empty-placeholders/products.svg"
+  },
+  "src/Resources/assets/images/empty-placeholders/quotes.svg": {
+    "file": "assets/quotes-b42e961b.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/quotes.svg"
+  },
+  "src/Resources/assets/images/empty-placeholders/users.svg": {
+    "file": "assets/users-39e2d8eb.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/users.svg"
   },
   "src/Resources/assets/images/logo.svg": {
     "file": "assets/logo-0db24d41.svg",
@@ -339,8 +363,17 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
+<<<<<<< HEAD
     "file": "assets/app-116eea9b.js",
+=======
+    "file": "assets/app-3d6dac5a.js",
+>>>>>>> origin/2.x
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
+  },
+  "src/Resources/assets/js/chart.js": {
+    "file": "assets/chart-1d2144fe.js",
+    "isEntry": true,
+    "src": "src/Resources/assets/js/chart.js"
   }
 }
