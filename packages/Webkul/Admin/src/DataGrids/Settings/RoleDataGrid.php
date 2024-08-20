@@ -81,18 +81,22 @@ class RoleDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.roles.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.user.roles.edit')) {
+            $this->addAction([
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.roles.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.roles.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.user.roles.delete')) {
+            $this->addAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.roles.delete', $row->id),
+            ]);
+        }
     }
 }

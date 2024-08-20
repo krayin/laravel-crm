@@ -92,19 +92,23 @@ class OrganizationDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.contacts.organizations.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.contacts.organizations.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('contacts.organizations.edit')) {
+            $this->addAction([
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.contacts.organizations.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.contacts.organizations.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.contacts.organizations.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('contacts.organizations.delete')) {
+            $this->addAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.contacts.organizations.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.contacts.organizations.delete', $row->id),
+            ]);
+        }
     }
 
     /**

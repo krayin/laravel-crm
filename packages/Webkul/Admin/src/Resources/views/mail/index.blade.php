@@ -24,13 +24,15 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                <button
-                    type="button"
-                    class="primary-button"
-                    @click="$refs.composeMail.toggleModal()"
-                >
-                    @lang('admin::app.mail.index.compose-mail-btn')
-                </button>
+                @if (bouncer()->hasPermission('mail.compose'))
+                    <button
+                        type="button"
+                        class="primary-button"
+                        @click="$refs.composeMail.toggleModal()"
+                    >
+                        @lang('admin::app.mail.index.compose-mail-btn')
+                    </button>
+                @endif
             </div>
         </div>
     </div>

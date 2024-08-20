@@ -21,13 +21,15 @@
             
             <!-- Create button for Types -->
             <div class="flex items-center gap-x-2.5">
-                <button
-                    type="button"
-                    class="primary-button"
-                    @click="$refs.typeSettings.openModal()"
-                >
-                    @lang('admin::app.settings.types.index.create-btn')
-                </button>
+                @if (bouncer()->hasPermission('settings.lead.types.create'))
+                    <button
+                        type="button"
+                        class="primary-button"
+                        @click="$refs.typeSettings.openModal()"
+                    >
+                        @lang('admin::app.settings.types.index.create-btn')
+                    </button>
+                @endif
             </div>
 
             {!! view_render_event('krayin.admin.settings.types.index.create_button.after') !!}

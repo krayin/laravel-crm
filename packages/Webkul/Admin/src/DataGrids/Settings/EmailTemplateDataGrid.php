@@ -64,20 +64,24 @@ class EmailTemplateDataGrid extends DataGrid
      */
     public function prepareActions()
     {
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.email-template.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.email_templates.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.email_templates.edit')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.email-template.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.email_templates.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'          => 'delete',
-            'icon'           => 'icon-delete',
-            'title'          => trans('admin::app.settings.email-template.index.datagrid.delete'),
-            'method'         => 'DELETE',
-            'url'            => fn ($row) => route('admin.settings.email_templates.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.email_templates.delete')) {
+            $this->addAction([
+                'index'          => 'delete',
+                'icon'           => 'icon-delete',
+                'title'          => trans('admin::app.settings.email-template.index.datagrid.delete'),
+                'method'         => 'DELETE',
+                'url'            => fn ($row) => route('admin.settings.email_templates.delete', $row->id),
+            ]);
+        }
     }
 }

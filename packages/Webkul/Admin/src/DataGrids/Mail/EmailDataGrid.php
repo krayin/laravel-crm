@@ -86,35 +86,39 @@ class EmailDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => request('route') == 'draft'
-                ? 'icon-edit'
-                : 'icon-eye',
-            'title'  => request('route') == 'draft'
-                ? trans('admin::app.mail.index.datagrid.edit')
-                : trans('admin::app.mail.index.datagrid.view'),
-            'method' => 'GET',
-            'params' => [
-                'type' => request('route') == 'trash'
-                    ? 'delete'
-                    : 'trash',
-            ],
-            'url'    => fn ($row) => route('admin.mail.view', [request('route'), $row->id]),
-        ]);
+        if (bouncer()->hasPermission('mail.view')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => request('route') == 'draft'
+                    ? 'icon-edit'
+                    : 'icon-eye',
+                'title'  => request('route') == 'draft'
+                    ? trans('admin::app.mail.index.datagrid.edit')
+                    : trans('admin::app.mail.index.datagrid.view'),
+                'method' => 'GET',
+                'params' => [
+                    'type' => request('route') == 'trash'
+                        ? 'delete'
+                        : 'trash',
+                ],
+                'url'    => fn ($row) => route('admin.mail.view', [request('route'), $row->id]),
+            ]);
+        }
 
-        $this->addAction([
-            'index'        => 'delete',
-            'icon'         => 'icon-delete',
-            'title'        => trans('admin::app.mail.index.datagrid.delete'),
-            'method'       => 'DELETE',
-            'params'       => [
-                'type' => request('route') == 'trash'
-                    ? 'delete'
-                    : 'trash',
-            ],
-            'url'    => fn ($row) => route('admin.mail.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('mail.delete')) {
+            $this->addAction([
+                'index'        => 'delete',
+                'icon'         => 'icon-delete',
+                'title'        => trans('admin::app.mail.index.datagrid.delete'),
+                'method'       => 'DELETE',
+                'params'       => [
+                    'type' => request('route') == 'trash'
+                        ? 'delete'
+                        : 'trash',
+                ],
+                'url'    => fn ($row) => route('admin.mail.delete', $row->id),
+            ]);
+        }
     }
 
     /**
