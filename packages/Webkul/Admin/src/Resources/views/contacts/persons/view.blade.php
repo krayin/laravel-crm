@@ -13,7 +13,10 @@
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
-                    <x-admin::breadcrumbs name="contacts.persons" />
+                    <x-admin::breadcrumbs
+                        name="contacts.persons.view"
+                        :entity="$person"
+                        />
                 </div>
 
                 <!-- Tags -->
