@@ -406,6 +406,27 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.workflows.delete',
         'sort'  => 3,
+    ],
+    [
+        'key'   => 'settings.automation.webhook',
+        'name'  => 'admin::app.acl.webhook',
+        'route' => 'admin.settings.webhooks.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.webhook.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.webhooks.create', 'admin.settings.webhooks.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.webhook.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.webhooks.edit', 'admin.settings.webhooks.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.webhook.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.webhooks.delete',
+        'sort'  => 3,
     ], [
         'key'   => 'settings.other_settings',
         'name'  => 'admin::app.acl.other-settings',

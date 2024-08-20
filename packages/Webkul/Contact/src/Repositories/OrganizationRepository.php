@@ -36,7 +36,9 @@ class OrganizationRepository extends Repository
      */
     public function create(array $data)
     {
-        $data['user_id'] = $data['user_id'] ?? null;
+        if (isset($data['user_id'])) {
+            $data['user_id'] = $data['user_id'] ?: null;
+        }
 
         $organization = parent::create($data);
 
@@ -52,7 +54,9 @@ class OrganizationRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
-        $data['user_id'] = $data['user_id'] ?? null;
+        if (isset($data['user_id'])) {
+            $data['user_id'] = $data['user_id'] ?: null;
+        }
 
         $organization = parent::update($data, $id);
 

@@ -17,12 +17,14 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                <a
-                    href="{{ route('admin.settings.email_templates.create') }}"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.email-template.index.create-btn')
-                </a>
+                @if (bouncer()->hasPermission('settings.automation.email_templates.create'))
+                    <a
+                        href="{{ route('admin.settings.email_templates.create') }}"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.email-template.index.create-btn')
+                    </a>
+                @endif
             </div>
         </div>
     </div>

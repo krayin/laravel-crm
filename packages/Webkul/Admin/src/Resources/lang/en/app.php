@@ -12,6 +12,7 @@ return [
         'sent'            => 'Sent',
         'trash'           => 'Trash',
         'activities'      => 'Activities',
+        'webhook'         => 'Webhook',
         'contacts'        => 'Contacts',
         'persons'         => 'Persons',
         'organizations'   => 'Organizations',
