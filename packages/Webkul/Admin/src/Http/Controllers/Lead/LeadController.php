@@ -35,9 +35,9 @@ class LeadController extends Controller
         protected UserRepository $userRepository,
         protected SourceRepository $sourceRepository,
         protected TypeRepository $typeRepository,
-        protected LeadRepository $leadRepository,
         protected PipelineRepository $pipelineRepository,
         protected StageRepository $stageRepository,
+        protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
     ) {
         request()->request->add(['entity_type' => 'leads']);
@@ -429,10 +429,8 @@ class LeadController extends Controller
 
     /**
      * Attach product to lead.
-     *
-     * @return void
      */
-    public function addProduct($leadId)
+    public function addProduct(int $leadId): JsonResponse
     {
         $product = $this->productRepository->updateOrCreate(
             [
