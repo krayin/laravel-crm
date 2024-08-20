@@ -127,6 +127,13 @@
                                 @lang('admin::app.leads.view.quotes.empty-info')
                             </p>
                         </div>
+
+                        <a
+                            class="secondary-button"
+                            href="{{ route('admin.quotes.create', $lead->id) }}"
+                        >
+                            @lang('admin::app.leads.view.quotes.add-btn')
+                        </a>
                     </div>
                 </div>
             </div>

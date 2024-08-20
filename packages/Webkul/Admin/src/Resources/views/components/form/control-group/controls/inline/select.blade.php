@@ -79,7 +79,7 @@
                     </x-admin::form.control-group.control>
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform items-center gap-[1px] bg-white">
+                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform items-center gap-[1px]">
                         <i class="icon-down-arrow text-2xl" />
 
                         <button
