@@ -90,7 +90,6 @@ class ActivityDataGrid extends DataGrid
             'searchable'         => false,
             'sortable'           => true,
             'filterable'         => true,
-            'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
                 'repository' => UserRepository::class,
