@@ -64,7 +64,7 @@
                         <!-- Placeholder Image -->
                         <img
                             src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}"
-                            class="h-20 w-20 dark:mix-blend-exclusion dark:invert"
+                            class="dark:mix-blend-exclusion dark:invert"
                         >
 
                         <!-- Add Variants Information -->
