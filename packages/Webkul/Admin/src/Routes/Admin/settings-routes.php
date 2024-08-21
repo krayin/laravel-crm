@@ -274,7 +274,7 @@ Route::prefix('settings')->group(function () {
     });
 
     /**
-     * Email Templates Routes
+     * Email Templates Routes.
      */
     Route::controller(EmailTemplateController::class)->prefix('email-templates')->group(function () {
         Route::get('', 'index')->name('admin.settings.email_templates.index');
