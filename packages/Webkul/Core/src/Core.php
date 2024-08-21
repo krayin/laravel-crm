@@ -10,6 +10,13 @@ use Webkul\Core\Repositories\CountryStateRepository;
 class Core
 {
     /**
+     * The Krayin version.
+     *
+     * @var string
+     */
+    const KRAYIN_VERSION = '2.x-dev';
+
+    /**
      * Create a new instance.
      *
      * @return void
@@ -19,6 +26,16 @@ class Core
         protected CoreConfigRepository $coreConfigRepository,
         protected CountryStateRepository $countryStateRepository
     ) {}
+
+    /**
+     * Get the version number of the Krayin.
+     *
+     * @return string
+     */
+    public function version()
+    {
+        return static::KRAYIN_VERSION;
+    }
 
     /**
      * Retrieve all timezones.

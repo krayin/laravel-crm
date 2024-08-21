@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Webkul\Admin\Http\Controllers\DashboardController;
 use Webkul\Admin\Http\Controllers\DataGrid\SavedFilterController;
 use Webkul\Admin\Http\Controllers\DataGridController;
 use Webkul\Admin\Http\Controllers\TinyMCEController;
@@ -9,7 +10,16 @@ use Webkul\Admin\Http\Controllers\User\AccountController;
 /**
  * Rest routes.
  */
-Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], function () {
+Route::middleware(['user'])->group(function () {
+    /**
+     * Dashboard routes.
+     */
+    Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
+        Route::get('', 'index')->name('admin.dashboard.index');
+
+        Route::get('stats', 'stats')->name('admin.dashboard.stats');
+    });
+
     /**
      * DataGrid routes.
      */

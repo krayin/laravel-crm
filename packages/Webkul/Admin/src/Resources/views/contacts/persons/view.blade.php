@@ -21,8 +21,8 @@
 
                 <!-- Tags -->
                 <x-admin::tags
-                    :attach-endpoint="route('admin.persons.tags.attach', $person->id)"
-                    :detach-endpoint="route('admin.persons.tags.detach', $person->id)"
+                    :attach-endpoint="route('admin.contacts.persons.tags.attach', $person->id)"
+                    :detach-endpoint="route('admin.contacts.persons.tags.detach', $person->id)"
                     :added-tags="$person->tags"
                 />
 
@@ -64,7 +64,7 @@
                     />
                 </div>
             </div>
-            
+
             <!-- Person Attributes -->
             @include ('admin::contacts.persons.view.attributes')
 
@@ -75,11 +75,11 @@
         {!! view_render_event('admin.contact.persons.view.left.after', ['person' => $person]) !!}
 
         {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
-        
+
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
             <!-- Stages Navigation -->
-            <x-admin::activities :endpoint="route('admin.persons.activities.index', $person->id)" />
+            <x-admin::activities :endpoint="route('admin.contacts.persons.activities.index', $person->id)" />
         </div>
 
         {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}

@@ -161,7 +161,7 @@ return [
         'name'  => 'admin::app.acl.view',
         'route' => 'admin.contacts.persons.view',
         'sort'  => 5,
-    ],[
+    ], [
         'key'   => 'contacts.organizations',
         'name'  => 'admin::app.acl.organizations',
         'route' => 'admin.contacts.organizations.index',
@@ -201,7 +201,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.products.delete', 'admin.products.mass_delete'],
         'sort'  => 3,
-    ],[
+    ], [
         'key'   => 'products.view',
         'name'  => 'admin::app.acl.view',
         'route' => 'admin.products.view',

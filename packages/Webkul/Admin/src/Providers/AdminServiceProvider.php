@@ -26,7 +26,12 @@ class AdminServiceProvider extends ServiceProvider
 
         include __DIR__.'/../Http/helpers.php';
 
-        Route::middleware(['web', 'admin_locale'])->group(__DIR__.'/../Routes/web.php');
+        Route::middleware(['web', 'admin_locale'])
+            ->prefix(config('app.admin_path'))
+            ->group(__DIR__.'/../Routes/Admin/web.php');
+
+        Route::middleware(['web', 'admin_locale'])
+            ->group(__DIR__.'/../Routes/Front/web.php');
 
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
 
