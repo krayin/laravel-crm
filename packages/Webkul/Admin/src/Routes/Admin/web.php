@@ -6,11 +6,6 @@
 require 'auth-routes.php';
 
 /**
- * Dashboard routes.
- */
-require 'dashboard-routes.php';
-
-/**
  * Leads routes.
  */
 require 'leads-routes.php';
@@ -41,7 +36,7 @@ require 'contacts-routes.php';
 require 'activities-routes.php';
 
 /**
- * Quotes Routes.
+ * Quotes routes.
  */
 require 'quote-routes.php';
 
