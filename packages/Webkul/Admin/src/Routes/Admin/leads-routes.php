@@ -7,7 +7,7 @@ use Webkul\Admin\Http\Controllers\Lead\LeadController;
 use Webkul\Admin\Http\Controllers\Lead\QuoteController;
 use Webkul\Admin\Http\Controllers\Lead\TagController;
 
-Route::middleware(['user'])->controller(LeadController::class)->prefix('leads')->group(function () {
+Route::controller(LeadController::class)->prefix('leads')->group(function () {
     Route::get('', 'index')->name('admin.leads.index');
 
     Route::get('create', 'create')->name('admin.leads.create');

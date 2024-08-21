@@ -22,7 +22,10 @@ use Webkul\Admin\Http\Controllers\Settings\WorkflowController;
 /**
  * Settings routes.
  */
-Route::middleware(['user'])->prefix('settings')->group(function () {
+Route::prefix('settings')->group(function () {
+    /**
+     * Settings main display page.
+     */
     Route::get('', [SettingController::class, 'index'])->name('admin.settings.index');
 
     /**

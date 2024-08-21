@@ -6,7 +6,7 @@ use Webkul\Admin\Http\Controllers\Contact\Persons\ActivityController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
 
-Route::middleware(['user'])->prefix('contacts')->group(function () {
+Route::prefix('contacts')->group(function () {
     /**
      * Persons routes.
      */

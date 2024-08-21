@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Mail\EmailController;
 
-Route::middleware(['user'])->controller(EmailController::class)->prefix('mail')->group(function () {
+Route::controller(EmailController::class)->prefix('mail')->group(function () {
     Route::post('create', 'store')->name('admin.mail.store');
 
     Route::put('edit/{id}', 'update')->name('admin.mail.update');

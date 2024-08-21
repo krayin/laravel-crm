@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Quote\QuoteController;
 
-Route::middleware(['user'])->controller(QuoteController::class)->prefix('quotes')->group(function () {
+Route::controller(QuoteController::class)->prefix('quotes')->group(function () {
     Route::get('', 'index')->name('admin.quotes.index');
 
     Route::get('create/{id?}', 'create')->name('admin.quotes.create');

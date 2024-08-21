@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Activity\ActivityController;
 
-Route::middleware(['user'])->controller(ActivityController::class)->prefix('activities')->group(function () {
+Route::controller(ActivityController::class)->prefix('activities')->group(function () {
     Route::get('', 'index')->name('admin.activities.index');
 
     Route::get('get', 'get')->name('admin.activities.get');

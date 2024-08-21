@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Configuration\ConfigurationController;
 
-Route::middleware(['user'])->controller(ConfigurationController::class)->prefix('configuration')->group(function () {
+Route::controller(ConfigurationController::class)->prefix('configuration')->group(function () {
     Route::get('search', 'search')->name('admin.configuration.search');
 
     Route::prefix('{slug?}/{slug2?}')->group(function () {

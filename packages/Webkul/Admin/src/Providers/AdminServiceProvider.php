@@ -26,7 +26,7 @@ class AdminServiceProvider extends ServiceProvider
 
         include __DIR__.'/../Http/helpers.php';
 
-        Route::middleware(['web', 'admin_locale'])
+        Route::middleware(['web', 'admin_locale', 'user'])
             ->prefix(config('app.admin_path'))
             ->group(__DIR__.'/../Routes/Admin/web.php');
 

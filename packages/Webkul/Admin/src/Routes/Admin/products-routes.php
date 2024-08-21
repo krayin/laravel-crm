@@ -5,7 +5,7 @@ use Webkul\Admin\Http\Controllers\Products\ActivityController;
 use Webkul\Admin\Http\Controllers\Products\ProductController;
 use Webkul\Admin\Http\Controllers\Products\TagController;
 
-Route::middleware(['user'])->controller(ProductController::class)->prefix('products')->group(function () {
+Route::controller(ProductController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('admin.products.index');
 
     Route::get('create', 'create')->name('admin.products.create');
