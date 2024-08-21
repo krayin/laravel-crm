@@ -40,7 +40,7 @@
                                 <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto">
                                     <nav class="grid w-full gap-2">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)
-                                            <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
+                                            <div class="px-3 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                                                 <a
                                                     href="{{ $subMenuItem->getUrl() }}"
                                                     class="flex gap-2.5 p-2 items-center cursor-pointer hover:rounded-lg {{ $subMenuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
