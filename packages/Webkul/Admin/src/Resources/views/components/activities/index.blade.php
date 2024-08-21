@@ -172,9 +172,9 @@
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                         </div>
                                     </div>
-
+                                    
                                     <!-- Activity More Options -->
-                                    <x-admin::dropdown position="bottom-right">
+                                    <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
                                         <x-slot:toggle>
                                             <template v-if="! isUpdating[activity.id]">
                                                 <button

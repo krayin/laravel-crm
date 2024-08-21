@@ -70,7 +70,7 @@
                     />
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px] bg-white">
+                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px]">
                         <button
                             type="button"
                             class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
