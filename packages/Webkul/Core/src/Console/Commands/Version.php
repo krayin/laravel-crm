@@ -37,6 +37,6 @@ class Version extends Command
      */
     public function handle()
     {
-        $this->comment('v'.config('app.version'));
+        $this->comment('v'.core()->version());
     }
 }

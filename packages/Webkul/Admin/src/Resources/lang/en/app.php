@@ -1750,6 +1750,7 @@ return [
                 'closed-at'      => 'Closed At',
                 'won-value'      => 'Won Value',
                 'lost-reason'    => 'Lost Reason',
+                'save-btn'       => 'Save',
             ],
         ],
     ],

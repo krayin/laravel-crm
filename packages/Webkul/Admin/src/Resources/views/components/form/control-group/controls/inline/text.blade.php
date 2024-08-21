@@ -15,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
+                class="rounded-xs flex h-[34px] items-center space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
@@ -59,7 +59,7 @@
                         type="text"
                         ::id="name"
                         ::name="name"
-                        class="!h-[34px] !py-0"
+                        class="!h-[34px] !py-0 pr-16"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"

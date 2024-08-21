@@ -71,7 +71,7 @@
                                     :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
                                 />
 
-                                <div class="absolute right-2 top-[9px] flex items-center gap-2">
+                                <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                     <span
                                         class="cursor-pointer font-medium hover:underline dark:text-white"
                                         @click="showCC = ! showCC"
