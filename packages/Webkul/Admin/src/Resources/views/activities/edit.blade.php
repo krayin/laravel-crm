@@ -116,13 +116,13 @@
                                     <li>
                                         <input
                                             type="text"
-                                            class="w-full px-1 py-1"
+                                            class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
                                             placeholder="@lang('admin::app.activities.edit.participants')"
                                         />
                                     </li>
                                 </ul>
 
-                                <span class="icon-down-arrow absolute right-1.5 top-1.5 text-2xl"></span>
+                                <span class="icon-down-arrow absolute top-1.5 text-2xl ltr:right-1.5 rtl:left-1.5"></span>
                             </div>
                         </v-multi-lookup-component>
                     </x-admin::form.control-group>
@@ -276,7 +276,7 @@
                         <li>
                             <input
                                 type="text"
-                                class="w-full px-1 py-1"
+                                class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
                                 placeholder="@lang('admin::app.activities.edit.participants')"
                                 v-model.lazy="searchTerm"
                                 v-debounce="500"
@@ -288,13 +288,13 @@
                     <div>
                         <template v-if="! isSearching.users && ! isSearching.persons">
                             <span
-                                class="absolute right-1.5 top-1.5 text-2xl"
+                                class="absolute top-1.5 text-2xl ltr:right-1.5 rtl:left-1.5"
                                 :class="[searchTerm.length >= 2 ? 'icon-up-arrow' : 'icon-down-arrow']"
                             ></span>
                         </template>
 
                         <template v-else>
-                            <x-admin::spinner class="absolute right-2 top-2" />
+                            <x-admin::spinner class="absolute top-2 ltr:right-2 rtl:left-2" />
                         </template>
                     </div>
                 </div>
