@@ -25,7 +25,7 @@
                     ['code', 'NOTIN', ['title', 'description']]
                 ])"
                 :entity="$lead"
-                :url="route('admin.leads.update', $lead->id)"
+                :url="route('admin.leads.attributes.update', $lead->id)"
             />
         </form>
     </x-admin::form>
