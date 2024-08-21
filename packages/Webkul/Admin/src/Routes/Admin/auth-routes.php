@@ -6,15 +6,7 @@ use Webkul\Admin\Http\Controllers\User\ForgotPasswordController;
 use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
 use Webkul\Admin\Http\Controllers\User\SessionController;
 
-/**
- * Home routes.
- */
-Route::get('/', [Controller::class, 'redirectToLogin'])->name('krayin.home');
-
-/**
- * Auth routes.
- */
-Route::group(['prefix' => config('app.admin_path')], function () {
+Route::withoutMiddleware(['user'])->group(function () {
     /**
      * Redirect route.
      */
@@ -30,7 +22,7 @@ Route::group(['prefix' => config('app.admin_path')], function () {
             Route::post('', 'store')->name('admin.session.store');
         });
 
-        Route::group(['middleware' => ['user']], function () {
+        Route::middleware(['user'])->group(function () {
             Route::delete('logout', 'destroy')->name('admin.session.destroy');
         });
     });
