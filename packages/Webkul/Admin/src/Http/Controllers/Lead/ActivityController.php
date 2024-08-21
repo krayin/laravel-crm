@@ -82,6 +82,6 @@ class ActivityController extends Controller
                 'created_at'    => $email->created_at,
                 'updated_at'    => $email->updated_at,
             ];
-        }));
+        }))->sortByDesc('created_at')->sortByDesc('id');
     }
 }

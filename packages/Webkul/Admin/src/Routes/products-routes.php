@@ -20,7 +20,7 @@ Route::group(['middleware' => ['user'], 'prefix' => config('app.admin_path')], f
 
         Route::get('edit/{id}', 'edit')->name('admin.products.edit');
 
-        Route::post('edit/{id}', 'update')->name('admin.products.update');
+        Route::put('edit/{id}', 'update')->name('admin.products.update');
 
         Route::get('search', 'search')->name('admin.products.search');
 

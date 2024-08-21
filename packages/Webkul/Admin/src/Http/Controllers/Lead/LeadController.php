@@ -235,7 +235,7 @@ class LeadController extends Controller
 
         $data['status'] = 1;
 
-        if ($data['lead_pipeline_stage_id']) {
+        if (request()->input('lead_pipeline_stage_id')) {
             $stage = $this->stageRepository->findOrFail($data['lead_pipeline_stage_id']);
 
             $data['lead_pipeline_id'] = $stage->lead_pipeline_id;

@@ -5,6 +5,7 @@ namespace Webkul\Lead\Models;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Email\Models\EmailProxy;
@@ -15,7 +16,7 @@ use Webkul\User\Models\UserProxy;
 
 class Lead extends Model implements LeadContract
 {
-    use CustomAttribute;
+    use CustomAttribute, LogsActivity;
 
     protected $casts = [
         'closed_at'           => 'datetime',
