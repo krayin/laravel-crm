@@ -105,14 +105,20 @@
 
                                             <template v-else>
                                                 <!-- Activity Schedule -->
-                                                <p v-if="activity.schedule_from && activity.schedule_from">
+                                                <p 
+                                                    v-if="activity.schedule_from && activity.schedule_from"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
                                                     
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
-                                                <p v-if="activity.participants?.length">
+                                                <p 
+                                                    v-if="activity.participants?.length"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.participants'):
 
                                                     <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
@@ -121,7 +127,10 @@
                                                 </p>
 
                                                 <!-- Activity Location -->
-                                                <p v-if="activity.location">
+                                                <p 
+                                                    v-if="activity.location"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.location'):
 
                                                     @{{ activity.location }}

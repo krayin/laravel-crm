@@ -34,7 +34,7 @@
                     <x-slot:header>
                         <x-admin::dropdown>
                             <x-slot:toggle>
-                                <h3 class="flex cursor-pointer items-center gap-1 text-base font-semibold">
+                                <h3 class="flex cursor-pointer items-center gap-1 text-base font-semibold dark:text-white">
                                     @lang('admin::app.components.activities.actions.activity.title') - @{{ selectedType.label }}
 
                                     <span class="icon-down-arrow text-2xl"></span>
@@ -43,7 +43,7 @@
 
                             <x-slot:menu>
                                 <x-admin::dropdown.menu.item
-                                    ::class="{ 'bg-gray-100': selectedType.value === type.value }"
+                                    ::class="{ 'bg-gray-100 dark:bg-gray-950': selectedType.value === type.value }"
                                     v-for="type in availableTypes"
                                     @click="selectedType = type"
                                 >

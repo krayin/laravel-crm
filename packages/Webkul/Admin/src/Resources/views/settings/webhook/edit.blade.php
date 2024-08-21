@@ -21,7 +21,7 @@
                     />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.webhooks.edit.title')
                 </div>
             </div>
@@ -66,7 +66,7 @@
 
                         <!-- Method and URL endpoint -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
+                            <x-admin::form.control-group.label class="required !text-gray-600">
                                 @lang('admin::app.settings.webhooks.edit.url-and-parameters')
                             </x-admin::form.control-group.label>
 
@@ -106,9 +106,9 @@
                             :placeholders="placeholders"
                         ></v-key-and-value>
                         
-                        <div class="flex items-center justify-between rounded-sm border w-full bg-white border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                            <div class="flex gap-3 my-2">
-                                <div class="text-xs font-sm dark:text-gray-300">
+                        <div class="flex w-full items-center justify-between rounded-sm border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                            <div class="my-2 flex gap-3">
+                                <div class="font-sm text-xs dark:text-gray-300">
                                     @lang('admin::app.settings.webhooks.edit.url-preview')
 
                                     <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint }}</span>
@@ -129,60 +129,60 @@
                         <hr class="my-4 w-full"/>
 
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
+                            <x-admin::form.control-group.label class="required !text-gray-600">
                                 @lang('admin::app.settings.webhooks.edit.body')
                             </x-admin::form.control-group.label>
 
-                            <div class="flex gap-2 items-center mb-4">
-                                <div class="flex items-center justify-center cursor-pointer">
+                            <div class="mb-4 flex items-center gap-2">
+                                <div class="flex cursor-pointer items-center justify-center">
                                     <input
                                         id="default"
                                         type="radio"
                                         v-model="contentType"
                                         value="default"
                                         name="payload_type"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+                                        class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                                     >
                                     <label
                                         for="default"
-                                        class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
+                                        class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
                                     >
                                         @lang('admin::app.settings.webhooks.edit.default')
                                     </label>
                                 </div>
                                 
-                                <div class="flex items-center justify-center cursor-pointer">
+                                <div class="flex cursor-pointer items-center justify-center">
                                     <input
                                         id="x-www-form-urlencoded"
                                         type="radio"
                                         v-model="contentType"
                                         value="x-www-form-urlencoded"
                                         name="payload_type"
-                                        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+                                        class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                                     >
                                     <label
                                         for="x-www-form-urlencoded"
-                                        class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
+                                        class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
                                     >
                                         @lang('admin::app.settings.webhooks.edit.x-www-form-urlencoded')
                                     </label>
                                 </div>
 
-                                <div class="flex gap-5 items-center justify-center">
-                                    <div class="flex items-center justify-center cursor-pointer">
+                                <div class="flex items-center justify-center gap-5">
+                                    <div class="flex cursor-pointer items-center justify-center">
                                         <input
                                             id="raw"
                                             type="radio"
                                             v-model="contentType"
                                             value="raw"
                                             name="payload_type"
-                                            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 dark:ring-offset-gray-800 dark:bg-gray-700 dark:border-gray-600 cursor-pointer"
+                                            class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
                                             @click="contentType = 'raw'"
                                         >
 
                                         <label
                                             for="raw"
-                                            class="ms-2 text-xs font-normal text-gray-900 dark:text-gray-300 cursor-pointer"
+                                            class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
                                             @click="contentType = 'raw';rawType = 'json'"
                                         >
                                             @lang('admin::app.settings.webhooks.edit.raw')
@@ -193,7 +193,7 @@
                                         <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                             <x-slot:toggle>
                                                 <div class="flex items-center justify-center">
-                                                    <span class="text-xs font-normal text-brandColor dark:text-gray-300 cursor-pointer">@{{ rawType }}</span>
+                                                    <span class="cursor-pointer text-xs font-normal text-brandColor dark:text-gray-300">@{{ rawType }}</span>
 
                                                     <i class="icon-down-arrow -mt-px text-xs text-brandColor"></i>
                                                 </div>
@@ -268,7 +268,7 @@
                         <x-slot:content>
                             <!-- Name -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                <x-admin::form.control-group.label class="required !text-gray-600">
                                     @lang('admin::app.settings.webhooks.edit.name')
                                 </x-admin::form.control-group.label>
 
@@ -287,7 +287,7 @@
 
                             <!-- Entity Type -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                <x-admin::form.control-group.label class="required !text-gray-600">
                                     @lang('admin::app.settings.webhooks.edit.entity-type')
                                 </x-admin::form.control-group.label>
 
@@ -312,7 +312,7 @@
 
                             <!-- Description -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                <x-admin::form.control-group.label class="required !text-gray-600">
                                     @lang('admin::app.settings.webhooks.edit.description')
                                 </x-admin::form.control-group.label>
 
@@ -339,13 +339,13 @@
             id="v-key-and-value-template"
         >
             <x-admin::form.control-group class="my-2">
-                <x-admin::form.control-group.label class="!text-gray-600 required">
+                <x-admin::form.control-group.label class="required !text-gray-600">
                     @{{ title }}
                 </x-admin::form.control-group.label>
             
                 <div class="flex flex-col">
                     <div 
-                        class="flex gap-3 my-2 items-center justify-between group"
+                        class="group my-2 flex items-center justify-between gap-3"
                         v-for="(field, index) in fields"
                         :key="index"
                     >
@@ -376,7 +376,7 @@
                         </div>
 
                         <i 
-                            class="cursor-pointer rounded-md p-1.5 ml-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950 icon-delete"
+                            class="icon-delete ml-1 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                             @click="remove(index)"
                             v-if="fields.length > 1"
                         ></i>
@@ -385,19 +385,19 @@
                             <x-admin::dropdown class="rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                 <x-slot:toggle>
                                     <span
-                                        class="py-2 text-xs text-brandColor hover:underline hover:text-brandColor cursor-pointer invisible group-hover:visible"
+                                        class="invisible cursor-pointer py-2 text-xs text-brandColor hover:text-brandColor hover:underline group-hover:visible"
                                     >
                                         @lang('admin::app.settings.webhooks.edit.insert-placeholder')
                                     </span>
                                 </x-slot>
             
-                                <x-slot:menu class="!p-0 dark:border-gray-800 max-h-80 overflow-y-auto">
+                                <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                     <div
                                         v-for="entity in placeholders"
                                         :key="entity.text"
                                         class="mb-4"
                                     >
-                                        <div class="font-bold text-lg m-2">@{{ entity.text }}</div>
+                                        <div class="m-2 text-lg font-bold">@{{ entity.text }}</div>
 
                                         <span
                                             v-for="placeholder in entity.menu"
@@ -416,7 +416,7 @@
                     </div>
             
                     <span
-                        class="py-2 text-xs text-brandColor hover:underline hover:text-sky-500 cursor-pointer"
+                        class="cursor-pointer py-2 text-xs text-brandColor hover:text-sky-500 hover:underline"
                         @click="add(index)" 
                     >
                         @{{ addBtnTitle }}

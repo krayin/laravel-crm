@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="settings.pipelines" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 <!-- title -->
                 @lang('admin::app.settings.pipelines.index.title')
             </div>

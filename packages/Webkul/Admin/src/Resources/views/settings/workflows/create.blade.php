@@ -13,7 +13,7 @@
                     <x-admin::breadcrumbs name="settings.workflows.create" />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.workflows.create.title')
                 </div>
             </div>

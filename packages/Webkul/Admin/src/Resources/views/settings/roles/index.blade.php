@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="settings.roles" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 <!-- title -->
                 @lang('admin::app.settings.roles.index.title')
             </div>

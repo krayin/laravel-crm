@@ -41,9 +41,9 @@
 
                         <!-- Person Details -->
                         <div class="flex flex-col gap-1">
-                            <p>@{{ item.name }}</p>
+                            <p class="font-medium text-gray-800 dark:text-white">@{{ item.name }}</p>
                             
-                            <p>@{{ item.emails.map(item => item.value).join(', ') }}</p>
+                            <p class="font-normal text-gray-800 dark:text-white">@{{ item.emails.map(item => item.value).join(', ') }}</p>
                         </div>
                     </a>
                 </div>
