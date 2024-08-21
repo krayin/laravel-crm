@@ -3,13 +3,15 @@
 namespace Webkul\Warehouse\Repositories;
 
 use Illuminate\Container\Container;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Warehouse\Contracts\Warehouse;
 
 class WarehouseRepository extends Repository
 {
     /**
-     * Searchable fields
+     * Searchable fields.
      */
     protected $fieldSearchable = [
         'name',
@@ -25,6 +27,7 @@ class WarehouseRepository extends Repository
      * @return void
      */
     public function __construct(
+        protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
         Container $container
     ) {
@@ -32,37 +35,76 @@ class WarehouseRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Warehouse\Contracts\Warehouse';
+        return Warehouse::class;
     }
 
     /**
+     * Create.
+     *
      * @return \Webkul\Warehouse\Contracts\Warehouse
      */
     public function create(array $data)
     {
         $warehouse = parent::create($data);
 
-        $this->attributeValueRepository->save($data, $warehouse->id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $warehouse->id,
+        ]), $attributes);
 
         return $warehouse;
     }
 
     /**
+     * Update.
+     *
      * @param  int  $id
-     * @param  string  $attribute
+     * @param  array  $attribute
      * @return \Webkul\Warehouse\Contracts\Warehouse
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attributes = [])
     {
         $warehouse = parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        /**
+         * If attributes are provided then only save the provided attributes and return.
+         */
+        if (! empty($attributes)) {
+            $attributes = $this->attributeRepository->where($conditions)
+                ->whereIn('code', $attributes)
+                ->get();
+
+            $this->attributeValueRepository->save(array_merge($data, [
+                'entity_id' => $warehouse->id,
+            ]), $attributes);
+
+            return $warehouse;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $warehouse->id,
+        ]), $attributes);
 
         return $warehouse;
     }
