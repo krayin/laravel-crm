@@ -24,13 +24,15 @@
                 />
 
                 <!-- Title -->
-                <h3 class="text-lg font-bold dark:text-white">
-                    {{ $product->name }}
-                </h3>
-                
-                <p class="text-sm font-normal dark:text-white">
-                    @lang('admin::app.products.view.sku') : {{ $product->sku }}
-                </p>
+                <div class="mb-2 flex flex-col gap-0.5">
+                    <h3 class="text-lg font-bold dark:text-white">
+                        {{ $product->name }}
+                    </h3>
+                    
+                    <p class="text-sm font-normal dark:text-white">
+                        @lang('admin::app.products.view.sku') : {{ $product->sku }}
+                    </p>
+                </div>
 
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
