@@ -143,14 +143,8 @@ class LeadDataGrid extends DataGrid
             'searchable'         => false,
             'sortable'           => true,
             'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'filterable_options' => [
-                'repository' => SourceRepository::class,
-                'column'     => [
-                    'label' => 'name',
-                    'value' => 'name',
-                ],
-            ],
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
