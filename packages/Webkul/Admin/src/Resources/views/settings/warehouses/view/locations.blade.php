@@ -21,30 +21,37 @@
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
-                <x-admin::table.tbody class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                    <x-admin::table.tbody.tr v-for="location in locations">
+                <x-admin::table.tbody >
+                    <x-admin::table.tbody.tr 
+                        class="border border-gray-200 dark:border-gray-800 dark:bg-gray-900" 
+                        v-for="location in locations"
+                    >
                         <x-admin::table.td class="dark:text-white">
                             @{{ location.name }}
                         </x-admin::table.td>
 
                         <x-admin::table.td>
-                            <div
-                                class="cursor-pointer text-brandColor" 
-                                @click="remove(location)"
-                            >
-                                @lang('admin::app.settings.warehouses.view.locations.delete')
+                            <div class="inline-block">
+                                <p 
+                                    @click="remove(location)" 
+                                    class="cursor-pointer text-brandColor"
+                                >
+                                    @lang('admin::app.settings.warehouses.view.locations.delete')
+                                </p>
                             </div>
                         </x-admin::table.td>
                     </x-admin::table.tbody.tr>
                 </x-admin::table.tbody>
             </x-admin::table>
 
-            <div
-                class="cursor-pointer text-brandColor" 
-                @click="openModal()"
-            >
-                @lang('admin::app.settings.warehouses.view.locations.add-location')
-            </div
+            <div>
+                <span 
+                    class="cursor-pointer text-brandColor" 
+                    @click="openModal()"
+                >
+                    @lang('admin::app.settings.warehouses.view.locations.add-location')
+                </span>
+            </div>
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
