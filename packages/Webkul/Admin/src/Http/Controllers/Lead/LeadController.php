@@ -17,6 +17,7 @@ use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
@@ -34,6 +35,7 @@ class LeadController extends Controller
      */
     public function __construct(
         protected UserRepository $userRepository,
+        protected AttributeRepository $attributeRepository,
         protected SourceRepository $sourceRepository,
         protected TypeRepository $typeRepository,
         protected PipelineRepository $pipelineRepository,
@@ -242,6 +244,62 @@ class LeadController extends Controller
     }
 
     /**
+     * Update the lead attributes.
+     */
+    public function updateAttributes(int $id)
+    {
+        $data = request()->all();
+
+        $attributes = $this->attributeRepository->findWhere([
+            'entity_type' => 'leads',
+            ['code', 'NOTIN', ['title', 'description']],
+        ]);
+
+        Event::dispatch('lead.update.before', $id);
+
+        $lead = $this->leadRepository->update($data, $id, $attributes);
+
+        Event::dispatch('lead.update.after', $lead);
+
+        return response()->json([
+            'message' => trans('admin::app.leads.update-success'),
+        ]);
+    }
+
+    /**
+     * Update the lead stage.
+     */
+    public function updateStage(int $id)
+    {
+        $this->validate(request(), [
+            'lead_pipeline_stage_id' => 'required',
+        ]);
+
+        $lead = $this->leadRepository->findOrFail($id);
+
+        $stage = $lead->pipeline->stages()
+            ->where('id', request()->input('lead_pipeline_stage_id'))
+            ->firstOrFail();
+
+        Event::dispatch('lead.update.before', $id);
+
+        $lead = $this->leadRepository->update(
+            [
+                'entity_type'            => 'leads',
+                'lead_pipeline_stage_id' => $stage->id,
+            ],
+            $id,
+            ['lead_pipeline_stage_id']
+        );
+
+        Event::dispatch('lead.update.after', $lead);
+
+        return response()->json([
+            'message' => trans('admin::app.leads.update-success'),
+        ]);
+    }
+
+    /**
      * Search person results.
      */
     public function search(): AnonymousResourceCollection
@@ -292,11 +350,13 @@ class LeadController extends Controller
 
         try {
             foreach ($leads as $lead) {
-                $lead = $this->leadRepository->find($lead->id);
-
                 Event::dispatch('lead.update.before', $lead->id);
 
-                $lead->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
+                $this->leadRepository->update(
+                    ['lead_pipeline_stage_id' => $massUpdateRequest->input('value')],
+                    $lead->id,
+                    ['lead_pipeline_stage_id']
+                );
 
                 Event::dispatch('lead.update.before', $lead->id);
             }
