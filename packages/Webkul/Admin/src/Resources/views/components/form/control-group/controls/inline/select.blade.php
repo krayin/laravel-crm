@@ -3,7 +3,7 @@
     :options="{{ json_encode($options) }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -19,7 +19,7 @@
             <div
                 v-if="! isEditing"
                 class="rounded-xs flex h-[34px] items-center"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
@@ -47,7 +47,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden pr-2 text-xl group-hover:block"
+                        class="icon-edit hidden text-2xl cursor-pointer rounded hover:bg-gray-200    dark:hover:bg-gray-950 group-hover:block"
                     ></i>
                 </template>
             </div>
