@@ -66,7 +66,7 @@
 
                         <!-- Method and URL endpoint -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required !text-gray-600">
+                            <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webhooks.edit.url-and-parameters')
                             </x-admin::form.control-group.label>
 
@@ -129,7 +129,7 @@
                         <hr class="my-4 w-full"/>
 
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required !text-gray-600">
+                            <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webhooks.edit.body')
                             </x-admin::form.control-group.label>
 
@@ -268,7 +268,7 @@
                         <x-slot:content>
                             <!-- Name -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required !text-gray-600">
+                                <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webhooks.edit.name')
                                 </x-admin::form.control-group.label>
 
@@ -287,7 +287,7 @@
 
                             <!-- Entity Type -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required !text-gray-600">
+                                <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webhooks.edit.entity-type')
                                 </x-admin::form.control-group.label>
 
@@ -312,7 +312,7 @@
 
                             <!-- Description -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required !text-gray-600">
+                                <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webhooks.edit.description')
                                 </x-admin::form.control-group.label>
 
@@ -339,7 +339,7 @@
             id="v-key-and-value-template"
         >
             <x-admin::form.control-group class="my-2">
-                <x-admin::form.control-group.label class="required !text-gray-600">
+                <x-admin::form.control-group.label class="required">
                     @{{ title }}
                 </x-admin::form.control-group.label>
             
