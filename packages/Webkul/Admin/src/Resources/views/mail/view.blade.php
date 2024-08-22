@@ -26,13 +26,20 @@
             </div>
     
             <!-- Link Mail Button -->
-            <button
-                type="button"
-                class="primary-button"
-                @click="$refs.emailAction.openDrawer()"
-            >
-                @lang('admin::app.mail.view.link-mail')
-            </button>
+            @if (
+                bouncer()->hasPermission('contacts.persons.create')
+                || bouncer()->hasPermission('leads.create')
+                || bouncer()->hasPermission('leads.view')
+                || bouncer()->hasPermission('contacts.persons.edit')
+            )
+                <button
+                    type="button"
+                    class="primary-button"
+                    @click="$refs.emailAction.openDrawer()"
+                >
+                    @lang('admin::app.mail.view.link-mail')
+                </button>
+            @endif
         </div>
 
         <!-- Email List Vue Component -->
@@ -77,9 +84,9 @@
             type="text/x-template"
             id="v-email-item-template"
         >
-            <div class="flex gap-2.5 box-shadow rounded bg-white p-4 dark:bg-gray-900 max-xl:flex-wrap">
-                <div class="flex flex-col gap-4 w-full">
-                    <div class="flex gap-4 w-full items-center justify-between">
+            <div class="box-shadow flex gap-2.5 rounded bg-white p-4 dark:bg-gray-900 max-xl:flex-wrap">
+                <div class="flex w-full flex-col gap-4">
+                    <div class="flex w-full items-center justify-between gap-4">
                         <div class="flex gap-4">
                             <!-- Mailer Sort name -->
                             <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
@@ -99,7 +106,7 @@
                                         <!-- Show More Button -->
                                         <i
                                             v-if="email?.cc?.length || email?.bcc?.length"
-                                            class="text-2xl cursor-pointer"
+                                            class="cursor-pointer text-2xl"
                                             :class="email.showMore ? 'icon-up-arrow' : 'icon-down-arrow'"
                                             @click="email.showMore = ! email.showMore"
                                         ></i>
@@ -127,7 +134,7 @@
                         </div>
 
                         <!-- Time and Actions -->
-                        <div class="flex gap-2 items-center justify-center">
+                        <div class="flex items-center justify-center gap-2">
                             @{{ email.time_ago }}
 
                             <div class="flex select-none items-center">
@@ -140,7 +147,7 @@
                                     <x-slot:menu class="!min-w-40">
                                         <x-admin::dropdown.menu.item>
                                             <div
-                                                class="flex items-center gap-2 cursor-pointer"
+                                                class="flex cursor-pointer items-center gap-2"
                                                 @click="emailAction('reply')"
                                             >
                                                 <i class="icon-reply text-2xl"></i>
@@ -151,7 +158,7 @@
 
                                         <x-admin::dropdown.menu.item>
                                             <div
-                                                class="flex items-center gap-2 cursor-pointer"
+                                                class="flex cursor-pointer items-center gap-2"
                                                 @click="emailAction('reply')"
                                             >
                                                 <i class="icon-reply text-2xl"></i>
@@ -162,7 +169,7 @@
 
                                         <x-admin::dropdown.menu.item>
                                             <div
-                                                class="flex items-center gap-2 cursor-pointer"
+                                                class="flex cursor-pointer items-center gap-2"
                                                 @click="emailAction('forward')"
                                             >
                                                 <i class="icon-forward text-2xl"></i>
@@ -173,7 +180,7 @@
 
                                         <x-admin::dropdown.menu.item>
                                             <div
-                                                class="flex items-center gap-2 cursor-pointer"
+                                                class="flex cursor-pointer items-center gap-2"
                                                 @click="emailAction('delete')"
                                             >
                                                 <i class="icon-delete text-2xl"></i>
@@ -191,7 +198,7 @@
                     <div v-html="email.reply"></div>
 
                     <div
-                        class="flex gap-2 flex-wrap"
+                        class="flex flex-wrap gap-2"
                         v-if="email.attachments.length"
                     >
                         <a
@@ -208,9 +215,9 @@
 
                     <!-- Reply, Reply All and Forward email -->
                     <template v-if="! action[email.id]">
-                        <div class="flex gap-6 font-medium py-4 border-t-2">
+                        <div class="flex gap-6 border-t-2 py-4 font-medium">
                             <label
-                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                class="flex cursor-pointer items-center gap-2 text-brandColor"
                                 @click="emailAction('reply')"
                             >
                                 @lang('admin::app.mail.view.reply')
@@ -219,7 +226,7 @@
                             </label>
 
                             <label
-                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                class="flex cursor-pointer items-center gap-2 text-brandColor"
                                 @click="emailAction('reply-all')"
                             >
                                 @lang('admin::app.mail.view.reply-all')
@@ -228,7 +235,7 @@
                             </label>
 
                             <label
-                                class="flex gap-2 items-center text-brandColor cursor-pointer"
+                                class="flex cursor-pointer items-center gap-2 text-brandColor"
                                 @click="emailAction('forward')"
                             >
                                 @lang('admin::app.mail.view.forward')
@@ -255,12 +262,12 @@
             type="text/x-template"
             id="v-email-form-template"
         >
-            <div class="flex gap-2 w-full">
+            <div class="flex w-full gap-2">
                 <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
                     @{{ email.name.split(' ').map(word => word[0]).join('') }}
                 </div>
                 
-                <div class="gap-2 w-[926px] border rounded p-4">
+                <div class="w-[926px] gap-2 rounded border p-4">
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
                         enctype="multipart/form-data"
@@ -295,7 +302,7 @@
                                                 :placeholder="trans('admin::app.mail.view.enter-mails')"
                                             />
 
-                                            <div class="absolute right-2 top-[9px] flex items-center gap-2">
+                                            <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                                 <span
                                                     class="cursor-pointer font-medium hover:underline"
                                                     @click="showCC = ! showCC"
@@ -391,9 +398,9 @@
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>
                                                             
-                                    <div class="flex gap-4 items-center justify-center">
+                                    <div class="flex items-center justify-center gap-4">
                                         <label
-                                            class="flex cursor-pointer font-semibold items-center gap-1"
+                                            class="flex cursor-pointer items-center gap-1 font-semibold"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
@@ -424,7 +431,7 @@
                     <div class="flex justify-between">
                         <div class="flex gap-2">
                             <div
-                                class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                class="flex h-9 w-9 items-center justify-center rounded-full bg-lime-200 text-xs font-medium"
                                 :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
                             >
                                 @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
@@ -483,12 +490,12 @@
                             @click="toggle"
                         >
                             <!-- Input-like div -->
-                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
+                            <div class="w-full cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700">
                                 @{{ selectedItem.name ?? '@lang('Search an existing contact')'}}
                             </div>
                             
                             <!-- Arrow down icon -->
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                            <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                 <i class="fas fa-chevron-down text-gray-400"></i>
                             </div>
                         </div>
@@ -505,7 +512,7 @@
                         <!-- Popup Box -->
                         <div 
                             v-if="showPopup" 
-                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                            class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border bg-white p-2 shadow-lg transition-transform"
                         >
                             <!-- Search Bar -->
                             <div class="relative">
@@ -514,7 +521,7 @@
                                     type="text"
                                     v-model.lazy="searchTerm"
                                     v-debounce="500"
-                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
+                                    class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
                                     placeholder="Search..."
                                     ref="searchInput"
                                     @keyup="search"
@@ -542,7 +549,7 @@
                                 <li 
                                     v-for="person in persons" 
                                     :key="person.id"
-                                    class="flex gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
+                                    class="flex cursor-pointer gap-2 p-2 text-gray-800 transition-colors hover:bg-blue-100"
                                     @click="linkContact(person)"
                                 >
                                     <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
@@ -568,12 +575,14 @@
                             </ul>
 
                             <!-- Add New Contact Button -->
-                            <div
-                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
-                                @click="toggleContactModal"
-                            >
-                                <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
-                            </div>
+                            @if (bouncer()->hasPermission('contacts.persons.create'))
+                                <div
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors"
+                                    @click="toggleContactModal"
+                                >
+                                    <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
+                                </div>
+                            @endif
                         </div>
                     </div>
                 </template>
@@ -587,7 +596,7 @@
             <div>
                 <template v-if="email?.lead_id">
                     <div class="flex">
-                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 w-full">
+                        <div class="lead-item flex w-full flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2">
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
@@ -595,7 +604,7 @@
                             >
                                 <div class="flex items-center gap-1">
                                     <div
-                                        class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium bg-lime-200"
+                                        class="flex h-9 w-9 items-center justify-center rounded-full bg-lime-200 text-xs font-medium"
                                         :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
                                     >
                                         @{{ email.lead.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
@@ -612,7 +621,7 @@
                                     </div>
                                 </div>
 
-                                <div class="flex gap-2 items-center">
+                                <div class="flex items-center gap-2">
                                     <span
                                         class="icon-rotten cursor-default text-xl text-rose-600"
                                         v-if="email.lead.rotten_days > 0"
@@ -680,105 +689,109 @@
                     </div>
                 </template>
 
-                <template v-else>
-                    <div
-                        class="relative"
-                        ref="lookup"
-                    >
-                        <!-- Input Box (Button) -->
+                @if (bouncer()->hasPermission('leads.view'))
+                    <template v-else>
                         <div
-                            class="relative inline-block w-full"
-                            @click="toggle"
+                            class="relative"
+                            ref="lookup"
                         >
-                            <!-- Input-like div -->
-                            <div class="w-full bg-white border border-gray-300 rounded-md px-3 py-2 text-gray-700 cursor-pointer">
-                                @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
-                            </div>
-                            
-                            <!-- Arrow down icon -->
-                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <i class="fas fa-chevron-down text-gray-400"></i>
-                            </div>
-                        </div>
-
-                        <!-- toggle popup -->
-                        <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                            <div class="flex items-center justify-center space-x-1">                        
-                                <i 
-                                    class="text-2xl"
-                                    :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
-                                ></i>
-                            </div>
-                        </span>
-
-                        <!-- Popup Box -->
-                        <div 
-                            v-if="showPopup" 
-                            class="flex flex-col gap-2 absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
-                        >
-                            <!-- Search Bar -->
-                            <div class="relative">
-                                <!-- Input Box -->
-                                <input
-                                    type="text"
-                                    v-model.lazy="searchTerm"
-                                    v-debounce="500"
-                                    class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 pr-10" 
-                                    placeholder="@lang('admin::app.mail.view.search')"
-                                    ref="searchInput"
-                                    @keyup="search"
-                                />
-                            
-                                <!-- Search Icon (absolute positioned) -->
-                                <span class="absolute inset-y-0 right-0 flex items-center pr-3">
-                                    <div class="flex items-center justify-center space-x-1">
-                                        <!-- Loader (optional, based on condition) -->
-                                        <div
-                                            class="relative"
-                                            v-if="isSearching"
-                                        >
-                                            <x-admin::spinner />
-                                        </div>
-                            
-                                        <!-- Search Icon -->
-                                        <i class="fas fa-search text-gray-500"></i>
-                                    </div>
-                                </span>
-                            </div>
-
-                            <!-- Results List -->
-                            <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                                <li 
-                                    v-for="lead in leads" 
-                                    :key="lead.id"
-                                    class="flex items-center gap-2 p-2 cursor-pointer text-gray-800 transition-colors hover:bg-blue-100"
-                                    @click="linkLead(lead)"
-                                >
-                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                        @{{ lead.title.split(' ').map(word => word[0]).join('') }}
-                                    </div>
-                            
-                                    <!-- Lead Title -->
-                                    <div class="flex flex-col gap-1">
-                                        <span>@{{ lead.title }}</span>
-                                    </div>
-                                </li>                       
-                            
-                                <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
-                                    @lang('admin::app.mail.view.no-result-found')
-                                </li>
-                            </ul>
-
-                            <!-- Add New Lead Button -->
+                            <!-- Input Box (Button) -->
                             <div
-                                class="flex items-center gap-2 p-2 border-t border-gray-200 cursor-pointer text-blue-600 transition-colors"
-                                @click="toggleLeadModal"
+                                class="relative inline-block w-full"
+                                @click="toggle"
                             >
-                                <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
+                                <!-- Input-like div -->
+                                <div class="w-full cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700">
+                                    @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
+                                </div>
+                                
+                                <!-- Arrow down icon -->
+                                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <i class="fas fa-chevron-down text-gray-400"></i>
+                                </div>
+                            </div>
+
+                            <!-- toggle popup -->
+                            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
+                                <div class="flex items-center justify-center space-x-1">                        
+                                    <i 
+                                        class="text-2xl"
+                                        :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                                    ></i>
+                                </div>
+                            </span>
+
+                            <!-- Popup Box -->
+                            <div 
+                                v-if="showPopup" 
+                                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                            >
+                                <!-- Search Bar -->
+                                <div class="relative">
+                                    <!-- Input Box -->
+                                    <input
+                                        type="text"
+                                        v-model.lazy="searchTerm"
+                                        v-debounce="500"
+                                        class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                                        placeholder="@lang('admin::app.mail.view.search')"
+                                        ref="searchInput"
+                                        @keyup="search"
+                                    />
+                                
+                                    <!-- Search Icon (absolute positioned) -->
+                                    <span class="absolute inset-y-0 right-0 flex items-center pr-3">
+                                        <div class="flex items-center justify-center space-x-1">
+                                            <!-- Loader (optional, based on condition) -->
+                                            <div
+                                                class="relative"
+                                                v-if="isSearching"
+                                            >
+                                                <x-admin::spinner />
+                                            </div>
+                                
+                                            <!-- Search Icon -->
+                                            <i class="fas fa-search text-gray-500"></i>
+                                        </div>
+                                    </span>
+                                </div>
+
+                                <!-- Results List -->
+                                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                    <li 
+                                        v-for="lead in leads" 
+                                        :key="lead.id"
+                                        class="flex cursor-pointer items-center gap-2 p-2 text-gray-800 transition-colors hover:bg-blue-100"
+                                        @click="linkLead(lead)"
+                                    >
+                                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                            @{{ lead.title.split(' ').map(word => word[0]).join('') }}
+                                        </div>
+                                
+                                        <!-- Lead Title -->
+                                        <div class="flex flex-col gap-1">
+                                            <span>@{{ lead.title }}</span>
+                                        </div>
+                                    </li>                       
+                                
+                                    <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                        @lang('admin::app.mail.view.no-result-found')
+                                    </li>
+                                </ul>
+
+                                <!-- Add New Lead Button -->
+                                @if (bouncer()->hasPermission('leads.create'))
+                                    <div
+                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors"
+                                        @click="toggleLeadModal"
+                                    >
+                                        <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
+                                    </div>
+                                @endif
                             </div>
                         </div>
-                    </div>
-                </template>
+                    </template>
+                @endif
             </div>
         </script>
 
@@ -883,7 +896,7 @@
                                             />
 
                                             <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2 mb-4">
+                                                <div class="mb-4 w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['lead_value']],
@@ -893,7 +906,7 @@
                                                     />
                                                 </div>
 
-                                                <div class="w-1/2 mb-4">
+                                                <div class="mb-4 w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['lead_source_id']],
@@ -905,7 +918,7 @@
                                             </div>
 
                                             <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2 mb-4">
+                                                <div class="mb-4 w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['lead_type_id']],
@@ -915,7 +928,7 @@
                                                     />
                                                 </div>
                                                 
-                                                <div class="w-1/2 mb-4">
+                                                <div class="mb-4 w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['user_id']],
@@ -927,7 +940,7 @@
                                             </div>
 
                                             <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2 mb-4">
+                                                <div class="mb-4 w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['expected_close_date']],
@@ -992,37 +1005,48 @@
                 
                 <x-slot:content class="p-3.5">
                     <div class="flex flex-col gap-4">
-                        <!-- Link to contact -->
-                        <label class="font-semibold text-gray-700 cursor-pointer">
-                            @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
-                        </label>
-                
                         <!-- Contact Lookup -->
-                        <v-contact-lookup
-                            @link-contact="linkContact"
-                            @unlink-contact="unlinkContact"
-                            @open-contact-modal="openContactModal"
-                            :unlinking="unlinking"
-                            :email="email"
-                            :tag-text-color="tagTextColor"
-                            :background-colors="backgroundColors"
-                        ></v-contact-lookup>
+                        @if (
+                            bouncer()->hasPermission('contacts.persons.create') 
+                            || bouncer()->hasPermission('contacts.persons.edit')
+                        )
+                          <!-- Link to contact -->
+                            <label class="cursor-pointer font-semibold text-gray-700">
+                                @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
+                            </label>
 
-                        <!-- Link to Lead -->
-                        <label class="font-semibold text-gray-700 cursor-pointer">
-                            @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
-                        </label>
-                    
+                            <v-contact-lookup
+                                @link-contact="linkContact"
+                                @unlink-contact="unlinkContact"
+                                @open-contact-modal="openContactModal"
+                                :unlinking="unlinking"
+                                :email="email"
+                                :tag-text-color="tagTextColor"
+                                :background-colors="backgroundColors"
+                            ></v-contact-lookup>
+                        @endif
+
+                     
                         <!-- Lead Lookup -->
-                        <v-lead-lookup
-                            @link-lead="linkLead"
-                            @unlink-lead="unlinkLead"
-                            @open-lead-modal="openLeadModal"
-                            :unlinking="unlinking"
-                            :email="email"
-                            :tag-text-color="tagTextColor"
-                            :background-colors="backgroundColors"
-                        ></v-lead-lookup>
+                        @if (
+                            bouncer()->hasPermission('leads.view') 
+                            || bouncer()->hasPermission('leads.create')
+                        )
+                            <!-- Link to Lead -->
+                            <label class="cursor-pointer font-semibold text-gray-700">
+                                @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
+                            </label>
+                        
+                            <v-lead-lookup
+                                @link-lead="linkLead"
+                                @unlink-lead="unlinkLead"
+                                @open-lead-modal="openLeadModal"
+                                :unlinking="unlinking"
+                                :email="email"
+                                :tag-text-color="tagTextColor"
+                                :background-colors="backgroundColors"
+                            ></v-lead-lookup>
+                        @endif
                     </div>
                 </x-slot>
             </x-admin::drawer>

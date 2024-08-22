@@ -51,20 +51,24 @@ class TypeDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.types.update', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.lead.types.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.roles.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.types.update', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.types.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.lead.types.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.roles.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.types.delete', $row->id),
+            ]);
+        }
     }
 }

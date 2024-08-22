@@ -15,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
+                class="rounded-xs flex h-[34px] items-center space-x-2"
                 :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
@@ -59,7 +59,7 @@
                         type="text"
                         ::id="name"
                         ::name="name"
-                        class="!h-[34px] !py-0"
+                        class="!h-[34px] !py-0 pr-16"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"
@@ -69,13 +69,13 @@
                     />
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px] bg-white dark:bg-gray-900">
+                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px]">
                         <button
                             type="button"
                             class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
                             @click="save"
                         >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600" />
+                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                         </button>
                     
                         <button
@@ -83,7 +83,7 @@
                             class="ml-[1px] flex items-center justify-center rounded-r-md bg-red-100 p-1 hover:bg-red-200"
                             @click="cancel"
                         >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600" />
+                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
                         </button>
                     </div>
                 </div>

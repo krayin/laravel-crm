@@ -73,20 +73,24 @@ class WebhookDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.webhooks.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.webhooks.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.webhooks.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.webhooks.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.webhooks.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.webhooks.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.webhooks.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.webhooks.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.webhooks.delete', $row->id),
+            ]);
+        }
     }
 }

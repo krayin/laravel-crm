@@ -111,7 +111,7 @@ class RoleController extends Controller
 
         session()->flash('success', trans('admin::app.settings.roles.index.update-success'));
 
-        return redirect()->route('admin.settings.roles.index');
+        return redirect()->back();
     }
 
     /**

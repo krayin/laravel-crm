@@ -15,8 +15,8 @@
                 />
             @else
                 <img
-                    class="w-max" 
-                    src="{{ vite()->asset('images/logo.svg') }}"
+                    class="w-max"
+                    src="{{ admin_vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
             @endif
@@ -39,10 +39,10 @@
 
                             <x-admin::form.control-group.control
                                 type="email"
-                                class="w-[254px] max-w-full" 
+                                class="w-[254px] max-w-full"
                                 id="email"
-                                name="email" 
-                                rules="required|email" 
+                                name="email"
+                                rules="required|email"
                                 :value="old('email')"
                                 :label="trans('admin::app.users.forget-password.create.email')"
                                 :placeholder="trans('admin::app.users.forget-password.create.email')"
@@ -54,7 +54,7 @@
 
                     <div class="flex items-center justify-between p-4">
                         <!-- Back to Sign In link -->
-                        <a 
+                        <a
                             class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
                             href="{{ route('admin.session.create') }}"
                         >
@@ -62,7 +62,7 @@
                         </a>
 
                         <!-- Form Submit Button -->
-                        <button 
+                        <button
                             class="primary-button">
                             @lang('admin::app.users.forget-password.create.submit-btn')
                         </button>

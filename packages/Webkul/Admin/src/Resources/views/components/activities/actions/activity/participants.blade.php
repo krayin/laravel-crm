@@ -34,7 +34,7 @@
                     <li>
                         <input
                             type="text"
-                            class="w-full px-1 py-1"
+                            class="w-full px-1 py-1 dark:bg-gray-900"
                             placeholder="@lang('admin::app.components.activities.actions.activity.participants.placeholder')"
                             v-model.lazy="searchTerm"
                             v-debounce="500"

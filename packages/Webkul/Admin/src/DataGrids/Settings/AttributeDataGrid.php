@@ -95,19 +95,23 @@ class AttributeDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.attributes.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.attributes.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.attributes.edit')) {
+            $this->addAction([
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.attributes.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.attributes.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.attributes.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.attributes.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.attributes.delete')) {
+            $this->addAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.attributes.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.attributes.delete', $row->id),
+            ]);
+        }
     }
 
     /**

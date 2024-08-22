@@ -11,7 +11,7 @@
                     <x-admin::breadcrumbs name="quotes" />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.quotes.index.title')
                 </div>
             </div>
@@ -19,12 +19,14 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for Quote -->
                 <div class="flex items-center gap-x-2.5">
-                    <a 
-                        href="{{ route('admin.quotes.create') }}"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.quotes.index.create-btn')
-                    </a>
+                    @if (bouncer()->hasPermission('quotes.create'))
+                        <a 
+                            href="{{ route('admin.quotes.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.quotes.index.create-btn')
+                        </a>
+                    @endif
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
                         <x-admin::breadcrumbs name="quotes" />
                     </div>
         
-                    <div class="text-xl font-bold dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.quotes.index.title')
                     </div>
                 </div>
@@ -54,13 +56,15 @@
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('krayin.admin.quotes.index.create_button.before') !!}
-        
-                        <a 
-                            href="{{ route('admin.quotes.create') }}"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.quotes.index.create-btn')
-                        </a>
+                        
+                        @if (bouncer()->hasPermission('quotes.create'))
+                            <a 
+                                href="{{ route('admin.quotes.create') }}"
+                                class="primary-button"
+                            >
+                                @lang('admin::app.quotes.index.create-btn')
+                            </a>
+                        @endif
         
                         {!! view_render_event('krayin.admin.quotes.index.create_button.after') !!}
                     </div>

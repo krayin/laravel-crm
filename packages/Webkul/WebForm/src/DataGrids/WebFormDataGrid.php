@@ -52,28 +52,34 @@ class WebFormDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'view',
-            'icon'   => 'icon-eye',
-            'title'  => trans('admin::app.settings.webforms.index.datagrid.view'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.web_forms.view', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.other_settings.web_forms.view')) {
+            $this->addAction([
+                'index'  => 'view',
+                'icon'   => 'icon-eye',
+                'title'  => trans('admin::app.settings.webforms.index.datagrid.view'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.web_forms.view', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.webforms.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.web_forms.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.other_settings.web_forms.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.webforms.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.web_forms.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.webforms.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.web_forms.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.other_settings.web_forms.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.webforms.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.web_forms.delete', $row->id),
+            ]);
+        }
     }
 }

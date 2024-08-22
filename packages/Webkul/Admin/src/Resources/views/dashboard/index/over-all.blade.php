@@ -19,13 +19,13 @@
             <!-- Stats Cards -->
             <div class="grid grid-cols-3 gap-4">
                 <!-- Average Revenue Card -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.average-lead-value')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.average_lead_value.formatted_total }}
                         </p>
 
@@ -46,13 +46,13 @@
                 </div>
                 
                 <!-- Average Revenue Card -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.total-leads')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.total_leads.current }}
                         </p>
 
@@ -73,13 +73,13 @@
                 </div>
                 
                 <!-- Average Lead Per Day -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.average-leads-per-day')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.average_leads_per_day.current.toFixed(2) }}
                         </p>
 
@@ -100,13 +100,13 @@
                 </div>
                 
                 <!-- Total Quotes -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.total-quotations')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.total_quotations.current }}
                         </p>
 
@@ -127,13 +127,13 @@
                 </div>
                 
                 <!-- Total Persons -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.total-persons')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.total_persons.current }}
                         </p>
 
@@ -154,13 +154,13 @@
                 </div>
                 
                 <!-- Total Organizations -->
-                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800">
-                    <p class="text-xs text-gray-600">
+                <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
+                    <p class="text-xs text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.over-all.total-organizations')
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold">
+                        <p class="text-xl font-bold dark:text-gray-300">
                             @{{ report.statistics.total_organizations.current }}
                         </p>
 

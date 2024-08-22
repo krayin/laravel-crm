@@ -11,7 +11,7 @@
                     <x-admin::breadcrumbs name="settings.web_forms" />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.webforms.index.title')
                 </div>
             </div>
@@ -19,12 +19,14 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.webforms.index.create-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('admin.settings.web_forms.create'))
+                        <button
+                            type="button"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.webforms.index.create-btn')
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -45,7 +47,7 @@
                         <x-admin::breadcrumbs name="settings.web_forms" />
                     </div>
         
-                    <div class="text-xl font-bold dark:text-gray-300">
+                    <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.index.title')
                     </div>
                 </div>
@@ -55,12 +57,14 @@
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('krayin.admin.settings.web_forms.index.create_button.before') !!}
         
-                        <a
-                            href="{{ route('admin.settings.web_forms.create') }}"
-                            class="primary-button"
-                        >
-                            @lang('admin::app.settings.webforms.index.create-btn')
-                        </a>
+                        @if (bouncer()->hasPermission('admin.settings.web_forms.create'))
+                            <a
+                                href="{{ route('admin.settings.web_forms.create') }}"
+                                class="primary-button"
+                            >
+                                @lang('admin::app.settings.webforms.index.create-btn')
+                            </a>
+                        @endif
 
                         {!! view_render_event('krayin.admin.settings.web_forms.index.create_button.after') !!}
                     </div>

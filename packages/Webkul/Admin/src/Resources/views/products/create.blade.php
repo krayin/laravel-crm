@@ -26,12 +26,14 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for Product -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.products.create.save-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('settings.user.groups.create'))
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.products.create.save-btn')
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

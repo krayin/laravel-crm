@@ -73,7 +73,7 @@
                 <form @submit="handleSubmit($event, handleFormSubmit)">
                     <x-admin::modal ref="stageUpdateModal">
                         <x-slot:header>
-                            <h3 class="text-base font-semibold">
+                            <h3 class="text-base font-semibold dark:text-white">
                                 @lang('admin::app.leads.view.stages.need-more-info')
                             </h3>
                         </x-slot>
@@ -126,7 +126,7 @@
                                 type="submit"
                                 class="primary-button"
                             >
-                                @lang('admin::app.leads.view.activities.actions.note.save-btn')
+                                @lang('admin::app.leads.view.stages.save-btn')
                             </button>
                         </x-slot>
                     </x-admin::modal>

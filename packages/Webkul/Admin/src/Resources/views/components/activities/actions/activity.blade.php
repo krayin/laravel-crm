@@ -9,7 +9,7 @@
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-blue-200 text-blue-800 transition-all hover:border-blue-400"
         @click="$refs.actionComponent.openModal('mail')"
     >
-        <span class="icon-activity text-2xl"></span>
+        <span class="icon-activity text-2xl dark:!text-blue-800"></span>
 
         @lang('admin::app.components.activities.actions.activity.btn')
     </button>
@@ -34,7 +34,7 @@
                     <x-slot:header>
                         <x-admin::dropdown>
                             <x-slot:toggle>
-                                <h3 class="flex cursor-pointer items-center gap-1 text-base font-semibold">
+                                <h3 class="flex cursor-pointer items-center gap-1 text-base font-semibold dark:text-white">
                                     @lang('admin::app.components.activities.actions.activity.title') - @{{ selectedType.label }}
 
                                     <span class="icon-down-arrow text-2xl"></span>
@@ -43,7 +43,7 @@
 
                             <x-slot:menu>
                                 <x-admin::dropdown.menu.item
-                                    ::class="{ 'bg-gray-100': selectedType.value === type.value }"
+                                    ::class="{ 'bg-gray-100 dark:bg-gray-950': selectedType.value === type.value }"
                                     v-for="type in availableTypes"
                                     @click="selectedType = type"
                                 >
@@ -56,18 +56,18 @@
                     <x-slot:content>
                         <!-- Activity Type -->
                         <x-admin::form.control-group.control
-                            type="hidden"
+                            type="text"
                             name="type"
-                            ::value="selectedType.value"
+                            v-model="selectedType.value"
                         />
-                        
+
                         <!-- Id -->
                         <x-admin::form.control-group.control
                             type="hidden"
                             ::name="entityControlName"
                             ::value="entity.id"
                         />
-                        
+
                         <!-- Title -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
@@ -202,7 +202,7 @@
                             value: 'meeting'
                         }, {
                             label: "{{ trans('admin::app.components.activities.actions.activity.lunch') }}",
-                            value: 'task'
+                            value: 'lunch'
                         },
                     ]
                 }

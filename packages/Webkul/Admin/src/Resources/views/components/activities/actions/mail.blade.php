@@ -9,7 +9,7 @@
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-green-200 text-green-900 transition-all hover:border-green-400"
         @click="$refs.mailActionComponent.openModal('mail')"
     >
-        <span class="icon-mail text-2xl"></span>
+        <span class="icon-mail text-2xl dark:!text-green-900"></span>
 
         @lang('admin::app.components.activities.actions.mail.btn')
     </button>
@@ -71,16 +71,16 @@
                                     :placeholder="trans('admin::app.components.activities.actions.mail.enter-emails')"
                                 />
 
-                                <div class="absolute right-2 top-[9px] flex items-center gap-2">
+                                <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                     <span
-                                        class="cursor-pointer font-medium hover:underline"
+                                        class="cursor-pointer font-medium hover:underline dark:text-white"
                                         @click="showCC = ! showCC"
                                     >
                                         @lang('admin::app.components.activities.actions.mail.cc')
                                     </span>
 
                                     <span
-                                        class="cursor-pointer font-medium hover:underline"
+                                        class="cursor-pointer font-medium hover:underline dark:text-white"
                                         @click="showBCC = ! showBCC"
                                     >
                                         @lang('admin::app.components.activities.actions.mail.bcc')

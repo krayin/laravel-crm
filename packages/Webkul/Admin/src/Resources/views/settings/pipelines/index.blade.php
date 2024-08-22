@@ -10,7 +10,7 @@
                 <x-admin::breadcrumbs name="settings.pipelines" />
             </div>
 
-            <div class="text-xl font-bold dark:text-gray-300">
+            <div class="text-xl font-bold dark:text-white">
                 <!-- title -->
                 @lang('admin::app.settings.pipelines.index.title')
             </div>
@@ -20,12 +20,14 @@
             <!-- Create button Pipelines -->
             <div class="flex items-center gap-x-2.5">
                 {!! view_render_event('krayin.admin.settings.pipelines.index.create_button.before') !!}
-                    <a
-                        href="{{ route('admin.settings.pipelines.create') }}"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.pipelines.index.create-btn')
-                    </a>
+                    @if (bouncer()->hasPermission('settings.lead.pipelines.create'))
+                        <a
+                            href="{{ route('admin.settings.pipelines.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.pipelines.index.create-btn')
+                        </a>
+                    @endif
                 {!! view_render_event('krayin.admin.settings.pipelines.index.create_button.after') !!}
             </div>
         </div>

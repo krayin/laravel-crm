@@ -4,7 +4,7 @@
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
 >
-    <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto group-[.sidebar-collapsed]/container:overflow-visible">
+    <div class="journal-scroll h-[calc(100vh-100px)] overflow-hidden group-[.sidebar-collapsed]/container:overflow-visible">
         <nav class="sidebar-rounded grid w-full gap-2">
             <!-- Navigation Menu -->
             @foreach (menu()->getItems('admin') as $menuItem)
@@ -22,7 +22,7 @@
                             <p>{{ $menuItem->getName() }}</p>
                         
                             @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren())
-                                <i class="icon-right-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
+                                <i class="icon-right-arrow rtl:icon-left-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
                             @endif
                         </div>
                     </a>
@@ -33,11 +33,11 @@
                         && $menuItem->haveChildren()
                     )
                         <div
-                            class="absolute left-[190px] top-0 hidden w-[200px] flex-col bg-gray-100"
+                            class="absolute top-0 hidden w-[200px] flex-col bg-gray-100 ltr:left-[190px] rtl:right-[190px]"
                             :class="[isMenuActive && (hoveringMenu == '{{$menuItem->getKey()}}') ? '!flex' : 'hidden']"
                         >
                             <div class="sidebar-rounded fixed top-14 z-[1000] h-full w-[140px] border bg-white pt-4 dark:border-gray-800 dark:bg-gray-900 max-lg:hidden">
-                                <div class="journal-scroll h-[calc(100vh-100px)] overflow-auto">
+                                <div class="journal-scroll h-[calc(100vh-100px)] overflow-hidden">
                                     <nav class="grid w-full gap-2">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)
                                             <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">

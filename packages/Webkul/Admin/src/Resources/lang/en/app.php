@@ -1,6 +1,46 @@
 <?php
 
 return [
+    'acl' => [
+        'leads'           => 'Leads',
+        'lead'            => 'Lead',
+        'quotes'          => 'Quotes',
+        'mail'            => 'Mail',
+        'inbox'           => 'Inbox',
+        'draft'           => 'Draft',
+        'outbox'          => 'Outbox',
+        'sent'            => 'Sent',
+        'trash'           => 'Trash',
+        'activities'      => 'Activities',
+        'webhook'         => 'Webhook',
+        'contacts'        => 'Contacts',
+        'persons'         => 'Persons',
+        'organizations'   => 'Organizations',
+        'products'        => 'Products',
+        'settings'        => 'Settings',
+        'groups'          => 'Groups',
+        'roles'           => 'Roles',
+        'users'           => 'Users',
+        'user'            => 'User',
+        'automation'      => 'Automation',
+        'attributes'      => 'Attributes',
+        'pipelines'       => 'Pipelines',
+        'sources'         => 'Sources',
+        'types'           => 'Types',
+        'email-templates' => 'Email Templates',
+        'workflows'       => 'Workflows',
+        'other-settings'  => 'Other Settings',
+        'tags'            => 'Tags',
+        'configuration'   => 'Configuration',
+        'create'          => 'Create',
+        'edit'            => 'Edit',
+        'view'            => 'View',
+        'print'           => 'Print',
+        'delete'          => 'Delete',
+        'export'          => 'Export',
+        'mass-delete'     => 'Mass Delete',
+    ],
+
     'users' => [
         'login' => [
             'email'                => 'Email Address',
@@ -1670,6 +1710,7 @@ return [
                 'destroy-success' => 'Quote deleted successfully.',
                 'empty-title'     => 'No Quotes Found',
                 'empty-info'      => 'No Quotes Found for this Lead',
+                'add-btn'         => 'Add Quote',
             ],
 
             'products' => [
@@ -1698,16 +1739,18 @@ return [
                 'closed-at'      => 'Closed At',
                 'won-value'      => 'Won Value',
                 'lost-reason'    => 'Lost Reason',
+                'save-btn'       => 'Save',
             ],
         ],
     ],
 
     'configuration' => [
         'index' => [
-            'title'    => 'Configuration',
-            'search'   => 'Search',
-            'back'     => 'Back',
-            'save-btn' => 'Save Configuration',
+            'back'         => 'Back',
+            'save-btn'     => 'Save Configuration',
+            'save-success' => 'Configuration Saved Successfully.',
+            'search'       => 'Search',
+            'title'        => 'Configuration',
 
             'general'  => [
                 'title'   => 'General',
@@ -1777,7 +1820,9 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title' => 'Open Leads By States',
+                'title'       => 'Open Leads By States',
+                'empty-title' => 'No Data Available',
+                'empty-info'  => 'No data available for selected interval',
             ],
         ],
     ],

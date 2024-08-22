@@ -46,7 +46,7 @@ class ConfigurationController extends Controller
 
         Event::dispatch('core.configuration.save.after');
 
-        session()->flash('success', trans('admin::app.configuration.save-message'));
+        session()->flash('success', trans('admin::app.configuration.index.save-success'));
 
         return redirect()->back();
     }

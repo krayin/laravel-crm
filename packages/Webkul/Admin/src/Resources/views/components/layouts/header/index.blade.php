@@ -5,7 +5,7 @@
 
         <a href="{{ route('admin.dashboard.index') }}">
             <img
-                class="h-10" 
+                class="h-10"
                 src="{{ request()->cookie('dark_mode') ? admin_vite()->asset('images/dark-logo.svg') : admin_vite()->asset('images/logo.svg') }}"
                 id="logo-image"
                 alt="{{ config('app.name') }}"
@@ -18,15 +18,15 @@
         <v-mega-search>
             <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
                 <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
-    
-                <input 
-                    type="text" 
+
+                <input
+                    type="text"
                     class="block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"
-                    placeholder="@lang('admin::app.components.layouts.header.mega-search.title')" 
+                    placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
                 >
             </div>
         </v-mega-search>
-        
+
         <!-- Quick create section -->
         <div>
             @if (bouncer()->hasPermission('leads.create')
@@ -53,116 +53,116 @@
                             <div class="grid grid-cols-3 gap-2 text-center">
                                 <!-- Link to create new Lead -->
                                 @if (bouncer()->hasPermission('leads.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.leads.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-leads text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.lead')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.lead')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new Quotes -->
                                 @if (bouncer()->hasPermission('quotes.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.quotes.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-quote text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.quote')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.quote')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to send new Mail-->
                                 @if (bouncer()->hasPermission('mail.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-mail text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.email')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.email')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new Person-->
                                 @if (bouncer()->hasPermission('contacts.persons.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.contacts.persons.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-settings-user text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.person')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.person')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new Organizations -->
                                 @if (bouncer()->hasPermission('contacts.organizations.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.contacts.organizations.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-organization text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.organization')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.organization')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new Products -->
                                 @if (bouncer()->hasPermission('products.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.products.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-product text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.product')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.product')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                                
+
                                 <!-- Link to create new Attributes -->
                                 @if (bouncer()->hasPermission('settings.automation.attributes.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.attributes.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-attribute text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.attribute')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.attribute')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new Role -->
                                 @if (bouncer()->hasPermission('settings.user.roles.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.roles.create') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-role text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.role')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.role')</span>
                                             </div>
                                         </a>
                                     </div>
                                 @endif
-                    
+
                                 <!-- Link to create new User-->
                                 @if (bouncer()->hasPermission('settings.user.users.create'))
-                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100">
+                                    <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
                                         <a href="{{ route('admin.settings.users.index') }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-user text-2xl text-gray-600"></i>
-                                                
-                                                <span class="font-medium">@lang('admin::app.layouts.user')</span>
+
+                                                <span class="font-medium dark:text-gray-300">@lang('admin::app.layouts.user')</span>
                                             </div>
                                         </a>
                                     </div>
@@ -184,16 +184,16 @@
                 ></span>
             </div>
         </v-dark>
-        
+
         <!-- Notification Component -->
         <span class="relative flex">
-            <span 
-                class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950" 
+            <span
+                class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                 title="@lang('admin::app.components.layouts.header.notifications')"
             >
             </span>
         </span>
-            
+
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-right">
             <x-slot:toggle>
@@ -222,7 +222,7 @@
 
                     <!-- Version -->
                     <p class="text-gray-400">
-                        Version: v{{ config('app.version') }}
+                        Version: v{{ core()->version() }}
                     </p>
                 </div>
 
@@ -263,11 +263,11 @@
         <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
             <i class="icon-search absolute top-1.5 flex items-center text-2xl ltr:left-3 rtl:right-3"></i>
 
-            <input 
+            <input
                 type="text"
                 class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 :class="{'border-gray-400': isDropdownOpen}"
-                placeholder="@lang('Search')" 
+                placeholder="@lang('Search')"
                 v-model.lazy="searchTerm"
                 @click="searchTerm.length >= 2 ? isDropdownOpen = true : {}"
                 v-debounce="500"
@@ -309,13 +309,13 @@
                                             <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                                                 @{{ product.name }}
                                             </p>
-    
+
                                             <p class="text-gray-500">
                                                 @{{ "@lang(':sku')".replace(':sku', product.sku) }}
                                             </p>
                                         </div>
                                     </div>
-    
+
                                     <!-- Right Information -->
                                     <div class="grid place-content-center gap-1 text-right">
                                         <!-- Formatted Price -->
@@ -334,7 +334,7 @@
                                     :href="'{{ route('admin.products.index') }}?search=:query'.replace(':query', searchTerm)"
                                     class="cursor-pointer text-xs font-semibold text-brandColor transition-all hover:underline"
                                 >
-                                
+
                                     @{{ `@lang('admin::app.components.layouts.header.mega-search.explore-all-matching-products')`.replace(':query', searchTerm).replace(':count', searchedResults.products.length) }}
                                 </a>
                             </template>
@@ -370,13 +370,13 @@
                                             <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                                                 @{{ lead.title }}
                                             </p>
-    
+
                                             <p class="text-gray-500">
                                                 @{{ lead.description }}
                                             </p>
                                         </div>
                                     </div>
-    
+
                                     <!-- Right Information -->
                                     <div class="grid place-content-center gap-1 text-right">
                                         <!-- Formatted Price -->
@@ -429,7 +429,7 @@
                                             <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                                                 @{{ person.name }}
                                             </p>
-    
+
                                             <p class="text-gray-500">
                                                 @{{ person.emails.map((item) => `${item.value}(${item.label})`).join(', ') }}
                                             </p>
@@ -480,7 +480,7 @@
                                             <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                                                 @{{ quote.subject }}
                                             </p>
-    
+
                                             <p class="text-gray-500">
                                                 @{{ quote.description }}
                                             </p>

@@ -79,7 +79,7 @@
                     </x-admin::form.control-group.control>
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform items-center gap-[1px] bg-white">
+                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform items-center gap-[1px]">
                         <i class="icon-down-arrow text-2xl" />
 
                         <button
@@ -87,7 +87,7 @@
                             class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
                             @click="save"
                         >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600" />
+                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
                         </button>
                     
                         <button
@@ -95,7 +95,7 @@
                             class="ml-[1px] flex items-center justify-center rounded-r-md bg-red-100 p-1 hover:bg-red-200"
                             @click="cancel"
                         >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600" />
+                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
                         </button>
                     </div>
                 </div>

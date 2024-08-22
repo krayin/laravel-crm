@@ -23,8 +23,8 @@
         <v-dashboard-filters>
             <!-- Shimmer -->
             <div class="flex gap-1.5">
-                <div class="light-shimmer-bg h-[39px] w-[140px] rounded-md"></div>
-                <div class="light-shimmer-bg h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
+                <div class="light-shimmer-bg dark:shimmer h-[39px] w-[140px] rounded-md"></div>
             </div>
         </v-dashboard-filters>
         
@@ -50,7 +50,7 @@
             <!-- Total Leads Stats -->
             @include('admin::dashboard.index.total-leads')
 
-            <div class="flex gap-4">
+            <div class="flex gap-4 [&>*]:flex-1">
                 <!-- Total Products -->
                 @include('admin::dashboard.index.top-selling-products')
 
@@ -65,14 +65,14 @@
         {!! view_render_event('admin.dashboard.index.content.right.before') !!}
 
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
+            <!-- Revenue by Types -->
+            @include('admin::dashboard.index.open-leads-by-states')
+
             <!-- Revenue by Sources -->
             @include('admin::dashboard.index.revenue-by-sources')
 
             <!-- Revenue by Types -->
             @include('admin::dashboard.index.revenue-by-types')
-
-            <!-- Revenue by Types -->
-            @include('admin::dashboard.index.open-leads-by-states')
         </div>
 
         {!! view_render_event('admin.dashboard.index.content.left.after') !!}

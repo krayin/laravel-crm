@@ -16,7 +16,7 @@
                     />
                 </div>
     
-                <div class="text-xl font-bold dark:text-gray-300">
+                <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.webforms.edit.title')
                 </div>
             </div>
@@ -74,7 +74,7 @@
 
                         <!-- Submit success actions -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
+                            <x-admin::form.control-group.label class="required !text-gray-600">
                                 @lang('admin::app.settings.webforms.edit.submit-success-action')
                             </x-admin::form.control-group.label>
 
@@ -116,7 +116,7 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="!text-gray-600 required">
+                            <x-admin::form.control-group.label class="required !text-gray-600">
                                 @lang('admin::app.settings.webforms.edit.create-lead')
                             </x-admin::form.control-group.label>
 
@@ -266,7 +266,7 @@
                             </div>
                         </div>
 
-                        <x-admin::dropdown class="rounded-lg group-hover:visible w-1/5 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                        <x-admin::dropdown class="w-1/5 rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                             <x-slot:toggle>
                                 <button
                                     type="button"
@@ -276,9 +276,9 @@
                                 </button>
                             </x-slot>
         
-                            <x-slot:menu class="!p-0 dark:border-gray-800 max-h-80 overflow-y-auto">
+                            <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                 <template v-if="createLead">
-                                    <div class="font-bold text-lg m-2">@lang('admin::app.settings.webforms.edit.person')</div>
+                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.edit.person')</div>
 
                                     <span
                                         v-for="attribute in groupedAttributes.persons"
@@ -292,7 +292,7 @@
                                 </template>
 
                                 <template v-else>
-                                    <div class="font-bold text-lg m-2">@lang('admin::app.settings.webforms.edit.leads')</div>
+                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.edit.leads')</div>
 
                                     <span
                                         v-for="attribute in groupedAttributes.leads"
@@ -389,7 +389,7 @@
                                     <x-admin::table.td>
                                         <x-admin::form.control-group class="!mt-6">
                                             <i
-                                                class="icon-delete text-2xl cursor-pointer"
+                                                class="icon-delete cursor-pointer text-2xl"
                                                 v-if="element['attribute']['code'] != 'name' && element['attribute']['code'] != 'emails'"
                                                 @click="removeAttribute(element)"
                                             ></i>
@@ -415,7 +415,7 @@
                         <x-slot:content>
                             <!-- Title -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                <x-admin::form.control-group.label class="required !text-gray-600">
                                     @lang('admin::app.settings.webforms.edit.title')
                                 </x-admin::form.control-group.label>
 
@@ -452,7 +452,7 @@
 
                             <!-- Submit button label -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600 required">
+                                <x-admin::form.control-group.label class="required !text-gray-600">
                                     @lang('admin::app.settings.webforms.edit.submit-button-label')
                                 </x-admin::form.control-group.label>
 
@@ -499,7 +499,7 @@
 
                             <span
                                 id="publicUrlBtn"
-                                class="text-xs font-normal text-brandColor cursor-pointer hover:text-sky-600 hover:underline"
+                                class="cursor-pointer text-xs font-normal text-brandColor hover:text-sky-600 hover:underline"
                                 @click="copyToClipboard('#publicUrl','#publicUrlBtn')"
                             >
                                 @lang('admin::app.settings.webforms.edit.copy')
@@ -521,7 +521,7 @@
 
                             <span
                                 id="coeSnippt"
-                                class="text-xs font-normal text-brandColor cursor-pointer hover:text-sky-600 hover:underline"
+                                class="cursor-pointer text-xs font-normal text-brandColor hover:text-sky-600 hover:underline"
                                 @click="copyToClipboard('#codeSnippet','#coeSnippt')"
                             >
                                 @lang('admin::app.settings.webforms.edit.copy')
@@ -537,7 +537,7 @@
             id="v-color-picker"
         >
             <x-admin::form.control-group>
-                <x-admin::form.control-group.label class="!text-gray-600 required">
+                <x-admin::form.control-group.label class="required !text-gray-600">
                     @{{ title }}
                 </x-admin::form.control-group.label>
 
@@ -554,7 +554,7 @@
 
                     <x-admin::form.control-group.control
                         type="color"
-                        class="!w-12 !h-10 p-1 rounded-l-none"
+                        class="!h-10 !w-12 rounded-l-none p-1"
                         name="color"
                         :label="trans('Submit Success Action')"
                         ::value="color"

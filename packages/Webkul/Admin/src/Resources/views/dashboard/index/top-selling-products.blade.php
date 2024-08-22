@@ -16,7 +16,7 @@
 
         <!-- Total Sales Section -->
         <template v-else>
-            <div class="w-full rounded-lg border border-gray-200 bg-white dark:border-gray-800">
+            <div class="w-full rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex items-center justify-between p-4">
                     <p class="text-base font-semibold text-gray-600 dark:text-gray-300">
                         @lang('admin::app.dashboard.index.top-selling-products.title')
@@ -43,11 +43,11 @@
                             </p>
 
                             <div class="flex justify-between">
-                                <p class="font-semibold text-gray-600 dark:text-gray-300">
+                                <p class="font-medium text-gray-800 dark:text-white">
                                     @{{ item.formatted_price }}
                                 </p>
 
-                                <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                <p class="font-normal text-gray-800 dark:text-white">
                                     @{{ item.formatted_revenue }}
                                 </p>
                             </div>
@@ -64,7 +64,7 @@
                         <!-- Placeholder Image -->
                         <img
                             src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}"
-                            class="h-20 w-20 dark:mix-blend-exclusion dark:invert"
+                            class="dark:mix-blend-exclusion dark:invert"
                         >
 
                         <!-- Add Variants Information -->

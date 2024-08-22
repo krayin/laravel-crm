@@ -97,21 +97,25 @@ class UserDataGrid extends DataGrid
      */
     public function prepareActions(): void
     {
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.users.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.users.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.user.users.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.users.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.users.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'  => 'delete',
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.users.index.datagrid.delete'),
-            'method' => 'DELETE',
-            'url'    => fn ($row) => route('admin.settings.users.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.user.users.delete')) {
+            $this->addAction([
+                'index'  => 'delete',
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.users.index.datagrid.delete'),
+                'method' => 'DELETE',
+                'url'    => fn ($row) => route('admin.settings.users.delete', $row->id),
+            ]);
+        }
     }
 
     /**

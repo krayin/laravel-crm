@@ -28,12 +28,14 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for Attributes -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.attributes.create.save-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('settings.automation.attributes.create'))
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.attributes.create.save-btn')
+                        </button>
+                    @endif
                 </div>
             </div>
         </div>

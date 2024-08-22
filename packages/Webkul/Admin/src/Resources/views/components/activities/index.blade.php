@@ -72,25 +72,31 @@
                                             </p>
 
                                             <template v-if="activity.type == 'email'">
-                                                <p>
+                                                <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.from'):
 
                                                     @{{ activity.additional.from }}
                                                 </p>
 
-                                                <p>
+                                                <p class="dark:text-white">
                                                     @lang('admin::app.components.activities.index.to'):
 
                                                     @{{ activity.additional.to.join(', ') }}
                                                 </p>
 
-                                                <p v-if="activity.additional.cc">
+                                                <p 
+                                                    v-if="activity.additional.cc"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.cc'):
 
                                                     @{{ activity.additional.cc.join(', ') }}
                                                 </p>
 
-                                                <p v-if="activity.additional.bcc">
+                                                <p 
+                                                    v-if="activity.additional.bcc"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.bcc'):
 
                                                     @{{ activity.additional.bcc.join(', ') }}
@@ -99,14 +105,20 @@
 
                                             <template v-else>
                                                 <!-- Activity Schedule -->
-                                                <p v-if="activity.schedule_from && activity.schedule_from">
+                                                <p 
+                                                    v-if="activity.schedule_from && activity.schedule_from"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
                                                     
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
-                                                <p v-if="activity.participants?.length">
+                                                <p 
+                                                    v-if="activity.participants?.length"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.participants'):
 
                                                     <span class="after:content-[',_'] last:after:content-['']" v-for="(participant, index) in activity.participants">
@@ -115,7 +127,10 @@
                                                 </p>
 
                                                 <!-- Activity Location -->
-                                                <p v-if="activity.location">
+                                                <p 
+                                                    v-if="activity.location"
+                                                    class="dark:text-white"  
+                                                >
                                                     @lang('admin::app.components.activities.index.location'):
 
                                                     @{{ activity.location }}
@@ -157,9 +172,9 @@
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                         </div>
                                     </div>
-
+                                    
                                     <!-- Activity More Options -->
-                                    <x-admin::dropdown position="bottom-right">
+                                    <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
                                         <x-slot:toggle>
                                             <template v-if="! isUpdating[activity.id]">
                                                 <button
@@ -243,7 +258,10 @@
                                 class="grid justify-center justify-items-center gap-3.5 py-12"
                                 v-if="! filteredActivities.length"
                             >
-                                <img :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image">
+                                <img
+                                    class="dark:mix-blend-exclusion dark:invert" 
+                                    :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image"
+                                >
                                 
                                 <div class="flex flex-col items-center gap-2">
                                     <p class="text-xl font-semibold dark:text-white">
@@ -333,13 +351,13 @@
                     selectedType: 'all',
 
                     typeClasses: {
-                        email: 'icon-mail bg-green-200 text-green-900',
-                        note: 'icon-note bg-orange-200 text-orange-800',
-                        call: 'icon-call bg-cyan-200 text-cyan-800',
-                        meeting: 'icon-activity bg-blue-200 text-blue-800',
-                        lunch: 'icon-activity bg-blue-200 text-blue-800',
-                        file: 'icon-file bg-green-200 text-green-900',
-                        default: 'icon-activity bg-blue-200 text-blue-800',
+                        email: 'icon-mail bg-green-200 text-green-900 dark:!text-green-900',
+                        note: 'icon-note bg-orange-200 text-orange-800 dark:!text-orange-800',
+                        call: 'icon-call bg-cyan-200 text-cyan-800 dark:!text-cyan-800',
+                        meeting: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
+                        lunch: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
+                        file: 'icon-file bg-green-200 text-green-900 dark:!text-green-900',
+                        default: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                     },
 
                     typeIllustrations: {

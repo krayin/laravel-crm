@@ -6,25 +6,25 @@ use Webkul\Admin\Http\Controllers\User\ForgotPasswordController;
 use Webkul\Admin\Http\Controllers\User\ResetPasswordController;
 use Webkul\Admin\Http\Controllers\User\SessionController;
 
-/**
- * Auth routes.
- */
-Route::group(['middleware' => ['web', 'admin_locale'], 'prefix' => config('app.admin_path')], function () {
+Route::withoutMiddleware(['user'])->group(function () {
     /**
      * Redirect route.
      */
     Route::get('/', [Controller::class, 'redirectToLogin']);
 
-    Route::controller(SessionController::class)->prefix('login')->group(function () {
-        /**
-         * Login routes.
-         */
-        Route::get('', 'create')->name('admin.session.create');
+    /**
+     * Session routes.
+     */
+    Route::controller(SessionController::class)->group(function () {
+        Route::prefix('login')->group(function () {
+            Route::get('', 'create')->name('admin.session.create');
 
-        /**
-         * Login post route to admin auth controller.
-         */
-        Route::post('', 'store')->name('admin.session.store');
+            Route::post('', 'store')->name('admin.session.store');
+        });
+
+        Route::middleware(['user'])->group(function () {
+            Route::delete('logout', 'destroy')->name('admin.session.destroy');
+        });
     });
 
     /**

@@ -26,24 +26,16 @@
                 @click="toggle"
             >
                 <!-- Input Container -->
-                <div class="relative h-10 rounded border p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
                     @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
-                </div>
-                
-                <!-- Arrow down icon -->
-                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                    <i class="fas fa-chevron-down text-gray-400"></i>
-                </div>
-            </div>
-
-            <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                <div class="flex items-center justify-center space-x-1">                        
+                    
+                    <!-- Arrow Icon -->
                     <i 
-                        class="text-2xl"
-                        :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                        class="absolute text-2xl ltr:right-2 rtl:left-2"
+                        :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
                     ></i>
                 </div>
-            </span>
+            </div>
 
             <!-- Hidden Input Entity Value -->
             <input
@@ -54,34 +46,36 @@
             
             <div 
                 v-if="showPopup" 
-                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
+                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
             >
                 <!-- Search Bar -->
-                <div class="relative">
+                <div class="relative flex items-center">
                     <!-- Input Box -->
                     <input
                         type="text"
                         v-model.lazy="searchTerm"
                         v-debounce="500"
-                        class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                        class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
                         placeholder="@lang('Search...')"
                         ref="searchInput"
                         @keyup="search"
                     />
                 
                     <!-- Search Icon (absolute positioned) -->
-                    <span class="absolute inset-y-0 right-0 flex items-center pr-3">
-                        <div class="flex items-center justify-center space-x-1">
-                            <!-- Loader (optional, based on condition) -->
-                            <div
-                                class="relative"
-                                v-if="isSearching"
-                            >
-                                <x-admin::spinner />
-                            </div>
+                    <span class="absolute flex items-center ltr:right-2 rtl:left-2">
+                        <!-- Close Icon -->
+                        <i 
+                            v-if="entityId && ! isSearching"
+                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
+                            @click="remove"
+                        ></i>
                 
-                            <!-- Search Icon -->
-                            <i class="fas fa-search text-gray-500"></i>
+                        <!-- Loader (optional, based on condition) -->
+                        <div
+                            class="relative"
+                            v-if="isSearching"
+                        >
+                            <x-admin::spinner />
                         </div>
                     </span>
                 </div>
@@ -222,6 +216,18 @@
                         this.showPopup = false;
                     }
                 },
+
+                remove() {
+                    this.entityId = null;
+
+                    this.selectedItem = null;
+
+                    this.searchTerm = '';
+
+                    this.searchedResults = [];
+
+                    this.$emit('lookup-removed');
+                }
             }
         });
     </script>

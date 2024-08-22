@@ -237,37 +237,37 @@
                     <!-- Table Head -->
                     <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                         <x-admin::table.thead.tr>
-                            <x-admin::table.th>
+                            <x-admin::table.th >
                                 @lang('admin::app.quotes.create.product-name')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.quantity')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.price')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.amount')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.discount')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.tax')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="text-right">
+                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
                                 @lang('admin::app.quotes.create.total')
                             </x-admin::table.th>
 
                             <x-admin::table.th 
                                 v-if="products.length > 1"
-                                class="text-right"
+                                class="!px-2 ltr:text-right rtl:text-left"
                             >
                                 @lang('admin::app.quotes.create.action')
                             </x-admin::table.th>
@@ -392,7 +392,7 @@
                 </x-admin::table.td>
             
                 <!-- Quantity -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -408,7 +408,7 @@
                 </x-admin::table.td>
             
                 <!-- Price -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -424,7 +424,7 @@
                 </x-admin::table.td>
             
                 <!-- Total -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -440,7 +440,7 @@
                 </x-admin::table.td>
             
                 <!-- Discount Amount -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -456,7 +456,7 @@
                 </x-admin::table.td>
             
                 <!-- Tax Amount -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -472,7 +472,7 @@
                 </x-admin::table.td>
             
                 <!-- Total with Discount -->
-                <x-admin::table.td class="text-right">
+                <x-admin::table.td class="!px-2 ltr:text-right rtl:text-left">
                     <x-admin::form.control-group class="!mb-0">
                         <x-admin::form.control-group.control
                             type="inline"
@@ -487,7 +487,7 @@
                 <!-- Action -->
                 <x-admin::table.td
                     v-if="$parent.products.length > 1"
-                    class="!p-2 text-right"
+                    class="!px-2 ltr:text-right rtl:text-left"
                 >
                     <x-admin::form.control-group class="!mb-0">
                         <i  

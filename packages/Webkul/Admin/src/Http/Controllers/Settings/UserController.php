@@ -131,7 +131,7 @@ class UserController extends Controller
         }
 
         if (auth()->guard('user')->user()->id != $id) {
-            $data['status'] = isset($data['status']) ? 1 : 0;
+            $data['status'] = $data['status'] ? 1 : 0;
         }
 
         Event::dispatch('settings.user.update.before', $id);
