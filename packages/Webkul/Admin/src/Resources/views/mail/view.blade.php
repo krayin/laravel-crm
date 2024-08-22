@@ -1010,8 +1010,8 @@
                             bouncer()->hasPermission('contacts.persons.create') 
                             || bouncer()->hasPermission('contacts.persons.edit')
                         )
-                          <!-- Link to contact -->
-                            <label class="cursor-pointer font-semibold text-gray-700">
+                            <!-- Link to contact -->
+                            <label class="font-semibold text-gray-700">
                                 @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
                             </label>
 
@@ -1033,7 +1033,7 @@
                             || bouncer()->hasPermission('leads.create')
                         )
                             <!-- Link to Lead -->
-                            <label class="cursor-pointer font-semibold text-gray-700">
+                            <label class="font-semibold text-gray-700">
                                 @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
                             </label>
                         

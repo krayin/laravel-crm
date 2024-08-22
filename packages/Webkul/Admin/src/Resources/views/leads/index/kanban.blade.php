@@ -130,11 +130,11 @@
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.formatted_lead_value }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.source.name }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.type.name }}
                                         </div>
@@ -376,7 +376,7 @@
                     this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
 
                     this.$axios
-                        .put("{{ route('admin.leads.update', 'replace') }}".replace('replace', event.added.element.id), {
+                        .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
                             'lead_pipeline_stage_id': stage.id
                         })
                         .then(response => {
