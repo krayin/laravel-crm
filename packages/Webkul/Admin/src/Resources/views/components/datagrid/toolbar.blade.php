@@ -11,27 +11,39 @@
             {{ $toolbarLeftBefore }}
             
             <!-- Mass Actions Panel -->
-            <template v-if="applied.massActions.indices.length">
-                <x-admin::datagrid.toolbar.mass-action>
-                    <template #mass-action="{
-                        available,
-                        applied,
-                        massActions,
-                        validateMassAction,
-                        performMassAction
-                    }">
-                        <slot
-                            name="mass-action"
-                            :available="available"
-                            :applied="applied"
-                            :mass-actions="massActions"
-                            :validate-mass-action="validateMassAction"
-                            :perform-mass-action="performMassAction"
-                        >
-                        </slot>
-                    </template>
-                </x-admin::datagrid.toolbar.mass-action>
-            </template>
+            <transition-group
+                tag='div'
+                name="flash-group"
+                enter-from-class="ltr:translate-y-full rtl:-translate-y-full"
+                enter-active-class="transform transition duration-300 ease-[cubic-bezier(.4,0,.2,1)]"
+                enter-to-class="ltr:translate-y-0 rtl:-translate-y-0"
+                leave-from-class="ltr:translate-y-0 rtl:-translate-y-0"
+                leave-active-class="transform transition duration-300 ease-[cubic-bezier(.4,0,.2,1)]"
+                leave-to-class="ltr:translate-y-full rtl:-translate-y-full"
+                class='fixed bottom-10 left-1/2 z-[10003] grid -translate-x-1/2 justify-items-end gap-2.5'
+            >
+                <div v-if="applied.massActions.indices.length">
+                    <x-admin::datagrid.toolbar.mass-action>
+                        <template #mass-action="{
+                            available,
+                            applied,
+                            massActions,
+                            validateMassAction,
+                            performMassAction
+                        }">
+                            <slot
+                                name="mass-action"
+                                :available="available"
+                                :applied="applied"
+                                :mass-actions="massActions"
+                                :validate-mass-action="validateMassAction"
+                                :perform-mass-action="performMassAction"
+                            >
+                            </slot>
+                        </template>
+                    </x-admin::datagrid.toolbar.mass-action>
+                </div>
+            </transition-group>
 
             <!-- Search Panel -->
             <x-admin::datagrid.toolbar.search>
