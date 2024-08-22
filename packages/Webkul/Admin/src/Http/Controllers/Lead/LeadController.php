@@ -343,9 +343,7 @@ class LeadController extends Controller
         $attributes = $this->attributeRepository->findWhere([
             'entity_type' => 'leads',
             ['code', 'NOTIN', ['title', 'description']],
-        ])
-            ->pluck('code')
-            ->toArray();
+        ]);
 
         Event::dispatch('lead.update.before', $id);
 
@@ -442,11 +440,13 @@ class LeadController extends Controller
 
         try {
             foreach ($leads as $lead) {
-                $lead = $this->leadRepository->find($lead->id);
-
                 Event::dispatch('lead.update.before', $lead->id);
 
-                $lead->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
+                $this->leadRepository->update(
+                    ['lead_pipeline_stage_id' => $massUpdateRequest->input('value')],
+                    $lead->id,
+                    ['lead_pipeline_stage_id']
+                );
 
                 Event::dispatch('lead.update.before', $lead->id);
             }

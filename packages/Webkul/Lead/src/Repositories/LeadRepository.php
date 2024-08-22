@@ -14,7 +14,7 @@ use Webkul\Lead\Contracts\Lead;
 class LeadRepository extends Repository
 {
     /**
-     * Searchable fields
+     * Searchable fields.
      */
     protected $fieldSearchable = [
         'title',
@@ -153,7 +153,7 @@ class LeadRepository extends Repository
      * Update.
      *
      * @param  int  $id
-     * @param  array  $attributes
+     * @param  array|\Illuminate\Database\Eloquent\Collection  $attributes
      * @return \Webkul\Lead\Contracts\Lead
      */
     public function update(array $data, $id, $attributes = [])
@@ -193,12 +193,20 @@ class LeadRepository extends Repository
         }
 
         /**
-         * If attributes are provided then only save the provided attributes and return.
+         * If attributes are provided, only save the provided attributes and return.
+         * A collection of attributes may also be provided, which will be treated as valid,
+         * regardless of whether it is empty or not.
          */
         if (! empty($attributes)) {
-            $attributes = $this->attributeRepository->where($conditions)
-                ->whereIn('code', $attributes)
-                ->get();
+            /**
+             * If attributes are provided as an array, then fetch the attributes from the database;
+             * otherwise, use the provided collection of attributes.
+             */
+            if (is_array($attributes)) {
+                $attributes = $this->attributeRepository->where($conditions)
+                    ->whereIn('code', $attributes)
+                    ->get();
+            }
 
             $this->attributeValueRepository->save(array_merge($data, [
                 'entity_id' => $lead->id,
