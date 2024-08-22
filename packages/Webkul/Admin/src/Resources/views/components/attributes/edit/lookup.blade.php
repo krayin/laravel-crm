@@ -67,7 +67,7 @@
                         v-model.lazy="searchTerm"
                         v-debounce="500"
                         class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
-                        placeholder="@lang('Search...')"
+                        placeholder="@lang('admin::app.components.attributes.lookup.search')"
                         ref="searchInput"
                         @keyup="search"
                     />
@@ -141,6 +141,12 @@
                         this.searchTerm = newValue ? newValue['name'] : '';
 
                         this.entityId = newValue ? newValue['id'] : '';
+
+                        if (this.searchTerm == '') {
+                            this.remove();
+                        } else {
+                            this.getLookUpEntity();
+                        }
                     }
                 }
             },
@@ -166,10 +172,8 @@
                     }
                 },
 
-                search(event) {
-                    const searchTerm = event.target.value;
-
-                    if (searchTerm.length <= 2) {
+                search() {
+                    if (this.searchTerm.length <= 2) {
                         this.searchedResults = [];
 
                         return;
@@ -178,7 +182,7 @@
                     this.isSearching = true;
 
                     this.$axios.get(this.searchRoute, {
-                            params: { query: searchTerm }
+                            params: { query: this.searchTerm }
                         })
                         .then (response => {
                             this.searchedResults = response.data;
@@ -189,7 +193,7 @@
 
                 getLookUpEntity() {
                     this.$axios.get(this.searchRoute, {
-                            params: { query: this.value.name }
+                            params: { query: this.value?.name ?? ""}
                         })
                         .then (response => {
                             const [result] = response.data;

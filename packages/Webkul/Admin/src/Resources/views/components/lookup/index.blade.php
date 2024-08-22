@@ -17,13 +17,13 @@
                 <!-- Input Container -->
                 <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
                     <!-- Selected Item or Placeholder Text -->
-                    @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
+                    @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
                     
                     <!-- Icons Container -->
                     <div class="flex gap-2 items-center">
                         <!-- Close Icon -->
                         <i 
-                            v-if="selectedItem.id && ! isSearching"
+                            v-if="(selectedItem?.name) && ! isSearching"
                             class="icon-cross-large cursor-pointer text-2xl text-gray-600"
                             @click="remove"
                         ></i>
@@ -58,7 +58,7 @@
                         v-model.lazy="searchTerm"
                         v-debounce="500"
                         class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
-                        placeholder="Search..."
+                        placeholder="@lang('admin::app.components.lookup.search')"
                         ref="searchInput"
                         @keyup="search"
                     />
@@ -86,9 +86,19 @@
                         @{{ item.name }}
                     </li>
 
-                    <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500">
-                        @lang('No results found')
-                    </li>
+                    <template v-if="filteredResults.length === 0">
+                        <li class="px-4 py-2 text-gray-500">
+                            @lang('admin::app.components.lookup.no-results')
+                        </li>
+
+                        <li
+                            v-if="searchTerm.length > 2"
+                            @click="selectItem({ id: '', name: searchTerm })"
+                            class="px-4 py-2 cursor-pointer border-t border-gray-800 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-brandColor dark:hover:text-white"
+                        >
+                            + @lang('admin::app.components.lookup.add-as-new')
+                        </li>
+                    </template>
                 </ul>
             </div>
         </div>
