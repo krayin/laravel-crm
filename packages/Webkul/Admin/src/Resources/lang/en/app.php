@@ -1643,6 +1643,8 @@ return [
             ],
 
             'kanban' => [
+                'rotten-days' => 'Lead is rotten for :days days',
+
                 'columns' => [
                     'contact-person'      => 'Contact Person',
                     'id'                  => 'ID',
