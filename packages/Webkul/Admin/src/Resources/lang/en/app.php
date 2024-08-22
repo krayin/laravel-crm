@@ -384,7 +384,15 @@ return [
                 'click-to-add'    => 'Click to add',
                 'search'          => 'Search',
                 'no-result-found' => 'No result found',
+                'search'          => 'Search...',
             ],
+        ],
+
+        'lookup' => [
+            'click-to-add' => 'Click to Add',
+            'no-results'   => 'No Results Found',
+            'add-as-new'   => 'Add as New',
+            'search'       => 'Search...',
         ],
 
         'flash-group' => [
@@ -1692,7 +1700,7 @@ return [
             'contact' => [
                 'name'           => 'Name',
                 'email'          => 'Email',
-                'contact-number' => 'contact-number',
+                'contact-number' => 'Contact Number',
                 'organization'   => 'Organization',
             ],
 

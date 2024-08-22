@@ -25,6 +25,8 @@
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[address]'" />
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '.address'" />
                 </x-admin::form.control-group>
             </div>
 
@@ -45,6 +47,7 @@
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[country]'" />
 
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '.country'" />
                 </x-admin::form.control-group>
 
                 <!-- State Field -->
@@ -54,15 +57,21 @@
                             type="select"
                             ::name="attribute['code'] + '[state]'"
                             v-model="state"
+                            :label="trans('admin::app.common.custom-attributes.state')"
                         >
                             <option value="">@lang('admin::app.common.custom-attributes.select-state')</option>
                             
-                            <option v-for='(state, index) in countryStates[country]' :value="state.code">
+                            <option 
+                                v-for='(state, index) in countryStates[country]' 
+                                :value="state.code"
+                            >
                                 @{{ state.name }}
                             </option>
                         </x-admin::form.control-group.control>
 
                         <x-admin::form.control-group.error ::name="attribute['code'] + '[state]'" />
+
+                        <x-admin::form.control-group.error ::name="attribute['code'] + '.state'" />
                     </x-admin::form.control-group>
                 </template>
 
@@ -72,11 +81,14 @@
                             type="text"
                             ::name="attribute['code'] + '[state]'"
                             :placeholder="trans('admin::app.common.custom-attributes.state')"
+                            :label="trans('admin::app.common.custom-attributes.state')"
                             v-model="state"
                         >
                         </x-admin::form.control-group.control>
                         
                         <x-admin::form.control-group.error ::name="attribute['code'] + '[state]'" />
+
+                        <x-admin::form.control-group.error ::name="attribute['code'] + '.state'" />
                     </x-admin::form.control-group>
                 </template>
 
@@ -87,9 +99,12 @@
                         ::name="attribute['code'] + '[city]'"
                         ::value="data && data['city'] ? data['city'] : ''"
                         :placeholder="trans('admin::app.common.custom-attributes.city')"
+                        :label="trans('admin::app.common.custom-attributes.city')"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[city]'"/>
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '.city'" />
                 </x-admin::form.control-group>
 
                 <!-- Postcode Field -->
@@ -99,9 +114,12 @@
                         ::name="attribute['code'] + '[postcode]'"
                         ::value="data &&  data['postcode'] ? data['postcode'] : ''"
                         :placeholder="trans('admin::app.common.custom-attributes.postcode')"
+                        :postcode="trans('admin::app.common.custom-attributes.postcode')"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[postcode]'" />
+
+                    <x-admin::form.control-group.error ::name="attribute['code'] + '.postcode'" />
                 </x-admin::form.control-group>
             </div>
         </div>

@@ -83,7 +83,7 @@
                                     id="end_point"
                                     class="rounded-l-none"
                                     :value="old('end_point')"
-                                    rules="required"
+                                    rules="required|url"
                                     :label="trans('admin::app.settings.webhooks.create.url-endpoint')"
                                     :placeholder="trans('admin::app.settings.webhooks.create.url-endpoint')"
                                     v-model="baseUrl"
@@ -404,12 +404,14 @@
                         </div>
                     </div>
             
-                    <span
-                        class="cursor-pointer py-2 text-xs text-brandColor hover:text-sky-500 hover:underline"
-                        @click="add(index)" 
-                    >
-                        @{{ removeBtnTitle }}
-                    </span>
+                    <div class="inline-block">
+                        <span
+                            class="cursor-pointer py-2 text-xs text-brandColor hover:text-sky-500 hover:underline"
+                            @click="add(index)" 
+                        >
+                            @{{ addBtnTitle }}
+                        </span>
+                    </div>
                 </div>
             </x-admin::form.control-group>
         </script>
