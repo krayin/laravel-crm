@@ -4,11 +4,15 @@ namespace Webkul\Warehouse\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Webkul\Activity\Models\ActivityProxy;
+use Webkul\Activity\Traits\LogsActivity;
+use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Tag\Models\TagProxy;
 use Webkul\Warehouse\Contracts\Warehouse as WarehouseContract;
 
 class Warehouse extends Model implements WarehouseContract
 {
+    use CustomAttribute, LogsActivity;
+
     /**
      * The attributes that are mass assignable.
      *

@@ -72,6 +72,7 @@
                     ['name' => 'all', 'label' => trans('admin::app.settings.warehouses.view.all')],
                     ['name' => 'note', 'label' => trans('admin::app.settings.warehouses.view.notes')],
                     ['name' => 'file', 'label' => trans('admin::app.settings.warehouses.view.files')],
+                    ['name' => 'system', 'label' => trans('admin::app.settings.warehouses.view.change-logs')],
                 ]"
                 :extra-types="[
                     ['name' => 'location', 'label' => trans('admin::app.settings.warehouses.view.location')],

@@ -10,7 +10,9 @@
             'entity_type' => 'products',
             ['code', 'IN', ['SKU', 'price', 'quantity', 'status']]
         ])->sortBy('sort_order')"
+        :allow-edit="true"
         :entity="$product"
+        :url="route('admin.products.update', $product->id)"   
     />
 </div>
 

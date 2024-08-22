@@ -20,7 +20,7 @@ class ActivityResource extends JsonResource
             'title'         => $this->title,
             'type'          => $this->type,
             'comment'       => $this->comment,
-            'additional'    => $this->resource->additional,
+            'additional'    => is_array($this->resource->additional) ? $this->resource->additional : json_decode($this->resource->additional, true),
             'schedule_from' => $this->schedule_from,
             'schedule_to'   => $this->schedule_to,
             'is_done'       => $this->is_done,

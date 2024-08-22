@@ -56,7 +56,7 @@
                     <x-slot:content>
                         <!-- Activity Type -->
                         <x-admin::form.control-group.control
-                            type="text"
+                            type="hidden"
                             name="type"
                             v-model="selectedType.value"
                         />
@@ -114,7 +114,7 @@
                                 </x-admin::form.control-group.label>
                                 
                                 <x-admin::form.control-group.control
-                                    type="date"
+                                    type="datetime"
                                     name="schedule_from"
                                     rules="required"
                                     :label="trans('admin::app.components.activities.actions.activity.schedule-from')"
@@ -130,7 +130,7 @@
                                 </x-admin::form.control-group.label>
                                 
                                 <x-admin::form.control-group.control
-                                    type="date"
+                                    type="datetime"
                                     name="schedule_to"
                                     rules="required"
                                     :label="trans('admin::app.components.activities.actions.activity.schedule-to')"
