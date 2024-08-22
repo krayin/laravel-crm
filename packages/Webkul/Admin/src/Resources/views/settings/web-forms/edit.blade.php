@@ -152,6 +152,7 @@
                             name="background_color"
                             title="@lang('admin::app.settings.webforms.edit.backgroud-color')"
                             value="{{ old('background_color') ?? $webForm->background_color }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -173,6 +174,7 @@
                             name="form_background_color"
                             title="@lang('admin::app.settings.webforms.edit.form-background-color')"
                             value="{{ old('form_background_color') ?? $webForm->form_background_color }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -194,6 +196,7 @@
                             name="form_title_color"
                             title="@lang('admin::app.settings.webforms.edit.form-title-color')"
                             value="{{ old('form_title_color') ?? $webForm->form_title_color }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -215,6 +218,7 @@
                             name="form_submit_button_color"
                             title="@lang('admin::app.settings.webforms.edit.form-submit-button-color')"
                             value="{{ old('form_submit_button_color') ?? $webForm->form_submit_button_color }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -236,6 +240,7 @@
                             name="attribute_label_color"
                             title="@lang('admin::app.settings.webforms.edit.attribute-label-color')"
                             value="{{ old('attribute_label_color') ?? $webForm->attribute_label_color }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -278,7 +283,9 @@
             
                                 <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                     <template v-if="createLead">
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.edit.person')</div>
+                                        <div class="m-2 text-lg font-bold">
+                                            @lang('admin::app.settings.webforms.edit.person')
+                                        </div>
 
                                         <span
                                             v-for="attribute in groupedAttributes.persons"
@@ -292,7 +299,9 @@
                                     </template>
 
                                     <template v-else>
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.edit.leads')</div>
+                                        <div class="m-2 text-lg font-bold">
+                                            @lang('admin::app.settings.webforms.edit.leads')
+                                        </div>
 
                                         <span
                                             v-for="attribute in groupedAttributes.leads"
@@ -311,7 +320,7 @@
                             <draggable
                                 tag="tbody"
                                 ghost-class="draggable-ghost"
-                                handle=".icon-edit"
+                                handle=".icon-move"
                                 v-bind="{animation: 200}"
                                 item-key="id"
                                 :list="addedAttributes"
@@ -319,8 +328,8 @@
                                 <template #item="{ element, index }">
                                     <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
                                         <!-- Draggable Icon -->
-                                        <x-admin::table.td class="!px-0 text-center">
-                                            <i class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
+                                        <x-admin::table.td class="text-center">
+                                            <i class="icon-move cursor-grab rounded-md text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></i>
 
                                             <input
                                                 type="hidden"
@@ -577,7 +586,7 @@
                             value: "{{ old('submit_success_action') ?? $webForm->submit_success_action }}",
 
                             options: [
-                                { value: 'message', label: '@lang('admin::app.settings.webforms.edit.display-custom-messsage')' },
+                                { value: 'message', label: '@lang('admin::app.settings.webforms.edit.display-custom-message')' },
                                 { value: 'redirect', label: '@lang('admin::app.settings.webforms.edit.redirect-to-url')' },
                             ],
                         },

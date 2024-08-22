@@ -126,12 +126,13 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="background_color"
-                            title="@lang('admin::app.settings.webforms.create.backgroud-color')"
+                            title="@lang('admin::app.settings.webforms.create.background-color')"
                             value="{{ old('background_color') ?? '#F7F8F9' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
-                                    @lang('admin::app.settings.webforms.create.backgroud-color')
+                                    @lang('admin::app.settings.webforms.create.background-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -149,6 +150,7 @@
                             name="form_background_color"
                             title="@lang('admin::app.settings.webforms.create.form-background-color')"
                             value="{{ old('form_background_color') ?? '#FFFFFF' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -172,6 +174,7 @@
                             name="form_title_color"
                             title="@lang('admin::app.settings.webforms.create.form-title-color')"
                             value="{{ old('form_title_color') ?? '#263238' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -195,6 +198,7 @@
                             name="form_submit_button_color"
                             title="@lang('admin::app.settings.webforms.create.form-submit-btn-color')"
                             value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -218,6 +222,7 @@
                             name="attribute_label_color"
                             title="@lang('admin::app.settings.webforms.create.attribute-label-color')"
                             value="{{ old('attribute_label_color') ?? '#546E7A' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -296,7 +301,7 @@
                             <draggable
                                 tag="tbody"
                                 ghost-class="draggable-ghost"
-                                handle=".icon-edit"
+                                handle=".icon-move"
                                 v-bind="{animation: 200}"
                                 item-key="id"
                                 :list="addedAttributes"z
@@ -304,8 +309,8 @@
                                 <template #item="{ element, index }">
                                     <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
                                         <!-- Draggable Icon -->
-                                        <x-admin::table.td class="!px-0 text-center">
-                                            <i class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
+                                        <x-admin::table.td class="text-center">
+                                            <i class="icon-move cursor-grab rounded-md text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></i>
 
                                             <input
                                                 type="hidden"
