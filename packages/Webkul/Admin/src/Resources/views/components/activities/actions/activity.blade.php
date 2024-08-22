@@ -56,18 +56,18 @@
                     <x-slot:content>
                         <!-- Activity Type -->
                         <x-admin::form.control-group.control
-                            type="hidden"
+                            type="text"
                             name="type"
-                            ::value="selectedType.value"
+                            v-model="selectedType.value"
                         />
-                        
+
                         <!-- Id -->
                         <x-admin::form.control-group.control
                             type="hidden"
                             ::name="entityControlName"
                             ::value="entity.id"
                         />
-                        
+
                         <!-- Title -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
@@ -202,7 +202,7 @@
                             value: 'meeting'
                         }, {
                             label: "{{ trans('admin::app.components.activities.actions.activity.lunch') }}",
-                            value: 'task'
+                            value: 'lunch'
                         },
                     ]
                 }
