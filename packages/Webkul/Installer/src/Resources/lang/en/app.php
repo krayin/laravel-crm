@@ -11,6 +11,8 @@ return [
                 'source'              => 'Source',
                 'title'               => 'Title',
                 'type'                => 'Type',
+                'pipeline'            => 'Pipeline',
+                'stage'               => 'Stage',
             ],
 
             'persons' => [

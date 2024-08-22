@@ -109,6 +109,12 @@ class ProductController extends Controller
 
         Event::dispatch('product.update.after', $product);
 
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.products.index.update-success'),
+            ]);
+        }
+
         session()->flash('success', trans('admin::app.products.index.update-success'));
 
         return redirect()->route('admin.products.index');

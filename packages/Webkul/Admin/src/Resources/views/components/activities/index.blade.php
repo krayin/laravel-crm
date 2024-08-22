@@ -66,9 +66,28 @@
                                 >
                                     <div class="flex flex-col gap-2">
                                         <!-- Activity Title -->
-                                        <div class="flex flex-col gap-1">
-                                            <p class="font-medium dark:text-white">
+                                        <div
+                                            class="flex flex-col gap-1"
+                                            v-if="activity.title"
+                                        >
+                                            <p class="flex items-center gap-1 font-medium dark:text-white">
                                                 @{{ activity.title }}
+
+                                                <template v-if="activity.type == 'system' && activity.additional">
+                                                    <div class="flex items-center gap-1">
+                                                        <span>:</span>
+                                                        
+                                                        <span>
+                                                            @{{ activity.additional.old.label ?? "@lang('admin::app.components.activities.index.empty')" }}
+                                                        </span>
+
+                                                        <span class="icon-stats-up rotate-90 text-xl"></span>
+
+                                                        <span>
+                                                            @{{ activity.additional.new.label ?? "@lang('admin::app.components.activities.index.empty')" }}
+                                                        </span>
+                                                    </div>
+                                                </template>
                                             </p>
 
                                             <template v-if="activity.type == 'email'">
@@ -174,82 +193,84 @@
                                     </div>
                                     
                                     <!-- Activity More Options -->
-                                    <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
-                                        <x-slot:toggle>
-                                            <template v-if="! isUpdating[activity.id]">
-                                                <button
-                                                    class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
-                                                ></button>
-                                            </template>
+                                    <template v-if="activity.type != 'system'">
+                                        <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
+                                            <x-slot:toggle>
+                                                <template v-if="! isUpdating[activity.id]">
+                                                    <button
+                                                        class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
+                                                    ></button>
+                                                </template>
 
-                                            <template v-else>
-                                                <x-admin::spinner />
-                                            </template>
-                                        </x-slot>
+                                                <template v-else>
+                                                    <x-admin::spinner />
+                                                </template>
+                                            </x-slot>
 
-                                        <x-slot:menu class="!min-w-40">
-                                            <template v-if="activity.type != 'email'">
-                                                @if (bouncer()->hasPermission('activities.edit'))
-                                                    <x-admin::dropdown.menu.item 
-                                                        v-if="! activity.is_done"
-                                                        @click="markAsDone(activity)"
-                                                    >
-                                                        <div class="flex items-center gap-2">
-                                                            <span class="icon-tick text-2xl"></span>
-                                                            
-                                                            @lang('admin::app.components.activities.index.mark-as-done')
-                                                        </div>
-                                                    </x-admin::dropdown.menu.item>
+                                            <x-slot:menu class="!min-w-40">
+                                                <template v-if="activity.type != 'email'">
+                                                    @if (bouncer()->hasPermission('activities.edit'))
+                                                        <x-admin::dropdown.menu.item 
+                                                            v-if="! activity.is_done"
+                                                            @click="markAsDone(activity)"
+                                                        >
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="icon-tick text-2xl"></span>
+                                                                
+                                                                @lang('admin::app.components.activities.index.mark-as-done')
+                                                            </div>
+                                                        </x-admin::dropdown.menu.item>
+                                                        
+                                                        <x-admin::dropdown.menu.item>
+                                                            <a
+                                                                class="flex items-center gap-2"
+                                                                :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
+                                                                target="_blank"
+                                                            >
+                                                                <span class="icon-edit text-2xl"></span>
+                                                                
+                                                                @lang('admin::app.components.activities.index.edit')
+                                                            </a>
+                                                        </x-admin::dropdown.menu.item>
+                                                    @endif
+
+                                                    @if (bouncer()->hasPermission('activities.delete'))
+                                                        <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                            <div class="flex items-center gap-2">
+                                                                <span class="icon-delete text-2xl"></span>
+
+                                                                @lang('admin::app.components.activities.index.delete')
+                                                            </div>
+                                                        </x-admin::dropdown.menu.item>
+                                                    @endif
+                                                </template>
+
+                                                <template v-else>
+                                                    @if (bouncer()->hasPermission('mail.view'))
+                                                        <x-admin::dropdown.menu.item>
+                                                            <a
+                                                                :href="'{{ route('admin.mail.view', ['route' => 'replaceFolder', 'id' => 'replaceMailId']) }}'.replace('replaceFolder', activity.additional.folders[0]).replace('replaceMailId', activity.id)"
+                                                                class="flex items-center gap-2"
+                                                                target="_blank"
+                                                            >
+                                                                <span class="icon-eye text-2xl"></span>
+
+                                                                @lang('admin::app.components.activities.index.view')
+                                                            </a>
+                                                        </x-admin::dropdown.menu.item>
+                                                    @endif
                                                     
-                                                    <x-admin::dropdown.menu.item>
-                                                        <a
-                                                            class="flex items-center gap-2"
-                                                            :href="'{{ route('admin.activities.edit', 'replaceId') }}'.replace('replaceId', activity.id)"
-                                                            target="_blank"
-                                                        >
-                                                            <span class="icon-edit text-2xl"></span>
-                                                            
-                                                            @lang('admin::app.components.activities.index.edit')
-                                                        </a>
-                                                    </x-admin::dropdown.menu.item>
-                                                @endif
-
-                                                @if (bouncer()->hasPermission('activities.delete'))
-                                                    <x-admin::dropdown.menu.item @click="remove(activity)">
+                                                    <x-admin::dropdown.menu.item @click="unlinkEmail(activity)">
                                                         <div class="flex items-center gap-2">
-                                                            <span class="icon-delete text-2xl"></span>
+                                                            <span class="icon-attachment text-2xl"></span>
 
-                                                            @lang('admin::app.components.activities.index.delete')
+                                                            @lang('admin::app.components.activities.index.unlink')
                                                         </div>
                                                     </x-admin::dropdown.menu.item>
-                                                @endif
-                                            </template>
-
-                                            <template v-else>
-                                                @if (bouncer()->hasPermission('mail.view'))
-                                                    <x-admin::dropdown.menu.item>
-                                                        <a
-                                                            :href="'{{ route('admin.mail.view', ['route' => 'replaceFolder', 'id' => 'replaceMailId']) }}'.replace('replaceFolder', activity.additional.folders[0]).replace('replaceMailId', activity.id)"
-                                                            class="flex items-center gap-2"
-                                                            target="_blank"
-                                                        >
-                                                            <span class="icon-eye text-2xl"></span>
-
-                                                            @lang('admin::app.components.activities.index.view')
-                                                        </a>
-                                                    </x-admin::dropdown.menu.item>
-                                                @endif
-                                                
-                                                <x-admin::dropdown.menu.item @click="unlinkEmail(activity)">
-                                                    <div class="flex items-center gap-2">
-                                                        <span class="icon-attachment text-2xl"></span>
-
-                                                        @lang('admin::app.components.activities.index.unlink')
-                                                    </div>
-                                                </x-admin::dropdown.menu.item>
-                                            </template>
-                                        </x-slot>
-                                    </x-admin::dropdown>
+                                                </template>
+                                            </x-slot>
+                                        </x-admin::dropdown>
+                                    </template>
                                 </div>
                             </div>
 
@@ -330,6 +351,9 @@
                         }, {
                             name: 'email',
                             label: "{{ trans('admin::app.components.activities.index.emails') }}",
+                        }, {
+                            name: 'system',
+                            label: "{{ trans('admin::app.components.activities.index.change-log') }}",
                         }
                     ],
                 },
@@ -357,6 +381,7 @@
                         meeting: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                         lunch: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                         file: 'icon-file bg-green-200 text-green-900 dark:!text-green-900',
+                        system: 'icon-system-generate bg-yellow-200 text-yellow-900 dark:!text-yellow-900',
                         default: 'icon-activity bg-blue-200 text-blue-800 dark:!text-blue-800',
                     },
 
@@ -408,6 +433,12 @@
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.description') }}",
                         },
+
+                        system: {
+                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            title: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.title') }}",
+                            description: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.description') }}",
+                        }
                     },
                 }
             },

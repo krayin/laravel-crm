@@ -79,7 +79,7 @@
 
                             <!-- Attachments -->
                             <p
-                                :class="record.attachments ? 'icon-attachmetent' : ''"
+                                :class="record.attachments ? 'icon-attachment' : ''"
                                 v-html="record.attachments"
                             ></p>
 

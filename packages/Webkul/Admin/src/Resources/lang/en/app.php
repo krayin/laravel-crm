@@ -160,6 +160,7 @@ return [
                 'quotes'       => 'Quotes',
                 'notes'        => 'Notes',
                 'emails'       => 'Emails',
+                'change-log'   => 'Changelogs',
                 'by-user'      => 'By :user',
                 'scheduled-on' => 'Scheduled on',
                 'location'     => 'Location',
@@ -169,6 +170,7 @@ return [
                 'edit'         => 'Edit',
                 'view'         => 'View',
                 'unlink'       => 'Unlink',
+                'empty'        => 'Empty',
 
                 'empty-placeholders' => [
                     'all' => [
@@ -209,6 +211,11 @@ return [
                     'emails' => [
                         'title'       => 'No Emails Found',
                         'description' => 'No emails found for this. You can add email by clicking on the button on the left panel.',
+                    ],
+
+                    'system' => [
+                        'title'       => 'No Change Logs Found',
+                        'description' => 'No change logs found for this.',
                     ],
                 ],
             ],
@@ -378,6 +385,13 @@ return [
                 'search'          => 'Search',
                 'no-result-found' => 'No result found',
             ],
+        ],
+
+        'flash-group' => [
+            'success' => 'Success',
+            'error'   => 'Error',
+            'warning' => 'Warning',
+            'info'    => 'Info',
         ],
     ],
 
@@ -667,6 +681,7 @@ return [
             'notes'       => 'Notes',
             'files'       => 'Files',
             'inventories' => 'Inventory',
+            'change-logs' => 'Change Logs',
 
             'attributes' => [
                 'about-product' => 'About Product',
@@ -1301,10 +1316,11 @@ return [
             ],
 
             'view' => [
-                'all'          => 'All',
-                'notes'        => 'Notes',
-                'files'        => 'Files',
-                'location'     => 'Location',
+                'all'         => 'All',
+                'notes'       => 'Notes',
+                'files'       => 'Files',
+                'location'    => 'Location',
+                'change-logs' => 'Change Logs',
 
                 'locations' => [
                     'action'         => 'Action',
@@ -1489,9 +1505,12 @@ return [
             'users'           => 'Users',
         ],
 
+        'updated'              => 'Updated :attribute',
+        'created'              => 'Created',
         'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
         'create-success'       => 'Activity created successfully.',
         'update-success'       => 'Activity updated successfully.',
+        'overlapping-error'    => 'Participants have another meeting at this time.',
         'mass-update-success'  => 'Activities updated successfully.',
         'destroy-success'      => 'Activity deleted successfully.',
         'delete-failed'        => 'Activity can not be deleted.',

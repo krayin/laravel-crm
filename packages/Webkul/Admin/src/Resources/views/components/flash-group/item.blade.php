@@ -12,29 +12,63 @@
         id="v-flash-item-template"
     >
         <div
-            class="flex w-max justify-between gap-12 rounded-full p-3"
+            class="flex w-max items-start justify-between gap-2 rounded-lg bg-white p-3 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)]"
             :style="typeStyles[flash.type]['container']"
         >
-            <p
-                class="flex items-center break-all text-sm"
-                :style="typeStyles[flash.type]['message']"
-            >
-                <span
-                    class="icon-toast-done rounded-full bg-white text-2xl dark:bg-gray-900 ltr:mr-2.5 rtl:ml-2.5"
-                    :class="iconClasses[flash.type]"
-                    :style="typeStyles[flash.type]['icon']"
-                ></span>
+            <!-- Icon -->
+            <span
+                class="icon-toast-done rounded-full bg-white text-2xl dark:bg-gray-900"
+                :class="iconClasses[flash.type]"
+                :style="typeStyles[flash.type]['icon']"
+            ></span>
 
-                @{{ flash.message }}
-            </p>
+            <div class="flex flex-col gap-1.5">
+                <!-- Heading -->
+                <p class="text-base font-semibold">
+                    @{{ typeHeadings[flash.type] }}
+                </p>
 
-			<span
-                class="cursor-pointer underline"
-                :style="typeStyles[flash.type]['message']"
+                <!-- Message -->
+                <p
+                    class="flex items-center break-all text-sm"
+                    :style="typeStyles[flash.type]['message']"
+                >
+
+                    @{{ flash.message }}
+                </p>
+            </div>
+
+            <button
+                class="relative ml-4 inline-flex rounded-full bg-white p-1.5 text-gray-400"
                 @click="remove"
             >
-                Close
-            </span>
+                <span class="icon-cross-large text-2xl text-slate-800"></span>
+
+                <svg class="absolute inset-0 h-full w-full -rotate-90" viewBox="0 0 24 24">
+                    <circle
+                        class="text-gray-200"
+                        stroke-width="1.5"
+                        stroke="#D0D4DA"
+                        fill="transparent"
+                        r="10"
+                        cx="12"
+                        cy="12"
+                    />
+                    
+                    <circle
+                        class="text-blue-600 transition-all duration-100 ease-out"
+                        stroke-width="1.5"
+                        :stroke-dasharray="circumference"
+                        :stroke-dashoffset="strokeDashoffset"
+                        stroke-linecap="round"
+                        :stroke="typeStyles[flash.type]['stroke']"
+                        fill="transparent"
+                        r="10"
+                        cx="12"
+                        cy="12"
+                    />
+                </svg>
+            </button>
         </div>
     </script>
 
@@ -47,62 +81,96 @@
             data() {
                 return {
                     iconClasses: {
-                        success: 'icon-done',
+                        success: 'icon-success',
 
-                        error: 'icon-cancel-1',
+                        error: 'icon-error',
 
-                        warning: 'icon-information',
+                        warning: 'icon-warning',
 
-                        info: 'icon-processing',
+                        info: 'icon-info',
+                    },
+
+                    typeHeadings: {
+                        success: "@lang('admin::app.components.flash-group.success')",
+
+                        error: "@lang('admin::app.components.flash-group.error')",
+
+                        warning: "@lang('admin::app.components.flash-group.warning')",
+
+                        info: "@lang('admin::app.components.flash-group.info')",
                     },
 
                     typeStyles: {
                         success: {
-                            container: 'background: #059669',
+                            container: 'border-left: 8px solid #16A34A',
 
-                            message: 'color: #FFFFFF',
+                            icon: 'color: #16A34A',
 
-                            icon: 'color: #059669'
+                            stroke: '#16A34A',
                         },
 
                         error: {
-                            container: 'background: #EF4444',
+                            container: 'border-left: 8px solid #FF4D50',
 
-                            message: 'color: #FFFFFF',
+                            icon: 'color: #FF4D50',
 
-                            icon: 'color: #EF4444'
+                            stroke: '#FF4D50',
                         },
 
                         warning: {
-                            container: 'background: #FACC15',
+                            container: 'border-left: 8px solid #FBAD15',
 
-                            message: 'color: #1F2937',
+                            icon: 'color: #FBAD15',
 
-                            icon: 'color: #FACC15'
+                            stroke: '#FBAD15',
                         },
 
                         info: {
-                            container: 'background: #0284C7',
+                            container: 'border-left: 8px solid #0E90D9',
 
-                            message: 'color: #FFFFFF',
+                            icon: 'color: #0E90D9',
 
-                            icon: 'color: #0284C7'
+                            stroke: '#0E90D9',
                         },
                     },
+
+                    duration: 5000,
+
+                    progress: 0,
+                    
+                    circumference: 2 * Math.PI * 10,
                 };
             },
 
-            created() {
-                var self = this;
+            computed: {
+                strokeDashoffset() {
+                    return this.circumference - (this.progress / 100) * this.circumference;
+                }
+            },
 
-                setTimeout(function() {
-                    self.remove()
-                }, 5000)
+            created() {
+                this.startTimer();
             },
 
             methods: {
                 remove() {
                     this.$emit('onRemove', this.flash)
+                },
+
+                startTimer() {
+                    const interval = 100;
+
+                    const step = (100 / (this.duration / interval));
+
+                    const timer = setInterval(() => {
+                        this.progress += step;
+                        
+                        if (this.progress >= 100) {
+                            clearInterval(timer);
+
+                            this.remove();
+                        }
+                    }, interval);
                 }
             }
         });
