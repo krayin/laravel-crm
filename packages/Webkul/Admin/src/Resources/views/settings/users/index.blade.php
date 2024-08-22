@@ -137,7 +137,7 @@
 
                             <!-- Actions -->
                             <div class="flex justify-end">
-                                <a @click="selectedType=true; editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                <a @click="editModal(record.actions.find(action => action.index === 'edit')?.url)">
                                     <span
                                         :class="record.actions.find(action => action.index === 'edit')?.icon"
                                         class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
@@ -176,9 +176,9 @@
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @{{ 
-                                    selectedType
-                                    ? "@lang('admin::app.settings.users.index.edit.title')" 
-                                    : "@lang('admin::app.settings.users.index.create.title')"
+                                    selectedType == 'create'
+                                    ? "@lang('admin::app.settings.users.index.create.title')"
+                                    : "@lang('admin::app.settings.users.index.edit.title')" 
                                 }}
                             </p>
                         </x-slot>
@@ -338,13 +338,13 @@
                                     rules="required"
                                     label="@lang('admin::app.settings.users.index.create.group')"
                                     multiple
-                                    v-model="selectedGroups"
+                                    v-model="user.groups"
                                 >
                                     <select
                                         name="groups[]"
                                         class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         multiple
-                                        v-model="selectedGroups"
+                                        v-model="user.groups"
                                     >
                                         <option
                                             v-for="group in groups"
@@ -416,9 +416,7 @@
 
                         roles: @json($roles),
 
-                        groups:  @json($groups),  
-
-                        selectedGroups: {},
+                        groups:  @json($groups),
 
                         user: {},
                     };
@@ -438,10 +436,16 @@
         
                         return count;
                     },
+
+                    selectedType() {
+                        return this.user.id ? 'edit' : 'create';
+                    },
                 },
         
                 methods: {
                     openModal() {
+                        this.user = {};
+
                         this.$refs.userUpdateAndCreateModal.toggle();
                     },
                     
@@ -473,10 +477,10 @@
                     
                     editModal(url) {
                         this.$axios.get(url)
-                            .then(response => {
+                            .then(response => {                                
                                 this.user = response.data.data;
 
-                                this.selectedGroups = response.data.groups.map(group => group.id);
+                                this.user.groups = this.user.groups.map(group => group.id);
 
                                 this.$refs.userUpdateAndCreateModal.toggle();
                             })

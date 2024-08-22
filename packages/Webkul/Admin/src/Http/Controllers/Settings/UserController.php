@@ -96,16 +96,10 @@ class UserController extends Controller
      */
     public function edit(int $id): View|JsonResponse
     {
-        $admin = $this->userRepository->findOrFail($id);
-
-        $roles = $this->roleRepository->all();
-
-        $groups = $this->groupRepository->all();
+        $admin = $this->userRepository->with(['role', 'groups'])->findOrFail($id);
 
         return new JsonResponse([
             'data'   => $admin,
-            'roles'  => $roles,
-            'groups' => $groups,
         ]);
     }
 
@@ -142,7 +136,7 @@ class UserController extends Controller
 
         $admin->save();
 
-        $admin->groups()->sync(request('groups') ?? []);
+        $admin->groups()->sync(request()->input('groups') ?? []);
 
         Event::dispatch('settings.user.update.after', $admin);
 
