@@ -49,12 +49,14 @@
             </x-admin::table>
 
             <!-- Add New Product Item -->
-            <span
-                class="cursor-pointer text-brandColor"
-                @click="addProduct"
-            >
-                + @lang('admin::app.leads.view.products.add-more')
-            </span>
+            <div>
+                <span 
+                    class="cursor-pointer text-brandColor" 
+                    @click="addProduct"
+                >
+                    + @lang('admin::app.leads.view.products.add-more')
+                </span>
+            </div>
         </div>
 
         <div v-else>
@@ -172,15 +174,15 @@
             <x-admin::table.td class="text-right">
                 <template v-if="product.is_new">
                     <x-admin::form.control-group>
-                        <div class="flex gap-4 items-center justify-end">
+                        <div class="flex items-center justify-end gap-4">
                             <i  
                                 @click="attachProduct(product)"
-                                class="icon-enter text-black cursor-pointer text-2xl"
+                                class="icon-enter cursor-pointer text-2xl text-black"
                             ></i>
 
                             <i  
                                 @click="removeProduct"
-                                class="icon-cross-large text-black cursor-pointer text-2xl"
+                                class="icon-cross-large cursor-pointer text-2xl text-black"
                             ></i>
                         </div>
                     </x-admin::form.control-group>

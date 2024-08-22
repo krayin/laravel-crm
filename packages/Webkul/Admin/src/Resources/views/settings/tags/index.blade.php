@@ -185,11 +185,11 @@
                                         id="blue-500" 
                                         name="color" 
                                         value="blue-500" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="blue-500" 
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-blue-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
+                                        class="block h-6 w-6 cursor-pointer rounded-full bg-blue-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
                                     >
                                     </label>
                                 </span>
@@ -200,7 +200,7 @@
                                         id="yellow-400" 
                                         name="color" 
                                         value="yellow-400" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="yellow-400" 
@@ -215,7 +215,7 @@
                                         id="pink-500" 
                                         name="color" 
                                         value="pink-500" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="pink-500" 
@@ -230,7 +230,7 @@
                                         id="cyan-500" 
                                         name="color" 
                                         value="cyan-500" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="cyan-500"    
@@ -245,7 +245,7 @@
                                         id="orange-500" 
                                         name="color" 
                                         value="orange-500" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="orange-500" 
@@ -260,7 +260,7 @@
                                         id="green-500" 
                                         name="color" 
                                         value="green-500" 
-                                        class="peer absolute z-10 ml-1.5 mt-1.5 cursor-pointer opacity-0"
+                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
                                     />
                                     <label 
                                         for="green-500" 

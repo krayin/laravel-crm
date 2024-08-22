@@ -230,8 +230,7 @@
                 type="radio"
                 name="{{ $name }}"
                 v-bind="field"
-                class="peer sr-only"
-                {{ $attributes->except(['rules', 'label', ':label', 'key', ':key']) }}
+                {{ $attributes->except(['rules', 'label', ':label', 'key', ':key'])->merge(['class' => 'peer sr-only']) }}
             />
                 
             <v-checked-handler
@@ -243,8 +242,7 @@
         </v-field>
 
         <label
-            class="icon-radio-normal peer-checked:icon-radio-selected cursor-pointer text-2xl peer-checked:text-blue-600"
-            {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label', 'key', ':key']) }}
+            {{ $attributes->except(['value', ':value', 'v-model', 'rules', ':rules', 'label', ':label', 'key', ':key'])->merge(['class' => 'icon-radio-normal peer-checked:icon-radio-selected cursor-pointer text-2xl peer-checked:text-blue-600']) }}
         >
         </label>
 
