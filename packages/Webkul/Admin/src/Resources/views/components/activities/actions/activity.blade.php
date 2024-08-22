@@ -236,7 +236,7 @@
                             } else {
                                 self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                //self.$refs.activityModal.close();
+                                self.$refs.activityModal.close();
                             }
                         });
                 },
