@@ -10,7 +10,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\DataGrids\Settings\WarehouseDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
-use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Warehouse\Repositories\WarehouseRepository;
 
 class WarehouseController extends Controller

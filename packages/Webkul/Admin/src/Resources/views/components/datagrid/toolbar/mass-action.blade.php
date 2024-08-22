@@ -18,7 +18,7 @@
             :validate-mass-action="validateMassAction"
             :perform-mass-action="performMassAction"
         >
-            <div class="flex max-w-max items-center justify-center gap-2 rounded-lg bg-white p-2 px-4 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)] dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex max-w-max items-center justify-center gap-2 rounded-lg bg-white p-2 px-4 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)] dark:border-gray-800 dark:bg-gray-700 dark:text-gray-300">
                 <div>
                     <p class="text-sm font-light text-gray-800 dark:text-white">
                         @{{ "@lang('admin::app.components.datagrid.toolbar.selected')".replace(':total', applied.massActions.indices.length) }}
@@ -34,7 +34,7 @@
                                     class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     @click="showPopup = ! showPopup"
                                 >
-                                    <span class="text-sm font-normal text-black">
+                                    <span class="text-sm font-normal">
                                         @{{ massAction.title }}
                                     </span>
         
