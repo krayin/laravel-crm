@@ -1,6 +1,6 @@
 <v-inline-datetime-edit {{ $attributes }}>
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px] space-x-2">
+        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px]">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -15,8 +15,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[34px] space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                class="flex items-center rounded-xs h-[34px]"
+                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
@@ -44,7 +44,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden text-xl pr-2 group-hover:block"
+                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
                     ></i>
                 </template>
             </div>

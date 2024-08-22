@@ -20,6 +20,10 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
 
     Route::put('edit/{id}', 'update')->name('admin.leads.update');
 
+    Route::put('attributes/edit/{id}', 'updateAttributes')->name('admin.leads.attributes.update');
+
+    Route::put('stage/edit/{id}', 'updateStage')->name('admin.leads.stage.update');
+
     Route::get('search', 'search')->name('admin.leads.search');
 
     Route::delete('{id}', 'destroy')->name('admin.leads.delete');
@@ -33,6 +37,8 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
     Route::delete('product/{lead_id}', 'removeProduct')->name('admin.leads.product.remove');
 
     Route::put('product/{lead_id}', 'addProduct')->name('admin.leads.product.add');
+
+    Route::get('kanban/look-up', [LeadController::class, 'kanbanLookup'])->name('admin.leads.kanban.look_up');
 
     Route::controller(ActivityController::class)->prefix('{id}/activities')->group(function () {
         Route::get('', 'index')->name('admin.leads.activities.index');

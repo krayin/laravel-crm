@@ -130,11 +130,11 @@
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.formatted_lead_value }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.source.name }}
                                         </div>
-                                        
+
                                         <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
                                             @{{ element.type.name }}
                                         </div>
@@ -270,7 +270,14 @@
                             return;
                         }
 
-                        params['search'] += `${column.index}:${column.value.join(',')};`;
+                        /**
+                         * If the column is a searchable dropdown, then we need to append the column value
+                         * with the column label. Otherwise, we can directly append the column value.
+                         */
+                        params['search'] += column.filterable_type === 'searchable_dropdown'
+                            ? `${column.index}:${column.value.map(option => option.value).join(',')};`
+                            : `${column.index}:${column.value.join(',')};`;
+
                         params['searchFields'] += `${column.index}:${column.search_field};`;
                     });
 
@@ -376,7 +383,7 @@
                     this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
 
                     this.$axios
-                        .put("{{ route('admin.leads.update', 'replace') }}".replace('replace', event.added.element.id), {
+                        .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
                             'lead_pipeline_stage_id': stage.id
                         })
                         .then(response => {

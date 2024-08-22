@@ -26,14 +26,25 @@
                 @click="toggle"
             >
                 <!-- Input Container -->
-                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                    <!-- Selected Item or Placeholder Text -->
                     @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
                     
-                    <!-- Arrow Icon -->
-                    <i 
-                        class="absolute text-2xl ltr:right-2 rtl:left-2"
-                        :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
-                    ></i>
+                    <!-- Icons Container -->
+                    <div class="flex gap-2 items-center">
+                        <!-- Close Icon -->
+                        <i 
+                            v-if="entityId && ! isSearching"
+                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
+                            @click="remove"
+                        ></i>
+                
+                        <!-- Arrow Icon -->
+                        <i 
+                            class="text-2xl text-gray-600"
+                            :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
+                        ></i>
+                    </div>
                 </div>
             </div>
 
@@ -56,20 +67,13 @@
                         v-model.lazy="searchTerm"
                         v-debounce="500"
                         class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
-                        placeholder="@lang('Search...')"
+                        placeholder="@lang('admin::app.components.attributes.lookup.search')"
                         ref="searchInput"
                         @keyup="search"
                     />
                 
                     <!-- Search Icon (absolute positioned) -->
-                    <span class="absolute flex items-center ltr:right-2 rtl:left-2">
-                        <!-- Close Icon -->
-                        <i 
-                            v-if="entityId && ! isSearching"
-                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
-                            @click="remove"
-                        ></i>
-                
+                    <span class="absolute flex items-center ltr:right-2 rtl:left-2">                
                         <!-- Loader (optional, based on condition) -->
                         <div
                             class="relative"
@@ -137,6 +141,12 @@
                         this.searchTerm = newValue ? newValue['name'] : '';
 
                         this.entityId = newValue ? newValue['id'] : '';
+
+                        if (this.searchTerm == '') {
+                            this.remove();
+                        } else {
+                            this.getLookUpEntity();
+                        }
                     }
                 }
             },
@@ -162,10 +172,8 @@
                     }
                 },
 
-                search(event) {
-                    const searchTerm = event.target.value;
-
-                    if (searchTerm.length <= 2) {
+                search() {
+                    if (this.searchTerm.length <= 2) {
                         this.searchedResults = [];
 
                         return;
@@ -174,7 +182,7 @@
                     this.isSearching = true;
 
                     this.$axios.get(this.searchRoute, {
-                            params: { query: searchTerm }
+                            params: { query: this.searchTerm }
                         })
                         .then (response => {
                             this.searchedResults = response.data;
@@ -185,7 +193,7 @@
 
                 getLookUpEntity() {
                     this.$axios.get(this.searchRoute, {
-                            params: { query: this.value.name }
+                            params: { query: this.value?.name ?? ""}
                         })
                         .then (response => {
                             const [result] = response.data;

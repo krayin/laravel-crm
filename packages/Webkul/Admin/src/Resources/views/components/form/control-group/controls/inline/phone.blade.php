@@ -3,7 +3,7 @@
     :value={{ json_encode($attributes->get('value')) }}
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -17,8 +17,8 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="rounded-xs flex h-[34px] items-center space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                class="rounded-xs flex h-[34px] items-center"
+                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <div class="group relative flex !w-full flex-col items-center">
@@ -39,7 +39,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden pr-2 text-xl group-hover:block"
+                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
                     ></i>
                 </template>
             </div>
@@ -77,7 +77,7 @@
                                             type="select"
                                             ::id="`${name}[${index}].label`"
                                             ::name="`${name}[${index}].label`"
-                                            class="!rounded-l-none"
+                                            class="!rounded-l-none !w-24"
                                             ::value="contactNumber.label"
                                         >
                                             <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
@@ -92,7 +92,7 @@
                                     ></i>
                                 </div>
                     
-                                <x-admin::form.control-group.error ::name="`${name}[${index}][value]`"/>
+                                <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
                             </template>
                     
                             <span

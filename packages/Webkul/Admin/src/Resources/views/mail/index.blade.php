@@ -78,10 +78,7 @@
                             <p>@{{ record.id }}</p>
 
                             <!-- Attachments -->
-                            <p
-                                :class="record.attachments ? 'icon-attachment' : ''"
-                                v-html="record.attachments"
-                            ></p>
+                            <p v-html="record.attachments"></p>
 
                             <!-- Name -->
                             <p>@{{ record.name }}</p>
