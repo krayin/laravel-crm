@@ -41,7 +41,7 @@
                 
                         <!-- Arrow Icon -->
                         <i 
-                            class="cursor-pointer text-2xl text-gray-600"
+                            class="text-2xl text-gray-600"
                             :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
                         ></i>
                     </div>

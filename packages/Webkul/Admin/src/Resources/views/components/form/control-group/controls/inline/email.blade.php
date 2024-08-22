@@ -77,7 +77,7 @@
                                             type="select"
                                             ::id="`${name}[${index}].label`"
                                             ::name="`${name}[${index}].label`"
-                                            class="!rounded-l-none"
+                                            class="!rounded-l-none !w-24"
                                             ::value="email.label"
                                         >
                                             <option value="work">@lang('admin::app.common.custom-attributes.work')</option>

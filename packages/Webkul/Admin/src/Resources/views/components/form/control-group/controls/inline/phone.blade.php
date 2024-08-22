@@ -77,7 +77,7 @@
                                             type="select"
                                             ::id="`${name}[${index}].label`"
                                             ::name="`${name}[${index}].label`"
-                                            class="!rounded-l-none"
+                                            class="!rounded-l-none !w-24"
                                             ::value="contactNumber.label"
                                         >
                                             <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
@@ -92,7 +92,7 @@
                                     ></i>
                                 </div>
                     
-                                <x-admin::form.control-group.error ::name="`${name}[${index}][value]`"/>
+                                <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
                             </template>
                     
                             <span
