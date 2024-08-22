@@ -66,13 +66,13 @@ class EmailController extends BaseEmailController
             'user'          => auth()->guard('user')->user(),
             'participants'  => [],
             'location'      => null,
-            'additional'    => (object) [
-                'folders' => json_decode($data['folders']),
-                'from'    => json_decode($data['from']),
-                'to'      => json_decode($data['reply_to']),
-                'cc'      => json_decode($data['cc']),
-                'bcc'     => json_decode($data['bcc']),
-            ],
+            'additional'    => json_encode([
+                'folders' => $data['folders'],
+                'from'    => $data['from'],
+                'to'      => $data['reply_to'],
+                'cc'      => $data['cc'],
+                'bcc'     => $data['bcc'],
+            ]),
             'files'         => array_map(function ($attachment) {
                 return (object) $attachment;
             }, $data['attachments']),
