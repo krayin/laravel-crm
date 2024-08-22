@@ -3,7 +3,7 @@
     :value='@json($attributes->get('value'))'
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -22,7 +22,7 @@
                 :style="textPositionStyle"
             >
                 <div class="group relative flex !w-full flex-col items-center">
-                    <span class="w-40 truncate rounded border border-transparent pl-[2px]">@{{ inputValue?.address }} @{{ `${inputValue?.postcode} ${inputValue?.city}` }}</span>
+                    <span class="w-40 truncate rounded border border-transparent ltr:pl-0.5 rtl:pr-0.5">@{{ inputValue?.address }} @{{ `${inputValue?.postcode} ${inputValue?.city}` }}</span>
 
                     <div class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex">
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg dark:text-gray-900">
@@ -38,7 +38,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950 ltr:mr-2 rtl:ml-2"
                     ></i>
                 </template>
             </div>

@@ -31,9 +31,9 @@
                 </x-admin::table.thead>
 
                 <!-- Table Body -->
-                <x-admin::table.tbody> 
+                <x-admin::table.tbody class="border border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"> 
                     <template v-for="warehouse in productWarehouses">
-                        <x-admin::table.tbody.tr class="border border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-950">
+                        <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
                             <x-admin::table.td class="font-bold dark:text-white">
                                 @{{ warehouse.name }}
                             </x-admin::table.td>
@@ -62,20 +62,20 @@
                         </x-admin::table.tbody.tr>
 
                         <template v-for="location in warehouse.locations">
-                            <x-admin::table.tbody.tr class="border-b">
-                                <x-admin::table.td>
+                            <x-admin::table.tbody.tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
+                                <x-admin::table.td class="dark:text-white">
                                     @{{ location.name }}
                                 </x-admin::table.td>
                                 
-                                <x-admin::table.td>
+                                <x-admin::table.td class="dark:text-white">
                                     @{{ location.in_stock }}
                                 </x-admin::table.td>
                                 
-                                <x-admin::table.td>
+                                <x-admin::table.td class="dark:text-white">
                                     @{{ location.allocated }}
                                 </x-admin::table.td>
                                 
-                                <x-admin::table.td>
+                                <x-admin::table.td class="dark:text-white">
                                     @{{ location.on_hand }}
                                 </x-admin::table.td>
                                 
@@ -237,7 +237,7 @@
                 <x-admin::form.control-group.control
                     type="text"
                     ::name="'inventories[inventory_' + index + '][allocated]'"
-                    v-model="parseInt(location.allocated)"
+                    v-model="location.allocated"
                     rules="required|numeric|min_value:0"
                     :label="trans('admin::app.products.view.inventory.allocated')"
                     :placeholder="trans('admin::app.products.view.inventory.allocated')"

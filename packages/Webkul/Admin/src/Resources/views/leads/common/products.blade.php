@@ -97,6 +97,7 @@
                         :label="trans('admin::app.leads.common.products.quantity')"
                         :placeholder="trans('admin::app.leads.common.products.quantity')"
                         @on-change="(event) => product.quantity = event.value"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -112,6 +113,7 @@
                         :label="trans('admin::app.leads.common.products.price')"
                         :placeholder="trans('admin::app.leads.common.products.price')"
                         @on-change="(event) => product.price = event.value"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
