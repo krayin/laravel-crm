@@ -46,9 +46,6 @@
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
-
-        <!-- Email Action Vue Component -->
-        <v-action-email ref="emailAction"></v-action-email>
     </div>
 
     @pushOnce('scripts')
@@ -57,26 +54,40 @@
             type="text/x-template"
             id="v-email-list-template"
         >  
-            <!-- Email Item Vue Component -->
-            <v-email-item
-                :email="email"
-                :key="0"
-                :index="0"
-                :action="action"
-                @on-discard="action = {}"
-                @on-email-action="emailAction($event)"
-            ></v-email-item>
+            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto overflow-y-auto max-h-screen">
+                    <!-- Email Item Vue Component -->
+                    <v-email-item
+                        :email="email"
+                        :key="0"
+                        :index="0"
+                        :action="action"
+                        @on-discard="action = {}"
+                        @on-email-action="emailAction($event)"
+                    ></v-email-item>
 
-            <!-- Email Item Vue Component -->
-            <v-email-item
-                v-for='(email, index) in email.emails'
-                :email="email"
-                :key="index + 1"
-                :index="index + 1"
-                :action="action"
-                @on-discard="action = {}"
-                @on-email-action="emailAction($event)"
-            ></v-email-item>
+                    <!-- Email Item Vue Component -->
+                    <v-email-item
+                        v-for='(email, index) in email.emails'
+                        :email="email"
+                        :key="index + 1"
+                        :index="index + 1"
+                        :action="action"
+                        @on-discard="action = {}"
+                        @on-email-action="emailAction($event)"
+                    ></v-email-item>
+                </div>
+
+                <!-- Email Actions -->
+                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    <div class="box-shadow rounded bg-white dark:bg-gray-900">
+                        <div class="flex flex-col gap-4 p-4">
+                            <!-- Email Action Vue Component -->
+                            <v-action-email ref="emailAction"></v-action-email>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </script>
 
         <!-- Email Item Template -->
@@ -990,66 +1001,50 @@
             type="text/x-template"
             id="v-action-email-template"
         >
-            <x-admin::drawer
-                width="350px"
-                ref="emailLinkDrawer"
-            >
-                <x-slot:header class="p-3.5">
-                    <!-- Apply Filter Title -->
-                    <div class="flex items-center justify-between">
-                        <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                            @lang('admin::app.mail.view.link-mail')
-                        </p>
-                    </div>
-                </x-slot>
+            <div class="flex flex-col gap-4">
+                <!-- Contact Lookup -->
+                @if (
+                    bouncer()->hasPermission('contacts.persons.create') 
+                    || bouncer()->hasPermission('contacts.persons.edit')
+                )
+                    <!-- Link to contact -->
+                    <label class="font-semibold text-gray-700">
+                        @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
+                    </label>
+
+                    <v-contact-lookup
+                        @link-contact="linkContact"
+                        @unlink-contact="unlinkContact"
+                        @open-contact-modal="openContactModal"
+                        :unlinking="unlinking"
+                        :email="email"
+                        :tag-text-color="tagTextColor"
+                        :background-colors="backgroundColors"
+                    ></v-contact-lookup>
+                @endif
+
+            
+                <!-- Lead Lookup -->
+                @if (
+                    bouncer()->hasPermission('leads.view') 
+                    || bouncer()->hasPermission('leads.create')
+                )
+                    <!-- Link to Lead -->
+                    <label class="font-semibold text-gray-700">
+                        @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
+                    </label>
                 
-                <x-slot:content class="p-3.5">
-                    <div class="flex flex-col gap-4">
-                        <!-- Contact Lookup -->
-                        @if (
-                            bouncer()->hasPermission('contacts.persons.create') 
-                            || bouncer()->hasPermission('contacts.persons.edit')
-                        )
-                            <!-- Link to contact -->
-                            <label class="font-semibold text-gray-700">
-                                @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
-                            </label>
-
-                            <v-contact-lookup
-                                @link-contact="linkContact"
-                                @unlink-contact="unlinkContact"
-                                @open-contact-modal="openContactModal"
-                                :unlinking="unlinking"
-                                :email="email"
-                                :tag-text-color="tagTextColor"
-                                :background-colors="backgroundColors"
-                            ></v-contact-lookup>
-                        @endif
-
-                     
-                        <!-- Lead Lookup -->
-                        @if (
-                            bouncer()->hasPermission('leads.view') 
-                            || bouncer()->hasPermission('leads.create')
-                        )
-                            <!-- Link to Lead -->
-                            <label class="font-semibold text-gray-700">
-                                @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
-                            </label>
-                        
-                            <v-lead-lookup
-                                @link-lead="linkLead"
-                                @unlink-lead="unlinkLead"
-                                @open-lead-modal="openLeadModal"
-                                :unlinking="unlinking"
-                                :email="email"
-                                :tag-text-color="tagTextColor"
-                                :background-colors="backgroundColors"
-                            ></v-lead-lookup>
-                        @endif
-                    </div>
-                </x-slot>
-            </x-admin::drawer>
+                    <v-lead-lookup
+                        @link-lead="linkLead"
+                        @unlink-lead="unlinkLead"
+                        @open-lead-modal="openLeadModal"
+                        :unlinking="unlinking"
+                        :email="email"
+                        :tag-text-color="tagTextColor"
+                        :background-colors="backgroundColors"
+                    ></v-lead-lookup>
+                @endif
+            </div>
 
             <!-- Create Contact Modal -->
             <v-create-contact ref="createContact"></v-create-contact>
