@@ -10,32 +10,32 @@
              <!-- Table -->
              <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
-                <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.thead class="rounded-lg border border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
                             @lang('admin::app.leads.view.products.product-name')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.quantity')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.price')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.amount')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.action')
                         </x-admin::table.th>
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
                 <!-- Table Body -->
-                <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                     
                     <!-- Product Item Vue Component -->
                     <v-product-item
@@ -90,10 +90,10 @@
         type="text/x-template" 
         id="v-product-item-template"
     >
-        <x-admin::table.thead.tr class="border-b">
+        <x-admin::table.tbody.tr class="border-b border-gray-200 dark:border-gray-800">
             <!-- Product Name -->
-            <x-admin::table.td>
-                <x-admin::form.control-group>
+            <x-admin::table.td class="!px-4">
+                <x-admin::form.control-group class="!mb-0">
                     <x-admin::lookup 
                         ::src="src"
                         name="name"
@@ -118,8 +118,8 @@
             </x-admin::table.td>
             
             <!-- Product Quantity -->
-            <x-admin::table.td class="text-right">
-                <x-admin::form.control-group>
+            <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
+                <x-admin::form.control-group class="!mb-0">
                     <x-admin::form.control-group.control
                         type="inline"
                         ::name="'quantity'"
@@ -130,14 +130,13 @@
                         @on-change="(event) => product.quantity = event.value"
                         ::url="url(product)"
                         ::params="{product_id: product.product_id}"
-                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
         
             <!-- Price -->
-            <x-admin::table.td class="text-right">
-                <x-admin::form.control-group>
+            <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
+                <x-admin::form.control-group class="!mb-0">
                 <x-admin::form.control-group.control
                         type="inline"
                         ::name="'price'"
@@ -148,14 +147,13 @@
                         @on-change="(event) => product.price = event.value"
                         ::url="url(product)"
                         ::params="{product_id: product.product_id}"
-                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
         
             <!-- Total -->
-            <x-admin::table.td class="text-right">
-                <x-admin::form.control-group>
+            <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
+                <x-admin::form.control-group class="!mb-0">
                     <x-admin::form.control-group.control
                         type="inline"
                         ::name="'amount'"
@@ -165,15 +163,14 @@
                         :placeholder="trans('admin::app.leads.view.products.total')"
                         ::allowEdit="false"
                         ::url="url(product)"
-                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
 
             <!-- Action -->
-            <x-admin::table.td class="text-right">
+            <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
                 <template v-if="product.is_new">
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <div class="flex items-center justify-end gap-4">
                             <i  
                                 @click="attachProduct(product)"
@@ -189,7 +186,7 @@
                 </template>
 
                 <template v-else>
-                    <x-admin::form.control-group>
+                    <x-admin::form.control-group class="!mb-0">
                         <i  
                             @click="removeProduct"
                             class="icon-delete cursor-pointer text-2xl"
@@ -197,7 +194,7 @@
                     </x-admin::form.control-group>
                 </template>
             </x-admin::table.td>
-        </x-admin::table.thead.tr>
+        </x-admin::table.tbody.tr>
     </script>
 
     <script type="module">
