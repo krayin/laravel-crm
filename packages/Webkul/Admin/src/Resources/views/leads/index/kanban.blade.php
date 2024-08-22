@@ -270,7 +270,14 @@
                             return;
                         }
 
-                        params['search'] += `${column.index}:${column.value.join(',')};`;
+                        /**
+                         * If the column is a searchable dropdown, then we need to append the column value
+                         * with the column label. Otherwise, we can directly append the column value.
+                         */
+                        params['search'] += column.filterable_type === 'searchable_dropdown'
+                            ? `${column.index}:${column.value.map(option => option.value).join(',')};`
+                            : `${column.index}:${column.value.join(',')};`;
+
                         params['searchFields'] += `${column.index}:${column.search_field};`;
                     });
 
