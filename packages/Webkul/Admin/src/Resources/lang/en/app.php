@@ -1503,6 +1503,7 @@ return [
         'duration-overlapping' => 'Participants have another meeting at this time. Do you want to continue?',
         'create-success'       => 'Activity created successfully.',
         'update-success'       => 'Activity updated successfully.',
+        'overlapping-error'    => 'Participants have another meeting at this time.',
         'mass-update-success'  => 'Activities updated successfully.',
         'destroy-success'      => 'Activity deleted successfully.',
         'delete-failed'        => 'Activity can not be deleted.',
