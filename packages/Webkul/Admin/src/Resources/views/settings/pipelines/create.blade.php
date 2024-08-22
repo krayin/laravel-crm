@@ -37,7 +37,7 @@
                 </div>
             </div>
 
-            <div class="flex gap-4 border-t px-4 py-2 align-top max-sm:flex-wrap">
+            <div class="flex gap-4 border-t border-gray-200 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
                 <!-- Name -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
@@ -129,12 +129,12 @@
                             ::class="{ draggable: isDragable(element) }"
                             class="flex gap-4 overflow-x-auto"
                         >
-                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white">
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white dark:bg-gray-900">
                                 <!-- Stage Crad -->
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
-                                        <span class="py-1 font-medium">
+                                        <span class="py-1 font-medium dark:text-gray-300">
                                             @{{ element.name ? element.name : '@lang('admin::app.settings.pipelines.create.newly-added')                                            ' }} 
                                         </span>
 
@@ -199,7 +199,7 @@
                                 </div>
                                 
                                 <div
-                                    class="flex cursor-pointer items-center gap-2 border-t p-2 text-red-600" 
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
                                     @click="removeStage(element)" 
                                     v-if="isDragable(element)"
                                 >
@@ -214,11 +214,11 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg bg-white">
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg bg-white dark:bg-gray-900">
                     <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">
-                                <p class="text-xl font-semibold">
+                                <p class="text-xl font-semibold dark:text-gray-300">
                                     @lang('admin::app.settings.pipelines.create.add-new-stages')
                                 </p>
 
