@@ -80,11 +80,6 @@ class QuoteDataGrid extends DataGrid
                     'value' => 'name',
                 ],
             ],
-            'closure'    => function ($row) {
-                $route = urldecode(route('admin.settings.users.index', ['id[eq]' => $row->user_id]));
-
-                return "<a href='".$route."'>".$row->sales_person.'</a>';
-            },
         ]);
 
         $this->addColumn([
@@ -110,9 +105,9 @@ class QuoteDataGrid extends DataGrid
                 ],
             ],
             'closure'    => function ($row) {
-                $route = urldecode(route('admin.contacts.persons.index', ['id[eq]' => $row->person_id]));
+                $route = route('admin.contacts.persons.view', $row->person_id);
 
-                return "<a href='".$route."'>".$row->person_name.'</a>';
+                return "<a class=\"text-brandColor transition-all hover:underline\" href='".$route."'>".$row->person_name.'</a>';
             },
         ]);
 
