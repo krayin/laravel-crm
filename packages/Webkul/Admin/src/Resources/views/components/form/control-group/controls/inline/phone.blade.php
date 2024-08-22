@@ -28,7 +28,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 

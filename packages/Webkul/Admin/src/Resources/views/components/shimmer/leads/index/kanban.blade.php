@@ -21,7 +21,7 @@
             <div class="flex h-[calc(100vh-315px)] flex-col gap-2 overflow-y-auto p-2">
                 @for ($j = 1; $j <= 3; $j++)
                     <!-- Card -->
-                    <div class="flex w-full flex-col gap-5 rounded-md border border-gray-100 p-2 dark:border-gray-400">
+                    <div class="flex w-full flex-col gap-5 rounded-md border border-gray-100 p-2 dark:border-gray-800">
                         <!-- Header -->
                         <div class="flex items-start justify-between">
                             <div class="flex items-center gap-1">
@@ -34,6 +34,9 @@
                                     <div class="shimmer h-[15px] w-12"></div>
                                 </div>
                             </div>
+
+                            <!-- Rotten Lead Info -->
+                            <div class="shimmer h-5 w-5 rounded-md"></div>
                         </div>
 
                         <!-- Body -->

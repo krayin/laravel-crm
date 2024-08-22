@@ -25,7 +25,7 @@
                     <span class="w-40 truncate rounded border border-transparent ltr:pl-0.5 rtl:pr-0.5">@{{ inputValue?.address }} @{{ `${inputValue?.postcode} ${inputValue?.city}` }}</span>
 
                     <div class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex">
-                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg dark:text-gray-900">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:text-gray-900">
                             @{{ inputValue?.address }}<br>
                             @{{ `${inputValue?.postcode} ${inputValue?.city}` }}<br>
                             @{{ `${inputValue?.state}, ${inputValue?.country}` }}<br>

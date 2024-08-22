@@ -40,7 +40,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
                         </span>
 
