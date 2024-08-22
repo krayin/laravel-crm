@@ -451,7 +451,7 @@ class LeadController extends Controller
                 'search_field'          => 'in',
                 'filterable'            => true,
                 'filterable_type'       => 'searchable_dropdown',
-                'filterable_options' => [
+                'filterable_options'    => [
                     'repository' => UserRepository::class,
                     'column'     => [
                         'label' => 'name',
@@ -473,8 +473,8 @@ class LeadController extends Controller
                 'allow_multiple_values' => true,
                 'sortable'              => true,
                 'visibility'            => true,
-                'filterable_type'    => 'searchable_dropdown',
-                'filterable_options' => [
+                'filterable_type'       => 'searchable_dropdown',
+                'filterable_options'    => [
                     'repository' => PersonRepository::class,
                     'column'     => [
                         'label' => 'name',
