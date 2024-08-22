@@ -468,7 +468,9 @@ class LeadController extends Controller
         return app($column['filterable_options']['repository'])
             ->select([$column['filterable_options']['column']['label'].' as label', $column['filterable_options']['column']['value'].' as value'])
             ->where($column['filterable_options']['column']['label'], 'LIKE', '%'.$params['search'].'%')
-            ->get();
+            ->get()
+            ->map
+            ->only('label', 'value');
     }
 
     /**
@@ -523,7 +525,7 @@ class LeadController extends Controller
                 'visibility'            => true,
             ],
             [
-                'index'                 => 'person.name',
+                'index'                 => 'person.id',
                 'label'                 => trans('admin::app.leads.index.kanban.columns.contact-person'),
                 'type'                  => 'string',
                 'searchable'            => false,
