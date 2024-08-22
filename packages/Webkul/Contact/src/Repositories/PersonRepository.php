@@ -3,7 +3,9 @@
 namespace Webkul\Contact\Repositories;
 
 use Illuminate\Container\Container;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Contact\Contracts\Person;
 use Webkul\Core\Eloquent\Repository;
 
 class PersonRepository extends Repository
@@ -25,6 +27,7 @@ class PersonRepository extends Repository
      * @return void
      */
     public function __construct(
+        protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
         Container $container
     ) {
@@ -32,16 +35,18 @@ class PersonRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Contact\Contracts\Person';
+        return Person::class;
     }
 
     /**
+     * Create.
+     *
      * @return \Webkul\Contact\Contracts\Person
      */
     public function create(array $data)
@@ -52,17 +57,27 @@ class PersonRepository extends Repository
 
         $person = parent::create($data);
 
-        $this->attributeValueRepository->save($data, $person->id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $person->id,
+        ]), $attributes);
 
         return $person;
     }
 
     /**
      * @param  int  $id
-     * @param  string  $attribute
+     * @param  array  $attribute
      * @return \Webkul\Contact\Contracts\Person
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attributes = [])
     {
         if (isset($data['user_id'])) {
             $data['user_id'] = $data['user_id'] ?: null;
@@ -70,13 +85,38 @@ class PersonRepository extends Repository
 
         $person = parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        /**
+         * If attributes are provided then only save the provided attributes and return.
+         */
+        if (! empty($attributes)) {
+            $attributes = $this->attributeRepository->where($conditions)
+                ->whereIn('code', $attributes)
+                ->get();
+
+            $this->attributeValueRepository->save(array_merge($data, [
+                'entity_id' => $person->id,
+            ]), $attributes);
+
+            return $person;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $person->id,
+        ]), $attributes);
 
         return $person;
     }
 
     /**
-     * Retrieves customers count based on date
+     * Retrieves customers count based on date.
      *
      * @return number
      */

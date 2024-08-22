@@ -5,6 +5,7 @@ namespace Webkul\Attribute\Repositories;
 use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Storage;
+use Webkul\Attribute\Contracts\AttributeValue;
 use Webkul\Core\Eloquent\Repository;
 
 class AttributeValueRepository extends Repository
@@ -22,29 +23,20 @@ class AttributeValueRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Attribute\Contracts\AttributeValue';
+        return AttributeValue::class;
     }
 
     /**
-     * @param  int  $entityId
-     * @return void
+     * Save attribute value.
      */
-    public function save(array $data, $entityId)
+    public function save(array $data, $attributes = []): void
     {
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->findWhere($conditions);
-
         foreach ($attributes as $attribute) {
             $typeColumn = $this->model::$attributeTypeFields[$attribute->type];
 
@@ -77,20 +69,20 @@ class AttributeValueRepository extends Repository
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
                 $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
-                    ? request()->file($attribute->code)->store($data['entity_type'].'/'.$entityId)
+                    ? request()->file($attribute->code)->store($data['entity_type'].'/'.$data['entity_id'])
                     : null;
             }
 
             $attributeValue = $this->findOneWhere([
-                'entity_id'    => $entityId,
                 'entity_type'  => $data['entity_type'],
+                'entity_id'    => $data['entity_id'],
                 'attribute_id' => $attribute->id,
             ]);
 
             if (! $attributeValue) {
                 $this->create([
-                    'entity_id'    => $entityId,
                     'entity_type'  => $data['entity_type'],
+                    'entity_id'    => $data['entity_id'],
                     'attribute_id' => $attribute->id,
                     $typeColumn    => $data[$attribute->code],
                 ]);
@@ -107,6 +99,8 @@ class AttributeValueRepository extends Repository
     }
 
     /**
+     * Is value unique.
+     *
      * @param  int  $entityId
      * @param  string  $entityType
      * @param  \Webkul\Attribute\Contracts\Attribute  $attribute

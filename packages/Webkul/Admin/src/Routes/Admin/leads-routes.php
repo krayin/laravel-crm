@@ -20,6 +20,10 @@ Route::controller(LeadController::class)->prefix('leads')->group(function () {
 
     Route::put('edit/{id}', 'update')->name('admin.leads.update');
 
+    Route::put('attributes/edit/{id}', 'updateAttributes')->name('admin.leads.attributes.update');
+
+    Route::put('stage/edit/{id}', 'updateStage')->name('admin.leads.stage.update');
+
     Route::get('search', 'search')->name('admin.leads.search');
 
     Route::delete('{id}', 'destroy')->name('admin.leads.delete');

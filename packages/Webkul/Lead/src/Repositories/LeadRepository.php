@@ -5,14 +5,16 @@ namespace Webkul\Lead\Repositories;
 use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Lead\Contracts\Lead;
 
 class LeadRepository extends Repository
 {
     /**
-     * Searchable fields
+     * Searchable fields.
      */
     protected $fieldSearchable = [
         'title',
@@ -38,6 +40,7 @@ class LeadRepository extends Repository
         protected StageRepository $stageRepository,
         protected PersonRepository $personRepository,
         protected ProductRepository $productRepository,
+        protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
         Container $container
     ) {
@@ -45,16 +48,18 @@ class LeadRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Lead\Contracts\Lead';
+        return Lead::class;
     }
 
     /**
+     * Get leads query.
+     *
      * @param  int  $pipelineId
      * @param  int  $pipelineStageId
      * @param  string  $term
@@ -98,6 +103,8 @@ class LeadRepository extends Repository
     }
 
     /**
+     * Create.
+     *
      * @return \Webkul\Lead\Contracts\Lead
      */
     public function create(array $data)
@@ -112,15 +119,23 @@ class LeadRepository extends Repository
             ]));
         }
 
-        $stage = $this->stageRepository->find($data['lead_pipeline_stage_id']);
-
         $lead = parent::create(array_merge([
             'person_id'              => $person->id,
             'lead_pipeline_id'       => 1,
             'lead_pipeline_stage_id' => 1,
         ], $data));
 
-        $this->attributeValueRepository->save($data, $lead->id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $lead->id,
+        ]), $attributes);
 
         if (isset($data['products'])) {
             foreach ($data['products'] as $product) {
@@ -135,11 +150,13 @@ class LeadRepository extends Repository
     }
 
     /**
+     * Update.
+     *
      * @param  int  $id
-     * @param  string  $attribute
+     * @param  array|\Illuminate\Database\Eloquent\Collection  $attributes
      * @return \Webkul\Lead\Contracts\Lead
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attributes = [])
     {
         if (isset($data['person'])) {
             if (isset($data['person']['id'])) {
@@ -169,7 +186,40 @@ class LeadRepository extends Repository
 
         $lead = parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        /**
+         * If attributes are provided, only save the provided attributes and return.
+         * A collection of attributes may also be provided, which will be treated as valid,
+         * regardless of whether it is empty or not.
+         */
+        if (! empty($attributes)) {
+            /**
+             * If attributes are provided as an array, then fetch the attributes from the database;
+             * otherwise, use the provided collection of attributes.
+             */
+            if (is_array($attributes)) {
+                $attributes = $this->attributeRepository->where($conditions)
+                    ->whereIn('code', $attributes)
+                    ->get();
+            }
+
+            $this->attributeValueRepository->save(array_merge($data, [
+                'entity_id' => $lead->id,
+            ]), $attributes);
+
+            return $lead;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $lead->id,
+        ]), $attributes);
 
         $previousProductIds = $lead->products()->pluck('id');
 
