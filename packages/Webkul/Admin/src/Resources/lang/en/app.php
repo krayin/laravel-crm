@@ -386,6 +386,13 @@ return [
                 'no-result-found' => 'No result found',
             ],
         ],
+
+        'flash-group' => [
+            'success' => 'Success',
+            'error'   => 'Error',
+            'warning' => 'Warning',
+            'info'    => 'Info',
+        ],
     ],
 
     'quotes' => [
