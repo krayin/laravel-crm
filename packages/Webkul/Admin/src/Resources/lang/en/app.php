@@ -1673,7 +1673,7 @@ return [
             'contact' => [
                 'name'           => 'Name',
                 'email'          => 'Email',
-                'contact-number' => 'contact-number',
+                'contact-number' => 'Contact Number',
                 'organization'   => 'Organization',
             ],
 

@@ -26,14 +26,25 @@
                 @click="toggle"
             >
                 <!-- Input Container -->
-                <div class="relative rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                    <!-- Selected Item or Placeholder Text -->
                     @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
                     
-                    <!-- Arrow Icon -->
-                    <i 
-                        class="absolute text-2xl ltr:right-2 rtl:left-2"
-                        :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
-                    ></i>
+                    <!-- Icons Container -->
+                    <div class="flex gap-2 items-center">
+                        <!-- Close Icon -->
+                        <i 
+                            v-if="entityId && ! isSearching"
+                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
+                            @click="remove"
+                        ></i>
+                
+                        <!-- Arrow Icon -->
+                        <i 
+                            class="cursor-pointer text-2xl text-gray-600"
+                            :class="showPopup ? 'icon-up-arrow' : 'icon-down-arrow'"
+                        ></i>
+                    </div>
                 </div>
             </div>
 
@@ -62,14 +73,7 @@
                     />
                 
                     <!-- Search Icon (absolute positioned) -->
-                    <span class="absolute flex items-center ltr:right-2 rtl:left-2">
-                        <!-- Close Icon -->
-                        <i 
-                            v-if="entityId && ! isSearching"
-                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
-                            @click="remove"
-                        ></i>
-                
+                    <span class="absolute flex items-center ltr:right-2 rtl:left-2">                
                         <!-- Loader (optional, based on condition) -->
                         <div
                             class="relative"
