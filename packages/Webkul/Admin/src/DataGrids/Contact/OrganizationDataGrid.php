@@ -69,9 +69,7 @@ class OrganizationDataGrid extends DataGrid
             'closure'    => function ($row) {
                 $personsCount = $this->personRepository->findWhere(['organization_id' => $row->id])->count();
 
-                $route = urldecode(route('admin.contacts.persons.index', ['organization[in]' => $row->id]));
-
-                return "<a href='".$route."' class='text-brandColor'>".$personsCount.'</a>';
+                return $personsCount;
             },
         ]);
 

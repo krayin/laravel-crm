@@ -78,7 +78,7 @@
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
                                 <a
-                                    class="lead-item flex cursor-grab flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
+                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
                                     <!-- Header -->
@@ -91,12 +91,12 @@
                                                 @{{ element.person.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                             </div>
 
-                                            <div class="flex flex-col gap-1">
+                                            <div class="flex flex-col gap-0.5">
                                                 <span class="text-xs font-medium">
                                                     @{{ element.person.name }}
                                                 </span>
 
-                                                <span class="text-[10px]">
+                                                <span class="text-[10px] leading-normal">
                                                     @{{ element.person.organization?.name }}
                                                 </span>
                                             </div>
@@ -114,10 +114,31 @@
                                     </p>
 
                                     <div class="flex flex-wrap gap-1">
+                                        <div
+                                            class="flex items-center gap-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="element.user"
+                                        >
+                                            <span class="icon-settings-user text-sm"></span>
+                                            
+                                            @{{ element.user.name }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.formatted_lead_value }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.source.name }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.type.name }}
+                                        </div>
+
                                         <!-- Tags -->
                                         <template v-for="tag in element.tags">
                                             <div
-                                                class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800"
+                                                class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
                                                 :style="{
                                                     backgroundColor: tag.color,
                                                     color: tagTextColor[tag.color]
@@ -126,18 +147,6 @@
                                                 @{{ tag.name }}
                                             </div>
                                         </template>
-
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.formatted_lead_value }}
-                                        </div>
-
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.source.name }}
-                                        </div>
-
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.type.name }}
-                                        </div>
                                     </div>
                                 </a>
                             </template>
