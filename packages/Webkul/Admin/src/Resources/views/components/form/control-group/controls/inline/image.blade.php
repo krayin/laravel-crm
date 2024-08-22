@@ -42,7 +42,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden text-2xl cursor-pointer rounded hover:bg-gray-200    dark:hover:bg-gray-950 group-hover:block"
+                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
                     ></i>
                 </template>
             </div>

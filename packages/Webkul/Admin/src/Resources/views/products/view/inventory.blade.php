@@ -237,7 +237,7 @@
                 <x-admin::form.control-group.control
                     type="text"
                     ::name="'inventories[inventory_' + index + '][allocated]'"
-                    v-model="location.allocated"
+                    v-model="parseInt(location.allocated)"
                     rules="required|numeric|min_value:0"
                     :label="trans('admin::app.products.view.inventory.allocated')"
                     :placeholder="trans('admin::app.products.view.inventory.allocated')"
