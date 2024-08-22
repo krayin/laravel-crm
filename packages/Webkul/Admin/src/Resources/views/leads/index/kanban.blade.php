@@ -102,10 +102,20 @@
                                             </div>
                                         </div>
 
-                                        <span
-                                            class="icon-rotten cursor-default text-xl text-rose-600"
+                                        <div
+                                            class="group relative"
                                             v-if="element.rotten_days > 0"
-                                        ></span>
+                                        >
+                                            <span class="icon-rotten cursor-default text-xl text-rose-600"></span>
+
+                                            <div class="absolute bottom-0 right-0 mb-7 hidden w-max flex-col items-center group-hover:flex">
+                                                <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
+                                                    @{{ "@lang('admin::app.leads.index.kanban.rotten-days', ['days' => 'replaceDays'])".replace('replaceDays', element.rotten_days) }}
+                                                </span>
+
+                                                <div class="absolute -bottom-0.5 right-1 h-3 w-3 rotate-45 bg-black"></div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Lead Title -->

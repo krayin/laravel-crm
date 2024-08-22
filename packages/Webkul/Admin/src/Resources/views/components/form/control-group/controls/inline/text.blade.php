@@ -33,7 +33,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue.length > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
                         </span>
 
@@ -44,7 +44,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
                     ></i>
                 </template>
             </div>
