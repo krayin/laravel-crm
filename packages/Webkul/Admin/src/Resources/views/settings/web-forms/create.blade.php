@@ -51,7 +51,7 @@
 
                         <!-- Submit success actions -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required !text-gray-600">
+                            <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webforms.create.submit-success-action')
                             </x-admin::form.control-group.label>
 
@@ -92,7 +92,7 @@
 
                         <!-- Create Leads -->
                         <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required !text-gray-600">
+                            <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webforms.create.create-lead')
                             </x-admin::form.control-group.label>
 
@@ -130,7 +130,7 @@
                             value="{{ old('background_color') ?? '#F7F8F9' }}"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.backgroud-color')
                                 </x-admin::form.control-group.label>
 
@@ -151,7 +151,7 @@
                             value="{{ old('form_background_color') ?? '#FFFFFF' }}"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.form-background-color')
                                 </x-admin::form.control-group.label>
 
@@ -174,7 +174,7 @@
                             value="{{ old('form_title_color') ?? '#263238' }}"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.form-title-color')
                                 </x-admin::form.control-group.label>
 
@@ -197,7 +197,7 @@
                             value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.form-submit-btn-color')
                                 </x-admin::form.control-group.label>
 
@@ -220,7 +220,7 @@
                             value="{{ old('attribute_label_color') ?? '#546E7A' }}"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.attribute-label-color')
                                 </x-admin::form.control-group.label>
 
@@ -316,7 +316,7 @@
                                     <!-- Attribute Name -->
                                     <x-admin::table.td>
                                         <x-admin::form.control-group>
-                                            <x-admin::form.control-group.label class="!text-gray-600">
+                                            <x-admin::form.control-group.label class="">
                                                 @{{ element?.name + ' (' + element?.attribute?.entity_type + ')' }}
                                             </x-admin::form.control-group.label>
 
@@ -398,7 +398,7 @@
                         <x-slot:content>
                             <!-- Title -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required !text-gray-600">
+                                <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.create.title')
                                 </x-admin::form.control-group.label>
 
@@ -417,7 +417,7 @@
 
                             <!-- Description -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="!text-gray-600">
+                                <x-admin::form.control-group.label class="">
                                     @lang('admin::app.settings.webforms.create.description')
                                 </x-admin::form.control-group.label>
 
@@ -435,7 +435,7 @@
 
                             <!-- Submit button label -->
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required !text-gray-600">
+                                <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.create.submit-button-label')
                                 </x-admin::form.control-group.label>
 
@@ -462,7 +462,7 @@
             id="v-color-picker"
         >
             <x-admin::form.control-group>
-                <x-admin::form.control-group.label class="required !text-gray-600">
+                <x-admin::form.control-group.label class="required">
                     @{{ title }}
                 </x-admin::form.control-group.label>
 
