@@ -501,7 +501,7 @@
                                             v-text="column.label"
                                         >
                                         </p>
-                    
+
                                         <div
                                             class="flex items-center gap-x-1.5"
                                             @click="removeAppliedColumnAllValues(column.index)"
@@ -514,7 +514,7 @@
                                             </p>
                                         </div>
                                     </div>
-                    
+
                                     <div class="mb-2 mt-1.5">
                                         <v-kanban-searchable-dropdown
                                             :column="column"
@@ -522,14 +522,14 @@
                                         >
                                         </v-kanban-searchable-dropdown>
                                     </div>
-                    
+
                                     <div class="mb-4 flex flex-wrap gap-2">
                                         <p
                                             class="flex items-center rounded bg-gray-600 px-2 py-1 font-semibold text-white"
                                             v-for="appliedColumnValue in getAppliedColumnValues(column.index)"
                                         >
-                                            <span v-text="appliedColumnValue"></span>
-                    
+                                            <span v-text="appliedColumnValue.label"></span>
+
                                             <span
                                                 class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
                                                 @click="removeAppliedColumnValue(column.index, appliedColumnValue)"
@@ -951,7 +951,7 @@
                     class="inline-flex h-[38px] w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 >
                     <span
-                        class="text-sm text-gray-400 dark:text-gray-400" 
+                        class="text-sm text-gray-400 dark:text-gray-400"
                         v-text="'@lang('admin::app.components.datagrid.filters.select')'"
                     >
                     </span>
@@ -1055,7 +1055,7 @@
 
                     this.$emit('select-option', {
                         target: {
-                            value: option.value,
+                            value: option,
                         }
                     });
                 },
