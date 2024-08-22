@@ -482,45 +482,44 @@
                         @toggle="listenModel"
                         ref="addOptionsRow"
                     >
-                        <!-- Modal Header !-->
+                        <!-- Modal Header -->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.edit.add-option')
                             </p>
                         </x-slot>
 
-                        <!-- Modal Content !-->
+                        <!-- Modal Content -->
                         <x-slot:content>
-                                <!-- Hidden Id Input -->
-                                <x-admin::form.control-group.control
-                                    type="hidden"
-                                    name="id"
-                                />
+                            <!-- Hidden Id Input -->
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                name="id"
+                            />
+
+                            <x-admin::form.control-group.control
+                                type="hidden"
+                                name="isNew"
+                                ::value="optionIsNew"
+                            />
+
+                            <!-- Admin Input -->
+                            <x-admin::form.control-group class="mb-2.5 w-full">
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.attributes.edit.option-name')
+                                </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
-                                    type="hidden"
-                                    name="isNew"
-                                    ::value="optionIsNew"
+                                    type="text"
+                                    name="name"
+                                    rules="required"
+                                    :label="trans('admin::app.settings.attributes.edit.option-name')"
+                                    :placeholder="trans('admin::app.settings.attributes.edit.option-name')"
+                                    ref="inputAdmin"
                                 />
 
-                                <!-- Admin Input -->
-                                <x-admin::form.control-group class="mb-2.5 w-full">
-                                    <x-admin::form.control-group.label class="required">
-                                        @lang('admin::app.settings.attributes.edit.option-name')
-                                    </x-admin::form.control-group.label>
-
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        name="name"
-                                        rules="required"
-                                        :label="trans('admin::app.settings.attributes.edit.option-name')"
-                                        :placeholder="trans('admin::app.settings.attributes.edit.option-name')"
-                                        ref="inputAdmin"
-                                    />
-
-                                    <x-admin::form.control-group.error control-name="name" />
-                                </x-admin::form.control-group>
-                            </div>
+                                <x-admin::form.control-group.error control-name="name" />
+                            </x-admin::form.control-group>
                         </x-slot>
 
                         <!-- Modal Footer -->

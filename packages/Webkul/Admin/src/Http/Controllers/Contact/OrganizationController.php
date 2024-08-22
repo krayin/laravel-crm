@@ -9,7 +9,7 @@ use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Contact\OrganizationDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
-use Webkul\Attribute\Http\Requests\AttributeForm;
+use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Contact\Repositories\OrganizationRepository;
 
 class OrganizationController extends Controller
