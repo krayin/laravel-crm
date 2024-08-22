@@ -1,5 +1,4 @@
 <x-admin::layouts>
-    <!-- Page Title -->
     <x-slot:title>
         @lang('admin::app.settings.workflows.edit.title')
     </x-slot>
@@ -18,14 +17,14 @@
                         :entity="$workflow"
                     />
                 </div>
-    
+
                 <div class="text-xl font-bold dark:text-white">
                     @lang('admin::app.settings.workflows.edit.title')
                 </div>
             </div>
-    
+
             <div class="flex items-center gap-x-2.5">
-                <!-- Save button -->
+                <!-- Save button for person -->
                 <div class="flex items-center gap-x-2.5">
                     <button
                         type="submit"
@@ -37,74 +36,171 @@
             </div>
         </div>
 
+        <!-- Workflow Vue Component -->
         <v-workflow></v-workflow>
 
         <x-admin::attributes.edit.lookup />
     </x-admin::form>
-
-    {!! view_render_event('krayin.admin.activities.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script
             type="text/x-template"
             id="v-workflow-template"
         >
-            <!-- Body Content -->
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <!-- Events -->
                     <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        <div class="mb-8 flex items-center justify-between gap-4">
-                            <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                @lang('admin::app.settings.workflows.edit.event')
-                            </p>
+                        {!! view_render_event('admin.settings.workflows.edit.form_controls.before') !!}
+                       
+                        <!-- Tab Switcher -->
+                        <div class="border-b border-gray-200 text-center text-sm font-medium dark:border-gray-700">
+                            <ul class="flex flex-wrap">
+                                <template
+                                    v-for="tab in tabs"
+                                    :key="tab.id"
+                                >
+                                    <li class="me-2">
+                                        <a
+                                            :href="'#' + tab.id"
+                                            :class="[
+                                                'inline-block p-4 rounded-t-lg border-b-2',
+                                                activeTab === tab.id
+                                                ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
+                                                : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
+                                            ]"
+                                            @click="scrollToSection(tab.id)"
+                                            :text="tab.label"
+                                        ></a>
+                                    </li>
+                                </template>
+                            </ul>
                         </div>
 
-                        <!-- Events -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.workflows.edit.event')
-                            </x-admin::form.control-group.label>
+                        <!-- Basic Details -->
+                        <div 
+                            class="mt-4"
+                            id="basic-details"
+                        >
+                            <div class="mb-4 flex items-center justify-between gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.settings.workflows.edit.basic-details')
+                                    </p>
 
+                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.settings.workflows.edit.basic-details-info')</p>
+                                </div>
+                            </div>
+
+                            <div class="w-1/2">
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label class="required">
+                                        @lang('admin::app.settings.workflows.edit.name')
+                                    </x-admin::form.control-group.label>
+
+                                    <x-admin::form.control-group.control
+                                        type="text"
+                                        name="name"
+                                        id="name"
+                                        :value="old('name') ?? $workflow->name"
+                                        rules="required"
+                                        :label="trans('admin::app.settings.workflows.edit.name')"
+                                        :placeholder="trans('admin::app.settings.workflows.edit.name')"
+                                    />
+                                    <x-admin::form.control-group.error control-name="name" />
+                                </x-admin::form.control-group>
+
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.settings.workflows.edit.description')
+                                    </x-admin::form.control-group.label>
+
+                                    <x-admin::form.control-group.control
+                                        type="textarea"
+                                        name="description"
+                                        id="description"
+                                        rows="5"
+                                        :value="old('description') ?? $workflow->description"
+                                        :label="trans('admin::app.settings.workflows.edit.description')"
+                                        :placeholder="trans('admin::app.settings.workflows.edit.description')"
+                                    />
+
+                                    <x-admin::form.control-group.error control-name="description" />
+                                </x-admin::form.control-group>
+                            </div>
+                        </div>
+
+                        <!-- Event -->
+                        <div 
+                            class="mt-4"
+                            id="event"
+                        >
+                            <div class="mb-4 flex items-center justify-between gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.settings.workflows.edit.event')
+                                    </p>
+
+                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.settings.workflows.edit.event-info')</p>
+                                </div>
+                            </div>
+
+                            <!-- Hidden Entity Type -->
                             <input
                                 type="hidden"
                                 name="entity_type"
                                 :value="entityType"
                             />
 
-                            <x-admin::form.control-group.control
-                                type="select"
-                                id="event"
-                                name="event"
-                                ::value="event"
-                                rules="required"
-                                :label="trans('admin::app.settings.workflows.edit.event')"
-                                :placeholder="trans('admin::app.settings.workflows.edit.event')"
-                                v-model="event"
-                            >
-                                <optgroup
-                                    v-for='entity in events'
-                                    :label="entity.name"
-                                >
-                                    <option
-                                        v-for='event in entity.events'
-                                        :value="event.event"
-                                        :text="event.name"
-                                    ></option>
-                                </optgroup>
-                            </x-admin::form.control-group.control>
+                            <div class="w-1/2">
+                                <!-- Event -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label class="required">
+                                        @lang('admin::app.settings.workflows.edit.event')
+                                    </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.error control-name="event" />
-                        </x-admin::form.control-group>
+                                    <x-admin::form.control-group.control
+                                        type="select"
+                                        id="event"
+                                        name="event"
+                                        ::value="event"
+                                        rules="required"
+                                        :label="trans('admin::app.settings.workflows.edit.event')"
+                                        :placeholder="trans('admin::app.settings.workflows.edit.event')"
+                                        v-model="event"
+                                    >
+                                        <optgroup
+                                            v-for='entity in events'
+                                            :label="entity.name"
+                                        >
+                                            <option
+                                                v-for='event in entity.events'
+                                                :value="event.event"
+                                                :text="event.name"
+                                            ></option>
+                                        </optgroup>
+                                    </x-admin::form.control-group.control>
+
+                                    <x-admin::form.control-group.error control-name="event" />
+                                </x-admin::form.control-group>
+                            </div>
+                        </div>
 
                         <!-- Conditions -->
-                        <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                            <div class="flex items-center justify-between gap-4">
-                                <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('admin::app.settings.workflows.edit.conditions')
-                                </p>
-    
+                        <div 
+                            class="mt-4"
+                            id="conditions"
+                        >
+                            <div class="mb-4 flex items-center justify-between gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.settings.workflows.edit.conditions')
+                                    </p>
+
+                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.settings.workflows.edit.conditions-info')</p>
+                                </div>
+                            </div>
+
+                            <div class="w-1/2">
                                 <!-- Condition Type -->
                                 <x-admin::form.control-group>
                                     <x-admin::form.control-group.label>
@@ -132,106 +228,74 @@
     
                                     <x-admin::form.control-group.error control-name="condition_type" />
                                 </x-admin::form.control-group>
-                            </div>
-    
-                            <!-- Workflow Condition Vue Component. -->
-                                
-                            <template
-                                v-for='(condition, index) in conditions' 
-                                :key="index"
-                            >
-                                <v-workflow-condition-item
-                                    :entityType="entityType"
-                                    :condition="condition"
-                                    :index="index"
-                                    @onRemoveCondition="removeCondition($event)"
-                                ></v-workflow-condition-item>
-                            </template>
-    
-                            <div
-                                class="secondary-button mt-4 max-w-max"
-                                @click="addCondition"
-                            >
-                                @lang('admin::app.settings.workflows.edit.add-condition')
+
+                                <!-- Workflow Condition Vue Component. -->
+                                <template
+                                    v-for='(condition, index) in conditions' 
+                                    :key="index"
+                                >
+                                    <v-workflow-condition-item
+                                        :entityType="entityType"
+                                        :condition="condition"
+                                        :index="index"
+                                        @onRemoveCondition="removeCondition($event)"
+                                    ></v-workflow-condition-item>
+                                </template>
+
+                                <button
+                                    type="button"
+                                    class="flex gap-2 items-center max-w-max mt-4 text-brandColor"
+                                    @click="addCondition"
+                                >
+                                    <i class="icon-add text-2xl"></i>
+
+                                    @lang('admin::app.settings.workflows.edit.add-condition')
+                                </button>
                             </div>
                         </div>
-    
+
                         <!-- Actions -->
-                        <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                            <!-- Workflow Condition Vue Component. -->
-                           <template
-                                v-for='(action, index) in actions'
-                                :key="index"
-                            >
-                                <v-workflow-action-item
-                                    :entityType="entityType"
-                                    :action="action"
-                                    :index="index"
-                                    @onRemoveAction="removeAction($event)"
-                                ></v-workflow-action-item>
-                           </template>
-    
-                            <div
-                                class="secondary-button mt-4 max-w-max"
-                                @click="addAction"
-                            >
-                                @lang('admin::app.settings.workflows.edit.add-action')
+                        <div 
+                            class="mt-4"
+                            id="actions"
+                        >
+                            <div class="mb-4 flex items-center justify-between gap-4">
+                                <div class="flex flex-col gap-1">
+                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.settings.workflows.edit.actions')
+                                    </p>
+
+                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.settings.workflows.edit.actions-info')</p>
+                                </div>
+                            </div>
+
+                            <div class="w-1/2">
+                                <template
+                                    v-for='(action, index) in actions'
+                                    :key="index"
+                                >
+                                    <v-workflow-action-item
+                                        :entityType="entityType"
+                                        :action="action"
+                                        :index="index"
+                                        @onRemoveAction="removeAction($event)"
+                                    ></v-workflow-action-item>
+                                </template>
+
+                                <button
+                                    type="button"
+                                    class="flex gap-2 items-center max-w-max mt-4 text-brandColor"
+                                    @click="addAction"
+                                >
+                                    <i class="icon-add text-2xl"></i>
+
+                                    @lang('admin::app.settings.workflows.edit.add-action')
+                                </button>
                             </div>
                         </div>
+
+                        {!! view_render_event('admin.settings.workflows.edit.form_controls.after') !!}
                     </div>
-                </div>
-
-                <!-- Right sub-component -->
-                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.before') !!}
-
-                    <x-admin::accordion>
-                        <x-slot:header>
-                            <div class="flex items-center justify-between">
-                                <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                    @lang('admin::app.settings.workflows.edit.general')
-                                </p>
-                            </div>
-                        </x-slot>
-
-                        <x-slot:content>
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.settings.workflows.edit.name')
-                                </x-admin::form.control-group.label>
-
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    name="name"
-                                    id="name"
-                                    :value="old('name') ?? $workflow->name"
-                                    rules="required"
-                                    :label="trans('admin::app.settings.workflows.edit.name')"
-                                    :placeholder="trans('admin::app.settings.workflows.edit.name')"
-                                />
-                                <x-admin::form.control-group.error control-name="name" />
-                            </x-admin::form.control-group>
-
-                            <x-admin::form.control-group>
-                                <x-admin::form.control-group.label>
-                                    @lang('admin::app.settings.workflows.edit.description')
-                                </x-admin::form.control-group.label>
-
-                                <x-admin::form.control-group.control
-                                    type="textarea"
-                                    name="description"
-                                    id="description"
-                                    :value="old('description') ?? $workflow->description"
-                                    :label="trans('admin::app.settings.workflows.edit.description')"
-                                    :placeholder="trans('admin::app.settings.workflows.edit.description')"
-                                />
-
-                                <x-admin::form.control-group.error control-name="description" />
-                            </x-admin::form.control-group>
-                        </x-slot>
-                    </x-admin::accordion>
-
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.after') !!}
                 </div>
             </div>
         </script>
@@ -292,8 +356,8 @@
                             <v-field
                                 :name="`conditions[${index}][value]`"
                                 v-slot="{ field, errorMessage }"
-                                :id="`conditions[${index}][value]`"
                                 label="@lang('admin::app.settings.workflows.edit.value')"
+                                :id="`conditions[${index}][value]`"
                                 :rules="
                                     matchedAttribute.type == 'price' ? 'regex:^[0-9]+(\\.[0-9]+)?$' : ''
                                     || matchedAttribute.type == 'decimal' ? 'regex:^[0-9]+(\\.[0-9]+)?$' : ''
@@ -389,13 +453,13 @@
                             </template>
 
                             <template v-else>
-                               <div class="w-1/3">
+                            <div class="w-1/3">
                                     <v-lookup-component
                                         :attribute="{'code': 'conditions[' + index + '][value]', 'name': 'Email', 'lookup_type': matchedAttribute.lookup_type}"
                                         validations="required|email"
                                         :data="condition.value"
                                     ></v-lookup-component>
-                               </div>
+                            </div>
                             </template>
                         </template>
 
@@ -651,8 +715,7 @@
 
                     <template v-if="matchedAction && matchedAction.options">
                         <select
-                            :name="['actions[' + index + '][value]']"
-                            :id="['actions[' + index + '][value]']"
+                            :name="`actions[${index}][value]`"
                             class="custom-select min:w-1/3 flex h-10 w-1/3 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                             v-model="action.value"
                         >
@@ -673,8 +736,8 @@
                         "
                     >
                         <v-field
-                            :name="['actions[' + index + '][value]']"
-                            :id="['actions[' + index + '][value]']"
+                            :name="`actions[${index}][value]`"
+                            :id="`actions[${index}][value]`"
                             v-slot="{ field, errorMessage }"
                             v-model="action.value"
                         >
@@ -687,7 +750,7 @@
                         </v-field>
 
                         <v-error-message
-                            :name="['actions[' + index + '][value]']"
+                            :name="`actions[${index}][value]`"
                             class="mt-1 text-xs italic text-red-500"
                             as="p"
                         >
@@ -717,6 +780,15 @@
                         conditions: @json($workflow->conditions ?: []),
 
                         actions: @json($workflow->actions ?: []),
+
+                        activeTab: 'basic-details',
+
+                        tabs: [
+                            { id: 'basic-details', label: '@lang('admin::app.settings.workflows.create.basic-details')' },
+                            { id: 'event', label: '@lang('admin::app.settings.workflows.create.event')' },
+                            { id: 'conditions', label: '@lang('admin::app.settings.workflows.create.conditions')' },
+                            { id: 'actions', label: '@lang('admin::app.settings.workflows.create.actions')' }
+                        ],
                     };
                 },
 
@@ -807,6 +879,21 @@
                         let index = this.actions.indexOf(action)
 
                         this.actions.splice(index, 1);
+                    },
+
+                    /**
+                     * Scroll to the section.
+                     * 
+                     * @param {String} tabId
+                     * 
+                     * @returns {void}
+                     */
+                     scrollToSection(tabId) {
+                        const section = document.getElementById(tabId);
+
+                        if (section) {
+                            section.scrollIntoView({ behavior: 'smooth' });
+                        }
                     },
                 },
             });
@@ -1077,8 +1164,6 @@
                             return;
                         }
 
-                        console.log(this.matchedAction);
-
                         let matchedAttribute = this.matchedAction.attributes.find(attribute => attribute.id == this.action.attribute);
 
                         if (! matchedAttribute) {
@@ -1124,5 +1209,13 @@
                 },
             });
         </script>
-   @endPushOnce
+    @endPushOnce
+
+    @pushOnce('styles')
+        <style>
+            html {
+                scroll-behavior: smooth;
+            }
+        </style>
+    @endPushOnce    
 </x-admin::layouts>

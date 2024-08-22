@@ -59,27 +59,27 @@ class Quote extends AbstractEntity
         return [
             [
                 'id'         => 'update_quote',
-                'name'       => trans('admin::app.settings.workflows.update-quote'),
+                'name'       => trans('admin::app.settings.workflows.helpers.update-quote'),
                 'attributes' => $this->getAttributes('quotes'),
             ], [
                 'id'         => 'update_person',
-                'name'       => trans('admin::app.settings.workflows.update-person'),
+                'name'       => trans('admin::app.settings.workflows.helpers.update-person'),
                 'attributes' => $this->getAttributes('persons'),
             ], [
                 'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.update-related-leads'),
+                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'      => 'send_email_to_person',
-                'name'    => trans('admin::app.settings.workflows.send-email-to-person'),
+                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-person'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => trans('admin::app.settings.workflows.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'trigger_webhook',
-                'name'    => trans('admin::app.settings.workflows.add-webhook'),
+                'name'    => trans('admin::app.settings.workflows.helpers.add-webhook'),
                 'options' => $webhookOptions,
             ],
         ];
