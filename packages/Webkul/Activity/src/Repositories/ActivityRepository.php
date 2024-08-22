@@ -133,8 +133,7 @@ class ActivityRepository extends Repository
      */
     public function isDurationOverlapping($startFrom, $endFrom, $participants, $id)
     {
-        $queryBuilder = $this->model
-            ->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
+        $queryBuilder = $this->leftJoin('activity_participants', 'activities.id', '=', 'activity_participants.activity_id')
             ->where(function ($query) use ($startFrom, $endFrom) {
                 $query->where([
                     ['activities.schedule_from', '<=', $startFrom],
@@ -150,11 +149,11 @@ class ActivityRepository extends Repository
                 }
 
                 if (isset($participants['users'])) {
-                    $query->orWhereIn('activity_participants.user_id', collect($participants['users'])->pluck('id'));
+                    $query->orWhereIn('activity_participants.user_id', $participants['users']);
                 }
 
                 if (isset($participants['persons'])) {
-                    $query->orWhereIn('activity_participants.person_id', collect($participants['persons'])->pluck('id'));
+                    $query->orWhereIn('activity_participants.person_id', $participants['persons']);
                 }
             })
             ->groupBy('activities.id');

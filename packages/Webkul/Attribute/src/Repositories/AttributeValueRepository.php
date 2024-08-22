@@ -2,6 +2,7 @@
 
 namespace Webkul\Attribute\Repositories;
 
+use Carbon\Carbon;
 use Illuminate\Container\Container;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Core\Eloquent\Repository;
@@ -143,5 +144,110 @@ class AttributeValueRepository extends Repository
         }
 
         return $data;
+    }
+
+    /**
+     * Replace placeholders with values
+     */
+    public function getAttributeLabel(mixed $value, mixed $attribute)
+    {
+        switch ($attribute?->type) {
+            case 'price':
+                $label = core()->formatBasePrice($value);
+
+                break;
+
+            case 'boolean':
+                $label = $value ? 'Yes' : 'No';
+
+                break;
+
+            case 'select':
+            case 'radio':
+            case 'lookup':
+                if ($attribute->lookup_type) {
+                    $option = $this->attributeRepository->getLookUpEntity($attribute->lookup_type, $value);
+                } else {
+                    $option = $attribute->options->where('id', $value)->first();
+                }
+
+                $label = $option?->name;
+
+                break;
+
+            case 'multiselect':
+            case 'checkbox':
+                if ($attribute->lookup_type) {
+                    $options = $this->attributeRepository->getLookUpEntity($attribute->lookup_type, explode(',', $value));
+                } else {
+                    $options = $attribute->options->whereIn('id', explode(',', $value));
+                }
+
+                $optionsLabels = [];
+
+                foreach ($options as $key => $option) {
+                    $optionsLabels[] = $option->name;
+                }
+
+                $label = implode(', ', $optionsLabels);
+
+                break;
+
+            case 'email':
+            case 'phone':
+                if (! is_array($value)) {
+                    break;
+                }
+
+                $optionsLabels = [];
+
+                foreach ($value as $item) {
+                    $optionsLabels[] = $item['value'].' ('.$item['label'].')';
+                }
+
+                $label = implode(', ', $optionsLabels);
+
+                break;
+
+            case 'address':
+                if (
+                    ! $value
+                    || ! count(array_filter($value))
+                ) {
+                    break;
+                }
+
+                $label = $value['address'].'<br>'
+                    .$value['postcode'].'  '.$value['city'].'<br>'
+                    .core()->state_name($value['state']).'<br>'
+                    .core()->country_name($value['country']).'<br>';
+
+                break;
+
+            case 'date':
+                if ($value) {
+                    $label = Carbon::parse($value)->format('D M d, Y');
+                } else {
+                    $label = null;
+                }
+
+                break;
+
+            case 'datetime':
+                if ($value) {
+                    $label = Carbon::parse($value)->format('D M d, Y H:i A');
+                } else {
+                    $label = null;
+                }
+
+                break;
+
+            default:
+                $label = $value;
+
+                break;
+        }
+
+        return $label ?? null;
     }
 }

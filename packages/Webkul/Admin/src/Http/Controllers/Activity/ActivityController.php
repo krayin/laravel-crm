@@ -76,10 +76,27 @@ class ActivityController extends Controller
         ]);
 
         /**
-         * TODO
-         *
          * Check if meeting is overlapping with other meetings
          */
+        $isOverlapping = $this->activityRepository->isDurationOverlapping(
+            request()->input('schedule_from'),
+            request()->input('schedule_to'),
+            request()->input('participants'),
+            request()->input('id')
+        );
+
+        if ($isOverlapping) {
+            if (request()->ajax()) {
+                return response()->json([
+                    'message' => trans('admin::app.activities.overlapping-error'),
+                ], 400);
+            }
+
+            session()->flash('success', trans('admin::app.activities.overlapping-error'));
+
+            return redirect()->back();
+        }
+
         Event::dispatch('activity.create.before');
 
         $activity = $this->activityRepository->create(array_merge(request()->all(), [

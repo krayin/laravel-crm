@@ -3,10 +3,13 @@
 namespace Webkul\Attribute\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Contracts\AttributeValue as AttributeValueContract;
 
 class AttributeValue extends Model implements AttributeValueContract
 {
+    use LogsActivity;
+
     public $timestamps = false;
 
     protected $casts = [

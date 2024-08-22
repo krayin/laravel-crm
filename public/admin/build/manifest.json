@@ -220,24 +220,12 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-65c23fd5.css",
+    "file": "assets/app-1dc5b673.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
-  "src/Resources/assets/fonts/icomoon.eot": {
-    "file": "assets/icomoon-734593ec.eot",
-    "src": "src/Resources/assets/fonts/icomoon.eot"
-  },
-  "src/Resources/assets/fonts/icomoon.svg": {
-    "file": "assets/icomoon-ca49b754.svg",
-    "src": "src/Resources/assets/fonts/icomoon.svg"
-  },
-  "src/Resources/assets/fonts/icomoon.ttf": {
-    "file": "assets/icomoon-6f880af4.ttf",
-    "src": "src/Resources/assets/fonts/icomoon.ttf"
-  },
   "src/Resources/assets/fonts/icomoon.woff": {
-    "file": "assets/icomoon-e7a22934.woff",
+    "file": "assets/icomoon-8bbcff3c.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
   },
   "src/Resources/assets/images/dark-logo.svg": {
