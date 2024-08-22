@@ -87,7 +87,7 @@
                                                     >
                                                     </span>
 
-                                                    <span class="icon-sort-down text-2xl"></span>
+                                                    <span class="icon-down-arrow text-2xl"></span>
                                                 </button>
                                             </x-slot>
 
@@ -459,7 +459,7 @@
                                                     >
                                                     </span>
 
-                                                    <span class="icon-sort-down text-2xl"></span>
+                                                    <span class="icon-down-arrow text-2xl"></span>
                                                 </button>
                                             </x-slot>
 
