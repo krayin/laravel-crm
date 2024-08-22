@@ -169,19 +169,19 @@ class Activity extends AbstractEntity
         return [
             [
                 'id'         => 'update_related_leads',
-                'name'       => trans('admin::app.settings.workflows.edit.helper.update-related-leads'),
+                'name'       => trans('admin::app.settings.workflows.helpers.update-related-leads'),
                 'attributes' => $this->getAttributes('leads'),
             ], [
                 'id'      => 'send_email_to_sales_owner',
-                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-sales-owner'),
+                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-sales-owner'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'send_email_to_participants',
-                'name'    => trans('admin::app.settings.workflows.edit.helper.send-email-to-participants'),
+                'name'    => trans('admin::app.settings.workflows.helpers.send-email-to-participants'),
                 'options' => $emailTemplates,
             ], [
                 'id'      => 'trigger_webhook',
-                'name'    => trans('admin::app.settings.workflows.edit.helper.add-webhook'),
+                'name'    => trans('admin::app.settings.workflows.helpers.add-webhook'),
                 'options' => $webhooksOptions,
             ],
         ];
