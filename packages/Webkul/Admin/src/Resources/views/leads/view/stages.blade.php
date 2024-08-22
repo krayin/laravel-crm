@@ -153,6 +153,10 @@
 
             methods: {
                 openModal(stage) {
+                    if (this.currentStage.code == stage.code) {
+                        return;
+                    }
+                    
                     this.nextStage = stage;
 
                     this.$refs.stageUpdateModal.open();

@@ -10,7 +10,7 @@ return [
         'key'  => 'general.general',
         'name' => 'admin::app.configuration.index.general.general.title',
         'info' => 'admin::app.configuration.index.general.general.info',
-        'icon' => 'icon-user',
+        'icon' => 'icon-setting',
         'sort' => 1,
     ], [
         'key'    => 'general.general.locale_settings',

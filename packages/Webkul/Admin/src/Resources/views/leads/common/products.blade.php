@@ -35,7 +35,6 @@
 
                 <!-- Table Body -->
                 <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                    
                     <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
