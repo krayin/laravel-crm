@@ -162,7 +162,7 @@
                         id: null,
                         product_id: null,
                         name: '',
-                        quantity: 0,
+                        quantity: 1,
                         price: 0,
                         amount: null,
                     })
@@ -202,7 +202,7 @@
                 params() {
                     return {
                         params: {
-                            query: this.product.name
+                            query: this.product.name,
                         },
                     };
                 },
@@ -223,7 +223,7 @@
                     
                     this.product.price = result.price;
                     
-                    this.product.quantity = result.quantity ?? 0;
+                    this.product.quantity = result.quantity ?? 1;
                 },
                   
                 /**

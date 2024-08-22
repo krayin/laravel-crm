@@ -29,7 +29,9 @@ class LocationController extends Controller
             ->pushCriteria(app(RequestCriteria::class))
             ->all();
 
-        return response()->json($results);
+        return response()->json([
+            'data' => $results,
+        ]);
     }
 
     /**

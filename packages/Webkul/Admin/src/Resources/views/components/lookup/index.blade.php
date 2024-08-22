@@ -92,7 +92,7 @@
                         </li>
 
                         <li
-                            v-if="searchTerm.length > 2"
+                            v-if="searchTerm.length > 2 && canAddNew"
                             @click="selectItem({ id: '', name: searchTerm })"
                             class="px-4 py-2 cursor-pointer border-t border-gray-800 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-brandColor dark:hover:text-white"
                         >
@@ -142,7 +142,12 @@
                 label: {
                     type: String,
                     default: '',
-                }
+                },
+
+                canAddNew: {
+                    type: Boolean,
+                    default: false,
+                },
             },
 
             emits: ['on-selected'],
