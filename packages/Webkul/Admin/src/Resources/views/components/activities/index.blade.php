@@ -31,7 +31,7 @@
 
         <template v-else>
             <div class="w-full bg-white dark:bg-gray-900">
-                <div class="flex gap-4 border-b border-gray-200 dark:border-gray-800">
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <div
                         v-for="type in types"
                         class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
