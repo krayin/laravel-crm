@@ -9,9 +9,9 @@ use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\ProductResource;
-use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Product\Repositories\ProductRepository;
 
 class ProductController extends Controller

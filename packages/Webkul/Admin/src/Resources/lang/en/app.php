@@ -880,13 +880,6 @@ return [
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
-                'get-method'                 => 'Get Method',
-                'post-method'                => 'Post Method',
-                'put-method'                 => 'Put Method',
-                'delete-method'              => 'Delete Method',
-                'patch-method'               => 'Patch Method',
-                'encoding-json'              => 'Encoding JSON',
-                'encoding-http-query'        => 'Encoding HTTP Query',
             ],
 
             'create' => [
