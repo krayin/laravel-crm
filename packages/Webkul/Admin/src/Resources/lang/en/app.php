@@ -214,8 +214,8 @@ return [
                     ],
 
                     'system' => [
-                        'title'       => 'No Change Logs Found',
-                        'description' => 'No change logs found for this.',
+                        'title'       => 'No Changelogs Found',
+                        'description' => 'No changelogs found for this.',
                     ],
                 ],
             ],
@@ -689,7 +689,7 @@ return [
             'notes'       => 'Notes',
             'files'       => 'Files',
             'inventories' => 'Inventory',
-            'change-logs' => 'Change Logs',
+            'change-logs' => 'Changelogs',
 
             'attributes' => [
                 'about-product' => 'About Product',
@@ -1329,7 +1329,7 @@ return [
                 'notes'       => 'Notes',
                 'files'       => 'Files',
                 'location'    => 'Location',
-                'change-logs' => 'Change Logs',
+                'change-logs' => 'Changelogs',
 
                 'locations' => [
                     'action'         => 'Action',
