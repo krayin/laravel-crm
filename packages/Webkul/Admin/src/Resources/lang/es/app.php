@@ -1,7 +1,7 @@
 <?php
 
 return [
-   'acl' => [
+    'acl' => [
         'leads'           => 'Clientes potenciales',
         'lead'            => 'Cliente potencial',
         'quotes'          => 'Cotizaciones',
@@ -1298,7 +1298,7 @@ return [
                 'update-success' => 'Almacén actualizado con éxito.',
                 'delete-success' => 'Almacén eliminado con éxito.',
                 'delete-failed'  => 'No se puede eliminar el almacén.',
-                
+
                 'datagrid' => [
                     'id'              => 'ID',
                     'name'            => 'Nombre',

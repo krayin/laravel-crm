@@ -325,7 +325,7 @@ return [
             ],
 
             'table' => [
-                'actions'  => 'الإجراءات',
+                'actions'              => 'الإجراءات',
                 'no-records-available' => 'لا توجد سجلات متاحة.',
             ],
         ],
@@ -411,7 +411,7 @@ return [
             'update-success' => 'تم تحديث عرض السعر بنجاح.',
             'delete-success' => 'تم حذف عرض السعر بنجاح.',
             'delete-failed'  => 'لا يمكن حذف عرض السعر.',
-    
+
             'datagrid' => [
                 'subject'        => 'الموضوع',
                 'sales-person'   => 'مندوب المبيعات',
@@ -428,7 +428,7 @@ return [
                 'delete'         => 'حذف',
                 'print'          => 'طباعة',
             ],
-    
+
             'pdf' => [
                 'title'            => 'عرض السعر',
                 'grand-total'      => 'المجموع الكلي',
@@ -449,7 +449,7 @@ return [
                 'quote-id'         => 'رقم عرض السعر',
             ],
         ],
-    
+
         'create' => [
             'title'             => 'إنشاء عرض سعر',
             'save-btn'          => 'حفظ عرض السعر',
@@ -480,7 +480,7 @@ return [
             'product-name'      => 'اسم المنتج',
             'action'            => 'الإجراء',
         ],
-    
+
         'edit' => [
             'title'             => 'تعديل عرض السعر',
             'save-btn'          => 'حفظ عرض السعر',
