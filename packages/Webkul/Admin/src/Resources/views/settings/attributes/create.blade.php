@@ -254,7 +254,7 @@
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2">
                     <!-- General -->
-                    <x-admin::accordion class="!rounded-lg">
+                    <x-admin::accordion>
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.create.general')
@@ -339,7 +339,7 @@
                     </x-admin::accordion>
                     
                     <!-- Validations -->
-                    <x-admin::accordion class="!rounded-lg">
+                    <x-admin::accordion>
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.create.validations')

@@ -264,7 +264,7 @@
                     {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.general.before', ['attribute' => $attribute]) !!}
 
                     <!-- General -->
-                    <x-admin::accordion class="!rounded-lg">
+                    <x-admin::accordion>
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.edit.general')
@@ -374,7 +374,7 @@
                     {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.validations.before', ['attribute' => $attribute]) !!}
 
                     <!-- Validations -->
-                    <x-admin::accordion class="!rounded-lg">
+                    <x-admin::accordion>
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.edit.validations')
