@@ -5,44 +5,46 @@
         @lang('admin::app.mail.index.' . request('route'))
     </x-slot>
 
-    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-        <div class="flex flex-col gap-2">
-            <div class="flex cursor-pointer items-center">
-                <!-- breadcrumbs -->
-                <x-admin::breadcrumbs
-                    name="mail.route"
-                    :entity="request('route')"
-                />
+    <div class="flex flex-col gap-4">
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <!-- breadcrumbs -->
+                    <x-admin::breadcrumbs
+                        name="mail.route"
+                        :entity="request('route')"
+                    />
+                </div>
+
+                <div class="text-xl font-bold dark:text-white">
+                    <!-- title -->
+                    @lang('admin::app.mail.index.' . request('route'))
+                </div>
             </div>
 
-            <div class="text-xl font-bold dark:text-white">
-                <!-- title -->
-                @lang('admin::app.mail.index.' . request('route'))
-            </div>
-        </div>
-
-        <div class="flex items-center gap-x-2.5">
-            <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                @if (bouncer()->hasPermission('mail.compose'))
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="$refs.composeMail.toggleModal()"
-                    >
-                        @lang('admin::app.mail.index.compose-mail-btn')
-                    </button>
-                @endif
+                <!-- Create button for person -->
+                <div class="flex items-center gap-x-2.5">
+                    @if (bouncer()->hasPermission('mail.compose'))
+                        <button
+                            type="button"
+                            class="primary-button"
+                            @click="$refs.composeMail.toggleModal()"
+                        >
+                            @lang('admin::app.mail.index.compose-mail-btn')
+                        </button>
+                    @endif
+                </div>
             </div>
         </div>
+
+        <!-- Compose Mail Vue Component -->
+        <v-mail ref="composeMail">
+            <!-- Datagrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </v-mail>
     </div>
-
-    <!-- Compose Mail Vue Component -->
-    <v-mail ref="composeMail">
-        <!-- Datagrid Shimmer -->
-        <x-admin::shimmer.datagrid />
-    </v-mail>
-
+    
     @pushOnce('scripts')
         <script
             type="text/x-template"

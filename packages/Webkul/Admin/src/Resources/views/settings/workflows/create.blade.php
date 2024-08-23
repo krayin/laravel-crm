@@ -6,34 +6,37 @@
     {!! view_render_event('krayin.admin.activities.create.form.before') !!}
 
     <x-admin::form :action="route('admin.settings.workflows.store')">
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <x-admin::breadcrumbs name="settings.workflows.create" />
+        <div class="flex flex-col gap-4">
+
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
+                    <div class="flex cursor-pointer items-center">
+                        <x-admin::breadcrumbs name="settings.workflows.create" />
+                    </div>
+
+                    <div class="text-xl font-bold dark:text-white">
+                        @lang('admin::app.settings.workflows.create.title')
+                    </div>
                 </div>
 
-                <div class="text-xl font-bold dark:text-white">
-                    @lang('admin::app.settings.workflows.create.title')
-                </div>
-            </div>
-
-            <div class="flex items-center gap-x-2.5">
-                <!-- Save button for person -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.workflows.create.save-btn')
-                    </button>
+                    <!-- Save button for person -->
+                    <div class="flex items-center gap-x-2.5">
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.workflows.create.save-btn')
+                        </button>
+                    </div>
                 </div>
             </div>
+
+            <!-- Workflow Vue Component -->
+            <v-workflow></v-workflow>
+
+            <x-admin::attributes.edit.lookup />
         </div>
-
-        <!-- Workflow Vue Component -->
-        <v-workflow></v-workflow>
-
-        <x-admin::attributes.edit.lookup />
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -41,9 +44,9 @@
             type="text/x-template"
             id="v-workflow-template"
         >
-            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+            <div class="flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
                         {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
                        
                         <!-- Tab Switcher -->
@@ -230,7 +233,7 @@
 
                                     <button
                                         type="button"
-                                        class="flex gap-2 items-center max-w-max mt-4 text-brandColor"
+                                        class="mt-4 flex max-w-max items-center gap-2 text-brandColor"
                                         @click="addCondition"
                                     >
                                         <i class="icon-add text-xl"></i>
@@ -284,7 +287,7 @@
 
                                 <button
                                     type="button"
-                                    class="flex gap-2 items-center max-w-max mt-4 text-brandColor"
+                                    class="mt-4 flex max-w-max items-center gap-2 text-brandColor"
                                     @click="addAction"
                                 >
                                     <i class="icon-add text-xl"></i>
@@ -524,14 +527,14 @@
                 </x-admin::table.td>
 
                 <x-admin::table.td>
-                    <div class="flex items-center gap-4 justify-between">
-                        <div class="flex justify-between gap-4 w-full">
+                    <div class="flex items-center justify-between gap-4">
+                        <div class="flex w-full justify-between gap-4">
                             <template v-if="matchedAction && matchedAction.attributes">
                                 <!-- Mattched Attribute -->
                                 <select
                                     :name="['actions[' + index + '][attribute]']"
                                     :id="['actions[' + index + '][attribute]']"
-                                    class="custom-select inline-flex h-10 items-center justify-between w-full gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
+                                    class="custom-select inline-flex h-10 w-full items-center justify-between gap-x-1 rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 max-sm:max-w-full max-sm:flex-auto"
                                     v-model="action.attribute"
                                 >
                                     <option
@@ -573,7 +576,7 @@
                                                 type="text"
                                                 v-bind="field"
                                                 :class="{ 'border border-red-500': errorMessage }"
-                                                class="w-full flex h-10 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                                class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                             />
                                         </v-field>
     
@@ -602,7 +605,7 @@
                                             type="email" 
                                             :name="`actions[${index}][value][0][value]`"
                                             :id="`actions[${index}][value][0][value]`"
-                                            class="w-full flex h-10 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                            class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                             v-model="action.value[0].value"
                                         />
                                     </template>
@@ -703,7 +706,7 @@
                                     <template v-if="this.matchedAttribute.type === 'multiselect' || this.matchedAttribute.type === 'checkbox'">
                                         <select
                                             :name="`actions[${index}][value][]`"
-                                            class="inline-flex h-20 items-center w-full justify-between gap-x-1 rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                            class="inline-flex h-20 w-full items-center justify-between gap-x-1 rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                             v-model="action.value"
                                             multiple
                                         >
@@ -750,7 +753,7 @@
                                         type="text"
                                         v-bind="field"
                                         :class="{ 'border border-red-500': errorMessage }"
-                                        class="w-full flex h-10 rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        class="flex h-10 w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     />
                                 </v-field>
     

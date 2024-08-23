@@ -3,43 +3,45 @@
         @lang('admin::app.settings.sources.index.title')
     </x-slot>
 
-    <!-- Header section -->
-    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-        <div class="flex flex-col gap-2">
-            <div class="flex cursor-pointer items-center">
-                <!-- Breadcrumbs -->
-                <x-admin::breadcrumbs name="settings.sources" />
-            </div>
-
-            <div class="text-xl font-bold dark:text-white">
-                @lang('admin::app.settings.sources.index.title')
-            </div>
-        </div>
-
-        <div class="flex items-center gap-x-2.5">
-            {!! view_render_event('krayin.admin.settings.sources.index.create_button.before') !!}
-            
-            <!-- Create button for Sources -->
-            @if (bouncer()->hasPermission('settings.lead.sources.create'))
-                <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="$refs.sourceSettings.openModal()"
-                    >
-                        @lang('admin::app.settings.sources.index.create-btn')
-                    </button>
+    <div class="flex flex-col gap-4">
+        <!-- Header section -->
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.sources" />
                 </div>
-            @endif
 
-            {!! view_render_event('krayin.admin.settings.sources.index.create_button.after') !!}
+                <div class="text-xl font-bold dark:text-white">
+                    @lang('admin::app.settings.sources.index.title')
+                </div>
+            </div>
+
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('krayin.admin.settings.sources.index.create_button.before') !!}
+                
+                <!-- Create button for Sources -->
+                @if (bouncer()->hasPermission('settings.lead.sources.create'))
+                    <div class="flex items-center gap-x-2.5">
+                        <button
+                            type="button"
+                            class="primary-button"
+                            @click="$refs.sourceSettings.openModal()"
+                        >
+                            @lang('admin::app.settings.sources.index.create-btn')
+                        </button>
+                    </div>
+                @endif
+
+                {!! view_render_event('krayin.admin.settings.sources.index.create_button.after') !!}
+            </div>
         </div>
+        
+        <v-sources-settings ref="sourceSettings">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </v-sources-settings>
     </div>
-    
-    <v-sources-settings ref="sourceSettings">
-        <!-- DataGrid Shimmer -->
-        <x-admin::shimmer.datagrid />
-    </v-sources-settings>
 
     @pushOnce('scripts')
         <script

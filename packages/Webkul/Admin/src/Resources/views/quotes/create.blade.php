@@ -16,33 +16,35 @@
     </x-slot>
 
     <x-admin::form :action="route('admin.quotes.store')">
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <x-admin::breadcrumbs 
-                        name="quotes.create" 
-                    />
+        <div class="flex flex-col gap-4">
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
+                    <div class="flex cursor-pointer items-center">
+                        <x-admin::breadcrumbs 
+                            name="quotes.create" 
+                        />
+                    </div>
+
+                    <div class="text-xl font-bold dark:text-white">
+                        @lang('admin::app.quotes.create.title')
+                    </div>
                 </div>
 
-                <div class="text-xl font-bold dark:text-white">
-                    @lang('admin::app.quotes.create.title')
-                </div>
-            </div>
-
-            <div class="flex items-center gap-x-2.5">
-                <!-- Save button for person -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.quotes.create.save-btn')
-                    </button>
+                    <!-- Save button for person -->
+                    <div class="flex items-center gap-x-2.5">
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.quotes.create.save-btn')
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <v-quote :errors="errors"></v-quote>
+            <v-quote :errors="errors"></v-quote>
+        </div>
     </x-admin::form>
 
     @pushOnce('scripts')
@@ -50,56 +52,80 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
-                        {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
                        
-                        <div class="border-b border-gray-200 text-center text-sm font-medium dark:border-gray-700">
-                            <ul class="flex flex-wrap">
-                                <template
-                                    v-for="tab in tabs"
-                                    :key="tab.id"
-                                >
-                                    <li class="me-2">
-                                        <a
-                                            :href="'#' + tab.id"
-                                            :class="[
-                                                'inline-block p-4 rounded-t-lg border-b-2',
-                                                activeTab === tab.id
-                                                ? 'text-blue-600 border-blue-600 dark:text-blue-500 dark:border-blue-500'
-                                                : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
-                                            ]"
-                                            @click="scrollToSection(tab.id)"
-                                            :text="tab.label"
-                                        ></a>
-                                    </li>
-                                </template>
-                            </ul>
+                    <template
+                        v-for="tab in tabs"
+                        :key="tab.id"
+                    >
+                        <a
+                            :href="'#' + tab.id"
+                            :class="[
+                                'inline-block px-3 py-2.5 border-b-2  text-sm font-medium ',
+                                activeTab === tab.id
+                                ? 'text-brandColor border-brandColor dark:brandColor dark:brandColor'
+                                : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
+                            ]"
+                            @click="scrollToSection(tab.id)"
+                            :text="tab.label"
+                        ></a>
+                    </template>
+                </div>
+
+                <div class="flex flex-col gap-4 px-4 py-2">
+                    <!-- Quote information -->
+                    <div 
+                        id="quote-info"
+                        class="flex flex-col gap-4" 
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.quotes.create.quote-info')
+                            </p>
+
+                            <p class="text-sm text-gray-600 dark:text-white">
+                                @lang('admin::app.quotes.create.quote-info-info')
+                            </p>
                         </div>
 
-                        <!-- Quote information -->
-                        <div 
-                            class="mt-4"
-                            id="quote-info"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.quotes.create.quote-info')
-                                    </p>
+                        <div class="w-1/2">
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    'entity_type' => 'quotes',
+                                    ['code', 'IN', ['subject']],
+                                ])"
 
-                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.quote-info-info')</p>
-                                </div>
-                            </div>
+                                :custom-validations="[
+                                    'expired_at' => [
+                                        'required',
+                                        'date_format:yyyy-MM-dd',
+                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                    ],
+                                ]"
+                            />
 
-                            <div class="w-1/2">
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['description']],
+                                    ])"
+                                :custom-validations="[
+                                    'expired_at' => [
+                                        'required',
+                                        'date_format:yyyy-MM-dd',
+                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                    ],
+                                ]"
+                            />
+                            
+                            <div class="flex gap-4">
                                 <x-admin::attributes
                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
-                                        ['code', 'IN', ['subject']],
-                                    ])"
-
+                                        ['code', 'IN', ['expired_at', 'user_id']],
+                                    ])->sortBy('sort_order')"
                                     :custom-validations="[
                                         'expired_at' => [
                                             'required',
@@ -107,122 +133,90 @@
                                             'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
                                         ],
                                     ]"
-                                />
-
-                                <x-admin::attributes
-                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            'entity_type' => 'quotes',
-                                            ['code', 'IN', ['description']],
-                                        ])"
-                                    :custom-validations="[
-                                        'expired_at' => [
-                                            'required',
-                                            'date_format:yyyy-MM-dd',
-                                            'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                        ],
-                                    ]"
-                                />
-                                
-                                <div class="flex gap-4">
-                                    <x-admin::attributes
-                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            'entity_type' => 'quotes',
-                                            ['code', 'IN', ['expired_at', 'user_id']],
-                                        ])->sortBy('sort_order')"
-                                        :custom-validations="[
-                                            'expired_at' => [
-                                                'required',
-                                                'date_format:yyyy-MM-dd',
-                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                            ],
-                                        ]"
-                                        :entity="$quote"
-                                    />
-                                </div>
-
-                                <div class="flex gap-4">
-                                    <x-admin::attributes
-                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            'entity_type' => 'quotes',
-                                            ['code', 'IN', ['person_id']],
-                                        ])->sortBy('sort_order')"
-                                        :custom-validations="[
-                                            'expired_at' => [
-                                                'required',
-                                                'date_format:yyyy-MM-dd',
-                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                            ],
-                                        ]"
-                                        :entity="$quote"
-                                    />
-                                    
-                                    <x-admin::attributes.edit.lookup />
-                                    
-                                    @php
-                                        $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
-                                    @endphp
-
-                                    <x-admin::form.control-group class="w-full">
-                                        <x-admin::form.control-group.label>
-                                            @lang('admin::app.quotes.create.link-to-lead')
-                                        </x-admin::form.control-group.label>
-                
-                                        <v-lookup-component
-                                            :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
-                                            :value='@json($lookUpEntityData)'
-                                        ></v-lookup-component>
-                                    </x-admin::form.control-group>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Address information -->
-                        <div
-                            class="mt-4"
-                            id="address-info"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.quotes.create.address-info')
-                                    </p>
-
-                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.address-info-info')</p>
-                                </div>
-                            </div>
-
-                            <div class="w-1/2">
-                                <x-admin::attributes
-                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                            'entity_type' => 'quotes',
-                                            ['code', 'IN', ['billing_address', 'shipping_address']],
-                                        ])"
                                     :entity="$quote"
                                 />
                             </div>
-                        </div>
 
-                        <!-- Quote Item Information -->
-                        <div
-                            class="mt-4"
-                            id="quote-items"
-                        >
-                            <div class="mb-4 flex items-center justify-between gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <p class="text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.quotes.create.quote-items')
-                                    </p>
+                            <div class="flex gap-4">
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['person_id']],
+                                    ])->sortBy('sort_order')"
+                                    :custom-validations="[
+                                        'expired_at' => [
+                                            'required',
+                                            'date_format:yyyy-MM-dd',
+                                            'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                        ],
+                                    ]"
+                                    :entity="$quote"
+                                />
+                                
+                                <x-admin::attributes.edit.lookup />
+                                
+                                @php
+                                    $lookUpEntityData = app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpEntity('leads', request('id'));
+                                @endphp
 
-                                    <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.quote-item-info')</p>
-                                </div>
+                                <x-admin::form.control-group class="w-full">
+                                    <x-admin::form.control-group.label>
+                                        @lang('admin::app.quotes.create.link-to-lead')
+                                    </x-admin::form.control-group.label>
+            
+                                    <v-lookup-component
+                                        :attribute="{'code': 'lead_id', 'name': 'Lead', 'lookup_type': 'leads'}"
+                                        :value='@json($lookUpEntityData)'
+                                    ></v-lookup-component>
+                                </x-admin::form.control-group>
                             </div>
+                        </div>
+                    </div>
 
-                            <!-- Quote Item List Vue Component -->
-                            <v-quote-item-list :errors="errors"></v-quote-item-list>
+                    <!-- Address information -->
+                    <div 
+                        id="address-info"
+                        class="flex flex-col gap-4" 
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.quotes.create.address-info')
+                            </p>
+
+                            <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.address-info-info')</p>
                         </div>
 
-                        {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
+                        <div class="w-1/2">
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['billing_address', 'shipping_address']],
+                                    ])"
+                                :entity="$quote"
+                            />
+                        </div>
                     </div>
+
+                    <!-- Quote Item Information -->
+                    <div  
+                        id="quote-items"
+                        class="flex flex-col gap-4" 
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold text-gray-800 dark:text-white">
+                                @lang('admin::app.quotes.create.quote-items')
+                            </p>
+
+                            <p class="text-sm text-gray-600 dark:text-white">
+                                @lang('admin::app.quotes.create.quote-item-info')
+                            </p>
+                        </div>
+
+                        <!-- Quote Item List Vue Component -->
+                        <v-quote-item-list :errors="errors"></v-quote-item-list>
+                    </div>
+
+                    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
                 </div>
             </div>
         </script>
@@ -231,7 +225,7 @@
             type="text/x-template"
             id="v-quote-item-list-template"
         >
-            <div class="pb-2">
+            <div>
                 <!-- Table -->
                 <x-admin::table class="w-full table-fixed">
                     <!-- Table Head -->
@@ -300,7 +294,7 @@
                 @lang('admin::app.quotes.create.add-item')
             </span>
 
-            <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
+            <div class="flex items-start gap-10 max-lg:gap-5">
                 <div class="flex-auto">
                     <div class="flex justify-end">
                         <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">

@@ -129,13 +129,13 @@
                             ::class="{ draggable: isDragable(element) }"
                             class="flex gap-4 overflow-x-auto"
                         >
-                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white dark:bg-gray-900">
+                            <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <!-- Stage Crad -->
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
                                         <span class="py-1 font-medium dark:text-gray-300">
-                                            @{{ element.name ? element.name : '@lang('admin::app.settings.pipelines.create.newly-added')                                            ' }} 
+                                            @{{ element.name ? element.name : '@lang('admin::app.settings.pipelines.create.newly-added')'}} 
                                         </span>
 
                                         <!-- Drag Icon -->
@@ -214,7 +214,7 @@
                 </draggable>
 
                 <!-- Add New Stage Card -->
-                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg bg-white dark:bg-gray-900">
+                <div class="flex min-h-[400px] min-w-[275px] max-w-[275px] flex-col items-center justify-center gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                     <div class="flex flex-col items-center justify-center gap-6 px-4 py-3">
                         <div class="grid justify-center justify-items-center gap-3.5 text-center">
                             <div class="flex flex-col items-center gap-2">
