@@ -266,23 +266,23 @@
                                 ></label>
 
                                 <div class="flex items-center gap-4">
-                                    <x-admin::button
+                                    <button
                                         type="submit"
                                         ref="submitBtn"
                                         class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                                        :title="trans('admin::app.mail.index.mail.draft')"
-                                        ::loading="isStoring.draft"
-                                        ::disabled="isStoring.draft"
+                                        :disabled="isStoring"
                                         @click="saveAsDraft = 1"
-                                    />
+                                    >
+                                        @lang('admin::app.mail.index.mail.draft')
+                                    </button>
 
                                     <x-admin::button
                                         class="primary-button"
                                         type="submit"
                                         ref="submitBtn"
                                         :title="trans('admin::app.mail.index.mail.send-btn')"
-                                        ::loading="isStoring.sent"
-                                        ::disabled="isStoring.sent"
+                                        ::loading="isStoring"
+                                        ::disabled="isStoring"
                                         @click="saveAsDraft = 0"
                                     />
                                 </div>
@@ -305,11 +305,7 @@
 
                         showBCC: false,
 
-                        isStoring: {
-                            draft: false,
-
-                            sent: false,
-                        },
+                        isStoring: false,
 
                         saveAsDraft: 0,
 
@@ -343,11 +339,13 @@
 
                 methods: {
                     toggleModal() {
+                        this.draft.reply_to = [];
+
                         this.$refs.toggleComposeModal.toggle();
                     },
 
                     save(params, { resetForm, setErrors  }) {
-                        this.isStoring[this.saveAsDraft ? 'draft' : 'sent'] = true;
+                        this.isStoring = true;
 
                         let formData = new FormData(this.$refs.mailForm);
 
@@ -378,7 +376,7 @@
                             }).finally(() => {
                                 this.$refs.toggleComposeModal.close();
 
-                                this.isStoring[this.saveAsDraft ? 'draft' : 'sent'] = false;
+                                this.isStoring = false;
                             });
                     },
 
