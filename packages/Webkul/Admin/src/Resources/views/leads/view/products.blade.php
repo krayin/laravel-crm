@@ -130,6 +130,7 @@
                         @on-change="(event) => product.quantity = event.value"
                         ::url="url(product)"
                         ::params="{product_id: product.product_id}"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -147,6 +148,7 @@
                         @on-change="(event) => product.price = event.value"
                         ::url="url(product)"
                         ::params="{product_id: product.product_id}"
+                        position="left"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>

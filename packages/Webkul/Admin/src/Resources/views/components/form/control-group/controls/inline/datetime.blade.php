@@ -1,6 +1,6 @@
 <v-inline-datetime-edit {{ $attributes }}>
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="flex items-center rounded-xs text-left pl-2.5 h-[34px]">
+        <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -15,7 +15,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex items-center rounded-xs h-[34px]"
+                class="rounded-xs flex h-[34px] items-center"
                 :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
@@ -26,40 +26,40 @@
                     v-model="inputValue"
                 />
 
-                <div class="relative flex flex-col items-center group !w-full">
-                    <span class="pl-[2px] rounded border border-transparent truncate w-40">@{{ inputValue }}</span>
+                <div class="group relative flex !w-full flex-col items-center">
+                    <span class="w-40 truncate rounded border border-transparent ltr:pl-0.5 rtl:pr-0.5">@{{ inputValue }}</span>
 
                     <div
-                        class="absolute bottom-0 flex-col items-center hidden mb-5 group-hover:flex"
+                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue.length > 20"
                     >
-                        <span class="relative rounded-md z-10 p-4 text-xs leading-none whitespace-no-wrap text-white bg-black shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg">
                             @{{ inputValue }}
                         </span>
 
-                        <div class="w-3 h-3 -mt-2 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
                     </div>
                 </div>
 
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
                     ></i>
                 </template>
             </div>
         
             <!-- Editing view -->
             <div
-                class="relative flex flex-col w-full"
+                class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex flex-col w-full">
+                <div class="relative flex w-full flex-col">
                     <x-admin::form.control-group.control
                         type="datetime"
                         ::id="name"
                         ::name="name"
-                        class="py-1 pr-16 text-normal"
+                        class="text-normal py-1 ltr:pr-16 rtl:pl-16"
                         ::rules="rules"
                         ::label="label"
                         ::placeholder="placeholder"
@@ -70,21 +70,21 @@
                     />
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 transform -translate-y-1/2 flex gap-[1px] bg-white">
+                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white ltr:right-2 rtl:left-2">
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-l-md p-1 bg-green-100 hover:bg-green-200"
+                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
                             @click="save"
                         >
-                            <i class="icon-tick text-md font-bold cursor-pointer text-green-600" />
+                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600" />
                         </button>
                     
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-r-md p-1 ml-[1px] bg-red-100 hover:bg-red-200"
+                            class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
                             @click="cancel"
                         >
-                            <i class="icon-cross-large text-md font-bold cursor-pointer text-red-600" />
+                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600" />
                         </button>
                     </div>
                 </div>
@@ -151,6 +151,8 @@
                     inputValue: this.value,
 
                     isEditing: false,
+
+                    isRTL: document.documentElement.dir === 'rtl',
                 };
             },
 
@@ -171,8 +173,14 @@
                  * 
                  * @return {String}
                  */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
+                 inputPositionStyle() {
+                    return this.position === 'left' 
+                        ? this.isRTL 
+                            ? 'text-align: right; padding-right: 9px;' 
+                            : 'text-align: left; padding-left: 9px;'
+                        : this.isRTL 
+                            ? 'text-align: left; padding-left: 9px;' 
+                            : 'text-align: right; padding-right: 9px;';
                 },
 
                 /**
@@ -181,7 +189,12 @@
                  * @return {String}
                  */
                 textPositionStyle() {
-                    return this.position === 'left' ? 'justify-content: space-between' : 'justify-content: end';
+                    return this.position === 'left'  ? this.isRTL 
+                            ? 'justify-content: end;' 
+                            : 'justify-content: space-between;' 
+                        : this.isRTL 
+                            ? 'justify-content: space-between;' 
+                            : 'justify-content: end;';
                 },
             },
 
