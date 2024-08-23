@@ -298,14 +298,20 @@
                         });
                     },
 
-                    removeStage (stage) {
-                        const index = this.stages.indexOf(stage);
+                    removeStage(stage) {
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                const index = this.stages.indexOf(stage);
 
-                        if (index > -1) {
-                            this.stages.splice(index, 1);
-                        }
+                                if (index > -1) {
+                                    this.stages.splice(index, 1);
+                                }
 
-                        this.removeUniqueNameErrors();
+                                this.removeUniqueNameErrors();
+                                
+                                this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.create.stage-delete-success')" });
+                            }
+                        });
                     },
 
                     isDragable (stage) {

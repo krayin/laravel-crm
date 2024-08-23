@@ -277,14 +277,21 @@
                         });
                     },
 
-                    removeStage (stage) {
-                        const index = this.stages.indexOf(stage);
+                    removeStage(stage) {
+                        
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                const index = this.stages.indexOf(stage);
 
-                        if (index > -1) {
-                            this.stages.splice(index, 1);
-                        }
-
-                        this.removeUniqueNameErrors();
+                                if (index > -1) {
+                                    this.stages.splice(index, 1);
+                                }
+                                
+                                this.removeUniqueNameErrors();
+                                
+                                this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.edit.stage-delete-success')" });
+                            }
+                        });
                     },
 
                     isDragable (stage) {
@@ -298,17 +305,17 @@
                     slugify (name) {
                         return name
                             .toString()
-
+                            
                             .toLowerCase()
-
+                            
                             .replace(/[^\w\u0621-\u064A\u4e00-\u9fa5\u3402-\uFA6D\u3041-\u30A0\u30A0-\u31FF- ]+/g, '')
-
+                            
                             // replace whitespaces with dashes
                             .replace(/ +/g, '-')
-
+                            
                             // avoid having multiple dashes (---- translates into -)
                             .replace('![-\s]+!u', '-')
-
+                            
                             .trim();
                     },
 
