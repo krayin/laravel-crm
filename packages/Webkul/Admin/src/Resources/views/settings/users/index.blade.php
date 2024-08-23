@@ -124,14 +124,11 @@
 
                             <!-- Users Status -->
                             <span
-                                :class="{
-                                    'label-canceled': record.status == '',
-                                    'label-active': record.status === 1,
-                                }"
+                                :class="record.status == 1 ? 'label-active' : 'label-inactive'"
                             >
-                                @{{ record.status ? '@lang('admin::app.settings.users.index.active')' : '@lang('admin::app.settings.users.index.inactive')' }}
+                                @{{ record.status == 1 ? '@lang('admin::app.settings.users.index.active')' : '@lang('admin::app.settings.users.index.inactive')' }}
                             </span>
-
+                        
                             <!-- Users Creation Date -->
                             <p>@{{ record.created_at }}</p>
 
