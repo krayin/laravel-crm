@@ -62,7 +62,7 @@
 
                         {!! view_render_event('krayin.admin.email_template.create.subject.before') !!}
 
-                        <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.email-template.edit.subject')
                             </x-admin::form.control-group.label>
@@ -113,7 +113,7 @@
                         {!! view_render_event('krayin.admin.email_template.create.content.before') !!}
 
                         <!-- Event Name -->
-                        <x-admin::form.control-group class="mt-4">
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.email-template.edit.content')
                             </x-admin::form.control-group.label>
@@ -151,7 +151,7 @@
                         </x-slot>
 
                         <x-slot:content>
-                            <x-admin::form.control-group>
+                            <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.email-template.edit.name')
                                 </x-admin::form.control-group.label>

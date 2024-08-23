@@ -130,7 +130,7 @@
         >
             <div>
                 <!-- Permission Type -->
-                <x-admin::form.control-group>
+                <x-admin::form.control-group class="!mb-0">
                     <x-admin::form.control-group.label class="required">
                         @lang('admin::app.settings.roles.create.permissions')
                     </x-admin::form.control-group.label>

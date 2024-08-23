@@ -202,7 +202,7 @@
                             class="w-1/5"
                         >
                             <x-admin::form.control-group>
-                                <x-admin::form.control-group.label class="">
+                                <x-admin::form.control-group.label>
                                     @lang('admin::app.settings.webforms.create.form-submit-btn-color')
                                 </x-admin::form.control-group.label>
 
@@ -256,7 +256,7 @@
                             </div>
                         </div>
 
-                        <div class="flex flex-col gap-4">
+                        <div class= "flex flex-col gap-4">
                             <x-admin::dropdown class="w-1/5 rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                 <x-slot:toggle>
                                     <button
@@ -442,7 +442,7 @@
                             </x-admin::form.control-group>
 
                             <!-- Submit button label -->
-                            <x-admin::form.control-group>
+                            <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.create.submit-button-label')
                                 </x-admin::form.control-group.label>

@@ -124,7 +124,7 @@
 
                         <hr class="my-4"/>
 
-                        <x-admin::form.control-group>
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webhooks.create.body')
                             </x-admin::form.control-group.label>
@@ -303,7 +303,7 @@
                             </x-admin::form.control-group>
 
                             <!-- Description -->
-                            <x-admin::form.control-group>
+                            <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webhooks.create.description')
                                 </x-admin::form.control-group.label>
