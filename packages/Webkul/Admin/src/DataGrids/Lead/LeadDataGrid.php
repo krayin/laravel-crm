@@ -143,14 +143,8 @@ class LeadDataGrid extends DataGrid
             'searchable'         => false,
             'sortable'           => true,
             'filterable'         => true,
-            'filterable_type'    => 'searchable_dropdown',
-            'filterable_options' => [
-                'repository' => SourceRepository::class,
-                'column'     => [
-                    'label' => 'name',
-                    'value' => 'name',
-                ],
-            ],
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->sourceRepository->all(['name as label', 'id as value'])->toArray(),
         ]);
 
         $this->addColumn([
@@ -176,6 +170,11 @@ class LeadDataGrid extends DataGrid
                     'value' => 'name',
                 ],
             ],
+            'closure'    => function ($row) {
+                $route = route('admin.contacts.persons.view', $row->person_id);
+
+                return "<a class=\"text-brandColor transition-all hover:underline\" href='".$route."'>".$row->person_name.'</a>';
+            },
         ]);
 
         $this->addColumn([

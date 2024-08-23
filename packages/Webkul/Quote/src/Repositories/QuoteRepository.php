@@ -4,13 +4,15 @@ namespace Webkul\Quote\Repositories;
 
 use Illuminate\Container\Container;
 use Illuminate\Support\Str;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Quote\Contracts\Quote;
 
 class QuoteRepository extends Repository
 {
     /**
-     * Searchable fields
+     * Searchable fields.
      */
     protected $fieldSearchable = [
         'subject',
@@ -23,6 +25,7 @@ class QuoteRepository extends Repository
      * @return void
      */
     public function __construct(
+        protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
         protected QuoteItemRepository $quoteItemRepository,
         Container $container
@@ -31,23 +34,35 @@ class QuoteRepository extends Repository
     }
 
     /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Quote\Contracts\Quote';
+        return Quote::class;
     }
 
     /**
+     * Create.
+     *
      * @return \Webkul\Quote\Contracts\Quote
      */
     public function create(array $data)
     {
         $quote = parent::create($data);
 
-        $this->attributeValueRepository->save($data, $quote->id);
+        $conditions = ['entity_type' => $data['entity_type']];
+
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $quote->id,
+        ]), $attributes);
 
         foreach ($data['items'] as $itemData) {
             $this->quoteItemRepository->create(array_merge($itemData, [
@@ -59,21 +74,44 @@ class QuoteRepository extends Repository
     }
 
     /**
+     * Update.
+     *
      * @param  int  $id
-     * @param  string  $attribute
+     * @param  array  $attribute
      * @return \Webkul\Quote\Contracts\Quote
      */
-    public function update(array $data, $id, $attribute = 'id')
+    public function update(array $data, $id, $attributes = [])
     {
         $quote = $this->find($id);
 
-        parent::update($data, $id, $attribute);
+        parent::update($data, $id);
 
-        $this->attributeValueRepository->save($data, $id);
+        $conditions = ['entity_type' => $data['entity_type']];
 
-        if (! isset($data['_method'])) {
+        if (isset($data['quick_add'])) {
+            $conditions['quick_add'] = 1;
+        }
+
+        /**
+         * If attributes are provided then only save the provided attributes and return.
+         */
+        if (! empty($attributes)) {
+            $attributes = $this->attributeRepository->where($conditions)
+                ->whereIn('code', $attributes)
+                ->get();
+
+            $this->attributeValueRepository->save(array_merge($data, [
+                'entity_id' => $quote->id,
+            ]), $attributes);
+
             return $quote;
         }
+
+        $attributes = $this->attributeRepository->where($conditions)->get();
+
+        $this->attributeValueRepository->save(array_merge($data, [
+            'entity_id' => $quote->id,
+        ]), $attributes);
 
         $previousItemIds = $quote->items->pluck('id');
 
@@ -101,7 +139,7 @@ class QuoteRepository extends Repository
     }
 
     /**
-     * Retrieves customers count based on date
+     * Retrieves customers count based on date.
      *
      * @return number
      */

@@ -126,12 +126,13 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="background_color"
-                            title="@lang('admin::app.settings.webforms.create.backgroud-color')"
+                            title="@lang('admin::app.settings.webforms.create.background-color')"
                             value="{{ old('background_color') ?? '#F7F8F9' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
-                                    @lang('admin::app.settings.webforms.create.backgroud-color')
+                                    @lang('admin::app.settings.webforms.create.background-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -149,6 +150,7 @@
                             name="form_background_color"
                             title="@lang('admin::app.settings.webforms.create.form-background-color')"
                             value="{{ old('form_background_color') ?? '#FFFFFF' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -172,6 +174,7 @@
                             name="form_title_color"
                             title="@lang('admin::app.settings.webforms.create.form-title-color')"
                             value="{{ old('form_title_color') ?? '#263238' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -195,6 +198,7 @@
                             name="form_submit_button_color"
                             title="@lang('admin::app.settings.webforms.create.form-submit-btn-color')"
                             value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -218,6 +222,7 @@
                             name="attribute_label_color"
                             title="@lang('admin::app.settings.webforms.create.attribute-label-color')"
                             value="{{ old('attribute_label_color') ?? '#546E7A' }}"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -250,137 +255,139 @@
                             </div>
                         </div>
 
-                        <x-admin::dropdown class="w-1/5 rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
-                            <x-slot:toggle>
-                                <button
-                                    type="button"
-                                    class="primary-button"
-                                >
-                                    @lang('admin::app.settings.webforms.create.add-attribute-btn')
-                                </button>
-                            </x-slot>
+                        <div class="flex flex-col gap-4">
+                            <x-admin::dropdown class="w-1/5 rounded-lg group-hover:visible dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                <x-slot:toggle>
+                                    <button
+                                        type="button"
+                                        class="primary-button"
+                                    >
+                                        @lang('admin::app.settings.webforms.create.add-attribute-btn')
+                                    </button>
+                                </x-slot>
+            
+                                <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
+                                    <template v-if="createLead">
+                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.persons')</div>
+
+                                        <span
+                                            v-for="attribute in groupedAttributes.persons"
+                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                            @click="addAttribute(attribute)"
+                                        >
+                                            <div class="items flex items-center gap-1.5">
+                                                @{{ attribute.name }}
+                                            </div>
+                                        </span>
+                                    </template>
+
+                                    <template v-else>
+                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.leads')</div>
+
+                                        <span
+                                            v-for="attribute in groupedAttributes.leads"
+                                            class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                            @click="addAttribute(attribute)"
+                                        >
+                                            <div class="items flex items-center gap-1.5">
+                                                @{{ attribute.name }}
+                                            </div>
+                                        </span>
+                                    </template>
+                                </x-slot>
+                            </x-admin::dropdown>
+
+                            <!-- Attributes -->
+                            <draggable
+                                tag="tbody"
+                                ghost-class="draggable-ghost"
+                                handle=".icon-move"
+                                v-bind="{animation: 200}"
+                                item-key="id"
+                                :list="addedAttributes"z
+                            >
+                                <template #item="{ element, index }">
+                                    <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
+                                        <!-- Draggable Icon -->
+                                        <x-admin::table.td class="text-center">
+                                            <i class="icon-move cursor-grab rounded-md text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></i>
+
+                                            <input
+                                                type="hidden"
+                                                :value="element['attribute']['id']"
+                                                :name="'attributes[' + element.id + '][attribute_id]'"
+                                            />
+                                        </x-admin::table.td>
+
+                                        <!-- Attribute Name -->
+                                        <x-admin::table.td>
+                                            <x-admin::form.control-group>
+                                                <x-admin::form.control-group.label class="">
+                                                    @{{ element?.name + ' (' + element?.attribute?.entity_type + ')' }}
+                                                </x-admin::form.control-group.label>
+
+                                                <x-admin::form.control-group.control
+                                                    type="text"
+                                                    ::name="'attributes[' + element.id + '][name]'"
+                                                    v-model="element.name"
+                                                />
+
+                                                <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][name]'"/>
+                                            </x-admin::form.control-group>
         
-                            <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
-                                <template v-if="createLead">
-                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.persons')</div>
+                                        </x-admin::table.td>
 
-                                    <span
-                                        v-for="attribute in groupedAttributes.persons"
-                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                        @click="addAttribute(attribute)"
-                                    >
-                                        <div class="items flex items-center gap-1.5">
-                                            @{{ attribute.name }}
-                                        </div>
-                                    </span>
+                                        <!-- Placeholder -->
+                                        <x-admin::table.td>
+                                            <x-admin::form.control-group class="!mt-6">
+                                                <x-admin::form.control-group.control
+                                                    type="text"
+                                                    ::name="'attributes[' + element.id + '][placeholder]'"
+                                                    ::rules="element.attribute.validation"
+                                                    ::label="element?.name + ' (' + element?.attribute?.entity_type + ')'"
+                                                    ::placeholder="getPlaceholderValue(element)"
+                                                />
+
+                                                <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][placeholder]'"/>
+                                            </x-admin::form.control-group>
+                                        </x-admin::table.td>
+
+                                        <!-- Required or Not -->
+                                        <x-admin::table.td>
+                                            <x-admin::form.control-group class="!mt-6">
+                                                <label :for="'attributes[' + element.id + '][is_required]'">
+                                                    <input
+                                                        type="checkbox"
+                                                        :name="'attributes[' + element.id + '][is_required]'"
+                                                        :id="'attributes[' + element.id + '][is_required]'"
+                                                        :value="1"
+                                                        class="peer hidden"
+                                                        :checked="element.is_required"
+                                                        :disabled="element.attribute.is_required ? true : false"
+                                                    >
+
+                                                    <span
+                                                        class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'
+                                                        :class="{'opacity-50' : element.attribute.is_required}"
+                                                    ></span>
+                                                </label>
+                                            </x-admin::form.control-group>
+                                        </x-admin::table.td>
+
+                                        <!-- Actions -->
+                                        <x-admin::table.td>
+                                            <x-admin::form.control-group class="!mt-6">
+                                                <i
+                                                    class="icon-delete cursor-pointer text-2xl"
+                                                    v-if="element['attribute']['code'] != 'name' && element['attribute']['code'] != 'emails'"
+                                                    @click="removeAttribute(element)"
+                                                ></i>
+                                            </x-admin::form.control-group>
+                                        </x-admin::table.td>
+                                    </x-admin::table.thead.tr>
                                 </template>
-
-                                <template v-else>
-                                    <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.leads')</div>
-
-                                    <span
-                                        v-for="attribute in groupedAttributes.leads"
-                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                        @click="addAttribute(attribute)"
-                                    >
-                                        <div class="items flex items-center gap-1.5">
-                                            @{{ attribute.name }}
-                                        </div>
-                                    </span>
-                                </template>
-                            </x-slot>
-                        </x-admin::dropdown>
-
-                        <!-- Attributes -->
-                        <draggable
-                            tag="tbody"
-                            ghost-class="draggable-ghost"
-                            handle=".icon-edit"
-                            v-bind="{animation: 200}"
-                            item-key="id"
-                            :list="addedAttributes"z
-                        >
-                            <template #item="{ element, index }">
-                                <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
-                                    <!-- Draggable Icon -->
-                                    <x-admin::table.td class="!px-0 text-center">
-                                        <i class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
-
-                                        <input
-                                            type="hidden"
-                                            :value="element['attribute']['id']"
-                                            :name="'attributes[' + element.id + '][attribute_id]'"
-                                        />
-                                    </x-admin::table.td>
-
-                                    <!-- Attribute Name -->
-                                    <x-admin::table.td>
-                                        <x-admin::form.control-group>
-                                            <x-admin::form.control-group.label class="">
-                                                @{{ element?.name + ' (' + element?.attribute?.entity_type + ')' }}
-                                            </x-admin::form.control-group.label>
-
-                                            <x-admin::form.control-group.control
-                                                type="text"
-                                                ::name="'attributes[' + element.id + '][name]'"
-                                                v-model="element.name"
-                                            />
-
-                                            <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][name]'"/>
-                                        </x-admin::form.control-group>
-    
-                                    </x-admin::table.td>
-
-                                    <!-- Placeholder -->
-                                    <x-admin::table.td>
-                                        <x-admin::form.control-group class="!mt-6">
-                                            <x-admin::form.control-group.control
-                                                type="text"
-                                                ::name="'attributes[' + element.id + '][placeholder]'"
-                                                ::rules="element.attribute.validation"
-                                                ::label="element?.name + ' (' + element?.attribute?.entity_type + ')'"
-                                                ::placeholder="getPlaceholderValue(element)"
-                                            />
-
-                                            <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][placeholder]'"/>
-                                        </x-admin::form.control-group>
-                                    </x-admin::table.td>
-
-                                    <!-- Required or Not -->
-                                    <x-admin::table.td>
-                                        <x-admin::form.control-group class="!mt-6">
-                                            <label :for="'attributes[' + element.id + '][is_required]'">
-                                                <input
-                                                    type="checkbox"
-                                                    :name="'attributes[' + element.id + '][is_required]'"
-                                                    :id="'attributes[' + element.id + '][is_required]'"
-                                                    :value="1"
-                                                    class="peer hidden"
-                                                    :checked="element.is_required"
-                                                    :disabled="element.attribute.is_required ? true : false"
-                                                >
-
-                                                <span
-                                                    class='icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl peer-checked:text-brandColor'
-                                                    :class="{'opacity-50' : element.attribute.is_required}"
-                                                ></span>
-                                            </label>
-                                        </x-admin::form.control-group>
-                                    </x-admin::table.td>
-
-                                    <!-- Actions -->
-                                    <x-admin::table.td>
-                                        <x-admin::form.control-group class="!mt-6">
-                                            <i
-                                                class="icon-delete cursor-pointer text-2xl"
-                                                v-if="element['attribute']['code'] != 'name' && element['attribute']['code'] != 'emails'"
-                                                @click="removeAttribute(element)"
-                                            ></i>
-                                        </x-admin::form.control-group>
-                                    </x-admin::table.td>
-                                </x-admin::table.thead.tr>
-                            </template>
-                        </draggable>
+                            </draggable>
+                        </div>
                     </div>
                 </div>
 
@@ -479,7 +486,7 @@
 
                     <x-admin::form.control-group.control
                         type="color"
-                        class="!h-10 !w-12 rounded-l-none p-1"
+                        class="!h-10 !w-12 rounded-l-none p-1 dark:border-gray-800 dark:bg-gray-900"
                         name="color"
                         :label="trans('Submit Success Action')"
                         ::value="color"

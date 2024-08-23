@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Attribute\Http\Requests;
+namespace Webkul\Admin\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Webkul\Attribute\Repositories\AttributeRepository;

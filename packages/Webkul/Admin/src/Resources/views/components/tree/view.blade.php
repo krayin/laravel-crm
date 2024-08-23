@@ -149,8 +149,8 @@
                         onClick: (selection) => {
                             selection.srcElement.parentElement.classList.toggle('active');
 
-                            selection.srcElement.classList.toggle('icon-sort-down', !selection.srcElement.classList.contains('icon-sort-down'));
-                            selection.srcElement.classList.toggle('icon-sort-right', !selection.srcElement.classList.contains('icon-sort-right'));
+                            selection.srcElement.classList.toggle('icon-down-arrow', !selection.srcElement.classList.contains('icon-down-arrow'));
+                            selection.srcElement.classList.toggle('icon-right-arrow', !selection.srcElement.classList.contains('icon-right-arrow'));
                         },
                     });
                 },

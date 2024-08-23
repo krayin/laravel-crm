@@ -184,7 +184,7 @@
                                                                     >
                                                                     </span>
 
-                                                                    <span class="icon-sort-down text-2xl"></span>
+                                                                    <span class="icon-down-arrow text-2xl"></span>
                                                                 </button>
                                                             </x-slot>
 
@@ -556,7 +556,7 @@
                                                                     >
                                                                     </span>
 
-                                                                    <span class="icon-sort-down text-2xl"></span>
+                                                                    <span class="icon-down-arrow text-2xl"></span>
                                                                 </button>
                                                             </x-slot>
 
@@ -594,7 +594,7 @@
                                                 <template v-if="column.filterable_type === 'searchable_dropdown'">
                                                     <div class="flex items-center justify-between">
                                                         <p
-                                                            class="text-sm font-medium leading-6 dark:text-white text-gray-800"
+                                                            class="text-sm font-medium leading-6 text-gray-800 dark:text-white"
                                                             v-text="column.label"
                                                         >
                                                         </p>
@@ -621,7 +621,7 @@
                                                         </v-datagrid-searchable-dropdown>
                                                     </div>
                                     
-                                                    <div class="mb-4 flex gap-2 flex-wrap">
+                                                    <div class="mb-4 flex flex-wrap gap-2">
                                                         <p
                                                             class="flex items-center rounded bg-gray-600 px-2 py-1 font-semibold text-white"
                                                             v-for="appliedColumnValue in getAppliedColumnValues(column.index)"
@@ -1418,13 +1418,16 @@
         });
     </script>
 
-    <script type="text/x-template" id="v-datagrid-searchable-dropdown-template">
+    <script 
+        type="text/x-template"
+        id="v-datagrid-searchable-dropdown-template"
+    >
         <x-admin::dropdown ::close-on-click="false">
             <!-- Dropdown Toggler -->
             <x-slot:toggle>
                 <button
                     type="button"
-                    class="inline-flex w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border h-[38px] dark:border-gray-800 bg-white dark:bg-gray-900 px-2.5 py-1.5 text-center leading-6 text-gray-600 dark:text-gray-300 transition-all marker:shadow hover:border-gray-400 dark:hover:border-gray-400 focus:border-gray-400 dark:focus:border-gray-400"
+                    class="inline-flex h-[38px] w-full cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 >
                     <span
                         class="text-sm text-gray-400 dark:text-gray-400" 
@@ -1443,7 +1446,7 @@
                         <ul class="list-reset">
                             <li class="p-2">
                                 <input
-                                    class="block w-full rounded-md border dark:border-gray-800 bg-white dark:bg-gray-900 px-2 py-1.5 text-sm leading-6 text-gray-600 dark:text-gray-300 transition-all hover:border-gray-400 dark:hover:border-gray-400 focus:border-gray-400 dark:focus:border-gray-400"
+                                    class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     @keyup="lookUp($event)"
                                 >
                             </li>
@@ -1470,7 +1473,7 @@
                                     v-else
                                 >
                                     <p
-                                        class="text-sm text-gray-600 dark:text-gray-300 p-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        class="cursor-pointer p-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                         v-text="option.label"
                                         @click="selectOption(option)"
                                     >

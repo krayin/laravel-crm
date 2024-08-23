@@ -35,7 +35,6 @@
 
                 <!-- Table Body -->
                 <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                    
                     <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
@@ -162,7 +161,7 @@
                         id: null,
                         product_id: null,
                         name: '',
-                        quantity: 0,
+                        quantity: 1,
                         price: 0,
                         amount: null,
                     })
@@ -202,7 +201,7 @@
                 params() {
                     return {
                         params: {
-                            query: this.product.name
+                            query: this.product.name,
                         },
                     };
                 },
@@ -223,7 +222,7 @@
                     
                     this.product.price = result.price;
                     
-                    this.product.quantity = result.quantity ?? 0;
+                    this.product.quantity = result.quantity ?? 1;
                 },
                   
                 /**

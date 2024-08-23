@@ -142,7 +142,7 @@
             data() {
                 return {
                     isUpdating: false,
-                    
+
                     currentStage: @json($lead->stage),
 
                     nextStage: null,
@@ -153,6 +153,10 @@
 
             methods: {
                 openModal(stage) {
+                    if (this.currentStage.code == stage.code) {
+                        return;
+                    }
+                    
                     this.nextStage = stage;
 
                     this.$refs.stageUpdateModal.open();
@@ -162,14 +166,14 @@
                     let params = {
                         'lead_pipeline_stage_id': this.nextStage.id
                     };
-                    
+
                     if (this.nextStage.code == 'won') {
                         params.lead_value = this.nextStage.lead_value;
 
                         params.closed_at = this.nextStage.closed_at;
                     } else if (this.nextStage.code == 'lost') {
                         params.lost_reason = this.nextStage.lost_reason;
-                        
+
                         params.closed_at = this.nextStage.closed_at;
                     }
 
@@ -186,15 +190,16 @@
                     this.isUpdating = true;
 
                     let self = this;
-                    
-                    this.$axios.put("{{ route('admin.leads.update', $lead->id) }}", params ?? {
-                        'lead_pipeline_stage_id': stage.id
-                    })
+
+                    this.$axios
+                        .put("{{ route('admin.leads.stage.update', $lead->id) }}", params ?? {
+                            'lead_pipeline_stage_id': stage.id
+                        })
                         .then (function(response) {
                             self.isUpdating = false;
 
                             self.currentStage = stage;
-                            
+
                             self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
                         .catch (function (error) {

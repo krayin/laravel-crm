@@ -3,7 +3,7 @@
     :value={{ json_encode($attributes->get('value')) }}
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -18,7 +18,7 @@
             <!-- Non-editing view -->
             <div
                 class="rounded-xs flex h-[34px] items-center"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <div class="group relative flex !w-full flex-col items-center">
@@ -28,7 +28,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 
@@ -39,7 +39,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden pr-2 text-xl group-hover:block"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
                     ></i>
                 </template>
             </div>
@@ -77,7 +77,7 @@
                                             type="select"
                                             ::id="`${name}[${index}].label`"
                                             ::name="`${name}[${index}].label`"
-                                            class="!rounded-l-none"
+                                            class="!w-24 !rounded-l-none"
                                             ::value="email.label"
                                         >
                                             <option value="work">@lang('admin::app.common.custom-attributes.work')</option>

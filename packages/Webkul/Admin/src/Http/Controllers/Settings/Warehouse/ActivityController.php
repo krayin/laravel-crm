@@ -40,6 +40,6 @@ class ActivityController extends Controller
      */
     public function concatEmail($activities)
     {
-        return $activities;
+        return $activities->sortByDesc('id')->sortByDesc('created_at');
     }
 }

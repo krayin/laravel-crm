@@ -9,9 +9,9 @@ use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Product\ProductDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\ProductResource;
-use Webkul\Attribute\Http\Requests\AttributeForm;
 use Webkul\Product\Repositories\ProductRepository;
 
 class ProductController extends Controller
@@ -108,6 +108,12 @@ class ProductController extends Controller
         $product = $this->productRepository->update($request->all(), $id);
 
         Event::dispatch('product.update.after', $product);
+
+        if (request()->ajax()) {
+            return response()->json([
+                'message' => trans('admin::app.products.index.update-success'),
+            ]);
+        }
 
         session()->flash('success', trans('admin::app.products.index.update-success'));
 

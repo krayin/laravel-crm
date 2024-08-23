@@ -78,7 +78,7 @@
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
                                 <a
-                                    class="lead-item flex cursor-grab flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
+                                    class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
                                     <!-- Header -->
@@ -91,21 +91,31 @@
                                                 @{{ element.person.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                             </div>
 
-                                            <div class="flex flex-col gap-1">
+                                            <div class="flex flex-col gap-0.5">
                                                 <span class="text-xs font-medium">
                                                     @{{ element.person.name }}
                                                 </span>
 
-                                                <span class="text-[10px]">
+                                                <span class="text-[10px] leading-normal">
                                                     @{{ element.person.organization?.name }}
                                                 </span>
                                             </div>
                                         </div>
 
-                                        <span
-                                            class="icon-rotten cursor-default text-xl text-rose-600"
+                                        <div
+                                            class="group relative"
                                             v-if="element.rotten_days > 0"
-                                        ></span>
+                                        >
+                                            <span class="icon-rotten cursor-default text-xl text-rose-600"></span>
+
+                                            <div class="absolute bottom-0 right-0 mb-7 hidden w-max flex-col items-center group-hover:flex">
+                                                <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
+                                                    @{{ "@lang('admin::app.leads.index.kanban.rotten-days', ['days' => 'replaceDays'])".replace('replaceDays', element.rotten_days) }}
+                                                </span>
+
+                                                <div class="absolute -bottom-0.5 right-1 h-3 w-3 rotate-45 bg-black"></div>
+                                            </div>
+                                        </div>
                                     </div>
 
                                     <!-- Lead Title -->
@@ -114,10 +124,31 @@
                                     </p>
 
                                     <div class="flex flex-wrap gap-1">
+                                        <div
+                                            class="flex items-center gap-1 rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white"
+                                            v-if="element.user"
+                                        >
+                                            <span class="icon-settings-user text-sm"></span>
+                                            
+                                            @{{ element.user.name }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.formatted_lead_value }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.source.name }}
+                                        </div>
+
+                                        <div class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
+                                            @{{ element.type.name }}
+                                        </div>
+
                                         <!-- Tags -->
                                         <template v-for="tag in element.tags">
                                             <div
-                                                class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800"
+                                                class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
                                                 :style="{
                                                     backgroundColor: tag.color,
                                                     color: tagTextColor[tag.color]
@@ -126,18 +157,6 @@
                                                 @{{ tag.name }}
                                             </div>
                                         </template>
-
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.formatted_lead_value }}
-                                        </div>
-                                        
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.source.name }}
-                                        </div>
-                                        
-                                        <div class="rounded-xl bg-gray-200 px-3 py-1 text-xs font-medium dark:bg-gray-800 dark:text-white">
-                                            @{{ element.type.name }}
-                                        </div>
                                     </div>
                                 </a>
                             </template>
@@ -270,7 +289,14 @@
                             return;
                         }
 
-                        params['search'] += `${column.index}:${column.value.join(',')};`;
+                        /**
+                         * If the column is a searchable dropdown, then we need to append the column value
+                         * with the column label. Otherwise, we can directly append the column value.
+                         */
+                        params['search'] += column.filterable_type === 'searchable_dropdown'
+                            ? `${column.index}:${column.value.map(option => option.value).join(',')};`
+                            : `${column.index}:${column.value.join(',')};`;
+
                         params['searchFields'] += `${column.index}:${column.search_field};`;
                     });
 
@@ -376,7 +402,7 @@
                     this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
 
                     this.$axios
-                        .put("{{ route('admin.leads.update', 'replace') }}".replace('replace', event.added.element.id), {
+                        .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
                             'lead_pipeline_stage_id': stage.id
                         })
                         .then(response => {

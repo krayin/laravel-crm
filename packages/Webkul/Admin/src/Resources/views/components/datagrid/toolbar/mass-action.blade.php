@@ -18,7 +18,7 @@
             :validate-mass-action="validateMassAction"
             :perform-mass-action="performMassAction"
         >
-            <div class="fixed inset-x-0 bottom-24 mx-auto flex gap-2 max-w-max items-center justify-center rounded-lg bg-white p-2 px-4 shadow-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex max-w-max items-center justify-center gap-2 rounded-lg bg-white p-2 px-4 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)] dark:border-gray-800 dark:bg-gray-700 dark:text-gray-300">
                 <div>
                     <p class="text-sm font-light text-gray-800 dark:text-white">
                         @{{ "@lang('admin::app.components.datagrid.toolbar.selected')".replace(':total', applied.massActions.indices.length) }}
@@ -34,7 +34,7 @@
                                     class="inline-flex w-full max-w-max cursor-pointer appearance-none items-center justify-between gap-x-2 rounded-md border bg-white px-2.5 py-1.5 text-center leading-6 text-gray-600 transition-all marker:shadow hover:border-gray-400 focus:border-gray-400 focus:ring-black dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     @click="showPopup = ! showPopup"
                                 >
-                                    <span class="font-normal text-sm text-black">
+                                    <span class="text-sm font-normal">
                                         @{{ massAction.title }}
                                     </span>
         
@@ -45,7 +45,7 @@
                                 </button>
                             </x-slot>
         
-                            <x-slot:menu class="!p-0 !top-auto !bottom-12 shadow-[0_5px_20px_rgba(0,0,0,0.15)] dark:border-gray-800">
+                            <x-slot:menu class="!bottom-12 !top-auto !p-0 shadow-[0_5px_20px_rgba(0,0,0,0.15)] dark:border-gray-800">
                                 <li v-for="option in massAction?.options">
                                     <a
                                         class="whitespace-no-wrap block rounded-t px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
@@ -62,14 +62,14 @@
                 
                 <button
                     type="button"
-                    class="!bg-red-500 border-red-500 primary-button"
+                    class="primary-button border-red-500 !bg-red-500"
                     @click="performMassAction(available.massActions.find(action => action.icon === 'icon-delete'))"
                 >
                     @{{ available.massActions.find(action => action.icon === 'icon-delete')?.title }}
                 </button>
 
                 <i 
-                    class="icon-cross-large text-2xl cursor-pointer text-gray-600 dark:text-gray-300"
+                    class="icon-cross-large cursor-pointer rounded-md p-1 text-2xl text-gray-600 transition-all hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                     @click="massActions.indices = []"
                 ></i>
             </div>

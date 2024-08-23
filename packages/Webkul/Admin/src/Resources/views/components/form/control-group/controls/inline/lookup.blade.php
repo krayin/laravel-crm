@@ -7,7 +7,7 @@
     :attribute="{{ json_encode($attribute) }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center space-x-2 pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -22,8 +22,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center space-x-2"
-                :class="allowEdit ? 'cursor-pointer hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                class="rounded-xs flex h-[34px] items-center"
+                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
                 :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
@@ -40,7 +40,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
                         v-if="inputValue > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
                         </span>
 
@@ -51,7 +51,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit hidden pr-2 text-xl group-hover:block"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
                     ></i>
                 </template>
             </div>
