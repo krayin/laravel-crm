@@ -100,9 +100,6 @@ class WarehouseDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'filterable' => false,
-            'closure'    => function ($row) {
-                return "<a href='".route('admin.settings.warehouses.products.index', $row->id)."' class='text-brandColor'>".$row->products.'</a>';
-            },
         ]);
 
         $this->addColumn([
