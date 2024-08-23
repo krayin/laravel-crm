@@ -299,19 +299,17 @@
                     },
 
                     removeStage(stage) {
-                        let self = this;
-
                         this.$emitter.emit('open-confirm-modal', {
                             agree: () => {
-                                const index = self.stages.indexOf(stage);
+                                const index = this.stages.indexOf(stage);
 
                                 if (index > -1) {
-                                    self.stages.splice(index, 1);
+                                    this.stages.splice(index, 1);
                                 }
 
-                                self.removeUniqueNameErrors();
+                                this.removeUniqueNameErrors();
                                 
-                                self.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.create.stage-remove')" });
+                                this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.create.stage-delete-success')" });
                             }
                         });
                     },
