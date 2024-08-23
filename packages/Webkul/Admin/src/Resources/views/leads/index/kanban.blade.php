@@ -24,7 +24,7 @@
 
                 {!! view_render_event('admin.leads.index.kanban.content.before') !!}
 
-                <div class="flex gap-4 overflow-x-auto">
+                <div class="flex gap-2.5 overflow-x-auto">
                     <!-- Stage Cards -->
                     <div
                         class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
@@ -50,7 +50,7 @@
 
                             <!-- Stage Total Leads and Amount -->
                             <div class="flex items-center justify-between gap-2">
-                                <span class="text-xs dark:text-white">
+                                <span class="text-xs font-medium dark:text-white">
                                     @{{ $admin.formatPrice(stage.lead_value) }}
                                 </span>
 

@@ -25,7 +25,7 @@
 
                 <!-- Doughnut Chart -->
                 <div
-                    class="flex w-full max-w-full flex-col gap-4 p-8"
+                    class="flex w-full max-w-full flex-col gap-4 px-8 pt-8"
                     v-if="report.statistics.length"
                 >
                     <x-admin::charts.doughnut
