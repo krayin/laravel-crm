@@ -897,17 +897,18 @@
                                 <div>
                                     <div v-show="selectedType == 'lead'">
                                         <div class="w-full">
-                                            <!-- Lead Details Title and Description -->
-                                            <x-admin::attributes
-                                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                    ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_value']],
-                                                    'entity_type' => 'leads',
-                                                    'quick_add'   => 1
-                                                ])"
-                                            />
-
                                             <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="mb-4 w-1/2">
+                                                <div class="w-1/2">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['title']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+
+                                                <div class="w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['lead_value']],
@@ -916,8 +917,54 @@
                                                         ])"
                                                     />
                                                 </div>
+                                            </div>
 
-                                                <div class="mb-4 w-1/2">
+                                            <div class="flex gap-4 w-full max-sm:flex-wrap">
+                                                <!-- Description -->
+                                                <x-admin::attributes
+                                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                        ['code', 'IN', ['description']],
+                                                        'entity_type' => 'leads',
+                                                        'quick_add'   => 1
+                                                    ])"
+                                                />
+                                            </div>
+
+
+                                            <div class="flex gap-4 max-sm:flex-wrap">
+                                                <div class="w-1/2">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_pipeline_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+
+                                                <div class="w-1/2">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_pipeline_stage_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+                                            </div>
+
+                                            <div class="flex gap-4 max-sm:flex-wrap">
+                                                <div class="w-1/2">
+                                                    <x-admin::attributes
+                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                            ['code', 'IN', ['lead_type_id']],
+                                                            'entity_type' => 'leads',
+                                                            'quick_add'   => 1
+                                                        ])"
+                                                    />
+                                                </div>
+
+                                                <div class="w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['lead_source_id']],
@@ -929,17 +976,7 @@
                                             </div>
 
                                             <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="mb-4 w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_type_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
-                                                </div>
-                                                
-                                                <div class="mb-4 w-1/2">
+                                                <div class="w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['user_id']],
@@ -948,10 +985,8 @@
                                                         ])"
                                                     />
                                                 </div>
-                                            </div>
-
-                                            <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="mb-4 w-1/2">
+                                                
+                                                <div class="w-1/2">
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                                             ['code', 'IN', ['expected_close_date']],
@@ -1810,14 +1845,10 @@
                     },
 
                     openContactModal() {
-                        this.$refs.emailLinkDrawer.close();
-                        
                         this.$refs.createContact.$refs.contactModal.open();
                     },
 
                     openLeadModal() {
-                        this.$refs.emailLinkDrawer.close();
-
                         this.$refs.createLead.$refs.leadModal.open();
                     },
                 },
