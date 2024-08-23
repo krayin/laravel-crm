@@ -39,7 +39,7 @@
             id="v-email-list-template"
         >  
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto overflow-y-auto max-h-screen">
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <!-- Email Item Vue Component -->
                     <v-email-item
                         :email="email"
