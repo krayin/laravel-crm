@@ -72,7 +72,7 @@
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                     {!! view_render_event('krayin.admin.settings.roles.edit.card.accordion.general.before', ['role' => $role]) !!}
 
-                    <x-admin::accordion class="!rounded-lg">
+                    <x-admin::accordion>
                         <x-slot:header>
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
