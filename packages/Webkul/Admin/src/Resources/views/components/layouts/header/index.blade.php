@@ -1,4 +1,4 @@
-<header class="sticky top-0 z-[10001] flex items-center justify-between bg-white px-4 py-2.5 dark:border-gray-800 dark:bg-gray-900">
+<header class="sticky top-0 z-[10001] flex items-center justify-between border-b border-gray-200 bg-white px-4 py-2.5 transition-all dark:border-gray-800 dark:bg-gray-900">
     <!-- logo -->
     <div class="flex items-center gap-1.5">
         <i class="icon-menu hidden cursor-pointer rounded-md p-1.5 text-2xl hover:bg-gray-100 dark:hover:bg-gray-950 max-lg:block"></i>
