@@ -205,14 +205,14 @@
                         ],
 
                         text: [
-                            'text-yellow-800',
-                            'text-red-800',
-                            'text-lime-800',
-                            'text-blue-800',
-                            'text-orange-800',
-                            'text-green-800',
-                            'text-pink-800',
-                            'text-yellow-800',
+                            'text-yellow-900',
+                            'text-red-900',
+                            'text-lime-900',
+                            'text-blue-900',
+                            'text-orange-900',
+                            'text-green-900',
+                            'text-pink-900',
+                            'text-yellow-900',
                         ],
                     },
 
