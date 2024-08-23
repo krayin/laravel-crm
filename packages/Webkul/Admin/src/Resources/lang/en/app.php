@@ -484,7 +484,6 @@ return [
         'edit' => [
             'title'             => 'Edit Quote',
             'save-btn'          => 'Save Quote',
-            'save-btn'          => 'Save Quotes',
             'quote-info'        => 'Quote Information',
             'quote-info-info'   => 'Put the basic information of the quote.',
             'address-info'      => 'Address Information',
@@ -1802,8 +1801,6 @@ return [
             ],
         ],
     ],
-
-    // ----------------------------------------------------------------Old version locale ----------------------------------
 
     'dashboard' => [
         'index' => [
