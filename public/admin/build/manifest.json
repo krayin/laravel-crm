@@ -220,13 +220,21 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-ad9df971.css",
+    "file": "assets/app-e6ce8910.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
   "src/Resources/assets/fonts/icomoon.woff": {
     "file": "assets/icomoon-8bbcff3c.woff",
     "src": "src/Resources/assets/fonts/icomoon.woff"
+  },
+  "src/Resources/assets/images/corner-clip.svg": {
+    "file": "assets/corner-clip-61a92b87.svg",
+    "src": "src/Resources/assets/images/corner-clip.svg"
+  },
+  "src/Resources/assets/images/dark-corner-clip.svg": {
+    "file": "assets/dark-corner-clip-142f6b73.svg",
+    "src": "src/Resources/assets/images/dark-corner-clip.svg"
   },
   "src/Resources/assets/images/dark-logo.svg": {
     "file": "assets/dark-logo-efbc17e1.svg",
@@ -347,7 +355,7 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
-    "file": "assets/app-728c8756.js",
+    "file": "assets/app-3d6dac5a.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   },

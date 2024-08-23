@@ -188,7 +188,7 @@
                 class="cursor-pointer text-brandColor"
                 @click="addLocation"
             >
-                +@lang('admin::app.products.view.inventory.add-more')
+                + @lang('admin::app.products.view.inventory.add-more')
             </span>
         </div>
     </script>

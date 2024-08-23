@@ -14,6 +14,8 @@
         <div
             class="flex w-max items-start justify-between gap-2 rounded-lg bg-white p-3 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)] dark:bg-gray-950"
             :style="typeStyles[flash.type]['container']"
+            @mouseenter="pauseTimer"
+            @mouseleave="resumeTimer"
         >
             <!-- Icon -->
             <span
@@ -139,6 +141,12 @@
                     progress: 0,
                     
                     circumference: 2 * Math.PI * 10,
+
+                    timer: null,
+
+                    isPaused: false,
+                    
+                    remainingTime: 5000,
                 };
             },
 
@@ -152,6 +160,10 @@
                 this.startTimer();
             },
 
+            beforeUnmount() {
+                this.stopTimer();
+            },
+
             methods: {
                 remove() {
                     this.$emit('onRemove', this.flash)
@@ -159,19 +171,34 @@
 
                 startTimer() {
                     const interval = 100;
-
+                    
                     const step = (100 / (this.duration / interval));
 
-                    const timer = setInterval(() => {
-                        this.progress += step;
-                        
-                        if (this.progress >= 100) {
-                            clearInterval(timer);
+                    this.timer = setInterval(() => {
+                        if (! this.isPaused) {
+                            this.progress += step;
 
-                            this.remove();
+                            this.remainingTime -= interval;
+
+                            if (this.progress >= 100) {
+                                this.stopTimer();
+                                this.remove();
+                            }
                         }
                     }, interval);
-                }
+                },
+
+                stopTimer() {
+                    clearInterval(this.timer);
+                },
+
+                pauseTimer() {
+                    this.isPaused = true;
+                },
+
+                resumeTimer() {
+                    this.isPaused = false;
+                },
             }
         });
     </script>
