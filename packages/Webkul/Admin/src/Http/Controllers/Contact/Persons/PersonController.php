@@ -179,6 +179,10 @@ class PersonController extends Controller
      */
     private function sanitizeRequestedPersonData(array $data): array
     {
+        if (empty($data['organization_id'])) {
+            $data['organization_id'] = null;
+        }
+
         if (isset($data['contact_numbers'])) {
             $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
         }

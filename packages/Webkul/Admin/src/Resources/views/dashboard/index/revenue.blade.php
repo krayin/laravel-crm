@@ -22,7 +22,7 @@
                     <div class="flex flex-col gap-2">
                         <!-- Won Reveneue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
-                            <p class="text-xs text-gray-600 dark:text-gray-300">
+                            <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')
                             </p>
 
@@ -49,7 +49,7 @@
 
                         <!-- Lost Reveneue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
-                            <p class="text-xs text-gray-600 dark:text-gray-300">
+                            <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.lost-revenue')
                             </p>
 
