@@ -101,7 +101,7 @@
                                 <span>@{{ email.name }}</span>
                                 
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex">
+                                    <div class="flex items-center gap-1">
                                         <!-- Mail To -->
                                         <span>@lang('admin::app.mail.view.to') @{{ email.reply_to.join(', ') }}</span>
 
@@ -448,13 +448,11 @@
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex flex-col">
-                                        <span class="text-[10px]">@{{ email.person.job_title }}</span>
+                                    <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                    <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
-                                    </div>
+                                    <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -564,9 +562,7 @@
                                         <span>@{{ person.name }}</span>
                                         
                                         <div class="flex flex-col gap-1">
-                                            <div class="flex">
-                                                <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
-                                            </div>
+                                            <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
                                         </div>
                                     </div>
                                 </li>                       
