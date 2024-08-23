@@ -1,6 +1,6 @@
 <div
     ref="sidebar"
-    class="duration-80 fixed top-14 z-[1000] h-full w-[190px] bg-white pt-4 transition-all group-[.sidebar-collapsed]/container:w-[70px] dark:bg-gray-900 max-lg:hidden"
+    class="duration-80 fixed top-[60px] z-[10002] h-full w-[190px] border-r border-gray-200 bg-white pt-4 transition-all group-[.sidebar-collapsed]/container:w-[70px] dark:border-gray-800 dark:bg-gray-900 max-lg:hidden"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
 >
@@ -36,7 +36,7 @@
                             class="absolute top-0 hidden w-[200px] flex-col bg-gray-100 ltr:left-[190px] rtl:right-[190px]"
                             :class="[isMenuActive && (hoveringMenu == '{{$menuItem->getKey()}}') ? '!flex' : 'hidden']"
                         >
-                            <div class="sidebar-rounded fixed top-14 z-[1000] h-full w-[140px] border bg-white pt-4 dark:border-gray-800 dark:bg-gray-900 max-lg:hidden">
+                            <div class="sidebar-rounded fixed z-[1000] h-full w-[140px] border-r bg-white pt-4 after:-right-[30px] dark:border-gray-800 dark:bg-gray-900 max-lg:hidden">
                                 <div class="journal-scroll h-[calc(100vh-100px)] overflow-hidden">
                                     <nav class="grid w-full gap-2">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)

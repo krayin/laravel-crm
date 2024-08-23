@@ -30,7 +30,7 @@
         </template>
 
         <template v-else>
-            <div class="w-full bg-white dark:bg-gray-900">
+            <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <div
                         v-for="type in types"
@@ -161,9 +161,8 @@
                                         <p 
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                        >
-                                            @{{ activity.comment }}
-                                        </p>
+                                            v-html="activity.comment"
+                                        ></p>
 
                                         <!-- Attachments -->
                                         <div

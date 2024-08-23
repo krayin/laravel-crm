@@ -2,8 +2,8 @@
 <v-locations></v-locations>
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-locations-template"
     >
         <div class="flex flex-col gap-2 p-4">
@@ -14,7 +14,7 @@
                         <x-admin::table.th>
                             @lang('admin::app.settings.warehouses.view.locations.name')
                         </x-admin::table.th>
-                        
+
                         <x-admin::table.th>
                             @lang('admin::app.settings.warehouses.view.locations.action')
                     </x-admin::table.th>
@@ -22,8 +22,8 @@
                 </x-admin::table.thead>
 
                 <x-admin::table.tbody >
-                    <x-admin::table.tbody.tr 
-                        class="border border-gray-200 dark:border-gray-800 dark:bg-gray-900" 
+                    <x-admin::table.tbody.tr
+                        class="border border-gray-200 dark:border-gray-800 dark:bg-gray-900"
                         v-for="location in locations"
                     >
                         <x-admin::table.td class="dark:text-white">
@@ -32,8 +32,8 @@
 
                         <x-admin::table.td>
                             <div class="inline-block">
-                                <p 
-                                    @click="remove(location)" 
+                                <p
+                                    @click="remove(location)"
                                     class="cursor-pointer text-brandColor"
                                 >
                                     @lang('admin::app.settings.warehouses.view.locations.delete')
@@ -45,8 +45,8 @@
             </x-admin::table>
 
             <div>
-                <span 
-                    class="cursor-pointer text-brandColor" 
+                <span
+                    class="cursor-pointer text-brandColor"
                     @click="openModal()"
                 >
                     @lang('admin::app.settings.warehouses.view.locations.add-location')
@@ -76,7 +76,7 @@
                                 name="entity_type"
                                 value="Warehouses"
                             />
-                            
+
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="warehouse_id"
@@ -128,7 +128,7 @@
             data() {
                 return {
                     locations: [],
-                    
+
                     isProcessing: false,
                 };
             },
@@ -165,7 +165,7 @@
                 getLocations() {
                     this.$axios.get("{{ route('admin.settings.locations.search') }}")
                         .then(response => {
-                            this.locations = response.data;
+                            this.locations = response.data.data;
                         })
                         .catch(error => {
                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
