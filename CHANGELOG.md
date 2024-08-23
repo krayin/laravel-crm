@@ -1,4 +1,4 @@
-## **v2.0.0-beta (23rd of August 2024)** - *Release*
+## **v2.0.0-BETA-1 (23rd of August 2024)** - *Release*
 
 * New, attractive UI design.
 
