@@ -298,14 +298,22 @@
                         });
                     },
 
-                    removeStage (stage) {
-                        const index = this.stages.indexOf(stage);
+                    removeStage(stage) {
+                        let self = this;
 
-                        if (index > -1) {
-                            this.stages.splice(index, 1);
-                        }
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                const index = self.stages.indexOf(stage);
 
-                        this.removeUniqueNameErrors();
+                                if (index > -1) {
+                                    self.stages.splice(index, 1);
+                                }
+
+                                self.removeUniqueNameErrors();
+                                
+                                self.$emitter.emit('add-flash', { type: 'success', message: 'Stage removed successfully.' });
+                            }
+                        });
                     },
 
                     isDragable (stage) {
