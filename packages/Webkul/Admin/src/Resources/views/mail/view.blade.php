@@ -69,7 +69,7 @@
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Email Actions -->
-                    <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full sticky top-4">
+                    <div class="sticky top-4 flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                         <div class="box-shadow rounded bg-white dark:bg-gray-900">
                             <div class="flex flex-col gap-4 p-4">
                                 <!-- Email Action Vue Component -->
@@ -617,7 +617,7 @@
                                             @{{ email.lead.person?.name }}
                                         </span>
 
-                                        <span class="text-[10px]">
+                                        <span class="text-[10px] leading-normal">
                                             @{{ email.lead.person?.organization?.name }}
                                         </span>
                                     </div>
@@ -910,7 +910,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flex gap-4 w-full max-sm:flex-wrap">
+                                            <div class="flex w-full gap-4 max-sm:flex-wrap">
                                                 <!-- Description -->
                                                 <x-admin::attributes
                                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
