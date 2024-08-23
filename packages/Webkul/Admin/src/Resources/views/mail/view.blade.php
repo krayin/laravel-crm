@@ -69,7 +69,7 @@
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Email Actions -->
-                    <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full sticky top-4">
+                    <div class="sticky top-4 flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                         <div class="box-shadow rounded bg-white dark:bg-gray-900">
                             <div class="flex flex-col gap-4 p-4">
                                 <!-- Email Action Vue Component -->
@@ -101,7 +101,7 @@
                                 <span>@{{ email.name }}</span>
                                 
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex">
+                                    <div class="flex items-center gap-1">
                                         <!-- Mail To -->
                                         <span>@lang('admin::app.mail.view.to') @{{ email.reply_to.join(', ') }}</span>
 
@@ -448,13 +448,11 @@
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex flex-col">
-                                        <span class="text-[10px]">@{{ email.person.job_title }}</span>
+                                    <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                    <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
-                                    </div>
+                                    <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -564,9 +562,7 @@
                                         <span>@{{ person.name }}</span>
                                         
                                         <div class="flex flex-col gap-1">
-                                            <div class="flex">
-                                                <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
-                                            </div>
+                                            <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
                                         </div>
                                     </div>
                                 </li>                       
@@ -617,7 +613,7 @@
                                             @{{ email.lead.person?.name }}
                                         </span>
 
-                                        <span class="text-[10px]">
+                                        <span class="text-[10px] leading-normal">
                                             @{{ email.lead.person?.organization?.name }}
                                         </span>
                                     </div>
@@ -910,7 +906,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flex gap-4 w-full max-sm:flex-wrap">
+                                            <div class="flex w-full gap-4 max-sm:flex-wrap">
                                                 <!-- Description -->
                                                 <x-admin::attributes
                                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
