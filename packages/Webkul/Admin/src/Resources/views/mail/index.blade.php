@@ -50,7 +50,6 @@
         >
             {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.before') !!}
 
-            <!-- DataGrid -->
            <!-- DataGrid -->
            <x-admin::datagrid
                 ref="datagrid"
@@ -74,21 +73,38 @@
                             class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                             :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
                         >
-                            <!-- Group ID -->
+                            <!-- Select Box -->
+                            <div class="flex select-none items-center gap-16">
+                                <input
+                                    type="checkbox"
+                                    :name="`mass_action_select_record_${record.id}`"
+                                    :id="`mass_action_select_record_${record.id}`"
+                                    :value="record.id"
+                                    class="peer hidden"
+                                    v-model="applied.massActions.indices"
+                                >
+
+                                <label
+                                    class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
+                                    :for="`mass_action_select_record_${record.id}`"
+                                ></label>
+                            </div>
+        
+                            <!-- ID -->
                             <p>@{{ record.id }}</p>
 
-                            <!-- Attachments -->
+                            <!-- Attachment -->
                             <p v-html="record.attachments"></p>
 
-                            <!-- Name -->
+                            <!-- From -->
                             <p>@{{ record.name }}</p>
-        
+
                             <!-- Subject -->
-                            <p v-html="record.subject"></p>
+                            <p>@{{ record.subject }}</p>
 
                             <!-- Created At -->
-                            <p v-html="record.created_at"></p>
-        
+                            <p>@{{ record.created_at }}</p>
+                           
                             <!-- Actions -->
                             <div class="flex justify-end">
                                 <a @click="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))">
