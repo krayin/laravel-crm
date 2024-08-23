@@ -7,7 +7,7 @@
 >
 
 <head>
-    
+
     {!! view_render_event('bagisto.admin.layout.head.before') !!}
 
     <title>{{ $title ?? '' }}</title>
@@ -57,7 +57,7 @@
         rel="stylesheet"
     />
 
-    <link 
+    <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
         rel="stylesheet"
     />
@@ -68,7 +68,7 @@
         href="{{ url('cache/logo/bagisto.png') }}"
     >
 
-    {{-- @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
+    @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
         <link
             type="image/x-icon"
             href="{{ Storage::url($favicon) }}"
@@ -78,11 +78,11 @@
     @else
         <link
             type="image/x-icon"
-            {{ vite()->asset('favicon.ico') }}
+            href="{{ admin_vite()->asset('images/favicon.ico') }}"
             rel="shortcut icon"
             sizes="16x16"
         />
-    @endif --}}
+    @endif
 
     @stack('styles')
 

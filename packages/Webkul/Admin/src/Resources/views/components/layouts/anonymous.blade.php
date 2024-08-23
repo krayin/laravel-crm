@@ -58,7 +58,7 @@
     @else
         <link
             type="image/x-icon"
-            href="{{ asset('images/favicon.ico') }}"
+            href="{{ admin_vite()->asset('images/favicon.ico') }}"
             rel="shortcut icon"
             sizes="16x16"
         />
