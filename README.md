@@ -8,6 +8,10 @@
 <a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/license.svg" alt="License"></a>
 </p>
 
+<a href="javascript:void();">
+    <img class="flag-img" src="https://raw.githubusercontent.com/krayin/temp-media/master/features.png" alt="Chinese" width="100%">
+</a>
+
 ## Topics
 
 1. [Introduction](#introduction)
@@ -30,6 +34,10 @@ a progressive Javascript framework.
 **We also have a forum for any type of concerns, feature requests, or discussions. Please visit: [Krayin CRM Forums](https://forums.krayincrm.com/)**
 
 # Visit our live [Demo](https://demo.krayincrm.com)
+
+<a href="javascript:void();">
+    <img class="flag-img" src="https://raw.githubusercontent.com/krayin/temp-media/master/visit-our-live-demo.png" alt="Chinese" width="100%">
+</a>
 
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
