@@ -1,6 +1,6 @@
 <div class="flex gap-4 overflow-auto max-xl:flex-wrap">
     @for ($i = 1; $i <= 6; $i++)
-        <div class="flex h-[380px] min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg bg-white dark:bg-gray-900">
+        <div class="flex h-[380px] min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Stage Header -->
             <div class="flex flex-col gap-6 px-4 py-3">
                 <!-- Stage Title and Action -->

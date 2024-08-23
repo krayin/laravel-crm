@@ -11,38 +11,40 @@
         enctype="multipart/form-data"
         method="PUT"
     >
-        <!-- actions buttons -->
-        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-            <div class="flex flex-col gap-2">
-                <div class="flex cursor-pointer items-center">
-                    <x-admin::breadcrumbs 
-                        name="settings.attributes.edit" 
-                        :entity="$attribute"
-                    />
+        <div class="flex flex-col gap-4">
+            <!-- actions buttons -->
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
+                    <div class="flex cursor-pointer items-center">
+                        <x-admin::breadcrumbs 
+                            name="settings.attributes.edit" 
+                            :entity="$attribute"
+                        />
+                    </div>
+
+                    <div class="text-xl font-bold dark:text-white">
+                        @lang('admin::app.settings.attributes.edit.title')
+                    </div>
                 </div>
 
-                <div class="text-xl font-bold dark:text-white">
-                    @lang('admin::app.settings.attributes.edit.title')
-                </div>
-            </div>
-
-            <div class="flex items-center gap-x-2.5">
-                <!-- Create button for Attributes -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.attributes.edit.save-btn')
-                    </button>
+                    <!-- Create button for Attributes -->
+                    <div class="flex items-center gap-x-2.5">
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.attributes.edit.save-btn')
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Edit Attributes Vue Components -->
-        <v-edit-attributes>
-            <!-- Shimmer Effect -->
-        </v-edit-attributes>
+            <!-- Edit Attributes Vue Components -->
+            <v-edit-attributes>
+                <!-- Shimmer Effect -->
+            </v-edit-attributes>
+        </div>
     </x-admin::form>
 
     {!! view_render_event('bagisto.admin.catalog.attributes.edit.after', ['attribute' => $attribute]) !!}
@@ -53,14 +55,12 @@
             id="v-edit-attributes-template"
         >
             <!-- body content -->
-            <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
+            <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub Component -->
-                <div class="flex flex-1 flex-col gap-2 overflow-auto max-xl:flex-auto">
-
-                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
-
-                    <!-- Label -->
-                    <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
+                
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.attributes.edit.labels')
                         </p>
@@ -255,16 +255,16 @@
                             </div>
                         </div>
                     </div>
-
-                    {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.after', ['attribute' => $attribute]) !!}
                 </div>
+                
+                {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.after', ['attribute' => $attribute]) !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                     {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.general.before', ['attribute' => $attribute]) !!}
 
                     <!-- General -->
-                    <x-admin::accordion>
+                    <x-admin::accordion class="!rounded-lg">
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.edit.general')
@@ -374,7 +374,7 @@
                     {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.accordian.validations.before', ['attribute' => $attribute]) !!}
 
                     <!-- Validations -->
-                    <x-admin::accordion>
+                    <x-admin::accordion class="!rounded-lg">
                         <x-slot:header>
                             <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                 @lang('admin::app.settings.attributes.edit.validations')
