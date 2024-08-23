@@ -102,7 +102,7 @@
                         </x-admin::form.control-group>
 
                         <!-- Participants -->
-                        <x-admin::form.control-group class="!mt-4">
+                        <x-admin::form.control-group>
                             <x-admin::form.control-group.label>
                                 @lang('admin::app.activities.edit.participants')
                             </x-admin::form.control-group.label>
@@ -129,7 +129,7 @@
                         </x-admin::form.control-group>
 
                         <!-- Lead -->
-                        <x-admin::form.control-group class="!mt-4">
+                        <x-admin::form.control-group class="!mb-0">
                             <x-admin::form.control-group.label>
                                 @lang('admin::app.activities.edit.lead')
                             </x-admin::form.control-group.label>
@@ -215,7 +215,7 @@
                             </x-admin::form.control-group>
 
                             <!-- Location -->
-                            <x-admin::form.control-group>
+                            <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.activities.edit.location')
                                 </x-admin::form.control-group.label>
