@@ -161,9 +161,8 @@
                                         <p 
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                        >
-                                            @{{ activity.comment }}
-                                        </p>
+                                            v-html="activity.comment"
+                                        ></p>
 
                                         <!-- Attachments -->
                                         <div

@@ -24,22 +24,6 @@
                     <span class="label-active">{{ request('route') }}</span>
                 </div>
             </div>
-    
-            <!-- Link Mail Button -->
-            @if (
-                bouncer()->hasPermission('contacts.persons.create')
-                || bouncer()->hasPermission('leads.create')
-                || bouncer()->hasPermission('leads.view')
-                || bouncer()->hasPermission('contacts.persons.edit')
-            )
-                <button
-                    type="button"
-                    class="primary-button"
-                    @click="$refs.emailAction.openDrawer()"
-                >
-                    @lang('admin::app.mail.view.link-mail')
-                </button>
-            @endif
         </div>
 
         <!-- Email List Vue Component -->
@@ -65,7 +49,7 @@
                         @on-discard="action = {}"
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
-
+            
                     <!-- Email Item Vue Component -->
                     <v-email-item
                         v-for='(email, index) in email.emails'
@@ -77,16 +61,23 @@
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
                 </div>
-
-                <!-- Email Actions -->
-                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    <div class="box-shadow rounded bg-white dark:bg-gray-900">
-                        <div class="flex flex-col gap-4 p-4">
-                            <!-- Email Action Vue Component -->
-                            <v-action-email ref="emailAction"></v-action-email>
+            
+                @if (
+                    bouncer()->hasPermission('contacts.persons.create')
+                    || bouncer()->hasPermission('leads.create')
+                    || bouncer()->hasPermission('leads.view')
+                    || bouncer()->hasPermission('contacts.persons.edit')
+                )
+                    <!-- Email Actions -->
+                    <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full sticky top-4">
+                        <div class="box-shadow rounded bg-white dark:bg-gray-900">
+                            <div class="flex flex-col gap-4 p-4">
+                                <!-- Email Action Vue Component -->
+                                <v-action-email ref="emailAction"></v-action-email>
+                            </div>
                         </div>
                     </div>
-                </div>
+                @endif
             </div>
         </script>
 
