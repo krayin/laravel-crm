@@ -3,7 +3,7 @@
     :value={{ json_encode($attributes->get('value')) }}
 >
     <div class="group w-full max-w-full hover:rounded-sm">
-        <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
+        <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
         </div>
     </div>
@@ -39,7 +39,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
+                        class="icon-edit cursor-pointer rounded p-0.5 text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950 ltr:mr-1 rtl:ml-1"
                     ></i>
                 </template>
             </div>
@@ -99,7 +99,7 @@
                                 class="cursor-pointer text-brandColor"
                                 @click="add"
                             >
-                                +@lang("admin::app.common.custom-attributes.add-more")
+                                + @lang("admin::app.common.custom-attributes.add-more")
                             </span>
                         </x-slot>
 

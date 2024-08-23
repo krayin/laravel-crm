@@ -47,16 +47,16 @@
 
                 {!! view_render_event('krayin.admin.activities.index.toggle_view.before') !!}
 
-                <div class="flex gap-2">
+                <div class="flex">
                     <i
-                        class="icon-kanban cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
+                        class="icon-kanban cursor-pointer rounded-md p-2 text-2xl"
+                        :class="{'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'table'}"
                         @click="toggleView('table')"
                     ></i>
         
                     <i
-                        class="icon-calendar cursor-pointer rounded p-1 text-2xl"
-                        :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
+                        class="icon-calendar cursor-pointer rounded-md p-2 text-2xl"
+                        :class="{'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
                         @click="toggleView('calendor')"
                     ></i>
                 </div>

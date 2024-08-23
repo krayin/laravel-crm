@@ -31,6 +31,10 @@ a progressive Javascript framework.
 
 # Visit our live [Demo](https://demo.krayincrm.com)
 
+<a href="javascript:void();">
+    <img class="flag-img" src="https://raw.githubusercontent.com/krayin/temp-media/master/visit-our-live-demo.png" alt="Chinese" width="100%">
+</a>
+
 It packs in lots of features that will allow your E-Commerce business to scale in no time:
 
 -   Descriptive and Simple Admin Panel.

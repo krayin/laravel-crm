@@ -17,7 +17,7 @@
         id="v-datagrid-table-template"
     >
         <div class="w-full">
-            <div class="table-responsive box-shadow rounded-t-0 grid w-full overflow-hidden bg-white dark:bg-gray-900">
+            <div class="table-responsive box-shadow rounded-t-0 grid w-full overflow-hidden border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <slot
                     name="header"
                     :is-loading="isLoading"

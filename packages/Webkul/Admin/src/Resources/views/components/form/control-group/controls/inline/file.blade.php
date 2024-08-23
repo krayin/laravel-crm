@@ -36,7 +36,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit opacity-0 text-2xl cursor-pointer rounded hover:bg-gray-200 dark:hover:bg-gray-950 group-hover:opacity-100"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
                     ></i>
                 </template>
             </div>
@@ -58,10 +58,10 @@
                     />
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px]">
+                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
+                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
                             @click="save"
                         >
                             <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
@@ -69,7 +69,7 @@
                     
                         <button
                             type="button"
-                            class="ml-[1px] flex items-center justify-center rounded-r-md bg-red-100 p-1 hover:bg-red-200"
+                            class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
                             @click="cancel"
                         >
                             <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
@@ -141,6 +141,8 @@
                     isEditing: false,
 
                     file: null,
+
+                    isRTL: document.documentElement.dir === 'rtl',
                 };
             },
 
@@ -161,8 +163,14 @@
                  * 
                  * @return {String}
                  */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
+                 inputPositionStyle() {
+                    return this.position === 'left' 
+                        ? this.isRTL 
+                            ? 'text-align: right; padding-right: 9px;' 
+                            : 'text-align: left; padding-left: 9px;'
+                        : this.isRTL 
+                            ? 'text-align: left; padding-left: 9px;' 
+                            : 'text-align: right; padding-right: 9px;';
                 },
 
                 /**
@@ -171,7 +179,12 @@
                  * @return {String}
                  */
                 textPositionStyle() {
-                    return this.position === 'left' ? 'justify-content: space-between' : 'justify-content: end';
+                    return this.position === 'left'  ? this.isRTL 
+                            ? 'justify-content: end;' 
+                            : 'justify-content: space-between;' 
+                        : this.isRTL 
+                            ? 'justify-content: space-between;' 
+                            : 'justify-content: end;';
                 },
             },
 

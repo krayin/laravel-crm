@@ -25,8 +25,9 @@
                 {!! view_render_event('admin.leads.index.kanban.content.before') !!}
 
                 <div class="flex gap-4 overflow-x-auto">
+                    <!-- Stage Cards -->
                     <div
-                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg bg-white dark:bg-gray-900"
+                        class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
                         v-for="(stage, index) in stageLeads"
                     >
                         <!-- Stage Header -->
@@ -65,7 +66,7 @@
 
                         <!-- Draggable Stage Lead Cards -->
                         <draggable
-                            class="flex h-[calc(100vh-315px)] flex-col gap-2 overflow-y-auto p-2"
+                            class="flex h-[calc(100vh-317px)] flex-col gap-2 overflow-y-auto p-2"
                             ghost-class="draggable-ghost"
                             handle=".lead-item"
                             v-bind="{animation: 200}"
@@ -86,7 +87,7 @@
                                         <div class="flex items-center gap-1">
                                             <div
                                                 class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium"
-                                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                                                :class="avtarColorClasses()"
                                             >
                                                 @{{ element.person.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                             </div>
@@ -191,16 +192,29 @@
 
                     isLoading: true,
 
-                    backgroundColors: [
-                        'bg-yellow-200',
-                        'bg-red-200',
-                        'bg-lime-200',
-                        'bg-blue-200',
-                        'bg-orange-200',
-                        'bg-green-200',
-                        'bg-pink-200',
-                        'bg-yellow-400'
-                    ],
+                    avatarColors: {
+                        background: [
+                            'bg-yellow-200',
+                            'bg-red-200',
+                            'bg-lime-200',
+                            'bg-blue-200',
+                            'bg-orange-200',
+                            'bg-green-200',
+                            'bg-pink-200',
+                            'bg-yellow-400'
+                        ],
+
+                        text: [
+                            'text-yellow-900',
+                            'text-red-900',
+                            'text-lime-900',
+                            'text-blue-900',
+                            'text-orange-900',
+                            'text-green-900',
+                            'text-pink-900',
+                            'text-yellow-900',
+                        ],
+                    },
 
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
@@ -230,6 +244,15 @@
             },
 
             methods: {
+                avtarColorClasses() {
+                    let index = Math.floor(Math.random() * this.avatarColors.background.length);
+
+                    return [
+                        this.avatarColors.background[index],
+                        this.avatarColors.text[index],
+                    ];
+                },
+                
                 /**
                  * Initialization: This function checks for any previously saved filters in local storage and applies them as needed.
                  *

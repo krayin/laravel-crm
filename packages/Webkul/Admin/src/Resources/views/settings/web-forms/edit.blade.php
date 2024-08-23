@@ -326,7 +326,7 @@
                                 :list="addedAttributes"
                             >
                                 <template #item="{ element, index }">
-                                    <x-admin::table.thead.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
+                                    <x-admin::table.thead.tr class="!rounded-lg hover:bg-gray-50 dark:hover:bg-gray-950">
                                         <!-- Draggable Icon -->
                                         <x-admin::table.td class="text-center">
                                             <i class="icon-move cursor-grab rounded-md text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></i>
