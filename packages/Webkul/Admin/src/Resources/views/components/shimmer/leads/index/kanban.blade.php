@@ -1,6 +1,6 @@
 <x-admin::shimmer.leads.index.kanban.toolbar />
 
-<div class="flex gap-4 overflow-x-auto">
+<div class="flex gap-2.5 overflow-x-auto">
     <!-- Stages -->
     @for ($i = 1; $i <= 6; $i++)
         <div class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">

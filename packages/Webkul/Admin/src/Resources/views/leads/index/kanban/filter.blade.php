@@ -17,7 +17,7 @@
         >
             <!-- Drawer Toggler -->
             <x-slot:toggle>
-                <div class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 hover:text-gray-800 focus:outline-none focus:ring-2 dark:border-gray-800 dark:bg-brandColor dark:text-white dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3">
+                <div class="relative flex cursor-pointer items-center rounded-md bg-sky-100 px-4 py-[9px] font-semibold text-sky-600 dark:bg-brandColor dark:text-white">
                     <span>
                         @lang('admin::app.leads.index.kanban.toolbar.filters.filter')
                     </span>

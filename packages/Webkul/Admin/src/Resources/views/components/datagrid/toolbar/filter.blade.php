@@ -37,23 +37,14 @@
                     ref="filterDrawer"
                 >
                     <x-slot:toggle>
-                        <div>
-                            <div
-                                class="relative inline-flex w-full max-w-max cursor-pointer select-none appearance-none items-center justify-between gap-x-1 rounded-md bg-sky-100 px-1 py-1.5 text-center text-base text-gray-900 transition-all marker:shadow hover:border-gray-400 hover:text-gray-800 focus:outline-none focus:ring-2 dark:border-gray-800 dark:bg-brandColor dark:text-white dark:hover:border-gray-400 ltr:pl-3 ltr:pr-3 rtl:pl-3 rtl:pr-3"
-                                :class="{'ltr:pl-3 ltr:pr-4 rtl:pl-3 rtl:pr-4 [&>*]:text-sky-600 [&>*]:dark:text-white': hasAnyAppliedColumn() }"
+                        <div class="relative flex cursor-pointer items-center rounded-md bg-sky-100 px-4 py-[9px] font-semibold text-sky-600 dark:bg-brandColor dark:text-white">
+                            @lang('admin::app.components.datagrid.toolbar.filter.title')
+
+                            <span
+                                class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-sky-600 dark:bg-white"
+                                v-if="hasAnyAppliedColumn()"
                             >
-                                <span>
-                                    @lang('admin::app.components.datagrid.toolbar.filter.title')
-                                </span>
-
-                                <span
-                                    class="icon-dot absolute right-2 top-1.5 text-sm font-bold"
-                                    v-if="hasAnyAppliedColumn()"
-                                >
-                                </span>
-                            </div>
-
-                            <div class="z-10 hidden w-full divide-y divide-gray-100 rounded bg-white shadow dark:bg-gray-900"></div>
+                            </span>
                         </div>
                     </x-slot>
 
