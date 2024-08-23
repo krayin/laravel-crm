@@ -185,15 +185,6 @@
             </div>
         </v-dark>
 
-        <!-- Notification Component -->
-        <span class="relative flex">
-            <span
-                class="icon-notification cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
-                title="@lang('admin::app.components.layouts.header.notifications')"
-            >
-            </span>
-        </span>
-
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-right">
             <x-slot:toggle>
