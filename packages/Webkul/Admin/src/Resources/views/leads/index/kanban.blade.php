@@ -87,7 +87,7 @@
                                         <div class="flex items-center gap-1">
                                             <div
                                                 class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium"
-                                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
+                                                :class="avtarColorClasses()"
                                             >
                                                 @{{ element.person.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
                                             </div>
@@ -192,16 +192,29 @@
 
                     isLoading: true,
 
-                    backgroundColors: [
-                        'bg-yellow-200',
-                        'bg-red-200',
-                        'bg-lime-200',
-                        'bg-blue-200',
-                        'bg-orange-200',
-                        'bg-green-200',
-                        'bg-pink-200',
-                        'bg-yellow-400'
-                    ],
+                    avatarColors: {
+                        background: [
+                            'bg-yellow-200',
+                            'bg-red-200',
+                            'bg-lime-200',
+                            'bg-blue-200',
+                            'bg-orange-200',
+                            'bg-green-200',
+                            'bg-pink-200',
+                            'bg-yellow-400'
+                        ],
+
+                        text: [
+                            'text-yellow-800',
+                            'text-red-800',
+                            'text-lime-800',
+                            'text-blue-800',
+                            'text-orange-800',
+                            'text-green-800',
+                            'text-pink-800',
+                            'text-yellow-800',
+                        ],
+                    },
 
                     tagTextColor: {
                         '#FEE2E2': '#DC2626',
@@ -231,6 +244,15 @@
             },
 
             methods: {
+                avtarColorClasses() {
+                    let index = Math.floor(Math.random() * this.avatarColors.background.length);
+
+                    return [
+                        this.avatarColors.background[index],
+                        this.avatarColors.text[index],
+                    ];
+                },
+                
                 /**
                  * Initialization: This function checks for any previously saved filters in local storage and applies them as needed.
                  *
