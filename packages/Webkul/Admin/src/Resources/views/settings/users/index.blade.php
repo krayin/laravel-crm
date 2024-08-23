@@ -408,8 +408,6 @@
             app.component('v-users-settings', {
                 template: '#users-settings-template',
         
-                props: ['roles'],
-
                 data() {
                     return {
                         isProcessing: false,

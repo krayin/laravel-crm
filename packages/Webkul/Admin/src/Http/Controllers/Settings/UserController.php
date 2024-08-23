@@ -66,7 +66,7 @@ class UserController extends Controller
             $data['password'] = bcrypt($data['password']);
         }
 
-        $data['status'] = isset($data['status']) ? 1 : 0;
+        $data['status'] = $data['status'] ? 1 : 0;
 
         Event::dispatch('settings.user.create.before');
 
