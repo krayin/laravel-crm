@@ -51,7 +51,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950 ltr:mr-2 rtl:ml-2"
                     ></i>
                 </template>
             </div>
@@ -65,14 +65,14 @@
                     <x-admin::form.control-group.control
                         type="text"
                         ::name="name"
-                        class="w-full cursor-pointer pr-10 text-gray-800 dark:text-white"
+                        class="w-full cursor-pointer text-gray-800 dark:text-white ltr:pr-10 rtl:pl-10"
                         ::placeholder="placeholder"
                         v-model="selectedItem.name"
                         @click="toggleEditor"   
                         readonly
                     />
 
-                    <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-14">
+                    <span class="pointer-events-none absolute inset-y-0 flex items-center ltr:right-0 ltr:pr-14 rtl:left-0 rtl:pl-14">
                         <div class="flex items-center justify-center space-x-1">
                             <div
                                 class="relative"
@@ -142,10 +142,10 @@
                     </div>
                         
                     <!-- Action Buttons -->
-                    <div class="absolute right-2 top-1/2 flex -translate-y-1/2 transform gap-[1px] bg-white dark:bg-gray-900">
+                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white dark:bg-gray-900 ltr:right-2 rtl:left-2">
                         <button
                             type="button"
-                            class="flex items-center justify-center rounded-l-md bg-green-100 p-1 hover:bg-green-200"
+                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
                             @click="save"
                         >
                             <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
@@ -153,7 +153,7 @@
                     
                         <button
                             type="button"
-                            class="ml-[1px] flex items-center justify-center rounded-r-md bg-red-100 p-1 hover:bg-red-200"
+                            class="item-center flex justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
                             @click="cancel"
                         >
                             <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
@@ -230,6 +230,8 @@
                     isSearching: false,
 
                     cancelToken: null,
+
+                    isRTL: document.documentElement.dir === 'rtl',
                 };
             },
 
@@ -250,8 +252,14 @@
                  * 
                  * @return {String}
                  */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
+                 inputPositionStyle() {
+                    return this.position === 'left' 
+                        ? this.isRTL 
+                            ? 'text-align: right; padding-right: 9px;' 
+                            : 'text-align: left; padding-left: 9px;'
+                        : this.isRTL 
+                            ? 'text-align: left; padding-left: 9px;' 
+                            : 'text-align: right; padding-right: 9px;';
                 },
 
                 /**
@@ -260,7 +268,12 @@
                  * @return {String}
                  */
                 textPositionStyle() {
-                    return this.position === 'left' ? 'justify-content: space-between' : 'justify-content: end';
+                    return this.position === 'left'  ? this.isRTL 
+                            ? 'justify-content: end;' 
+                            : 'justify-content: space-between;' 
+                        : this.isRTL 
+                            ? 'justify-content: space-between;' 
+                            : 'justify-content: end;';
                 },
 
                 src() {

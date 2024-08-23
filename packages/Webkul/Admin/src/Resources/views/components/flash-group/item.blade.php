@@ -12,7 +12,7 @@
         id="v-flash-item-template"
     >
         <div
-            class="flex w-max items-start justify-between gap-2 rounded-lg bg-white p-3 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)]"
+            class="flex w-max items-start justify-between gap-2 rounded-lg bg-white p-3 shadow-[0px_10px_20px_0px_rgba(0,0,0,0.12)] dark:bg-gray-950"
             :style="typeStyles[flash.type]['container']"
         >
             <!-- Icon -->
@@ -24,13 +24,13 @@
 
             <div class="flex flex-col gap-1.5">
                 <!-- Heading -->
-                <p class="text-base font-semibold">
+                <p class="text-base font-semibold dark:text-white">
                     @{{ typeHeadings[flash.type] }}
                 </p>
 
                 <!-- Message -->
                 <p
-                    class="flex items-center break-all text-sm"
+                    class="flex items-center break-all text-sm dark:text-white"
                     :style="typeStyles[flash.type]['message']"
                 >
 
@@ -39,7 +39,7 @@
             </div>
 
             <button
-                class="relative ml-4 inline-flex rounded-full bg-white p-1.5 text-gray-400"
+                class="relative ml-4 inline-flex rounded-full bg-white p-1.5 text-gray-400 dark:bg-gray-950"
                 @click="remove"
             >
                 <span class="icon-cross-large text-2xl text-slate-800"></span>

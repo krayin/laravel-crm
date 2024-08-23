@@ -39,7 +39,7 @@
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
+                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950 ltr:mr-2 rtl:ml-2"
                     ></i>
                 </template>
             </div>
@@ -181,6 +181,8 @@
                     contactNumbers: JSON.parse(JSON.stringify(this.value || [{'value': '', 'label': 'work'}])),
 
                     isProcessing: false,
+
+                    isRTL: document.documentElement.dir === 'rtl',
                 };
             },
 
@@ -214,8 +216,14 @@
                  * 
                  * @return {String}
                  */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
+                 inputPositionStyle() {
+                    return this.position === 'left' 
+                        ? this.isRTL 
+                            ? 'text-align: right; padding-right: 9px;' 
+                            : 'text-align: left; padding-left: 9px;'
+                        : this.isRTL 
+                            ? 'text-align: left; padding-left: 9px;' 
+                            : 'text-align: right; padding-right: 9px;';
                 },
 
                 /**
@@ -224,7 +232,12 @@
                  * @return {String}
                  */
                 textPositionStyle() {
-                    return this.position === 'left' ? 'justify-content: space-between' : 'justify-content: end';
+                    return this.position === 'left'  ? this.isRTL 
+                            ? 'justify-content: end;' 
+                            : 'justify-content: space-between;' 
+                        : this.isRTL 
+                            ? 'justify-content: space-between;' 
+                            : 'justify-content: end;';
                 },
 
                 /**
