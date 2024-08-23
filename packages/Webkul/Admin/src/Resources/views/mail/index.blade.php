@@ -377,6 +377,8 @@
                                 this.$refs.toggleComposeModal.close();
 
                                 this.isStoring = false;
+
+                                this.resetForm();
                             });
                     },
 
@@ -399,6 +401,18 @@
                                 
                             })
                             .catch(error => {});
+                    },
+
+                    resetForm() {
+                        this.draft = {
+                            id: null,
+                            reply_to: [],
+                            cc: [],
+                            bcc: [],
+                            subject: '',
+                            reply: '',
+                            attachments: [],
+                        };
                     },
                 },
             });
