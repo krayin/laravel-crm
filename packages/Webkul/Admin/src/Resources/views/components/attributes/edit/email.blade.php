@@ -19,7 +19,7 @@
         </div>
 
         <span class="cursor-pointer text-brandColor">
-            +@lang("admin::app.common.custom-attributes.add-more")
+            + @lang("admin::app.common.custom-attributes.add-more")
         </span>
     </v-email-component>
 @endif
@@ -72,7 +72,7 @@
             class="cursor-pointer text-brandColor"
             @click="add"
         >
-            +@lang("admin::app.common.custom-attributes.add-more")
+            + @lang("admin::app.common.custom-attributes.add-more")
         </span>
     </script>
 

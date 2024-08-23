@@ -99,7 +99,7 @@
                                 class="cursor-pointer text-brandColor"
                                 @click="add"
                             >
-                                +@lang("admin::app.common.custom-attributes.add-more")
+                                + @lang("admin::app.common.custom-attributes.add-more")
                             </span>
                         </x-slot>
 
