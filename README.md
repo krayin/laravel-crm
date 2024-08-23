@@ -8,10 +8,6 @@
 <a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/license.svg" alt="License"></a>
 </p>
 
-<a href="javascript:void();">
-    <img class="flag-img" src="https://raw.githubusercontent.com/krayin/temp-media/master/features.png" alt="Chinese" width="100%">
-</a>
-
 ## Topics
 
 1. [Introduction](#introduction)
