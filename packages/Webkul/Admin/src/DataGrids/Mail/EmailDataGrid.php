@@ -41,6 +41,15 @@ class EmailDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
+            'index'      => 'id',
+            'label'      => trans('admin::app.mail.index.datagrid.id'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => true,
+            'filterable' => true,
+        ]);
+
+        $this->addColumn([
             'index'      => 'attachments',
             'label'      => '<span class="icon-attachment text-2xl"></span>',
             'type'       => 'string',

@@ -3,7 +3,7 @@
         <div class="shimmer h-[17px] w-28"></div>
     </div>
 
-    <div class="flex flex-col gap-4 p-8">
+    <div class="flex flex-col gap-4 px-8 pt-8">
         <div class="shimmer h-[280px] w-[280px] rounded-full"></div>
 
         <div class="flex justify-center gap-5">

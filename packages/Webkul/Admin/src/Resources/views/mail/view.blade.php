@@ -39,7 +39,7 @@
             id="v-email-list-template"
         >  
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto overflow-y-auto max-h-screen">
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <!-- Email Item Vue Component -->
                     <v-email-item
                         :email="email"
@@ -69,7 +69,7 @@
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Email Actions -->
-                    <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full sticky top-4">
+                    <div class="sticky top-4 flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
                         <div class="box-shadow rounded bg-white dark:bg-gray-900">
                             <div class="flex flex-col gap-4 p-4">
                                 <!-- Email Action Vue Component -->
@@ -98,10 +98,10 @@
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span>@{{ email.name }}</span>
+                                <span class="dark:text-gray-300">@{{ email.name }}</span>
                                 
-                                <div class="flex flex-col gap-1">
-                                    <div class="flex">
+                                <div class="flex flex-col gap-1 dark:text-gray-300">
+                                    <div class="flex items-center gap-1">
                                         <!-- Mail To -->
                                         <span>@lang('admin::app.mail.view.to') @{{ email.reply_to.join(', ') }}</span>
 
@@ -136,13 +136,13 @@
                         </div>
 
                         <!-- Time and Actions -->
-                        <div class="flex items-center justify-center gap-2">
+                        <div class="flex items-center justify-center gap-2 dark:text-gray-300">
                             @{{ email.time_ago }}
 
                             <div class="flex select-none items-center">
                                 <x-admin::dropdown position="bottom-right">
                                     <x-slot:toggle>
-                                        <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"></button>
+                                        <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"></button>
                                     </x-slot>
                         
                                     <!-- Admin Dropdown -->
@@ -197,7 +197,10 @@
                     </div>
 
                     <!-- Mail Body -->
-                    <div v-html="email.reply"></div>
+                    <div
+                        v-html="email.reply"
+                        class="dark:text-gray-300"
+                    ></div>
 
                     <div
                         class="flex flex-wrap gap-2"
@@ -217,7 +220,7 @@
 
                     <!-- Reply, Reply All and Forward email -->
                     <template v-if="! action[email.id]">
-                        <div class="flex gap-6 border-t-2 py-4 font-medium">
+                        <div class="flex gap-6 border-t-2 py-4 font-medium dark:border-gray-800">
                             <label
                                 class="flex cursor-pointer items-center gap-2 text-brandColor"
                                 @click="emailAction('reply')"
@@ -442,19 +445,17 @@
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span class="text-xs font-medium">
+                                <span class="text-xs font-medium text-gray-800 dark:text-gray-300">
                                     @{{ email.person?.name }}
                                 </span>
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex flex-col">
-                                        <span class="text-[10px]">@{{ email.person.job_title }}</span>
+                                    <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                    <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
 
-                                        <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
-                                    </div>
+                                    <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
                                 </div>
                             </div>
                         </div>
@@ -463,7 +464,7 @@
                             <template v-if="! unlinking.contact">
                                 <button
                                     type="button"
-                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     @click="unlinkContact"
                                 ></button>
                             </template>
@@ -475,7 +476,7 @@
                             <a
                                 :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', email.person_id)"
                                 target="_blank"
-                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                             ></a>
                         </div>
                     </div>
@@ -492,8 +493,8 @@
                             @click="toggle"
                         >
                             <!-- Input-like div -->
-                            <div class="w-full cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700">
-                                @{{ selectedItem.name ?? '@lang('Search an existing contact')'}}
+                            <div class="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-800 dark:text-gray-300">
+                                @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-contact')'}}
                             </div>
                             
                             <!-- Arrow down icon -->
@@ -514,7 +515,7 @@
                         <!-- Popup Box -->
                         <div 
                             v-if="showPopup" 
-                            class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                            class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                         >
                             <!-- Search Bar -->
                             <div class="relative">
@@ -551,10 +552,10 @@
                                 <li 
                                     v-for="person in persons" 
                                     :key="person.id"
-                                    class="flex cursor-pointer gap-2 p-2 text-gray-800 transition-colors hover:bg-blue-100"
+                                    class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                     @click="linkContact(person)"
                                 >
-                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs dark:text-gray-800 font-medium">
                                         @{{ person.name.split(' ').map(word => word[0]).join('') }}
                                     </div>
                             
@@ -564,14 +565,15 @@
                                         <span>@{{ person.name }}</span>
                                         
                                         <div class="flex flex-col gap-1">
-                                            <div class="flex">
-                                                <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
-                                            </div>
+                                            <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
                                         </div>
                                     </div>
                                 </li>                       
                             
-                                <li v-if="persons.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                <li 
+                                    v-if="persons.length === 0"
+                                    class="px-4 py-2 text-gray-800 dark:text-gray-300"
+                                >
                                     @lang('admin::app.mail.view.no-result-found')
                                 </li>
                             </ul>
@@ -598,7 +600,7 @@
             <div>
                 <template v-if="email?.lead_id">
                     <div class="flex">
-                        <div class="lead-item flex w-full flex-col gap-5 rounded-md border border-gray-50 bg-gray-50 p-2">
+                        <div class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
@@ -617,22 +619,32 @@
                                             @{{ email.lead.person?.name }}
                                         </span>
 
-                                        <span class="text-[10px]">
+                                        <span class="text-[10px] leading-normal">
                                             @{{ email.lead.person?.organization?.name }}
                                         </span>
                                     </div>
                                 </div>
 
-                                <div class="flex items-center gap-2">
-                                    <span
-                                        class="icon-rotten cursor-default text-xl text-rose-600"
+                                <div class="flex items-center justify-center gap-2">
+                                    <div
+                                        class="group relative "
                                         v-if="email.lead.rotten_days > 0"
-                                    ></span>
+                                    >
+                                        <span class="icon-rotten flex items-center justify-center cursor-default text-2xl text-rose-600"></span>
+
+                                        <div class="absolute bottom-0 right-0 mb-7 hidden w-max flex-col items-center group-hover:flex">
+                                            <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
+                                                @{{ "@lang('admin::app.mail.view.rotten-days', ['days' => 'replaceDays'])".replace('replaceDays', email.lead.rotten_days) }}
+                                            </span>
+
+                                            <div class="absolute -bottom-0.5 right-1 h-3 w-3 rotate-45 bg-black"></div>
+                                        </div>
+                                    </div>
 
                                     <template v-if="! unlinking.lead">
                                         <button
                                             type="button"
-                                            class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                            class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                             @click="unlinkLead"
                                         ></button>
                                     </template>
@@ -644,7 +656,7 @@
                                     <a
                                         :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
                                         target="_blank"
-                                        class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200"
+                                        class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     ></a>
                                 </div>
                             </div>
@@ -703,8 +715,8 @@
                                 @click="toggle"
                             >
                                 <!-- Input-like div -->
-                                <div class="w-full cursor-pointer rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-700">
-                                    @{{ selectedItem.name ?? '@lang('Search an existing lead')'}}
+                                <div class="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-800 dark:text-gray-300">
+                                    @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-lead')'}}
                                 </div>
                                 
                                 <!-- Arrow down icon -->
@@ -726,7 +738,7 @@
                             <!-- Popup Box -->
                             <div 
                                 v-if="showPopup" 
-                                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                                class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                             >
                                 <!-- Search Bar -->
                                 <div class="relative">
@@ -759,14 +771,14 @@
                                 </div>
 
                                 <!-- Results List -->
-                                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                                <ul class="max-h-40 divide-y divide-gray-100 dark:divide-gray-700 overflow-y-auto">
                                     <li 
                                         v-for="lead in leads" 
                                         :key="lead.id"
-                                        class="flex cursor-pointer items-center gap-2 p-2 text-gray-800 transition-colors hover:bg-blue-100"
+                                        class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                         @click="linkLead(lead)"
                                     >
-                                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
+                                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs dark:text-gray-800 font-medium">
                                             @{{ lead.title.split(' ').map(word => word[0]).join('') }}
                                         </div>
                                 
@@ -776,7 +788,10 @@
                                         </div>
                                     </li>                       
                                 
-                                    <li v-if="leads.length === 0" class="px-4 py-2 text-center text-gray-500">
+                                    <li 
+                                        v-if="leads.length === 0"
+                                        class="px-4 py-2 text-gray-800 dark:text-gray-300"
+                                    >
                                         @lang('admin::app.mail.view.no-result-found')
                                     </li>
                                 </ul>
@@ -784,7 +799,7 @@
                                 <!-- Add New Lead Button -->
                                 @if (bouncer()->hasPermission('leads.create'))
                                     <div
-                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors"
+                                        class="flex cursor-pointer items-center gap-2 border-t dark:border-gray-700 border-gray-200 p-2 text-blue-600 transition-colors"
                                         @click="toggleLeadModal"
                                     >
                                         <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
@@ -910,7 +925,7 @@
                                                 </div>
                                             </div>
 
-                                            <div class="flex gap-4 w-full max-sm:flex-wrap">
+                                            <div class="flex w-full gap-4 max-sm:flex-wrap">
                                                 <!-- Description -->
                                                 <x-admin::attributes
                                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -1034,7 +1049,7 @@
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Link to contact -->
-                    <label class="font-semibold text-gray-700">
+                    <label class="font-semibold text-gray-800 dark:text-gray-300">
                         @{{ email?.person ? "@lang('admin::app.mail.view.linked-contact')" : "@lang('admin::app.mail.view.link-to-contact')" }}
                     </label>
 
@@ -1056,7 +1071,7 @@
                     || bouncer()->hasPermission('leads.create')
                 )
                     <!-- Link to Lead -->
-                    <label class="font-semibold text-gray-700">
+                    <label class="font-semibold text-gray-800 dark:text-gray-300">
                         @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
                     </label>
                 

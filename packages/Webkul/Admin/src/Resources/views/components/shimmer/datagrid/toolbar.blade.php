@@ -1,9 +1,9 @@
 <div class="flex h-[58px] items-center justify-between gap-4 rounded-t-lg border border-b-0 border-gray-200 bg-white pl-2 pr-4 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-md:flex-wrap">
     <!-- Left Toolbar -->
     <div class="flex w-full items-center gap-x-1.5">
-        <div class="shimmer h-[38px] w-[302px] rounded-lg"></div>
+        <div class="shimmer h-[38px] w-[264px] rounded-lg"></div>
     
-        <div class="shimmer h-[38px] w-[62px] rounded-lg"></div>
+        <div class="shimmer h-[38px] w-[66px] rounded-md"></div>
     </div>
 
     <!-- Right Toolbar -->

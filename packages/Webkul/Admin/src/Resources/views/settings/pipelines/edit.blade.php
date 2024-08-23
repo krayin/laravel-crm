@@ -121,7 +121,6 @@
                 <draggable
                     tag="div"
                     ghost-class="draggable-ghost"
-                    :handle="isAnyDraggable ? '.icon-move' : ''"
                     v-bind="{animation: 200}"
                     item-key="id"
                     :list="stages"
@@ -130,7 +129,7 @@
                 >
                     <template #item="{ element, index }">
                         <div
-                            ::class="{ draggable: isDragable(element) }"
+                            ::class="{ draggable: canDrag(element) }"
                             class="flex gap-4 overflow-x-auto"
                         >
                             <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
@@ -142,7 +141,7 @@
                                         </span>
 
                                         <i
-                                            v-if="isDragable(element)" 
+                                            v-if="canDrag(element)" 
                                             class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                                         >
                                         </i>
@@ -150,11 +149,19 @@
                                     
                                     <!-- Crads input fiels -->
                                     <div>
-                                        <!-- Name -->
+                                        <!-- Hidden Inputs -->
+                                        <!-- Code -->
                                         <input
                                             type="hidden"
                                             :value="slugify(element.name)"
                                             :name="'stages[' + element.id + '][code]'"
+                                        />
+
+                                        <!-- Sort Order -->
+                                        <input
+                                            type="hidden"
+                                            :value="index + 1"
+                                            :name="'stages[' + element.id + '][sort_order]'"
                                         />
 
                                         <x-admin::form.control-group>
@@ -168,17 +175,11 @@
                                                 v-model="element['name']"
                                                 ::rules="getValidation"
                                                 :label="trans('admin::app.settings.pipelines.edit.name')"
-                                                ::readonly="! isDragable(element)"
+                                                ::readonly="! canDrag(element)"
                                             />
 
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][name]'" />
                                         </x-admin::form.control-group>
-
-                                        <input
-                                            type="hidden"
-                                            :value="index + 1"
-                                            :name="'stages[' + element.id + '][sort_order]'"
-                                        />
 
                                         <!-- Probabilty -->
                                         <x-admin::form.control-group>
@@ -191,7 +192,7 @@
                                                 ::name="'stages[' + element.id + '][probability]'"
                                                 v-model="element['probability']"
                                                 rules="required|numeric|min_value:0|max_value:100"
-                                                ::readonly="element?.code != 'new' && ! isDragable(element)"
+                                                ::readonly="element?.code != 'new' && ! canDrag(element)"
                                                 :label="trans('admin::app.settings.pipelines.create.probability')"
                                             />
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][probability]'" />
@@ -202,8 +203,8 @@
                                 <!-- Remove Stage -->
                                 <div
                                     class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
-                                    @click="removeStage(element)" 
-                                    v-if="isDragable(element)"
+                                    @click="remove(element)" 
+                                    v-if="canDrag(element)"
                                 >
                                     <i class="icon-delete text-2xl"></i>
                                     
@@ -251,7 +252,7 @@
                         stages: @json($pipeline->stages),
 
                         stageCount: 1,
-                    }
+                    };
                 },
                 
                 computed: {
@@ -268,54 +269,44 @@
                 },
 
                 methods: {
-                    addStage () {
+                    addStage() {
                         this.stages.splice((this.stages.length - 2), 0, {
                             'id': 'stage_' + this.stageCount++,
                             'code': '',
                             'name': '',
-                            'probability': 100
+                            'probability': 100,
                         });
                     },
 
-                    removeStage(stage) {
-                        
+                    remove(stage) {
                         this.$emitter.emit('open-confirm-modal', {
                             agree: () => {
-                                const index = this.stages.indexOf(stage);
+                                let tempStages = this.stages.filter(item => item.id !== stage.id);
 
-                                if (index > -1) {
-                                    this.stages.splice(index, 1);
-                                }
-                                
+                                this.stages = [];
+
+                                this.$nextTick(() => this.stages = tempStages);
+
                                 this.removeUniqueNameErrors();
-                                
-                                this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.edit.stage-delete-success')" });
-                            }
+                            },
                         });
                     },
 
-                    isDragable (stage) {
-                        if (stage.code == 'new' || stage.code == 'won' || stage.code == 'lost') {
+                    canDrag(stage) {
+                        if (['new', 'won', 'lost'].includes(stage.code)) {
                             return false;
                         }
 
                         return true;
                     },
 
-                    slugify (name) {
+                    slugify(name) {
                         return name
                             .toString()
-                            
                             .toLowerCase()
-                            
                             .replace(/[^\w\u0621-\u064A\u4e00-\u9fa5\u3402-\uFA6D\u3041-\u30A0\u30A0-\u31FF- ]+/g, '')
-                            
-                            // replace whitespaces with dashes
                             .replace(/ +/g, '-')
-                            
-                            // avoid having multiple dashes (---- translates into -)
                             .replace('![-\s]+!u', '-')
-                            
                             .trim();
                     },
 
@@ -360,7 +351,7 @@
                         
                         const relatedElement = event.relatedContext.element;
 
-                        return this.isDragable(draggedElement) && this.isDragable(relatedElement);
+                        return this.canDrag(draggedElement) && this.canDrag(relatedElement);
                     },
                 },
             })
