@@ -462,7 +462,7 @@
                             </x-admin::form.control-group>
 
                             <!-- Submit button label -->
-                            <x-admin::form.control-group>
+                            <x-admin::form.control-group class="!mb-0">
                                 <x-admin::form.control-group.label class="required">
                                     @lang('admin::app.settings.webforms.edit.submit-button-label')
                                 </x-admin::form.control-group.label>
