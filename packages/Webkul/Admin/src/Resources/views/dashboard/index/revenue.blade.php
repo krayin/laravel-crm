@@ -33,7 +33,7 @@
 
                                 <div class="flex items-center gap-0.5">
                                     <span
-                                        class="text-base text-green-500"
+                                        class="text-base !font-semibold text-green-500"
                                         :class="[report.statistics.total_won_revenue.progress < 0 ? 'icon-stats-down text-red-500 dark:!text-red-500' : 'icon-stats-up text-green-500 dark:!text-green-500']"
                                     ></span>
 
@@ -60,7 +60,7 @@
 
                                 <div class="flex items-center gap-0.5">
                                     <span
-                                        class="text-base text-green-500"
+                                        class="text-base !font-semibold text-green-500"
                                         :class="[report.statistics.total_lost_revenue.progress < 0 ? 'icon-stats-down text-red-500 dark:!text-red-500' : 'icon-stats-up text-green-500 dark:!text-green-500']"
                                     ></span>
 
