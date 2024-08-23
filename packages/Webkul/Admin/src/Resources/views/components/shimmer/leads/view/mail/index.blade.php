@@ -51,6 +51,7 @@
 
                             <div class="flex flex-col gap-1">
                                 <div class="shimmer h-4 w-32"></div>
+                                <div class="shimmer h-4 w-28"></div>
                                 <div class="shimmer h-4 w-48"></div>
                                 <div class="shimmer h-4 w-24"></div>
                             </div>
@@ -59,13 +60,13 @@
 
                     <div class="flex gap-2 items-center justify-center">
                         <div class="flex gap-2 items-center">
-                            <div class="shimmer h-4 w-20"></div>
+                            <div class="shimmer h-5 w-5"></div>
                             <div class="shimmer h-5 w-5"></div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex w-full flex-col gap-5 rounded-md p-2 dark:border-gray-400">
+                <div class="flex w-full flex-col gap-5 rounded-md dark:border-gray-400">
                     <div class="shimmer h-4 w-20"></div>
 
                     <!-- Header -->
@@ -78,6 +79,14 @@
                             <div class="flex flex-col gap-0.5">
                                 <div class="shimmer h-4 w-20"></div>
                                 <div class="shimmer h-[15px] w-12"></div>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-2 items-center justify-center">
+                            <div class="flex gap-2 items-center">
+                                <div class="shimmer h-5 w-5"></div>
+                                <div class="shimmer h-5 w-5"></div>
+                                <div class="shimmer h-5 w-5"></div>
                             </div>
                         </div>
                     </div>
