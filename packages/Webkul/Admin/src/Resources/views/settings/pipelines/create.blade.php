@@ -311,7 +311,7 @@
 
                                 self.removeUniqueNameErrors();
                                 
-                                self.$emitter.emit('add-flash', { type: 'success', message: 'Stage removed successfully.' });
+                                self.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.create.stage-remove')" });
                             }
                         });
                     },

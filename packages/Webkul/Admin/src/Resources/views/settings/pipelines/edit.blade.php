@@ -277,14 +277,22 @@
                         });
                     },
 
-                    removeStage (stage) {
-                        const index = this.stages.indexOf(stage);
+                    removeStage(stage) {
+                        let self = this;
 
-                        if (index > -1) {
-                            this.stages.splice(index, 1);
-                        }
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                const index = this.stages.indexOf(stage);
 
-                        this.removeUniqueNameErrors();
+                                if (index > -1) {
+                                    this.stages.splice(index, 1);
+                                }
+
+                                self.removeUniqueNameErrors();
+                                
+                                self.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.pipelines.edit.stage-remove')" });
+                            }
+                        });
                     },
 
                     isDragable (stage) {

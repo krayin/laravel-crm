@@ -1191,6 +1191,7 @@ return [
                 'add-new-stages'  => 'Add New Stages',
                 'add-stage-info'  => 'Add new stage for your Pipeline',
                 'newly-added'     => 'Newly Added',
+                'stage-remove'    => 'Stage Removed Successfully',
             ],
 
             'edit'  => [
@@ -1210,6 +1211,7 @@ return [
                 'delete-stage'    => 'Delete Stage',
                 'add-new-stages'  => 'Add New Stages',
                 'add-stage-info'  => 'Add new stage for your Pipeline',
+                'stage-remove'    => 'Stage Removed Successfully',
             ],
         ],
 
