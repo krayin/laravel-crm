@@ -57,17 +57,9 @@ class PersonRepository extends Repository
 
         $person = parent::create($data);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $person->id,
-        ]), $attributes);
+        ]));
 
         return $person;
     }
@@ -85,16 +77,16 @@ class PersonRepository extends Repository
 
         $person = parent::update($data, $id);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
         /**
          * If attributes are provided then only save the provided attributes and return.
          */
         if (! empty($attributes)) {
+            $conditions = ['entity_type' => $data['entity_type']];
+
+            if (isset($data['quick_add'])) {
+                $conditions['quick_add'] = 1;
+            }
+
             $attributes = $this->attributeRepository->where($conditions)
                 ->whereIn('code', $attributes)
                 ->get();
@@ -106,11 +98,9 @@ class PersonRepository extends Repository
             return $person;
         }
 
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $person->id,
-        ]), $attributes);
+        ]));
 
         return $person;
     }

@@ -52,17 +52,9 @@ class QuoteRepository extends Repository
     {
         $quote = parent::create($data);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $quote->id,
-        ]), $attributes);
+        ]));
 
         foreach ($data['items'] as $itemData) {
             $this->quoteItemRepository->create(array_merge($itemData, [
@@ -86,16 +78,16 @@ class QuoteRepository extends Repository
 
         parent::update($data, $id);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
         /**
          * If attributes are provided then only save the provided attributes and return.
          */
         if (! empty($attributes)) {
+            $conditions = ['entity_type' => $data['entity_type']];
+
+            if (isset($data['quick_add'])) {
+                $conditions['quick_add'] = 1;
+            }
+
             $attributes = $this->attributeRepository->where($conditions)
                 ->whereIn('code', $attributes)
                 ->get();
@@ -107,11 +99,9 @@ class QuoteRepository extends Repository
             return $quote;
         }
 
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $quote->id,
-        ]), $attributes);
+        ]));
 
         $previousItemIds = $quote->items->pluck('id');
 
