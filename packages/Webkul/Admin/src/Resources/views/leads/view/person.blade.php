@@ -44,9 +44,12 @@
             
             @foreach ($lead->person->emails as $email)
                 <div class="flex gap-1">
-                    <span class="text-brandColor">
+                    <a 
+                        class="text-brandColor"
+                        href="mailto:{{ $email['value'] }}"
+                    >
                         {{ $email['value'] }}
-                    </span>
+                    </a>
 
                     <span class="text-gray-500 dark:text-gray-300">
                         ({{ $email['label'] }})
@@ -56,9 +59,12 @@
             
             @foreach ($lead->person->contact_numbers as $contactNumber)
                 <div class="flex gap-1">
-                    <span class="text-brandColor">
+                    <a  
+                        class="text-brandColor"
+                        href="callto:{{ $contactNumber['value'] }}"
+                    >
                         {{ $contactNumber['value'] }}
-                    </span>
+                    </a>
 
                     <span class="text-gray-500 dark:text-gray-300">
                         ({{ $contactNumber['label'] }})
