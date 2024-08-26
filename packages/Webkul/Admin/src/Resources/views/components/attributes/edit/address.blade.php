@@ -22,6 +22,8 @@
                         ::name="attribute['code'] + '[address]'"
                         rows="10"
                         ::value="data ? data['address'] : ''"
+                        :label="trans('admin::app.common.custom-attributes.address')"
+                        ::rules="attribute.is_required ? 'required' : ''"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[address]'" />
@@ -36,6 +38,8 @@
                     <x-admin::form.control-group.control
                         type="select"
                         ::name="attribute['code'] + '[country]'"
+                        ::rules="attribute.is_required ? 'required' : ''"
+                        :label="trans('admin::app.common.custom-attributes.country')"
                         v-model="country"
                     >
                         <option value="">@lang('admin::app.common.custom-attributes.select-country')</option>
@@ -58,6 +62,7 @@
                             ::name="attribute['code'] + '[state]'"
                             v-model="state"
                             :label="trans('admin::app.common.custom-attributes.state')"
+                            ::rules="attribute.is_required ? 'required' : ''"
                         >
                             <option value="">@lang('admin::app.common.custom-attributes.select-state')</option>
                             
@@ -82,6 +87,7 @@
                             ::name="attribute['code'] + '[state]'"
                             :placeholder="trans('admin::app.common.custom-attributes.state')"
                             :label="trans('admin::app.common.custom-attributes.state')"
+                            ::rules="attribute.is_required ? 'required' : ''"
                             v-model="state"
                         >
                         </x-admin::form.control-group.control>
@@ -100,6 +106,7 @@
                         ::value="data && data['city'] ? data['city'] : ''"
                         :placeholder="trans('admin::app.common.custom-attributes.city')"
                         :label="trans('admin::app.common.custom-attributes.city')"
+                        ::rules="attribute.is_required ? 'required' : ''"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[city]'"/>
@@ -114,7 +121,8 @@
                         ::name="attribute['code'] + '[postcode]'"
                         ::value="data &&  data['postcode'] ? data['postcode'] : ''"
                         :placeholder="trans('admin::app.common.custom-attributes.postcode')"
-                        :postcode="trans('admin::app.common.custom-attributes.postcode')"
+                        :label="trans('admin::app.common.custom-attributes.postcode')"
+                        ::rules="attribute.is_required ? 'required' : ''"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[postcode]'" />
