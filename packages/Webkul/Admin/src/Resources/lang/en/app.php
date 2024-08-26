@@ -1615,6 +1615,8 @@ return [
             'home'           => 'Home',
             'add-more'       => 'Add More',
             'select'         => 'Select',
+            'country'        => 'Country',
+            'address'        => 'Address',
         ],
     ],
 
