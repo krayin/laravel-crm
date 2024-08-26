@@ -582,7 +582,7 @@
                                                     </div>
                                                 </template>
 
-                                                <template v-if="column.filterable_type === 'searchable_dropdown'">
+                                                <template v-else-if="column.filterable_type === 'searchable_dropdown'">
                                                     <div class="flex items-center justify-between">
                                                         <p
                                                             class="text-sm font-medium leading-6 text-gray-800 dark:text-white"

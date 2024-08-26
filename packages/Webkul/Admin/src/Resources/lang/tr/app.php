@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'Kaynak',
                     'title'               => 'Başlık',
                     'tags'                => 'Etiketler',
+                    'expected-close-date' => 'Beklenen Kapanış Tarihi',
+                    'created-at'          => 'Oluşturulma Tarihi',
                 ],
 
                 'toolbar' => [

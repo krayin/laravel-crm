@@ -52,6 +52,7 @@ class LeadDataGrid extends DataGrid
                 'leads.lead_value',
                 'leads.expected_close_date',
                 'lead_sources.name as lead_source_name',
+                'lead_types.name as lead_type_name',
                 'leads.created_at',
                 'lead_pipeline_stages.name as stage',
                 'lead_tags.tag_id as tag_id',
@@ -87,6 +88,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('user', 'leads.user_id');
         $this->addFilter('sales_person', 'users.name');
         $this->addFilter('lead_source_name', 'lead_sources.name');
+        $this->addFilter('lead_type_name', 'lead_types.name');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('type', 'lead_pipeline_stages.code');
         $this->addFilter('stage', 'lead_pipeline_stages.id');
@@ -120,7 +122,7 @@ class LeadDataGrid extends DataGrid
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
             'filterable_options' => [
-                'repository' => \Webkul\Contact\Repositories\PersonRepository::class,
+                'repository' => UserRepository::class,
                 'column'     => [
                     'label' => 'name',
                     'value' => 'name',
@@ -148,11 +150,34 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'    => 'lead_value',
-            'label'    => trans('admin::app.leads.index.datagrid.lead-value'),
-            'type'     => 'string',
-            'sortable' => true,
-            'closure'  => fn ($row) => core()->formatBasePrice($row->lead_value, 2),
+            'index'      => 'lead_value',
+            'label'      => trans('admin::app.leads.index.datagrid.lead-value'),
+            'type'       => 'string',
+            'sortable'   => true,
+            'searchable' => false,
+            'filterable' => true,
+            'closure'    => fn ($row) => core()->formatBasePrice($row->lead_value, 2),
+        ]);
+
+        $this->addColumn([
+            'index'              => 'lead_type_name',
+            'label'              => trans('Lead Type'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => $this->typeRepository->all(['name as label', 'id as value'])->toArray(),
+        ]);
+
+        $this->addColumn([
+            'index'      => 'tag_name',
+            'label'      => trans('Tag Name'),
+            'type'       => 'string',
+            'searchable' => false,
+            'sortable'   => true,
+            'filterable' => true,
+            'closure'    => fn ($row) => $row->tag_name ?? '--',
         ]);
 
         $this->addColumn([
