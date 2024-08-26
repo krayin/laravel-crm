@@ -226,31 +226,29 @@
                 save(params, { resetForm, setErrors  }) {
                     let formData = new FormData(this.$refs.mailActionForm);
 
-                    let self = this;
-
                     this.$axios.post("{{ route('admin.leads.emails.store', 'replaceLeadId') }}".replace('replaceLeadId', this.entity.id), formData, {
                             headers: {
                                 'Content-Type': 'multipart/form-data'
                             }
                         })
-                        .then (function(response) {
-                            self.isStoring = false;
+                        .then (response => {
+                            this.isStoring = false;
 
-                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                            self.$emitter.emit('on-activity-added', response.data.data);
+                            this.$emitter.emit('on-activity-added', response.data.data);
 
-                            self.$refs.mailActivityModal.close();
+                            this.$refs.mailActivityModal.close();
                         })
-                        .catch (function (error) {
-                            self.isStoring = false;
+                        .catch (error => {
+                            this.isStoring = false;
 
                             if (error.response.status == 422) {
                                 setErrors(error.response.data.errors);
                             } else {
-                                self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                self.$refs.mailActivityModal.close();
+                                this.$refs.mailActivityModal.close();
                             }
                         });
                 },

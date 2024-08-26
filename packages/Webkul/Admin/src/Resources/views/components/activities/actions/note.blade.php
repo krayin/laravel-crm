@@ -114,27 +114,25 @@
                 save(params) {
                     this.isStoring = true;
 
-                    let self = this;
-
                     this.$axios.post("{{ route('admin.activities.store') }}", params)
-                        .then (function(response) {
-                            self.isStoring = false;
+                        .then (response => {
+                            this.isStoring = false;
 
-                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                            self.$emitter.emit('on-activity-added', response.data.data);
+                            this.$emitter.emit('on-activity-added', response.data.data);
 
-                            self.$refs.noteActivityModal.close();
+                            this.$refs.noteActivityModal.close();
                         })
-                        .catch (function (error) {
-                            self.isStoring = false;
+                        .catch (error => {
+                            this.isStoring = false;
 
                             if (error.response.status == 422) {
                                 setErrors(error.response.data.errors);
                             } else {
-                                self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                self.$refs.noteActivityModal.close();
+                                this.$refs.noteActivityModal.close();
                             }
                         });
                 },
