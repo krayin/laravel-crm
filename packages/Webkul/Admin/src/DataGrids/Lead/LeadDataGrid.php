@@ -9,6 +9,7 @@ use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadDataGrid extends DataGrid
@@ -30,7 +31,8 @@ class LeadDataGrid extends DataGrid
         protected StageRepository $stageRepository,
         protected SourceRepository $sourceRepository,
         protected TypeRepository $typeRepository,
-        protected UserRepository $userRepository
+        protected UserRepository $userRepository,
+        protected TagRepository $tagRepository,
     ) {
         if (request('pipeline_id')) {
             $this->pipeline = $this->pipelineRepository->find(request('pipeline_id'));
@@ -171,13 +173,21 @@ class LeadDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'tag_name',
-            'label'      => trans('Tag Name'),
-            'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'filterable' => true,
-            'closure'    => fn ($row) => $row->tag_name ?? '--',
+            'index'              => 'tag_name',
+            'label'              => trans('Tag Name'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'closure'            => fn ($row) => $row->tag_name ?? '--',
+            'filterable_options' => [
+                'repository' => TagRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([

@@ -25,6 +25,7 @@ use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
@@ -579,11 +580,18 @@ class LeadController extends Controller
                 'searchable'            => false,
                 'search_field'          => 'in',
                 'filterable'            => true,
-                'filterable_type'       => null,
                 'filterable_options'    => [],
                 'allow_multiple_values' => true,
                 'sortable'              => true,
                 'visibility'            => true,
+                'filterable_type'       => 'searchable_dropdown',
+                'filterable_options'    => [
+                    'repository' => TagRepository::class,
+                    'column'     => [
+                        'label' => 'name',
+                        'value' => 'name',
+                    ],
+                ],
             ],
 
             [
