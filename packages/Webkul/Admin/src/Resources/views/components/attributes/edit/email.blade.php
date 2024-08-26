@@ -46,7 +46,7 @@
                         type="select"
                         ::id="attribute.code"
                         ::name="`${attribute['code']}[${index}][label]`"
-                        class="rounded-l-none ltr:mr-6 rtl:ml-6"
+                        class="rounded-l-none ltr:pr-8 rtl:pl-8 ltr:mr-6 rtl:ml-6"
                         rules="required"
                         ::label="attribute.name"
                         v-model="email['label']"
