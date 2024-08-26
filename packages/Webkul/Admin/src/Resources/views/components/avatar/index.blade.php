@@ -1,5 +1,5 @@
 <v-avatar {{ $attributes }}>
-    <div class="flex h-9 w-9  rounded-full text-xs shimmer"></div>
+    <div class="flex h-9 w-9 rounded-full text-xs shimmer"></div>
 </v-avatar>
 
 @pushOnce('scripts')
