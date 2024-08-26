@@ -91,10 +91,8 @@
                     <div class="flex w-full items-center justify-between gap-4">
                         <div class="flex gap-4">
                             <!-- Mailer Sort name -->
-                            <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                                @{{ email.name.split(' ').map(word => word[0]).join('') }}
-                            </div>
-                    
+                            <x-admin::avatar ::name="email.name" />
+
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
@@ -268,9 +266,7 @@
             id="v-email-form-template"
         >
             <div class="flex w-full gap-2">
-                <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                    @{{ email.name.split(' ').map(word => word[0]).join('') }}
-                </div>
+                <x-admin::avatar ::name="email.name" />
                 
                 <div class="w-[926px] gap-2 rounded border p-4">
                     <x-admin::form
@@ -435,12 +431,7 @@
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
                         <div class="flex gap-2">
-                            <div
-                                class="flex h-9 w-9 items-center justify-center rounded-full bg-lime-200 text-xs font-medium"
-                                :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
-                            >
-                                @{{ email.person.name.split(' ').map(word => word[0]).join('') }}
-                            </div>
+                            <x-admin::avatar ::name="email.person.name" />
                     
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
@@ -555,9 +546,7 @@
                                     class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                     @click="linkContact(person)"
                                 >
-                                    <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs dark:text-gray-800 font-medium">
-                                        @{{ person.name.split(' ').map(word => word[0]).join('') }}
-                                    </div>
+                                    <x-admin::avatar ::name="person.name" />
                             
                                     <!-- Mailer receivers -->
                                     <div class="flex flex-col gap-1">
@@ -607,12 +596,7 @@
                                 v-if="email.lead?.person"
                             >
                                 <div class="flex items-center gap-1">
-                                    <div
-                                        class="flex h-9 w-9 items-center justify-center rounded-full bg-lime-200 text-xs font-medium"
-                                        :class="backgroundColors[Math.floor(Math.random() * backgroundColors.length)]"
-                                    >
-                                        @{{ email.lead.person?.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
-                                    </div>
+                                    <x-admin::avatar ::name="email.lead.person?.name" />
 
                                     <div class="flex flex-col gap-1">
                                         <span class="text-xs font-medium">
@@ -778,9 +762,7 @@
                                         class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                         @click="linkLead(lead)"
                                     >
-                                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs dark:text-gray-800 font-medium">
-                                            @{{ lead.title.split(' ').map(word => word[0]).join('') }}
-                                        </div>
+                                        <x-admin::avatar ::name="lead.title" />
                                 
                                         <!-- Lead Title -->
                                         <div class="flex flex-col gap-1">
@@ -1060,7 +1042,6 @@
                         :unlinking="unlinking"
                         :email="email"
                         :tag-text-color="tagTextColor"
-                        :background-colors="backgroundColors"
                     ></v-contact-lookup>
                 @endif
 
@@ -1082,7 +1063,6 @@
                         :unlinking="unlinking"
                         :email="email"
                         :tag-text-color="tagTextColor"
-                        :background-colors="backgroundColors"
                     ></v-lead-lookup>
                 @endif
             </div>
@@ -1302,7 +1282,7 @@
             app.component('v-contact-lookup', {
                 template: '#v-contact-lookup-template',
 
-                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
+                props: ['email', 'unlinking', 'tagTextColor'],
 
                 emits: ['link-contact', 'unlink-contact', 'open-contact-modal'],
 
@@ -1466,7 +1446,7 @@
             app.component('v-lead-lookup', {
                 template: '#v-lead-lookup-template',
 
-                props: ['email', 'unlinking', 'backgroundColors', 'tagTextColor'],
+                props: ['email', 'unlinking', 'tagTextColor'],
 
                 emits: ['link-lead', 'unlink-lead', 'open-lead-modal'],
 
@@ -1750,17 +1730,6 @@
                             lead: false,
                             contact: false,
                         },
-
-                        backgroundColors: [
-                            'bg-yellow-200',
-                            'bg-red-200',
-                            'bg-lime-200',
-                            'bg-blue-200',
-                            'bg-orange-200',
-                            'bg-green-200',
-                            'bg-pink-200',
-                            'bg-yellow-400'
-                        ],
 
                         tagTextColor: {
                             '#FEE2E2': '#DC2626',
