@@ -21,8 +21,6 @@ class InstallerServiceProvider extends ServiceProvider
      */
     public function boot(Router $router): void
     {
-        include __DIR__.'/../Http/helpers.php';
-
         $router->middlewareGroup('install', [CanInstall::class]);
 
         $this->loadTranslationsFrom(__DIR__.'/../Resources/lang', 'installer');
