@@ -1601,6 +1601,11 @@ return [
             'lead-details'               => 'تفاصيل العميل المحتمل',
             'contact-person'             => 'الشخص المسؤول',
             'product'                    => 'المنتج',
+
+            'tags' => [
+                'create-success'  => 'تم إنشاء العلامة بنجاح.',
+                'destroy-success' => 'تم حذف العلامة بنجاح.',
+            ],
         ],
     ],
 

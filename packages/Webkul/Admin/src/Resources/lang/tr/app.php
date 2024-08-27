@@ -1601,6 +1601,11 @@ return [
             'lead-details'               => 'Müşteri Detayları',
             'contact-person'             => 'İletişim Kişisi',
             'product'                    => 'Ürün',
+
+            'tags' => [
+                'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                'destroy-success' => 'Etiket başarıyla silindi.',
+            ],
         ],
     ],
 

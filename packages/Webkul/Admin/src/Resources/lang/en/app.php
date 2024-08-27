@@ -1601,6 +1601,11 @@ return [
             'lead-details'               => 'Lead Details',
             'contact-person'             => 'Contact Person',
             'product'                    => 'Product',
+
+            'tags' => [
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
+            ],
         ],
     ],
 

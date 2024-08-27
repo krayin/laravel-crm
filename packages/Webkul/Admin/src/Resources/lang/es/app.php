@@ -1601,6 +1601,11 @@ return [
             'lead-details'               => 'Detalles del Lead',
             'contact-person'             => 'Persona de Contacto',
             'product'                    => 'Producto',
+
+            'tags' => [
+                'create-success'  => 'Etiqueta creada con éxito.',
+                'destroy-success' => 'Etiqueta eliminada con éxito.',
+            ],
         ],
     ],
 

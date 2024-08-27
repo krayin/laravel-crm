@@ -1601,6 +1601,11 @@ return [
             'lead-details'               => 'جزئیات سرنخ',
             'contact-person'             => 'شخص تماس',
             'product'                    => 'محصول',
+
+            'tags' => [
+                'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                'destroy-success' => 'برچسب با موفقیت حذف شد.',
+            ],
         ],
     ],
 
