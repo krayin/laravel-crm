@@ -18,12 +18,14 @@ use Webkul\Admin\Http\Resources\LeadResource;
 use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\DataGrid\Enums\DateRangeOptionEnum;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
 class LeadController extends Controller
@@ -570,6 +572,7 @@ class LeadController extends Controller
                 'sortable'              => true,
                 'visibility'            => true,
             ],
+
             [
                 'index'                 => 'tags.name',
                 'label'                 => trans('admin::app.leads.index.kanban.columns.tags'),
@@ -577,11 +580,42 @@ class LeadController extends Controller
                 'searchable'            => false,
                 'search_field'          => 'in',
                 'filterable'            => true,
-                'filterable_type'       => null,
                 'filterable_options'    => [],
                 'allow_multiple_values' => true,
                 'sortable'              => true,
                 'visibility'            => true,
+                'filterable_type'       => 'searchable_dropdown',
+                'filterable_options'    => [
+                    'repository' => TagRepository::class,
+                    'column'     => [
+                        'label' => 'name',
+                        'value' => 'name',
+                    ],
+                ],
+            ],
+
+            [
+                'index'              => 'expected_close_date',
+                'label'              => trans('admin::app.leads.index.kanban.columns.expected-close-date'),
+                'type'               => 'date',
+                'searchable'         => false,
+                'searchable'         => false,
+                'sortable'           => true,
+                'filterable'         => true,
+                'filterable_type'    => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
+            ],
+
+            [
+                'index'              => 'created_at',
+                'label'              => trans('admin::app.leads.index.kanban.columns.created-at'),
+                'type'               => 'date',
+                'searchable'         => false,
+                'searchable'         => false,
+                'sortable'           => true,
+                'filterable'         => true,
+                'filterable_type'    => 'date_range',
+                'filterable_options' => DateRangeOptionEnum::options(),
             ],
         ];
     }

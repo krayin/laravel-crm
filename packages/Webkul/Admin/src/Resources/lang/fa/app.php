@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'منبع',
                     'title'               => 'عنوان',
                     'tags'                => 'برچسب‌ها',
+                    'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
+                    'created-at'          => 'تاریخ ایجاد',
                 ],
 
                 'toolbar' => [

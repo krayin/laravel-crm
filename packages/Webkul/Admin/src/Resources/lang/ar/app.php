@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'المصدر',
                     'title'               => 'العنوان',
                     'tags'                => 'العلامات',
+                    'expected-close-date' => 'تاريخ الإغلاق المتوقع',
+                    'created-at'          => 'تم الإنشاء في',
                 ],
 
                 'toolbar' => [

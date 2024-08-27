@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'Fuente',
                     'title'               => 'Título',
                     'tags'                => 'Etiquetas',
+                    'expected-close-date' => 'Fecha de Cierre Esperada',
+                    'created-at'          => 'Creado En',
                 ],
 
                 'toolbar' => [

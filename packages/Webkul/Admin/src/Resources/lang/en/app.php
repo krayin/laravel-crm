@@ -1660,6 +1660,8 @@ return [
                     'source'              => 'Source',
                     'title'               => 'Title',
                     'tags'                => 'Tags',
+                    'expected-close-date' => 'Expected Close Date',
+                    'created-at'          => 'Created At',
                 ],
 
                 'toolbar' => [
