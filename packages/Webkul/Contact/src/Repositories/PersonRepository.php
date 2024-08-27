@@ -19,6 +19,9 @@ class PersonRepository extends Repository
         'contact_numbers',
         'organization_id',
         'job_title',
+        'organization.name',
+        'user_id',
+        'user.name',
     ];
 
     /**

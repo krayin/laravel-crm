@@ -545,8 +545,20 @@
                             endpoint: "{{ route('admin.quotes.search') }}",
                             query_params: [
                                 {
-                                    search: 'subject:',
+                                    search: 'subject',
                                     searchFields: 'subject:like',
+                                },
+                                {
+                                    search: 'description',
+                                    searchFields: 'description:like',
+                                },
+                                {
+                                    search: 'user.name',
+                                    searchFields: 'user.name:like',
+                                },
+                                {
+                                    search: 'person.name',
+                                    searchFields: 'person.name:like',
                                 },
                             ],
                         },
@@ -558,8 +570,16 @@
                             endpoint: "{{ route('admin.products.search') }}",
                             query_params: [
                                 {
-                                    search: 'name:',
+                                    search: 'name',
                                     searchFields: 'name:like',
+                                },
+                                {
+                                    search: 'sku',
+                                    searchFields: 'sku:like',
+                                },
+                                {
+                                    search: 'description',
+                                    searchFields: 'description:like',
                                 },
                             ],
                         },
@@ -571,8 +591,20 @@
                             endpoint: "{{ route('admin.contacts.persons.search') }}",
                             query_params: [
                                 {
-                                    search: 'name:',
+                                    search: 'name',
                                     searchFields: 'name:like',
+                                },
+                                {
+                                    search: 'job_title',
+                                    searchFields: 'job_title:like',
+                                },
+                                {
+                                    search: 'user.name',
+                                    searchFields: 'user.name:like', 
+                                },
+                                {
+                                    search: 'organization.name',
+                                    searchFields: 'organization.name:like',
                                 },
                             ],
                         },
@@ -597,15 +629,9 @@
             },
 
             watch: {
-                searchTerm(newTerm) {
-                    const tab = this.tabs[this.activeTab];
-
-                    this.params['search'] = tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
-
-                    this.params['searchFields'] += tab.query_params.map((param) => `${param.searchFields};`).join('');
-
-                    this.search();
-                },
+                searchTerm: 'updateSearchParams',
+                
+                activeTab: 'updateSearchParams',
             },
 
             created() {
@@ -617,7 +643,7 @@
             },
 
             methods: {
-                search() {
+                search(endpoint) {
                     if (this.searchTerm.length <= 1) {
                         this.searchedResults[this.activeTab] = [];
 
@@ -628,7 +654,7 @@
 
                     this.isDropdownOpen = true;
 
-                    this.$axios.get(this.tabs[this.activeTab].endpoint, {
+                    this.$axios.get(endpoint, {
                             params: {
                                 ...this.params,
                             },
@@ -644,6 +670,23 @@
                     if (! this.$el.contains(e.target)) {
                         this.isDropdownOpen = false;
                     }
+                },
+
+                updateSearchParams() {
+                    const newTerm = this.searchTerm;
+
+                    this.params = {
+                        search: '',
+                        searchFields: '',
+                    };
+
+                    const tab = this.tabs[this.activeTab];
+
+                    this.params.search += tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
+
+                    this.params.searchFields += tab.query_params.map((param) => `${param.searchFields};`).join('');
+
+                    this.search(tab.endpoint);
                 },
             },
         });
