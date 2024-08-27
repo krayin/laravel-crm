@@ -8,7 +8,7 @@
         @if (bouncer()->hasPermission('quotes'))
             <div class="p-3">
                 <x-admin::table v-if="quotes.length">
-                    <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    <x-admin::table.thead>
                         <x-admin::table.thead.tr>
                             <x-admin::table.th class="!px-2">
                                 @lang('admin::app.leads.view.quotes.subject')
@@ -47,7 +47,7 @@
                         </x-admin::table.thead.tr>
                     </x-admin::table.thead>
                     
-                    <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    <x-admin::table.tbody>
                         <x-admin::table.tbody.tr v-for="quote in quotes" class="border-b">
                             <x-admin::table.td class="!px-2">@{{ quote.subject }}</x-admin::table.td>
 

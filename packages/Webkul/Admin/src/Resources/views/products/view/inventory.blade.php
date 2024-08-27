@@ -4,9 +4,9 @@
 @pushOnce('scripts')
     <script type="text/x-template" id="v-product-inventories-template">
         <div class="p-4">
-            <x-admin::table class="w-full table-fixed">
+            <x-admin::table>
                 <!-- Table Head -->
-                <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.thead>
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
                             @lang('admin::app.products.view.inventory.source')
@@ -31,7 +31,7 @@
                 </x-admin::table.thead>
 
                 <!-- Table Body -->
-                <x-admin::table.tbody class="border border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300"> 
+                <x-admin::table.tbody> 
                     <template v-for="warehouse in productWarehouses">
                         <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
                             <x-admin::table.td class="font-bold dark:text-white">
@@ -153,7 +153,7 @@
         <div class="flex flex-col gap-2">
             <!-- Add location header -->
             <x-admin::table class="!min-w-[480px]">
-                <x-admin::table.thead class="dark:bg-gray-800 dark:text-gray-300">
+                <x-admin::table.thead>
                     <x-admin::table.thead.tr>
                         <x-admin::table.th class="!w-56">
                             @lang('admin::app.products.view.inventory.location')
@@ -195,7 +195,7 @@
 
     <script type="text/x-template" id="v-warehouse-location-inventory-item-template">
         <!-- Input fields for add locations -->
-        <x-admin::table.tbody.tr class="border-b border-gray-200 align-top transition-all hover:bg-gray-50 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-950">
+        <x-admin::table.tbody.tr>
             <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group>
                     <x-admin::lookup 

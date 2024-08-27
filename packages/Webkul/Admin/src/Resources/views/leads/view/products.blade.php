@@ -7,10 +7,10 @@
         id="v-lead-products-template"
     >
         <div v-if="products.length" class="flex flex-col gap-4 p-3">
-             <!-- Table -->
-             <x-admin::table class="w-full table-fixed">
+            <!-- Table -->
+            <x-admin::table>
                 <!-- Table Head -->
-                <x-admin::table.thead class="rounded-lg border border-gray-200 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.thead>
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
                             @lang('admin::app.leads.view.products.product-name')
@@ -35,8 +35,7 @@
                 </x-admin::table.thead>
 
                 <!-- Table Body -->
-                <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                    
+                <x-admin::table.tbody>
                     <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
@@ -51,7 +50,7 @@
             <!-- Add New Product Item -->
             <div>
                 <span 
-                    class="cursor-pointer text-brandColor" 
+                    class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                     @click="addProduct"
                 >
                     + @lang('admin::app.leads.view.products.add-more')
