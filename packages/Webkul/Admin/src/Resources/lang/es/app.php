@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'Fuente',
                     'title'               => 'Título',
                     'tags'                => 'Etiquetas',
+                    'expected-close-date' => 'Fecha de Cierre Esperada',
+                    'created-at'          => 'Creado En',
                 ],
 
                 'toolbar' => [
@@ -1774,6 +1776,11 @@ return [
                 'won-value'      => 'Valor Ganado',
                 'lost-reason'    => 'Razón de la Pérdida',
                 'save-btn'       => 'Guardar',
+            ],
+
+            'tags' => [
+                'create-success'  => 'Etiqueta creada con éxito.',
+                'destroy-success' => 'Etiqueta eliminada con éxito.',
             ],
         ],
     ],

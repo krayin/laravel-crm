@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'منبع',
                     'title'               => 'عنوان',
                     'tags'                => 'برچسب‌ها',
+                    'expected-close-date' => 'تاریخ بسته شدن مورد انتظار',
+                    'created-at'          => 'تاریخ ایجاد',
                 ],
 
                 'toolbar' => [
@@ -1774,6 +1776,11 @@ return [
                 'won-value'      => 'ارزش برد',
                 'lost-reason'    => 'دلیل باخت',
                 'save-btn'       => 'ذخیره',
+            ],
+
+            'tags' => [
+                'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                'destroy-success' => 'برچسب با موفقیت حذف شد.',
             ],
         ],
     ],

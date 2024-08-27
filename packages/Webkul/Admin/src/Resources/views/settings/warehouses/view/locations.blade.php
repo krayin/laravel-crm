@@ -163,7 +163,11 @@
                 },
 
                 getLocations() {
-                    this.$axios.get("{{ route('admin.settings.locations.search') }}")
+                    this.$axios.get("{{ route('admin.settings.locations.search') }}", {
+                        params: {
+                            search: 'warehouse_id: {{ $warehouse->id }}',
+                        },
+                    })
                         .then(response => {
                             this.locations = response.data.data;
                         })

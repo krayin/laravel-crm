@@ -1660,6 +1660,8 @@ return [
                     'source'              => 'Source',
                     'title'               => 'Title',
                     'tags'                => 'Tags',
+                    'expected-close-date' => 'Expected Close Date',
+                    'created-at'          => 'Created At',
                 ],
 
                 'toolbar' => [
@@ -1776,6 +1778,11 @@ return [
                 'won-value'      => 'Won Value',
                 'lost-reason'    => 'Lost Reason',
                 'save-btn'       => 'Save',
+            ],
+
+            'tags' => [
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
             ],
         ],
     ],

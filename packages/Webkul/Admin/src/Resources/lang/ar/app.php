@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'المصدر',
                     'title'               => 'العنوان',
                     'tags'                => 'العلامات',
+                    'expected-close-date' => 'تاريخ الإغلاق المتوقع',
+                    'created-at'          => 'تم الإنشاء في',
                 ],
 
                 'toolbar' => [
@@ -1774,6 +1776,11 @@ return [
                 'won-value'      => 'قيمة الربح',
                 'lost-reason'    => 'سبب الخسارة',
                 'save-btn'       => 'حفظ',
+            ],
+
+            'tags' => [
+                'create-success'  => 'تم إنشاء العلامة بنجاح.',
+                'destroy-success' => 'تم حذف العلامة بنجاح.',
             ],
         ],
     ],

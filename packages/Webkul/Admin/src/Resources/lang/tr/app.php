@@ -1658,6 +1658,8 @@ return [
                     'source'              => 'Kaynak',
                     'title'               => 'Başlık',
                     'tags'                => 'Etiketler',
+                    'expected-close-date' => 'Beklenen Kapanış Tarihi',
+                    'created-at'          => 'Oluşturulma Tarihi',
                 ],
 
                 'toolbar' => [
@@ -1774,6 +1776,11 @@ return [
                 'won-value'      => 'Kazanan Değer',
                 'lost-reason'    => 'Kayıp Nedeni',
                 'save-btn'       => 'Kaydet',
+            ],
+
+            'tags' => [
+                'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                'destroy-success' => 'Etiket başarıyla silindi.',
             ],
         ],
     ],
