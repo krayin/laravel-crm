@@ -166,11 +166,15 @@
 
                                         <!-- Attachments -->
                                         <div
-                                            class="flex gap-2"
+                                            class="flex flex-wrap gap-2"
                                             v-if="activity.files.length"
                                         >
                                             <a
-                                                :href="`{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)"
+                                                :href="
+                                                    activity.type == 'email'
+                                                    ? `{{ route('admin.mail.attachment_download', 'replaceID') }}`.replace('replaceID', file.id)
+                                                    : `{{ route('admin.activities.file_download', 'replaceID') }}`.replace('replaceID', file.id)
+                                                "
                                                 class="flex cursor-pointer items-center gap-1 rounded-md p-1.5"
                                                 target="_blank"
                                                 v-for="(file, index) in activity.files"
@@ -462,6 +466,8 @@
                         this.types.push(type);
                     });
                 }
+
+                this.$emitter.on('on-activity-added', (activity) => this.activities.unshift(activity));
             },
 
             methods: {
