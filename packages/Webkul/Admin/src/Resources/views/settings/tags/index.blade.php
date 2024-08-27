@@ -197,7 +197,7 @@
     
                                         <label 
                                             :for="index" 
-                                            class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
+                                            class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-gray-850"
                                             :style="`background-color: ${color.background}`"
                                         >
                                         </label>
