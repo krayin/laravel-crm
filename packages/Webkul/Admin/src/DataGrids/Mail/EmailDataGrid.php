@@ -6,6 +6,7 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\DataGrid\DataGrid;
+use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Tag\Repositories\TagRepository;
 
 class EmailDataGrid extends DataGrid
@@ -91,7 +92,13 @@ class EmailDataGrid extends DataGrid
             'sortable'           => true,
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
-            'closure'            => fn ($row) => $row->tag_name ?? '--',
+            'closure'            => function($row) {
+                if ($email = app(EmailRepository::class)->find($row->id)) {
+                    return $email->tags->implode('name', ', ');
+                }
+
+                return '--';
+            },
             'filterable_options' => [
                 'repository' => TagRepository::class,
                 'column'     => [
