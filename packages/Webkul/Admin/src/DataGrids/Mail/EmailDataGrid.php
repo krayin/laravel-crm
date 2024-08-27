@@ -92,7 +92,7 @@ class EmailDataGrid extends DataGrid
             'sortable'           => true,
             'filterable'         => true,
             'filterable_type'    => 'searchable_dropdown',
-            'closure'            => function($row) {
+            'closure'            => function ($row) {
                 if ($email = app(EmailRepository::class)->find($row->id)) {
                     return $email->tags->implode('name', ', ');
                 }
