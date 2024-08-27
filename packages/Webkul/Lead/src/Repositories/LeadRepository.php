@@ -127,17 +127,9 @@ class LeadRepository extends Repository
             'lead_pipeline_stage_id' => 1,
         ], $data));
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $lead->id,
-        ]), $attributes);
+        ]));
 
         if (isset($data['products'])) {
             foreach ($data['products'] as $product) {
@@ -188,12 +180,6 @@ class LeadRepository extends Repository
 
         $lead = parent::update($data, $id);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
         /**
          * If attributes are provided, only save the provided attributes and return.
          * A collection of attributes may also be provided, which will be treated as valid,
@@ -205,6 +191,12 @@ class LeadRepository extends Repository
              * otherwise, use the provided collection of attributes.
              */
             if (is_array($attributes)) {
+                $conditions = ['entity_type' => $data['entity_type']];
+
+                if (isset($data['quick_add'])) {
+                    $conditions['quick_add'] = 1;
+                }
+
                 $attributes = $this->attributeRepository->where($conditions)
                     ->whereIn('code', $attributes)
                     ->get();
@@ -217,11 +209,9 @@ class LeadRepository extends Repository
             return $lead;
         }
 
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $lead->id,
-        ]), $attributes);
+        ]));
 
         $previousProductIds = $lead->products()->pluck('id');
 

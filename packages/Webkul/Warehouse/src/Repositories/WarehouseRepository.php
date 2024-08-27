@@ -53,17 +53,9 @@ class WarehouseRepository extends Repository
     {
         $warehouse = parent::create($data);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $warehouse->id,
-        ]), $attributes);
+        ]));
 
         return $warehouse;
     }
@@ -79,16 +71,16 @@ class WarehouseRepository extends Repository
     {
         $warehouse = parent::update($data, $id);
 
-        $conditions = ['entity_type' => $data['entity_type']];
-
-        if (isset($data['quick_add'])) {
-            $conditions['quick_add'] = 1;
-        }
-
         /**
          * If attributes are provided then only save the provided attributes and return.
          */
         if (! empty($attributes)) {
+            $conditions = ['entity_type' => $data['entity_type']];
+
+            if (isset($data['quick_add'])) {
+                $conditions['quick_add'] = 1;
+            }
+
             $attributes = $this->attributeRepository->where($conditions)
                 ->whereIn('code', $attributes)
                 ->get();
@@ -100,11 +92,9 @@ class WarehouseRepository extends Repository
             return $warehouse;
         }
 
-        $attributes = $this->attributeRepository->where($conditions)->get();
-
         $this->attributeValueRepository->save(array_merge($data, [
             'entity_id' => $warehouse->id,
-        ]), $attributes);
+        ]));
 
         return $warehouse;
     }
