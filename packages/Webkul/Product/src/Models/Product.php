@@ -10,7 +10,7 @@ use Webkul\Activity\Traits\LogsActivity;
 use Webkul\Attribute\Traits\CustomAttribute;
 use Webkul\Product\Contracts\Product as ProductContract;
 use Webkul\Tag\Models\TagProxy;
-use Webkul\Warehouse\Models\WarehouseLocationProxy;
+use Webkul\Warehouse\Models\LocationProxy;
 use Webkul\Warehouse\Models\WarehouseProxy;
 
 class Product extends Model implements ProductContract
@@ -43,7 +43,7 @@ class Product extends Model implements ProductContract
      */
     public function locations(): BelongsToMany
     {
-        return $this->belongsToMany(WarehouseLocationProxy::modelClass(), 'product_inventories');
+        return $this->belongsToMany(LocationProxy::modelClass(), 'product_inventories');
     }
 
     /**
