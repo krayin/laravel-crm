@@ -163,7 +163,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'              => 'lead_type_name',
-            'label'              => trans('Lead Type'),
+            'label'              => trans('admin::app.leads.index.datagrid.lead-type'),
             'type'               => 'string',
             'searchable'         => false,
             'sortable'           => true,
@@ -174,7 +174,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'              => 'tag_name',
-            'label'              => trans('Tag Name'),
+            'label'              => trans('admin::app.leads.index.datagrid.tag-name'),
             'type'               => 'string',
             'searchable'         => false,
             'sortable'           => true,
