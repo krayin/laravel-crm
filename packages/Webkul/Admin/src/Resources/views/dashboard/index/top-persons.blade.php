@@ -35,9 +35,7 @@
                         v-for="item in report.statistics"
                     >
                         <!-- Person Initials -->
-                        <div class="flex h-9 w-9 items-center justify-center rounded-full bg-green-200 text-xs font-medium">
-                            @{{ item.name.split(' ').map(word => word[0].toUpperCase()).join('') }}
-                        </div>
+                        <x-admin::avatar ::name="item.name" />
 
                         <!-- Person Details -->
                         <div class="flex flex-col gap-1">
