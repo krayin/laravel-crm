@@ -1553,6 +1553,7 @@ return [
                 'from'          => 'از',
                 'to'            => 'به',
                 'subject'       => 'موضوع',
+                'tag-name'      => 'نام برچسب',
                 'created-at'    => 'تاریخ ایجاد',
                 'move-to-inbox' => 'انتقال به صندوق ورودی',
                 'edit'          => 'ویرایش',
@@ -1601,6 +1602,11 @@ return [
             'lead-details'               => 'جزئیات سرنخ',
             'contact-person'             => 'شخص تماس',
             'product'                    => 'محصول',
+
+            'tags' => [
+                'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                'destroy-success' => 'برچسب با موفقیت حذف شد.',
+            ],
         ],
     ],
 
@@ -1634,6 +1640,8 @@ return [
                 'subject'             => 'موضوع',
                 'source'              => 'منبع',
                 'lead-value'          => 'ارزش سرنخ',
+                'lead-type'           => 'نوع سرنخ',
+                'tag-name'            => 'نام برچسب',
                 'contact-person'      => 'شخص تماس',
                 'stage'               => 'مرحله',
                 'rotten-lead'         => 'سرنخ خراب شده',

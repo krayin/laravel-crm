@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Webkul\Contact\Models\PersonProxy;
 use Webkul\Email\Contracts\Email as EmailContract;
 use Webkul\Lead\Models\LeadProxy;
+use Webkul\Tag\Models\TagProxy;
 
 class Email extends Model implements EmailContract
 {
@@ -86,6 +87,14 @@ class Email extends Model implements EmailContract
     public function person()
     {
         return $this->belongsTo(PersonProxy::modelClass());
+    }
+
+    /**
+     * The tags that belong to the lead.
+     */
+    public function tags()
+    {
+        return $this->belongsToMany(TagProxy::modelClass(), 'email_tags');
     }
 
     /**

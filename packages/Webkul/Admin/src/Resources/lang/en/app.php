@@ -1553,6 +1553,7 @@ return [
                 'from'          => 'From',
                 'to'            => 'To',
                 'subject'       => 'Subject',
+                'tag-name'      => 'Tag Name',
                 'created-at'    => 'Created At',
                 'move-to-inbox' => 'Moved To Inbox',
                 'edit'          => 'Edit',
@@ -1601,6 +1602,11 @@ return [
             'lead-details'               => 'Lead Details',
             'contact-person'             => 'Contact Person',
             'product'                    => 'Product',
+
+            'tags' => [
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
+            ],
         ],
     ],
 
@@ -1636,6 +1642,8 @@ return [
                 'subject'             => 'Subject',
                 'source'              => 'Source',
                 'lead-value'          => 'Lead Value',
+                'lead-type'           => 'Lead Type',
+                'tag-name'            => 'Tag Name',
                 'contact-person'      => 'Contact Person',
                 'stage'               => 'Stage',
                 'rotten-lead'         => 'Rotten Lead',

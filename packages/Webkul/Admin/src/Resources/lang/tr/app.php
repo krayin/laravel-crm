@@ -1553,6 +1553,7 @@ return [
                 'from'          => 'Kimden',
                 'to'            => 'Kime',
                 'subject'       => 'Konu',
+                'tag-name'      => 'Etiket Adı',
                 'created-at'    => 'Oluşturulma Tarihi',
                 'move-to-inbox' => 'Gelen Kutusuna Taşı',
                 'edit'          => 'Düzenle',
@@ -1601,6 +1602,11 @@ return [
             'lead-details'               => 'Müşteri Detayları',
             'contact-person'             => 'İletişim Kişisi',
             'product'                    => 'Ürün',
+
+            'tags' => [
+                'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                'destroy-success' => 'Etiket başarıyla silindi.',
+            ],
         ],
     ],
 
@@ -1634,6 +1640,8 @@ return [
                 'subject'             => 'Konu',
                 'source'              => 'Kaynak',
                 'lead-value'          => 'Lead Değeri',
+                'lead-type'           => 'Potansiyel Müşteri Türü',
+                'tag-name'            => 'Etiket Adı',
                 'contact-person'      => 'İletişim Kişisi',
                 'stage'               => 'Aşama',
                 'rotten-lead'         => 'Çürümüş Lead',

@@ -1553,6 +1553,7 @@ return [
                 'from'          => 'De',
                 'to'            => 'Para',
                 'subject'       => 'Asunto',
+                'tag-name'      => 'Nombre de la etiqueta',
                 'created-at'    => 'Creado En',
                 'move-to-inbox' => 'Mover a Bandeja de Entrada',
                 'edit'          => 'Editar',
@@ -1601,6 +1602,11 @@ return [
             'lead-details'               => 'Detalles del Lead',
             'contact-person'             => 'Persona de Contacto',
             'product'                    => 'Producto',
+
+            'tags' => [
+                'create-success'  => 'Etiqueta creada con éxito.',
+                'destroy-success' => 'Etiqueta eliminada con éxito.',
+            ],
         ],
     ],
 
@@ -1634,6 +1640,8 @@ return [
                 'subject'             => 'Asunto',
                 'source'              => 'Fuente',
                 'lead-value'          => 'Valor del Lead',
+                'lead-type'           => 'Tipo de cliente potencial',
+                'tag-name'            => 'Nombre de la etiqueta',
                 'contact-person'      => 'Persona de Contacto',
                 'stage'               => 'Etapa',
                 'rotten-lead'         => 'Lead Podrido',

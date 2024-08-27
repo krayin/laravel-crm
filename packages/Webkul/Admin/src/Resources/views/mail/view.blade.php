@@ -22,6 +22,12 @@
                     </div>
                     
                     <span class="label-active">{{ request('route') }}</span>
+
+                    <x-admin::tags
+                        :attach-endpoint="route('admin.mail.tags.attach', $email->id)"
+                        :detach-endpoint="route('admin.mail.tags.detach', $email->id)"
+                        :added-tags="$email->tags"
+                    />
                 </div>
             </div>
         </div>

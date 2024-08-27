@@ -6,6 +6,8 @@ use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\DataGrid\DataGrid;
+use Webkul\Email\Repositories\EmailRepository;
+use Webkul\Tag\Repositories\TagRepository;
 
 class EmailDataGrid extends DataGrid
 {
@@ -21,15 +23,19 @@ class EmailDataGrid extends DataGrid
                 'emails.subject',
                 'emails.reply',
                 'emails.created_at',
+                'tags.name as tag_name',
                 DB::raw('COUNT(DISTINCT '.DB::getTablePrefix().'email_attachments.id) as attachments')
             )
             ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
+            ->leftJoin('email_tags', 'emails.id', '=', 'email_tags.email_id')
+            ->leftJoin('tags', 'tags.id', '=', 'email_tags.tag_id')
             ->groupBy('emails.id')
             ->where('folders', 'like', '%"'.request('route').'"%')
             ->whereNull('parent_id');
 
         $this->addFilter('id', 'emails.id');
         $this->addFilter('name', 'emails.name');
+        $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('created_at', 'emails.created_at');
 
         return $queryBuilder;
@@ -76,6 +82,30 @@ class EmailDataGrid extends DataGrid
             'searchable' => true,
             'filterable' => true,
             'closure'    => fn ($row) => Str::limit(strip_tags($row->reply), 50),
+        ]);
+
+        $this->addColumn([
+            'index'              => 'tag_name',
+            'label'              => trans('admin::app.mail.index.datagrid.tag-name'),
+            'type'               => 'string',
+            'searchable'         => false,
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'searchable_dropdown',
+            'closure'            => function ($row) {
+                if ($email = app(EmailRepository::class)->find($row->id)) {
+                    return $email->tags->implode('name', ', ');
+                }
+
+                return '--';
+            },
+            'filterable_options' => [
+                'repository' => TagRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([

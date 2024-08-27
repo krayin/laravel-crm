@@ -104,6 +104,9 @@
                             <!-- Subject -->
                             <p>@{{ record.subject }}</p>
 
+                            <!-- Tag Name -->
+                            <p>@{{ record.tag_name }}</p>
+
                             <!-- Created At -->
                             <p>@{{ record.created_at }}</p>
                            
