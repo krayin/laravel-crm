@@ -91,19 +91,23 @@
                                 ></label>
                             </div>
                             
-                            <!-- Tag ID -->
+                            <!-- ID -->
                             <p>@{{ record.id }}</p>
         
-                            <!-- Tag Name -->
-                            <p v-html="record.name"></p>
+                            <!-- Name and Color -->
+                            <p class="flex gap-2 items-center">
+                                <span 
+                                    class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
+                                    :style="`background-color: ${record.color}`"
+                                ></span>
 
+                                <span>@{{ record.name }}</span>
+                            </p>
 
-                            {{-- <p>@{{ record.name }}</p> --}}
-
-                            <!-- Tag User Name -->
+                            <!-- User Name -->
                             <p>@{{ record.user_name }}</p>
 
-                            <!-- Tag Created Date -->
+                            <!-- Created Date -->
                             <p>@{{ record.created_at }}</p>
 
                             <!-- Actions -->
@@ -181,95 +185,24 @@
                             </x-admin::form.control-group.label>
                             
                             <div class="flex gap-3">
-                                <span class="relative inline-block">
-                                    <x-admin::form.control-group.control
-                                        type="radio" 
-                                        id="blue-500" 
-                                        name="color" 
-                                        value="blue-500" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="blue-500" 
-                                        class="block h-6 w-6 cursor-pointer rounded-full bg-blue-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
-                                    >
-                                    </label>
-                                </span>
-                            
-                                <span class="relative inline-block">
-                                    <x-admin::form.control-group.control
-                                        type="radio" 
-                                        id="yellow-400" 
-                                        name="color" 
-                                        value="yellow-400" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="yellow-400" 
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-yellow-400 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
-                                    >
-                                    </label>
-                                </span>
-                            
-                                <span class="relative inline-block">
-                                    <x-admin::form.control-group.control 
-                                        type="radio" 
-                                        id="pink-500" 
-                                        name="color" 
-                                        value="pink-500" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="pink-500" 
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-pink-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
-                                    >
-                                    </label>
-                                </span>
-                            
-                                <span class="relative inline-block">
-                                    <x-admin::form.control-group.control 
-                                        type="radio" 
-                                        id="cyan-500" 
-                                        name="color" 
-                                        value="cyan-500" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="cyan-500"    
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-cyan-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
-                                    >
-                                    </label>
-                                </span>
-                            
-                                <span class="relative inline-block">
-                                    <x-admin::form.control-group.control 
-                                        type="radio" 
-                                        id="orange-500" 
-                                        name="color" 
-                                        value="orange-500" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="orange-500" 
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-orange-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
+                                <template v-for="(color, index) in colors">
+                                    <span class="relative inline-block">
+                                        <x-admin::form.control-group.control
+                                            type="radio" 
+                                            ::id="index" 
+                                            name="color" 
+                                            ::value="color.background" 
+                                            class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
+                                        />
+    
+                                        <label 
+                                            :for="index" 
+                                            class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
+                                            :style="`background-color: ${color.background}`"
                                         >
-                                    </label>
-                                </span>
-                            
-                                <span class="mr-1.25 relative inline-block">
-                                    <x-admin::form.control-group.control 
-                                        type="radio" 
-                                        id="green-500" 
-                                        name="color" 
-                                        value="green-500" 
-                                        class="peer absolute left-0 right-3 top-5 z-10 h-full w-full cursor-pointer opacity-0"
-                                    />
-                                    <label 
-                                        for="green-500" 
-                                        class="inline-block h-6 w-6 cursor-pointer rounded-full bg-green-500 shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
-                                    >
-                                    </label>
-                                </span>
+                                        </label>
+                                    </span>
+                                </template>
                             </div>
 
                             {!! view_render_event('krayin.admin.settings.tags.index.content.after') !!}
@@ -300,6 +233,22 @@
                 data() {
                     return {
                         isProcessing: false,
+
+                        colors: [
+                            {
+                                background: '#FEE2E2',
+                            }, {
+                                background: '#FFEDD5',
+                            }, {
+                                background: '#FEF3C7',
+                            }, {
+                                background: '#FEF9C3',
+                            }, {
+                                background: '#ECFCCB',
+                            }, {
+                                background: '#DCFCE7',
+                            },
+                        ],
                     };
                 },
         
