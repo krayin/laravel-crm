@@ -17,6 +17,10 @@ class QuoteRepository extends Repository
     protected $fieldSearchable = [
         'subject',
         'description',
+        'person_id',
+        'person.name',
+        'user_id',
+        'user.name',
     ];
 
     /**

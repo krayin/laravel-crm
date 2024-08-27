@@ -522,10 +522,20 @@
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.leads')",
                             is_active: true,
                             endpoint: "{{ route('admin.leads.search') }}",
-                            query_params: {
-                                search: 'title:',
-                                searchFields: 'title:like',
-                            }
+                            query_params: [
+                                {
+                                    search: 'title',
+                                    searchFields: 'title:like',
+                                },
+                                {
+                                    search: 'user.name',
+                                    searchFields: 'user.name:like',
+                                },
+                                {
+                                    search: 'person.name',
+                                    searchFields: 'person.name:like',
+                                },
+                            ],
                         },
 
                         quotes: {
@@ -533,10 +543,24 @@
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.quotes')",
                             is_active: false,
                             endpoint: "{{ route('admin.quotes.search') }}",
-                            query_params: {
-                                search: 'subject:',
-                                searchFields: 'subject:like',
-                            }
+                            query_params: [
+                                {
+                                    search: 'subject',
+                                    searchFields: 'subject:like',
+                                },
+                                {
+                                    search: 'description',
+                                    searchFields: 'description:like',
+                                },
+                                {
+                                    search: 'user.name',
+                                    searchFields: 'user.name:like',
+                                },
+                                {
+                                    search: 'person.name',
+                                    searchFields: 'person.name:like',
+                                },
+                            ],
                         },
 
                         products: {
@@ -544,10 +568,20 @@
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.products')",
                             is_active: false,
                             endpoint: "{{ route('admin.products.search') }}",
-                            query_params: {
-                                search: 'name:',
-                                searchFields: 'name:like',
-                            },
+                            query_params: [
+                                {
+                                    search: 'name',
+                                    searchFields: 'name:like',
+                                },
+                                {
+                                    search: 'sku',
+                                    searchFields: 'sku:like',
+                                },
+                                {
+                                    search: 'description',
+                                    searchFields: 'description:like',
+                                },
+                            ],
                         },
 
                         persons: {
@@ -555,10 +589,24 @@
                             title: "@lang('admin::app.components.layouts.header.mega-search.tabs.persons')",
                             is_active: false,
                             endpoint: "{{ route('admin.contacts.persons.search') }}",
-                            query_params: {
-                                search: 'name:',
-                                searchFields: 'name:like',
-                            }
+                            query_params: [
+                                {
+                                    search: 'name',
+                                    searchFields: 'name:like',
+                                },
+                                {
+                                    search: 'job_title',
+                                    searchFields: 'job_title:like',
+                                },
+                                {
+                                    search: 'user.name',
+                                    searchFields: 'user.name:like', 
+                                },
+                                {
+                                    search: 'organization.name',
+                                    searchFields: 'organization.name:like',
+                                },
+                            ],
                         },
                     },
 
@@ -572,23 +620,18 @@
                         products: [],
                         persons: []
                     },
+
+                    params: {
+                        search: '',
+                        searchFields: '',
+                    },
                 };
             },
 
             watch: {
-                searchTerm(newTerm) {
-                    for (const tabKey in this.tabs) {
-                        if (this.tabs.hasOwnProperty(tabKey)) {
-                            const tab = this.tabs[tabKey];
-
-                            const searchField = tab.query_params.search.split(':')[0];
-
-                            tab.query_params.search = `${searchField}:${newTerm}`;
-                        }
-                    }
-
-                    this.search();
-                },
+                searchTerm: 'updateSearchParams',
+                
+                activeTab: 'updateSearchParams',
             },
 
             created() {
@@ -600,7 +643,7 @@
             },
 
             methods: {
-                search() {
+                search(endpoint) {
                     if (this.searchTerm.length <= 1) {
                         this.searchedResults[this.activeTab] = [];
 
@@ -611,8 +654,10 @@
 
                     this.isDropdownOpen = true;
 
-                    this.$axios.get(this.tabs[this.activeTab].endpoint, {
-                            params: this.tabs[this.activeTab]?.query_params
+                    this.$axios.get(endpoint, {
+                            params: {
+                                ...this.params,
+                            },
                         })
                         .then((response) => {
                             this.searchedResults[this.activeTab] = response.data.data;
@@ -625,6 +670,23 @@
                     if (! this.$el.contains(e.target)) {
                         this.isDropdownOpen = false;
                     }
+                },
+
+                updateSearchParams() {
+                    const newTerm = this.searchTerm;
+
+                    this.params = {
+                        search: '',
+                        searchFields: '',
+                    };
+
+                    const tab = this.tabs[this.activeTab];
+
+                    this.params.search += tab.query_params.map((param) => `${param.search}:${newTerm};`).join('');
+
+                    this.params.searchFields += tab.query_params.map((param) => `${param.searchFields};`).join('');
+
+                    this.search(tab.endpoint);
                 },
             },
         });
