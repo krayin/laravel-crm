@@ -57,142 +57,143 @@
             type="text/x-template"
             id="v-lead-edit-template"
         >
-        <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-            {!! view_render_event('krayin.admin.leads.edit.form_controls.before') !!}
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+                {!! view_render_event('krayin.admin.leads.edit.form_controls.before') !!}
 
-            <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
-                <!-- Tabs -->
-                <template v-for="tab in tabs" :key="tab.id">
-                    <a
-                        :href="'#' + tab.id"
-                        :class="[
-                            'inline-block px-3 py-2.5 border-b-2  text-sm font-medium ',
-                            activeTab === tab.id
-                            ? 'text-brandColor border-brandColor dark:brandColor dark:brandColor'
-                            : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
-                        ]"
-                        @click="scrollToSection(tab.id)"
-                        :text="tab.label"
-                    ></a>
-                </template>
-            </div>
-
-            <div class="flex flex-col gap-4 px-4 py-2">
-                <!-- Details section -->
-                <div 
-                    class="flex flex-col gap-4" 
-                    id="lead-details"
-                >
-                    <div class="flex flex-col gap-1">
-                        <p class="text-base font-semibold dark:text-white">
-                            @lang('admin::app.leads.edit.details')
-                        </p>
-
-                        <p class="text-gray-600 dark:text-white">
-                            @lang('admin::app.leads.edit.details-info')
-                        </p>
-                    </div>
-
-                    <div class="w-1/2">
-                        <!-- Lead Details Title and Description -->
-                        <x-admin::attributes
-                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_pipeline_id', 'lead_pipeline_stage_id']],
-                                'entity_type' => 'leads',
-                                'quick_add'   => 1
-                            ])"
-                            :custom-validations="[
-                                'expected_close_date' => [
-                                    'date_format:yyyy-MM-dd',
-                                    'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                ],
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                    <!-- Tabs -->
+                    <template v-for="tab in tabs" :key="tab.id">
+                        <a
+                            :href="'#' + tab.id"
+                            :class="[
+                                'inline-block px-3 py-2.5 border-b-2  text-sm font-medium ',
+                                activeTab === tab.id
+                                ? 'text-brandColor border-brandColor dark:brandColor dark:brandColor'
+                                : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
                             ]"
-                            :entity="$lead"
-                        />
+                            @click="scrollToSection(tab.id)"
+                            :text="tab.label"
+                        ></a>
+                    </template>
+                </div>
 
-                        <!-- Lead Details Other input fields -->
-                        <div class="flex gap-4 max-sm:flex-wrap">
-                            <div class="w-full">
-                                <x-admin::attributes
-                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                        ['code', 'IN', ['lead_value', 'lead_type_id', 'lead_source_id']],
-                                        'entity_type' => 'leads',
-                                        'quick_add'   => 1
-                                    ])"
-                                    :custom-validations="[
-                                        'expected_close_date' => [
-                                            'date_format:yyyy-MM-dd',
-                                            'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                        ],
-                                    ]"
-                                    :entity="$lead"
-                                />
-                            </div>
-                                
-                            <div class="w-full">
-                                <x-admin::attributes
-                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                        ['code', 'IN', ['expected_close_date', 'user_id']],
-                                        'entity_type' => 'leads',
-                                        'quick_add'   => 1
-                                    ])"
-                                    :custom-validations="[
-                                        'expected_close_date' => [
-                                            'date_format:yyyy-MM-dd',
-                                            'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                        ],
-                                    ]"
-                                    :entity="$lead"
+                <div class="flex flex-col gap-4 px-4 py-2">
+                    <!-- Details section -->
+                    <div 
+                        class="flex flex-col gap-4" 
+                        id="lead-details"
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.edit.details')
+                            </p>
+
+                            <p class="text-gray-600 dark:text-white">
+                                @lang('admin::app.leads.edit.details-info')
+                            </p>
+                        </div>
+
+                        <div class="w-1/2">
+                            <!-- Lead Details Title and Description -->
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    ['code', 'NOTIN', ['lead_value', 'lead_type_id', 'lead_source_id', 'expected_close_date', 'user_id', 'lead_pipeline_id', 'lead_pipeline_stage_id']],
+                                    'entity_type' => 'leads',
+                                    'quick_add'   => 1
+                                ])"
+                                :custom-validations="[
+                                    'expected_close_date' => [
+                                        'date_format:yyyy-MM-dd',
+                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                    ],
+                                ]"
+                                :entity="$lead"
+                            />
+
+                            <!-- Lead Details Other input fields -->
+                            <div class="flex gap-4 max-sm:flex-wrap">
+                                <div class="w-full">
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            ['code', 'IN', ['lead_value', 'lead_type_id', 'lead_source_id']],
+                                            'entity_type' => 'leads',
+                                            'quick_add'   => 1
+                                        ])"
+                                        :custom-validations="[
+                                            'expected_close_date' => [
+                                                'date_format:yyyy-MM-dd',
+                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                            ],
+                                        ]"
+                                        :entity="$lead"
                                     />
+                                </div>
+                                    
+                                <div class="w-full">
+                                    <x-admin::attributes
+                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                            ['code', 'IN', ['expected_close_date', 'user_id']],
+                                            'entity_type' => 'leads',
+                                            'quick_add'   => 1
+                                        ])"
+                                        :custom-validations="[
+                                            'expected_close_date' => [
+                                                'date_format:yyyy-MM-dd',
+                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                            ],
+                                        ]"
+                                        :entity="$lead"
+                                        />
+                                </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Contact Person -->
+                    <div 
+                        class="flex flex-col gap-4" 
+                        id="contact-person"
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.edit.contact-person')
+                            </p>
+
+                            <p class="text-gray-600 dark:text-white">
+                                @lang('admin::app.leads.edit.contact-info')
+                            </p>
+                        </div>
+
+                        <div class="w-1/2">
+                            <!-- Contact Person Component -->
+                            @include('admin::leads.common.contact')
+                        </div>
+                    </div>
+
+                    <!-- Product Section -->
+                    <div 
+                        class="flex flex-col gap-4" 
+                        id="products"
+                    >
+                        <div class="flex flex-col gap-1">
+                            <p class="text-base font-semibold dark:text-white">
+                                @lang('admin::app.leads.edit.products')
+                            </p>
+
+                            <p class="text-gray-600 dark:text-white">
+                                @lang('admin::app.leads.edit.products-info')
+                            </p>
+                        </div>
+
+                        <div>
+                            <!-- Product Component -->
+                            @include('admin::leads.common.products')
+                        </div>
+                    </div>
                 </div>
-
-                <!-- Contact Person -->
-                <div 
-                    class="flex flex-col gap-4" 
-                    id="contact-person"
-                >
-                    <div class="flex flex-col gap-1">
-                        <p class="text-base font-semibold dark:text-white">
-                            @lang('admin::app.leads.edit.contact-person')
-                        </p>
-
-                        <p class="text-gray-600 dark:text-white">
-                            @lang('admin::app.leads.edit.contact-info')
-                        </p>
-                    </div>
-
-                    <div class="w-1/2">
-                        <!-- Contact Person Component -->
-                        @include('admin::leads.common.contact')
-                    </div>
-                </div>
-
-                <!-- Product Section -->
-                <div 
-                    class="flex flex-col gap-4" 
-                    id="products"
-                >
-                    <div class="flex flex-col gap-1">
-                        <p class="text-base font-semibold dark:text-white">
-                            @lang('admin::app.leads.edit.products')
-                        </p>
-
-                        <p class="text-gray-600 dark:text-white">
-                            @lang('admin::app.leads.edit.products-info')
-                        </p>
-                    </div>
-
-                    <div>
-                        <!-- Product Component -->
-                        @include('admin::leads.common.products')
-                    </div>
-                </div>
+                
+                {!! view_render_event('krayin.admin.leads.form_controls.after') !!}
             </div>
-            
-            {!! view_render_event('krayin.admin.leads.form_controls.after') !!}
         </script>
 
         <script type="module">
