@@ -2,8 +2,8 @@
 <v-lead-products></v-lead-products>
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-lead-products-template"
     >
         <div v-if="products.length" class="flex flex-col gap-4 p-3">
@@ -15,15 +15,15 @@
                         <x-admin::table.th>
                             @lang('admin::app.leads.view.products.product-name')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.quantity')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.price')
                         </x-admin::table.th>
-            
+
                         <x-admin::table.th class="ltr:text-right rtl:text-left">
                             @lang('admin::app.leads.view.products.amount')
                         </x-admin::table.th>
@@ -49,7 +49,7 @@
 
             <!-- Add New Product Item -->
             <div>
-                <span 
+                <span
                     class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                     @click="addProduct"
                 >
@@ -61,15 +61,15 @@
         <div v-else>
             <div class="grid justify-center justify-items-center gap-3.5 py-12">
                 <img
-                    class="dark:mix-blend-exclusion dark:invert" 
-                    src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}"
+                    class="dark:mix-blend-exclusion dark:invert"
+                    src="{{ vite()->asset('images/empty-placeholders/products.svg') }}"
                 >
-                
+
                 <div class="flex flex-col items-center gap-2">
                     <p class="text-xl font-semibold dark:text-white">
                         @lang('admin::app.leads.view.products.empty-title')
                     </p>
-                    
+
                     <p class="text-gray-400 dark:text-gray-400">
                         @lang('admin::app.leads.view.products.empty-info')
                     </p>
@@ -85,15 +85,15 @@
         </div>
     </script>
 
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-product-item-template"
     >
         <x-admin::table.tbody.tr class="border-b border-gray-200 dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
                 <x-admin::form.control-group class="!mb-0">
-                    <x-admin::lookup 
+                    <x-admin::lookup
                         ::src="src"
                         name="name"
                         ::params="params"
@@ -111,11 +111,11 @@
                         :placeholder="trans('admin::app.leads.view.products.product-name')"
                         ::url="url(product)"
                     />
-            
+
                     <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-            
+
             <!-- Product Quantity -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
                 <x-admin::form.control-group class="!mb-0">
@@ -133,7 +133,7 @@
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-        
+
             <!-- Price -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
                 <x-admin::form.control-group class="!mb-0">
@@ -151,7 +151,7 @@
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
-        
+
             <!-- Total -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
                 <x-admin::form.control-group class="!mb-0">
@@ -173,12 +173,12 @@
                 <template v-if="product.is_new">
                     <x-admin::form.control-group class="!mb-0">
                         <div class="flex items-center justify-end gap-4">
-                            <i  
+                            <i
                                 @click="attachProduct(product)"
                                 class="icon-enter cursor-pointer text-2xl text-black"
                             ></i>
 
-                            <i  
+                            <i
                                 @click="removeProduct"
                                 class="icon-cross-large cursor-pointer text-2xl text-black"
                             ></i>
@@ -188,7 +188,7 @@
 
                 <template v-else>
                     <x-admin::form.control-group class="!mb-0">
-                        <i  
+                        <i
                             @click="removeProduct"
                             class="icon-delete cursor-pointer text-2xl"
                         ></i>
@@ -222,7 +222,7 @@
                         amount: null,
                     })
                 },
-                
+
                 removeProduct (product) {
                     const index = this.products.indexOf(product);
                     this.products.splice(index, 1);
@@ -249,7 +249,7 @@
 
                     return "products[product_" + this.index + "]";
                 },
-                
+
                 src() {
                     return '{{ route('admin.products.search') }}';
                 },
@@ -266,24 +266,24 @@
             methods: {
                 /**
                  * Add the product.
-                 * 
+                 *
                  * @param {Object} result
-                 * 
+                 *
                  * @return {void}
                  */
                 addProduct(result) {
                     this.product.product_id = result.id;
 
                     this.product.name = result.name;
-                    
+
                     this.product.price = result.price;
-                    
+
                     this.product.quantity = result.quantity ?? 0;
                 },
 
                 /**
                  * Attach Product.
-                 * 
+                 *
                  * @return {void}
                  */
                 attachProduct(product) {
@@ -298,10 +298,10 @@
                         })
                         .catch(error => {});
                 },
-                  
+
                 /**
                  * Remove the product.
-                 * 
+                 *
                  * @return {void}
                  */
                 removeProduct() {
@@ -320,12 +320,12 @@
                         },
                     });
                 },
-                
+
                 /**
                  * Get the product URL.
-                 * 
+                 *
                  * @param {Object} product
-                 * 
+                 *
                  * @return {String}
                  */
                 url(product) {
