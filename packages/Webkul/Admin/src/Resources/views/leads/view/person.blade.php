@@ -16,7 +16,7 @@
 
         <div class="flex gap-2">
             <!-- Person Initials -->
-            <x-admin::avatar :name="$lead->person->name">
+            <x-admin::avatar :name="$lead->person->name" />
 
             <!-- Person Details -->
             <div class="flex flex-col gap-1">
@@ -28,42 +28,42 @@
                     {{ $lead->person->name }}
                 </a>
 
-            @if ($lead->person->job_title)
-                <span class="dark:text-white">
-                    @if ($lead->person->organization)
-                        @lang('admin::app.leads.view.persons.job-title', [
-                            'job_title'    => $lead->person->job_title,
-                            'organization' => $lead->person->organization->name
-                        ])
-                    @else
-                        {{ $lead->person->job_title }}
-                    @endif
-                </span>
-            @endif
-            
-            @foreach ($lead->person->emails as $email)
-                <div class="flex gap-1">
-                    <a 
-                        class="text-brandColor"
-                        href="mailto:{{ $email['value'] }}"
-                    >
-                        {{ $email['value'] }}
-                    </a>
-
-                    <span class="text-gray-500 dark:text-gray-300">
-                        ({{ $email['label'] }})
+                @if ($lead->person->job_title)
+                    <span class="dark:text-white">
+                        @if ($lead->person->organization)
+                            @lang('admin::app.leads.view.persons.job-title', [
+                                'job_title'    => $lead->person->job_title,
+                                'organization' => $lead->person->organization->name
+                            ])
+                        @else
+                            {{ $lead->person->job_title }}
+                        @endif
                     </span>
-                </div>
-            @endforeach
+                @endif
             
-            @foreach ($lead->person->contact_numbers as $contactNumber)
-                <div class="flex gap-1">
-                    <a  
-                        class="text-brandColor"
-                        href="callto:{{ $contactNumber['value'] }}"
-                    >
-                        {{ $contactNumber['value'] }}
-                    </a>
+                @foreach ($lead->person->emails as $email)
+                    <div class="flex gap-1">
+                        <a 
+                            class="text-brandColor"
+                            href="mailto:{{ $email['value'] }}"
+                        >
+                            {{ $email['value'] }}
+                        </a>
+
+                        <span class="text-gray-500 dark:text-gray-300">
+                            ({{ $email['label'] }})
+                        </span>
+                    </div>
+                @endforeach
+            
+                @foreach ($lead->person->contact_numbers as $contactNumber)
+                    <div class="flex gap-1">
+                        <a  
+                            class="text-brandColor"
+                            href="callto:{{ $contactNumber['value'] }}"
+                        >
+                            {{ $contactNumber['value'] }}
+                        </a>
 
                         <span class="text-gray-500 dark:text-gray-300">
                             ({{ $contactNumber['label'] }})
