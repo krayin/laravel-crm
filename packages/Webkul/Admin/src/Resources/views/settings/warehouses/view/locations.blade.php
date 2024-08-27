@@ -46,10 +46,10 @@
 
             <div>
                 <span
-                    class="cursor-pointer text-brandColor"
+                    class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                     @click="openModal()"
                 >
-                    @lang('admin::app.settings.warehouses.view.locations.add-location')
+                    + @lang('admin::app.settings.warehouses.view.locations.add-location')
                 </span>
             </div>
 

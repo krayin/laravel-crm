@@ -227,9 +227,9 @@
         >
             <div>
                 <!-- Table -->
-                <x-admin::table class="w-full table-fixed">
+                <x-admin::table>
                     <!-- Table Head -->
-                    <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    <x-admin::table.thead>
                         <x-admin::table.thead.tr>
                             <x-admin::table.th >
                                 @lang('admin::app.quotes.create.product-name')
@@ -269,7 +269,7 @@
                     </x-admin::table.thead>
 
                     <!-- Table Body -->
-                    <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                    <x-admin::table.tbody>
                         <!-- Quote Item Vue component -->
                         <template
                             v-for='(product, index) in products'
@@ -288,7 +288,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-md cursor-pointer text-brandColor hover:underline dark:text-brandColor"
+                class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
@@ -372,7 +372,7 @@
             type="text/x-template"
             id="v-quote-item-template"
         >
-            <x-admin::table.thead.tr class="border-b-2">
+            <x-admin::table.thead.tr>
                 <!-- Quote Product Name -->
                 <x-admin::table.td>
                     <x-admin::form.control-group class="!mb-0">

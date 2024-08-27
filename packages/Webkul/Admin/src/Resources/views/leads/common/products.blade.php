@@ -6,8 +6,8 @@
         id="v-product-list-template"
     >
         <div class="flex flex-col gap-4">
-             <!-- Table -->
-             <x-admin::table class="w-full table-fixed">
+            <!-- Table -->
+            <x-admin::table>
                 <!-- Table Head -->
                 <x-admin::table.thead>
                     <x-admin::table.thead.tr>
@@ -48,7 +48,7 @@
 
             <!-- Add New Product Item -->
             <span
-                class="cursor-pointer text-brandColor"
+                class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 + @lang('admin::app.leads.common.products.add-more')

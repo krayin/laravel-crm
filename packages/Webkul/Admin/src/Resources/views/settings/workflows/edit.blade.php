@@ -260,9 +260,9 @@
                                     </div>
                                 </div>
 
-                                <x-admin::table class="!w-1/2 table-fixed">
+                                <x-admin::table class="!w-1/2">
                                     <!-- Table Head -->
-                                    <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                                    <x-admin::table.thead>
                                         <x-admin::table.thead.tr>
                                             <x-admin::table.th>
                                                 @lang('admin::app.settings.workflows.edit.type')
@@ -275,7 +275,7 @@
                                     </x-admin::table.thead>
 
                                     <!-- Table Body -->
-                                    <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                                    <x-admin::table.tbody>
                                         <template
                                             v-for='(action, index) in actions'
                                             :key="index"
