@@ -1,6 +1,7 @@
 @props([
     'endpoint',
     'emailDetachEndpoint' => null,
+    'activeType'          => 'all',
     'types'               => null,
     'extraTypes'          => null,
 ])
@@ -9,6 +10,7 @@
 <v-activities
     endpoint="{{ $endpoint }}"
     email-detach-endpoint="{{ $emailDetachEndpoint }}"
+    active-type="{{ $activeType }}"
     @if($types):types='@json($types)'@endif
     @if($extraTypes):extra-types='@json($extraTypes)'@endif
 >
@@ -327,6 +329,11 @@
                     default: '',
                 },
 
+                activeType: {
+                    type: String,
+                    default: 'all',
+                },
+
                 types: {
                     type: Array,
                     default: [
@@ -375,7 +382,7 @@
                     
                     activities: [],
 
-                    selectedType: 'all',
+                    selectedType: this.activeType,
 
                     typeClasses: {
                         email: 'icon-mail bg-green-200 text-green-900 dark:!text-green-900',
