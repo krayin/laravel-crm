@@ -1775,6 +1775,11 @@ return [
                 'lost-reason'    => 'Kayıp Nedeni',
                 'save-btn'       => 'Kaydet',
             ],
+
+            'tags' => [
+                'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                'destroy-success' => 'Etiket başarıyla silindi.',
+            ],
         ],
     ],
 

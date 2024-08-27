@@ -1775,6 +1775,11 @@ return [
                 'lost-reason'    => 'Razón de la Pérdida',
                 'save-btn'       => 'Guardar',
             ],
+
+            'tags' => [
+                'create-success'  => 'Etiqueta creada con éxito.',
+                'destroy-success' => 'Etiqueta eliminada con éxito.',
+            ],
         ],
     ],
 

@@ -1775,6 +1775,11 @@ return [
                 'lost-reason'    => 'دلیل باخت',
                 'save-btn'       => 'ذخیره',
             ],
+
+            'tags' => [
+                'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                'destroy-success' => 'برچسب با موفقیت حذف شد.',
+            ],
         ],
     ],
 
