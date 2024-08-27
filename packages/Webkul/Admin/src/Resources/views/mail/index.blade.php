@@ -41,7 +41,7 @@
         <!-- Compose Mail Vue Component -->
         <v-mail ref="composeMail">
             <!-- Datagrid Shimmer -->
-            <x-admin::shimmer.datagrid />
+            <x-admin::shimmer.mail.datagrid />
         </v-mail>
     </div>
     
@@ -56,7 +56,18 @@
            <x-admin::datagrid
                 ref="datagrid"
                 src="{{ route('admin.mail.index', request('route')) }}"
-            >
+            >   
+                <template #header="{
+                    isLoading,
+                    available,
+                    applied,
+                    selectAll,
+                    sort,
+                    performAction
+                }">
+                    <div></div>
+                </template>
+            
                 <template #body="{
                     isLoading,
                     available,
@@ -65,68 +76,87 @@
                     sort,
                     performAction
                 }">
+                
                     <template v-if="isLoading">
-                        <x-admin::shimmer.datagrid.table.body />
+                        <x-admin::shimmer.mail.datagrid.table.body />
                     </template>
         
                     <template v-else>
                         <div
                             v-for="record in available.records"
-                            class="row grid items-center gap-2.5 border-b px-4 py-4 text-gray-600 transition-all hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
-                            :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
+                            class="flex justify-between items-center border-b px-8 py-4 text-gray-600 cursor-pointer hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            :class="{
+                                'font-medium': record.is_read,
+                                'font-semibold': ! record.is_read
+                            }"
+                            @click.stop="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))"
                         >
                             <!-- Select Box -->
-                            <div class="flex select-none items-center gap-16">
-                                <input
-                                    type="checkbox"
-                                    :name="`mass_action_select_record_${record.id}`"
-                                    :id="`mass_action_select_record_${record.id}`"
-                                    :value="record.id"
-                                    class="peer hidden"
-                                    v-model="applied.massActions.indices"
-                                >
+                            <div class="flex gap-32 items-center justify-start w-full">
+                                <div class="flex items-center gap-6">
+                                    <div class="relative flex items-center">
+                                        <!-- Dot Indicator -->
+                                        <span
+                                            class="absolute right-8 h-1.5 w-1.5 rounded-full bg-sky-600 dark:bg-white"
+                                            v-if="! record.is_read"
+                                        ></span>
 
-                                <label
-                                    class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
-                                    :for="`mass_action_select_record_${record.id}`"
-                                ></label>
-                            </div>
-        
-                            <!-- ID -->
-                            <p>@{{ record.id }}</p>
+                                        <!-- Checkbox Container -->
+                                        <div class="flex items-center gap-2">
+                                            <input
+                                                type="checkbox"
+                                                :name="`mass_action_select_record_${record.id}`"
+                                                :id="`mass_action_select_record_${record.id}`"
+                                                :value="record.id"
+                                                class="peer hidden"
+                                                v-model="applied.massActions.indices"
+                                                @click.stop
+                                            >
+                        
+                                            <label
+                                                class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl !text-gray-500 peer-checked:!text-brandColor dark:!text-gray-300"
+                                                :for="`mass_action_select_record_${record.id}`"
+                                                @click.stop
+                                            ></label>
+                                        </div>
+                                    </div>
+                                
+                                    <p class="leading-none whitespace-nowrap overflow-hidden text-ellipsis">@{{ record.name }}</p>
+                                </div>
 
-                            <!-- Attachment -->
-                            <p v-html="record.attachments"></p>
+                                <div class="flex gap-4 items-center justify-between w-full">
+                                    <!-- Content -->
+                                    <div class="flex gap-2 items-center flex-frow">
+                                        <!-- Attachments -->
+                                        <p v-html="record.attachments"></p>
 
-                            <!-- From -->
-                            <p>@{{ record.name }}</p>
+                                        <!-- Tags -->
+                                        <span
+                                            class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                            :style="{
+                                                'background-color': tag.color,
+                                                'color': backgroundColors.find(color => color.background === tag.color)?.text
+                                            }"
+                                            v-for="(tag, index) in record.tags"
+                                            v-html="tag.name"
+                                        >
+                                        </span>
 
-                            <!-- Subject -->
-                            <p>@{{ record.subject }}</p>
+                                        <!-- Subject -->
+                                        <p v-text="record.subject"></p>
 
-                            <!-- Tag Name -->
-                            <p>@{{ record.tag_name }}</p>
-
-                            <!-- Created At -->
-                            <p>@{{ record.created_at }}</p>
-                           
-                            <!-- Actions -->
-                            <div class="flex justify-end">
-                                <a @click="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'edit')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                    >
-                                    </span>
-                                </a>
-
-                                <a @click="performAction(record.actions.find(action => action.index === 'delete'))">
-                                    <span
-                                        :class="record.actions.find(action => action.index === 'delete')?.icon"
-                                        class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                    >
-                                    </span>
-                                </a>
+                                        <!-- Reply(Content) -->
+                                        <p
+                                            class="!font-normal"
+                                            v-html="truncatedReply(record.reply)"
+                                        ></p>
+                                    </div>
+                                
+                                    <!-- Time -->
+                                    <div class="flex-shrink-0 min-w-[80px] text-right">
+                                        <p class="leading-none">@{{ record.created_at }}</p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </template>
@@ -339,26 +369,48 @@
                             reply: '',
                             attachments: [],
                         },
+
+                        backgroundColors: [
+                            {
+                                label: "@lang('admin::app.components.tags.index.aquarelle-red')",
+                                text: '#DC2626',
+                                background: '#FEE2E2',
+                            }, {
+                                label: "@lang('admin::app.components.tags.index.crushed-cashew')",
+                                text: '#EA580C',
+                                background: '#FFEDD5',
+                            }, {
+                                label: "@lang('admin::app.components.tags.index.beeswax')",
+                                text: '#D97706',
+                                background: '#FEF3C7',
+                            }, {
+                                label: "@lang('admin::app.components.tags.index.lemon-chiffon')",
+                                text: '#CA8A04',
+                                background: '#FEF9C3',
+                            }, {
+                                label: "@lang('admin::app.components.tags.index.snow-flurry')",
+                                text: '#65A30D',
+                                background: '#ECFCCB',
+                            }, {
+                                label: "@lang('admin::app.components.tags.index.honeydew')",
+                                text: '#16A34A',
+                                background: '#DCFCE7',
+                            },
+                        ],
                     };
                 },
 
-                computed: {
-                    gridsCount() {
-                        let count = this.$refs.datagrid.available.columns.length;
-
-                        if (this.$refs.datagrid.available.actions.length) {
-                            ++count;
-                        }
-
-                        if (this.$refs.datagrid.available.massActions.length) {
-                            ++count;
-                        }
-
-                        return count;
-                    },
-                },
-
                 methods: {
+                    truncatedReply(reply) {
+                        const maxLength = 100;
+
+                        if (reply.length > maxLength) {
+                            return `${reply.substring(0, maxLength)}...`;
+                        }
+                        
+                        return reply;
+                    },
+
                     toggleModal() {
                         this.draft.reply_to = [];
 
