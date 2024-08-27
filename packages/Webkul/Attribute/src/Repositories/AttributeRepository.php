@@ -124,7 +124,7 @@ class AttributeRepository extends Repository
         }
 
         if (Str::contains($lookup['repository'], 'UserRepository')) {
-            $userRepository = app($lookup['repository']);
+            $userRepository = app($lookup['repository'])->where('status', 1);
 
             $currentUser = auth()->guard('user')->user();
 
@@ -135,6 +135,8 @@ class AttributeRepository extends Repository
             } elseif ($currentUser->view_permission === 'individual') {
                 return $userRepository->findByField('users.id', $currentUser->id);
             }
+
+            return $userRepository->where('users.name', 'like', '%'.urldecode($query).'%')->get();
         }
 
         return app($lookup['repository'])->findWhere([
