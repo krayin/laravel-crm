@@ -66,7 +66,7 @@
                             <x-admin::table.td class="!px-2">
                                 <x-admin::dropdown position="bottom-right">
                                     <x-slot:toggle>
-                                        <icon class="icon-more text-2xl"></icon>
+                                        <i class="icon-more text-2xl"></i>
                                     </x-slot>
 
                                     <x-slot:menu class="!min-w-40">
