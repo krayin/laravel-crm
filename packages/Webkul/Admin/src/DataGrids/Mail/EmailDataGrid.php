@@ -5,7 +5,6 @@ namespace Webkul\Admin\DataGrids\Mail;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Tag\Repositories\TagRepository;
@@ -117,11 +116,11 @@ class EmailDataGrid extends DataGrid
             'filterable'      => true,
             'filterable_type' => 'date_range',
             'sortable'        => true,
-            'closure'         => function($row) {
-                return Carbon::parse($row->created_at)->isToday() 
-                    ? Carbon::parse($row->created_at)->format('h:i A') 
+            'closure'         => function ($row) {
+                return Carbon::parse($row->created_at)->isToday()
+                    ? Carbon::parse($row->created_at)->format('h:i A')
                     : Carbon::parse($row->created_at)->format('M d');
-            }
+            },
         ]);
     }
 
