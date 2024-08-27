@@ -1777,6 +1777,11 @@ return [
                 'lost-reason'    => 'Lost Reason',
                 'save-btn'       => 'Save',
             ],
+            
+            'tags' => [
+                'create-success'  => 'Tag created successfully.',
+                'destroy-success' => 'Tag deleted successfully.',
+            ],
         ],
     ],
 

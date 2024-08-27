@@ -1775,6 +1775,11 @@ return [
                 'lost-reason'    => 'سبب الخسارة',
                 'save-btn'       => 'حفظ',
             ],
+
+            'tags' => [
+                'create-success'  => 'تم إنشاء العلامة بنجاح.',
+                'destroy-success' => 'تم حذف العلامة بنجاح.',
+            ],
         ],
     ],
 
