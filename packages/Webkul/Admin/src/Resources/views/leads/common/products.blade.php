@@ -9,7 +9,7 @@
              <!-- Table -->
              <x-admin::table class="w-full table-fixed">
                 <!-- Table Head -->
-                <x-admin::table.thead class="rounded-lg border border-gray-200 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.thead>
                     <x-admin::table.thead.tr>
                         <x-admin::table.th>
                             @lang('admin::app.leads.common.products.product-name')
@@ -34,7 +34,7 @@
                 </x-admin::table.thead>
 
                 <!-- Table Body -->
-                <x-admin::table.tbody class="rounded-lg border border-gray-200 bg-gray-500 px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <x-admin::table.tbody>
                     <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
@@ -60,7 +60,7 @@
         type="text/x-template" 
         id="v-product-item-template"
     >
-        <x-admin::table.thead.tr class="border-b-2">
+        <x-admin::table.thead.tr>
             <!-- Product Name -->
             <x-admin::table.td>
                 <x-admin::form.control-group class="!mb-0">
