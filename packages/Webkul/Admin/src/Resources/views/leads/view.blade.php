@@ -99,7 +99,6 @@
 
             <x-admin::activities
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
-                active-type="products"
                 :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
                 :extra-types="[
                     ['name' => 'products', 'label' => 'Products'],
