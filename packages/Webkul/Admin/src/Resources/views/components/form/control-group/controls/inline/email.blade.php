@@ -17,22 +17,27 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="rounded-xs flex h-[34px] items-center"
-                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
-                :style="textPositionStyle"
+                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
-                <div class="group relative flex !w-full flex-col items-center">
-                    <span class="w-40 truncate rounded border border-transparent pl-[2px]">@{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}</span>
+                <div 
+                    class="group relative !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <span class="truncate rounded cursor-pointer">
+                        @{{ valueLabel ? valueLabel : inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20 ? inputValue.map(item => `${item.value}(${item.label})`).join(', ').substring(0, 20) + '...' : inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}
+                    </span>
 
+                    <!-- Tooltip -->
                     <div
-                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
+                        class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
                         v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
                     >
                         <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
@@ -170,6 +175,11 @@
                     type: String,
                     default: '',
                 },
+
+                valueLabel: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -209,24 +219,6 @@
             },
 
             computed: {
-                /**
-                 * Get the input position style.
-                 * 
-                 * @return {String}
-                 */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                textPositionStyle() {
-                    return this.position === 'left' ? 'justify-content: space-between' : 'justify-content: end';
-                },
-
                 /**
                  * Get the validation rules.
                  * 

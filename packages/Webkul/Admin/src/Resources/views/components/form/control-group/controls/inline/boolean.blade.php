@@ -15,9 +15,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
-                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
-                :style="textPositionStyle"
+                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -26,7 +25,9 @@
                     v-model="inputValue"
                 />
 
-                <span class="rounded border border-transparent ltr:pl-0.5 rtl:pr-0.5">@{{ selectedValue?.name }}</span>
+                <span class="truncate rounded cursor-pointer">
+                    @{{ valueLabel ? valueLabel : selectedValue?.name }}
+                </span>
 
                 <template v-if="allowEdit">
                     <i
@@ -41,45 +42,43 @@
                 class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex w-full flex-col">
-                    <x-admin::form.control-group.control
-                        type="select"
-                        ::id="name"
-                        ::name="name"
-                        class="text-normal py-1 ltr:pr-16 rtl:pl-16"
-                        ::rules="rules"
-                        ::label="label"
-                        ::placeholder="placeholder"
-                        ::style="inputPositionStyle"
-                        v-model="inputValue"
+                <x-admin::form.control-group.control
+                    type="select"
+                    ::id="name"
+                    ::name="name"
+                    class="text-normal py-1 ltr:pr-16 rtl:pl-16"
+                    ::rules="rules"
+                    ::label="label"
+                    ::placeholder="placeholder"
+                    ::style="inputPositionStyle"
+                    v-model="inputValue"
+                >
+                    <option
+                        v-for="(option, index) in options"
+                        :key="option.id"
+                        :value="option.id"
                     >
-                        <option
-                            v-for="(option, index) in options"
-                            :key="option.id"
-                            :value="option.id"
-                        >
-                            @{{ option.name }}
-                        </option>
-                    </x-admin::form.control-group.control>
-                        
-                    <!-- Action Buttons -->
-                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
-                            @click="save"
-                        >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
-                        </button>
+                        @{{ option.name }}
+                    </option>
+                </x-admin::form.control-group.control>
                     
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
-                            @click="cancel"
-                        >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
-                        </button>
-                    </div>
+                <!-- Action Buttons -->
+                <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
+                        @click="save"
+                    >
+                        <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
+                    </button>
+                
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
+                        @click="cancel"
+                    >
+                        <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
+                    </button>
                 </div>
 
                 <x-admin::form.control-group.error ::name="name"/>
@@ -137,6 +136,11 @@
                     type: String,
                     default: '',
                 },
+
+                valueLabel: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -168,46 +172,6 @@
                  */
                 value(newValue) {
                     this.inputValue = newValue;
-                },
-            },
-
-            computed: {
-                /**
-                 * Get the input position style.
-                 * 
-                 * @return {String}
-                 */
-                inputPositionStyle() {
-                    return this.position === 'left' ? 'text-align: left; padding-left: 9px' : 'text-align: right;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                 inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                textPositionStyle() {
-                    return this.position === 'left'  ? this.isRTL 
-                            ? 'justify-content: end;' 
-                            : 'justify-content: space-between;' 
-                        : this.isRTL 
-                            ? 'justify-content: space-between;' 
-                            : 'justify-content: end;';
                 },
             },
 

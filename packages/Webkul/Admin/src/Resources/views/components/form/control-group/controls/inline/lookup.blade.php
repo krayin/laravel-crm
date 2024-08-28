@@ -22,9 +22,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
-                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
-                :style="textPositionStyle"
+                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -33,18 +32,24 @@
                     v-model="inputValue"
                 />
 
-                <div class="group relative flex !w-full flex-col items-center">
-                    <span class="w-40 truncate rounded border border-transparent pl-[2px]">@{{ inputValue }}</span>
+                <div
+                    class="group relative !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <span class="truncate rounded cursor-pointer">
+                        @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                    </span>
 
+                    <!-- Tooltip -->
                     <div
-                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
-                        v-if="inputValue > 20"
+                        class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
+                        v-if="inputValue.length > 20"
                     >
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
@@ -61,104 +66,102 @@
                 class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex w-full flex-col">
-                    <x-admin::form.control-group.control
-                        type="text"
-                        ::name="name"
-                        class="w-full cursor-pointer text-gray-800 dark:text-white ltr:pr-10 rtl:pl-10"
-                        ::placeholder="placeholder"
-                        v-model="selectedItem.name"
-                        @click="toggleEditor"   
-                        readonly
-                    />
+                <x-admin::form.control-group.control
+                    type="text"
+                    ::name="name"
+                    class="w-full cursor-pointer text-gray-800 dark:text-white ltr:pr-10 rtl:pl-10"
+                    ::placeholder="placeholder"
+                    v-model="selectedItem.name"
+                    @click="toggleEditor"   
+                    readonly
+                />
 
-                    <span class="pointer-events-none absolute inset-y-0 flex items-center ltr:right-0 ltr:pr-14 rtl:left-0 rtl:pl-14">
-                        <div class="flex items-center justify-center space-x-1">
-                            <div
-                                class="relative"
-                                v-if="isSearching"
+                <span class="pointer-events-none absolute inset-y-0 flex items-center ltr:right-0 ltr:pr-14 rtl:left-0 rtl:pl-14">
+                    <div class="flex items-center justify-center space-x-1">
+                        <div
+                            class="relative"
+                            v-if="isSearching"
+                        >
+                            <svg
+                                class="h-5 w-5 animate-spin"
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                aria-hidden="true"
+                                viewBox="0 0 24 24"
                             >
-                                <svg
-                                    class="h-5 w-5 animate-spin"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    fill="none"
-                                    aria-hidden="true"
-                                    viewBox="0 0 24 24"
-                                >
-                                    <circle
-                                        class="opacity-25"
-                                        cx="12"
-                                        cy="12"
-                                        r="10"
-                                        stroke="currentColor"
-                                        stroke-width="4"
-                                    ></circle>
-                                    <path
-                                        class="opacity-75"
-                                        fill="currentColor"
-                                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                    ></path>
-                                </svg>
-                            </div>
-                            
-                            <i 
-                                class="text-2xl"
-                                :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
-                            ></i>
+                                <circle
+                                    class="opacity-25"
+                                    cx="12"
+                                    cy="12"
+                                    r="10"
+                                    stroke="currentColor"
+                                    stroke-width="4"
+                                ></circle>
+                                <path
+                                    class="opacity-75"
+                                    fill="currentColor"
+                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                                ></path>
+                            </svg>
                         </div>
-                    </span>
-        
-                    <!-- Popup Box -->
-                    <div 
-                        v-if="showPopup" 
-                        class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-900"
-                    >
-                        <!-- Search Bar -->
-                        <input
-                            type="text"
-                            v-model.lazy="searchTerm"
-                            v-debounce="200"
-                            class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                            placeholder="Search..."
-                            ref="searchInput"
-                            @keyup="search"
-                        />
-                
-                        <!-- Results List -->
-                        <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                            <li 
-                                v-for="item in filteredResults" 
-                                :key="item.id"
-                                class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-950"
-                                @click="selectItem(item)"
-                            >
-                                @{{ item.name }}
-                            </li>
-        
-                            <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500 dark:text-gray-300">
-                                @lang('No results found')
-                            </li>
-                        </ul>
-                    </div>
                         
-                    <!-- Action Buttons -->
-                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white dark:bg-gray-900 ltr:right-2 rtl:left-2">
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
-                            @click="save"
-                        >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
-                        </button>
-                    
-                        <button
-                            type="button"
-                            class="item-center flex justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
-                            @click="cancel"
-                        >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
-                        </button>
+                        <i 
+                            class="text-2xl"
+                            :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
+                        ></i>
                     </div>
+                </span>
+    
+                <!-- Popup Box -->
+                <div 
+                    v-if="showPopup" 
+                    class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-900"
+                >
+                    <!-- Search Bar -->
+                    <input
+                        type="text"
+                        v-model.lazy="searchTerm"
+                        v-debounce="200"
+                        class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                        placeholder="Search..."
+                        ref="searchInput"
+                        @keyup="search"
+                    />
+            
+                    <!-- Results List -->
+                    <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                        <li 
+                            v-for="item in filteredResults" 
+                            :key="item.id"
+                            class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-950"
+                            @click="selectItem(item)"
+                        >
+                            @{{ item.name }}
+                        </li>
+    
+                        <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500 dark:text-gray-300">
+                            @lang('No results found')
+                        </li>
+                    </ul>
+                </div>
+                    
+                <!-- Action Buttons -->
+                <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white dark:bg-gray-900 ltr:right-2 rtl:left-2">
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
+                        @click="save"
+                    >
+                        <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
+                    </button>
+                
+                    <button
+                        type="button"
+                        class="item-center flex justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
+                        @click="cancel"
+                    >
+                        <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
+                    </button>
                 </div>
 
                 <x-admin::form.control-group.error ::name="name"/>
@@ -211,6 +214,11 @@
                     type: String,
                     default: '',
                 },
+                
+                valueLabel: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {
@@ -247,35 +255,6 @@
             },
 
             computed: {
-                /**
-                 * Get the input position style.
-                 * 
-                 * @return {String}
-                 */
-                 inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                textPositionStyle() {
-                    return this.position === 'left'  ? this.isRTL 
-                            ? 'justify-content: end;' 
-                            : 'justify-content: space-between;' 
-                        : this.isRTL 
-                            ? 'justify-content: space-between;' 
-                            : 'justify-content: end;';
-                },
-
                 src() {
                     return `{{ route('admin.settings.attributes.lookup') }}/${this.attribute.lookup_type}`;
                 },
