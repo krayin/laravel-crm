@@ -18,9 +18,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
+                class="rounded-xs flex h-[34px] items-center border border-transparent"
                 :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
-                :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -29,18 +28,24 @@
                     v-model="inputValue"
                 />
 
-                <div class="group relative flex !w-full flex-col items-center">
-                    <span class="w-40 truncate rounded border border-transparent pl-[2px]">@{{ selectedValue }}</span>
+                <div
+                    class="group relative !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <span class="truncate rounded cursor-pointer">
+                        @{{ selectedValue }}
+                    </span>
 
+                    <!-- Tooltip -->
                     <div
-                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
+                        class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
                         v-if="selectedValue.length > 20"
                     >
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
                             @{{ selectedValue }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
@@ -57,64 +62,62 @@
                 class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex w-full flex-col">
-                    <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400">
-                        <ul class="flex flex-wrap items-center gap-1">
-                            <li
-                                class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
-                                v-for="option in tempOptions"
-                            >
-                                <input type="hidden" :name="name" :value="option"/>
-            
-                                @{{ option.name }}
-            
-                                <span
-                                    class="icon-cross-large cursor-pointer p-0.5 text-xl"
-                                    @click="removeOption(option)"
-                                ></span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div
-                        class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
-                        v-if="options.length > 0"
-                    >
-                        <!-- Results List -->
-                        <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                            <li 
-                                v-for="option in options" 
-                                :key="option.id"
-                                class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100"
-                                @click="addOption(option)"
-                            >
-                                @{{ option.name }}
-                            </li>
-                        </ul>
-                    </div>
-                        
-                    <!-- Action Buttons -->
-                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
-                            @click="save"
+                <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400">
+                    <ul class="flex flex-wrap items-center gap-1">
+                        <li
+                            class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
+                            v-for="option in tempOptions"
                         >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
-                        </button>
-                    
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
-                            @click="cancel"
-                        >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
-                        </button>
-                    </div>
+                            <input type="hidden" :name="name" :value="option"/>
+        
+                            @{{ option.name }}
+        
+                            <span
+                                class="icon-cross-large cursor-pointer p-0.5 text-xl"
+                                @click="removeOption(option)"
+                            ></span>
+                        </li>
+                    </ul>
                 </div>
 
-                <x-admin::form.control-group.error ::name="name"/>
+                <div
+                    class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                    v-if="options.length > 0"
+                >
+                    <!-- Results List -->
+                    <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                        <li 
+                            v-for="option in options" 
+                            :key="option.id"
+                            class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100"
+                            @click="addOption(option)"
+                        >
+                            @{{ option.name }}
+                        </li>
+                    </ul>
+                </div>
+                    
+                <!-- Action Buttons -->
+                <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
+                        @click="save"
+                    >
+                        <i class="icon-tick text-md cursor-pointer font-bold text-green-600 dark:!text-green-600" />
+                    </button>
+                
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
+                        @click="cancel"
+                    >
+                        <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600 dark:!text-red-600" />
+                    </button>
+                </div>
             </div>
+
+            <x-admin::form.control-group.error ::name="name"/>
         </div>
     </script>
 
@@ -196,35 +199,6 @@
             },
 
             computed: {
-                /**
-                 * Get the input position style.
-                 * 
-                 * @return {String}
-                 */
-                 inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                textPositionStyle() {
-                    return this.position === 'left'  ? this.isRTL 
-                            ? 'justify-content: end;' 
-                            : 'justify-content: space-between;' 
-                        : this.isRTL 
-                            ? 'justify-content: space-between;' 
-                            : 'justify-content: end;';
-                },
-
                 /**
                  * Get the selected value.
                  * 

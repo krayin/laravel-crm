@@ -15,9 +15,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center"
+                class="rounded-xs flex h-[34px] items-center border border-transparent"
                 :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
-                :style="textPositionStyle"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -26,18 +25,24 @@
                     v-model="inputValue"
                 />
 
-                <div class="group relative flex !w-full flex-col items-center">
-                    <span class="w-40 truncate rounded border border-transparent ltr:pl-0.5 rtl:pr-0.5">@{{ inputValue }}</span>
+                <div
+                    class="group relative !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <span class="truncate rounded cursor-pointer">
+                        @{{ inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                    </span>
 
+                    <!-- Tooltip -->
                     <div
-                        class="absolute bottom-0 mb-5 hidden flex-col items-center group-hover:flex"
+                        class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
                         v-if="inputValue.length > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black p-4 text-xs leading-none text-white shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 rotate-45 bg-black"></div>
+                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
@@ -54,39 +59,37 @@
                 class="relative flex w-full flex-col"
                 v-else
             >
-                <div class="relative flex w-full flex-col">
-                    <x-admin::form.control-group.control
-                        type="datetime"
-                        ::id="name"
-                        ::name="name"
-                        class="text-normal py-1 ltr:pr-16 rtl:pl-16"
-                        ::rules="rules"
-                        ::label="label"
-                        ::placeholder="placeholder"
-                        ::style="inputPositionStyle"
-                        v-model="inputValue"
-                        ref="input"
-                        readonly
-                    />
-                        
-                    <!-- Action Buttons -->
-                    <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white ltr:right-2 rtl:left-2">
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
-                            @click="save"
-                        >
-                            <i class="icon-tick text-md cursor-pointer font-bold text-green-600" />
-                        </button>
+                <x-admin::form.control-group.control
+                    type="datetime"
+                    ::id="name"
+                    ::name="name"
+                    class="text-normal py-1 ltr:pr-16 rtl:pl-16"
+                    ::rules="rules"
+                    ::label="label"
+                    ::placeholder="placeholder"
+                    ::style="inputPositionStyle"
+                    v-model="inputValue"
+                    ref="input"
+                    readonly
+                />
                     
-                        <button
-                            type="button"
-                            class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
-                            @click="cancel"
-                        >
-                            <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600" />
-                        </button>
-                    </div>
+                <!-- Action Buttons -->
+                <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 bg-white ltr:right-2 rtl:left-2">
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
+                        @click="save"
+                    >
+                        <i class="icon-tick text-md cursor-pointer font-bold text-green-600" />
+                    </button>
+                
+                    <button
+                        type="button"
+                        class="flex items-center justify-center bg-red-100 p-1 hover:bg-red-200 ltr:rounded-r-md rtl:rounded-l-md"
+                        @click="cancel"
+                    >
+                        <i class="icon-cross-large text-md cursor-pointer font-bold text-red-600" />
+                    </button>
                 </div>
 
                 <x-admin::form.control-group.error ::name="name"/>
