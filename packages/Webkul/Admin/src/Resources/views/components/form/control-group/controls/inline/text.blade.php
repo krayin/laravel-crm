@@ -177,14 +177,14 @@
                  * 
                  * @return {String}
                  */
-                 inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
+                inputPositionStyle() {
+                    return this.position === 'left'
+                        ? this.isRTL
+                            ? { textAlign: 'right', paddingRight: '9px' }
+                            : { textAlign: 'left', paddingLeft: '9px' }
+                        : this.isRTL
+                            ? { textAlign: 'left', paddingLeft: '60px' }
+                            : { textAlign: 'right', paddingRight: '60px' };
                 },
 
                 /**
