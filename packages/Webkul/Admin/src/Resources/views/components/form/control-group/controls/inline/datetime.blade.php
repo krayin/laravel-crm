@@ -170,37 +170,6 @@
                 },
             },
 
-            computed: {
-                /**
-                 * Get the input position style.
-                 * 
-                 * @return {String}
-                 */
-                 inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
-                },
-
-                /**
-                 * Get the text position style.
-                 * 
-                 * @return {String}
-                 */
-                textPositionStyle() {
-                    return this.position === 'left'  ? this.isRTL 
-                            ? 'justify-content: end;' 
-                            : 'justify-content: space-between;' 
-                        : this.isRTL 
-                            ? 'justify-content: space-between;' 
-                            : 'justify-content: end;';
-                },
-            },
-
             methods: {
                 /**
                  * Toggle the input.
