@@ -15,11 +15,14 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\QuoteResource;
+use Webkul\Core\Traits\PDFHandler;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
 
 class QuoteController extends Controller
 {
+    use PDFHandler;
+
     /**
      * Create a new controller instance.
      *
@@ -175,12 +178,13 @@ class QuoteController extends Controller
     /**
      * Print and download the for the specified resource.
      */
-    public function print($id): Response
+    public function print($id): mixed
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
-        return PDF::loadHTML(view('admin::quotes.pdf', compact('quote'))->render())
-            ->setPaper('a4')
-            ->download('Quote_'.$quote->subject.'.pdf');
+        return $this->downloadPDF(
+            view('admin::quotes.pdf', compact('quote'))->render(),
+            'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
+        );
     }
 }
