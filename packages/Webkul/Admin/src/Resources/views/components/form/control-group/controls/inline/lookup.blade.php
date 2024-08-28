@@ -22,8 +22,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center border border-transparent"
-                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
                     type="hidden"

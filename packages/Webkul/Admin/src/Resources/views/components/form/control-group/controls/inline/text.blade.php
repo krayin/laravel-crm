@@ -15,8 +15,8 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="rounded-xs flex h-[34px] items-center border border-transparent"
-                :class="allowEdit ? 'hover:bg-gray-50 dark:hover:bg-gray-800' : ''"
+                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
                     type="hidden"
@@ -26,7 +26,7 @@
                 />
 
                 <div
-                    class="group relative !w-full pl-2.5"
+                    class="group relative !w-full pl-2.5 h-[18px]"
                     :style="{ 'text-align': position }"
                 >
                     <span class="truncate rounded cursor-pointer">
@@ -72,7 +72,7 @@
                 />
                     
                 <!-- Action Buttons -->
-                <div class="absolute top-1/2 flex -translate-y-1/2 transform gap-0.5 ltr:right-2 rtl:left-2">
+                <div class="absolute top-[6px] flex gap-0.5 ltr:right-2 rtl:left-2">
                     <button
                         type="button"
                         class="flex items-center justify-center bg-green-100 p-1 hover:bg-green-200 ltr:rounded-l-md rtl:rounded-r-md"
