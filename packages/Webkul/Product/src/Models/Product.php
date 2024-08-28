@@ -43,7 +43,7 @@ class Product extends Model implements ProductContract
      */
     public function locations(): BelongsToMany
     {
-        return $this->belongsToMany(LocationProxy::modelClass(), 'product_inventories');
+        return $this->belongsToMany(LocationProxy::modelClass(), 'product_inventories', 'product_id', 'warehouse_location_id');
     }
 
     /**
