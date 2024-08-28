@@ -1725,7 +1725,7 @@ return [
 
             'products' => [
                 'product-name' => 'Product Name',
-                'quantity'     => 'quantity',
+                'quantity'     => 'Quantity',
                 'price'        => 'Price',
                 'amount'       => 'Amount',
                 'action'       => 'Action',
@@ -1761,7 +1761,7 @@ return [
 
             'products' => [
                 'product-name' => 'Product Name',
-                'quantity'     => 'quantity',
+                'quantity'     => 'Quantity',
                 'price'        => 'Price',
                 'amount'       => 'Amount',
                 'action'       => 'Action',

@@ -89,83 +89,94 @@
         type="text/x-template"
         id="v-product-item-template"
     >
-        <x-admin::table.tbody.tr class="border-b border-gray-200 dark:border-gray-800">
+        <x-admin::table.tbody.tr class="align-top border-b border-gray-200 dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
-                <x-admin::form.control-group class="!mb-0">
-                    <x-admin::lookup
-                        ::src="src"
-                        name="name"
-                        ::params="params"
-                        :placeholder="trans('admin::app.leads.view.products.product-name')"
-                        @on-selected="(product) => addProduct(product)"
-                        ::value="{ id: product.product_id, name: product.name }"
-                    />
+                <v-form v-slot="{ errors }">
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::lookup 
+                            ::src="src"
+                            name="name"
+                            ::params="params"
+                            :placeholder="trans('admin::app.leads.view.products.product-name')"
+                            @on-selected="(product) => addProduct(product)"
+                            ::value="{ id: product.product_id, name: product.name }"
+                        />
 
-                    <x-admin::form.control-group.control
-                        type="hidden"
-                        name="product_id"
-                        v-model="product.product_id"
-                        rules="required"
-                        :label="trans('admin::app.leads.view.products.product-name')"
-                        :placeholder="trans('admin::app.leads.view.products.product-name')"
-                        ::url="url(product)"
-                    />
-
-                    <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
-                </x-admin::form.control-group>
+                        <x-admin::form.control-group.control
+                            type="hidden"
+                            name="product_id"
+                            v-model="product.product_id"
+                            rules="required"
+                            :label="trans('admin::app.leads.view.products.product-name')"
+                            :placeholder="trans('admin::app.leads.view.products.product-name')"
+                            ::url="url(product)"
+                        />
+                
+                        <x-admin::form.control-group.error ::name="`${inputName}[product_id]`" />
+                    </x-admin::form.control-group>
+                </v-form>
             </x-admin::table.td>
 
             <!-- Product Quantity -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <x-admin::form.control-group class="!mb-0">
-                    <x-admin::form.control-group.control
-                        type="inline"
-                        ::name="'quantity'"
-                        ::value="product.quantity"
-                        rules="required|decimal:4"
-                        :label="trans('admin::app.leads.view.products.quantity')"
-                        :placeholder="trans('admin::app.leads.view.products.quantity')"
-                        @on-change="(event) => product.quantity = event.value"
-                        ::url="url(product)"
-                        ::params="{product_id: product.product_id}"
-                        position="left"
-                    />
-                </x-admin::form.control-group>
+                <v-form v-slot="{ errors }">
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group.control
+                            type="inline"
+                            ::name="'quantity'"
+                            ::value="product.quantity"
+                            rules="required|decimal:4"
+                            :label="trans('admin::app.leads.view.products.quantity')"
+                            :placeholder="trans('admin::app.leads.view.products.quantity')"
+                            @on-change="(event) => product.quantity = event.value"
+                            ::url="url(product)"
+                            ::params="{product_id: product.product_id}"
+                            position="left"
+                            ::errors="errors"
+                        />
+                    </x-admin::form.control-group>
+                </v-form>
             </x-admin::table.td>
 
             <!-- Price -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <x-admin::form.control-group class="!mb-0">
-                <x-admin::form.control-group.control
-                        type="inline"
-                        ::name="'price'"
-                        ::value="product.price"
-                        rules="required|decimal:4"
-                        :label="trans('admin::app.leads.view.products.price')"
-                        :placeholder="trans('admin::app.leads.view.products.price')"
-                        @on-change="(event) => product.price = event.value"
-                        ::url="url(product)"
-                        ::params="{product_id: product.product_id}"
-                        position="left"
-                    />
-                </x-admin::form.control-group>
+                <v-form v-slot="{ errors }">
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group.control
+                            type="inline"
+                            ::name="'price'"
+                            ::value="product.price"
+                            rules="required|decimal:4"
+                            :label="trans('admin::app.leads.view.products.price')"
+                            :placeholder="trans('admin::app.leads.view.products.price')"
+                            @on-change="(event) => product.price = event.value"
+                            ::url="url(product)"
+                            ::params="{product_id: product.product_id}"
+                            position="left"
+                            ::errors="errors"
+                        />
+                    </x-admin::form.control-group>
+                </v-form>
             </x-admin::table.td>
 
             <!-- Total -->
             <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
-                <x-admin::form.control-group class="!mb-0">
-                    <x-admin::form.control-group.control
-                        type="inline"
-                        ::name="'amount'"
-                        ::value="product.price * product.quantity"
-                        rules="required|decimal:4"
-                        :label="trans('admin::app.leads.view.products.total')"
-                        :placeholder="trans('admin::app.leads.view.products.total')"
-                        ::allowEdit="false"
-                        ::url="url(product)"
-                    />
-                </x-admin::form.control-group>
+                <v-form v-slot="{ errors }">
+                    <x-admin::form.control-group class="!mb-0">
+                        <x-admin::form.control-group.control
+                            type="inline"
+                            ::name="'amount'"
+                            ::value="product.price * product.quantity"
+                            rules="required|decimal:4"
+                            :label="trans('admin::app.leads.view.products.total')"
+                            :placeholder="trans('admin::app.leads.view.products.total')"
+                            ::allowEdit="false"
+                            ::url="url(product)"
+                            ::errors="errors"
+                        />
+                    </x-admin::form.control-group>
+                </v-form>
             </x-admin::table.td>
 
             <!-- Action -->
