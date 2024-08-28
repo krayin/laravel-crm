@@ -17,17 +17,27 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('krayin.admin.settings.attributes.create.breadcrumbs.before') !!}
+
                         <x-admin::breadcrumbs name="settings.attributes.create" />
+
+                        {!! view_render_event('krayin.admin.settings.attributes.create.breadcrumbs.after') !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
+                        {!! view_render_event('krayin.admin.settings.attributes.create.title.before') !!}
+
                         @lang('admin::app.settings.attributes.create.title')
+
+                        {!! view_render_event('krayin.admin.settings.attributes.create.title.after') !!}
                     </div>
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for Attributes -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('krayin.admin.settings.attributes.create.create_button.before') !!}
+
                         @if (bouncer()->hasPermission('settings.automation.attributes.create'))
                             <button
                                 type="submit"
@@ -36,6 +46,8 @@
                                 @lang('admin::app.settings.attributes.create.save-btn')
                             </button>
                         @endif
+
+                        {!! view_render_event('krayin.admin.settings.attributes.create.create_button.after') !!}
                     </div>
                 </div>
             </div>
@@ -43,10 +55,10 @@
             <!-- Create Attributes Vue Components -->
             <v-create-attributes>
                 <!-- Shimmer Effect -->
-                {{-- <x-admin::shimmer.catalog.attributes /> --}}
+                <x-admin::shimmer.settings.attributes />
             </v-create-attributes>
 
-            {!! view_render_event('krayin.admin.settings.attributes.form_controls.after') !!}
+            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.after') !!}
         </div>
     </x-admin::form>
 
@@ -68,6 +80,8 @@
                             @lang('admin::app.settings.attributes.create.labels')
                         </p>
 
+                        {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.name.before') !!}
+
                         <!-- Name -->
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
@@ -86,6 +100,8 @@
 
                             <x-admin::form.control-group.error control-name="name" />
                         </x-admin::form.control-group>
+
+                        {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.name.after') !!}
 
                         <!-- Options -->
                         <div
@@ -114,6 +130,8 @@
                             <!-- For Attribute Options If Data Exist -->
                             <div class="mt-4 overflow-x-auto">
                                 <div class="flex gap-4 max-sm:flex-wrap">
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.option_type.before') !!}
+
                                     <!-- Input Option Type -->
                                     <x-admin::form.control-group v-if="attributeType != 'lookup'" class="mb-2.5 w-1/2">
                                         <x-admin::form.control-group.label>
@@ -142,6 +160,10 @@
                                         />
                                     </x-admin::form.control-group>
                                 
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.option_type.after') !!}
+
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.lookup_type.before') !!}
+
                                     <!-- Input Lookup Type -->
                                     <x-admin::form.control-group v-if="attributeType == 'lookup' || (optionType == 'lookup')" class="mb-2.5 w-1/2">
                                         <x-admin::form.control-group.label>
@@ -168,9 +190,13 @@
                                             control-name="admin"
                                         />
                                     </x-admin::form.control-group>
+
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.lookup_type.after') !!}
                                 </div>
 
                                 <template v-if="this.options?.length && optionType == 'options'">
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.table.before') !!}
+
                                     <!-- Table Information -->
                                     <x-admin::table>
                                         <x-admin::table.thead class="text-sm font-medium dark:bg-gray-800">
@@ -241,6 +267,8 @@
                                             </template>
                                         </draggable>
                                     </x-admin::table>
+
+                                    {!! view_render_event('krayin.admin.settings.attributes.create.table.after') !!}
                                 </template>
                             </div>
                         </div>
@@ -253,6 +281,8 @@
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2">
+                    {!! view_render_event('krayin.admin.settings.attributes.create.accordion.general.before') !!}
+
                     <!-- General -->
                     <x-admin::accordion>
                         <x-slot:header>
@@ -262,6 +292,8 @@
                         </x-slot>
 
                         <x-slot:content>
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.code.before') !!}
+
                             <!-- Code -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -280,6 +312,10 @@
 
                                 <x-admin::form.control-group.error control-name="code" />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.code.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.select.before') !!}
 
                             <!-- Attribute Type -->
                             <x-admin::form.control-group>
@@ -312,6 +348,10 @@
                                 <x-admin::form.control-group.error control-name="type" />
                             </x-admin::form.control-group>
 
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.select.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.entity_type.before') !!}
+
                             <!-- Entity Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -335,9 +375,15 @@
                                     
                                 <x-admin::form.control-group.error control-name="entity_type" />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.entity_type.after') !!}
                         </x-slot>
                     </x-admin::accordion>
                     
+                    {!! view_render_event('krayin.admin.settings.attributes.create.accordion.general.after') !!}
+
+                    {!! view_render_event('krayin.admin.settings.attributes.create.accordion.validation.before') !!}
+
                     <!-- Validations -->
                     <x-admin::accordion>
                         <x-slot:header>
@@ -347,6 +393,8 @@
                         </x-slot>
 
                         <x-slot:content>
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.validation.before') !!}
+
                             <!-- Input Validation -->
                             <x-admin::form.control-group v-if="swatchAttribute && (attributeType == 'text')">
                                 <x-admin::form.control-group.label>
@@ -375,6 +423,10 @@
                                 <x-admin::form.control-group.error control-name="validation" />
                             </x-admin::form.control-group>
 
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.validation.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.is_required.before') !!}
+
                             <!-- Is Required -->
                                 <x-admin::form.control-group class="!mb-2 flex items-center gap-2.5">
                                 <x-admin::form.control-group.control
@@ -393,6 +445,10 @@
                                 </label>
                             </x-admin::form.control-group>
 
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.is_required.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.is_unique.before') !!}
+
                             <!-- Is Unique -->
                             <x-admin::form.control-group class="!mb-0 flex select-none items-center gap-2.5">
                                 <x-admin::form.control-group.control
@@ -410,12 +466,18 @@
                                     @lang('admin::app.settings.attributes.create.is-unique')
                                 </label>
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.is_unique.after') !!}
                         </x-slot>
                     </x-admin::accordion>
+
+                    {!! view_render_event('krayin.admin.settings.attributes.create.accordion.validation.after') !!}
                 </div>
             </div>
             
             {!! view_render_event('krayin.admin.settings.attributes.create.card.general.after') !!}
+
+            {!! view_render_event('krayin.admin.settings.attributes.create.modal.before') !!}
 
             <!-- Add Options Model Form -->
             <x-admin::form
@@ -447,6 +509,8 @@
                                 name="id"
                             />
 
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.name.before') !!}
+
                             <!-- Admin Input -->
                             <x-admin::form.control-group class="mb-2.5 w-full">
                                 <x-admin::form.control-group.label class="required">
@@ -463,6 +527,8 @@
 
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.attributes.create.form_controls.name.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer !-->
@@ -477,6 +543,8 @@
                     </x-admin::modal>
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('krayin.admin.settings.attributes.create.modal.after') !!}
         </script>
 
         <script type="module">
