@@ -25,7 +25,7 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="truncate rounded cursor-pointer">
-                        @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20 ? inputValue.map(item => `${item.value}(${item.label})`).join(', ').substring(0, 20) + '...' : inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}
+                        @{{ valueLabel ? valueLabel : inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20 ? inputValue.map(item => `${item.value}(${item.label})`).join(', ').substring(0, 20) + '...' : inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}
                     </span>
 
                     <div
@@ -173,7 +173,12 @@
                 url: {
                     type: String,
                     default: '',
-                }
+                },
+
+                valueLabel: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data() {

@@ -33,7 +33,7 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="truncate rounded cursor-pointer">
-                        @{{ selectedValue }}
+                        @{{ valueLabel ? valueLabel : selectedValue }}
                     </span>
 
                     <!-- Tooltip -->
@@ -173,6 +173,11 @@
                 },
 
                 url: {
+                    type: String,
+                    default: '',
+                },
+
+                valueLabel: {
                     type: String,
                     default: '',
                 },
