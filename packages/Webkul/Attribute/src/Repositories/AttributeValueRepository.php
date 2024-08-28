@@ -37,7 +37,7 @@ class AttributeValueRepository extends Repository
      */
     public function save(array $data, $attributes = []): void
     {
-        if (! empty($attributes)) {
+        if (empty($attributes)) {
             $conditions = ['entity_type' => $data['entity_type']];
 
             if (isset($data['quick_add'])) {
