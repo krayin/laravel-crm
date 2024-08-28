@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Http\Controllers\Quote;
 
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -10,16 +9,20 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\QuoteResource;
+use Webkul\Core\Traits\PDFHandler;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Quote\Repositories\QuoteRepository;
 
 class QuoteController extends Controller
 {
+    use PDFHandler;
+
     /**
      * Create a new controller instance.
      *
@@ -175,12 +178,13 @@ class QuoteController extends Controller
     /**
      * Print and download the for the specified resource.
      */
-    public function print($id): Response
+    public function print($id): Response|StreamedResponse
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
-        return PDF::loadHTML(view('admin::quotes.pdf', compact('quote'))->render())
-            ->setPaper('a4')
-            ->download('Quote_'.$quote->subject.'.pdf');
+        return $this->downloadPDF(
+            view('admin::quotes.pdf', compact('quote'))->render(),
+            'Quote_'.$quote->subject.'_'.$quote->created_at->format('d-m-Y')
+        );
     }
 }
