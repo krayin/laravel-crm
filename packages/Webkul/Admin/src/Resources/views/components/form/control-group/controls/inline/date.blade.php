@@ -56,7 +56,7 @@
         
             <!-- Editing view -->
             <div
-                class="relative flex w-full flex-col"
+                class="relative flex w-full flex-col ltr:[&>span>i]:right-14 rtl:[&>span>i]:left-14"
                 v-else
             >
                 <x-admin::form.control-group.control
