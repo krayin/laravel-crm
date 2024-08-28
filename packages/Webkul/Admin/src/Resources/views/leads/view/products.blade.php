@@ -7,53 +7,45 @@
         id="v-lead-products-template"
     >
         <div v-if="products.length" class="flex flex-col gap-4 p-3">
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-                ref="modalForm"
-            >
-                <form @submit="handleSubmit($event, () => {})">
-                    <!-- Table -->
-                    <x-admin::table>
-                        <!-- Table Head -->
-                        <x-admin::table.thead>
-                            <x-admin::table.thead.tr>
-                                <x-admin::table.th>
-                                    @lang('admin::app.leads.view.products.product-name')
-                                </x-admin::table.th>
-                    
-                                <x-admin::table.th class="ltr:text-right rtl:text-left">
-                                    @lang('admin::app.leads.view.products.quantity')
-                                </x-admin::table.th>
-                    
-                                <x-admin::table.th class="ltr:text-right rtl:text-left">
-                                    @lang('admin::app.leads.view.products.price')
-                                </x-admin::table.th>
-                    
-                                <x-admin::table.th class="ltr:text-right rtl:text-left">
-                                    @lang('admin::app.leads.view.products.amount')
-                                </x-admin::table.th>
+            <!-- Table -->
+            <x-admin::table>
+                <!-- Table Head -->
+                <x-admin::table.thead>
+                    <x-admin::table.thead.tr>
+                        <x-admin::table.th>
+                            @lang('admin::app.leads.view.products.product-name')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                            @lang('admin::app.leads.view.products.quantity')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                            @lang('admin::app.leads.view.products.price')
+                        </x-admin::table.th>
+            
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                            @lang('admin::app.leads.view.products.amount')
+                        </x-admin::table.th>
 
-                                <x-admin::table.th class="ltr:text-right rtl:text-left">
-                                    @lang('admin::app.leads.view.products.action')
-                                </x-admin::table.th>
-                            </x-admin::table.thead.tr>
-                        </x-admin::table.thead>
+                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                            @lang('admin::app.leads.view.products.action')
+                        </x-admin::table.th>
+                    </x-admin::table.thead.tr>
+                </x-admin::table.thead>
 
-                        <!-- Table Body -->
-                        <x-admin::table.tbody>
-                            <!-- Product Item Vue Component -->
-                            <v-product-item
-                                v-for='(product, index) in products'
-                                :product="product"
-                                :key="index"
-                                :index="index"
-                                @onRemoveProduct="removeProduct($event)"
-                            ></v-product-item>
-                        </x-admin::table.tbody>
-                    </x-admin::table>
-                </form>
-            </x-admin::form>
+                <!-- Table Body -->
+                <x-admin::table.tbody>
+                    <!-- Product Item Vue Component -->
+                    <v-product-item
+                        v-for='(product, index) in products'
+                        :product="product"
+                        :key="index"
+                        :index="index"
+                        @onRemoveProduct="removeProduct($event)"
+                    ></v-product-item>
+                </x-admin::table.tbody>
+            </x-admin::table>
 
             <!-- Add New Product Item -->
             <div>
