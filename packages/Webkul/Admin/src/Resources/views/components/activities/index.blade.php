@@ -1,6 +1,7 @@
 @props([
     'endpoint',
     'emailDetachEndpoint' => null,
+    'activeType'          => 'all',
     'types'               => null,
     'extraTypes'          => null,
 ])
@@ -9,6 +10,7 @@
 <v-activities
     endpoint="{{ $endpoint }}"
     email-detach-endpoint="{{ $emailDetachEndpoint }}"
+    active-type="{{ $activeType }}"
     @if($types):types='@json($types)'@endif
     @if($extraTypes):extra-types='@json($extraTypes)'@endif
 >
@@ -58,7 +60,7 @@
                                     :class="typeClasses[activity.type] ?? typeClasses['default']"
                                 >
                                 </div>
-                                
+
                                 <!-- Activity Details -->
                                 <div
                                     class="flex w-full justify-between gap-4 rounded-md p-4"
@@ -76,7 +78,7 @@
                                                 <template v-if="activity.type == 'system' && activity.additional">
                                                     <div class="flex items-center gap-1">
                                                         <span>:</span>
-                                                        
+
                                                         <span>
                                                             @{{ activity.additional.old.label ?? "@lang('admin::app.components.activities.index.empty')" }}
                                                         </span>
@@ -103,18 +105,18 @@
                                                     @{{ activity.additional.to.join(', ') }}
                                                 </p>
 
-                                                <p 
+                                                <p
                                                     v-if="activity.additional.cc"
-                                                    class="dark:text-white"  
+                                                    class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.cc'):
 
                                                     @{{ activity.additional.cc.join(', ') }}
                                                 </p>
 
-                                                <p 
+                                                <p
                                                     v-if="activity.additional.bcc"
-                                                    class="dark:text-white"  
+                                                    class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.bcc'):
 
@@ -124,19 +126,19 @@
 
                                             <template v-else>
                                                 <!-- Activity Schedule -->
-                                                <p 
+                                                <p
                                                     v-if="activity.schedule_from && activity.schedule_from"
-                                                    class="dark:text-white"  
+                                                    class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.scheduled-on'):
-                                                    
+
                                                     @{{ $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') + ' - ' + $admin.formatDate(activity.schedule_from, 'd MMM yyyy, h:mm A') }}
                                                 </p>
 
                                                 <!-- Activity Participants -->
-                                                <p 
+                                                <p
                                                     v-if="activity.participants?.length"
-                                                    class="dark:text-white"  
+                                                    class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.participants'):
 
@@ -146,9 +148,9 @@
                                                 </p>
 
                                                 <!-- Activity Location -->
-                                                <p 
+                                                <p
                                                     v-if="activity.location"
-                                                    class="dark:text-white"  
+                                                    class="dark:text-white"
                                                 >
                                                     @lang('admin::app.components.activities.index.location'):
 
@@ -158,7 +160,7 @@
                                         </div>
 
                                         <!-- Activity Description -->
-                                        <p 
+                                        <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
                                             v-html="activity.comment"
@@ -194,7 +196,7 @@
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                         </div>
                                     </div>
-                                    
+
                                     <!-- Activity More Options -->
                                     <template v-if="activity.type != 'system'">
                                         <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
@@ -213,17 +215,17 @@
                                             <x-slot:menu class="!min-w-40">
                                                 <template v-if="activity.type != 'email'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
-                                                        <x-admin::dropdown.menu.item 
+                                                        <x-admin::dropdown.menu.item
                                                             v-if="! activity.is_done"
                                                             @click="markAsDone(activity)"
                                                         >
                                                             <div class="flex items-center gap-2">
                                                                 <span class="icon-tick text-2xl"></span>
-                                                                
+
                                                                 @lang('admin::app.components.activities.index.mark-as-done')
                                                             </div>
                                                         </x-admin::dropdown.menu.item>
-                                                        
+
                                                         <x-admin::dropdown.menu.item>
                                                             <a
                                                                 class="flex items-center gap-2"
@@ -231,7 +233,7 @@
                                                                 target="_blank"
                                                             >
                                                                 <span class="icon-edit text-2xl"></span>
-                                                                
+
                                                                 @lang('admin::app.components.activities.index.edit')
                                                             </a>
                                                         </x-admin::dropdown.menu.item>
@@ -262,7 +264,7 @@
                                                             </a>
                                                         </x-admin::dropdown.menu.item>
                                                     @endif
-                                                    
+
                                                     <x-admin::dropdown.menu.item @click="unlinkEmail(activity)">
                                                         <div class="flex items-center gap-2">
                                                             <span class="icon-attachment text-2xl"></span>
@@ -283,10 +285,10 @@
                                 v-if="! filteredActivities.length"
                             >
                                 <img
-                                    class="dark:mix-blend-exclusion dark:invert" 
+                                    class="dark:mix-blend-exclusion dark:invert"
                                     :src="typeIllustrations[selectedType]?.image ?? typeIllustrations['all'].image"
                                 >
-                                
+
                                 <div class="flex flex-col items-center gap-2">
                                     <p class="text-xl font-semibold dark:text-white">
                                         @{{ typeIllustrations[selectedType]?.title ?? typeIllustrations['all'].title }}
@@ -325,6 +327,11 @@
                 emailDetachEndpoint: {
                     type: String,
                     default: '',
+                },
+
+                activeType: {
+                    type: String,
+                    default: 'all',
                 },
 
                 types: {
@@ -372,10 +379,10 @@
                     isLoading: false,
 
                     isUpdating: {},
-                    
+
                     activities: [],
 
-                    selectedType: 'all',
+                    selectedType: this.activeType,
 
                     typeClasses: {
                         email: 'icon-mail bg-green-200 text-green-900 dark:!text-green-900',
@@ -390,55 +397,55 @@
 
                     typeIllustrations: {
                         all: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/activities.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.all.description') }}",
                         },
-                        
+
                         planned: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/plans.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/plans.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.planned.description') }}",
                         },
-                        
+
                         note: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/notes.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/notes.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.notes.description') }}",
                         },
-                        
+
                         call: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/calls.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/calls.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.calls.description') }}",
                         },
-                        
+
                         meeting: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/meetings.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/meetings.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.meetings.description') }}",
                         },
-                        
+
                         lunch: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/lunches.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/lunches.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.lunches.description') }}",
                         },
-                        
+
                         file: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/files.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/files.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.files.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.files.description') }}",
                         },
-                        
+
                         email: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/emails.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/emails.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.emails.description') }}",
                         },
 
                         system: {
-                            image: "{{ admin_vite()->asset('images/empty-placeholders/activities.svg') }}",
+                            image: "{{ vite()->asset('images/empty-placeholders/activities.svg') }}",
                             title: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.title') }}",
                             description: "{{ trans('admin::app.components.activities.index.empty-placeholders.system.description') }}",
                         }
@@ -499,7 +506,7 @@
                                     self.isUpdating[activity.id] = false;
 
                                     activity.is_done = 1;
-                                    
+
                                     self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
                                 .catch (function (error) {
@@ -513,7 +520,7 @@
 
                 remove: function(activity) {
                     let self = this;
-                    
+
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             self.isUpdating[activity.id] = true;
@@ -523,12 +530,12 @@
                                     self.isUpdating[activity.id] = false;
 
                                     self.activities.splice(self.activities.indexOf(activity), 1);
-                                    
+
                                     self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
                                 .catch (function (error) {
                                     self.isUpdating[activity.id] = false;
-                                    
+
                                     self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
                         },
@@ -537,7 +544,7 @@
 
                 unlinkEmail: function(activity) {
                     let self = this;
-                    
+
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             let emailId = activity.parent_id ?? activity.id;
@@ -552,7 +559,7 @@
 
                                     relatedActivities.forEach(activity => {
                                         const index = self.activities.findIndex(a => a === activity);
-                                        
+
                                         if (index !== -1) {
                                             self.activities.splice(index, 1);
                                         }

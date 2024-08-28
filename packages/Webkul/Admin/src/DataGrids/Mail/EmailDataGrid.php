@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Tag\Repositories\TagRepository;
@@ -22,8 +22,9 @@ class EmailDataGrid extends DataGrid
                 'emails.name',
                 'emails.subject',
                 'emails.reply',
+                'emails.is_read',
                 'emails.created_at',
-                'tags.name as tag_name',
+                'tags.name as tags',
                 DB::raw('COUNT(DISTINCT '.DB::getTablePrefix().'email_attachments.id) as attachments')
             )
             ->leftJoin('email_attachments', 'emails.id', '=', 'email_attachments.email_id')
@@ -35,7 +36,7 @@ class EmailDataGrid extends DataGrid
 
         $this->addFilter('id', 'emails.id');
         $this->addFilter('name', 'emails.name');
-        $this->addFilter('tag_name', 'tags.name');
+        $this->addFilter('tags', 'tags.name');
         $this->addFilter('created_at', 'emails.created_at');
 
         return $queryBuilder;
@@ -62,7 +63,7 @@ class EmailDataGrid extends DataGrid
             'searchable' => false,
             'filterable' => false,
             'sortable'   => false,
-            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '-',
+            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
         ]);
 
         $this->addColumn([
@@ -81,11 +82,10 @@ class EmailDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
-            'closure'    => fn ($row) => Str::limit(strip_tags($row->reply), 50),
         ]);
 
         $this->addColumn([
-            'index'              => 'tag_name',
+            'index'              => 'tags',
             'label'              => trans('admin::app.mail.index.datagrid.tag-name'),
             'type'               => 'string',
             'searchable'         => false,
@@ -94,7 +94,7 @@ class EmailDataGrid extends DataGrid
             'filterable_type'    => 'searchable_dropdown',
             'closure'            => function ($row) {
                 if ($email = app(EmailRepository::class)->find($row->id)) {
-                    return $email->tags->implode('name', ', ');
+                    return $email->tags;
                 }
 
                 return '--';
@@ -116,7 +116,11 @@ class EmailDataGrid extends DataGrid
             'filterable'      => true,
             'filterable_type' => 'date_range',
             'sortable'        => true,
-            'closure'         => fn ($row) => core()->formatDate($row->created_at),
+            'closure'         => function ($row) {
+                return Carbon::parse($row->created_at)->isToday()
+                    ? Carbon::parse($row->created_at)->format('h:i A')
+                    : Carbon::parse($row->created_at)->format('M d');
+            },
         ]);
     }
 

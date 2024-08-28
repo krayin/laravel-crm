@@ -123,6 +123,10 @@ class Lead extends AbstractReporting
     {
         $days = $startDate->diffInDays($endDate);
 
+        if ($days == 0) {
+            return 0;
+        }
+
         return $this->getTotalLeads($startDate, $endDate) / $days;
     }
 

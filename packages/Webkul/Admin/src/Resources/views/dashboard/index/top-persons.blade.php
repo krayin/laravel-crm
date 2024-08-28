@@ -40,7 +40,7 @@
                         <!-- Person Details -->
                         <div class="flex flex-col gap-1">
                             <p class="font-medium text-gray-800 dark:text-white">@{{ item.name }}</p>
-                            
+
                             <p class="font-normal text-gray-800 dark:text-white">@{{ item.emails.map(item => item.value).join(', ') }}</p>
                         </div>
                     </a>
@@ -54,7 +54,7 @@
                     <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
                         <!-- Placeholder Image -->
                         <img
-                            src="{{ admin_vite()->asset('images/empty-placeholders/users.svg') }}"
+                            src="{{ vite()->asset('images/empty-placeholders/users.svg') }}"
                             class="dark:mix-blend-exclusion dark:invert"
                         >
 

@@ -42,7 +42,7 @@
                                 class="h-3.5 w-3.5 rounded-sm"
                                 :style="{ backgroundColor: colors[index] }"
                             ></span>
-                            
+
                             <p class="text-xs dark:text-gray-300">
                                 @{{ stat.name }}
                             </p>
@@ -58,7 +58,7 @@
                     <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
                         <!-- Placeholder Image -->
                         <img
-                            src="{{ admin_vite()->asset('images/empty-placeholders/default.svg') }}"
+                            src="{{ vite()->asset('images/empty-placeholders/default.svg') }}"
                             class="dark:mix-blend-exclusion dark:invert"
                         >
 

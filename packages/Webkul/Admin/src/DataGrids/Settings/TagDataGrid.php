@@ -60,15 +60,6 @@ class TagDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
-            'closure'    => function ($row) {
-                $color = $row->color ?? 'gray-500';
-                $html = "<div class=\"flex items-center gap-2\">
-                            <span class='inline-block h-4 w-4 cursor-pointer rounded-full bg-{$color } shadow-md'></span>
-                            <span>{$row->name}</span>
-                        </div>";
-
-                return $html;
-            },
         ]);
 
         $this->addColumn([

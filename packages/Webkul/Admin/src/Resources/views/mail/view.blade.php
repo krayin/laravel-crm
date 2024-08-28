@@ -1,3 +1,11 @@
+@php
+    if (! $email->is_read) {
+        $email->is_read = true;
+    
+        $email->save();
+    }
+@endphp
+
 <x-admin::layouts>
     <x-slot:title>
         @lang('admin::app.mail.view.subject', ['subject' => $email->subject])

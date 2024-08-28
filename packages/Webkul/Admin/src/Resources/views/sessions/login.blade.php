@@ -6,7 +6,7 @@
 
     <div class="flex h-[100vh] items-center justify-center">
         <div class="flex flex-col items-center gap-5">
-            <!-- Logo -->            
+            <!-- Logo -->
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
                 <img
                     class="h-10 w-[110px]"
@@ -15,8 +15,8 @@
                 />
             @else
                 <img
-                    class="w-max" 
-                    src="{{ admin_vite()->asset('images/logo.svg') }}"
+                    class="w-max"
+                    src="{{ vite()->asset('images/logo.svg') }}"
                     alt="{{ config('app.name') }}"
                 />
             @endif
@@ -35,12 +35,12 @@
                                 @lang('admin::app.users.login.email')
                             </x-admin::form.control-group.label>
 
-                            <x-admin::form.control-group.control 
-                                type="email" 
-                                class="w-[254px] max-w-full" 
+                            <x-admin::form.control-group.control
+                                type="email"
+                                class="w-[254px] max-w-full"
                                 id="email"
-                                name="email" 
-                                rules="required|email" 
+                                name="email"
+                                rules="required|email"
                                 :label="trans('admin::app.users.login.email')"
                                 :placeholder="trans('admin::app.users.login.email')"
                             />
@@ -53,18 +53,18 @@
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.users.login.password')
                             </x-admin::form.control-group.label>
-                        
-                            <x-admin::form.control-group.control 
-                                type="password" 
-                                class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10" 
+
+                            <x-admin::form.control-group.control
+                                type="password"
+                                class="w-[254px] max-w-full ltr:pr-10 rtl:pl-10"
                                 id="password"
-                                name="password" 
-                                rules="required|min:6" 
+                                name="password"
+                                rules="required|min:6"
                                 :label="trans('admin::app.users.login.password')"
                                 :placeholder="trans('admin::app.users.login.password')"
                             />
-                    
-                            <span 
+
+                            <span
                                 class="icon-eye-hide absolute top-11 -translate-y-2/4 cursor-pointer text-2xl ltr:right-3 rtl:left-3"
                                 onclick="switchVisibility()"
                                 id="visibilityIcon"
@@ -72,14 +72,14 @@
                                 tabindex="0"
                             >
                             </span>
-                        
+
                             <x-admin::form.control-group.error control-name="password" />
                         </x-admin::form.control-group>
                     </div>
 
                     <div class="flex items-center justify-between p-4">
                         <!-- Forgot Password Link -->
-                        <a 
+                        <a
                             class="cursor-pointer text-xs font-semibold leading-6 text-brandColor"
                             href="{{ route('admin.forgot_password.create') }}"
                         >
@@ -90,7 +90,7 @@
                         <button
                             class="primary-button"
                             aria-label="{{ trans('admin::app.users.login.submit-btn')}}"
-                        >   
+                        >
                             @lang('admin::app.users.login.submit-btn')
                         </button>
                     </div>
