@@ -190,13 +190,9 @@
                  * @return {String}
                  */
                  inputPositionStyle() {
-                    return this.position === 'left' 
-                        ? this.isRTL 
-                            ? 'text-align: right; padding-right: 9px;' 
-                            : 'text-align: left; padding-left: 9px;'
-                        : this.isRTL 
-                            ? 'text-align: left; padding-left: 9px;' 
-                            : 'text-align: right; padding-right: 9px;';
+                    return this.isRTL
+                        ? { textAlign: 'left', paddingLeft: '80px' }
+                        : { textAlign: 'right', paddingRight: '80px' }
                 },
 
                 /**

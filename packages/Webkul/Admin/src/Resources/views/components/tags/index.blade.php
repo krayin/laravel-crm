@@ -85,7 +85,7 @@
                                                     class="cursor-pointer rounded-sm bg-gray-100 px-5 py-2 text-sm text-gray-800 dark:bg-gray-950 dark:text-white"
                                                     @click="create"
                                                 >
-                                                    @{{ "@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])".replace('replaceTerm', searchTerm) }}
+                                                    @{{ `@lang('admin::app.components.tags.index.add-tag', ['term' => 'replaceTerm'])`.replace('replaceTerm', searchTerm) }}
                                                 </li>
                                             </template>
                                         @endif
