@@ -25,7 +25,7 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="truncate rounded cursor-pointer">
-                        @{{ `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.length > 20 ? `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.substring(0, 20) + '...' : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}` }}
+                        @{{ valueLabel ? valueLabel : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.length > 20 ? `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.substring(0, 20) + '...' : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}` }}
                     </span>
 
                     <div class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex">
@@ -219,6 +219,11 @@
                 },
 
                 url: {
+                    type: String,
+                    default: '',
+                },
+
+                valueLabel: {
                     type: String,
                     default: '',
                 },

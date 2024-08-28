@@ -26,7 +26,7 @@
                 />
 
                 <span class="truncate rounded cursor-pointer">
-                    @{{ selectedValue?.name }}
+                    @{{ valueLabel ? valueLabel : selectedValue?.name }}
                 </span>
 
                 <template v-if="allowEdit">
@@ -133,6 +133,11 @@
                 },
 
                 url: {
+                    type: String,
+                    default: '',
+                },
+
+                valueLabel: {
                     type: String,
                     default: '',
                 },

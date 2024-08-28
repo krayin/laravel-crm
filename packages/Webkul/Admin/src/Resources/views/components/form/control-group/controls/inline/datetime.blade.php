@@ -30,7 +30,7 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="truncate rounded cursor-pointer">
-                        @{{ inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
                     </span>
 
                     <!-- Tooltip -->
@@ -144,6 +144,11 @@
                 },
 
                 url: {
+                    type: String,
+                    default: '',
+                },
+
+                valueLabel: {
                     type: String,
                     default: '',
                 },
