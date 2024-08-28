@@ -41,6 +41,14 @@ trait LogsActivity
 
             self::logActivity($model);
         });
+
+        static::deleting(function ($model) {
+            if (! method_exists($model->entity ?? $model, 'activities')) {
+                return;
+            }
+             
+            $model->activities()->delete();
+        });
     }
 
     /**
