@@ -6,7 +6,7 @@
         <a href="{{ route('admin.dashboard.index') }}">
             <img
                 class="h-10"
-                src="{{ request()->cookie('dark_mode') ? admin_vite()->asset('images/dark-logo.svg') : admin_vite()->asset('images/logo.svg') }}"
+                src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
                 id="logo-image"
                 alt="{{ config('app.name') }}"
             />
@@ -600,7 +600,7 @@
                                 },
                                 {
                                     search: 'user.name',
-                                    searchFields: 'user.name:like', 
+                                    searchFields: 'user.name:like',
                                 },
                                 {
                                     search: 'organization.name',
@@ -630,7 +630,7 @@
 
             watch: {
                 searchTerm: 'updateSearchParams',
-                
+
                 activeTab: 'updateSearchParams',
             },
 
@@ -713,9 +713,9 @@
                 return {
                     isDarkMode: {{ request()->cookie('dark_mode') ?? 0 }},
 
-                    logo: "{{ admin_vite()->asset('images/logo.svg') }}",
+                    logo: "{{ vite()->asset('images/logo.svg') }}",
 
-                    dark_logo: "{{ admin_vite()->asset('images/dark-logo.svg') }}",
+                    dark_logo: "{{ vite()->asset('images/dark-logo.svg') }}",
                 };
             },
 

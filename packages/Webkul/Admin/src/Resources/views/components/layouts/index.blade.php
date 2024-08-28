@@ -44,7 +44,7 @@
     @stack('meta')
 
     {{
-        admin_vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+        vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
     }}
 
     <link
@@ -78,7 +78,7 @@
     @else
         <link
             type="image/x-icon"
-            href="{{ admin_vite()->asset('images/favicon.ico') }}"
+            href="{{ vite()->asset('images/favicon.ico') }}"
             rel="shortcut icon"
             sizes="16x16"
         />

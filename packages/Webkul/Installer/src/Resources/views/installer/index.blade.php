@@ -16,7 +16,7 @@
         @stack('meta')
 
         {{
-            installer_vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'])
+            vite()->set(['src/Resources/assets/css/app.css', 'src/Resources/assets/js/app.js'], 'installer')
         }}
 
         <link
@@ -31,7 +31,7 @@
 
         {{-- <link
             type="image/x-icon"
-            href="{{ installer_vite()->asset('images/installer/favicon.ico', 'installer') }}"
+            href="{{ vite()->asset('images/installer/favicon.ico', 'installer') }}"
             rel="shortcut icon"
             sizes="16x16"
         /> --}}
@@ -135,7 +135,7 @@
                     <div class="m-auto grid h-[100vh] max-w-[362px] items-end">
                         <div class="grid gap-4">
                             <img
-                                src="{{ installer_vite()->asset('images/installer/krayin-logo.svg', 'installer') }}"
+                                src="{{ vite()->asset('images/installer/krayin-logo.svg', 'installer') }}"
                                 alt="@lang('installer::app.installer.index.krayin-logo')"
                             >
 
@@ -168,7 +168,7 @@
                                 </div>
 
                                 <!-- Server Environment -->
-                                <div 
+                                <div
                                     class="flex items-center"
                                     :class="[stepStates.systemRequirements == 'active' ? 'font-bold' : '']"
                                 >
@@ -345,7 +345,7 @@
                                     </div>
                                 </div>
                             </div>
-                        
+
                             <div class="flex items-center justify-end px-4 py-3">
                                 <button
                                     type="button"
@@ -362,7 +362,7 @@
 
                 <!-- Systme Requirements -->
                 <div
-                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"   
+                    class="w-full max-w-[568px] rounded-lg border border-gray-300 bg-white"
                     v-if="currentStep == 'systemRequirements'"
                 >
                     <div class="flex items-center justify-between gap-2.5 border-b border-gray-300 px-4 py-3">
@@ -692,7 +692,7 @@
                                 <!-- Spinner -->
                                 <img
                                     class="text-brandColor h-5 w-5 animate-spin"
-                                    src="{{ installer_vite()->asset('images/installer/spinner.svg', 'installer') }}"
+                                    src="{{ vite()->asset('images/installer/spinner.svg', 'installer') }}"
                                     alt="Loading"
                                 />
 
@@ -818,7 +818,7 @@
                                         <x-installer::form.control-group.label class="required">
                                             @lang('installer::app.installer.index.environment-configuration.default-locale')
                                         </x-installer::form.control-group.label>
-    
+
                                         <x-installer::form.control-group.control
                                             type="select"
                                             name="app_locale"
@@ -833,7 +833,7 @@
                                                 </option>
                                             @endforeach
                                         </x-installer::form.control-group.control>
-    
+
                                         <x-installer::form.control-group.error control-name="app_locale" />
                                     </x-installer::form.control-group>
 
@@ -852,14 +852,14 @@
                                             :label="trans('installer::app.installer.index.environment-configuration.default-currency')"
                                         >
                                             <option value="" disabled>Select Currencies</option>
-    
+
                                             @foreach ($currencies as $value => $label)
                                                 <option value="{{ $value }}" @if($value == 'USD') selected @endif>
                                                     @lang("installer::app.installer.index.environment-configuration.$label")
                                                 </option>
                                             @endforeach
                                         </x-installer::form.control-group.control>
-    
+
                                         <x-installer::form.control-group.error control-name="app_currency" />
                                     </x-installer::form.control-group>
                                 </div>
@@ -1134,7 +1134,7 @@
 
                                 systemRequirements: () => {
                                     this.completeStep('systemRequirements', 'envDatabase', 'active', 'complete');
-                                    
+
                                     this.currentStep = 'envDatabase';
                                 },
 

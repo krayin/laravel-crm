@@ -63,7 +63,7 @@
                     <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
                         <!-- Placeholder Image -->
                         <img
-                            src="{{ admin_vite()->asset('images/empty-placeholders/products.svg') }}"
+                            src="{{ vite()->asset('images/empty-placeholders/products.svg') }}"
                             class="dark:mix-blend-exclusion dark:invert"
                         >
 

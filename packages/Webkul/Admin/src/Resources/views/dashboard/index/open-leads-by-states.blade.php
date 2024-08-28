@@ -58,7 +58,7 @@
                     <div class="grid justify-center justify-items-center gap-3.5 py-2.5">
                         <!-- Placeholder Image -->
                         <img
-                            src="{{ admin_vite()->asset('images/empty-placeholders/default.svg') }}"
+                            src="{{ vite()->asset('images/empty-placeholders/default.svg') }}"
                             class="dark:mix-blend-exclusion dark:invert"
                         >
 
@@ -88,7 +88,7 @@
                     report: [],
 
                     isLoading: true,
-                    
+
                     chart: undefined,
                 }
             },
@@ -121,7 +121,7 @@
                         })
                         .catch(error => {});
                 },
-                
+
                 prepare() {
                     if (this.chart) {
                         this.chart.destroy();
@@ -136,7 +136,7 @@
 
                     this.chart = new Chart(ctx, {
                         type: 'funnel',
-                        
+
                         data: {
                             labels: this.report.statistics.map(stat => stat.name),
                             datasets: [
