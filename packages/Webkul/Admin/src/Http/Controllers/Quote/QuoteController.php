@@ -2,7 +2,6 @@
 
 namespace Webkul\Admin\Http\Controllers\Quote;
 
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -10,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Webkul\Admin\DataGrids\Quote\QuoteDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
@@ -178,7 +178,7 @@ class QuoteController extends Controller
     /**
      * Print and download the for the specified resource.
      */
-    public function print($id): mixed
+    public function print($id): Response|StreamedResponse
     {
         $quote = $this->quoteRepository->findOrFail($id);
 
