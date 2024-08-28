@@ -46,7 +46,7 @@ trait LogsActivity
             if (! method_exists($model->entity ?? $model, 'activities')) {
                 return;
             }
-             
+
             $model->activities()->delete();
         });
     }

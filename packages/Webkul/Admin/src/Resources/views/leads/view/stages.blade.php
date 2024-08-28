@@ -21,7 +21,7 @@
                     class="stage relative flex h-7 min-w-24 cursor-pointer items-center justify-center bg-white pl-7 pr-4 dark:bg-gray-900 ltr:first:rounded-l-lg rtl:first:rounded-r-lg"
                     :class="{
                         '!bg-green-500 text-white dark:text-gray-900 ltr:after:bg-green-500 rtl:before:bg-green-500': currentStage.sort_order >= stage.sort_order,
-                        '!bg-red-500 text-white dark:text-gray-900 after:bg-red-500': currentStage.code == 'lost',
+                        '!bg-red-500 text-white dark:text-gray-900 ltr:after:bg-red-500 rtl:before:bg-red-500': currentStage.code == 'lost',
                     }"
                     v-if="! ['won', 'lost'].includes(stage.code)"
                     @click="update(stage)"
