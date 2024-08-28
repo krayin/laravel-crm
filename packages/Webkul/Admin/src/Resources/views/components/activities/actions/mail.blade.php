@@ -6,7 +6,7 @@
 <!-- Mail Button -->
 <div class="">
     <button
-        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-green-200 text-green-900 transition-all hover:border-green-400"
+        class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent font-medium bg-green-200 text-green-900 transition-all hover:border-green-400"
         @click="$refs.mailActionComponent.openModal('mail')"
     >
         <span class="icon-mail text-2xl dark:!text-green-900"></span>
