@@ -22,7 +22,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
@@ -33,10 +33,10 @@
                 />
 
                 <div
-                    class="group relative !w-full pl-2.5"
+                    class="group relative h-[18px] !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
-                    <span class="truncate rounded cursor-pointer">
+                     <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
                     </span>
 
@@ -49,7 +49,7 @@
                             @{{ inputValue }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
+                        <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
@@ -69,7 +69,7 @@
                 <x-admin::form.control-group.control
                     type="text"
                     ::name="name"
-                    class="w-full cursor-pointer text-gray-800 dark:text-white ltr:pr-10 rtl:pl-10"
+                    class="!h-[34px] w-full cursor-pointer !py-0 text-gray-800 dark:text-white ltr:pr-20 rtl:pl-20"
                     ::placeholder="placeholder"
                     v-model="selectedItem.name"
                     @click="toggleEditor"   
@@ -82,27 +82,7 @@
                             class="relative"
                             v-if="isSearching"
                         >
-                            <svg
-                                class="h-5 w-5 animate-spin"
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                aria-hidden="true"
-                                viewBox="0 0 24 24"
-                            >
-                                <circle
-                                    class="opacity-25"
-                                    cx="12"
-                                    cy="12"
-                                    r="10"
-                                    stroke="currentColor"
-                                    stroke-width="4"
-                                ></circle>
-                                <path
-                                    class="opacity-75"
-                                    fill="currentColor"
-                                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                                ></path>
-                            </svg>
+                            <x-admin::spinner />
                         </div>
                         
                         <i 
@@ -223,7 +203,7 @@
 
             data() {
                 return {
-                    inputValue: this.value,
+                    inputValue: this.value ?? '',
 
                     isEditing: false,
 
