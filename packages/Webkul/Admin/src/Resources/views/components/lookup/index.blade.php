@@ -17,7 +17,10 @@
                 <!-- Input Container -->
                 <div class="relative flex cursor-pointer items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
                     <!-- Selected Item or Placeholder Text -->
-                    <span class="overflow-hidden text-ellipsis">
+                    <span 
+                        class="overflow-hidden text-ellipsis"
+                        :title="selectedItem?.name"
+                    >
                         @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
                     </span>
                     
