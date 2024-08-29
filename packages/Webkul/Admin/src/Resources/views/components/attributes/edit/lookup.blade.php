@@ -31,7 +31,7 @@
                     @{{ selectedItem ? selectedItem : "@lang('admin::app.components.attributes.lookup.click-to-add')" }}
                     
                     <!-- Icons Container -->
-                    <div class="flex gap-2 items-center">
+                    <div class="flex items-center gap-2">
                         <!-- Close Icon -->
                         <i 
                             v-if="entityId && ! isSearching"
