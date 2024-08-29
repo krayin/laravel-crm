@@ -41,13 +41,13 @@ class SessionController extends Controller
         ]);
 
         if (! auth()->guard('user')->attempt(request(['email', 'password']), request('remember'))) {
-            session()->flash('error', trans('admin::app.sessions.login.login-error'));
+            session()->flash('error', trans('admin::app.users.login-error'));
 
             return redirect()->back();
         }
 
         if (auth()->guard('user')->user()->status == 0) {
-            session()->flash('warning', trans('admin::app.sessions.login.activate-warning'));
+            session()->flash('warning', trans('admin::app.users.activate-warning'));
 
             auth()->guard('user')->logout();
 

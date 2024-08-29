@@ -42,6 +42,9 @@ return [
     ],
 
     'users' => [
+        'activate-warning' => 'Your account is not activated yet. Please contact the administrator.',
+        'login-error'      => 'The credentials do not match our records.',
+
         'login' => [
             'email'                => 'Email Address',
             'forget-password-link' => 'Forget Password ?',
