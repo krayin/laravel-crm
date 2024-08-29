@@ -35,7 +35,10 @@
                     <x-admin::table.tbody> 
                         <template v-for="warehouse in productWarehouses">
                             <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
-                                <x-admin::table.td class="font-bold dark:text-white">
+                                <x-admin::table.td 
+                                    class="truncate font-bold dark:text-white"
+                                    ::title="warehouse.name"
+                                >
                                     @{{ warehouse.name }}
                                 </x-admin::table.td>
                                 
