@@ -79,11 +79,11 @@ trait LogsActivity
                     'attribute' => $attributeCode,
                     'new'       => [
                         'value' => $attributeData['new'],
-                        'label' => app(AttributeValueRepository::class)->getAttributeLabel($attributeData['new'], $model->attribute),
+                        'label' => self::getAttributeLabel($attributeData['new'], $model->attribute),
                     ],
                     'old'       => [
                         'value' => $attributeData['old'],
-                        'label' => app(AttributeValueRepository::class)->getAttributeLabel($attributeData['old'], $model->attribute),
+                        'label' => self::getAttributeLabel($attributeData['old'], $model->attribute),
                     ],
                 ]),
                 'user_id'    => auth()->id(),
@@ -95,6 +95,14 @@ trait LogsActivity
                 $model->activities()->attach($activity->id);
             }
         }
+    }
+
+    /**
+     * Get attribute label.
+     */
+    private static function getAttributeLabel($value, $attribute)
+    {
+        return app(AttributeValueRepository::class)->getAttributeLabel($value, $attribute);
     }
 
     /**
