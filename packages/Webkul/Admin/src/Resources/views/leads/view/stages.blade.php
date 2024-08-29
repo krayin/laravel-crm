@@ -85,6 +85,7 @@
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.leads.view.stages.won-value')
                                     </x-admin::form.control-group.label>
+
                                     <x-admin::form.control-group.control
                                         type="price"
                                         name="lead_value"
@@ -100,6 +101,7 @@
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.leads.view.stages.lost-reason')
                                     </x-admin::form.control-group.label>
+
                                     <x-admin::form.control-group.control
                                         type="textarea"
                                         name="lost_reason"
@@ -113,11 +115,15 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.leads.view.stages.closed-at')
                                 </x-admin::form.control-group.label>
-                                <x-admin::form.control-group.control
-                                    type="date"
-                                    name="closed_at"
-                                    v-model="nextStage.closed_at"
-                                />
+
+                                <x-admin::flat-picker.date ::allow-input="false">
+                                    <input
+                                        type="date"
+                                        name="closed_at"
+                                        v-model="nextStage.closed_at"
+                                        class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                    />
+                                </x-admin::flat-picker.date>
                             </x-admin::form.control-group>
                         </x-slot>
 
