@@ -4,7 +4,7 @@
 
 <v-inline-image-edit 
     {{ $attributes }}
-    :allow-edit="{{ $allowEdit }}"
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
  >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">

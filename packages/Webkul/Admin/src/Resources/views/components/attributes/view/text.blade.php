@@ -1,4 +1,4 @@
-<x-admin::form.control-group.control
+<x-admin::form.control-group.controls.inline.text
     type="inline"
     ::name="'{{ $attribute->code }}'"
     ::value="'{{ $value }}'"

@@ -26,7 +26,7 @@
                 ])"
                 :entity="$lead"
                 :url="route('admin.leads.attributes.update', $lead->id)"
-                allow-edit="false"
+                :allow-edit="true"
             />
         </form>
     </x-admin::form>

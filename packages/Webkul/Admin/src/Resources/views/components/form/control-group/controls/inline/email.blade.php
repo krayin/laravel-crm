@@ -5,7 +5,7 @@
 <v-inline-email-edit
     {{ $attributes->except('value') }}
     :value={{ json_encode($attributes->get('value')) }}
-    :allow-edit="{{ $allowEdit }}"
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">

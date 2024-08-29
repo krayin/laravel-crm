@@ -1,4 +1,5 @@
 <x-admin::form.control-group.controls.inline.text
+    type="inline"
     ::name="'{{ $attribute->code }}'"
     ::value="'{{ $value }}'"
     position="left"
