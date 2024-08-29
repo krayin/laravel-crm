@@ -1,5 +1,4 @@
-<x-admin::form.control-group.control
-    type="inline"
+<x-admin::form.control-group.controls.inline.text
     ::name="'{{ $attribute->code }}'"
     ::value="'{{ $value }}'"
     position="left"
@@ -8,4 +7,5 @@
     :placeholder="$attribute->name"
     ::errors="errors"
     :url="$url"
+    :allow-edit="$allowEdit"
 />

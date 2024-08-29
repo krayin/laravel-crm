@@ -19,6 +19,7 @@
                 :entity="$person"
                 :allow-edit="true"
                 :url="route('admin.contacts.persons.update', $person->id)"
+                allow-edit="false"
             />
         </form>
     </x-admin::form>

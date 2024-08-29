@@ -8,4 +8,5 @@
     :placeholder="$attribute->name"
     ::errors="errors"
     :url="$url"
+    :allow-edit="$allowEdit"
 />

@@ -1,6 +1,11 @@
+@props([
+    'allowEdit' => true,
+])
+
 <v-inline-phone-edit
     {{ $attributes->except('value') }}
     :value={{ json_encode($attributes->get('value')) }}
+    :allow-edit="{{ $allowEdit }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
@@ -17,14 +22,14 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <div 
                     class="group relative !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
-                    <span class="truncate rounded cursor-pointer">
+                    <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20 ? inputValue.map(item => `${item.value}(${item.label})`).join(', ').substring(0, 20) + '...' : inputValue.map(item => `${item.value}(${item.label})`).join(', ') }}
                     </span>
 
@@ -36,7 +41,7 @@
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
+                        <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 
