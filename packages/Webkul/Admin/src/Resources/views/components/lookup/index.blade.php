@@ -15,12 +15,11 @@
                 @click="toggle"
             >
                 <!-- Input Container -->
-                <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
-                    <!-- Selected Item or Placeholder Text -->
-                    @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
+                <div class="relative flex cursor-pointer items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                    @{{ selectedItem?.name !== undefined ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
                     
                     <!-- Icons Container -->
-                    <div class="flex gap-2 items-center">
+                    <div class="flex items-center gap-2">
                         <!-- Close Icon -->
                         <i 
                             v-if="(selectedItem?.name) && ! isSearching"
@@ -94,7 +93,7 @@
                         <li
                             v-if="searchTerm.length > 2 && canAddNew"
                             @click="selectItem({ id: '', name: searchTerm })"
-                            class="px-4 py-2 cursor-pointer border-t border-gray-800 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-brandColor dark:hover:text-white"
+                            class="cursor-pointer border-t border-gray-800 px-4 py-2 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-brandColor dark:hover:text-white"
                         >
                             + @lang('admin::app.components.lookup.add-as-new')
                         </li>
@@ -172,6 +171,8 @@
                 if (this.value) {
                     this.selectedItem = this.value;
                 }
+
+                console.log(this.selectedItem?.name == "");
             },
 
             created() {
