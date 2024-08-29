@@ -4,10 +4,10 @@
     </x-slot>
 
     <!-- Head Details Section -->
-    {!! view_render_event('admin.dashboard.index.header.before') !!}
+    {!! view_render_event('krayin.admin.dashboard.index.header.before') !!}
 
     <div class="mb-5 flex items-center justify-between gap-4 max-sm:flex-wrap">
-        {!! view_render_event('admin.dashboard.index.header.left.before') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.header.left.before') !!}
 
         <div class="grid gap-1.5">
             <p class="text-2xl font-semibold dark:text-white">
@@ -15,10 +15,10 @@
             </p>
         </div>
 
-        {!! view_render_event('admin.dashboard.index.header.left.after') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.header.left.after') !!}
 
         <!-- Actions -->
-        {!! view_render_event('admin.dashboard.index.header.right.before') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.header.right.before') !!}
 
         <v-dashboard-filters>
             <!-- Shimmer -->
@@ -28,17 +28,17 @@
             </div>
         </v-dashboard-filters>
 
-        {!! view_render_event('admin.dashboard.index.header.right.after') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.header.right.after') !!}
     </div>
 
-    {!! view_render_event('admin.dashboard.index.header.after') !!}
+    {!! view_render_event('krayin.admin.dashboard.index.header.after') !!}
 
     <!-- Body Component -->
-    {!! view_render_event('admin.dashboard.index.content.before') !!}
+    {!! view_render_event('krayin.admin.dashboard.index.content.before') !!}
 
     <div class="mt-3.5 flex gap-4 max-xl:flex-wrap">
         <!-- Left Section -->
-        {!! view_render_event('admin.dashboard.index.content.left.before') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.content.left.before') !!}
 
         <div class="flex flex-1 flex-col gap-4 max-xl:flex-auto">
             <!-- Revenue Stats -->
@@ -59,10 +59,10 @@
             </div>
         </div>
 
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.content.left.after') !!}
 
         <!-- Right Section -->
-        {!! view_render_event('admin.dashboard.index.content.right.before') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.content.right.before') !!}
 
         <div class="flex w-[378px] max-w-full flex-col gap-4 max-sm:w-full">
             <!-- Revenue by Types -->
@@ -75,10 +75,10 @@
             @include('admin::dashboard.index.revenue-by-types')
         </div>
 
-        {!! view_render_event('admin.dashboard.index.content.left.after') !!}
+        {!! view_render_event('krayin.admin.dashboard.index.content.left.after') !!}
     </div>
 
-    {!! view_render_event('admin.dashboard.index.content.after') !!}
+    {!! view_render_event('krayin.admin.dashboard.index.content.after') !!}
 
     @pushOnce('scripts')
         <script

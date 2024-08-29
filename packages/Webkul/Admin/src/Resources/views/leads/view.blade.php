@@ -6,7 +6,7 @@
     <!-- Content -->
     <div class="relative flex gap-4">
         <!-- Left Panel -->
-        {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
+        {!! view_render_event('krayin.admin.leads.view.left.before', ['lead' => $lead]) !!}
 
         <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Lead Information -->
@@ -20,7 +20,7 @@
                 </div>
 
                 <!-- Tags -->
-                {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
+                {!! view_render_event('krayin.admin.leads.view.tags.before', ['lead' => $lead]) !!}
 
                 <div class="mb-2">
                     @if (($days = $lead->rotten_days) > 0)
@@ -39,7 +39,7 @@
                     />
                 </div>
 
-                {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
+                {!! view_render_event('krayin.admin.leads.view.tags.after', ['lead' => $lead]) !!}
 
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
@@ -85,9 +85,9 @@
             @include ('admin::leads.view.person')
         </div>
 
-        {!! view_render_event('admin.leads.view.left.after', ['lead' => $lead]) !!}
+        {!! view_render_event('krayin.admin.leads.view.left.after', ['lead' => $lead]) !!}
 
-        {!! view_render_event('admin.leads.view.right.before', ['lead' => $lead]) !!}
+        {!! view_render_event('krayin.admin.leads.view.right.before', ['lead' => $lead]) !!}
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
@@ -95,7 +95,7 @@
             @include ('admin::leads.view.stages')
 
             <!-- Activities -->
-            {!! view_render_event('admin.leads.view.activities.before', ['lead' => $lead]) !!}
+            {!! view_render_event('krayin.admin.leads.view.activities.before', ['lead' => $lead]) !!}
 
             <x-admin::activities
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
@@ -116,9 +116,9 @@
                 </x-slot>
             </x-admin::activities>
 
-            {!! view_render_event('admin.leads.view.activities.after', ['lead' => $lead]) !!}
+            {!! view_render_event('krayin.admin.leads.view.activities.after', ['lead' => $lead]) !!}
         </div>
 
-        {!! view_render_event('admin.leads.view.right.after', ['lead' => $lead]) !!}
+        {!! view_render_event('krayin.admin.leads.view.right.after', ['lead' => $lead]) !!}
     </div>    
 </x-admin::layouts>

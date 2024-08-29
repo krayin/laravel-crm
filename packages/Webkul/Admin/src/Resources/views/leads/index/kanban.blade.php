@@ -1,4 +1,4 @@
-{!! view_render_event('admin.leads.index.kanban.before') !!}
+{!! view_render_event('krayin.admin.leads.index.kanban.before') !!}
 
 <!-- Kanabn Vue Component -->
 <v-leads-kanban>
@@ -8,7 +8,7 @@
     </div>
 </v-leads-kanban>
 
-{!! view_render_event('admin.leads.index.kanban.after') !!}
+{!! view_render_event('krayin.admin.leads.index.kanban.after') !!}
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-leads-kanban-template">
@@ -22,7 +22,7 @@
             <div class="flex flex-col gap-4">
                 @include('admin::leads.index.kanban.toolbar')
 
-                {!! view_render_event('admin.leads.index.kanban.content.before') !!}
+                {!! view_render_event('krayin.admin.leads.index.kanban.content.before') !!}
 
                 <div class="flex gap-2.5 overflow-x-auto">
                     <!-- Stage Cards -->
@@ -160,7 +160,7 @@
                     </div>
                 </div>
 
-                {!! view_render_event('admin.leads.index.kanban.content.after') !!}
+                {!! view_render_event('krayin.admin.leads.index.kanban.content.after') !!}
             </div>
         </template>
     </script>

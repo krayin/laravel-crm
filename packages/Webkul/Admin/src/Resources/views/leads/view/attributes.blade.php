@@ -1,4 +1,4 @@
-{!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}
+{!! view_render_event('krayin.admin.leads.view.attributes.before', ['lead' => $lead]) !!}
 
 <div class="dark: flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
     <h4 class="flex items-center justify-between font-semibold dark:text-white">
@@ -31,4 +31,4 @@
     </x-admin::form>
 </div>
 
-{!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}
+{!! view_render_event('krayin.admin.leads.view.attributes.before', ['lead' => $lead]) !!}

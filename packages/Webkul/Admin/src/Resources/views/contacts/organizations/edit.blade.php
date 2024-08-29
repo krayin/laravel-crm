@@ -15,10 +15,14 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('krayin.admin.organizations.edit.breadcrumbs.before', ['organization' => $organization]) !!}
+
                         <x-admin::breadcrumbs 
                             name="contacts.organizations.edit" 
                             :entity="$organization"
                         />
+
+                        {!! view_render_event('krayin.admin.organizations.edit.breadcrumbs.before', ['organization' => $organization]) !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-gray-300">
@@ -27,20 +31,24 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Save button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('krayin.admin.organizations.edit.save_button.before', ['organization' => $organization]) !!}
+
+                        <!-- Save button for person -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.contacts.organizations.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('krayin.admin.organizations.edit.save_button.after', ['organization' => $organization]) !!}
                     </div>
                 </div>
             </div>
 
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
-                {!! view_render_event('admin.contacts.organizations.edit.form_controls.before') !!}
+                {!! view_render_event('krayin.admin.contacts.organizations.edit.form_controls.before') !!}
 
                 <x-admin::attributes
                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -49,7 +57,7 @@
                     :entity="$organization"
                 />
                 
-                {!! view_render_event('admin.contacts.organizations.edit.form_controls.after') !!}
+                {!! view_render_event('krayin.admin.contacts.organizations.edit.form_controls.after') !!}
             </div>
         </div>
     </x-admin::form>

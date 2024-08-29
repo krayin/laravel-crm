@@ -1,4 +1,5 @@
 <x-admin::layouts>
+    <!-- Page Title -->
     <x-slot:title>
         @lang('admin::app.settings.webforms.edit.title')
     </x-slot>
@@ -11,10 +12,15 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('krayin.admin.settings.webform.edit.breadcrumbs.before', ['webform' => $webForm]) !!}
+
+                        <!-- Breadcurmbs -->
                         <x-admin::breadcrumbs
                             name="settings.web_forms.edit" 
                             :entity="$webForm"
                         />
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.breadcrumbs.after', ['webform' => $webForm]) !!}
                     </div>
         
                     <div class="text-xl font-bold dark:text-white">
@@ -23,8 +29,10 @@
                 </div>
         
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Edit button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('krayin.admin.settings.webform.edit.embed_button.before', ['webform' => $webForm]) !!}
+
+                        <!-- Edit button for person -->
                         <button
                             type="button"
                             class="secondary-button"
@@ -32,6 +40,10 @@
                         >
                             @lang('admin::app.settings.webforms.edit.embed')
                         </button>
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.embed_button.after', ['webform' => $webForm]) !!}
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.preview_button.before', ['webform' => $webForm]) !!}
 
                         <a
                             href="{{ route('admin.settings.web_forms.preview', $webForm->form_id) }}"
@@ -41,12 +53,18 @@
                             @lang('admin::app.settings.webforms.edit.preview')
                         </a>
 
+                        {!! view_render_event('krayin.admin.settings.webform.edit.preview_button.after', ['webform' => $webForm]) !!}
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.save_button.before', ['webform' => $webForm]) !!}
+
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.settings.webforms.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.save_button.after', ['webform' => $webForm]) !!}
                     </div>
                 </div>
             </div>
@@ -62,6 +80,8 @@
             id="v-webform-template"
         >
             <div class="flex gap-2.5 max-xl:flex-wrap">
+                {!! view_render_event('krayin.admin.settings.webform.edit.left.before', ['webform' => $webForm]) !!}
+
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
@@ -72,6 +92,8 @@
                                 </p>
                             </div>
                         </div>
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.form_controls.before', ['webform' => $webForm]) !!}
 
                         <!-- Submit success actions -->
                         <x-admin::form.control-group>
@@ -409,8 +431,14 @@
                                 </template>
                             </draggable>
                         </div>
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.form_controls.before', ['webform' => $webForm]) !!}
                     </div>
                 </div>
+
+                {!! view_render_event('krayin.admin.settings.webform.edit.left.after', ['webform' => $webForm]) !!}
+
+                {!! view_render_event('krayin.admin.settings.webform.edit.right.before', ['webform' => $webForm]) !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
@@ -483,6 +511,8 @@
                     </x-admin::accordion>
                 </div>
 
+                {!! view_render_event('krayin.admin.settings.webform.edit.right.after', ['webform' => $webForm]) !!}
+
                 <x-admin::modal ref="embed">
                     <!-- Modal Header -->
                     <x-slot:header>
@@ -493,6 +523,8 @@
 
                     <!-- Modal Content -->
                     <x-slot:content class="!border-b-0">
+                        {!! view_render_event('krayin.admin.settings.webform.edit.modal.form_controls.before', ['webform' => $webForm]) !!}
+
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
                                 @lang('admin::app.settings.webforms.edit.public-url')
@@ -538,6 +570,8 @@
                                 @lang('admin::app.settings.webforms.edit.copy')
                             </span>
                         </x-admin::form.control-group>
+
+                        {!! view_render_event('krayin.admin.settings.webform.edit.modal.form_controls.after', ['webform' => $webForm]) !!}
                     </x-slot>
                 </x-admin::modal>
             </div>

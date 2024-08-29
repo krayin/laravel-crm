@@ -22,6 +22,8 @@
             @endif
 
             <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
+                {!! view_render_event('krayin.admin.sessions.login.form_controls.before') !!}
+
                 <!-- Login Form -->
                 <x-admin::form :action="route('admin.session.store')">
                     <p class="p-4 text-xl font-bold text-gray-800 dark:text-white">
@@ -95,6 +97,8 @@
                         </button>
                     </div>
                 </x-admin::form>
+
+                {!! view_render_event('krayin.admin.sessions.login.form_controls.after') !!}
             </div>
         </div>
     </div>
