@@ -8,7 +8,7 @@
         <!-- Left Panel -->
         {!! view_render_event('admin.contact.persons.view.left.before', ['person' => $person]) !!}
 
-        <div class="flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Person Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrums -->
