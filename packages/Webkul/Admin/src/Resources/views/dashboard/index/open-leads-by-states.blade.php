@@ -127,7 +127,11 @@
                         this.chart.destroy();
                     }
 
-                    const ctx = document.getElementById(this.$.uid + '_chart').getContext('2d');
+                    if (this.report.statistics.length === 0) {
+                        return;
+                    }
+
+                    const ctx = document.getElementById(this.$.uid + '_chart')?.getContext('2d');
 
                     // Create gradient
                     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
