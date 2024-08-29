@@ -58,8 +58,6 @@ trait LogsActivity
     {
         $customAttributes = [];
 
-        $excludeLoggingAttributes = [];
-
         if (method_exists($model, 'getCustomAttributes')) {
             $customAttributes = $model->getCustomAttributes()->pluck('code')->toArray();
         }
