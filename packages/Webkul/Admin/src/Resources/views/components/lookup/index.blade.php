@@ -16,7 +16,12 @@
             >
                 <!-- Input Container -->
                 <div class="relative flex cursor-pointer items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
-                    @{{ selectedItem?.name !== undefined ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
+                    <span 
+                        class="truncate"
+                        :title="selectedItem?.name"
+                    >
+                        @{{ selectedItem?.name !== undefined ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
+                    </span>
                     
                     <!-- Icons Container -->
                     <div class="flex items-center gap-2">
