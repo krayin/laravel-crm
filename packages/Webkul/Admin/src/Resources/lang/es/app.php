@@ -1739,7 +1739,7 @@ return [
             'tabs'        => [
                 'description' => 'Descripción',
                 'products'    => 'Productos',
-                'quotes'      => 'Cotizaciones',    
+                'quotes'      => 'Cotizaciones',
             ],
 
             'attributes' => [
