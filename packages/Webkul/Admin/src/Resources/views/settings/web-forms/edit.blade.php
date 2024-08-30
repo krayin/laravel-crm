@@ -173,13 +173,13 @@
                         <!-- Backgroud Color Picker -->
                         <v-color-picker
                             name="background_color"
-                            title="@lang('admin::app.settings.webforms.edit.backgroud-color')"
+                            title="@lang('admin::app.settings.webforms.edit.background-color')"
                             value="{{ old('background_color') ?? $webForm->background_color }}"
                             class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
-                                    @lang('admin::app.settings.webforms.edit.backgroud-color')
+                                    @lang('admin::app.settings.webforms.edit.background-color')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -579,7 +579,7 @@
 
         <script
             type="text/x-template"
-            id="v-color-picker"
+            id="v-color-picker-template"
         >
             <x-admin::form.control-group>
                 <x-admin::form.control-group.label class="required">
@@ -781,7 +781,7 @@
 
         <script type="module">
             app.component('v-color-picker', {
-                template: '#v-color-picker',
+                template: '#v-color-picker-template',
 
                 props: {
                     name: {

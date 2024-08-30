@@ -489,7 +489,7 @@
 
         <script
             type="text/x-template"
-            id="v-color-picker"
+            id="v-color-picker-template"
         >
             <x-admin::form.control-group>
                 <x-admin::form.control-group.label class="required">
@@ -667,7 +667,7 @@
 
         <script type="module">
             app.component('v-color-picker', {
-                template: '#v-color-picker',
+                template: '#v-color-picker-template',
 
                 props: {
                     name: {
