@@ -11,106 +11,80 @@
 
     var formHTML = `{!! view('web_form::settings.web-forms.form-js.form', compact('webForm'))->render() !!}`;
 
-    content.innerHTML = '<div id="krayin-content-container-' + webFormId + '" class="krayin-content-container krayin_' + webFormId + '">' + formHTML + '</div>';
+    content.innerHTML = '<div id="krayin-content-container-' + webFormId + '" class="krayin-content-container krayin_'+webFormId+'">' + formHTML + '</div>';
 
     var script = document.createElement('script');
 
     script.src = '{{ asset('vendor/webkul/web-form/assets/js/web-form.js') }}';
 
-    script.onload = function() {
-        flatpickr(".form-group.date input", {
-            allowInput: true,
-            altFormat: "Y-m-d",
-            dateFormat: "Y-m-d",
-            weekNumbers: true,
-        });
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('krayinWebForm').addEventListener('submit', function(event) {
+            event.preventDefault();
 
-        flatpickr(".form-group.datetime input", {
-            allowInput: true,
-            altFormat: "Y-m-d H:i:S",
-            dateFormat: "Y-m-d H:i:S",
-            enableTime: true,
-            time_24hr: true,
-            weekNumbers: true,
-        });
+            const form = document.getElementById("krayinWebForm");
 
-        var data = null;
-
-        $('.button-group button').on('click', function() {
-            data = $("#krayinWebForm").serializeArray();
-
-            $("#krayinWebForm").validate({
-                submitHandler: function(form) {
-
-                    document.querySelector('#loaderDiv').classList.add('loaderDiv');
-
-                    document.querySelector('#imgSpinner').classList.add('imgSpinner');
-
-                    $.ajax({
-                        url: "{{ route('admin.settings.web_forms.form_store', $webForm->id) }}",
-                        type: 'post',
-                        data: data,
-                        headers: {
-                            'X-CSRF-TOKEN': "{{ csrf_token() }}"
-                        },
-                        dataType: 'json',
-                        success: function (data) {
-
-                            document.querySelector('#loaderDiv').classList.remove('loaderDiv');
-
-                            document.querySelector('#imgSpinner').classList.remove('imgSpinner');
-
-                            var validator = $("#krayinWebForm").validate();
-
-                            if (data.message) {
-                                $('.alert-wrapper .alert p').text(data.message);
-
-                                $('.alert-wrapper').show();
-                            } else {
-                                window.location.href = data.redirect;
-                            }
-
-                            $("#krayinWebForm").trigger("reset");
-                        },
-
-                        error: function (data) {
-
-                            document.querySelector('#loaderDiv').classList.remove('loaderDiv');
-
-                            document.querySelector('#imgSpinner').classList.remove('imgSpinner');
-                            
-                            var validator = $("#krayinWebForm").validate();
-
-                            for (var key in data.responseJSON.errors) {
-                                var inputNames = [];
-                    
-                                key.split('.').forEach(function(chunk, index) {
-                                    if(index) {
-                                        inputNames.push('[' + chunk + ']')
-                                    } else {
-                                        inputNames.push(chunk)
-                                    }
-                                })
+            const formData = new FormData(document.querySelector('#krayinWebForm'));
+            const data = new URLSearchParams(formData).toString();
             
-                                var inputName = inputNames.join('');
-
-                                var error = {};
-
-                                error[inputName] = data.responseJSON.errors[key][0];
-
-                                validator.showErrors(error);
-                            }
-                        }
-                    });
+            fetch("{{ route('admin.settings.web_forms.form_store', $webForm->id) }}", {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Accept': 'application/json, text/javascript, */*; q=0.01',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
                 }
-            });
-        });
+            })
+                .then(response => response.json())
+                .then(response => {
+                    document.querySelectorAll('.error-message').forEach(function(errorElement) {
+                        errorElement.textContent = '';
+                    });
 
-        $('.alert-wrapper .icon').on('click', function() {
-            $('.alert-wrapper').hide();
+                    if (response.message) {
+                        let messageElement = document.querySelector('#message');
 
+                        messageElement.style.display = 'block';
+
+                        messageElement.textContent = response.message;
+
+                        setTimeout(function() {
+                            messageElement.style.display = 'none';
+                        }, 5000);
+
+                        document.querySelector('#krayinWebForm').reset();
+                    }
+
+                    if (response.errors) {
+                        showError(response.errors);
+                    }
+                })
+                .catch(error => {});
         });
+    });
+    
+    function showError(errors) {
+        for (var key in errors) {
+            var inputNames = [];
+
+            key.split('.').forEach(function(chunk, index) {
+                if(index) {
+                    inputNames.push('[' + chunk + ']')
+                } else {
+                    inputNames.push(chunk)
+                }
+            })
+
+
+            var inputName = inputNames.join('');
+
+            const input = document.querySelector(`[name="${inputName}"]`);
+
+            if (input) {
+                const inputError = document.querySelector(`[id="${inputName}-error"]`);
+
+                inputError.textContent = errors[key][0];
+            }
+        }
     };
-
-    content.appendChild(script);
 })()

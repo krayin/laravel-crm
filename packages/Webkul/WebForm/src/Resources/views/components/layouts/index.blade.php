@@ -28,7 +28,6 @@
         name="base-url"
         content="{{ url()->to('/') }}"
     >
-    <meta
 
     @stack('meta')
 

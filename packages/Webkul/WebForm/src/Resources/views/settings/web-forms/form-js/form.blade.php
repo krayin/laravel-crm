@@ -11,7 +11,7 @@
             <!-- Logo -->            
             <img
                 class="h-10 w-[110px]"
-                src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}""
+                src="{{ vite()->asset('images/logo.svg') }}"
                 alt="krayin"
             />
 
@@ -20,10 +20,17 @@
             <p>{{ $webForm->description }}</p>
 
             <div class="box-shadow flex min-w-[476px] flex-col rounded-lg">
+                <!-- Message -->
+                <div 
+                    id="message"
+                    class="mb-4 hidden rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-gray-800 dark:text-green-400"
+                    role="alert"
+                ></div>
+
                 <!-- Login Form -->
                 <form 
                     style="background-color: {{ $webForm->form_background_color }}"
-                    action="{{ route('admin.session.store') }}"
+                    id="krayinWebForm"
                 >
                     <div class="p-4 dark:border-gray-800">
                         @foreach ($webForm->attributes as $attribute)
@@ -53,6 +60,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('date')
@@ -65,6 +77,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('textarea')
@@ -74,6 +91,11 @@
                                             {{ $attribute->is_required ? 'required' : '' }}
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         ></textarea>
+
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
@@ -94,6 +116,11 @@
                                             value="work"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}[0][value]-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('phone')
@@ -112,6 +139,11 @@
                                             class="control"
                                             value="work"
                                         />
+
+                                        <p 
+                                            id="{{ $fieldName }}[0][value]-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
@@ -139,6 +171,11 @@
 
                                         </select>
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('multiselect')
@@ -163,6 +200,11 @@
 
                                         </select>
 
+                                        <p 
+                                            id="{{ $fieldName }}[]-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('checkbox')
@@ -186,6 +228,11 @@
                                                 </span>
                                             @endforeach
                                         </div>
+
+                                        <p 
+                                            id="{{ $fieldName }}[]-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
                                         
                                         @break;
 
@@ -198,6 +245,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('boolean')
@@ -209,6 +261,11 @@
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="error-message mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
@@ -225,7 +282,7 @@
                         <button
                             type="submit"
                             style="background-color: {{ $webForm->form_submit_button_color }} !important"
-                            class="flex justify-center w-full bg-brandColor border border-brandColor cursor-pointer focus:opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all"
+                            class="flex w-full cursor-pointer place-content-center items-center justify-center gap-x-1 rounded-md border border-brandColor bg-brandColor px-3 py-1.5 font-semibold text-gray-50 transition-all hover:opacity-[0.9] focus:opacity-[0.9]"
                         >
                             {{ $webForm->submit_button_label }}
                         </button>
