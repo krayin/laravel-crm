@@ -133,7 +133,7 @@ class AttributeRepository extends Repository
                     ->where('users.name', 'like', '%'.urldecode($query).'%')
                     ->get();
             } elseif ($currentUser->view_permission === 'individual') {
-                return $userRepository->findByField('users.id', $currentUser->id);
+                return $userRepository->where('users.id', $currentUser->id);
             }
 
             return $userRepository->where('users.name', 'like', '%'.urldecode($query).'%')->get();
