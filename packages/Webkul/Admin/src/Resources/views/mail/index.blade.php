@@ -9,7 +9,7 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
                     
                     <!-- breadcrumbs -->
                     <x-admin::breadcrumbs
@@ -17,7 +17,7 @@
                         :entity="request('route')"
                     />
 
-                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -28,7 +28,7 @@
 
             <div class="flex items-center gap-x-2.5">
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
 
                     <!-- Create button for person -->
                     @if (bouncer()->hasPermission('mail.compose'))
@@ -41,7 +41,7 @@
                         </button>
                     @endif
 
-                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
             type="text/x-template"
             id="v-mail-template"
         >
-            {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.before') !!}
+            {!! view_render_event('admin.mail.'.request('route').'.datagrid.before') !!}
 
            <!-- DataGrid -->
            <x-admin::datagrid
@@ -171,9 +171,9 @@
                 </template>
             </x-admin::datagrid>
 
-            {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.after') !!}
+            {!! view_render_event('admin.mail.'.request('route').'.datagrid.after') !!}
 
-            {!! view_render_event('krayin.admin.mail.create.form.before') !!}
+            {!! view_render_event('admin.mail.create.form.before') !!}
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -353,7 +353,7 @@
                 </form>
             </x-admin::form>
 
-            {!! view_render_event('krayin.admin.mail.create.form.after') !!}
+            {!! view_render_event('admin.mail.create.form.after') !!}
         </script>
 
         <script type="module">

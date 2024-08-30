@@ -15,7 +15,7 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('krayin.admin.mail.view.form.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
 
                     <!-- Bredcrumbs -->
                     <x-admin::breadcrumbs
@@ -24,7 +24,7 @@
                         :route="request('route')"
                     />
 
-                    {!! view_render_event('krayin.admin.mail.view.form.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
                 </div>
     
                 <!-- Title -->
@@ -35,7 +35,7 @@
                     
                     <span class="label-active">{{ request('route') }}</span>
 
-                    {!! view_render_event('krayin.admin.mail.view.tags.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
 
                     <x-admin::tags
                         :attach-endpoint="route('admin.mail.tags.attach', $email->id)"
@@ -43,19 +43,19 @@
                         :added-tags="$email->tags"
                     />
 
-                    {!! view_render_event('krayin.admin.mail.view.tags.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.tags.after', ['email' => $email]) !!}
                 </div>
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.mail.view.email-list.before', ['email' => $email]) !!}
+        {!! view_render_event('admin.mail.view.email-list.before', ['email' => $email]) !!}
 
         <!-- Email List Vue Component -->
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
 
-        {!! view_render_event('krayin.admin.mail.view.email-list.before', ['email' => $email]) !!}
+        {!! view_render_event('admin.mail.view.email-list.before', ['email' => $email]) !!}
     </div>
 
     @pushOnce('scripts')
@@ -66,7 +66,7 @@
         >  
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    {!! view_render_event('krayin.admin.mail.view.email-item.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
 
                     <!-- Email Item Vue Component -->
                     <v-email-item
@@ -78,9 +78,9 @@
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
 
-                    {!! view_render_event('krayin.admin.mail.view.email-item.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
 
-                    {!! view_render_event('krayin.admin.mail.view.email-item.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
             
                     <!-- Email Item Vue Component -->
                     <v-email-item
@@ -93,7 +93,7 @@
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
 
-                    {!! view_render_event('krayin.admin.mail.view.email-item.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
                 </div>
             
                 @if (
@@ -124,14 +124,14 @@
                 <div class="flex w-full flex-col gap-4">
                     <div class="flex w-full items-center justify-between gap-4">
                         <div class="flex gap-4">
-                            {!! view_render_event('krayin.admin.mail.view.avatar.before', ['email' => $email]) !!}
+                            {!! view_render_event('admin.mail.view.avatar.before', ['email' => $email]) !!}
 
                             <!-- Mailer Sort name -->
                             <x-admin::avatar ::name="email.name" />
 
-                            {!! view_render_event('krayin.admin.mail.view.avatar.after', ['email' => $email]) !!}
+                            {!! view_render_event('admin.mail.view.avatar.after', ['email' => $email]) !!}
 
-                            {!! view_render_event('krayin.admin.mail.view.mail_receivers.before', ['email' => $email]) !!}
+                            {!! view_render_event('admin.mail.view.mail_receivers.before', ['email' => $email]) !!}
 
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
@@ -172,10 +172,10 @@
                                 </div>
                             </div>
 
-                            {!! view_render_event('krayin.admin.mail.view.mail_receivers.after', ['email' => $email]) !!}
+                            {!! view_render_event('admin.mail.view.mail_receivers.after', ['email' => $email]) !!}
                         </div>
 
-                        {!! view_render_event('krayin.admin.mail.view.time_actions.before', ['email' => $email]) !!}
+                        {!! view_render_event('admin.mail.view.time_actions.before', ['email' => $email]) !!}
 
                         <!-- Time and Actions -->
                         <div class="flex items-center justify-center gap-2 dark:text-gray-300">
@@ -237,10 +237,10 @@
                             </div>
                         </div>
 
-                        {!! view_render_event('krayin.admin.mail.view.time_actions.before', ['email' => $email]) !!}
+                        {!! view_render_event('admin.mail.view.time_actions.before', ['email' => $email]) !!}
                     </div>
 
-                    {!! view_render_event('krayin.admin.mail.view.mail_body.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.mail_body.before', ['email' => $email]) !!}
 
                     <!-- Mail Body -->
                     <div
@@ -248,9 +248,9 @@
                         class="dark:text-gray-300"
                     ></div>
                    
-                    {!! view_render_event('krayin.admin.mail.view.mail_body.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
 
-                    {!! view_render_event('krayin.admin.mail.view.attach.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.attach.before', ['email' => $email]) !!}
 
                     <div
                         class="flex flex-wrap gap-2"
@@ -268,9 +268,9 @@
                         </a>
                     </div>
 
-                    {!! view_render_event('krayin.admin.mail.view.attach.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.attach.after', ['email' => $email]) !!}
 
-                    {!! view_render_event('krayin.admin.mail.view.replay_reply_all_forward_email.before', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.replay_reply_all_forward_email.before', ['email' => $email]) !!}
 
                     <!-- Reply, Reply All and Forward email -->
                     <template v-if="! action[email.id]">
@@ -304,7 +304,7 @@
                         </div>
                     </template>
 
-                    {!! view_render_event('krayin.admin.mail.view.replay_reply_all_forward_email.after', ['email' => $email]) !!}
+                    {!! view_render_event('admin.mail.view.replay_reply_all_forward_email.after', ['email' => $email]) !!}
 
                     <template v-else>
                         <!-- Email Form Vue Component -->
@@ -327,7 +327,7 @@
                 
                 <x-admin::avatar ::name="email.name" />
 
-                {!! view_render_event('krayin.admin.mail.view.form.before', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
                 
                 <div class="w-[926px] gap-2 rounded border p-4">
                     <x-admin::form
@@ -481,7 +481,7 @@
                     </x-admin::form>    
                 </div>
 
-                {!! view_render_event('krayin.admin.mail.view.form.after', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -491,7 +491,7 @@
             id="v-contact-lookup-template"
         >
             <div>
-                {!! view_render_event('krayin.admin.mail.view.contact_lookup.before', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.contact_lookup.before', ['email' => $email]) !!}
 
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
@@ -645,7 +645,7 @@
                     </div>
                 </template>
 
-                {!! view_render_event('krayin.admin.mail.view.contact_lookup.after', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.contact_lookup.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -654,7 +654,7 @@
             id="v-lead-lookup-template"
         >
             <div>
-                {!! view_render_event('krayin.admin.mail.view.lead_lookup.before', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.lead_lookup.before', ['email' => $email]) !!}
 
                 <template v-if="email?.lead_id">
                     <div class="flex">
@@ -861,7 +861,7 @@
                     </template>
                 @endif
 
-                {!! view_render_event('krayin.admin.mail.view.lead_lookup.after', ['email' => $email]) !!}
+                {!! view_render_event('admin.mail.view.lead_lookup.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -870,7 +870,7 @@
             type="text/x-template"
             id="v-create-contact-template"
         >
-            {!! view_render_event('krayin.admin.mail.view.contact_form.before', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.contact_form.before', ['email' => $email]) !!}
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -913,14 +913,14 @@
                 </form>
             </x-admin::form>
 
-            {!! view_render_event('krayin.admin.mail.view.contact_form.after', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.contact_form.after', ['email' => $email]) !!}
         </script>
 
         <script
             type="text/x-template"
             id="v-create-lead-template"
         >
-            {!! view_render_event('krayin.admin.mail.view.lead_form.before', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.lead_form.before', ['email' => $email]) !!}
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -1096,14 +1096,14 @@
                 </form>
             </x-admin::form>
 
-            {!! view_render_event('krayin.admin.mail.view.lead_form.after', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.lead_form.after', ['email' => $email]) !!}
         </script>
 
         <script
             type="text/x-template"
             id="v-action-email-template"
         >
-            {!! view_render_event('krayin.admin.mail.view.action_mail.before', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.action_mail.before', ['email' => $email]) !!}
 
             <div class="flex flex-col gap-4">
                 <!-- Contact Lookup -->
@@ -1154,7 +1154,7 @@
             <!-- Create Lead Modal -->
             <v-create-lead ref="createLead"></v-create-lead>
 
-            {!! view_render_event('krayin.admin.mail.view.action_mail.after', ['email' => $email]) !!}
+            {!! view_render_event('admin.mail.view.action_mail.after', ['email' => $email]) !!}
         </script>
 
         <!-- Email List Vue Component -->

@@ -31,11 +31,11 @@
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.products.index.datagrid.before') !!}
+        {!! view_render_event('admin.products.index.datagrid.before') !!}
 
         <!-- DataGrid -->
         <x-admin::datagrid src="{{ route('admin.products.index') }}" />
 
-        {!! view_render_event('krayin.admin.products.index.datagrid.after') !!}
+        {!! view_render_event('admin.products.index.datagrid.after') !!}
     </div>
 </x-admin::layouts>

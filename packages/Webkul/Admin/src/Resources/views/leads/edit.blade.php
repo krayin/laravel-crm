@@ -4,7 +4,7 @@
         @lang('admin::app.leads.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.leads.edit.form.before') !!}
+    {!! view_render_event('admin.leads.edit.form.before') !!}
 
     <!-- Edit Lead Form -->
     <x-admin::form         
@@ -30,7 +30,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Save button for Editing Lead -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.leads.edit.form_buttons.before') !!}
+                        {!! view_render_event('admin.leads.edit.form_buttons.before') !!}
 
                         <button
                             type="submit"
@@ -39,7 +39,7 @@
                             @lang('admin::app.leads.edit.save-btn')
                         </button>
 
-                        {!! view_render_event('krayin.admin.leads.edit.form_buttons.after') !!}
+                        {!! view_render_event('admin.leads.edit.form_buttons.after') !!}
                     </div>
                 </div>
             </div>
@@ -51,7 +51,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.leads.edit.form.after') !!}
+    {!! view_render_event('admin.leads.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script 
@@ -59,7 +59,7 @@
             id="v-lead-edit-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                {!! view_render_event('krayin.admin.leads.edit.form_controls.before') !!}
+                {!! view_render_event('admin.leads.edit.form_controls.before') !!}
 
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
@@ -193,7 +193,7 @@
                     </div>
                 </div>
                 
-                {!! view_render_event('krayin.admin.leads.form_controls.after') !!}
+                {!! view_render_event('admin.leads.form_controls.after') !!}
             </div>
         </script>
 

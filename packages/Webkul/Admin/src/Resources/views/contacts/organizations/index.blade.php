@@ -8,12 +8,12 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('krayin.admin.organizations.index.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.organizations.index.breadcrumbs.before') !!}
 
                     <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="contacts.organizations" />
 
-                    {!! view_render_event('krayin.admin.organizations.index.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.organizations.index.breadcrumbs.before') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-gray-300">
@@ -23,7 +23,7 @@
 
             <div class="flex items-center gap-x-2.5">
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('krayin.admin.organizations.index.create_button.before') !!}
+                    {!! view_render_event('admin.organizations.index.create_button.before') !!}
 
                     @if (bouncer()->hasPermission('contacts.organizations.create'))
                         <!-- Create button for person -->
@@ -35,15 +35,15 @@
                         </a>
                     @endif
 
-                    {!! view_render_event('krayin.admin.organizations.index.create_button.after') !!}
+                    {!! view_render_event('admin.organizations.index.create_button.after') !!}
                 </div>
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.organizations.datagrid.index.before') !!}
+        {!! view_render_event('admin.organizations.datagrid.index.before') !!}
 
         <x-admin::datagrid src="{{ route('admin.contacts.organizations.index') }}" />
 
-        {!! view_render_event('krayin.admin.organizations.datagrid.index.after') !!}
+        {!! view_render_event('admin.organizations.datagrid.index.after') !!}
     </div>
 </x-admin::layouts>

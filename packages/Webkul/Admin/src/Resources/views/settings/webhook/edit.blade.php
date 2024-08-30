@@ -6,7 +6,7 @@
         @lang('admin::app.settings.webhooks.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.webhook.edit.form.before', ['webhook' => $webhook]) !!}
+    {!! view_render_event('admin.settings.webhook.edit.form.before', ['webhook' => $webhook]) !!}
 
     <x-admin::form
         :action="route('admin.settings.webhooks.update', $webhook->id)"
@@ -16,7 +16,7 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.webhook.edit.breadcrumbs.before', ['webhook' => $webhook]) !!}
+                        {!! view_render_event('admin.settings.webhook.edit.breadcrumbs.before', ['webhook' => $webhook]) !!}
 
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs
@@ -24,7 +24,7 @@
                             :entity="$webhook"
                         />
 
-                        {!! view_render_event('krayin.admin.settings.webhook.edit.breadcrumbs.after', ['webhook' => $webhook]) !!}
+                        {!! view_render_event('admin.settings.webhook.edit.breadcrumbs.after', ['webhook' => $webhook]) !!}
                     </div>
         
                     <div class="text-xl font-bold dark:text-white">
@@ -34,7 +34,7 @@
         
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.webhook.edit.save_button.before', ['webhook' => $webhook]) !!}
+                        {!! view_render_event('admin.settings.webhook.edit.save_button.before', ['webhook' => $webhook]) !!}
 
                         <!-- Create button for person -->
                         <button
@@ -44,7 +44,7 @@
                             @lang('admin::app.settings.webhooks.edit.save-btn')
                         </button>
 
-                        {!! view_render_event('krayin.admin.settings.webhook.edit.save_button.after', ['webhook' => $webhook]) !!}
+                        {!! view_render_event('admin.settings.webhook.edit.save_button.after', ['webhook' => $webhook]) !!}
                     </div>
                 </div>
             </div>
@@ -53,7 +53,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.webhook.edit.form.after', ['webhook' => $webhook]) !!}
+    {!! view_render_event('admin.settings.webhook.edit.form.after', ['webhook' => $webhook]) !!}
 
     @pushOnce('scripts')
         <script
@@ -61,7 +61,7 @@
             id="webhooks-template"
         >
             <div class="flex gap-2.5 max-xl:flex-wrap">
-                {!! view_render_event('krayin.admin.settings.webhook.edit.left.before', ['webhook' => $webhook]) !!}
+                {!! view_render_event('admin.settings.webhook.edit.left.before', ['webhook' => $webhook]) !!}
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
@@ -268,9 +268,9 @@
                     </div>
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.webhook.edit.left.after', ['webhook' => $webhook]) !!}
+                {!! view_render_event('admin.settings.webhook.edit.left.after', ['webhook' => $webhook]) !!}
 
-                {!! view_render_event('krayin.admin.settings.webhook.edit.right.before', ['webhook' => $webhook]) !!}
+                {!! view_render_event('admin.settings.webhook.edit.right.before', ['webhook' => $webhook]) !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
@@ -350,7 +350,7 @@
                     </x-admin::accordion>
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.webhook.edit.right.before', ['webhook' => $webhook]) !!}
+                {!! view_render_event('admin.settings.webhook.edit.right.before', ['webhook' => $webhook]) !!}
             </div>
         </script>
 

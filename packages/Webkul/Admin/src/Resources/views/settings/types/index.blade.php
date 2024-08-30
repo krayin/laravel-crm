@@ -18,7 +18,7 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.types.index.create_button.before') !!}
+                {!! view_render_event('admin.settings.types.index.create_button.before') !!}
                 
                 <!-- Create button for Types -->
                 <div class="flex items-center gap-x-2.5">
@@ -33,7 +33,7 @@
                     @endif
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.types.index.create_button.after') !!}
+                {!! view_render_event('admin.settings.types.index.create_button.after') !!}
             </div>
         </div>
 
@@ -48,7 +48,7 @@
             type="text/x-template"
             id="types-settings-template"
         >
-            {!! view_render_event('krayin.admin.settings.types.index.datagrid.before') !!}
+            {!! view_render_event('admin.settings.types.index.datagrid.before') !!}
         
             <!-- Datagrid -->
             <x-admin::datagrid
@@ -102,7 +102,7 @@
                 </template>
             </x-admin::datagrid>
 
-            {!! view_render_event('krayin.admin.settings.types.index.datagrid.after') !!}
+            {!! view_render_event('admin.settings.types.index.datagrid.after') !!}
             
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -110,7 +110,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
-                    {!! view_render_event('krayin.admin.settings.types.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.types.index.form_controls.before') !!}
 
                     <x-admin::modal ref="typeUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -126,7 +126,7 @@
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.types.index.content.before') !!}
+                            {!! view_render_event('admin.settings.types.index.content.before') !!}
 
                             <x-admin::form.control-group.control
                                 type="hidden"
@@ -151,7 +151,7 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.types.index.content.after') !!}
+                            {!! view_render_event('admin.settings.types.index.content.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
@@ -167,7 +167,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.types.index.form_controls.after') !!}
+                    {!! view_render_event('admin.settings.types.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </script>

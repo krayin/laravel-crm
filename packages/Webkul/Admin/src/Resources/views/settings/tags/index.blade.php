@@ -9,12 +9,12 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('krayin.admin.settings.tags.index.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.tags.index.breadcrumbs.before') !!}
 
                     <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="settings.tags" />
 
-                    {!! view_render_event('krayin.admin.settings.tags.index.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.settings.tags.index.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -23,7 +23,7 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.tags.index.create_button.before') !!}
+                {!! view_render_event('admin.settings.tags.index.create_button.before') !!}
                 
                 <!-- Create button for Tags -->
                 @if (bouncer()->hasPermission('settings.other_settings.tags.create'))
@@ -38,7 +38,7 @@
                     </div>
                 @endif
 
-                {!! view_render_event('krayin.admin.settings.tags.index.create_button.after') !!}
+                {!! view_render_event('admin.settings.tags.index.create_button.after') !!}
             </div>
         </div>
         
@@ -53,7 +53,7 @@
             type="text/x-template"
             id="tag-settings-template"
         >
-            {!! view_render_event('krayin.admin.settings.tags.index.datagrid.before') !!}
+            {!! view_render_event('admin.settings.tags.index.datagrid.before') !!}
         
             <!-- Datagrid -->
             <x-admin::datagrid
@@ -136,7 +136,7 @@
                     </template>
                 </template>
             </x-admin::datagrid>
-            {!! view_render_event('krayin.admin.settings.tags.index.datagrid.after') !!}
+            {!! view_render_event('admin.settings.tags.index.datagrid.after') !!}
             
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -144,7 +144,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
-                    {!! view_render_event('krayin.admin.settings.tags.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.tags.index.form_controls.before') !!}
 
                     <x-admin::modal ref="tagsUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -160,14 +160,14 @@
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.tags.index.content.before') !!}
+                            {!! view_render_event('admin.settings.tags.index.content.before') !!}
 
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="id"
                             />
 
-                            {!! view_render_event('krayin.admin.settings.tags.index.form_controls.before') !!}
+                            {!! view_render_event('admin.settings.tags.index.form_controls.before') !!}
 
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -211,7 +211,7 @@
                                 </template>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.tags.index.content.after') !!}
+                            {!! view_render_event('admin.settings.tags.index.content.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
@@ -227,7 +227,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.tags.index.form_controls.after') !!}
+                    {!! view_render_event('admin.settings.tags.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </script>

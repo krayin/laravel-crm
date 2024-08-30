@@ -3,7 +3,7 @@
         @lang('admin::app.settings.attributes.edit.title')
     </x-slot>
 
-    {!! view_render_event('bagisto.admin.catalog.attributes.edit.before', ['attribute' => $attribute]) !!}
+    {!! view_render_event('admin.catalog.attributes.edit.before', ['attribute' => $attribute]) !!}
 
     <!-- Input Form -->
     <x-admin::form
@@ -12,35 +12,35 @@
         method="PUT"
     >
         <div class="flex flex-col gap-4">
-            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.before', ['attribute' => $attribute]) !!}
+            {!! view_render_event('admin.settings.attributes.edit.form_controls.before', ['attribute' => $attribute]) !!}
 
             <!-- actions buttons -->
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.breadcrumbs.before', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.breadcrumbs.before', ['attribute' => $attribute]) !!}
 
                         <x-admin::breadcrumbs 
                             name="settings.attributes.edit" 
                             :entity="$attribute"
                         />
                        
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.breadcrumbs.after', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.breadcrumbs.after', ['attribute' => $attribute]) !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.title.before', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.title.before', ['attribute' => $attribute]) !!}
 
                         @lang('admin::app.settings.attributes.edit.title')
 
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.title.after', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.title.after', ['attribute' => $attribute]) !!}
                     </div>
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for Attributes -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.edit_button.before', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.edit_button.before', ['attribute' => $attribute]) !!}
 
                         @if (bouncer()->hasPermission('settings.automation.attributes.edit'))
                             <button
@@ -51,7 +51,7 @@
                             </button>
                         @endif
 
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.edit_button.after', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.edit_button.after', ['attribute' => $attribute]) !!}
                     </div>
                 </div>
             </div>
@@ -62,11 +62,11 @@
                 <x-admin::shimmer.settings.attributes />
             </v-edit-attributes>
 
-            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.after', ['attribute' => $attribute]) !!}
+            {!! view_render_event('admin.settings.attributes.edit.form_controls.after', ['attribute' => $attribute]) !!}
         </div>
     </x-admin::form>
 
-    {!! view_render_event('bagisto.admin.catalog.attributes.edit.after', ['attribute' => $attribute]) !!}
+    {!! view_render_event('admin.catalog.attributes.edit.after', ['attribute' => $attribute]) !!}
 
     @pushOnce('scripts')
         <script
@@ -76,7 +76,7 @@
             <!-- body content -->
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub Component -->
-                {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
+                {!! view_render_event('admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
                 
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
@@ -84,7 +84,7 @@
                             @lang('admin::app.settings.attributes.edit.labels')
                         </p>
 
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.name.before', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.form_controls.name.before', ['attribute' => $attribute]) !!}
 
                         <!-- Admin name -->
                         <x-admin::form.control-group>
@@ -104,7 +104,7 @@
                             <x-admin::form.control-group.error control-name="name" />
                         </x-admin::form.control-group>
 
-                        {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.name.after', ['attribute' => $attribute]) !!}
+                        {!! view_render_event('admin.settings.attributes.edit.form_controls.name.after', ['attribute' => $attribute]) !!}
 
                         <!-- Options -->
                         <div
@@ -129,7 +129,7 @@
                             <!-- For Attribute Options If Data Exist -->
                             <div class="mt-4 overflow-x-auto">
                                 <div class="flex gap-4 max-sm:flex-wrap">
-                                    {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.option_type.before', ['attribute' => $attribute]) !!}
+                                    {!! view_render_event('admin.settings.attributes.edit.form_controls.option_type.before', ['attribute' => $attribute]) !!}
 
                                     <!-- Input Option Type -->
                                     <x-admin::form.control-group v-if="attributeType != 'lookup'" class="mb-2.5 w-1/2">
@@ -159,9 +159,9 @@
                                         />
                                     </x-admin::form.control-group>
 
-                                    {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.option_type.after', ['attribute' => $attribute]) !!}
+                                    {!! view_render_event('admin.settings.attributes.edit.form_controls.option_type.after', ['attribute' => $attribute]) !!}
 
-                                    {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.lookup_type.before', ['attribute' => $attribute]) !!}
+                                    {!! view_render_event('admin.settings.attributes.edit.form_controls.lookup_type.before', ['attribute' => $attribute]) !!}
                                 
                                     <!-- Input Lookup Type -->
                                     <x-admin::form.control-group v-if="attributeType == 'lookup' || (optionType == 'lookup')" class="mb-2.5 w-1/2">
@@ -190,7 +190,7 @@
                                         />
                                     </x-admin::form.control-group>
 
-                                    {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.lookup_type.after', ['attribute' => $attribute]) !!}
+                                    {!! view_render_event('admin.settings.attributes.edit.form_controls.lookup_type.after', ['attribute' => $attribute]) !!}
                                 </div>
                                     
                                 <template v-if="optionsData?.length">
@@ -200,7 +200,7 @@
                                         || $attribute->type == 'checkbox'
                                         || $attribute->type == 'lookup'
                                     )
-                                        {!! view_render_event('krayin.admin.settings.attributes.edit.table.before', ['attribute' => $attribute]) !!}
+                                        {!! view_render_event('admin.settings.attributes.edit.table.before', ['attribute' => $attribute]) !!}
 
                                         <!-- Table Information -->
                                         <x-admin::table>
@@ -284,7 +284,7 @@
                                             </draggable>
                                         </x-admin::table>
 
-                                        {!! view_render_event('krayin.admin.settings.attributes.edit.table.after', ['attribute' => $attribute]) !!}
+                                        {!! view_render_event('admin.settings.attributes.edit.table.after', ['attribute' => $attribute]) !!}
                                     @endif
                                 </template>
                             </div>
@@ -292,11 +292,11 @@
                     </div>
                 </div>
                 
-                {!! view_render_event('bagisto.admin.catalog.attributes.edit.card.label.after', ['attribute' => $attribute]) !!}
+                {!! view_render_event('admin.catalog.attributes.edit.card.label.after', ['attribute' => $attribute]) !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.settings.attributes.edit.accordian.general.before', ['attribute' => $attribute]) !!}
+                    {!! view_render_event('admin.settings.attributes.edit.accordian.general.before', ['attribute' => $attribute]) !!}
 
                     <!-- General -->
                     <x-admin::accordion>
@@ -307,7 +307,7 @@
                         </x-slot>
 
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.code.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.code.before', ['attribute' => $attribute]) !!}
 
                             <!-- Attribute Code -->
                             <x-admin::form.control-group>
@@ -340,9 +340,9 @@
                                 <x-admin::form.control-group.error control-name="code" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.code.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.code.after', ['attribute' => $attribute]) !!}
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.type.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.type.before', ['attribute' => $attribute]) !!}
 
                             <!-- Attribute Type -->
                             <x-admin::form.control-group>
@@ -384,9 +384,9 @@
                                 <x-admin::form.control-group.error control-name="type" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.type.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.type.after', ['attribute' => $attribute]) !!}
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.entity_type.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.entity_type.before', ['attribute' => $attribute]) !!}
 
                             <!-- Entity Type -->
                             <x-admin::form.control-group>
@@ -412,13 +412,13 @@
                                 <x-admin::form.control-group.error control-name="entity_type" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.entity_type.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.entity_type.after', ['attribute' => $attribute]) !!}
                         </x-slot>
                     </x-admin::accordion>
                     
-                    {!! view_render_event('krayin.admin.settings.attributes.edit.accordian.general.after', ['attribute' => $attribute]) !!}
+                    {!! view_render_event('admin.settings.attributes.edit.accordian.general.after', ['attribute' => $attribute]) !!}
 
-                    {!! view_render_event('krayin.admin.settings.attributes.edit.accordian.validations.before', ['attribute' => $attribute]) !!}
+                    {!! view_render_event('admin.settings.attributes.edit.accordian.validations.before', ['attribute' => $attribute]) !!}
 
                     <!-- Validations -->
                     <x-admin::accordion>
@@ -431,7 +431,7 @@
                         <x-slot:content>
                             <!-- Input Validation -->
                             @if($attribute->type == 'text')
-                                {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.select.before', ['attribute' => $attribute]) !!}
+                                {!! view_render_event('admin.settings.attributes.edit.form_controls.select.before', ['attribute' => $attribute]) !!}
 
                                 <x-admin::form.control-group>
                                     <x-admin::form.control-group.label>
@@ -454,10 +454,10 @@
                                     </x-admin::form.control-group.control>
                                 </x-admin::form.control-group>
 
-                                {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.select.after', ['attribute' => $attribute]) !!}
+                                {!! view_render_event('admin.settings.attributes.edit.form_controls.select.after', ['attribute' => $attribute]) !!}
                             @endif
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.is_required.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.is_required.before', ['attribute' => $attribute]) !!}
 
                             <!-- Is Required -->
                             <x-admin::form.control-group class="!mb-2 flex select-none items-center gap-2.5">
@@ -488,9 +488,9 @@
                                 </label>
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.is_required.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.is_required.after', ['attribute' => $attribute]) !!}
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.is_unique.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.is_unique.before', ['attribute' => $attribute]) !!}
 
                             <!-- Is Unique -->
                             <x-admin::form.control-group class="!mb-0 flex select-none items-center gap-2.5">
@@ -518,11 +518,11 @@
                                 />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.is_unique.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.is_unique.after', ['attribute' => $attribute]) !!}
                         </x-slot>
                     </x-admin::accordion>
 
-                    {!! view_render_event('krayin.admin.settings.attributes.edit.accordian.validations.after', ['attribute' => $attribute]) !!}
+                    {!! view_render_event('admin.settings.attributes.edit.accordian.validations.after', ['attribute' => $attribute]) !!}
                 </div>
             </div>
 
@@ -562,7 +562,7 @@
                                 ::value="optionIsNew"
                             />
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.name.before', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.name.before', ['attribute' => $attribute]) !!}
 
                             <!-- Admin Input -->
                             <x-admin::form.control-group class="mb-2.5 w-full">
@@ -582,7 +582,7 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.attributes.edit.form_controls.name.after', ['attribute' => $attribute]) !!}
+                            {!! view_render_event('admin.settings.attributes.edit.form_controls.name.after', ['attribute' => $attribute]) !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
