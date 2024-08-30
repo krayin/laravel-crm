@@ -31,6 +31,7 @@
         </div>
 
         <x-admin::datagrid :src="route('admin.contacts.persons.index')">
+            <!-- DataGrid Shimmer -->
             <x-admin::shimmer.datagrid />
         </x-admin::datagrid>
     </div>
