@@ -1,6 +1,11 @@
+@props([
+    'allowEdit' => true,
+])
+
 <v-inline-address-edit
     {{ $attributes->except('value') }}
     :value='@json($attributes->get('value'))'
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">
@@ -17,14 +22,14 @@
         <div class="group w-full max-w-full hover:rounded-sm">
             <!-- Non-editing view -->
             <div
-                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <div 
                     class="group relative !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
-                    <span class="truncate rounded cursor-pointer">
+                    <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.length > 20 ? `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.substring(0, 20) + '...' : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}` }}
                     </span>
 
@@ -35,7 +40,7 @@
                             @{{ `${inputValue?.state}, ${inputValue?.country}` }}<br>
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
+                        <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 

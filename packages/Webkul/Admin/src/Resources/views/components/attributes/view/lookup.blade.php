@@ -11,4 +11,5 @@
     ::errors="errors"
     :placeholder="$attribute->name"
     :url="$url"
+    :allow-edit="$allowEdit"
 />
