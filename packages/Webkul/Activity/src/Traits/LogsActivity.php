@@ -31,7 +31,7 @@ trait LogsActivity
                 return;
             }
 
-            self::logActivity($model);
+            static::logActivity($model);
         });
 
         static::updated(function ($model) {
@@ -39,7 +39,7 @@ trait LogsActivity
                 return;
             }
 
-            self::logActivity($model);
+            static::logActivity($model);
         });
 
         static::deleting(function ($model) {
@@ -54,7 +54,7 @@ trait LogsActivity
     /**
      * Create activity.
      */
-    private static function logActivity($model)
+    protected static function logActivity($model)
     {
         $customAttributes = [];
 
@@ -62,7 +62,7 @@ trait LogsActivity
             $customAttributes = $model->getCustomAttributes()->pluck('code')->toArray();
         }
 
-        $updatedAttributes = self::getUpdatedAttributes($model);
+        $updatedAttributes = static::getUpdatedAttributes($model);
 
         foreach ($updatedAttributes as $attributeCode => $attributeData) {
             if (in_array($attributeCode, $customAttributes)) {
@@ -79,11 +79,11 @@ trait LogsActivity
                     'attribute' => $attributeCode,
                     'new'       => [
                         'value' => $attributeData['new'],
-                        'label' => self::getAttributeLabel($attributeData['new'], $model->attribute),
+                        'label' => static::getAttributeLabel($attributeData['new'], $model->attribute),
                     ],
                     'old'       => [
                         'value' => $attributeData['old'],
-                        'label' => self::getAttributeLabel($attributeData['old'], $model->attribute),
+                        'label' => static::getAttributeLabel($attributeData['old'], $model->attribute),
                     ],
                 ]),
                 'user_id'    => auth()->id(),
@@ -100,7 +100,7 @@ trait LogsActivity
     /**
      * Get attribute label.
      */
-    private static function getAttributeLabel($value, $attribute)
+    protected static function getAttributeLabel($value, $attribute)
     {
         return app(AttributeValueRepository::class)->getAttributeLabel($value, $attribute);
     }
@@ -108,7 +108,7 @@ trait LogsActivity
     /**
      * Create activity.
      */
-    private static function getUpdatedAttributes($model)
+    protected static function getUpdatedAttributes($model)
     {
         $updatedAttributes = [];
 
@@ -123,9 +123,9 @@ trait LogsActivity
                 continue;
             }
 
-            $newValue = self::decodeValueIfJson($value);
+            $newValue = static::decodeValueIfJson($value);
 
-            $oldValue = self::decodeValueIfJson($model->getOriginal($key));
+            $oldValue = static::decodeValueIfJson($model->getOriginal($key));
 
             if ($newValue != $oldValue) {
                 $updatedAttributes[$key] = [
@@ -141,7 +141,7 @@ trait LogsActivity
     /**
      * Convert value if json.
      */
-    private static function decodeValueIfJson($value)
+    protected static function decodeValueIfJson($value)
     {
         if (
             ! is_array($value)
@@ -154,7 +154,7 @@ trait LogsActivity
             return $value;
         }
 
-        self::ksortRecursive($value);
+        static::ksortRecursive($value);
 
         return $value;
     }
@@ -162,7 +162,7 @@ trait LogsActivity
     /**
      * Sort array recursively.
      */
-    private static function ksortRecursive(&$array)
+    protected static function ksortRecursive(&$array)
     {
         if (! is_array($array)) {
             return;
@@ -175,7 +175,7 @@ trait LogsActivity
                 continue;
             }
 
-            self::ksortRecursive($value);
+            static::ksortRecursive($value);
         }
     }
 }
