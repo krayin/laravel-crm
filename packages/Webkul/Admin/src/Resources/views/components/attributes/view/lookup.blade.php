@@ -4,7 +4,7 @@
 
 <x-admin::form.control-group.controls.inline.lookup 
     ::name="'{{ $attribute->code }}'"
-    :value="$lookUpEntity?->name"
+    ::value="'{{ $lookUpEntity?->name }}'"
     :attribute="$attribute"
     position="left"
     :label="$attribute->name"
