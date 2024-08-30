@@ -1736,6 +1736,12 @@ return [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Días',
 
+            'tabs'        => [
+                'description' => 'Descripción',
+                'products'    => 'Productos',
+                'quotes'      => 'Cotizaciones',    
+            ],
+
             'attributes' => [
                 'title' => 'Sobre el Lead',
             ],

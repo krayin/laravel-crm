@@ -1741,6 +1741,12 @@ return [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Days',
 
+            'tabs'        => [
+                'description' => 'Description',
+                'products'    => 'Products',
+                'quotes'      => 'Quotes',
+            ],
+
             'attributes' => [
                 'title' => 'About Lead',
             ],

@@ -101,8 +101,9 @@
                 :endpoint="route('admin.leads.activities.index', $lead->id)"
                 :email-detach-endpoint="route('admin.leads.emails.detach', $lead->id)"
                 :extra-types="[
-                    ['name' => 'products', 'label' => 'Products'],
-                    ['name' => 'quotes', 'label' => 'Quotes'],
+                    ['name' => 'description', 'label' => trans('admin::app.leads.view.tabs.description')],
+                    ['name' => 'products', 'label' => trans('admin::app.leads.view.tabs.products')],
+                    ['name' => 'quotes', 'label' => trans('admin::app.leads.view.tabs.quotes')],
                 ]"
             >
                 <!-- Products -->
@@ -113,6 +114,13 @@
                 <!-- Quotes -->
                 <x-slot:quotes>
                     @include ('admin::leads.view.quotes')
+                </x-slot>
+
+                <!-- Description -->
+                <x-slot:description>
+                    <div class="p-4">
+                        {{ $lead->description }}
+                    </div>
                 </x-slot>
             </x-admin::activities>
 
