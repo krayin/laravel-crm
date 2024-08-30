@@ -42,7 +42,10 @@
 
         {!! view_render_event('admin.settings.workflows.index.datagrid.before') !!}
 
-        <x-admin::datagrid :src="route('admin.settings.workflows.index')" />
+        <x-admin::datagrid :src="route('admin.settings.workflows.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.settings.workflows.index.datagrid.after') !!}
     </div>

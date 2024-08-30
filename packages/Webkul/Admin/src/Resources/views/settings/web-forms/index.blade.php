@@ -77,7 +77,7 @@
                 {!! view_render_event('admin.settings.web_forms.index.datagrid.before') !!}
             
                 <!-- DataGrid -->
-                <x-admin::datagrid src="{{ route('admin.settings.web_forms.index') }}" />
+                <x-admin::datagrid :src="route('admin.settings.web_forms.index')" />
 
                 {!! view_render_event('admin.settings.web_forms.index.datagrid.after') !!}
             </div>

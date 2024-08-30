@@ -31,11 +31,9 @@
             </div>
         </div>
 
-        {!! view_render_event('admin.products.index.datagrid.before') !!}
-
-        <!-- DataGrid -->
-        <x-admin::datagrid src="{{ route('admin.products.index') }}" />
-
-        {!! view_render_event('admin.products.index.datagrid.after') !!}
+        <x-admin::datagrid :src="route('admin.products.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
     </div>
 </x-admin::layouts>

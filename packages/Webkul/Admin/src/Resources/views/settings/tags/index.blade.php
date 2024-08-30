@@ -57,7 +57,7 @@
         
             <!-- Datagrid -->
             <x-admin::datagrid
-                src="{{ route('admin.settings.tags.index') }}"
+                :src="route('admin.settings.tags.index')"
                 ref="datagrid"
             >
                 <template #body="{
@@ -99,7 +99,7 @@
                             <p>@{{ record.id }}</p>
         
                             <!-- Name and Color -->
-                            <p class="flex gap-2 items-center">
+                            <p class="flex items-center gap-2">
                                 <span 
                                     class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-white"
                                     :style="`background-color: ${record.color}`"
@@ -203,7 +203,7 @@
     
                                         <label 
                                             :for="index" 
-                                            class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid peer-checked:border-gray-850"
+                                            class="peer-checked:border-gray-850 block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid"
                                             :style="`background-color: ${color.background}`"
                                         >
                                         </label>

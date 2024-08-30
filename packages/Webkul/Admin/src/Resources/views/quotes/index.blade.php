@@ -77,7 +77,7 @@
                 {!! view_render_event('admin.quotes.index.datagrid.before') !!}
             
                 <!-- DataGrid -->
-                <x-admin::datagrid src="{{ route('admin.quotes.index') }}" />
+                <x-admin::datagrid :src="route('admin.quotes.index')" />
 
                 {!! view_render_event('admin.quotes.index.datagrid.after') !!}
             </div>

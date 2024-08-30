@@ -43,7 +43,10 @@
         {!! view_render_event('admin.settings.attributes.index.datagrid.before') !!}
 
         <!-- DataGrid -->
-        <x-admin::datagrid :src="route('admin.settings.attributes.index')" />
+        <x-admin::datagrid :src="route('admin.settings.attributes.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.settings.attributes.index.datagrid.after') !!}
     </div>

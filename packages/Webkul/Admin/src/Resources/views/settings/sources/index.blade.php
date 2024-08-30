@@ -56,7 +56,7 @@
         
             <!-- Datagrid -->
             <x-admin::datagrid
-                src="{{ route('admin.settings.sources.index') }}"
+                :src="route('admin.settings.sources.index')"
                 ref="datagrid"
             >
                 <template #body="{
