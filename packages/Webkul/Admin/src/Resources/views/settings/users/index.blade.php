@@ -184,13 +184,13 @@
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.users.index.content.before') !!}
-                            
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="id"
                                 v-model="user.id"
                             />
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.name.before') !!}
 
                             <!-- Name -->
                             <x-admin::form.control-group>
@@ -211,6 +211,10 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
+                            {!! view_render_event('krayin.admin.settings.users.index.form.name.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.email.before') !!}
+
                             <!-- Email -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -229,6 +233,10 @@
 
                                 <x-admin::form.control-group.error control-name="email" />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.email.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.password.before') !!}
 
                             <div class="flex gap-4">
                                 <!-- Password -->
@@ -268,6 +276,10 @@
                                     <x-admin::form.control-group.error control-name="confirm_password" />
                                 </x-admin::form.control-group>
                             </div>
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.password.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.before') !!}
                             
                             <div class="flex gap-4">
                                 <!-- Role -->
@@ -326,6 +338,10 @@
                                 </x-admin::form.control-group>
                             </div>
 
+                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.before') !!}
+
                             <!-- Group -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -355,6 +371,10 @@
                                 </v-field>
                             </x-admin::form.control-group>
 
+                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.users.index.form.status.before') !!}
+
                             <!-- Status -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -382,7 +402,7 @@
 
                             </x-admin::form.control-group>
                                 
-                            {!! view_render_event('krayin.admin.settings.users.index.content.after') !!}
+                            {!! view_render_event('krayin.admin.settings.users.index.form.status.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->

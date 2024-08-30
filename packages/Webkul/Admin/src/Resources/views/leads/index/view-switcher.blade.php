@@ -1,4 +1,4 @@
-{!! view_render_event('admin.leads.index.view_switcher.before') !!}
+{!! view_render_event('krayin.admin.leads.index.view_switcher.before') !!}
 
 <div class="flex gap-4">
     <x-admin::dropdown>
@@ -72,4 +72,4 @@
     </div>
 </div>
 
-{!! view_render_event('admin.leads.index.view_switcher.after') !!}
+{!! view_render_event('krayin.admin.leads.index.view_switcher.after') !!}

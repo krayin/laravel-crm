@@ -1,12 +1,12 @@
 <!-- Stages Navigation -->
-{!! view_render_event('admin.leads.view.stages.before', ['lead' => $lead]) !!}
+{!! view_render_event('krayin.admin.leads.view.stages.before', ['lead' => $lead]) !!}
 
 <!-- Stages Vue Component -->
 <v-lead-stages>
     <x-admin::shimmer.leads.view.stages :count="$lead->pipeline->stages->count() - 1" />
 </v-lead-stages>
 
-{!! view_render_event('admin.leads.view.stages.after', ['lead' => $lead]) !!}
+{!! view_render_event('krayin.admin.leads.view.stages.after', ['lead' => $lead]) !!}
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-lead-stages-template">

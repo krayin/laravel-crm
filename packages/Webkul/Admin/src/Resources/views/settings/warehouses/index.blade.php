@@ -21,14 +21,16 @@
                 <!-- Create button For Warehouses -->
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.before') !!}
-                        @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
-                            <a
-                                href="{{ route('admin.settings.warehouses.create') }}"
-                                class="primary-button"
-                            >
-                                @lang('admin::app.settings.warehouses.index.create-btn')
-                            </a>
-                        @endif
+
+                    @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
+                        <a
+                            href="{{ route('admin.settings.warehouses.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.warehouses.index.create-btn')
+                        </a>
+                    @endif
+
                     {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.after') !!}
                 </div>
             </div>

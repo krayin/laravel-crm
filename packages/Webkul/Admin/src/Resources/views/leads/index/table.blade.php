@@ -1,4 +1,4 @@
-{!! view_render_event('admin.leads.index.table.before') !!}
+{!! view_render_event('krayin.admin.leads.index.table.before') !!}
 
 <x-admin::datagrid src="{{ route('admin.leads.index') }}">
     <x-slot:toolbar-right-after>
@@ -6,4 +6,4 @@
     </x-slot>
 </x-admin::datagrid>
 
-{!! view_render_event('admin.leads.index.table.after') !!}
+{!! view_render_event('krayin.admin.leads.index.table.after') !!}

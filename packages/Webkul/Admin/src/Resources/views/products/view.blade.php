@@ -6,7 +6,7 @@
     <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
-        {!! view_render_event('admin.leads.view.left.before', ['product' => $product]) !!}
+        {!! view_render_event('krayin.admin.leads.view.left.before', ['product' => $product]) !!}
 
         <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Product Information -->
@@ -54,9 +54,9 @@
             @include ('admin::products.view.attributes')
         </div>
 
-        {!! view_render_event('admin.products.view.left.after', ['product' => $product]) !!}
+        {!! view_render_event('krayin.admin.products.view.left.after', ['product' => $product]) !!}
 
-        {!! view_render_event('admin.products.view.right.before', ['product' => $product]) !!}
+        {!! view_render_event('krayin.admin.products.view.right.before', ['product' => $product]) !!}
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
@@ -79,6 +79,6 @@
             </x-admin::activities>
         </div>
 
-        {!! view_render_event('admin.products.view.right.after', ['product' => $product]) !!}
+        {!! view_render_event('krayin.admin.products.view.right.after', ['product' => $product]) !!}
     </div>    
 </x-admin::layouts>

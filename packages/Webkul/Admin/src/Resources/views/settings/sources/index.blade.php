@@ -8,8 +8,12 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('krayin.admin.settings.sources.index.breadcrumbs.before') !!}
+
                     <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="settings.sources" />
+
+                    {!! view_render_event('krayin.admin.settings.sources.index.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -133,6 +137,8 @@
                                 name="id"
                             />
 
+                            {!! view_render_event('krayin.admin.settings.sources.index.form.name.before') !!}
+
                             <!-- Name -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -151,11 +157,13 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.sources.index.content.after') !!}
+                            {!! view_render_event('krayin.admin.settings.sources.index.form.name.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            {!! view_render_event('krayin.admin.settings.sources.index.form.save_button.before') !!}
+
                             <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
@@ -164,6 +172,8 @@
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
+
+                            {!! view_render_event('krayin.admin.settings.sources.index.form.save_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
 

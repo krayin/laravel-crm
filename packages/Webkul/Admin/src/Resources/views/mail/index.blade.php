@@ -9,11 +9,15 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.before') !!}
+                    
                     <!-- breadcrumbs -->
                     <x-admin::breadcrumbs
                         name="mail.route"
                         :entity="request('route')"
                     />
+
+                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -23,8 +27,10 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
+                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.before') !!}
+
+                    <!-- Create button for person -->
                     @if (bouncer()->hasPermission('mail.compose'))
                         <button
                             type="button"
@@ -34,6 +40,8 @@
                             @lang('admin::app.mail.index.compose-mail-btn')
                         </button>
                     @endif
+
+                    {!! view_render_event('krayin.admin.mail.create.breadcrumbs.after') !!}
                 </div>
             </div>
         </div>
@@ -84,7 +92,7 @@
                     <template v-else>
                         <div
                             v-for="record in available.records"
-                            class="flex justify-between items-center border-b px-8 py-4 text-gray-600 cursor-pointer hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
+                            class="flex cursor-pointer items-center justify-between border-b px-8 py-4 text-gray-600 hover:bg-gray-50 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-950"
                             :class="{
                                 'font-medium': record.is_read,
                                 'font-semibold': ! record.is_read
@@ -92,7 +100,7 @@
                             @click.stop="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))"
                         >
                             <!-- Select Box -->
-                            <div class="flex gap-32 items-center justify-start w-full">
+                            <div class="flex w-full items-center justify-start gap-32">
                                 <div class="flex items-center gap-6">
                                     <div class="relative flex items-center">
                                         <!-- Dot Indicator -->
@@ -121,12 +129,12 @@
                                         </div>
                                     </div>
                                 
-                                    <p class="leading-none whitespace-nowrap overflow-hidden text-ellipsis">@{{ record.name }}</p>
+                                    <p class="overflow-hidden text-ellipsis whitespace-nowrap leading-none">@{{ record.name }}</p>
                                 </div>
 
-                                <div class="flex gap-4 items-center justify-between w-full">
+                                <div class="flex w-full items-center justify-between gap-4">
                                     <!-- Content -->
-                                    <div class="flex gap-2 items-center flex-frow">
+                                    <div class="flex-frow flex items-center gap-2">
                                         <!-- Attachments -->
                                         <p v-html="record.attachments"></p>
 
@@ -153,7 +161,7 @@
                                     </div>
                                 
                                     <!-- Time -->
-                                    <div class="flex-shrink-0 min-w-[80px] text-right">
+                                    <div class="min-w-[80px] flex-shrink-0 text-right">
                                         <p class="leading-none">@{{ record.created_at }}</p>
                                     </div>
                                 </div>
@@ -164,6 +172,8 @@
             </x-admin::datagrid>
 
             {!! view_render_event('krayin.admin.mail.'.request('route').'.datagrid.after') !!}
+
+            {!! view_render_event('krayin.admin.mail.create.form.before') !!}
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -342,6 +352,8 @@
                     </x-admin::modal>
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('krayin.admin.mail.create.form.after') !!}
         </script>
 
         <script type="module">

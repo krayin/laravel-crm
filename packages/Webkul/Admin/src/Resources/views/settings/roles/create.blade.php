@@ -4,124 +4,147 @@
         @lang('admin::app.settings.roles.create.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.roles.create.before') !!}
+    {!! view_render_event('krayin.admin.settings.roles.create.form.before') !!}
 
     <!-- Create Form -->
     <x-admin::form :action="route('admin.settings.roles.store')">
         <div class="flex flex-col gap-4">
-            {!! view_render_event('krayin.admin.settings.roles.create.form_controls.before') !!}
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                <div class="flex flex-col gap-2">
+                    <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('krayin.admin.settings.roles.create.breadcrumbs.before') !!}
 
-                <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                    <div class="flex flex-col gap-2">
-                        <div class="flex cursor-pointer items-center">
-                            <x-admin::breadcrumbs name="settings.roles.create" />
-                        </div>
+                        <!-- Breadcrumbs -->
+                        <x-admin::breadcrumbs name="settings.roles.create" />
 
-                        <div class="text-xl font-bold dark:text-white">
-                            @lang('admin::app.settings.roles.create.title')
-                        </div>
+                        {!! view_render_event('krayin.admin.settings.roles.create.breadcrumbs.after') !!}
                     </div>
 
+                    <div class="text-xl font-bold dark:text-white">
+                        @lang('admin::app.settings.roles.create.title')
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        <!-- Create button for Roles -->
-                        <div class="flex items-center gap-x-2.5">
-                            @if (bouncer()->hasPermission('settings.user.roles.create'))
-                                <button
-                                    type="submit"
-                                    class="primary-button"
-                                >
-                                    @lang('admin::app.settings.roles.create.save-btn')
-                                </button>
-                            @endif
-                        </div>
+                        {!! view_render_event('krayin.admin.settings.roles.create.create_button.before') !!}
+
+                        @if (bouncer()->hasPermission('settings.user.roles.create'))
+                            <!-- Create button for Roles -->
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                @lang('admin::app.settings.roles.create.save-btn')
+                            </button>
+                        @endif
+
+                        {!! view_render_event('krayin.admin.settings.roles.create.create_button.after') !!}
+                    </div>
+                </div>
+            </div>
+
+            {!! view_render_event('krayin.admin.settings.roles.create.content.before') !!}
+
+            <!-- body content -->
+            <div class="flex gap-2.5 max-xl:flex-wrap">
+                {!! view_render_event('krayin.admin.settings.roles.create.content.left.before') !!}
+
+                <!-- Left sub-component -->
+                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+                        <!-- Create Role for -->
+                        <v-access-control>
+                            <!-- Shimmer Effect -->
+                            <div class="mb-4">
+                                <div class="shimmer mb-1.5 h-4 w-24"></div>
+
+                                <div class="custom-select h-11 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"></div>
+                            </div>
+
+                            <!-- Roles Checkbox -->
+                            <x-admin::shimmer.tree />
+                        </v-access-control>
                     </div>
                 </div>
 
-                <!-- body content -->
-                <div class="flex gap-2.5 max-xl:flex-wrap">
-                    <!-- Left sub-component -->
-                    <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                        <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
-                            <!-- Create Role for -->
-                            <v-access-control>
-                                <!-- Shimmer Effect -->
-                                <div class="mb-4">
-                                    <div class="shimmer mb-1.5 h-4 w-24"></div>
+                {!! view_render_event('krayin.admin.settings.roles.create.content.left.after') !!}
 
-                                    <div class="custom-select h-11 w-full rounded-md border bg-white px-3 py-2.5 text-sm font-normal text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"></div>
-                                </div>
+                {!! view_render_event('krayin.admin.settings.roles.create.content.right.before') !!}
 
-                                <!-- Roles Checkbox -->
-                                <x-admin::shimmer.tree />
-                            </v-access-control>
-                        </div>
+                <!-- Right sub-component -->
+                <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    {!! view_render_event('krayin.admin.settings.roles.create.accordion.general.before') !!}
 
-                        {!! view_render_event('krayin.admin.settings.roles.create.card.access_control.after') !!}
-                    </div>
+                    <x-admin::accordion class="rounded-lg">
+                        <x-slot:header>
+                            <div class="flex items-center justify-between">
+                                <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
+                                    @lang('admin::app.settings.roles.create.general')
+                                </p>
+                            </div>
+                        </x-slot>
 
-                    <!-- Right sub-component -->
-                    <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                        {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.before') !!}
+                        <x-slot:content>
+                            {!! view_render_event('krayin.admin.settings.roles.create.form.name.before') !!}
 
-                        <x-admin::accordion class="rounded-lg">
-                            <x-slot:header>
-                                <div class="flex items-center justify-between">
-                                    <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
-                                        @lang('admin::app.settings.roles.create.general')
-                                    </p>
-                                </div>
-                            </x-slot>
+                            <!-- Name -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.roles.create.name')
+                                </x-admin::form.control-group.label>
 
-                            <x-slot:content>
-                                <!-- Name -->
-                                <x-admin::form.control-group>
-                                    <x-admin::form.control-group.label class="required">
-                                        @lang('admin::app.settings.roles.create.name')
-                                    </x-admin::form.control-group.label>
+                                <x-admin::form.control-group.control
+                                    type="text"
+                                    id="name"
+                                    name="name"
+                                    rules="required"
+                                    value="{{ old('name') }}"
+                                    :label="trans('admin::app.settings.roles.create.name')"
+                                    :placeholder="trans('admin::app.settings.roles.create.name')"
+                                />
 
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        id="name"
-                                        name="name"
-                                        rules="required"
-                                        value="{{ old('name') }}"
-                                        :label="trans('admin::app.settings.roles.create.name')"
-                                        :placeholder="trans('admin::app.settings.roles.create.name')"
-                                    />
+                                <x-admin::form.control-group.error control-name="name" />
+                            </x-admin::form.control-group>
 
-                                    <x-admin::form.control-group.error control-name="name" />
-                                </x-admin::form.control-group>
+                            {!! view_render_event('krayin.admin.settings.roles.create.form.name.after') !!}
 
-                                <!-- Description -->
-                                <x-admin::form.control-group class="!mb-0">
-                                    <x-admin::form.control-group.label class="required">
-                                        @lang('admin::app.settings.roles.create.description')
-                                    </x-admin::form.control-group.label>
+                            {!! view_render_event('krayin.admin.settings.roles.create.form.description.before') !!}
 
-                                    <x-admin::form.control-group.control
-                                        type="textarea"
-                                        id="description"
-                                        name="description"
-                                        rules="required"
-                                        :value="old('description')"
-                                        :label="trans('admin::app.settings.roles.create.description')"
-                                        :placeholder="trans('admin::app.settings.roles.create.description')"
-                                    />
+                            <!-- Description -->
+                            <x-admin::form.control-group class="!mb-0">
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.roles.create.description')
+                                </x-admin::form.control-group.label>
 
-                                    <x-admin::form.control-group.error control-name="description" />
-                                </x-admin::form.control-group>
-                            </x-slot>
-                        </x-admin::accordion>
+                                <x-admin::form.control-group.control
+                                    type="textarea"
+                                    id="description"
+                                    name="description"
+                                    rules="required"
+                                    :value="old('description')"
+                                    :label="trans('admin::app.settings.roles.create.description')"
+                                    :placeholder="trans('admin::app.settings.roles.create.description')"
+                                />
 
-                        {!! view_render_event('krayin.admin.settings.roles.create.card.accordion.general.after') !!}
-                    </div>
+                                <x-admin::form.control-group.error control-name="description" />
+                            </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.roles.create.form.description.after') !!}
+                        </x-slot>
+                    </x-admin::accordion>
+
+                    {!! view_render_event('krayin.admin.settings.roles.create.accordion.general.after') !!}
                 </div>
 
-            {!! view_render_event('krayin.admin.settings.roles.create.create_form_controls.after') !!}
+                {!! view_render_event('krayin.admin.settings.roles.create.content.right.after') !!}
+            </div>
+
+            {!! view_render_event('krayin.admin.settings.roles.create.content.after') !!}
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.roles.create.after') !!}
+    {!! view_render_event('krayin.admin.settings.roles.create.form.after') !!}
 
     @pushOnce('scripts')
         <script
@@ -129,6 +152,8 @@
             id="v-access-control-template"
         >
             <div>
+                {!! view_render_event('krayin.admin.settings.roles.create.form.permission_type.before') !!}
+
                 <!-- Permission Type -->
                 <x-admin::form.control-group class="!mb-0">
                     <x-admin::form.control-group.label class="required">
@@ -156,7 +181,11 @@
                     <x-admin::form.control-group.error control-name="permission_type" />
                 </x-admin::form.control-group>
 
+                {!! view_render_event('krayin.admin.settings.roles.create.form.permission_type.after') !!}
+
                 <div v-if="permission_type == 'custom'">
+                    {!! view_render_event('krayin.admin.settings.roles.create.form.tree-view.before') !!}
+
                     <x-admin::tree.view
                         input-type="checkbox"
                         value-field="key"
@@ -164,6 +193,8 @@
                         :items="json_encode(acl()->getItems())"
                         :fallback-locale="config('app.fallback_locale')"
                     />
+
+                    {!! view_render_event('krayin.admin.settings.roles.create.form.tree-view.after') !!}
                 </div>
             </div>
         </script>
@@ -174,10 +205,10 @@
 
                 data() {
                     return {
-                        permission_type: 'custom'
+                        permission_type: 'custom',
                     };
-                }
-            })
+                },
+            });
         </script>
     @endPushOnce
 </x-admin::layouts>

@@ -6,7 +6,7 @@
     <!-- Content -->
     <div class="flex gap-4">
         <!-- Left Panel -->
-        {!! view_render_event('admin.contact.persons.view.left.before', ['person' => $person]) !!}
+        {!! view_render_event('krayin.admin.contact.persons.view.left.before', ['person' => $person]) !!}
 
         <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Person Information -->
@@ -16,7 +16,7 @@
                     <x-admin::breadcrumbs
                         name="contacts.persons.view"
                         :entity="$person"
-                        />
+                    />
                 </div>
 
                 <!-- Tags -->
@@ -72,9 +72,9 @@
             @include ('admin::contacts.persons.view.organization')
         </div>
 
-        {!! view_render_event('admin.contact.persons.view.left.after', ['person' => $person]) !!}
+        {!! view_render_event('krayin.admin.contact.persons.view.left.after', ['person' => $person]) !!}
 
-        {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
+        {!! view_render_event('krayin.admin.contact.persons.view.right.before', ['person' => $person]) !!}
 
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
@@ -82,6 +82,6 @@
             <x-admin::activities :endpoint="route('admin.contacts.persons.activities.index', $person->id)" />
         </div>
 
-        {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
+        {!! view_render_event('krayin.admin.contact.persons.view.right.after', ['person' => $person]) !!}
     </div>
 </x-admin::layouts>

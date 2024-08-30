@@ -1,4 +1,5 @@
 <x-admin::layouts>
+    <!-- Page Title -->
     <x-slot:title>
         @lang('admin::app.settings.groups.index.title')
     </x-slot>
@@ -8,8 +9,12 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('krayin.admin.settings.groups.index.breadcrumbs.before') !!}
+
                     <!-- Bredcrumbs -->
                     <x-admin::breadcrumbs name="settings.groups" />
+
+                    {!! view_render_event('krayin.admin.settings.groups.index.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-gray-300">
@@ -17,21 +22,23 @@
                 </div>
             </div>
 
-            <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.groups.index.create_button.before') !!}
-                
+            <div class="flex items-center gap-x-2.5">                
                 <!-- Create button for Group -->
                 <div class="flex items-center gap-x-2.5">
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="$refs.groupSettings.openModal()"
-                    >
-                        @lang('admin::app.settings.groups.index.create-btn')
-                    </button>
-                </div>
+                    {!! view_render_event('krayin.admin.settings.groups.index.breadcrumbs.after') !!}
 
-                {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
+                    @if (bouncer()->hasPermission('settings.user.groups.create'))
+                        <button
+                            type="button"
+                            class="primary-button"
+                            @click="$refs.groupSettings.openModal()"
+                        >
+                            @lang('admin::app.settings.groups.index.create-btn')
+                        </button>
+                    @endif
+
+                    {!! view_render_event('krayin.admin.settings.groups.index.create_button.after') !!}
+                </div>
             </div>
         </div>
         
@@ -50,7 +57,7 @@
         
             <!-- DataGrid -->
             <x-admin::datagrid
-                src="{{ route('admin.settings.groups.index') }}"
+                :src="route('admin.settings.groups.index')"
                 ref="datagrid"
             >
                 <template #body="{
@@ -103,6 +110,10 @@
                 </template>
             </x-admin::datagrid>
 
+            {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
+
+            {!! view_render_event('krayin.admin.settings.groups.index.form.before') !!}
+
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
@@ -110,6 +121,8 @@
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
                     {!! view_render_event('krayin.admin.settings.groups.index.create_form_controls.before') !!}
+
+                    {!! view_render_event('krayin.admin.settings.groups.index.form.modal.before') !!}
 
                     <x-admin::modal ref="groupUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -132,6 +145,8 @@
                                 name="id"
                             />
 
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.name.before') !!}
+
                             <!-- Name -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
@@ -149,6 +164,10 @@
 
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.name.after') !!}
+
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.description.before') !!}
 
                             <!-- Description -->
                             <x-admin::form.control-group>
@@ -168,11 +187,13 @@
                                 <x-admin::form.control-group.error control-name="description" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.groups.index.content.after') !!}
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.description.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.save_button.before') !!}
+
                             <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
@@ -181,14 +202,16 @@
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
+
+                            {!! view_render_event('krayin.admin.settings.groups.index.form.form_controls.save_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.groups.index.create_form_controls.after') !!}
+                    {!! view_render_event('krayin.admin.settings.groups.index.form.modal.after') !!}
                 </form>
             </x-admin::form>
 
-            {!! view_render_event('krayin.admin.settings.groups.index.datagrid.after') !!}
+            {!! view_render_event('krayin.admin.settings.groups.index.form.after') !!}
         </script>
 
         <script type="module">

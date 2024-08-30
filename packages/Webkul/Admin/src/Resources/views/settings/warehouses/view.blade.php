@@ -84,7 +84,7 @@
             </x-admin::activities>
         </div>
 
-        {!! view_render_event('admin.warehouse.view.right.after', ['warehouse' => $warehouse]) !!}
+        {!! view_render_event('krayin.admin.warehouse.view.right.after', ['warehouse' => $warehouse]) !!}
     </div>    
 
 </x-admin::layouts>

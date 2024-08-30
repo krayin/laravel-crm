@@ -15,11 +15,15 @@
             <div class="flex items-center justify-between px-4 py-2">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('krayin.admin.settings.pipelines.edit.breadcrumbs.before', ['pipeline' => $pipeline]) !!}
+
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs 
                             name="settings.pipelines.edit"
                             :entity="$pipeline"
                         />
+
+                        {!! view_render_event('krayin.admin.settings.pipelines.edit.breadcrumbs.after', ['pipeline' => $pipeline]) !!}
                     </div>
 
                     <!-- Title -->
@@ -29,19 +33,25 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Save button -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('krayin.admin.settings.pipelines.edit.save_button.before', ['pipeline' => $pipeline]) !!}
+
+                        <!-- Save button -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.settings.pipelines.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('krayin.admin.settings.pipelines.edit.save_button.after', ['pipeline' => $pipeline]) !!}
                     </div>
                 </div>
             </div>
 
             <div class="flex gap-4 border-t border-gray-200 px-4 py-2 align-top dark:border-gray-800 max-sm:flex-wrap">
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.name.before', ['pipeline' => $pipeline]) !!}
+
                 <!-- Pipeline Name -->
                 <x-admin::form.control-group>
                     <x-admin::form.control-group.label class="required">
@@ -60,6 +70,10 @@
 
                     <x-admin::form.control-group.error control-name="name" />
                 </x-admin::form.control-group>
+
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.name.after', ['pipeline' => $pipeline]) !!}
+
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.rotten_days.before', ['pipeline' => $pipeline]) !!}
                 
                 <!-- Pipeline Rotten Days -->
                 <x-admin::form.control-group>
@@ -80,6 +94,10 @@
                     <x-admin::form.control-group.error control-name="rotten_days" />
                 </x-admin::form.control-group>
 
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.rotten_days.after', ['pipeline' => $pipeline]) !!}
+
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.is_default.before', ['pipeline' => $pipeline]) !!}
+
                 <!-- Pipeline Default Switcher -->
                 <x-admin::form.control-group class="mt-4 flex items-center gap-4">
                     <x-admin::form.control-group.label class="!required mb-0">
@@ -98,6 +116,8 @@
 
                     <x-admin::form.control-group.error control-name="is_default" />
                 </x-admin::form.control-group>
+
+                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.is_default.after', ['pipeline' => $pipeline]) !!}
             </div>
         </div>
 
@@ -164,6 +184,8 @@
                                             :name="'stages[' + element.id + '][sort_order]'"
                                         />
 
+                                        {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.name.before', ['pipeline' => $pipeline]) !!}
+
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.settings.pipelines.edit.name')
@@ -181,6 +203,10 @@
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][name]'" />
                                         </x-admin::form.control-group>
 
+                                        {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.name.after', ['pipeline' => $pipeline]) !!}
+
+                                        {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.probability.before', ['pipeline' => $pipeline]) !!}
+
                                         <!-- Probabilty -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
@@ -197,9 +223,13 @@
                                             />
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][probability]'" />
                                         </x-admin::form.control-group>
+
+                                        {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.probability.after', ['pipeline' => $pipeline]) !!}
                                     </div>
                                 </div>
                                 
+                                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.remove_button.before', ['pipeline' => $pipeline]) !!}
+
                                 <!-- Remove Stage -->
                                 <div
                                     class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
@@ -210,6 +240,8 @@
                                     
                                     @lang('admin::app.settings.pipelines.edit.delete-stage')
                                 </div>
+
+                                {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.remove_button.after', ['pipeline' => $pipeline]) !!}
                             </div>
                         </div>
                     </template>
@@ -229,6 +261,8 @@
                                 </p>
                             </div>
 
+                            {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.create_button.before', ['pipeline' => $pipeline]) !!}
+
                             <!-- Add Stage Button -->
                             <button
                                 class="secondary-button"
@@ -237,6 +271,8 @@
                             >
                                 @lang('admin::app.settings.pipelines.edit.stage-btn')
                             </button>
+
+                            {!! view_render_event('krayin.admin.settings.pipelines.edit.form.stages.create_button.after', ['pipeline' => $pipeline]) !!}
                         </div>
                     </div>
                 </div>

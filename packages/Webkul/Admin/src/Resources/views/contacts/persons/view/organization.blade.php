@@ -1,4 +1,4 @@
-{!! view_render_event('admin.contacts.persons.view.organization.before', ['person' => $person]) !!}
+{!! view_render_event('krayin.admin.contacts.persons.view.organization.before', ['person' => $person]) !!}
 
 @if ($person?->organization)
     <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
@@ -41,4 +41,4 @@
         </div>
     </div>
 @endif
-{!! view_render_event('admin.contacts.persons.view.organization.after', ['person' => $person]) !!}
+{!! view_render_event('krayin.admin.contacts.persons.view.organization.after', ['person' => $person]) !!}
