@@ -2,6 +2,7 @@
 
 namespace Webkul\WebForm\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
@@ -9,7 +10,6 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
-use Illuminate\Http\JsonResponse;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\WebForm\Http\Requests\WebForm;
