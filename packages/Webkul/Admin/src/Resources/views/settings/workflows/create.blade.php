@@ -3,7 +3,7 @@
         @lang('admin::app.settings.workflows.create.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.workflow.form.before') !!}
+    {!! view_render_event('admin.settings.workflow.form.before') !!}
 
     <x-admin::form :action="route('admin.settings.workflows.store')">
         <div class="flex flex-col gap-4">
@@ -11,11 +11,11 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.workflow.breadcrumbs.before') !!}
+                        {!! view_render_event('admin.settings.workflow.breadcrumbs.before') !!}
 
                         <x-admin::breadcrumbs name="settings.workflows.create" />
 
-                        {!! view_render_event('krayin.admin.settings.webhooks.breadcrumbs.after') !!}
+                        {!! view_render_event('admin.settings.webhooks.breadcrumbs.after') !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -25,7 +25,7 @@
 
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.workflow.save_button.before') !!}
+                        {!! view_render_event('admin.settings.workflow.save_button.before') !!}
 
                         <!-- Save button for person -->
                         <button
@@ -35,7 +35,7 @@
                             @lang('admin::app.settings.workflows.create.save-btn')
                         </button>
 
-                        {!! view_render_event('krayin.admin.settings.workflow.save_button.after') !!}
+                        {!! view_render_event('admin.settings.workflow.save_button.after') !!}
                     </div>
                 </div>
             </div>
@@ -47,7 +47,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.workflow.form.after') !!}
+    {!! view_render_event('admin.settings.workflow.form.after') !!}
 
     @pushOnce('scripts')
         <script
@@ -57,7 +57,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
-                        {!! view_render_event('krayin.admin.settings.workflows.create.form_controls.before') !!}
+                        {!! view_render_event('admin.settings.workflows.create.form_controls.before') !!}
                        
                         <!-- Tab Switcher -->
                         <div class="border-b border-gray-200 text-center text-sm font-medium dark:border-gray-700">
@@ -84,7 +84,7 @@
                         </div>
 
                         <div class="flex flex-col gap-4">
-                            {!! view_render_event('krayin.admin.settings.workflows.create.basic_details.before') !!}
+                            {!! view_render_event('admin.settings.workflows.create.basic_details.before') !!}
 
                             <!-- Basic Details -->
                             <div id="basic-details">
@@ -136,9 +136,9 @@
                                 </div>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.basic_details.after') !!}
+                            {!! view_render_event('admin.settings.workflows.create.basic_details.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.event.before') !!}
+                            {!! view_render_event('admin.settings.workflows.create.event.before') !!}
 
                             <!-- Event -->
                             <div id="event">
@@ -193,9 +193,9 @@
                                 </div>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.event.after') !!}
+                            {!! view_render_event('admin.settings.workflows.create.event.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.condition.before') !!}
+                            {!! view_render_event('admin.settings.workflows.create.condition.before') !!}
 
                             <!-- Conditions -->
                             <div id="conditions">
@@ -263,9 +263,9 @@
                                 </div>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.condition.after') !!}
+                            {!! view_render_event('admin.settings.workflows.create.condition.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.action.before') !!}
+                            {!! view_render_event('admin.settings.workflows.create.action.before') !!}
 
                             <!-- Actions -->
                             <div id="actions">
@@ -320,10 +320,10 @@
                                 </button>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.workflows.create.action.after') !!}
+                            {!! view_render_event('admin.settings.workflows.create.action.after') !!}
                         </div>
 
-                        {!! view_render_event('krayin.admin.settings.workflows.create.form_controls.after') !!}
+                        {!! view_render_event('admin.settings.workflows.create.form_controls.after') !!}
                     </div>
                 </div>
             </div>

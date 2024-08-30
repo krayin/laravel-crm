@@ -8,7 +8,7 @@
 
 <head>
 
-    {!! view_render_event('bagisto.admin.layout.head.before') !!}
+    {!! view_render_event('admin.layout.head.before') !!}
 
     <title>{{ $title ?? '' }}</title>
 
@@ -90,11 +90,11 @@
         {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 
-    {!! view_render_event('bagisto.admin.layout.head.after') !!}
+    {!! view_render_event('admin.layout.head.after') !!}
 </head>
 
 <body class="h-full font-inter dark:bg-gray-950">
-    {!! view_render_event('bagisto.admin.layout.body.before') !!}
+    {!! view_render_event('admin.layout.body.before') !!}
 
     <div
         id="app"
@@ -106,7 +106,7 @@
         <!-- Confirm Modal Blade Component -->
         <x-admin::modal.confirm />
 
-        {!! view_render_event('bagisto.admin.layout.content.before') !!}
+        {!! view_render_event('admin.layout.content.before') !!}
 
         <!-- Page Header Blade Component -->
         <x-admin::layouts.header />
@@ -130,14 +130,14 @@
             </div>
         </div>
 
-        {!! view_render_event('bagisto.admin.layout.content.after') !!}
+        {!! view_render_event('admin.layout.content.after') !!}
     </div>
 
-    {!! view_render_event('bagisto.admin.layout.body.after') !!}
+    {!! view_render_event('admin.layout.body.after') !!}
 
     @stack('scripts')
 
-    {!! view_render_event('bagisto.admin.layout.vue-app-mount.before') !!}
+    {!! view_render_event('admin.layout.vue-app-mount.before') !!}
 
     <script>
         /**
@@ -151,7 +151,7 @@
         });
     </script>
 
-    {!! view_render_event('bagisto.admin.layout.vue-app-mount.after') !!}
+    {!! view_render_event('admin.layout.vue-app-mount.after') !!}
 </body>
 
 </html>

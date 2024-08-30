@@ -5,7 +5,7 @@
         @lang('admin::app.settings.email-template.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.email_template.edit.form.before') !!}
+    {!! view_render_event('admin.settings.email_template.edit.form.before') !!}
 
     <x-admin::form
         :action="route('admin.settings.email_templates.update', $emailTemplate->id)"
@@ -15,7 +15,7 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.breadcrumbs.before') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.breadcrumbs.before') !!}
 
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs
@@ -23,7 +23,7 @@
                             :entity="$emailTemplate"
                         />
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.breadcrumbs.after') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.breadcrumbs.after') !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -34,7 +34,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.save_button.before') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.save_button.before') !!}
 
                         <button
                             type="submit"
@@ -43,7 +43,7 @@
                             @lang('Save Email Template')
                         </button>
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.save_button.before') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.save_button.before') !!}
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.email_template.edit.form.after') !!}
+    {!! view_render_event('admin.settings.email_template.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script
@@ -69,7 +69,7 @@
                             </p>
                         </div>
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.subject.before') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.subject.before') !!}
 
                         <x-admin::form.control-group>
                             <x-admin::form.control-group.label class="required">
@@ -117,9 +117,9 @@
 
                         <x-admin::form.control-group.error control-name="subject"/>
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.subject.after') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.subject.after') !!}
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.content.before') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.content.before') !!}
 
                         <!-- Event Name -->
                         <x-admin::form.control-group class="!mb-0">
@@ -142,13 +142,13 @@
                             <x-admin::form.control-group.error control-name="content" />
                         </x-admin::form.control-group>
 
-                        {!! view_render_event('krayin.admin.settings.email_template.edit.content.after') !!}
+                        {!! view_render_event('admin.settings.email_template.edit.content.after') !!}
                     </div>
                 </div>
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.settings.email_template.edit.accordion.general.before') !!}
+                    {!! view_render_event('admin.settings.email_template.edit.accordion.general.before') !!}
 
                     <x-admin::accordion>
                         <x-slot:header>
@@ -179,7 +179,7 @@
                         </x-slot>
                     </x-admin::accordion>
 
-                    {!! view_render_event('krayin.admin.settings.email_template.edit.accordion.general.after') !!}
+                    {!! view_render_event('admin.settings.email_template.edit.accordion.general.after') !!}
                 </div>
             </div>
         </script>

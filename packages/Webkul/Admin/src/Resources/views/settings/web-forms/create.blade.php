@@ -9,12 +9,12 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.webform.create.breadcrumbs.before') !!}
+                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
 
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs name="settings.web_forms.create" />
 
-                        {!! view_render_event('krayin.admin.settings.webform.create.breadcrumbs.after') !!}
+                        {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
                     </div>
         
                     <div class="text-xl font-bold dark:text-white">
@@ -24,7 +24,7 @@
         
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.webform.create.save_button.before') !!}
+                        {!! view_render_event('admin.settings.webform.create.save_button.before') !!}
 
                         <!-- Create button for person -->
                         <button
@@ -34,7 +34,7 @@
                             @lang('admin::app.settings.webforms.create.save-btn')
                         </button>
 
-                        {!! view_render_event('krayin.admin.settings.webform.create.save_button.after') !!}
+                        {!! view_render_event('admin.settings.webform.create.save_button.after') !!}
                     </div>
                 </div>
             </div>
@@ -49,7 +49,7 @@
             id="v-webform-template"
         >
             <div class="flex gap-2.5 max-xl:flex-wrap">
-                {!! view_render_event('krayin.admin.settings.webform.create.left.before') !!}
+                {!! view_render_event('admin.settings.webform.create.left.before') !!}
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
@@ -62,7 +62,7 @@
                             </div>
                         </div>
 
-                        {!! view_render_event('krayin.admin.settings.webform.create.form_controls.before') !!}
+                        {!! view_render_event('admin.settings.webform.create.form_controls.before') !!}
 
                         <!-- Submit success actions -->
                         <x-admin::form.control-group>
@@ -404,13 +404,13 @@
                             </draggable>
                         </div>
 
-                        {!! view_render_event('krayin.admin.settings.webform.create.form_controls.after') !!}
+                        {!! view_render_event('admin.settings.webform.create.form_controls.after') !!}
                     </div>
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.webform.create.left.after') !!}
+                {!! view_render_event('admin.settings.webform.create.left.after') !!}
 
-                {!! view_render_event('krayin.admin.settings.webform.create.right.before') !!}
+                {!! view_render_event('admin.settings.webform.create.right.before') !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
@@ -483,7 +483,7 @@
                     </x-admin::accordion>
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.webform.create.right.after') !!}
+                {!! view_render_event('admin.settings.webform.create.right.after') !!}
             </div>
         </script>
 

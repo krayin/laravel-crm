@@ -7,11 +7,11 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('krayin.admin.settings.webhooks.breadcrumbs.datagrid.before') !!}
+                    {!! view_render_event('admin.settings.webhooks.breadcrumbs.datagrid.before') !!}
 
                     <x-admin::breadcrumbs name="settings.webhooks" />
 
-                    {!! view_render_event('krayin.admin.settings.webhooks.breadcrumbs.datagrid.after') !!}
+                    {!! view_render_event('admin.settings.webhooks.breadcrumbs.datagrid.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -21,7 +21,7 @@
 
             <div class="flex items-center gap-x-2.5">
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('krayin.admin.settings.webhooks.create_button.datagrid.before') !!}
+                    {!! view_render_event('admin.settings.webhooks.create_button.datagrid.before') !!}
 
                     <!-- Create button for person -->
                     <a
@@ -31,15 +31,15 @@
                         @lang('admin::app.settings.webhooks.index.create-btn')
                     </a>
 
-                    {!! view_render_event('krayin.admin.settings.webhooks.create_button.datagrid.after') !!}
+                    {!! view_render_event('admin.settings.webhooks.create_button.datagrid.after') !!}
                 </div>
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.settings.webhooks.index.datagrid.before') !!}
+        {!! view_render_event('admin.settings.webhooks.index.datagrid.before') !!}
 
         <x-admin::datagrid :src="route('admin.settings.webhooks.index')" />
 
-        {!! view_render_event('krayin.admin.settings.webhooks.index.datagrid.after') !!}
+        {!! view_render_event('admin.settings.webhooks.index.datagrid.after') !!}
     </div>
 </x-admin::layouts>

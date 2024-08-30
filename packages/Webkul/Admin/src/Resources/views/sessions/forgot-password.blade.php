@@ -22,7 +22,7 @@
             @endif
 
             <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
-                {!! view_render_event('krayin.admin.sessions.forgor_password.form_controls.before') !!}
+                {!! view_render_event('admin.sessions.forgor_password.form_controls.before') !!}
 
                 <!-- Forget Password Form -->
                 <x-admin::form :action="route('admin.forgot_password.store')">
@@ -71,7 +71,7 @@
                     </div>
                 </x-admin::form>
 
-                {!! view_render_event('krayin.admin.sessions.forgor_password.form_controls.after') !!}
+                {!! view_render_event('admin.sessions.forgor_password.form_controls.after') !!}
             </div>
         </div>
     </div>

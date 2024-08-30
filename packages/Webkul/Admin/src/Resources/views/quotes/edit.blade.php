@@ -3,7 +3,7 @@
         @lang('admin::app.quotes.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.contacts.quotes.edit.form_controls.before', ['quote' => $quote]) !!}
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before', ['quote' => $quote]) !!}
 
     <x-admin::form
         :action="route('admin.quotes.update', $quote->id)"
@@ -41,7 +41,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
 
     @pushOnce('scripts')
         <script 
@@ -69,7 +69,7 @@
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
 
                     <!-- Quote information -->
                     <div 
@@ -171,9 +171,9 @@
                         </div>
                     </div>
 
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
 
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.address_information.before', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.address_information.before', ['quote' => $quote]) !!}
 
                     <!-- Address information -->
                     <div 
@@ -201,9 +201,9 @@
                         </div>
                     </div>
 
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.address_information.after', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.address_information.after', ['quote' => $quote]) !!}
 
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
 
                     <!-- Quote Item Information -->
                     <div
@@ -224,10 +224,10 @@
                         <v-quote-item-list :errors="errors"></v-quote-item-list>
                     </div>
 
-                    {!! view_render_event('krayin.admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
                 </div>
                 
-                {!! view_render_event('krayin.admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
+                {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
             </div>
         </script>
 

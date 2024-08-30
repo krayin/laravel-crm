@@ -4,7 +4,7 @@
         @lang('admin::app.settings.roles.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.roles.edit.form.before', ['role' => $role]) !!}
+    {!! view_render_event('admin.settings.roles.edit.form.before', ['role' => $role]) !!}
 
     <x-admin::form
         method="PUT"
@@ -14,7 +14,7 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
-                        {!! view_render_event('krayin.admin.settings.roles.edit.breadcrumbs.before', ['role' => $role]) !!}
+                        {!! view_render_event('admin.settings.roles.edit.breadcrumbs.before', ['role' => $role]) !!}
 
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs 
@@ -22,7 +22,7 @@
                             :entity="$role"
                         />
 
-                        {!! view_render_event('krayin.admin.settings.roles.edit.breadcrumbs.after', ['role' => $role]) !!}
+                        {!! view_render_event('admin.settings.roles.edit.breadcrumbs.after', ['role' => $role]) !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -32,7 +32,7 @@
 
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.settings.roles.edit.save_button.before', ['role' => $role]) !!}
+                        {!! view_render_event('admin.settings.roles.edit.save_button.before', ['role' => $role]) !!}
 
                         @if (bouncer()->hasPermission('settings.user.roles.edit'))
                             <!-- Save button for roles -->
@@ -44,16 +44,16 @@
                             </button>
                         @endif
 
-                        {!! view_render_event('krayin.admin.settings.roles.edit.save_button.after', ['role' => $role]) !!}
+                        {!! view_render_event('admin.settings.roles.edit.save_button.after', ['role' => $role]) !!}
                     </div>
                 </div>
             </div>
 
-            {!! view_render_event('krayin.admin.settings.roles.edit.content.before', ['role' => $role]) !!}
+            {!! view_render_event('admin.settings.roles.edit.content.before', ['role' => $role]) !!}
 
             <!-- body content -->
             <div class="flex gap-2.5 max-xl:flex-wrap">
-                {!! view_render_event('krayin.admin.settings.roles.edit.content.left.before', ['role' => $role]) !!}
+                {!! view_render_event('admin.settings.roles.edit.content.left.before', ['role' => $role]) !!}
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
@@ -77,13 +77,13 @@
                     </div>
                 </div>
 
-                {!! view_render_event('krayin.admin.settings.roles.edit.content.left.after', ['role' => $role]) !!}
+                {!! view_render_event('admin.settings.roles.edit.content.left.after', ['role' => $role]) !!}
 
-                {!! view_render_event('krayin.admin.settings.roles.edit.content.right.before', ['role' => $role]) !!}
+                {!! view_render_event('admin.settings.roles.edit.content.right.before', ['role' => $role]) !!}
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.settings.roles.edit.accordion.general.before', ['role' => $role]) !!}
+                    {!! view_render_event('admin.settings.roles.edit.accordion.general.before', ['role' => $role]) !!}
 
                     <x-admin::accordion>
                         <x-slot:header>
@@ -95,7 +95,7 @@
                         </x-slot>
 
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.roles.edit.form.name.before', ['role' => $role]) !!}
+                            {!! view_render_event('admin.settings.roles.edit.form.name.before', ['role' => $role]) !!}
 
                             <!-- Name -->
                             <x-admin::form.control-group>
@@ -116,9 +116,9 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.roles.edit.form.name.after', ['role' => $role]) !!}
+                            {!! view_render_event('admin.settings.roles.edit.form.name.after', ['role' => $role]) !!}
 
-                            {!! view_render_event('krayin.admin.settings.roles.edit.form.description.before', ['role' => $role]) !!}
+                            {!! view_render_event('admin.settings.roles.edit.form.description.before', ['role' => $role]) !!}
 
                             <!-- Description -->
                             <x-admin::form.control-group class="!mb-0">
@@ -139,19 +139,19 @@
                                 <x-admin::form.control-group.error control-name="description" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.roles.edit.form.description.after', ['role' => $role]) !!}
+                            {!! view_render_event('admin.settings.roles.edit.form.description.after', ['role' => $role]) !!}
                         </x-slot>
                     </x-admin::accordion>
 
-                    {!! view_render_event('krayin.admin.settings.roles.edit.accordion.general.after', ['role' => $role]) !!}
+                    {!! view_render_event('admin.settings.roles.edit.accordion.general.after', ['role' => $role]) !!}
                 </div>
             </div>
 
-            {!! view_render_event('krayin.admin.settings.roles.edit.content.after', ['role' => $role]) !!}
+            {!! view_render_event('admin.settings.roles.edit.content.after', ['role' => $role]) !!}
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.roles.edit.form.after', ['role' => $role]) !!}
+    {!! view_render_event('admin.settings.roles.edit.form.after', ['role' => $role]) !!}
 
     @pushOnce('scripts')
         <script
@@ -159,7 +159,7 @@
             id="v-access-control-template"
         >
             <div>
-                {!! view_render_event('krayin.admin.settings.roles.edit.form.permission_type.before', ['role' => $role]) !!}
+                {!! view_render_event('admin.settings.roles.edit.form.permission_type.before', ['role' => $role]) !!}
 
                 <!-- Permission Type -->
                 <x-admin::form.control-group>
@@ -187,11 +187,11 @@
                     <x-admin::form.control-group.error control-name="permission_type" />
                 </x-admin::form.control-group>
 
-                {!! view_render_event('krayin.admin.settings.roles.edit.form.permission_type.after', ['role' => $role]) !!}
+                {!! view_render_event('admin.settings.roles.edit.form.permission_type.after', ['role' => $role]) !!}
                 
                 <!-- Tree structure -->
                 <div v-if="permission_type == 'custom'">
-                    {!! view_render_event('krayin.admin.settings.roles.edit.form.tree_view.before', ['role' => $role]) !!}
+                    {!! view_render_event('admin.settings.roles.edit.form.tree_view.before', ['role' => $role]) !!}
 
                     <x-admin::tree.view
                         input-type="checkbox"
@@ -202,7 +202,7 @@
                         :fallback-locale="config('app.fallback_locale')"
                     />
 
-                    {!! view_render_event('krayin.admin.settings.roles.edit.form.tree_view.after', ['role' => $role]) !!}
+                    {!! view_render_event('admin.settings.roles.edit.form.tree_view.after', ['role' => $role]) !!}
                 </div>
             </div>
         </script>

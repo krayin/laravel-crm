@@ -4,10 +4,10 @@
     </x-slot>
 
     <!-- Header -->
-    {!! view_render_event('krayin.admin.leads.index.header.before') !!}
+    {!! view_render_event('admin.leads.index.header.before') !!}
 
     <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-        {!! view_render_event('krayin.admin.leads.index.header.left.before') !!}
+        {!! view_render_event('admin.leads.index.header.left.before') !!}
 
         <div class="flex flex-col gap-2">
             <div class="flex cursor-pointer items-center">
@@ -20,9 +20,9 @@
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.leads.index.header.left.after') !!}
+        {!! view_render_event('admin.leads.index.header.left.after') !!}
 
-        {!! view_render_event('krayin.admin.leads.index.header.right.before') !!}
+        {!! view_render_event('admin.leads.index.header.right.before') !!}
 
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for Leads -->
@@ -38,10 +38,10 @@
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.leads.index.header.right.after') !!}
+        {!! view_render_event('admin.leads.index.header.right.after') !!}
     </div>
 
-    {!! view_render_event('krayin.admin.leads.index.header.after') !!}
+    {!! view_render_event('admin.leads.index.header.after') !!}
 
     <!-- Content -->
     <div class="mt-3.5">

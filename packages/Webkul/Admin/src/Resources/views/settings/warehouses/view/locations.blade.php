@@ -59,7 +59,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, addLocation)">
-                    {!! view_render_event('krayin.admin.settings.tags.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.tags.index.form_controls.before') !!}
 
                     <x-admin::modal ref="locationCreateModal">
                         <!-- Modal Header -->
@@ -115,7 +115,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.tags.index.form_controls.after') !!}
+                    {!! view_render_event('admin.settings.tags.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </div>

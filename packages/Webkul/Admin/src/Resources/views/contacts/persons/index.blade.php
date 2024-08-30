@@ -30,10 +30,10 @@
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.person.datagrid.index.before') !!}
+        {!! view_render_event('admin.person.datagrid.index.before') !!}
 
         <x-admin::datagrid src="{{ route('admin.contacts.persons.index') }}" />
 
-        {!! view_render_event('krayin.admin.person.datagrid.index.after') !!}
+        {!! view_render_event('admin.person.datagrid.index.after') !!}
     </div>
 </x-admin::layouts>

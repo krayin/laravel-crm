@@ -17,7 +17,7 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.users.index.create_button.before') !!}
+                {!! view_render_event('admin.settings.users.index.create_button.before') !!}
                 
                 <!-- Create button for User -->
                 @if (bouncer()->hasPermission('settings.user.users.create'))
@@ -32,7 +32,7 @@
                     </div>
                 @endif
 
-                {!! view_render_event('krayin.admin.settings.users.index.create_button.after') !!}
+                {!! view_render_event('admin.settings.users.index.create_button.after') !!}
             </div>
         </div>
 
@@ -47,7 +47,7 @@
             type="text/x-template"
             id="users-settings-template"
         >
-            {!! view_render_event('krayin.admin.settings.users.index.datagrid.before') !!}
+            {!! view_render_event('admin.settings.users.index.datagrid.before') !!}
         
             <!-- Datagrid -->
             <x-admin::datagrid
@@ -157,7 +157,7 @@
                 </template>
             </x-admin::datagrid>
             
-            {!! view_render_event('krayin.admin.users.index.datagrid.after') !!}
+            {!! view_render_event('admin.users.index.datagrid.after') !!}
             
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -168,7 +168,7 @@
                     @submit="handleSubmit($event, updateOrCreate)"
                     ref="userForm"
                 >
-                    {!! view_render_event('krayin.admin.settings.users.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.users.index.form_controls.before') !!}
 
                     <x-admin::modal ref="userUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -190,7 +190,7 @@
                                 v-model="user.id"
                             />
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.name.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.name.before') !!}
 
                             <!-- Name -->
                             <x-admin::form.control-group>
@@ -211,9 +211,9 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.name.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.name.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.email.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.email.before') !!}
 
                             <!-- Email -->
                             <x-admin::form.control-group>
@@ -234,9 +234,9 @@
                                 <x-admin::form.control-group.error control-name="email" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.email.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.email.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.password.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.password.before') !!}
 
                             <div class="flex gap-4">
                                 <!-- Password -->
@@ -277,9 +277,9 @@
                                 </x-admin::form.control-group>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.password.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.password.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
                             
                             <div class="flex gap-4">
                                 <!-- Role -->
@@ -338,9 +338,9 @@
                                 </x-admin::form.control-group>
                             </div>
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.role_id.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.role_id.before') !!}
 
                             <!-- Group -->
                             <x-admin::form.control-group>
@@ -371,9 +371,9 @@
                                 </v-field>
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.role_id.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.role_id.after') !!}
 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.status.before') !!}
+                            {!! view_render_event('admin.settings.users.index.form.status.before') !!}
 
                             <!-- Status -->
                             <x-admin::form.control-group>
@@ -402,7 +402,7 @@
 
                             </x-admin::form.control-group>
                                 
-                            {!! view_render_event('krayin.admin.settings.users.index.form.status.after') !!}
+                            {!! view_render_event('admin.settings.users.index.form.status.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
@@ -418,7 +418,7 @@
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.users.index.form_controls.after') !!}
+                    {!! view_render_event('admin.settings.users.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </script>

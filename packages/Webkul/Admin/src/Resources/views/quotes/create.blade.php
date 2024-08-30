@@ -15,7 +15,7 @@
         @lang('admin::app.quotes.create.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.contacts.quotes.edit.form_controls.before') !!}
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
 
     <x-admin::form :action="route('admin.quotes.store')">
         <div class="flex flex-col gap-4">
@@ -49,7 +49,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.contacts.quotes.edit.form_controls.after') !!}
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
 
     @pushOnce('scripts')
         <script 
@@ -92,7 +92,7 @@
                             </p>
                         </div>
 
-                        {!! view_render_event('krayin.admin.contacts.quotes.edit.attribute.form_controls.before') !!}
+                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.before') !!}
 
                         <div class="w-1/2">
                             <x-admin::attributes
@@ -176,7 +176,7 @@
                             </div>
                         </div>
 
-                        {!! view_render_event('krayin.admin.contacts.quotes.edit.attribute.form_controls.after') !!}
+                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.after') !!}
                     </div>
 
                     <!-- Address information -->
@@ -230,7 +230,7 @@
             id="v-quote-item-list-template"
         >
             <div>
-                {!! view_render_event('krayin.admin.contacts.quotes.edit.table.after') !!}
+                {!! view_render_event('admin.contacts.quotes.edit.table.after') !!}
 
                 <!-- Table -->
                 <x-admin::table>
@@ -291,7 +291,7 @@
                     </x-admin::table.tbody>
                 </x-admin::table>
 
-                {!! view_render_event('krayin.admin.contacts.quotes.edit.table.before') !!}
+                {!! view_render_event('admin.contacts.quotes.edit.table.before') !!}
             </div>
 
             <!-- Add New Qoute Item -->
