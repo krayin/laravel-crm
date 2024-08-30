@@ -9,6 +9,7 @@ use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
+use Illuminate\Http\JsonResponse;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\WebForm\Http\Requests\WebForm;
@@ -46,7 +47,7 @@ class WebFormController extends Controller
     /**
      * Remove the specified email template from storage.
      */
-    public function formStore($id)
+    public function formStore(int $id): JsonResponse
     {
         $person = $this->personRepository
             ->getModel()

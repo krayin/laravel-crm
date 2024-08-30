@@ -37,7 +37,23 @@
             })
                 .then(response => response.json())
                 .then(response => {
-                    document.querySelector('#krayinWebForm').reset();
+                    document.querySelectorAll('.error-message').forEach(function(errorElement) {
+                        errorElement.textContent = '';
+                    });
+
+                    if (response.message) {
+                        let messageElement = document.querySelector('#message');
+
+                        messageElement.style.display = 'block';
+
+                        messageElement.textContent = response.message;
+
+                        setTimeout(function() {
+                            messageElement.style.display = 'none';
+                        }, 5000);
+
+                        document.querySelector('#krayinWebForm').reset();
+                    }
 
                     if (response.errors) {
                         showError(response.errors);

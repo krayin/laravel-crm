@@ -20,6 +20,13 @@
             <p>{{ $webForm->description }}</p>
 
             <div class="box-shadow flex min-w-[476px] flex-col rounded-lg">
+                <!-- Message -->
+                <div 
+                    id="message"
+                    class="mb-4 hidden rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-gray-800 dark:text-green-400"
+                    role="alert"
+                ></div>
+
                 <!-- Login Form -->
                 <form 
                     style="background-color: {{ $webForm->form_background_color }}"
@@ -55,7 +62,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -72,7 +79,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -87,7 +94,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -111,7 +118,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}[0][value]-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -135,7 +142,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}[0][value]-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -166,7 +173,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -195,7 +202,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}[]-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -224,7 +231,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}[]-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
                                         
                                         @break;
@@ -240,7 +247,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
@@ -257,7 +264,7 @@
 
                                         <p 
                                             id="{{ $fieldName }}-error"
-                                            class="mt-1 text-xs italic text-red-600"
+                                            class="error-message mt-1 text-xs italic text-red-600"
                                         ></p>
 
                                         @break;
