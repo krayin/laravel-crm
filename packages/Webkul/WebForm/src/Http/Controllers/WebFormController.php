@@ -120,7 +120,7 @@ class WebFormController extends Controller
 
         if ($webForm->submit_success_action == 'message') {
             return response()->json([
-                'message' => $webForm->submit_success_content,
+                'message' => 'Success',
             ], 200);
         } else {
             return response()->json([

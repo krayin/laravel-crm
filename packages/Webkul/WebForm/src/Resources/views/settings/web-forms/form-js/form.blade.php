@@ -11,7 +11,7 @@
             <!-- Logo -->            
             <img
                 class="h-10 w-[110px]"
-                src="{{ url('vendor/webkul/admin/assets/images/logo.svg') }}""
+                src="{{ vite()->asset('images/logo.svg') }}"
                 alt="krayin"
             />
 
@@ -23,7 +23,7 @@
                 <!-- Login Form -->
                 <form 
                     style="background-color: {{ $webForm->form_background_color }}"
-                    action="{{ route('admin.session.store') }}"
+                    id="krayinWebForm"
                 >
                     <div class="p-4 dark:border-gray-800">
                         @foreach ($webForm->attributes as $attribute)
@@ -225,7 +225,7 @@
                         <button
                             type="submit"
                             style="background-color: {{ $webForm->form_submit_button_color }} !important"
-                            class="flex justify-center w-full bg-brandColor border border-brandColor cursor-pointer focus:opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all"
+                            class="flex w-full cursor-pointer place-content-center items-center justify-center gap-x-1 rounded-md border border-brandColor bg-brandColor px-3 py-1.5 font-semibold text-gray-50 transition-all hover:opacity-[0.9] focus:opacity-[0.9]"
                         >
                             {{ $webForm->submit_button_label }}
                         </button>
