@@ -138,7 +138,7 @@
 
                                 <!-- Actions -->
                                 <p
-                                    class="place-self-end"
+                                    class="flex h-full items-center place-self-end"
                                     v-if="available.actions.length"
                                 >
                                     <span
