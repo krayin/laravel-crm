@@ -43,7 +43,10 @@
         {!! view_render_event('admin.settings.email_template.index.datagrid.before') !!}
 
         <!-- DataGrid -->
-        <x-admin::datagrid :src="route('admin.settings.email_templates.index')"/>
+        <x-admin::datagrid :src="route('admin.settings.email_templates.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.settings.email_template.index.datagrid.after') !!}
     </div>

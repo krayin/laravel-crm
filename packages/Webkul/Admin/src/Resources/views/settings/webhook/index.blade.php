@@ -38,7 +38,10 @@
 
         {!! view_render_event('admin.settings.webhooks.index.datagrid.before') !!}
 
-        <x-admin::datagrid :src="route('admin.settings.webhooks.index')" />
+        <x-admin::datagrid :src="route('admin.settings.webhooks.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.settings.webhooks.index.datagrid.after') !!}
     </div>

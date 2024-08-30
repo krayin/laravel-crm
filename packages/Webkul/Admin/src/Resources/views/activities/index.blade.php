@@ -25,7 +25,10 @@
             </div>
 
             <!-- DataGrid Shimmer -->
-            @if (request()->get('view-type') == 'table')
+            @if (
+                request()->get('view-type') == 'table'
+                || ! request()->has('view-type')
+            )
                 <x-admin::shimmer.datagrid />
             @endif
         </div>

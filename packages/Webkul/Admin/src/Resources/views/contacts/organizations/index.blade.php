@@ -42,7 +42,10 @@
 
         {!! view_render_event('admin.organizations.datagrid.index.before') !!}
 
-        <x-admin::datagrid src="{{ route('admin.contacts.organizations.index') }}" />
+        <x-admin::datagrid src="{{ route('admin.contacts.organizations.index') }}" >
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.organizations.datagrid.index.after') !!}
     </div>

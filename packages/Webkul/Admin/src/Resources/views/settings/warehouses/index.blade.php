@@ -39,7 +39,10 @@
         {!! view_render_event('admin.settings.warehouses.index.datagrid.before') !!}
 
         <!-- DataGrid -->
-        <x-admin::datagrid src="{{ route('admin.settings.warehouses.index') }}" />
+        <x-admin::datagrid src="{{ route('admin.settings.warehouses.index') }}">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
 
         {!! view_render_event('admin.settings.warehouses.index.datagrid.after') !!}
     </div>

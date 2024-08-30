@@ -41,11 +41,9 @@
             </div>
         </div>
 
-        {!! view_render_event('admin.settings.roles.index.datagrid.before') !!}
-
-        <!-- DataGrid -->
-        <x-admin::datagrid :src="route('admin.settings.roles.index')" />
-
-        {!! view_render_event('admin.settings.roles.index.datagrid.after') !!}
+        <x-admin::datagrid :src="route('admin.settings.roles.index')">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </x-admin::datagrid>
     </div>
 </x-admin::layouts>
