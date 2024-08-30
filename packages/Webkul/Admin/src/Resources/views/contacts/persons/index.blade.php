@@ -30,7 +30,7 @@
             </div>
         </div>
 
-        <x-admin::datagrid src="{{ route('admin.contacts.persons.index') }}">
+        <x-admin::datagrid :src="route('admin.contacts.persons.index')">
             <x-admin::shimmer.datagrid />
         </x-admin::datagrid>
     </div>

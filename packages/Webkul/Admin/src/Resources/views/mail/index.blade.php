@@ -63,7 +63,7 @@
            <!-- DataGrid -->
            <x-admin::datagrid
                 ref="datagrid"
-                src="{{ route('admin.mail.index', request('route')) }}"
+                :src="route('admin.mail.index', request('route'))"
             >   
                 <template #header="{
                     isLoading,
