@@ -559,7 +559,7 @@
                                 id="codeSnippet"
                                 name="codeSnippet"
                                 class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                                value="{{ '<script src="'.route('admin.settings.web_forms.form_js', $webForm->form_id).'"></sript>' }}"
+                                value="{{ '<script src="'.route('admin.settings.web_forms.form_js', $webForm->form_id).'"></script>' }}"
                             />
 
                             <span
