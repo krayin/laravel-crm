@@ -1,78 +1,11 @@
 {
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-7ef98db9.css",
+    "file": "assets/app-7f2e9890.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
-  "src/Resources/assets/fonts/Roboto-Black.ttf": {
-    "file": "assets/Roboto-Black-2e337683.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Black.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-BlackItalic.ttf": {
-    "file": "assets/Roboto-BlackItalic-c2d13e2d.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-BlackItalic.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Bold.ttf": {
-    "file": "assets/Roboto-Bold-baf44ce8.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Bold.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-BoldItalic.ttf": {
-    "file": "assets/Roboto-BoldItalic-467a9ef7.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-BoldItalic.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Italic.ttf": {
-    "file": "assets/Roboto-Italic-8aaf23ac.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Italic.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Light.ttf": {
-    "file": "assets/Roboto-Light-2835b358.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Light.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-LightItalic.ttf": {
-    "file": "assets/Roboto-LightItalic-3ec128e7.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-LightItalic.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Medium.ttf": {
-    "file": "assets/Roboto-Medium-4ac8e036.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Medium.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-MediumItalic.ttf": {
-    "file": "assets/Roboto-MediumItalic-8524736b.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-MediumItalic.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Regular.ttf": {
-    "file": "assets/Roboto-Regular-319cff6e.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Regular.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-Thin.ttf": {
-    "file": "assets/Roboto-Thin-bf9760a4.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-Thin.ttf"
-  },
-  "src/Resources/assets/fonts/Roboto-ThinItalic.ttf": {
-    "file": "assets/Roboto-ThinItalic-cacbe64b.ttf",
-    "src": "src/Resources/assets/fonts/Roboto-ThinItalic.ttf"
-  },
-  "src/Resources/assets/images/calendar-icon.svg": {
-    "file": "assets/calendar-icon-cc691263.svg",
-    "src": "src/Resources/assets/images/calendar-icon.svg"
-  },
-  "src/Resources/assets/images/close-white-icon.svg": {
-    "file": "assets/close-white-icon-fa3c522a.svg",
-    "src": "src/Resources/assets/images/close-white-icon.svg"
-  },
-  "src/Resources/assets/images/web-form-icon.svg": {
-    "file": "assets/web-form-icon-553b24a9.svg",
-    "src": "src/Resources/assets/images/web-form-icon.svg"
-  },
-  "src/Resources/assets/js/app.css": {
-    "file": "assets/app-c04ede37.css",
-    "src": "src/Resources/assets/js/app.css"
-  },
   "src/Resources/assets/js/app.js": {
-    "css": [
-      "assets/app-c04ede37.css"
-    ],
-    "file": "assets/app-12248025.js",
+    "file": "assets/app-4ed993c7.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }
