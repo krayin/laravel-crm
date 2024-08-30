@@ -16,11 +16,12 @@
             >
                 <!-- Input Container -->
                 <div class="relative flex cursor-pointer items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                    <!-- Selected Item or Placeholder Text -->
                     <span 
-                        class="truncate"
+                        class="overflow-hidden text-ellipsis"
                         :title="selectedItem?.name"
                     >
-                        @{{ selectedItem?.name !== undefined ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
+                        @{{ selectedItem?.name !== "" ? selectedItem?.name : "@lang('admin::app.components.lookup.click-to-add')" }}
                     </span>
                     
                     <!-- Icons Container -->
@@ -28,7 +29,7 @@
                         <!-- Close Icon -->
                         <i 
                             v-if="(selectedItem?.name) && ! isSearching"
-                            class="icon-cross-large cursor-pointer text-2xl text-gray-600"
+                            class="icon-cross-large cursor-pointer text-xl text-gray-600"
                             @click="remove"
                         ></i>
                 

@@ -5,7 +5,7 @@
         @lang('admin::app.settings.warehouses.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.settings.warehouses.edit.form.before', ['warehouse' => $warehouse]) !!}
+    {!! view_render_event('admin.settings.warehouses.edit.form.before', ['warehouse' => $warehouse]) !!}
 
     <x-admin::form
         method="PUT"
@@ -15,11 +15,15 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('admin.settings.warehouses.edit.breadcrumbs.before') !!}
+
                         <!-- Breadcrumbs -->
                         <x-admin::breadcrumbs 
                             name="settings.warehouses.edit" 
                             :entity="$warehouse"
                         />
+
+                        {!! view_render_event('admin.settings.warehouses.edit.breadcrumbs.after') !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -28,14 +32,18 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('admin.settings.warehouses.edit.save_button.after') !!}
+
+                        <!-- Create button for person -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.settings.warehouses.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('admin.settings.warehouses.edit.save_button.before') !!}
                     </div>
                 </div>
             </div>
@@ -48,7 +56,7 @@
                             @lang('admin::app.settings.warehouses.edit.contact-info')
                         </p>
                         
-                        {!! view_render_event('krayin.admin.settings.warehouses.edit.left_card.before', ['warehouse' => $warehouse]) !!}
+                        {!! view_render_event('admin.settings.warehouses.edit.left.form_controls.before', ['warehouse' => $warehouse]) !!}
 
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -57,8 +65,8 @@
                             ])->sortBy('sort_order')"
                             :entity="$warehouse"
                         />
-                        {!! view_render_event('krayin.admin.settings.warehouses.edit.left_card.after', ['warehouse' => $warehouse]) !!}
 
+                        {!! view_render_event('admin.settings.warehouses.edit.left.form_controls.after', ['warehouse' => $warehouse]) !!}
                     </div>
                 </div>
 
@@ -74,7 +82,7 @@
                         </x-slot>
 
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.warehouses.edit.right_card.before', ['warehouse' => $warehouse]) !!}
+                            {!! view_render_event('admin.settings.warehouses.edit.right.form_controls.before', ['warehouse' => $warehouse]) !!}
 
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -84,8 +92,7 @@
                                 :entity="$warehouse"
                             />
 
-                            {!! view_render_event('krayin.admin.settings.warehouses.edit.right_card.before', ['warehouse' => $warehouse]) !!}
-
+                            {!! view_render_event('admin.settings.warehouses.edit.right.form_controls.after', ['warehouse' => $warehouse]) !!}
                         </x-slot>
                     </x-admin::accordion>
                 </div>
@@ -93,6 +100,5 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.settings.warehouses.edit.form.after', ['warehouse' => $warehouse]) !!}
-
+    {!! view_render_event('admin.settings.warehouses.edit.form.after', ['warehouse' => $warehouse]) !!}
 </x-admin::layouts>

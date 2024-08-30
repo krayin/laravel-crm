@@ -3,6 +3,8 @@
         @lang('admin::app.quotes.edit.title')
     </x-slot>
 
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before', ['quote' => $quote]) !!}
+
     <x-admin::form
         :action="route('admin.quotes.update', $quote->id)"
         method="PUT"
@@ -39,15 +41,15 @@
         </div>
     </x-admin::form>
 
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
+
     @pushOnce('scripts')
         <script 
             type="text/x-template"
             id="v-quote-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
-                    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
-                    
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                    
                     <template
                         v-for="tab in tabs"
                         :key="tab.id"
@@ -67,6 +69,8 @@
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
+
                     <!-- Quote information -->
                     <div 
                         id="quote-info"
@@ -167,6 +171,10 @@
                         </div>
                     </div>
 
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
+
+                    {!! view_render_event('admin.contacts.quotes.edit.address_information.before', ['quote' => $quote]) !!}
+
                     <!-- Address information -->
                     <div 
                         id="address-info"
@@ -193,6 +201,10 @@
                         </div>
                     </div>
 
+                    {!! view_render_event('admin.contacts.quotes.edit.address_information.after', ['quote' => $quote]) !!}
+
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.before', ['quote' => $quote]) !!}
+
                     <!-- Quote Item Information -->
                     <div
                         id="quote-items"
@@ -211,9 +223,11 @@
                         <!-- Quote Item List Vue Component -->
                         <v-quote-item-list :errors="errors"></v-quote-item-list>
                     </div>
+
+                    {!! view_render_event('admin.contacts.quotes.edit.quote_information.after', ['quote' => $quote]) !!}
                 </div>
                 
-                {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
+                {!! view_render_event('admin.contacts.quotes.edit.form_controls.after', ['quote' => $quote]) !!}
             </div>
         </script>
 

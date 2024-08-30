@@ -5,6 +5,7 @@
         @lang('admin::app.settings.warehouses.view.contact-information.title')
     </h4>
 
+    <!-- General Initials -->
     <x-admin::form
         v-slot="{ meta, errors, handleSubmit }"
         as="div"
@@ -16,10 +17,10 @@
                     'entity_type' => 'warehouses',
                     ['code', 'IN', ['contact_name', 'contact_emails', 'contact_numbers', 'contact_address']]
                 ])"
-                :allow-edit="true"
                 :entity="$warehouse"
                 :url="route('admin.settings.warehouses.update', $warehouse->id)"           
-             />
+                :allow-edit="true"
+            />
         </form>
     </x-admin::form>
 </div>

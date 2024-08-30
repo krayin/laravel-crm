@@ -8,8 +8,12 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('admin.settings.sources.index.breadcrumbs.before') !!}
+
                     <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="settings.sources" />
+
+                    {!! view_render_event('admin.settings.sources.index.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-white">
@@ -18,7 +22,7 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('krayin.admin.settings.sources.index.create_button.before') !!}
+                {!! view_render_event('admin.settings.sources.index.create_button.before') !!}
                 
                 <!-- Create button for Sources -->
                 @if (bouncer()->hasPermission('settings.lead.sources.create'))
@@ -33,7 +37,7 @@
                     </div>
                 @endif
 
-                {!! view_render_event('krayin.admin.settings.sources.index.create_button.after') !!}
+                {!! view_render_event('admin.settings.sources.index.create_button.after') !!}
             </div>
         </div>
         
@@ -48,7 +52,7 @@
             type="text/x-template"
             id="sources-settings-template"
         >
-            {!! view_render_event('krayin.admin.settings.sources.index.datagrid.before') !!}
+            {!! view_render_event('admin.settings.sources.index.datagrid.before') !!}
         
             <!-- Datagrid -->
             <x-admin::datagrid
@@ -102,7 +106,7 @@
                 </template>
             </x-admin::datagrid>
 
-            {!! view_render_event('krayin.admin.settings.sources.index.datagrid.after') !!}
+            {!! view_render_event('admin.settings.sources.index.datagrid.after') !!}
             
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
@@ -110,7 +114,7 @@
                 ref="modalForm"
             >
                 <form @submit="handleSubmit($event, updateOrCreate)">
-                    {!! view_render_event('krayin.admin.settings.sources.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.sources.index.form_controls.before') !!}
 
                     <x-admin::modal ref="sourceUpdateAndCreateModal">
                         <!-- Modal Header -->
@@ -126,12 +130,14 @@
 
                         <!-- Modal Content -->
                         <x-slot:content>
-                            {!! view_render_event('krayin.admin.settings.sources.index.content.before') !!}
+                            {!! view_render_event('admin.settings.sources.index.content.before') !!}
 
                             <x-admin::form.control-group.control
                                 type="hidden"
                                 name="id"
                             />
+
+                            {!! view_render_event('admin.settings.sources.index.form.name.before') !!}
 
                             <!-- Name -->
                             <x-admin::form.control-group>
@@ -151,11 +157,13 @@
                                 <x-admin::form.control-group.error control-name="name" />
                             </x-admin::form.control-group>
 
-                            {!! view_render_event('krayin.admin.settings.sources.index.content.after') !!}
+                            {!! view_render_event('admin.settings.sources.index.form.name.after') !!}
                         </x-slot>
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            {!! view_render_event('admin.settings.sources.index.form.save_button.before') !!}
+
                             <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
@@ -164,10 +172,12 @@
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
+
+                            {!! view_render_event('admin.settings.sources.index.form.save_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
 
-                    {!! view_render_event('krayin.admin.settings.sources.index.form_controls.after') !!}
+                    {!! view_render_event('admin.settings.sources.index.form_controls.after') !!}
                 </form>
             </x-admin::form>
         </script>

@@ -16,15 +16,15 @@
                             @lang('admin::app.leads.view.products.product-name')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                        <x-admin::table.th class="ltr:text-left rtl:text-right">
                             @lang('admin::app.leads.view.products.quantity')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                        <x-admin::table.th class="ltr:text-left rtl:text-right">
                             @lang('admin::app.leads.view.products.price')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="ltr:text-right rtl:text-left">
+                        <x-admin::table.th class="ltr:text-left rtl:text-right">
                             @lang('admin::app.leads.view.products.amount')
                         </x-admin::table.th>
 
@@ -89,7 +89,7 @@
         type="text/x-template"
         id="v-product-item-template"
     >
-        <x-admin::table.tbody.tr class="align-top border-b border-gray-200 dark:border-gray-800">
+        <x-admin::table.tbody.tr class="border-b border-gray-200 align-top dark:border-gray-800">
             <!-- Product Name -->
             <x-admin::table.td class="!px-4">
                 <v-form v-slot="{ errors }">
@@ -154,6 +154,7 @@
                             ::url="url(product)"
                             ::params="{product_id: product.product_id}"
                             position="left"
+                            ::value-label="$admin.formatPrice(product.price)"
                             ::errors="errors"
                         />
                     </x-admin::form.control-group>
@@ -173,6 +174,8 @@
                             :placeholder="trans('admin::app.leads.view.products.total')"
                             ::allowEdit="false"
                             ::url="url(product)"
+                            position="left"
+                            ::value-label="$admin.formatPrice(product.price * product.quantity)"
                             ::errors="errors"
                         />
                     </x-admin::form.control-group>
@@ -180,10 +183,10 @@
             </x-admin::table.td>
 
             <!-- Action -->
-            <x-admin::table.td class="!px-4 ltr:text-right rtl:text-left">
+            <x-admin::table.td class="ltr:text-right rtl:text-left">
                 <template v-if="product.is_new">
                     <x-admin::form.control-group class="!mb-0">
-                        <div class="flex items-center justify-end gap-4">
+                        <div class="flex items-center justify-center gap-4">
                             <i
                                 @click="attachProduct(product)"
                                 class="icon-enter cursor-pointer text-2xl text-black"

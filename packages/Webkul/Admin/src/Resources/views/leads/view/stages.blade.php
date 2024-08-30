@@ -85,6 +85,7 @@
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.leads.view.stages.won-value')
                                     </x-admin::form.control-group.label>
+
                                     <x-admin::form.control-group.control
                                         type="price"
                                         name="lead_value"
@@ -100,6 +101,7 @@
                                     <x-admin::form.control-group.label>
                                         @lang('admin::app.leads.view.stages.lost-reason')
                                     </x-admin::form.control-group.label>
+
                                     <x-admin::form.control-group.control
                                         type="textarea"
                                         name="lost_reason"
@@ -113,11 +115,15 @@
                                 <x-admin::form.control-group.label>
                                     @lang('admin::app.leads.view.stages.closed-at')
                                 </x-admin::form.control-group.label>
+
                                 <x-admin::form.control-group.control
                                     type="date"
                                     name="closed_at"
                                     v-model="nextStage.closed_at"
+                                    :label="trans('admin::app.leads.view.stages.closed-at')"
                                 />
+
+                                <x-admin::form.control-group.error control-name="closed_at"/>
                             </x-admin::form.control-group>
                         </x-slot>
 

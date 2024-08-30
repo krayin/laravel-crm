@@ -80,13 +80,13 @@
                                                         <span>:</span>
 
                                                         <span>
-                                                            @{{ activity.additional.old.label ?? "@lang('admin::app.components.activities.index.empty')" }}
+                                                            @{{ activity.additional.old.label?.replaceAll(`<br>`, ' ') ?? "@lang('admin::app.components.activities.index.empty')" }}
                                                         </span>
 
                                                         <span class="icon-stats-up rotate-90 text-xl"></span>
 
                                                         <span>
-                                                            @{{ activity.additional.new.label ?? "@lang('admin::app.components.activities.index.empty')" }}
+                                                            @{{ activity.additional.new.label?.replaceAll(`<br>`, ' ') ?? "@lang('admin::app.components.activities.index.empty')" }}
                                                         </span>
                                                     </div>
                                                 </template>
