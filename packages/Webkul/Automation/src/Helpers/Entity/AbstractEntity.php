@@ -2,6 +2,7 @@
 
 namespace Webkul\Automation\Helpers\Entity;
 
+use Carbon\Carbon;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Automation\Repositories\WebhookRepository;
 use Webkul\Automation\Services\WebhookService;
@@ -174,6 +175,10 @@ abstract class AbstractEntity
 
                 case 'date':
                     if ($entity->{$attribute['id']}) {
+                        if (! is_object($entity->{$attribute['id']})) {
+                            $entity->{$attribute['id']} = Carbon::parse($entity->{$attribute['id']});
+                        }
+
                         $value = $entity->{$attribute['id']}->format('D M d, Y');
                     } else {
                         $value = 'N/A';
@@ -183,6 +188,10 @@ abstract class AbstractEntity
 
                 case 'datetime':
                     if ($entity->{$attribute['id']}) {
+                        if (! is_object($entity->{$attribute['id']})) {
+                            $entity->{$attribute['id']} = Carbon::parse($entity->{$attribute['id']});
+                        }
+
                         $value = $entity->{$attribute['id']}->format('D M d, Y H:i A');
                     } else {
                         $value = 'N/A';

@@ -110,7 +110,7 @@
                         <v-key-and-value
                             title="@lang('admin::app.settings.webhooks.create.parameters')"
                             name="query_params"
-                            :remove-btn-title="'@lang('admin::app.settings.webhooks.create.add-new-parameter')'"
+                            :add-btn-title="'@lang('admin::app.settings.webhooks.create.add-new-parameter')'"
                             :fields="parameters"
                             :placeholders="placeholders"
                         ></v-key-and-value>
@@ -130,7 +130,7 @@
                         <v-key-and-value
                             title="@lang('admin::app.settings.webhooks.create.headers')"
                             name="headers"
-                            :remove-btn-title="'@lang('admin::app.settings.webhooks.create.add-new-header')'"
+                            :add-btn-title="'@lang('admin::app.settings.webhooks.create.add-new-header')'"
                             :fields="headers"
                             :placeholders="placeholders"
                         ></v-key-and-value>
@@ -250,7 +250,7 @@
                                 <v-key-and-value
                                     title="@lang('Key and Value')"
                                     name="payload"
-                                    :remove-btn-title="'Add new payload'"
+                                    :add-btn-title="'Add new payload'"
                                     :fields="tempPayload"
                                     :placeholders="placeholders"
                                 ></v-key-and-value>
@@ -427,10 +427,10 @@
             
                     <div class="inline-block">
                         <span
-                            class="cursor-pointer py-2 text-xs text-brandColor hover:text-sky-500 hover:underline"
+                            class="cursor-pointer py-2 text-xs font-semibold text-brandColor hover:text-sky-500 hover:underline"
                             @click="add(index)" 
                         >
-                            @{{ addBtnTitle }}
+                            + @{{ addBtnTitle }}
                         </span>
                     </div>
                 </div>
@@ -634,7 +634,7 @@
             app.component('v-key-and-value', {
                 template: '#v-key-and-value-template',
 
-                props: ['title', 'name', 'removeBtnTitle', 'fields', 'placeholders'],
+                props: ['title', 'name', 'addBtnTitle', 'fields', 'placeholders'],
 
                 data() {
                     return {
