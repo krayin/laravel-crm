@@ -1736,6 +1736,12 @@ return [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days Gün',
 
+            'tabs' => [
+                'description' => 'Açıklama',
+                'products'    => 'Ürünler',
+                'quotes'      => 'Teklifler',
+            ],
+
             'attributes' => [
                 'title' => 'Lead Hakkında',
             ],

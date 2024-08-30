@@ -1736,6 +1736,12 @@ return [
             'title'       => 'سرنخ: :title',
             'rotten-days' => ':days روز',
 
+            'tabs' => [
+                'description' => 'توضیحات',
+                'products'    => 'محصولات',
+                'quotes'      => 'نقل‌قول‌ها',
+            ],
+
             'attributes' => [
                 'title' => 'درباره سرنخ',
             ],

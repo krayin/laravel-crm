@@ -1736,6 +1736,12 @@ return [
             'title'       => 'الفرصة: :title',
             'rotten-days' => ':days أيام',
 
+            'tabs' => [
+                'description' => 'الوصف',
+                'products'    => 'المنتجات',
+                'quotes'      => 'الاقتباسات',
+            ],
+
             'attributes' => [
                 'title' => 'حول الفرصة',
             ],
