@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.table.before') !!}
 
-<x-admin::datagrid src="{{ route('admin.leads.index') }}">
+<x-admin::datagrid :src="route('admin.leads.index')">
     <!-- DataGrid Shimmer -->
     <x-admin::shimmer.datagrid />
 
