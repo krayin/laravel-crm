@@ -122,7 +122,7 @@ abstract class AbstractEntity
                         $option = $attribute['options']->where('id', $entity->{$attribute['id']})->first();
                     }
 
-                    $value = $option ? $option->name : __('admin::app.common.not-available');
+                    $value = $option ? $option->name : '';
 
                     break;
 

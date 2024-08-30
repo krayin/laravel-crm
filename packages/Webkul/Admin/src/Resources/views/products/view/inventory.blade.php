@@ -32,7 +32,7 @@
                     </x-admin::table.thead>
 
                     <!-- Table Body -->
-                    <x-admin::table.tbody> 
+                    <x-admin::table.tbody class="align-top"> 
                         <template v-for="warehouse in productWarehouses">
                             <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
                                 <x-admin::table.td 
@@ -56,7 +56,6 @@
                                 
                                 <x-admin::table.td>
                                     <div  
-                                        href="#"
                                         @click="selectWarehouse(warehouse)"
                                         class="cursor-pointer text-brandColor" 
                                     >
@@ -176,7 +175,7 @@
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
-                <x-admin::table.tbody>
+                <x-admin::table.tbody class="align-top">
                     <v-warehouse-location-inventory-item
                         v-for='(location, index) in warehouseLocations'
                         :location="location"
@@ -227,7 +226,7 @@
 
             <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group.control
-                    type="text"
+                    type="number"
                     ::name="'inventories[inventory_' + index + '][in_stock]'"
                     v-model="location.in_stock"
                     rules="required|numeric|min_value:0"
@@ -240,7 +239,7 @@
 
             <x-admin::table.td class="!px-2">
                 <x-admin::form.control-group.control
-                    type="text"
+                    type="number"
                     ::name="'inventories[inventory_' + index + '][allocated]'"
                     v-model="location.allocated"
                     rules="required|numeric|min_value:0"
@@ -271,7 +270,7 @@
                     productWarehouses: [],
 
                     selectedWarehouse: null,
-                }
+                };
             },
 
             computed: {
@@ -337,7 +336,11 @@
                 onSubmit(params, { setErrors }) {
                     let formData = new FormData(this.$refs.locationForm);
 
-                    this.$axios.post("{{ route('admin.products.inventories.store', ['id' => $product->id, 'warehouseId' => 'warehouseId']) }}".replace('warehouseId', this.selectedWarehouse.id), formData).then(response => {
+                    this.$axios.post("{{ route('admin.products.inventories.store', ['id' => $product->id, 'warehouseId' => 'warehouseId']) }}".replace('warehouseId', this.selectedWarehouse.id), formData, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    }).then(response => {
                         this.getAllWarehouses();
 
                         this.getProductWarehouses();
