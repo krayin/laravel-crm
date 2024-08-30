@@ -22,6 +22,8 @@
             @endif
 
             <div class="box-shadow flex min-w-[300px] flex-col rounded-md bg-white dark:bg-gray-900">
+                {!! view_render_event('admin.sessions.reset-password.form_controls.before') !!}
+
                 <!-- Login Form -->
                 <x-admin::form :action="route('admin.reset_password.store')">
                     <div class="p-4">
@@ -113,6 +115,8 @@
                         </button>
                     </div>
                 </x-admin::form>
+
+                {!! view_render_event('admin.sessions.reset-password.form_controls.after') !!}
             </div>
         </div>
     </div>

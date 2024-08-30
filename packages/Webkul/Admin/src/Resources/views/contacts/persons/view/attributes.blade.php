@@ -17,8 +17,8 @@
                     ['code', 'NOTIN', ['name', 'jon_title']]
                 ])"
                 :entity="$person"
-                :allow-edit="true"
                 :url="route('admin.contacts.persons.update', $person->id)"
+                :allow-edit="true"
             />
         </form>
     </x-admin::form>

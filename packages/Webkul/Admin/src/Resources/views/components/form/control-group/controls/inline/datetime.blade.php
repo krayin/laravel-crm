@@ -1,4 +1,11 @@
-<v-inline-datetime-edit {{ $attributes }}>
+@props([
+    'allowEdit' => true,
+])
+
+<v-inline-datetime-edit 
+    {{ $attributes }}
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
+>
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center ltr:pl-2.5 ltr:text-left rtl:pr-2.5 rtl:text-right">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
@@ -15,7 +22,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
@@ -29,7 +36,7 @@
                     class="group relative !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
-                    <span class="truncate rounded cursor-pointer">
+                    <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
                     </span>
 
@@ -42,7 +49,7 @@
                             @{{ inputValue }}
                         </span>
 
-                        <div class="-mt-2 h-3 w-3 ml-4 rotate-45 bg-black dark:bg-white"></div>
+                        <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>
                     </div>
                 </div>
 

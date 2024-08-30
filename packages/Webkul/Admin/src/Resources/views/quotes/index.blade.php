@@ -58,7 +58,7 @@
                     <div class="flex items-center gap-x-2.5">
                         <!-- Create button for person -->
                         <div class="flex items-center gap-x-2.5">
-                            {!! view_render_event('krayin.admin.quotes.index.create_button.before') !!}
+                            {!! view_render_event('admin.quotes.index.create_button.before') !!}
                             
                             @if (bouncer()->hasPermission('quotes.create'))
                                 <a 
@@ -69,17 +69,17 @@
                                 </a>
                             @endif
             
-                            {!! view_render_event('krayin.admin.quotes.index.create_button.after') !!}
+                            {!! view_render_event('admin.quotes.index.create_button.after') !!}
                         </div>
                     </div>
                 </div>
             
-                {!! view_render_event('krayin.admin.quotes.index.datagrid.before') !!}
+                {!! view_render_event('admin.quotes.index.datagrid.before') !!}
             
                 <!-- DataGrid -->
                 <x-admin::datagrid src="{{ route('admin.quotes.index') }}" />
 
-                {!! view_render_event('krayin.admin.quotes.index.datagrid.after') !!}
+                {!! view_render_event('admin.quotes.index.datagrid.after') !!}
             </div>
         </script>
 

@@ -15,12 +15,16 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
+
                     <!-- Bredcrumbs -->
                     <x-admin::breadcrumbs
                         name="mail.route.view"
                         :entity="$email"
                         :route="request('route')"
                     />
+
+                    {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
                 </div>
     
                 <!-- Title -->
@@ -31,19 +35,27 @@
                     
                     <span class="label-active">{{ request('route') }}</span>
 
+                    {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
+
                     <x-admin::tags
                         :attach-endpoint="route('admin.mail.tags.attach', $email->id)"
                         :detach-endpoint="route('admin.mail.tags.detach', $email->id)"
                         :added-tags="$email->tags"
                     />
+
+                    {!! view_render_event('admin.mail.view.tags.after', ['email' => $email]) !!}
                 </div>
             </div>
         </div>
+
+        {!! view_render_event('admin.mail.view.email-list.before', ['email' => $email]) !!}
 
         <!-- Email List Vue Component -->
         <v-email-list>
            <x-admin::shimmer.leads.view.mail :count="$email->count()"/>
         </v-email-list>
+
+        {!! view_render_event('admin.mail.view.email-list.before', ['email' => $email]) !!}
     </div>
 
     @pushOnce('scripts')
@@ -54,6 +66,8 @@
         >  
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                    {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
+
                     <!-- Email Item Vue Component -->
                     <v-email-item
                         :email="email"
@@ -63,6 +77,10 @@
                         @on-discard="action = {}"
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
+
+                    {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
+
+                    {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
             
                     <!-- Email Item Vue Component -->
                     <v-email-item
@@ -74,6 +92,8 @@
                         @on-discard="action = {}"
                         @on-email-action="emailAction($event)"
                     ></v-email-item>
+
+                    {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
                 </div>
             
                 @if (
@@ -104,8 +124,14 @@
                 <div class="flex w-full flex-col gap-4">
                     <div class="flex w-full items-center justify-between gap-4">
                         <div class="flex gap-4">
+                            {!! view_render_event('admin.mail.view.avatar.before', ['email' => $email]) !!}
+
                             <!-- Mailer Sort name -->
                             <x-admin::avatar ::name="email.name" />
+
+                            {!! view_render_event('admin.mail.view.avatar.after', ['email' => $email]) !!}
+
+                            {!! view_render_event('admin.mail.view.mail_receivers.before', ['email' => $email]) !!}
 
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
@@ -145,7 +171,11 @@
                                     </div>
                                 </div>
                             </div>
+
+                            {!! view_render_event('admin.mail.view.mail_receivers.after', ['email' => $email]) !!}
                         </div>
+
+                        {!! view_render_event('admin.mail.view.time_actions.before', ['email' => $email]) !!}
 
                         <!-- Time and Actions -->
                         <div class="flex items-center justify-center gap-2 dark:text-gray-300">
@@ -206,13 +236,21 @@
                                 </x-admin::dropdown>
                             </div>
                         </div>
+
+                        {!! view_render_event('admin.mail.view.time_actions.before', ['email' => $email]) !!}
                     </div>
+
+                    {!! view_render_event('admin.mail.view.mail_body.before', ['email' => $email]) !!}
 
                     <!-- Mail Body -->
                     <div
                         v-html="email.reply"
                         class="dark:text-gray-300"
                     ></div>
+                   
+                    {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
+
+                    {!! view_render_event('admin.mail.view.attach.before', ['email' => $email]) !!}
 
                     <div
                         class="flex flex-wrap gap-2"
@@ -229,6 +267,10 @@
                             <span class="font-medium text-brandColor">@{{ attachment.name }}</span>
                         </a>
                     </div>
+
+                    {!! view_render_event('admin.mail.view.attach.after', ['email' => $email]) !!}
+
+                    {!! view_render_event('admin.mail.view.replay_reply_all_forward_email.before', ['email' => $email]) !!}
 
                     <!-- Reply, Reply All and Forward email -->
                     <template v-if="! action[email.id]">
@@ -262,6 +304,8 @@
                         </div>
                     </template>
 
+                    {!! view_render_event('admin.mail.view.replay_reply_all_forward_email.after', ['email' => $email]) !!}
+
                     <template v-else>
                         <!-- Email Form Vue Component -->
                         <v-email-form
@@ -280,7 +324,10 @@
             id="v-email-form-template"
         >
             <div class="flex w-full gap-2">
+                
                 <x-admin::avatar ::name="email.name" />
+
+                {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
                 
                 <div class="w-[926px] gap-2 rounded border p-4">
                     <x-admin::form
@@ -433,6 +480,8 @@
                         </form>
                     </x-admin::form>    
                 </div>
+
+                {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -442,6 +491,8 @@
             id="v-contact-lookup-template"
         >
             <div>
+                {!! view_render_event('admin.mail.view.contact_lookup.before', ['email' => $email]) !!}
+
                 <template v-if="email?.person_id">
                     <div class="flex justify-between">
                         <div class="flex gap-2">
@@ -469,7 +520,7 @@
                             <template v-if="! unlinking.contact">
                                 <button
                                     type="button"
-                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                                    class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     @click="unlinkContact"
                                 ></button>
                             </template>
@@ -481,7 +532,7 @@
                             <a
                                 :href="'{{ route('admin.contacts.persons.edit', ':id') }}'.replace(':id', email.person_id)"
                                 target="_blank"
-                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                                class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                             ></a>
                         </div>
                     </div>
@@ -520,7 +571,7 @@
                         <!-- Popup Box -->
                         <div 
                             v-if="showPopup" 
-                            class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
+                            class="transcontact_lookup absolute top-full z-10 mt-1 flex w-full origin-top flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                         >
                             <!-- Search Bar -->
                             <div class="relative">
@@ -557,7 +608,7 @@
                                 <li 
                                     v-for="person in persons" 
                                     :key="person.id"
-                                    class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
+                                    class="flex cursor-pointer gap-2 px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                     @click="linkContact(person)"
                                 >
                                     <x-admin::avatar ::name="person.name" />
@@ -593,6 +644,8 @@
                         </div>
                     </div>
                 </template>
+
+                {!! view_render_event('admin.mail.view.contact_lookup.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -601,6 +654,8 @@
             id="v-lead-lookup-template"
         >
             <div>
+                {!! view_render_event('admin.mail.view.lead_lookup.before', ['email' => $email]) !!}
+
                 <template v-if="email?.lead_id">
                     <div class="flex">
                         <div class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
@@ -625,10 +680,10 @@
 
                                 <div class="flex items-center justify-center gap-2">
                                     <div
-                                        class="group relative "
+                                        class="group relative"
                                         v-if="email.lead.rotten_days > 0"
                                     >
-                                        <span class="icon-rotten flex items-center justify-center cursor-default text-2xl text-rose-600"></span>
+                                        <span class="icon-rotten flex cursor-default items-center justify-center text-2xl text-rose-600"></span>
 
                                         <div class="absolute bottom-0 right-0 mb-7 hidden w-max flex-col items-center group-hover:flex">
                                             <span class="whitespace-no-wrap relative rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
@@ -642,7 +697,7 @@
                                     <template v-if="! unlinking.lead">
                                         <button
                                             type="button"
-                                            class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                                            class="icon-delete flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                             @click="unlinkLead"
                                         ></button>
                                     </template>
@@ -654,7 +709,7 @@
                                     <a
                                         :href="'{{ route('admin.leads.view', ':id') }}'.replace(':id', email.lead_id)"
                                         target="_blank"
-                                        class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center text-2xl rounded-md hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                                        class="icon-right-arrow flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     ></a>
                                 </div>
                             </div>
@@ -769,11 +824,11 @@
                                 </div>
 
                                 <!-- Results List -->
-                                <ul class="max-h-40 divide-y divide-gray-100 dark:divide-gray-700 overflow-y-auto">
+                                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto dark:divide-gray-700">
                                     <li 
                                         v-for="lead in leads" 
                                         :key="lead.id"
-                                        class="flex gap-2 cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
+                                        class="flex cursor-pointer gap-2 px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                         @click="linkLead(lead)"
                                     >
                                         <x-admin::avatar ::name="lead.title" />
@@ -795,7 +850,7 @@
                                 <!-- Add New Lead Button -->
                                 @if (bouncer()->hasPermission('leads.create'))
                                     <div
-                                        class="flex cursor-pointer items-center gap-2 border-t dark:border-gray-700 border-gray-200 p-2 text-blue-600 transition-colors"
+                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors dark:border-gray-700"
                                         @click="toggleLeadModal"
                                     >
                                         <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
@@ -805,6 +860,8 @@
                         </div>
                     </template>
                 @endif
+
+                {!! view_render_event('admin.mail.view.lead_lookup.after', ['email' => $email]) !!}
             </div>
         </script>
 
@@ -813,6 +870,8 @@
             type="text/x-template"
             id="v-create-contact-template"
         >
+            {!! view_render_event('admin.mail.view.contact_form.before', ['email' => $email]) !!}
+
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
@@ -853,12 +912,16 @@
                     </x-admin::modal>
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('admin.mail.view.contact_form.after', ['email' => $email]) !!}
         </script>
 
         <script
             type="text/x-template"
             id="v-create-lead-template"
         >
+            {!! view_render_event('admin.mail.view.lead_form.before', ['email' => $email]) !!}
+
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 as="div"
@@ -1032,12 +1095,16 @@
                     </x-admin::modal>
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('admin.mail.view.lead_form.after', ['email' => $email]) !!}
         </script>
 
         <script
             type="text/x-template"
             id="v-action-email-template"
         >
+            {!! view_render_event('admin.mail.view.action_mail.before', ['email' => $email]) !!}
+
             <div class="flex flex-col gap-4">
                 <!-- Contact Lookup -->
                 @if (
@@ -1086,6 +1153,8 @@
 
             <!-- Create Lead Modal -->
             <v-create-lead ref="createLead"></v-create-lead>
+
+            {!! view_render_event('admin.mail.view.action_mail.after', ['email' => $email]) !!}
         </script>
 
         <!-- Email List Vue Component -->

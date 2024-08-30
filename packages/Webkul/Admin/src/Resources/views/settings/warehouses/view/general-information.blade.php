@@ -17,9 +17,9 @@
                     'entity_type' => 'warehouses',
                     ['code', 'NOTIN', ['contact_name', 'contact_emails', 'contact_numbers', 'contact_address']]
                 ])"
-                :allow-edit="true"
                 :entity="$warehouse"
                 :url="route('admin.settings.warehouses.update', $warehouse->id)"        
+                :allow-edit="true"
             />
         </form>
     </x-admin::form>

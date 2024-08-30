@@ -3,7 +3,7 @@
         @lang('admin::app.settings.workflows.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.activities.edit.form.before') !!}
+    {!! view_render_event('admin.activities.edit.form.before') !!}
 
     <x-admin::form
         :action="route('admin.settings.workflows.update', $workflow->id)"
@@ -13,10 +13,14 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.before', ['workflow' => $workflow]) !!}
+
                         <x-admin::breadcrumbs
                             name="settings.workflows.edit"
                             :entity="$workflow"
                         />
+
+                        {!! view_render_event('admin.settings.workflows.edit.breadcrumbs.after', ['workflow' => $workflow]) !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -25,14 +29,18 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Save button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('admin.settings.workflows.edit.save_button.before', ['workflow' => $workflow]) !!}
+
+                        <!-- Save button for person -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.settings.workflows.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('admin.settings.workflows.edit.save_button.after', ['workflow' => $workflow]) !!}
                     </div>
                 </div>
             </div>
@@ -79,6 +87,8 @@
                         </div>
 
                         <div class="flex flex-col gap-4">
+                            {!! view_render_event('admin.settings.workflows.edit.basic_details.before', ['workflow' => $workflow]) !!}
+
                             <!-- Basic Details -->
                             <div id="basic-details">
                                 <div class="flex items-center justify-between gap-4 py-4">
@@ -128,6 +138,10 @@
                                     </x-admin::form.control-group>
                                 </div>
                             </div>
+
+                            {!! view_render_event('admin.settings.workflows.edit.basic_details.after', ['workflow' => $workflow]) !!}
+
+                            {!! view_render_event('admin.settings.workflows.edit.event.before', ['workflow' => $workflow]) !!}
 
                             <!-- Event -->
                             <div id="event">
@@ -182,6 +196,10 @@
                                 </div>
                             </div>
 
+                            {!! view_render_event('admin.settings.workflows.edit.event.after', ['workflow' => $workflow]) !!}
+
+                            {!! view_render_event('admin.settings.workflows.edit.condition.before', ['workflow' => $workflow]) !!}
+
                             <!-- Conditions -->
                             <div id="conditions">
                                 <div class="flex items-center justify-between gap-4 py-4">
@@ -211,11 +229,11 @@
                                             :label="trans('admin::app.settings.workflows.edit.condition-type')"
                                             :placeholder="trans('admin::app.settings.workflows.edit.condition-type')"
                                         >
-                                            <option value="1">
+                                            <option value="and">
                                                 @lang('admin::app.settings.workflows.edit.all-condition-are-true')
                                             </option>
         
-                                            <option value="2">
+                                            <option value="or">
                                                 @lang('admin::app.settings.workflows.edit.any-condition-are-true')
                                             </option>
                                         </x-admin::form.control-group.control>
@@ -247,6 +265,10 @@
                                     </button>
                                 </div>
                             </div>
+
+                            {!! view_render_event('admin.settings.workflows.edit.condition.after', ['workflow' => $workflow]) !!}
+
+                            {!! view_render_event('admin.settings.workflows.edit.action.before', ['workflow' => $workflow]) !!}
 
                             <!-- Actions -->
                             <div id="actions">
@@ -300,6 +322,8 @@
                                     @lang('admin::app.settings.workflows.edit.add-action')
                                 </button>
                             </div>
+
+                            {!! view_render_event('admin.settings.workflows.edit.action.after', ['workflow' => $workflow]) !!}
                         </div>
 
                         {!! view_render_event('admin.settings.workflows.edit.form_controls.after') !!}

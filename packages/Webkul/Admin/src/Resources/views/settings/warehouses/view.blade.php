@@ -5,7 +5,7 @@
 
     <div class="flex gap-4">
         <!-- Left Panel -->
-        {!! view_render_event('krayin.admin.settings.warehouses.view.left.before', ['warehouse' => $warehouse]) !!}
+        {!! view_render_event('admin.settings.warehouses.view.left.before', ['warehouse' => $warehouse]) !!}
 
         <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Product Information -->
@@ -59,9 +59,9 @@
             @include ('admin::settings.warehouses.view.contact-information')
         </div>
 
-        {!! view_render_event('krayin.admin.settings.warehouses.view.left.after', ['warehouse' => $warehouse]) !!}
+        {!! view_render_event('admin.settings.warehouses.view.left.after', ['warehouse' => $warehouse]) !!}
 
-        {!! view_render_event('krayin.admin.settings.warehouses.view.right.before', ['warehouse' => $warehouse]) !!}
+        {!! view_render_event('admin.settings.warehouses.view.right.before', ['warehouse' => $warehouse]) !!}
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">

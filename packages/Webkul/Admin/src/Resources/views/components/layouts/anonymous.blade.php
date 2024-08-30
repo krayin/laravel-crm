@@ -70,29 +70,29 @@
         {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 
-    {!! view_render_event('bagisto.admin.layout.head') !!}
+    {!! view_render_event('admin.layout.head') !!}
 </head>
 
 <body>
-    {!! view_render_event('bagisto.admin.layout.body.before') !!}
+    {!! view_render_event('admin.layout.body.before') !!}
 
     <div id="app">
         <!-- Flash Message Blade Component -->
         <x-admin::flash-group />
 
-        {!! view_render_event('bagisto.admin.layout.content.before') !!}
+        {!! view_render_event('admin.layout.content.before') !!}
 
         <!-- Page Content Blade Component -->
         {{ $slot }}
 
-        {!! view_render_event('bagisto.admin.layout.content.after') !!}
+        {!! view_render_event('admin.layout.content.after') !!}
     </div>
 
-    {!! view_render_event('bagisto.admin.layout.body.after') !!}
+    {!! view_render_event('admin.layout.body.after') !!}
 
     @stack('scripts')
 
-    {!! view_render_event('bagisto.admin.layout.vue-app-mount.before') !!}
+    {!! view_render_event('admin.layout.vue-app-mount.before') !!}
 
     <script>
         /**
@@ -106,7 +106,7 @@
         });
     </script>
 
-    {!! view_render_event('bagisto.admin.layout.vue-app-mount.after') !!}
+    {!! view_render_event('admin.layout.vue-app-mount.after') !!}
 
     <script type="text/javascript">
         {!! core()->getConfigData('general.content.custom_scripts.custom_javascript') !!}

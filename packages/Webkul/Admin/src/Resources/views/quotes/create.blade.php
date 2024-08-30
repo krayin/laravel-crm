@@ -15,6 +15,8 @@
         @lang('admin::app.quotes.create.title')
     </x-slot>
 
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
+
     <x-admin::form :action="route('admin.quotes.store')">
         <div class="flex flex-col gap-4">
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -47,15 +49,15 @@
         </div>
     </x-admin::form>
 
+    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
+
     @pushOnce('scripts')
         <script 
             type="text/x-template"
             id="v-quote-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
-                    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
-                       
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                       
                     <template
                         v-for="tab in tabs"
                         :key="tab.id"
@@ -89,6 +91,8 @@
                                 @lang('admin::app.quotes.create.quote-info-info')
                             </p>
                         </div>
+
+                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.before') !!}
 
                         <div class="w-1/2">
                             <x-admin::attributes
@@ -171,6 +175,8 @@
                                 </x-admin::form.control-group>
                             </div>
                         </div>
+
+                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.after') !!}
                     </div>
 
                     <!-- Address information -->
@@ -215,8 +221,6 @@
                         <!-- Quote Item List Vue Component -->
                         <v-quote-item-list :errors="errors"></v-quote-item-list>
                     </div>
-
-                    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
                 </div>
             </div>
         </script>
@@ -226,6 +230,8 @@
             id="v-quote-item-list-template"
         >
             <div>
+                {!! view_render_event('admin.contacts.quotes.edit.table.after') !!}
+
                 <!-- Table -->
                 <x-admin::table>
                     <!-- Table Head -->
@@ -284,6 +290,8 @@
                         </template>
                     </x-admin::table.tbody>
                 </x-admin::table>
+
+                {!! view_render_event('admin.contacts.quotes.edit.table.before') !!}
             </div>
 
             <!-- Add New Qoute Item -->

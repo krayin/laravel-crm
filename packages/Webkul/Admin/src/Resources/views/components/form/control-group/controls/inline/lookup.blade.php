@@ -1,10 +1,12 @@
 @props([
+    'allowEdit' => true,
     'attribute' => [],
 ])
 
 <v-inline-look-edit
     {{ $attributes }}
     :attribute="{{ json_encode($attribute) }}"
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
 >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
@@ -36,7 +38,7 @@
                     class="group relative h-[18px] !w-full pl-2.5"
                     :style="{ 'text-align': position }"
                 >
-                     <span class="cursor-pointer truncate rounded">
+                    <span class="cursor-pointer truncate rounded">
                         @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
                     </span>
 
