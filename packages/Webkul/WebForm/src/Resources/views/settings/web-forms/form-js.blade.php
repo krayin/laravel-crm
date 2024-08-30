@@ -18,89 +18,57 @@
     script.src = '{{ asset('vendor/webkul/web-form/assets/js/web-form.js') }}';
 
     document.addEventListener('DOMContentLoaded', function() {
-        {{-- flatpickr(".form-group.date input", {
-                allowInput: true,
-                altFormat: "Y-m-d",
-                dateFormat: "Y-m-d",
-                weekNumbers: true,
-            });
-        
-            flatpickr(".form-group.datetime input", {
-                allowInput: true,
-                altFormat: "Y-m-d H:i:S",
-                dateFormat: "Y-m-d H:i:S",
-                enableTime: true,
-                time_24hr: true,
-                weekNumbers: true,
-            });
-        --}}
-        let data = null;
-    
         document.getElementById('krayinWebForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
             const form = document.getElementById("krayinWebForm");
 
-            data = new FormData(form);
-    
-            if (validateForm(form)) {
-                const formData = new FormData(document.querySelector('#krayinWebForm'));
-                const data = new URLSearchParams(formData).toString();
-                
-                fetch("{{ route('admin.settings.web_forms.form_store', $webForm->id) }}", {
-                    method: 'POST',
-                    body: data,
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                        'X-CSRF-TOKEN': "{{ csrf_token() }}",
-                    }
-                })
+            const formData = new FormData(document.querySelector('#krayinWebForm'));
+            const data = new URLSearchParams(formData).toString();
+            
+            fetch("{{ route('admin.settings.web_forms.form_store', $webForm->id) }}", {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Accept': 'application/json, text/javascript, */*; q=0.01',
+                    'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'X-CSRF-TOKEN': "{{ csrf_token() }}",
+                }
+            })
                 .then(response => response.json())
-                .then(data => {
-                    document.querySelector('#loaderDiv').classList.remove('loaderDiv');
-                    document.querySelector('#imgSpinner').classList.remove('imgSpinner');
-                
-                    if (data.message) {
-                        document.querySelector('.alert-wrapper .alert p').textContent = data.message;
-                        document.querySelector('.alert-wrapper').style.display = 'block';
-                    } else {
-                        window.location.href = data.redirect;
-                    }
-                
+                .then(response => {
                     document.querySelector('#krayinWebForm').reset();
+
+                    if (response.errors) {
+                        showError(response.errors);
+                    }
                 })
-                .catch(error => {
-                    console.log(error);
-                
-                    error.response.json().then(errorData => {
-                        for (let key in errorData.errors) {
-                            let inputName = key.split('.').map((chunk, index) => index ? `[${chunk}]` : chunk).join('');
-                            showError(inputName, errorData.errors[key][0]);
-                        }
-                    });
-                });
-            }
+                .catch(error => {});
         });
     });
     
-    function validateForm(form) {
-        // Implement validation logic or integrate with an existing validation library
-        return true; // Replace with actual validation check
-    }
-    
-    function showError(inputName, errorMessage) {
-        const input = document.querySelector(`[name="${inputName}"]`);
+    function showError(errors) {
+        for (var key in errors) {
+            var inputNames = [];
 
-        if (input) {
-            const errorElement = document.createElement('span');
+            key.split('.').forEach(function(chunk, index) {
+                if(index) {
+                    inputNames.push('[' + chunk + ']')
+                } else {
+                    inputNames.push(chunk)
+                }
+            })
 
-            errorElement.classList.add('error');
 
-            errorElement.textContent = errorMessage;
+            var inputName = inputNames.join('');
 
-            input.parentElement.appendChild(errorElement);
+            const input = document.querySelector(`[name="${inputName}"]`);
+
+            if (input) {
+                const inputError = document.querySelector(`[id="${inputName}-error"]`);
+
+                inputError.textContent = errors[key][0];
+            }
         }
-    }
-
-    content.appendChild(script);
+    };
 })()

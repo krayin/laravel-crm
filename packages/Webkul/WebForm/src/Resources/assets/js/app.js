@@ -110,4 +110,6 @@ import CreateElement from "./plugins/createElement";
     VeeValidate,
 ].forEach((plugin) => app.use(plugin));
 
-export default app;
+window.addEventListener("load", function() {
+    app.mount("#app");
+});

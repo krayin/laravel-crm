@@ -47,11 +47,11 @@ class WebFormController extends Controller
     /**
      * Remove the specified email template from storage.
      */
-    public function formStore(int $id): JsonResponse
+    public function formStore($id)
     {
         $person = $this->personRepository
             ->getModel()
-            ->where('emails', 'like', '%'.request('persons.emails.0.value').'%')
+            ->where('emails', 'like', "%" . request('persons.emails.0.value') . "%")
             ->first();
 
         if ($person) {
@@ -120,7 +120,7 @@ class WebFormController extends Controller
 
         if ($webForm->submit_success_action == 'message') {
             return response()->json([
-                'message' => 'Success',
+                'message' => $webForm->submit_success_content,
             ], 200);
         } else {
             return response()->json([

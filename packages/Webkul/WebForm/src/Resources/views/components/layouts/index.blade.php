@@ -67,8 +67,6 @@
         {{ $slot }}
     </div>
 
-    @stack('scripts')
-
     <script>
         /**
          * Load event, the purpose of using the event is to mount the application

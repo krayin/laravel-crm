@@ -53,6 +53,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('date')
@@ -65,6 +70,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('textarea')
@@ -74,6 +84,11 @@
                                             {{ $attribute->is_required ? 'required' : '' }}
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         ></textarea>
+
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
@@ -94,6 +109,11 @@
                                             value="work"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}[0][value]-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('phone')
@@ -112,6 +132,11 @@
                                             class="control"
                                             value="work"
                                         />
+
+                                        <p 
+                                            id="{{ $fieldName }}[0][value]-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
@@ -139,6 +164,11 @@
 
                                         </select>
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('multiselect')
@@ -163,6 +193,11 @@
 
                                         </select>
 
+                                        <p 
+                                            id="{{ $fieldName }}[]-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('checkbox')
@@ -186,6 +221,11 @@
                                                 </span>
                                             @endforeach
                                         </div>
+
+                                        <p 
+                                            id="{{ $fieldName }}[]-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
                                         
                                         @break;
 
@@ -198,6 +238,11 @@
                                             class="w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         />
 
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
+
                                         @break;
 
                                     @case('boolean')
@@ -209,6 +254,11 @@
                                             <option value="1">Yes</option>
                                             <option value="0">No</option>
                                         </select>
+
+                                        <p 
+                                            id="{{ $fieldName }}-error"
+                                            class="mt-1 text-xs italic text-red-600"
+                                        ></p>
 
                                         @break;
 
