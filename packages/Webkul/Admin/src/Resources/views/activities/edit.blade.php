@@ -4,7 +4,7 @@
         @lang('admin::app.activities.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.activities.edit.form.before') !!}
+    {!! view_render_event('admin.activities.edit.form.before') !!}
 
     <x-admin::form
         :action="route('admin.activities.update', $activity->id)"
@@ -30,7 +30,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('krayin.admin.activities.edit.submit-btn.before') !!}
+                        {!! view_render_event('admin.activities.edit.submit-btn.before') !!}
 
                         <!-- Save Button -->
                         <button
@@ -40,7 +40,7 @@
                             @lang('admin::app.activities.edit.save-btn')
                         </button>
         
-                        {!! view_render_event('krayin.admin.activities.edit.submit-btn.after') !!}
+                        {!! view_render_event('admin.activities.edit.submit-btn.after') !!}
                     </div>
                 </div>
             </div>
@@ -152,7 +152,7 @@
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.before') !!}
+                    {!! view_render_event('admin.activities.edit.accordion.general.before') !!}
 
                     <x-admin::accordion>
                         <x-slot:header>
@@ -235,13 +235,13 @@
                         </x-slot>
                     </x-admin::accordion>
 
-                    {!! view_render_event('krayin.admin.activities.edit.accordion.general.after') !!}
+                    {!! view_render_event('admin.activities.edit.accordion.general.after') !!}
                 </div>
             </div>
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.activities.edit.form.after') !!}
+    {!! view_render_event('admin.activities.edit.form.after') !!}
 
     @pushOnce('scripts')
         <script 

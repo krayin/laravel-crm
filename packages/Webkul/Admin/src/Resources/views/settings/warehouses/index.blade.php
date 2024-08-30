@@ -20,25 +20,27 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button For Warehouses -->
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.before') !!}
-                        @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
-                            <a
-                                href="{{ route('admin.settings.warehouses.create') }}"
-                                class="primary-button"
-                            >
-                                @lang('admin::app.settings.warehouses.index.create-btn')
-                            </a>
-                        @endif
-                    {!! view_render_event('krayin.admin.settings.warehouses.index.create_button.after') !!}
+                    {!! view_render_event('admin.settings.warehouses.index.create_button.before') !!}
+
+                    @if (bouncer()->hasPermission('settings.automation.warehouses.create'))
+                        <a
+                            href="{{ route('admin.settings.warehouses.create') }}"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.warehouses.index.create-btn')
+                        </a>
+                    @endif
+
+                    {!! view_render_event('admin.settings.warehouses.index.create_button.after') !!}
                 </div>
             </div>
         </div>
 
-        {!! view_render_event('krayin.admin.settings.warehouses.index.datagrid.before') !!}
+        {!! view_render_event('admin.settings.warehouses.index.datagrid.before') !!}
 
         <!-- DataGrid -->
         <x-admin::datagrid src="{{ route('admin.settings.warehouses.index') }}" />
 
-        {!! view_render_event('krayin.admin.settings.warehouses.index.datagrid.after') !!}
+        {!! view_render_event('admin.settings.warehouses.index.datagrid.after') !!}
     </div>
 </x-admin::layouts>

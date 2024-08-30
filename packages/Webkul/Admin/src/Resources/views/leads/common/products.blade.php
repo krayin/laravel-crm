@@ -15,15 +15,15 @@
                             @lang('admin::app.leads.common.products.product-name')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.quantity')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.price')
                         </x-admin::table.th>
             
-                        <x-admin::table.th class="text-right">
+                        <x-admin::table.th class="text-center">
                             @lang('admin::app.leads.common.products.amount')
                         </x-admin::table.th>
 
@@ -97,7 +97,7 @@
                         :label="trans('admin::app.leads.common.products.quantity')"
                         :placeholder="trans('admin::app.leads.common.products.quantity')"
                         @on-change="(event) => product.quantity = event.value"
-                        position="left"
+                        position="center"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -113,7 +113,8 @@
                         :label="trans('admin::app.leads.common.products.price')"
                         :placeholder="trans('admin::app.leads.common.products.price')"
                         @on-change="(event) => product.price = event.value"
-                        position="left"
+                        ::value-label="$admin.formatPrice(product.price)"
+                        position="center"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>
@@ -129,6 +130,7 @@
                         :label="trans('admin::app.leads.common.products.total')"
                         :placeholder="trans('admin::app.leads.common.products.total')"
                         ::allowEdit="false"
+                        position="center"
                     />
                 </x-admin::form.control-group>
             </x-admin::table.td>

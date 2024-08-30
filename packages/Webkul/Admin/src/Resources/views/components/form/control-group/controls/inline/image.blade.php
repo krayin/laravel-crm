@@ -1,4 +1,11 @@
-<v-inline-image-edit {{ $attributes }}>
+@props([
+    'allowEdit' => true,
+])
+
+<v-inline-image-edit 
+    {{ $attributes }}
+    :allow-edit="{{ $allowEdit ? 'true' : 'false' }}"
+ >
     <div class="group w-full max-w-full hover:rounded-sm">
         <div class="rounded-xs flex h-[34px] items-center pl-2.5 text-left">
             <div class="shimmer h-5 w-48 rounded border border-transparent"></div>
@@ -15,7 +22,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex h-[34px] items-center border border-transparent transition-all rounded"
+                class="flex h-[34px] items-center rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control

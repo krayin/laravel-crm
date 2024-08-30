@@ -48,7 +48,7 @@
                         </div>
                     </div>
 
-                    {!! view_render_event('krayin.admin.activities.index.toggle_view.before') !!}
+                    {!! view_render_event('admin.activities.index.toggle_view.before') !!}
 
                     <div class="flex">
                         <i
@@ -64,13 +64,13 @@
                         ></i>
                     </div>
 
-                    {!! view_render_event('krayin.admin.activities.index.toggle_view.after') !!}
+                    {!! view_render_event('admin.activities.index.toggle_view.after') !!}
                 </div>
 
                 <!-- DataGrid Shimmer -->
                 <div>
                     <template v-if="viewType == 'table'">
-                        {!! view_render_event('krayin.admin.activities.index.datagrid.before') !!}
+                        {!! view_render_event('admin.activities.index.datagrid.before') !!}
 
                         <x-admin::datagrid
                             src="{{ route('admin.activities.get') }}"
@@ -260,15 +260,15 @@
                             </template>
                         </x-admin::datagrid>
 
-                        {!! view_render_event('krayin.admin.activities.index.datagrid.after') !!}
+                        {!! view_render_event('admin.activities.index.datagrid.after') !!}
                     </template>
 
                     <template v-else>
-                        {!! view_render_event('krayin.admin.activities.index.vue_calender.before') !!}
+                        {!! view_render_event('admin.activities.index.vue_calender.before') !!}
 
                         <v-calendar></v-calendar>
                         
-                        {!! view_render_event('krayin.admin.activities.index.vue_calender.after') !!}
+                        {!! view_render_event('admin.activities.index.vue_calender.after') !!}
                     </template>
                 </div>
             </div>

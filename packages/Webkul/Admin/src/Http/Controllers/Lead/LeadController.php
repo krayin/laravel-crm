@@ -98,6 +98,10 @@ class LeadController extends Controller
                     'lead_pipeline_stage_id' => $stage->id,
                 ]);
 
+            if ($userIds = bouncer()->getAuthorizedUserIds()) {
+                $query->whereIn('leads.user_id', $userIds);
+            }
+
             $stage->lead_value = (clone $query)->sum('lead_value');
 
             $data[$stage->id] = (new StageResource($stage))->jsonSerialize();

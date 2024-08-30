@@ -5,7 +5,7 @@
         @lang('admin::app.products.edit.title')
     </x-slot>
 
-    {!! view_render_event('krayin.admin.products.edit.form.before') !!}
+    {!! view_render_event('admin.products.edit.form.before') !!}
 
     <x-admin::form
         :action="route('admin.products.update', $product->id)"
@@ -86,6 +86,6 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('krayin.admin.products.edit.form.after') !!}
+    {!! view_render_event('admin.products.edit.form.after') !!}
 
 </x-admin::layouts>

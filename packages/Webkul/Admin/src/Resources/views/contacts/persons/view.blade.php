@@ -16,7 +16,7 @@
                     <x-admin::breadcrumbs
                         name="contacts.persons.view"
                         :entity="$person"
-                        />
+                    />
                 </div>
 
                 <!-- Tags -->

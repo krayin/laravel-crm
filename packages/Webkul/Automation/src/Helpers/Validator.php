@@ -96,6 +96,8 @@ class Validator
                     }
 
                     $result = ! empty(array_intersect($condition['value'], $attributeValue));
+                } elseif (is_object($attributeValue)) {
+                    $result = $attributeValue->value == $condition['value'];
                 } else {
                     if (is_array($attributeValue)) {
                         $result = count($attributeValue) == 1 && array_shift($attributeValue) == $condition['value'];
