@@ -4,93 +4,98 @@
 @pushOnce('scripts')
     <script type="text/x-template" id="v-product-inventories-template">
         <div class="p-4">
-            <x-admin::table>
-                <!-- Table Head -->
-                <x-admin::table.thead>
-                    <x-admin::table.thead.tr>
-                        <x-admin::table.th>
-                            @lang('admin::app.products.view.inventory.source')
-                        </x-admin::table.th>
-            
-                        <x-admin::table.th >
-                            @lang('admin::app.products.view.inventory.in-stock')
-                        </x-admin::table.th>
-            
-                        <x-admin::table.th>
-                            @lang('admin::app.products.view.inventory.allocated')
-                        </x-admin::table.th>
-            
-                        <x-admin::table.th>
-                            @lang('admin::app.products.view.inventory.on-hand')
-                        </x-admin::table.th>
-            
-                        <x-admin::table.th>
-                            @lang('admin::app.products.view.inventory.actions')
-                        </x-admin::table.th>
-                    </x-admin::table.thead.tr>
-                </x-admin::table.thead>
+            <div class="flex flex-col gap-4">
+                <x-admin::table>
+                    <!-- Table Head -->
+                    <x-admin::table.thead>
+                        <x-admin::table.thead.tr>
+                            <x-admin::table.th>
+                                @lang('admin::app.products.view.inventory.source')
+                            </x-admin::table.th>
+                
+                            <x-admin::table.th >
+                                @lang('admin::app.products.view.inventory.in-stock')
+                            </x-admin::table.th>
+                
+                            <x-admin::table.th>
+                                @lang('admin::app.products.view.inventory.allocated')
+                            </x-admin::table.th>
+                
+                            <x-admin::table.th>
+                                @lang('admin::app.products.view.inventory.on-hand')
+                            </x-admin::table.th>
+                
+                            <x-admin::table.th>
+                                @lang('admin::app.products.view.inventory.actions')
+                            </x-admin::table.th>
+                        </x-admin::table.thead.tr>
+                    </x-admin::table.thead>
 
-                <!-- Table Body -->
-                <x-admin::table.tbody> 
-                    <template v-for="warehouse in productWarehouses">
-                        <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
-                            <x-admin::table.td class="font-bold dark:text-white">
-                                @{{ warehouse.name }}
-                            </x-admin::table.td>
-                            
-                            <x-admin::table.td class="dark:text-white">
-                                @{{ warehouse.in_stock }}
-                            </x-admin::table.td>
-                            
-                            <x-admin::table.td class="dark:text-white">
-                                @{{ warehouse.allocated }}
-                            </x-admin::table.td>
-                            
-                            <x-admin::table.td class="dark:text-white">
-                                @{{ warehouse.on_hand }}
-                            </x-admin::table.td>
-                            
-                            <x-admin::table.td>
-                                <div  
-                                    href="#"
-                                    @click="selectWarehouse(warehouse)"
-                                    class="cursor-pointer text-brandColor" 
+                    <!-- Table Body -->
+                    <x-admin::table.tbody> 
+                        <template v-for="warehouse in productWarehouses">
+                            <x-admin::table.tbody.tr class="hover:bg-gray-50 dark:hover:bg-gray-950">
+                                <x-admin::table.td 
+                                    class="truncate font-bold dark:text-white"
+                                    ::title="warehouse.name"
                                 >
-                                    @lang('admin::app.products.view.inventory.assign')
-                                </div>
-                            </x-admin::table.td>
-                        </x-admin::table.tbody.tr>
-
-                        <template v-for="location in warehouse.locations">
-                            <x-admin::table.tbody.tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
-                                <x-admin::table.td class="dark:text-white">
-                                    @{{ location.name }}
+                                    @{{ warehouse.name }}
                                 </x-admin::table.td>
                                 
                                 <x-admin::table.td class="dark:text-white">
-                                    @{{ location.in_stock }}
+                                    @{{ warehouse.in_stock }}
                                 </x-admin::table.td>
                                 
                                 <x-admin::table.td class="dark:text-white">
-                                    @{{ location.allocated }}
+                                    @{{ warehouse.allocated }}
                                 </x-admin::table.td>
                                 
                                 <x-admin::table.td class="dark:text-white">
-                                    @{{ location.on_hand }}
+                                    @{{ warehouse.on_hand }}
                                 </x-admin::table.td>
                                 
-                                <x-admin::table.td></x-admin::table.td>
+                                <x-admin::table.td>
+                                    <div  
+                                        href="#"
+                                        @click="selectWarehouse(warehouse)"
+                                        class="cursor-pointer text-brandColor" 
+                                    >
+                                        @lang('admin::app.products.view.inventory.assign')
+                                    </div>
+                                </x-admin::table.td>
                             </x-admin::table.tbody.tr>
+
+                            <template v-for="location in warehouse.locations">
+                                <x-admin::table.tbody.tr class="border-b border-gray-200 hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950">
+                                    <x-admin::table.td class="dark:text-white">
+                                        @{{ location.name }}
+                                    </x-admin::table.td>
+                                    
+                                    <x-admin::table.td class="dark:text-white">
+                                        @{{ location.in_stock }}
+                                    </x-admin::table.td>
+                                    
+                                    <x-admin::table.td class="dark:text-white">
+                                        @{{ location.allocated }}
+                                    </x-admin::table.td>
+                                    
+                                    <x-admin::table.td class="dark:text-white">
+                                        @{{ location.on_hand }}
+                                    </x-admin::table.td>
+                                    
+                                    <x-admin::table.td></x-admin::table.td>
+                                </x-admin::table.tbody.tr>
+                            </template>
                         </template>
-                    </template>
-                </x-admin::table.tbody>
+                    </x-admin::table.tbody>
+                </x-admin::table>
 
                 <!-- Add Source dropdown -->
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown position="bottom-right">
                         <x-slot:toggle>
-                            <p class="mt-4 cursor-pointer text-brandColor">
-                                @lang('admin::app.products.view.inventory.add-source')
+                            <p class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor">
+                                + @lang('admin::app.products.view.inventory.add-source')
                             </p>
                         </x-slot>
 
@@ -105,7 +110,7 @@
                         </x-slot>
                     </x-admin::dropdown>
                 </div>
-            </x-admin::table>
+            </div>
 
             <!-- Drawer for Add Location -->
             <x-admin::form
@@ -417,46 +422,6 @@
                 inputName(type) {
                   return 'inventories[inventory_' + this.index + ']['+ type +']';
                 },
-                // search: debounce(function () {
-                //     this.state = '';
-
-                //     this.location['id'] = null;
-
-                //     this.isSearching = true;
-
-                //     if (this.location['name'].length < 2) {
-                //         this.searchedLocations = [];
-
-                //         this.isSearching = false;
-
-                //         return;
-                //     }
-
-                //     var self = this;
-
-                //     this.$http.get("{{ route('admin.settings.locations.search') }}", {
-                //             params: {
-                //                 search: 'warehouse_id:' + this.warehouse.id + ';name:' + this.location['name'],
-                //                 searchFields: 'warehouse_id:=;name:like',
-                //                 searchJoin: 'and'
-                //             }
-                //         })
-                //         .then (function(response) {
-                //             self.$parent.warehouseLocations.forEach(function(addedLocation) {
-                //                 response.data = response.data.filter(function(location) {
-                //                     return location.id !== addedLocation.id;
-                //                 });
-                //             });
-
-                //             self.searchedLocations = response.data;
-
-                //             self.isSearching = false;
-                //         })
-                //         .catch (function (error) {
-                //             self.isSearching = false;
-                //         })
-                // }, 500),
-
                 
                 /**
                  * Add the product.
