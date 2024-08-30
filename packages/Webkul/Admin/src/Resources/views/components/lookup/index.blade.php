@@ -177,6 +177,8 @@
                 if (this.value) {
                     this.selectedItem = this.value;
                 }
+
+                console.log(this.selectedItem?.name == "");
             },
 
             created() {

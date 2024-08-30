@@ -245,27 +245,27 @@
                                 @lang('admin::app.quotes.create.product-name')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.quantity')
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.price') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.amount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.discount') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.tax') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
                 
-                            <x-admin::table.th class="!px-2 ltr:text-right rtl:text-left">
+                            <x-admin::table.th class="text-center">
                                 @lang('admin::app.quotes.create.total') ({{ core()->currencySymbol(config('app.currency')) }})
                             </x-admin::table.th>
 
@@ -409,6 +409,7 @@
                             :label="trans('admin::app.quotes.create.quantity')"
                             :placeholder="trans('admin::app.quotes.create.quantity')"
                             @on-change="(event) => product.quantity = event.value"
+                            position="center"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -425,6 +426,8 @@
                             :label="trans('admin::app.quotes.create.price')"
                             :placeholder="trans('admin::app.quotes.create.price')"
                             @on-change="(event) => product.price = event.value"
+                            position="center"
+                            ::value-label="$admin.formatPrice(product.price)"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -441,6 +444,8 @@
                             :label="trans('admin::app.quotes.create.total')"
                             :placeholder="trans('admin::app.quotes.create.total')"
                             ::allowEdit="false"
+                            position="center"
+                            ::value-label="$admin.formatPrice(product.price * product.quantity)"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -457,6 +462,8 @@
                             :label="trans('admin::app.quotes.create.discount-amount')"
                             :placeholder="trans('admin::app.quotes.create.discount-amount')"
                             @on-change="(event) => product.discount_amount = event.value"
+                            position="center"
+                            ::value-label="$admin.formatPrice(product.discount_amount)"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -473,6 +480,8 @@
                             :label="trans('admin::app.quotes.create.tax-amount')"
                             :placeholder="trans('admin::app.quotes.create.tax-amount')"
                             @on-change="(event) => product.tax_amount = event.value"
+                            position="center"
+                            ::value-label="$admin.formatPrice(product.tax_amount)"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
@@ -486,6 +495,8 @@
                             ::errors="errors"
                             ::value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
                             ::allowEdit="false"
+                            position="center"
+                            ::value-label="$admin.formatPrice(parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount))"
                         />
                     </x-admin::form.control-group>
                 </x-admin::table.td>
