@@ -171,12 +171,12 @@
                                         .then((response) => {
                                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
-                                            this.$parent.get();
+                                            this.$parent.$parent.get();
                                         })
                                         .catch((error) => {
                                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                            this.$parent.get();
+                                            this.$parent.$parent.get();
                                         });
 
                                     break;
@@ -191,7 +191,7 @@
                                             /**
                                              * Need to check reason why this.$emit('massActionSuccess') not emitting.
                                              */
-                                            this.$parent.get();
+                                            this.$parent.$parent.get();
                                         })
                                         .catch((error) => {
                                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
@@ -199,7 +199,7 @@
                                             /**
                                              * Need to check reason why this.$emit('massActionSuccess') not emitting.
                                              */
-                                            this.$parent.get();
+                                            this.$parent.$parent.get();
                                         });
 
                                     break;
