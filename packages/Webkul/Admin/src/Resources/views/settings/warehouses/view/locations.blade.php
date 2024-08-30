@@ -147,6 +147,8 @@
 
                     this.$axios.post('{{ route('admin.settings.locations.store') }}', params)
                         .then((response) => {
+                            this.isProcessing = false;
+
                             this.getLocations();
 
                             this.$refs.locationCreateModal.toggle();
