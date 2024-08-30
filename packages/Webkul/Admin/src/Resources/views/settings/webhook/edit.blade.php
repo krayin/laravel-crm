@@ -437,10 +437,10 @@
             
                     <div class="inline-block">
                         <span
-                            class="cursor-pointer py-2 text-xs text-brandColor hover:text-sky-500 hover:underline"
+                            class="cursor-pointer py-2 text-xs font-semibold text-brandColor hover:text-sky-500 hover:underline"
                             @click="add(index)" 
                         >
-                            @{{ addBtnTitle }}
+                            + @{{ addBtnTitle }}
                         </span>
                     </div>
                 </div>
