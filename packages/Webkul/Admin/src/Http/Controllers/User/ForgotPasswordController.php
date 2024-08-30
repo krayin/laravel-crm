@@ -48,7 +48,7 @@ class ForgotPasswordController extends Controller
             });
 
             if ($response == Password::RESET_LINK_SENT) {
-                session()->flash('success', trans('admin::app.sessions.forgot-password.reset-link-sent'));
+                session()->flash('success', trans('admin::app.users.forget-password.create.reset-link-sent'));
 
                 return back();
             }
@@ -56,7 +56,7 @@ class ForgotPasswordController extends Controller
             return back()
                 ->withInput(request(['email']))
                 ->withErrors([
-                    'email' => trans('admin::app.sessions.forgot-password.email-not-exist'),
+                    'email' => trans('admin::app.users.forget-password.create.email-not-exist'),
                 ]);
         } catch (\Exception $exception) {
             session()->flash('error', trans($exception->getMessage()));
