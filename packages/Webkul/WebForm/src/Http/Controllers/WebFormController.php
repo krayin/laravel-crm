@@ -2,7 +2,6 @@
 
 namespace Webkul\WebForm\Http\Controllers;
 
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
@@ -51,7 +50,7 @@ class WebFormController extends Controller
     {
         $person = $this->personRepository
             ->getModel()
-            ->where('emails', 'like', "%" . request('persons.emails.0.value') . "%")
+            ->where('emails', 'like', '%'.request('persons.emails.0.value').'%')
             ->first();
 
         if ($person) {
