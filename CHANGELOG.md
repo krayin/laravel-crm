@@ -1,3 +1,101 @@
+# **v2.0.0 (30th of August 2024)** - *Release*
+
+* #1492[feature] Mega Search.
+
+* #1501[enhancement] Fixed vite helpers.
+
+* #1484[enhancement] Adjustment done for all the attribute entities.
+
+* #1374[enhancement] DataGrid searchable dropdown.
+
+* #1515[enhancement] Activity deleting method added to activity trait's modal.
+
+* #1516[enhancement] Add Support pdf for arabic language.
+
+* #1525[enhancement] Update Activity Log Traits.
+
+* #1523[enhancement] Add value-label props to inline component for showing custom input value.
+
+* #1543[enhancement] Fix validation attributes with enums.
+
+* #1540[enhancement] Inline allow editable or not.
+
+* #1457[enhancement] Fixed Ui Issues.
+
+* #1460[enhancement] Mail View Dark Mode.
+
+* #1462[enhancement] Refactor Lead index page.
+
+* #1466[enhancement] Fixed accordion border issue.
+
+* #1552[enhancement] Automation Entity.
+
+* #1467[enhancement] Fix stage for rtl remove publishable folder and old css file.
+
+* #1557[enhancement] Fix script tag in webform embed.
+
+* #1529[enhancement] Log activity refactor.
+
+* #1558[fixed]  Fix DataGrid not refresh when performing the mass action.
+
+* #1527[fixed] Create Webform, There click on Add Attribute Button we can see that the translation is missing.
+
+* #1549[fixed] Fixed webform is not creating the leads and redirecting to the dashboard.
+
+* #1450[fixed] After fresh Installation when we click on the link it is not redirected to Admin login page.
+
+* #1520[fixed] Unable to add location in the warehouse when we have added location first time and again adding them.
+
+* #1538[fixed] Person View Page.
+
+* #1519[fixed] Getting warning issue when adding inventory in products.
+
+* #1472[fixed] Create a new quote and there in Quote Items we can see UI issue in Quantity and Price Input Fields.
+
+* #1535[fixed] Fix Leads stages won/lost date add validations to date component.
+
+* #1545[fixed] Unable to see List of Leads in List mode in Other ACL User.
+
+* #1541[fixed] Assigned a Lead Role to a user and gave permission for Create, Edit and View, Exceptional Error is appearing.
+
+* #1485[fixed] UI issue in Action Buttons -> They must be centre aligned.
+
+* #1404[fixed] Translation missing -> Trying to login an Inactive User.
+
+* #1482[fixed] Updated Address details in Warehouse format is not appropriate.
+
+* #1520[fixed] Unable to add location in the warehouse when we have added location first time and again adding them.
+
+* #1528[fixed] Checked and Found Console Error on Dashboard.
+
+* #1521[fixed] UI issue is appearing in product View add location section.
+
+* #1518[fixed] Add View Render events.
+
+* #1530[fixed] UI Issues.
+
+* #1526[fixed] Fixed view actions and sticky the right bar.
+
+* #1517[fixed] Fix Leads Stages.
+
+* #1486[fixed] Inactive Users are also visible in Lead Create, Sales Owner Dropdown.
+
+* #1502[fixed] Getting 500 Internal Server Error in Console and Exceptional Error in Dashboard Calender Same Day Filter applied.
+
+* #1503[fixed] Getting Console Error and Blank Page when we edit the Lead and there when we click About Lead.
+
+* #1506[fixed] Fix settings tags view create and update.
+
+* #1481[fixed] The same details are being updated across multiple warehouse locations.
+
+* #1477[fixed] After creating a note and attaching file in Product View Page, we can only see the updated details when we refresh the page.
+
+* #1415[fixed] UI issue in adding Contact Person In Leads Section.
+
+* #1403[fixed] Created a new admin user and set the status to Inactive. However, after saving, we can see the status as Active.
+
+* #1458[fixed] While sending Mail, Draft button must be disable.
+
 ## **v2.0.0-BETA-1 (23rd of August 2024)** - *Release*
 
 * New, attractive UI design.
