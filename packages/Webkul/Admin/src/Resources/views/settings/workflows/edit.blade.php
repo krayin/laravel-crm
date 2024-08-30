@@ -211,11 +211,11 @@
                                             :label="trans('admin::app.settings.workflows.edit.condition-type')"
                                             :placeholder="trans('admin::app.settings.workflows.edit.condition-type')"
                                         >
-                                            <option value="1">
+                                            <option value="and">
                                                 @lang('admin::app.settings.workflows.edit.all-condition-are-true')
                                             </option>
         
-                                            <option value="2">
+                                            <option value="or">
                                                 @lang('admin::app.settings.workflows.edit.any-condition-are-true')
                                             </option>
                                         </x-admin::form.control-group.control>
