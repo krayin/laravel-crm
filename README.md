@@ -8,6 +8,9 @@
 <a href="https://packagist.org/packages/krayin/laravel-crm"><img src="https://poser.pugx.org/krayin/laravel-crm/license.svg" alt="License"></a>
 </p>
 
+
+![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/dashboard.png)
+
 ## Topics
 
 1. [Introduction](#introduction)
@@ -106,6 +109,17 @@ php artisan serve
 email:admin@example.com
 password:admin123
 ```
+### WhatsApp CRM Integration
+
+[Krayin CRM WhatsApp](https://krayincrm.com/extensions/krayin-crm-whatsapp-extension/) Extension enables the store administrator to generate leads via their WhatsApp number.
+
+![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-crm-whatsapp-integration.png)
+
+### VoIP CRM Integration
+
+[Krayin CRM VoIP](https://krayincrm.com/extensions/krayin-crm-voip/) extension allows the user to make Trunk calls over a broadband Internet connection and the user can also perform Inbound routes.
+
+![enter image description here](https://raw.githubusercontent.com/krayin/temp-media/master/krayin-voip.png)
 
 ### License
 
