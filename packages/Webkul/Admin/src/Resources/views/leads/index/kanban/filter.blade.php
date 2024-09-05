@@ -18,8 +18,12 @@
             <!-- Drawer Toggler -->
             <x-slot:toggle>
                 <div class="relative flex cursor-pointer items-center rounded-md bg-sky-100 px-4 py-[9px] font-semibold text-sky-600 dark:bg-brandColor dark:text-white">
-                    <span>
-                        @lang('admin::app.leads.index.kanban.toolbar.filters.filter')
+                    @lang('admin::app.leads.index.kanban.toolbar.filters.filter')
+
+                    <span
+                        class="absolute right-2 top-2 h-1.5 w-1.5 rounded-full bg-sky-600 dark:bg-white"
+                        v-if="hasAnyAppliedColumn()"
+                    >
                     </span>
                 </div>
             </x-slot>
