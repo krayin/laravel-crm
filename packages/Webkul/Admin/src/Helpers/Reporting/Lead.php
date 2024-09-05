@@ -48,7 +48,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = [];
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'created_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'created_at', $period);
     }
 
     /**
@@ -60,7 +60,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->wonStageIds;
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'closed_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
     }
 
     /**
@@ -72,7 +72,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->lostStageIds;
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'closed_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
     }
 
     /**
@@ -316,7 +316,7 @@ class Lead extends AbstractReporting
             ->resetModel()
             ->select(
                 DB::raw("$groupColumn AS date"),
-                DB::raw("$valueColumn AS total"),
+                DB::raw(DB::getTablePrefix()."$valueColumn AS total"),
                 DB::raw('COUNT(*) AS count')
             )
             ->whereIn('lead_pipeline_stage_id', $this->stageIds)
