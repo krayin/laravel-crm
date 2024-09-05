@@ -1660,7 +1660,10 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days' => 'Lead is rotten for :days days',
+                'rotten-days'            => 'Lead is rotten for :days days',
+                'empty-list'             => 'Your Leads List is Empty',
+                'empty-list-description' => 'Create a lead to organize your goals.',
+                'create-lead-btn'        => 'Create Lead',
 
                 'columns' => [
                     'contact-person'      => 'Contact Person',

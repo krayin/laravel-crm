@@ -42,6 +42,9 @@ return [
     ],
 
     'users' => [
+        'activate-warning' => 'Tu cuenta aún no está activada. Por favor, contacta al administrador.',
+        'login-error'      => 'Las credenciales no coinciden con nuestros registros.',
+
         'login' => [
             'email'                => 'Dirección de correo electrónico',
             'forget-password-link' => '¿Olvidaste tu contraseña?',
@@ -1619,8 +1622,10 @@ return [
             'postcode'       => 'Código Postal',
             'work'           => 'Trabajo',
             'home'           => 'Hogar',
-            'add-more'       => 'Agregar Más',
+            'add-more'       => 'Añadir Más',
             'select'         => 'Seleccionar',
+            'country'        => 'País',
+            'address'        => 'Dirección',
         ],
     ],
 
@@ -1655,7 +1660,10 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days' => 'Lead está podrido desde hace :days días',
+                'rotten-days'            => 'El lead está podrido desde hace :days días',
+                'empty-list'             => 'Tu lista de leads está vacía',
+                'empty-list-description' => 'Crea un lead para organizar tus objetivos.',
+                'create-lead-btn'        => 'Crear Lead',
 
                 'columns' => [
                     'contact-person'      => 'Persona de Contacto',

@@ -42,6 +42,9 @@ return [
     ],
 
     'users' => [
+        'activate-warning' => 'حساب شما هنوز فعال نشده است. لطفاً با مدیر سیستم تماس بگیرید.',
+        'login-error'      => 'اطلاعات وارد شده با سوابق ما مطابقت ندارد.',
+
         'login' => [
             'email'                => 'آدرس ایمیل',
             'forget-password-link' => 'فراموشی رمز عبور؟',
@@ -1613,14 +1616,16 @@ return [
     'common' => [
         'custom-attributes' => [
             'select-country' => 'انتخاب کشور',
-            'select-state'   => 'انتخاب استان',
-            'state'          => 'استان',
+            'select-state'   => 'انتخاب ایالت',
+            'state'          => 'ایالت',
             'city'           => 'شهر',
             'postcode'       => 'کد پستی',
-            'work'           => 'کار',
+            'work'           => 'محل کار',
             'home'           => 'خانه',
             'add-more'       => 'افزودن بیشتر',
             'select'         => 'انتخاب',
+            'country'        => 'کشور',
+            'address'        => 'آدرس',
         ],
     ],
 
@@ -1655,7 +1660,10 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days' => 'سرنخ به مدت :days روز خراب شده است',
+                'rotten-days'            => 'سرنخ برای :days روز خراب شده است',
+                'empty-list'             => 'لیست سرنخ‌های شما خالی است',
+                'empty-list-description' => 'یک سرنخ ایجاد کنید تا اهداف خود را سازماندهی کنید.',
+                'create-lead-btn'        => 'ایجاد سرنخ',
 
                 'columns' => [
                     'contact-person'      => 'شخص تماس',
