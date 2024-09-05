@@ -48,7 +48,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = [];
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'created_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'created_at', $period);
     }
 
     /**
@@ -60,7 +60,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->wonStageIds;
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'closed_at', $period);
     }
 
     /**
@@ -72,7 +72,7 @@ class Lead extends AbstractReporting
     {
         $this->stageIds = $this->lostStageIds;
 
-        return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'closed_at', $period);
+        return $this->getOverTimeStats($this->startDate, $this->endDate, DB::getTablePrefix().'leads.id', 'closed_at', $period);
     }
 
     /**

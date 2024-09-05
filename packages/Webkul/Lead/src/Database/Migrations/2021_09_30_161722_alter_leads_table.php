@@ -3,6 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\DB;
 
 class AlterLeadsTable extends Migration
 {
@@ -20,11 +21,11 @@ class AlterLeadsTable extends Migration
 
         DB::table('leads')
             ->update([
-                'leads.lead_pipeline_stage_id' => DB::raw('leads.lead_stage_id'),
+                'leads.lead_pipeline_stage_id' => DB::raw(DB::getTablePrefix().'leads.lead_stage_id'),
             ]);
 
         Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign('leads_lead_stage_id_foreign');
+            $table->dropForeign(DB::getTablePrefix().'leads_lead_stage_id_foreign');
             $table->dropColumn('lead_stage_id');
         });
     }
