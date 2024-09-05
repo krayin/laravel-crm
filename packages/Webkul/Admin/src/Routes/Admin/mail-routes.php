@@ -21,6 +21,8 @@ Route::prefix('mail')->group(function () {
         Route::post('mass-update', 'massUpdate')->name('admin.mail.mass_update');
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.mail.mass_delete');
+
+        Route::post('inbound-parse', 'inboundParse')->name('admin.mail.inbound_parse')->withoutMiddleware('user');
     });
 
     Route::controller(TagController::class)->prefix('{id}/tags')->group(function () {
