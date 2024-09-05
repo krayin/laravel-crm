@@ -1615,7 +1615,7 @@ return [
 
     'common' => [
         'custom-attributes' => [
-           'select-country' => 'اختر الدولة',
+            'select-country' => 'اختر الدولة',
             'select-state'   => 'اختر الولاية',
             'state'          => 'الولاية',
             'city'           => 'المدينة',
