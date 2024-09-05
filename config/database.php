@@ -72,7 +72,7 @@ return [
             'username'       => env('DB_USERNAME', 'forge'),
             'password'       => env('DB_PASSWORD', ''),
             'charset'        => 'utf8',
-            'prefix'         => env('DB_PREFIX'),
+            'prefix'         => env('DB_PREFIX', ''),
             'prefix_indexes' => true,
             'schema'         => 'public',
             'sslmode'        => 'prefer',
@@ -87,7 +87,7 @@ return [
             'username'       => env('DB_USERNAME', 'forge'),
             'password'       => env('DB_PASSWORD', ''),
             'charset'        => 'utf8',
-            'prefix'         => env('DB_PREFIX'),
+            'prefix'         => env('DB_PREFIX', ''),
             'prefix_indexes' => true,
         ],
 
