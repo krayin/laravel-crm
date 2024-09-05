@@ -251,12 +251,14 @@
                                                         >
                                                         </p>
 
-                                                        <x-admin::flat-picker.date ::allow-input="false">
+                                                        <x-admin::flat-picker.date 
+                                                           ::allow-input="false"
+                                                        >
                                                             <input
                                                                 type="date"
                                                                 :name="`${column.index}[from]`"
                                                                 value=""
-                                                                class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                                                class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:pr-8 rtl:pl-8"
                                                                 :placeholder="column.label"
                                                                 :ref="`${column.index}[from]`"
                                                                 @change="addFilter(
@@ -272,7 +274,7 @@
                                                                 type="date"
                                                                 :name="`${column.index}[to]`"
                                                                 value=""
-                                                                class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
+                                                                class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:pr-8 rtl:pl-8"
                                                                 :placeholder="column.label"
                                                                 :ref="`${column.index}[from]`"
                                                                 @change="addFilter(

@@ -1,6 +1,6 @@
 <x-admin::form.control-group.controls.inline.date
     ::name="'{{ $attribute->code }}'"
-    ::value="'{{ $value }}'"
+    ::value="'{{ $value->format('Y-m-d') }}'"
     rules="required"
     position="left"
     :label="$attribute->name"
