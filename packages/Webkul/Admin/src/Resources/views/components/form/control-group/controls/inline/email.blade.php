@@ -292,6 +292,8 @@
                             })
                             .catch((error) => {
                                 this.inputValue = this.value;
+
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             });                        
                     }
 
