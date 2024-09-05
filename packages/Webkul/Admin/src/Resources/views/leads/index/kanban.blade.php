@@ -425,7 +425,7 @@
                             'lead_pipeline_stage_id': stage.id
                         })
                         .then(response => {
-                            // this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
                         .catch(error => {
                             this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
