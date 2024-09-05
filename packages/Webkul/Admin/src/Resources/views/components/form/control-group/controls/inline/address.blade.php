@@ -52,128 +52,130 @@
                 </template>
             </div>
 
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-                ref="modalForm"
-            >
-                <form @submit="handleSubmit($event, updateOrCreate)">
-                    <!-- Editing view -->
-                    <x-admin::modal ref="emailModal">
-                        <!-- Modal Header -->
-                        <x-slot:header>
-                            <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                Update Address
-                            </p>
-                        </x-slot>
+            <Teleport to="body">
+                <x-admin::form
+                    v-slot="{ meta, errors, handleSubmit }"
+                    as="div"
+                    ref="modalForm"
+                >
+                    <form @submit="handleSubmit($event, updateOrCreate)">
+                        <!-- Editing view -->
+                        <x-admin::modal ref="emailModal">
+                            <!-- Modal Header -->
+                            <x-slot:header>
+                                <p class="text-lg font-bold text-gray-800 dark:text-white">
+                                    Update Address
+                                </p>
+                            </x-slot>
 
-                        <!-- Modal Content -->
-                        <x-slot:content>
-                            <div class="flex gap-4">
-                                <div class="w-full">
-                                    <!-- Address (Textarea field) -->
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="textarea"
-                                            ::name="`${name}.address`"
-                                            rows="10"
-                                            ::value="inputValue?.address"
-                                        />
+                            <!-- Modal Content -->
+                            <x-slot:content>
+                                <div class="flex gap-4">
+                                    <div class="w-full">
+                                        <!-- Address (Textarea field) -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.control
+                                                type="textarea"
+                                                ::name="`${name}.address`"
+                                                rows="10"
+                                                ::value="inputValue?.address"
+                                            />
 
-                                        <x-admin::form.control-group.error ::name="name" />
-                                    </x-admin::form.control-group>
-                                </div>
+                                            <x-admin::form.control-group.error ::name="name" />
+                                        </x-admin::form.control-group>
+                                    </div>
 
-                                <div class="grid w-full">
-                                    <!-- Country Field -->
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="select"
-                                            ::name="`${name}.country`"
-                                            v-model="inputValue.country"
-                                        >
-                                            <option value="">@lang('admin::app.common.custom-attributes.select-country')</option>
-                                            
-                                            @foreach (core()->countries() as $country)
-                                                <option value="{{ $country->code }}">{{ $country->name }}</option>
-                                            @endforeach
-                                        </x-admin::form.control-group.control>
-                    
-                                        <x-admin::form.control-group.error name="country" />
-                    
-                                    </x-admin::form.control-group>
-                    
-                                    <!-- State Field -->
-                                    <template v-if="haveStates()">
+                                    <div class="grid w-full">
+                                        <!-- Country Field -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.control
                                                 type="select"
-                                                ::name="`${name}.state`"
-                                                v-model="inputValue.state"
+                                                ::name="`${name}.country`"
+                                                v-model="inputValue.country"
                                             >
-                                                <option value="">@lang('admin::app.common.custom-attributes.select-state')</option>
+                                                <option value="">@lang('admin::app.common.custom-attributes.select-country')</option>
                                                 
-                                                <option v-for='(state, index) in countryStates[inputValue?.country]' :value="state.code">
-                                                    @{{ state.name }}
-                                                </option>
+                                                @foreach (core()->countries() as $country)
+                                                    <option value="{{ $country->code }}">{{ $country->name }}</option>
+                                                @endforeach
                                             </x-admin::form.control-group.control>
-                    
+                        
                                             <x-admin::form.control-group.error name="country" />
+                        
                                         </x-admin::form.control-group>
-                                    </template>
-                    
-                                    <template v-else>
+                        
+                                        <!-- State Field -->
+                                        <template v-if="haveStates()">
+                                            <x-admin::form.control-group>
+                                                <x-admin::form.control-group.control
+                                                    type="select"
+                                                    ::name="`${name}.state`"
+                                                    v-model="inputValue.state"
+                                                >
+                                                    <option value="">@lang('admin::app.common.custom-attributes.select-state')</option>
+                                                    
+                                                    <option v-for='(state, index) in countryStates[inputValue?.country]' :value="state.code">
+                                                        @{{ state.name }}
+                                                    </option>
+                                                </x-admin::form.control-group.control>
+                        
+                                                <x-admin::form.control-group.error name="country" />
+                                            </x-admin::form.control-group>
+                                        </template>
+                        
+                                        <template v-else>
+                                            <x-admin::form.control-group>
+                                                <x-admin::form.control-group.control
+                                                    type="text"
+                                                    ::name="`${name}.state`"
+                                                    v-model="inputValue.state"
+                                                />
+                                                
+                                                <x-admin::form.control-group.error name="state" />
+                                            </x-admin::form.control-group>
+                                        </template>
+                        
+                                        <!-- City Field -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.control
                                                 type="text"
-                                                ::name="`${name}.state`"
-                                                v-model="inputValue.state"
+                                                ::name="`${name}.city`"
+                                                ::value="inputValue?.city"
                                             />
-                                            
-                                            <x-admin::form.control-group.error name="state" />
+                        
+                                            <x-admin::form.control-group.error name="city" />
                                         </x-admin::form.control-group>
-                                    </template>
-                    
-                                    <!-- City Field -->
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::name="`${name}.city`"
-                                            ::value="inputValue?.city"
-                                        />
-                    
-                                        <x-admin::form.control-group.error name="city" />
-                                    </x-admin::form.control-group>
-                    
-                                    <!-- Postcode Field -->
-                                    <x-admin::form.control-group>
-                                        <x-admin::form.control-group.control
-                                            type="text"
-                                            ::name="`${name}.postcode`"
-                                            ::value="inputValue?.postcode"
-                                            :placeholder="trans('admin::app.common.custom-attributes.postcode')"
-                                        />
-                    
-                                        <x-admin::form.control-group.error name="postcode" />
-                                    </x-admin::form.control-group>
+                        
+                                        <!-- Postcode Field -->
+                                        <x-admin::form.control-group>
+                                            <x-admin::form.control-group.control
+                                                type="text"
+                                                ::name="`${name}.postcode`"
+                                                ::value="inputValue?.postcode"
+                                                :placeholder="trans('admin::app.common.custom-attributes.postcode')"
+                                            />
+                        
+                                            <x-admin::form.control-group.error name="postcode" />
+                                        </x-admin::form.control-group>
+                                    </div>
                                 </div>
-                            </div>
-                        </x-slot>
+                            </x-slot>
 
-                        <!-- Modal Footer -->
-                        <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="submit"
-                                class="primary-button justify-center"
-                                :title="trans('Save')"
-                                ::loading="isProcessing"
-                                ::disabled="isProcessing"
-                            />
-                        </x-slot>
-                    </x-admin::modal>
-                </form>
-            </x-admin::form>
+                            <!-- Modal Footer -->
+                            <x-slot:footer>
+                                <!-- Save Button -->
+                                <x-admin::button
+                                    button-type="submit"
+                                    class="primary-button justify-center"
+                                    :title="trans('Save')"
+                                    ::loading="isProcessing"
+                                    ::disabled="isProcessing"
+                                />
+                            </x-slot>
+                        </x-admin::modal>
+                    </form>
+                </x-admin::form>
+            </Teleport>
         </div>
     </script>
 
