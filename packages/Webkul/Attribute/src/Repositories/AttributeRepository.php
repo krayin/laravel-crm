@@ -115,7 +115,7 @@ class AttributeRepository extends Repository
      * @param  array  $columns
      * @return array
      */
-    public function getLookUpOptions($lookup, $query = '', $columns = [])
+    public function getLookUpOptions($lookup, array $params, $columns = [])
     {
         $lookup = config('attribute_lookups.'.$lookup);
 
@@ -126,21 +126,19 @@ class AttributeRepository extends Repository
         if (Str::contains($lookup['repository'], 'UserRepository')) {
             $userRepository = app($lookup['repository'])->where('status', 1);
 
-            $currentUser = auth()->guard('user')->user();
-
-            if ($currentUser->view_permission === 'group') {
+            if ($params['view_permission'] === 'group') {
                 return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                    ->where('users.name', 'like', '%'.urldecode($query).'%')
+                    ->where('users.name', 'like', '%'.urldecode($params['query']).'%')
                     ->get();
-            } elseif ($currentUser->view_permission === 'individual') {
-                return $userRepository->where('users.id', $currentUser->id);
+            } elseif ($params['view_permission'] === 'individual') {
+                return $userRepository->where('users.id', $params['user_id']);
             }
 
-            return $userRepository->where('users.name', 'like', '%'.urldecode($query).'%')->get();
+            return $userRepository->where('users.name', 'like', '%'.urldecode($params['query']).'%')->get();
         }
 
         return app($lookup['repository'])->findWhere([
-            [$lookup['label_column'] ?? 'name', 'like', '%'.urldecode($query).'%'],
+            [$lookup['label_column'] ?? 'name', 'like', '%'.urldecode($params['query']).'%'],
         ], $columns);
     }
 

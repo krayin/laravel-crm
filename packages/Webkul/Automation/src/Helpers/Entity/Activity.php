@@ -43,6 +43,8 @@ class Activity extends AbstractEntity
      */
     public function getAttributes(string $entityType, array $skipAttributes = []): array
     {
+        $user = auth()->guard('user')->user();
+        
         $attributes = [
             [
                 'id'          => 'title',
@@ -102,7 +104,11 @@ class Activity extends AbstractEntity
                 'type'        => 'select',
                 'name'        => 'User',
                 'lookup_type' => 'users',
-                'options'     => $this->attributeRepository->getLookUpOptions('users'),
+                'options'     => $this->attributeRepository->getLookUpOptions('users', [
+                    'query'           => '',
+                    'user_id'         => $user->id,
+                    'view_permission' => $user->view_permission,
+                ]),
             ],
         ];
 

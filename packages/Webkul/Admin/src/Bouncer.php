@@ -52,7 +52,7 @@ class Bouncer
         }
 
         if ($user->view_permission == 'group') {
-            return app(UserRepository::class)->getCurrentUserGroupsUserIds();
+            return app(UserRepository::class)->getGroupsUserIds(auth()->guard('user')->user()->group_ids);
         } else {
             return [$user->id];
         }
