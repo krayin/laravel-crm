@@ -118,7 +118,7 @@
 
                 <!-- Description -->
                 <x-slot:description>
-                    <div class="p-4">
+                    <div class="p-4 dark:text-white">
                         {{ $lead->description }}
                     </div>
                 </x-slot>

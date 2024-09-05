@@ -5,7 +5,7 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 
-class AlterLeadsTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -45,4 +45,4 @@ class AlterLeadsTable extends Migration
             $table->foreign('lead_stage_id')->references('id')->on('lead_stages')->onDelete('cascade');
         });
     }
-}
+};

@@ -4,7 +4,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Support\Facades\DB;
 
-class InsertExpectedClosedDateColumnInAttributesTable extends Migration
+return new class extends Migration
 {
     /**
      * Run the migrations.
@@ -39,4 +39,4 @@ class InsertExpectedClosedDateColumnInAttributesTable extends Migration
      * @return void
      */
     public function down() {}
-}
+};
