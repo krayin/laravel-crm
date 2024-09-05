@@ -70,7 +70,7 @@
                     type="date"
                     ::id="name"
                     ::name="name"
-                    class="text-normal py-1 ltr:pr-[85px] rtl:pl-[85px]"
+                    class="text-normal py-1 ltr:pr-20 rtl:pl-20"
                     ::rules="rules"
                     ::label="label"
                     ::placeholder="placeholder"
