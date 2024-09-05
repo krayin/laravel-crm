@@ -44,7 +44,7 @@ class Activity extends AbstractEntity
     public function getAttributes(string $entityType, array $skipAttributes = []): array
     {
         $user = auth()->guard('user')->user();
-        
+
         $attributes = [
             [
                 'id'          => 'title',

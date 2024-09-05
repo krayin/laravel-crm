@@ -34,11 +34,10 @@ class UserRepository extends Repository
      */
     public function getGroupsUserIds(array $groupIds)
     {
-        return $this->scopeQuery(fn ($query) =>
-            $query->select('users.*')
-                ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
-                ->leftJoin('groups', 'user_groups.group_id', 'groups.id')
-                ->whereIn('groups.id', $groupIds)
+        return $this->scopeQuery(fn ($query) => $query->select('users.*')
+            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
+            ->leftJoin('groups', 'user_groups.group_id', 'groups.id')
+            ->whereIn('groups.id', $groupIds)
         )
             ->get()
             ->pluck('id')
