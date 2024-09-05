@@ -4,13 +4,13 @@ namespace Webkul\Lead\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Container\Container;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Lead\Contracts\Lead;
-use Illuminate\Support\Facades\DB;
 
 class LeadRepository extends Repository
 {
