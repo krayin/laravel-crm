@@ -171,6 +171,8 @@ class LeadController extends Controller
             $data['closed_at'] = Carbon::now();
         }
 
+        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
+
         $lead = $this->leadRepository->create($data);
 
         Event::dispatch('lead.create.after', $lead);
@@ -229,6 +231,8 @@ class LeadController extends Controller
 
             $data['lead_pipeline_stage_id'] = $stage->id;
         }
+
+        $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
         $lead = $this->leadRepository->update($data, $id);
 
