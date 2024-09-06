@@ -273,4 +273,19 @@ return [
         'sort'       => 9,
         'icon-class' => 'icon-configuration',
     ],
+
+    [
+        'key'        => 'settings.data_transfer',
+        'name'       => 'Data Transfer',
+        'route'      => 'admin.settings.data_transfer.imports.index',
+        'sort'       => 10,
+        'icon-class' => 'icon-configuration',
+    ], [
+        'key'        => 'settings.data_transfer.imports',
+        'name'       => 'Data Transfer',
+        'info'       => 'Data Transfer imports the persons and leads from CSV files',
+        'route'      => 'admin.settings.data_transfer.imports.index',
+        'sort'       => 1,
+        'icon-class' => 'icon-configuration',
+    ],
 ];
