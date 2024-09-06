@@ -33,9 +33,9 @@
                         ::datasets="chartDatasets"
                     />
 
-                    <div class="flex justify-center gap-5">
+                    <div class="flex flex-wrap justify-center gap-5">
                         <div
-                            class="flex items-center gap-2"
+                            class="flex items-center gap-2 whitespace-nowrap"
                             v-for="(stat, index) in report.statistics"
                         >
                             <span
