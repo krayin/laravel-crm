@@ -1,4 +1,4 @@
-## **v2.1.0 (6th of September 2024)** - *Release*
+## **v2.0.1 (6th of September 2024)** - *Release*
 
 * #1583[enhancement] Workflow create and edit page ui enhancement.
 
