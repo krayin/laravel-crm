@@ -42,6 +42,9 @@ return [
     ],
 
     'users' => [
+        'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
+        'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+
         'login' => [
             'email'                => 'E-posta Adresi',
             'forget-password-link' => 'Şifremi Unuttum?',
@@ -1612,15 +1615,17 @@ return [
 
     'common' => [
         'custom-attributes' => [
-            'select-country' => 'Ülke Seçin',
-            'select-state'   => 'Eyalet Seçin',
+            'select-country' => 'Ülke Seç',
+            'select-state'   => 'Eyalet Seç',
             'state'          => 'Eyalet',
             'city'           => 'Şehir',
             'postcode'       => 'Posta Kodu',
             'work'           => 'İş',
             'home'           => 'Ev',
             'add-more'       => 'Daha Fazla Ekle',
-            'select'         => 'Seçin',
+            'select'         => 'Seç',
+            'country'        => 'Ülke',
+            'address'        => 'Adres',
         ],
     ],
 
@@ -1655,7 +1660,10 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days' => 'Lead :days gün boyunca çürümüş durumda',
+                'rotten-days'            => 'Bu müşteri adayı :days gündür çürük',
+                'empty-list'             => 'Müşteri Adayı Listeniz Boş',
+                'empty-list-description' => 'Hedeflerinizi düzenlemek için bir müşteri adayı oluşturun.',
+                'create-lead-btn'        => 'Müşteri Adayı Oluştur',
 
                 'columns' => [
                     'contact-person'      => 'İletişim Kişisi',

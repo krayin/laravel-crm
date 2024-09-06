@@ -42,6 +42,9 @@ return [
     ],
 
     'users' => [
+        'activate-warning' => 'حسابك لم يتم تفعيله بعد. يرجى الاتصال بالمسؤول.',
+        'login-error'      => 'بيانات الاعتماد لا تتطابق مع سجلاتنا.',
+
         'login' => [
             'email'                => 'عنوان البريد الإلكتروني',
             'forget-password-link' => 'نسيت كلمة المرور؟',
@@ -1621,6 +1624,8 @@ return [
             'home'           => 'المنزل',
             'add-more'       => 'أضف المزيد',
             'select'         => 'اختر',
+            'country'        => 'الدولة',
+            'address'        => 'العنوان',
         ],
     ],
 
@@ -1655,7 +1660,10 @@ return [
             ],
 
             'kanban' => [
-                'rotten-days' => 'العميل المحتمل متعفن منذ :days يومًا',
+                'rotten-days'            => 'العميل الفاسد منذ :days أيام',
+                'empty-list'             => 'قائمة العملاء الخاصة بك فارغة',
+                'empty-list-description' => 'قم بإنشاء عميل لتنظيم أهدافك.',
+                'create-lead-btn'        => 'إنشاء عميل',
 
                 'columns' => [
                     'contact-person'      => 'شخص الاتصال',
