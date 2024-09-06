@@ -48,16 +48,6 @@
     }}
 
     <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap"
-        rel="stylesheet"
-    />
-
-    <link
-        href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&display=swap"
-        rel="stylesheet"
-    />
-
-    <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
         rel="stylesheet"
     />
@@ -119,12 +109,6 @@
             <x-admin::layouts.sidebar />
 
             <div class="max-w-full flex-1 bg-gray-100 px-4 pb-6 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4 ltr:pl-[85px] rtl:pr-[85px]">
-                <!-- Added dynamic tabs for third level menus  -->
-                <!-- Todo @suraj-webkul need to optimize below statement. -->
-                @if (! request()->routeIs('admin.configuration.index'))
-                    {{-- <x-admin::layouts.tabs /> --}}
-                @endif
-
                 <!-- Page Content Blade Component -->
                 {{ $slot }}
             </div>
