@@ -160,7 +160,7 @@
             {!! view_render_event('admin.users.index.datagrid.after') !!}
             
             <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
+                v-slot="{ meta, values, errors, handleSubmit }"
                 as="div"
                 ref="modalForm"
             >
@@ -249,7 +249,7 @@
                                         type="password"
                                         id="password"
                                         name="password"
-                                        rules="required|min:6"
+                                        ::rules="user.id ? '' : 'required|min:6'"
                                         :label="trans('admin::app.settings.users.index.create.password')"
                                         :placeholder="trans('admin::app.settings.users.index.create.password')"
                                         ref="password"
@@ -268,7 +268,7 @@
                                         type="password"
                                         id="confirm_password"
                                         name="confirm_password"
-                                        rules="confirmed:@password"
+                                        ::rules="values.password ? 'confirmed:@password' : ''"
                                         :label="trans('admin::app.settings.users.index.create.password')"
                                         :placeholder="trans('admin::app.settings.users.index.create.confirm-password')"
                                     />
@@ -358,6 +358,7 @@
                                     <select
                                         name="groups[]"
                                         class="flex min-h-[39px] w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                                        :class="[errors['groups[]'] ? 'border !border-red-600 hover:border-red-600' : '']"
                                         multiple
                                         v-model="user.groups"
                                     >
@@ -369,6 +370,8 @@
                                         </option>
                                     </select>
                                 </v-field>
+
+                                <x-admin::form.control-group.error name="groups[]" />
                             </x-admin::form.control-group>
 
                             {!! view_render_event('admin.settings.users.index.form.role_id.after') !!}
