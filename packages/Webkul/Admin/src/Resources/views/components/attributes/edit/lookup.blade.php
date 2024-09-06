@@ -131,24 +131,16 @@
                 };
             },
 
+            mounted() {
+                if (this.value) {
+                    this.selectedItem = this.value;
+                }
+            },
 
             watch: { 
-                value(newValue, oldValue) {
-                    if (
-                        JSON.stringify(newValue) 
-                        !== JSON.stringify(oldValue)
-                    ) {
-                        this.searchTerm = newValue ? newValue['name'] : '';
-
-                        this.entityId = newValue ? newValue['id'] : '';
-
-                        if (this.searchTerm == '') {
-                            this.remove();
-                        } else {
-                            this.getLookUpEntity();
-                        }
-                    }
-                }
+                searchTerm(newVal, oldVal) {
+                    this.search();
+                },
             },
 
             mounted() {
@@ -235,8 +227,8 @@
                     this.searchedResults = [];
 
                     this.$emit('lookup-removed');
-                }
-            }
+                },
+            },
         });
     </script>
 @endPushOnce
