@@ -67,6 +67,7 @@
                         <!-- Draggable Stage Lead Cards -->
                         <draggable
                             class="flex h-[calc(100vh-317px)] flex-col gap-2 overflow-y-auto p-2"
+                            :class="{ 'justify-center': stage.leads.data.length === 0 }"
                             ghost-class="draggable-ghost"
                             handle=".lead-item"
                             v-bind="{animation: 200}"
@@ -76,6 +77,39 @@
                             @scroll="handleScroll(stage, $event)"
                             @change="updateStage(stage, $event)"
                         >
+                            <template #header>
+                                <div 
+                                    class="flex flex-col items-center justify-center"
+                                    v-if="! stage.leads.data.length"
+                                >
+                                    <img
+                                        class="dark:mix-blend-exclusion dark:invert"
+                                        src="{{ vite()->asset('images/empty-placeholders/pipedrive.svg') }}"    
+                                    >
+
+                                    <div class="flex flex-col items-center gap-4">
+                                        <div class="flex flex-col items-center gap-2">
+                                            <p class="text-xl font-semibold dark:text-white">
+                                                @lang('admin::app.leads.index.kanban.empty-list')
+                                            </p>
+
+                                            <p class="text-gray-400 dark:text-gray-400">
+                                                @lang('admin::app.leads.index.kanban.empty-list-description')
+                                            </p>
+                                        </div>
+
+                                        @if (bouncer()->hasPermission('leads.create'))
+                                            <a
+                                                :href="'{{ route('admin.leads.create') }}' + '?stage_id=' + stage.id"
+                                                class="secondary-button"
+                                            >
+                                                @lang('admin::app.leads.index.kanban.create-lead-btn')
+                                            </a>
+                                        @endif
+                                    </div>
+                                </div>
+                            </template>
+
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
                                 <a

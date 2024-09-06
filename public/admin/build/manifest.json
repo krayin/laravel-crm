@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-2ca194ad.css",
+    "file": "assets/app-dc56b168.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -279,6 +279,10 @@
   "src/Resources/assets/images/empty-placeholders/organizations.svg": {
     "file": "assets/organizations-7a7c8cfb.svg",
     "src": "src/Resources/assets/images/empty-placeholders/organizations.svg"
+  },
+  "src/Resources/assets/images/empty-placeholders/pipedrive.svg": {
+    "file": "assets/pipedrive-ef94222a.svg",
+    "src": "src/Resources/assets/images/empty-placeholders/pipedrive.svg"
   },
   "src/Resources/assets/images/empty-placeholders/plans.svg": {
     "file": "assets/plans-d1b57159.svg",
