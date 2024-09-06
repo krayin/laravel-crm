@@ -1,4 +1,32 @@
-# **v2.0.0 (30th of August 2024)** - *Release*
+## **v2.0.1 (6th of September 2024)** - *Release*
+
+* #1583[enhancement] Workflow create and edit page ui enhancement.
+
+* #1580[enhancement] Donut chart, ui enhancement.
+
+* #1570[enhancement] Kanban Leads add empty placeholder.
+
+* #1575[enhancement] sidebar menu width.
+
+* #1584[fixed] User is not being saved when status is not active.
+
+* #1582[fixed] Remove unused links of font family.
+
+* #1581[fixed] Product Inventories Migration have be updated.
+
+* #1576[fixed] Database Table prefix does not working while installation from CLI and GUI.
+
+* #1574[fixed] Inline component ui issues.
+
+* #1573[fixed] Add missing mail inbound parse route.
+
+* #1572[fixed] Fix modal ui issues.
+
+* #1571[fixed] Fixed lookup component.
+
+* #1560[fixed] Add description to leads view
+
+## **v2.0.0 (30th of August 2024)** - *Release*
 
 * #1492[feature] Mega Search.
 
@@ -114,9 +142,9 @@
 
 * #1405[fixed] Status Color is missing for Inactive.
 
-* #1406[fixed] Blank Page and consle error is appearing when we click on Tags Section in Settings.
+* #1406[fixed] Blank Page and console error is appearing when we click on Tags Section in Settings.
 
-* #1411[fixed] Unappropriate Warning Message is appearing when we send a mail In Leads.
+* #1411[fixed] Unappropriated Warning Message is appearing when we send a mail In Leads.
 
 * #1418[fixed] Mail Section Checkbox's are missing
 
@@ -134,8 +162,8 @@
 
 * #1438[fixed] Favicon Icon for Krayin must be available.
 
-* #1445[fixed] Getting Exceptional Error when we click on the Product Number in Warehouse Datagrid.
+* #1445[fixed] Getting Exceptional Error when we click on the Product Number in Warehouse DataGrid.
 
-* #1450[fixed] After fresh Installtion when we click on the link it is not redirected to Admin login page.
+* #1450[fixed] After fresh installation when we click on the link it is not redirected to Admin login page.
 
 * #1459[fixed] Getting Exceptional error when creating a Contact Person and then we fill the required field and then click save button we can see exceptional error.
