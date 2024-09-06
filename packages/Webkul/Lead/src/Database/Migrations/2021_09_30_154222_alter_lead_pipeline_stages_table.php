@@ -22,12 +22,12 @@ return new class extends Migration
         DB::table('lead_pipeline_stages')
             ->join('lead_stages', 'lead_pipeline_stages.lead_stage_id', '=', 'lead_stages.id')
             ->update([
-                'lead_pipeline_stages.code' => DB::raw('lead_stages.code'),
-                'lead_pipeline_stages.name' => DB::raw('lead_stages.name'),
+                'lead_pipeline_stages.code' => DB::raw(DB::getTablePrefix().'lead_stages.code'),
+                'lead_pipeline_stages.name' => DB::raw(DB::getTablePrefix().'lead_stages.name'),
             ]);
 
         Schema::table('lead_pipeline_stages', function (Blueprint $table) {
-            $table->dropForeign('lead_pipeline_stages_lead_stage_id_foreign');
+            $table->dropForeign(DB::getTablePrefix().'lead_pipeline_stages_lead_stage_id_foreign');
             $table->dropColumn('lead_stage_id');
 
             $table->unique(['code', 'lead_pipeline_id']);

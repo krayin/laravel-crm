@@ -316,7 +316,7 @@ class Lead extends AbstractReporting
             ->resetModel()
             ->select(
                 DB::raw("$groupColumn AS date"),
-                DB::raw("$valueColumn AS total"),
+                DB::raw(DB::getTablePrefix()."$valueColumn AS total"),
                 DB::raw('COUNT(*) AS count')
             )
             ->whereIn('lead_pipeline_stage_id', $this->stageIds)

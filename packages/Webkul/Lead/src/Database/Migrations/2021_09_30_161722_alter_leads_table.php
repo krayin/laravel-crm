@@ -21,11 +21,11 @@ return new class extends Migration
 
         DB::table('leads')
             ->update([
-                'leads.lead_pipeline_stage_id' => DB::raw('leads.lead_stage_id'),
+                'leads.lead_pipeline_stage_id' => DB::raw(DB::getTablePrefix().'leads.lead_stage_id'),
             ]);
 
         Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign('leads_lead_stage_id_foreign');
+            $table->dropForeign(DB::getTablePrefix().'leads_lead_stage_id_foreign');
             $table->dropColumn('lead_stage_id');
         });
     }
@@ -38,7 +38,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign('leads_lead_pipeline_stage_id_foreign');
+            $table->dropForeign(DB::getTablePrefix().'leads_lead_pipeline_stage_id_foreign');
             $table->dropColumn('lead_pipeline_stage_id');
 
             $table->integer('lead_stage_id')->unsigned();
