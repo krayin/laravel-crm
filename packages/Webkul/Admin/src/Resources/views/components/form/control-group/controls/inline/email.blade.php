@@ -54,79 +54,81 @@
                 </template>
             </div>
 
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-                ref="modalForm"
-            >
-                <form @submit="handleSubmit($event, updateOrCreate)">
-                    <!-- Editing view -->
-                    <x-admin::modal ref="emailModal">
-                        <!-- Modal Header -->
-                        <x-slot:header>
-                            <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                Update Contact Emails
-                            </p>
-                        </x-slot>
+            <Teleport to="body">
+                <x-admin::form
+                    v-slot="{ meta, errors, handleSubmit }"
+                    as="div"
+                    ref="modalForm"
+                >
+                    <form @submit="handleSubmit($event, updateOrCreate)">
+                        <!-- Editing view -->
+                        <x-admin::modal ref="emailModal">
+                            <!-- Modal Header -->
+                            <x-slot:header>
+                                <p class="text-lg font-bold text-gray-800 dark:text-white">
+                                    Update Contact Emails
+                                </p>
+                            </x-slot>
 
-                        <!-- Modal Content -->
-                        <x-slot:content>
-                            <template v-for="(email, index) in emails">
-                                <div class="mb-2 flex items-center">
-                                    <x-admin::form.control-group.control
-                                        type="text"
-                                        ::id="`${name}[${index}].value`"
-                                        ::name="`${name}[${index}].value`"
-                                        class="!rounded-r-none"
-                                        ::rules="getValidation"
-                                        v-model="email.value"
-                                    />
-
-                                    <div class="relative">
+                            <!-- Modal Content -->
+                            <x-slot:content>
+                                <template v-for="(email, index) in emails">
+                                    <div class="mb-2 flex items-center">
                                         <x-admin::form.control-group.control
-                                            type="select"
-                                            ::id="`${name}[${index}].label`"
-                                            ::name="`${name}[${index}].label`"
-                                            class="!w-24 !rounded-l-none"
-                                            ::value="email.label"
-                                        >
-                                            <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
-                                            <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
-                                        </x-admin::form.control-group.control>
+                                            type="text"
+                                            ::id="`${name}[${index}].value`"
+                                            ::name="`${name}[${index}].value`"
+                                            class="!rounded-r-none"
+                                            ::rules="getValidation"
+                                            v-model="email.value"
+                                        />
+
+                                        <div class="relative">
+                                            <x-admin::form.control-group.control
+                                                type="select"
+                                                ::id="`${name}[${index}].label`"
+                                                ::name="`${name}[${index}].label`"
+                                                class="!w-24 !rounded-l-none"
+                                                ::value="email.label"
+                                            >
+                                                <option value="work">@lang('admin::app.common.custom-attributes.work')</option>
+                                                <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
+                                            </x-admin::form.control-group.control>
+                                        </div>
+
+                                        <i
+                                            v-if="emails.length > 1"
+                                            class="icon-delete ml-1 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                                            @click="remove(email)"
+                                        ></i>
                                     </div>
+                        
+                                    <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
+                                </template>
+                        
+                                <span
+                                    class="cursor-pointer text-brandColor"
+                                    @click="add"
+                                >
+                                    + @lang("admin::app.common.custom-attributes.add-more")
+                                </span>
+                            </x-slot>
 
-                                    <i
-                                        v-if="emails.length > 1"
-                                        class="icon-delete ml-1 cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
-                                        @click="remove(email)"
-                                    ></i>
-                                </div>
-                    
-                                <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
-                            </template>
-                    
-                            <span
-                                class="cursor-pointer text-brandColor"
-                                @click="add"
-                            >
-                                + @lang("admin::app.common.custom-attributes.add-more")
-                            </span>
-                        </x-slot>
-
-                        <!-- Modal Footer -->
-                        <x-slot:footer>
-                            <!-- Save Button -->
-                            <x-admin::button
-                                button-type="submit"
-                                class="primary-button justify-center"
-                                :title="trans('Save')"
-                                ::loading="isProcessing"
-                                ::disabled="isProcessing"
-                            />
-                        </x-slot>
-                    </x-admin::modal>
-                </form>
-            </x-admin::form>
+                            <!-- Modal Footer -->
+                            <x-slot:footer>
+                                <!-- Save Button -->
+                                <x-admin::button
+                                    button-type="submit"
+                                    class="primary-button justify-center"
+                                    :title="trans('Save')"
+                                    ::loading="isProcessing"
+                                    ::disabled="isProcessing"
+                                />
+                            </x-slot>
+                        </x-admin::modal>
+                    </form>
+                </x-admin::form>
+            </Teleport>
         </div>
     </script>
 
