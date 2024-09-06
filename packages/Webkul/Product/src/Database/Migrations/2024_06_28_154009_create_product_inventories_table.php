@@ -23,7 +23,7 @@ return new class extends Migration
             $table->foreign('warehouse_id')->references('id')->on('warehouses')->onDelete('cascade');
 
             $table->integer('warehouse_location_id')->unsigned()->nullable();
-            $table->foreign('warehouse_location_id')->references('id')->on('warehouse_locations')->onDelete('cascade');
+            $table->foreign('warehouse_location_id')->references('id')->on('warehouse_locations')->onDelete('SET NULL');
 
             $table->timestamps();
         });
