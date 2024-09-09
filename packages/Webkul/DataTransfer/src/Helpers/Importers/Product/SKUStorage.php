@@ -2,7 +2,6 @@
 
 namespace Webkul\DataTransfer\Helpers\Importers\Product;
 
-use Illuminate\Support\Arr;
 use Webkul\Product\Repositories\ProductRepository;
 
 class SKUStorage
@@ -93,35 +92,9 @@ class SKUStorage
 
         $data = explode(self::DELIMITER, $this->items[$sku]);
 
-        dd($data);
-
         return [
-            'id'                  => $data[0],
-            'type'                => $data[1],
-            'attribute_family_id' => $data[2],
+            'id' => $data[0],
         ];
-    }
-
-    /**
-     * Return SKU filtered by product type
-     */
-    public function getByType(string $type): ?array
-    {
-        dd('getByType');
-        $result = Arr::where($this->items, function (string $row, string $key) use ($type) {
-            return str_contains($row, '|'.$type.'|');
-        });
-
-        return $result;
-    }
-
-    public function getBySku(string $sku): ?array
-    {
-        $result = Arr::where($this->items, function (string $row, string $key) use ($sku) {
-            return str_contains($row, '|'.$sku.'|');
-        });
-
-        return $result;
     }
 
     /**

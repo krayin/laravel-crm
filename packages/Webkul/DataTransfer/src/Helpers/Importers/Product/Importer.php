@@ -5,7 +5,6 @@ namespace Webkul\DataTransfer\Helpers\Importers\Product;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -13,17 +12,11 @@ use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
 use Webkul\DataTransfer\Repositories\ImportBatchRepository;
-use Webkul\Product\Jobs\ElasticSearch\DeleteIndex as DeleteIndexJob;
 use Webkul\Product\Repositories\ProductInventoryRepository;
 use Webkul\Product\Repositories\ProductRepository;
 
 class Importer extends AbstractImporter
 {
-    /**
-     * Error code for invalid product type
-     */
-    const ERROR_INVALID_TYPE = 'invalid_product_type';
-
     /**
      * Error code for non existing SKU
      */
@@ -33,8 +26,7 @@ class Importer extends AbstractImporter
      * Error message templates
      */
     protected array $messages = [
-        self::ERROR_INVALID_TYPE                   => 'data_transfer::app.importers.products.validation.errors.invalid-type',
-        self::ERROR_SKU_NOT_FOUND_FOR_DELETE       => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
+        self::ERROR_SKU_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
     ];
 
     /**
@@ -46,7 +38,6 @@ class Importer extends AbstractImporter
      * Permanent entity column
      */
     protected string $masterAttributeCode = 'sku';
-
 
     /**
      * Cached attributes
@@ -217,63 +208,6 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Start the products indexing process
-     */
-    public function indexBatch(ImportBatchContract $batch): bool
-    {
-        Event::dispatch('data_transfer.imports.batch.indexing.before', $batch);
-
-        /**
-         * Load SKU storage with batch skus
-         */
-        $this->skuStorage->load(Arr::pluck($batch->data, 'sku'));
-
-        $typeProductIds = [];
-
-        foreach ($batch->data as $rowData) {
-            $product = $this->skuStorage->get($rowData['sku']);
-
-            $typeProductIds[$product['type']][] = (int) $product['id'];
-        }
-
-        $productIdsToIndex = [];
-
-        foreach ($typeProductIds as $productIds) {
-            $productIdsToIndex = [
-                ...$productIds,
-                ...$productIdsToIndex,
-            ];
-
-            /**
-             * Get all the parent configurable product ids
-             */
-            $parentConfigurableProductIds = $this->productRepository->select('parent_id')
-                ->whereIn('id', $productIds)
-                ->whereNotNull('parent_id')
-                ->pluck('parent_id')
-                ->toArray();
-
-            $productIdsToIndex = [
-                ...$productIdsToIndex,
-                ...$parentConfigurableProductIds,
-            ];
-        }
-
-        $productIdsToIndex = array_unique($productIdsToIndex);
-
-        /**
-         * Update import batch summary
-         */
-        $this->importBatchRepository->update([
-            'state' => Import::STATE_INDEXED,
-        ], $batch->id);
-
-        Event::dispatch('data_transfer.imports.batch.indexing.after', $batch);
-
-        return true;
-    }
-
-    /**
      * Delete products from current batch
      */
     protected function deleteProducts(ImportBatchContract $batch): bool
@@ -316,10 +250,10 @@ class Importer extends AbstractImporter
 
         $products = [];
 
+        /**
+         * Prepare products for import
+         */
         foreach ($batch->data as $rowData) {
-            /**
-             * Prepare products for import
-             */
             $this->prepareProducts($rowData, $products);
         }
 
@@ -334,12 +268,10 @@ class Importer extends AbstractImporter
     public function prepareProducts(array $rowData, array &$products): void
     {
         if ($this->isSKUExist($rowData['sku'])) {
-            $products['update'][$rowData['sku']] = [
-                'sku' => $rowData['sku'],
-            ];
+            $products['update'][$rowData['sku']] = $rowData;
         } else {
             $products['insert'][$rowData['sku']] = [
-                'type'       => $rowData['type'],
+                ...$rowData,
                 'created_at' => $rowData['created_at'] ?? now(),
                 'updated_at' => $rowData['updated_at'] ?? now(),
             ];
@@ -364,28 +296,6 @@ class Importer extends AbstractImporter
             $this->createdItemsCount += count($products['insert']);
 
             $this->productRepository->insert($products['insert']);
-
-            /**
-             * Update the sku storage with newly created products
-             */
-            $newProducts = $this->productRepository->findWhereIn(
-                'sku',
-                array_keys($products['insert']),
-                [
-                    'id',
-                    'type',
-                    'sku',
-                    'attribute_family_id',
-                ]
-            );
-
-            foreach ($newProducts as $product) {
-                $this->skuStorage->set($product->sku, [
-                    'id'                  => $product->id,
-                    'type'                => $product->type,
-                    'attribute_family_id' => $product->attribute_family_id,
-                ]);
-            }
         }
     }
 
