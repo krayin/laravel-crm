@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataTransfer\Helpers\Importers\TaxRate;
+namespace Webkul\DataTransfer\Helpers\Importers\Leads;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
@@ -9,58 +9,63 @@ use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
 use Webkul\DataTransfer\Repositories\ImportBatchRepository;
-use Webkul\Tax\Repositories\TaxRateRepository;
+use Webkul\Lead\Repositories\LeadRepository;
 
 class Importer extends AbstractImporter
 {
     /**
-     * Error code for non existing identifier
+     * Error code for non existing title.
      */
-    const ERROR_IDENTIFIER_NOT_FOUND_FOR_DELETE = 'identifier_not_found_to_delete';
+    const ERROR_TITLE_NOT_FOUND_FOR_DELETE = 'title_not_found_to_delete';
 
     /**
-     * Error code for duplicated identifier
+     * Error code for duplicated title.
      */
-    const ERROR_DUPLICATE_IDENTIFIER = 'duplicated_identifier';
+    const ERROR_DUPLICATE_TITLE = 'duplicated_title';
 
     /**
-     * Permanent entity columns
+     * Permanent entity columns.
      */
     protected array $validColumnNames = [
-        'identifier',
-        'is_zip_range',
-        'zip_code',
-        'zip_from',
-        'zip_to',
-        'state',
-        'country',
-        'tax_rate',
+        'title',
+        'description',
+        'lead_value',
+        'status',
+        'lost_reason',
+        'closed_at',
+        'user_id',
+        'person_id',
+        'lead_source_id',
+        'lead_type_id',
+        'lead_pipeline_id',
+        'lead_pipeline_stage_id',
+        'expected_close_date',
     ];
 
     /**
-     * Error message templates
+     * Error message templates.
      */
     protected array $messages = [
-        self::ERROR_IDENTIFIER_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.tax-rates.validation.errors.identifier-not-found',
-        self::ERROR_DUPLICATE_IDENTIFIER            => 'data_transfer::app.importers.tax-rates.validation.errors.duplicate-identifier',
+        self::ERROR_TITLE_NOT_FOUND_FOR_DELETE => 'data_transfer::app.importers.leads.validation.errors.title-not-found',
+        self::ERROR_DUPLICATE_TITLE            => 'data_transfer::app.importers.leads.validation.errors.duplicate-title',
     ];
 
     /**
-     * Permanent entity columns
+     * Permanent entity columns.
      *
      * @var string[]
      */
-    protected $permanentAttributes = ['identifier'];
+    protected $permanentAttributes = ['title'];
 
     /**
-     * Permanent entity column
+     * Permanent entity column.
      */
-    protected string $masterAttributeCode = 'identifier';
+    protected string $masterAttributeCode = 'unique_id';
 
     /**
-     * Identifiers storage
+     * Titles storage.
      */
-    protected array $identifiers = [];
+    protected array $titles = [];
 
     /**
      * Create a new helper instance.
@@ -69,14 +74,14 @@ class Importer extends AbstractImporter
      */
     public function __construct(
         protected ImportBatchRepository $importBatchRepository,
-        protected TaxRateRepository $taxRateRepository,
-        protected Storage $taxRateStorage
+        protected LeadRepository $leadRepository,
+        protected Storage $leadsStorage
     ) {
         parent::__construct($importBatchRepository);
     }
 
     /**
-     * Initialize Product error templates
+     * Initialize Product error templates.
      */
     protected function initErrorMessages(): void
     {
@@ -92,18 +97,18 @@ class Importer extends AbstractImporter
      */
     public function validateData(): void
     {
-        $this->taxRateStorage->init();
+        $this->leadsStorage->init();
 
         parent::validateData();
     }
 
     /**
-     * Validates row
+     * Validates row.
      */
     public function validateRow(array $rowData, int $rowNumber): bool
     {
         /**
-         * If row is already validated than no need for further validation
+         * If row is already validated than no need for further validation.
          */
         if (isset($this->validatedRows[$rowNumber])) {
             return ! $this->errorHelper->isRowInvalid($rowNumber);
@@ -112,11 +117,11 @@ class Importer extends AbstractImporter
         $this->validatedRows[$rowNumber] = true;
 
         /**
-         * If import action is delete than no need for further validation
+         * If import action is delete than no need for further validation.
          */
         if ($this->import->action == Import::ACTION_DELETE) {
-            if (! $this->isIdentifierExist($rowData['identifier'])) {
-                $this->skipRow($rowNumber, self::ERROR_IDENTIFIER_NOT_FOUND_FOR_DELETE);
+            if (! $this->isTitleExist($rowData['title'])) {
+                $this->skipRow($rowNumber, self::ERROR_TITLE_NOT_FOUND_FOR_DELETE);
 
                 return false;
             }
@@ -125,16 +130,9 @@ class Importer extends AbstractImporter
         }
 
         /**
-         * Validate product attributes
+         * Validate product attributes.
          */
         $validator = Validator::make($rowData, [
-            'identifier'   => 'required|string',
-            'is_zip_range' => 'sometimes|boolean',
-            'zip_code'     => 'nullable|required_if:is_zip_range,0',
-            'zip_from'     => 'nullable|required_if:is_zip_range,1',
-            'zip_to'       => 'nullable|required_if:is_zip_range,1',
-            'country'      => 'required|string',
-            'tax_rate'     => 'required|numeric|min:0.0001',
         ]);
 
         if ($validator->fails()) {
@@ -147,38 +145,24 @@ class Importer extends AbstractImporter
             }
         }
 
-        /**
-         * Check if identifier is unique
-         */
-        if (! in_array($rowData['identifier'], $this->identifiers)) {
-            $this->identifiers[] = $rowData['identifier'];
-        } else {
-            $message = sprintf(
-                trans($this->messages[self::ERROR_DUPLICATE_IDENTIFIER]),
-                $rowData['identifier']
-            );
-
-            $this->skipRow($rowNumber, self::ERROR_DUPLICATE_IDENTIFIER, 'identifier', $message);
-        }
-
         return ! $this->errorHelper->isRowInvalid($rowNumber);
     }
 
     /**
-     * Start the import process
+     * Start the import process.
      */
     public function importBatch(ImportBatchContract $batch): bool
     {
         Event::dispatch('data_transfer.imports.batch.import.before', $batch);
 
         if ($batch->import->action == Import::ACTION_DELETE) {
-            $this->deleteTaxRates($batch);
+            $this->deleteLeads($batch);
         } else {
-            $this->saveTaxRatesData($batch);
+            $this->saveLeads($batch);
         }
 
         /**
-         * Update import batch summary
+         * Update import batch summary.
          */
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
@@ -196,64 +180,73 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Delete tax rates from current batch
+     * Delete leads from current batch.
      */
-    protected function deleteTaxRates(ImportBatchContract $batch): bool
+    protected function deleteLeads(ImportBatchContract $batch): bool
     {
         /**
-         * Load tax rates storage with batch identifiers
+         * Load leads storage with batch titles.
          */
-        $this->taxRateStorage->load(Arr::pluck($batch->data, 'identifier'));
+        $this->leadsStorage->load(Arr::pluck($batch->data, 'title'));
 
         $idsToDelete = [];
 
         foreach ($batch->data as $rowData) {
-            if (! $this->isIdentifierExist($rowData['identifier'])) {
+            if (! $this->isTitleExist($rowData['title'])) {
                 continue;
             }
 
-            $idsToDelete[] = $this->taxRateStorage->get($rowData['identifier']);
+            $idsToDelete[] = $this->leadsStorage->get($rowData['title']);
         }
 
         $idsToDelete = array_unique($idsToDelete);
 
         $this->deletedItemsCount = count($idsToDelete);
 
-        $this->taxRateRepository->deleteWhere([['id', 'IN', $idsToDelete]]);
+        $this->leadRepository->deleteWhere([['id', 'IN', $idsToDelete]]);
 
         return true;
     }
 
     /**
-     * Save tax rates from current batch
+     * Save leads from current batch.
      */
-    protected function saveTaxRatesData(ImportBatchContract $batch): bool
+    protected function saveLeads(ImportBatchContract $batch): bool
     {
         /**
-         * Load tax rate storage with batch identifier
+         * Load lead storage with batch unique ids.
          */
-        $this->taxRateStorage->load(Arr::pluck($batch->data, 'identifier'));
+        $this->leadsStorage->load(Arr::pluck($batch->data, 'title'));
 
         $taxRates = [];
 
         foreach ($batch->data as $rowData) {
             /**
-             * Prepare tax rates for import
+             * Prepare leads for import.
              */
-            if ($this->isIdentifierExist($rowData['identifier'])) {
-                $taxRates['update'][$rowData['identifier']] = $rowData;
+            $uniqueId = [
+                'unique_id' => "{$rowData['user_id']}|{$rowData['person_id']}|{$rowData['lead_source_id']}|{$rowData['lead_type_id']}|{$rowData['lead_pipeline_id']}"
+            ];
+
+            if ($this->isTitleExist($rowData['title'])) {
+                $taxRates['update'][$rowData['title']] = [
+                    ...$rowData,
+                    ...$uniqueId,
+                ];
             } else {
-                $taxRates['insert'][$rowData['identifier']] = array_merge($rowData, [
+                $taxRates['insert'][$rowData['title']] = [
+                    ...$rowData,
+                    ...$uniqueId,
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
-                ]);
+                ];
             }
         }
 
         if (! empty($taxRates['update'])) {
             $this->updatedItemsCount += count($taxRates['update']);
 
-            $this->taxRateRepository->upsert(
+            $this->leadRepository->upsert(
                 $taxRates['update'],
                 $this->masterAttributeCode
             );
@@ -262,18 +255,18 @@ class Importer extends AbstractImporter
         if (! empty($taxRates['insert'])) {
             $this->createdItemsCount += count($taxRates['insert']);
 
-            $this->taxRateRepository->insert($taxRates['insert']);
+            $this->leadRepository->insert($taxRates['insert']);
         }
 
         return true;
     }
 
     /**
-     * Check if identifier exists
+     * Check if title exists
      */
-    public function isIdentifierExist(string $identifier): bool
+    public function isTitleExist(string $title): bool
     {
-        return $this->taxRateStorage->has($identifier);
+        return $this->leadsStorage->has($title);
     }
 
     /**
@@ -281,10 +274,6 @@ class Importer extends AbstractImporter
      */
     protected function prepareRowForDb(array $rowData): array
     {
-        $rowData = parent::prepareRowForDb($rowData);
-
-        $rowData['is_zip'] = $rowData['is_zip_range'] ?? 0;
-
-        return Arr::except($rowData, 'is_zip_range');
+        return parent::prepareRowForDb($rowData);
     }
 }

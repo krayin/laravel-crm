@@ -29,7 +29,8 @@ return [
 
             'validation' => [
                 'errors' => [
-                    'identifier-not-found' => 'Identifier : \'%s\' not found in the system.',
+                    'title-not-found' => 'Title : \'%s\' not found in the system.',
+                    'duplicate-title' => 'Title : \'%s\' is found more than once in the import file.',
                 ],
             ],
         ],

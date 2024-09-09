@@ -216,13 +216,13 @@ abstract class AbstractImporter
 
         $errors = [];
 
-        $absentColumns = array_diff($this->permanentAttributes, $this->getSource()->getColumnNames());
+        $absentColumns = array_diff($this->permanentAttributes, $columns = $this->getSource()->getColumnNames());
 
         if (! empty($absentColumns)) {
             $errors[self::ERROR_CODE_COLUMN_NOT_FOUND] = $absentColumns;
         }
 
-        foreach ($this->getSource()->getColumnNames() as $columnNumber => $columnName) {
+        foreach ($columns as $columnNumber => $columnName) {
             if (empty($columnName)) {
                 $errors[self::ERROR_CODE_COLUMN_EMPTY_HEADER][] = $columnNumber + 1;
             } elseif (! preg_match('/^[a-z][a-z0-9_]*$/', $columnName)) {
