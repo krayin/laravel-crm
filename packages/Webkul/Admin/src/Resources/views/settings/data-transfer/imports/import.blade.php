@@ -3,27 +3,41 @@
         @lang('admin::app.settings.data-transfer.imports.import.title')
     </x-slot>
 
-    <div class="flex items-center justify-between gap-4 max-sm:flex-wrap">
-        <p class="text-xl font-bold text-gray-800 dark:text-white">
-            @lang('admin::app.settings.data-transfer.imports.import.title')
-        </p>
+    <!-- Page Header -->
+    <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+        <div class="flex flex-col gap-2">
+            <div class="flex cursor-pointer items-center">
+                {!! view_render_event('admin.settings.data_transfers.import.breadcrumbs.before') !!}
+
+                <!-- Breadcrumbs -->
+                <x-admin::breadcrumbs 
+                    name="settings.data_transfers.import"
+                    :entity="$import"
+                />
+
+                {!! view_render_event('admin.settings.data_transfers.import.breadcrumbs.after') !!}
+            </div>
+
+            <div class="text-xl font-bold dark:text-white">
+                @lang('admin::app.settings.data-transfer.imports.import.title')
+            </div>
+        </div>
 
         <div class="flex items-center gap-x-2.5">
-            <!-- Back Button -->
-            <a
-                href="{{ route('admin.settings.data_transfer.imports.index') }}"
-                class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-            >
-                @lang('admin::app.settings.data-transfer.imports.import.back-btn')
-            </a>
+            <!-- Create button for person -->
+            <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('admin.settings.data_transfers.edit.edit_button.before') !!}
 
-            <!-- Save Button -->
-            <a
-                href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
-                class="primary-button"
-            >
-                @lang('admin::app.settings.data-transfer.imports.import.edit-btn')
-            </a>
+                <!-- Edit Button -->
+                <a
+                    href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.settings.data-transfer.imports.import.edit-btn')
+                </a>
+
+                {!! view_render_event('admin.settings.data_transfers.edit.edit_button.after') !!}
+            </div>
         </div>
     </div>
 

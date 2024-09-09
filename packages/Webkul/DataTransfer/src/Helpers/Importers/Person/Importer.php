@@ -53,7 +53,6 @@ class Importer extends AbstractImporter
         self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
         self::ERROR_DUPLICATE_EMAIL             => 'data_transfer::app.importers.persons.validation.errors.duplicate-email',
         self::ERROR_DUPLICATE_PHONE             => 'data_transfer::app.importers.persons.validation.errors.duplicate-phone',
-        // self::ERROR_INVALID_PERSON_GROUP_CODE => 'data_transfer::app.importers.persons.validation.errors.invalid-person-group',
     ];
 
     /**
@@ -68,10 +67,6 @@ class Importer extends AbstractImporter
      */
     protected string $masterAttributeCode = 'emails';
 
-    /**
-     * Cached person groups
-     */
-    protected mixed $personOrganization = [];
 
     /**
      * Emails storage
@@ -92,19 +87,8 @@ class Importer extends AbstractImporter
         protected ImportBatchRepository $importBatchRepository,
         protected PersonRepository $personRepository,
         protected Storage $personStorage,
-        protected OrganizationRepository $organizationRepository
     ) {
-        $this->initPersonOrganization();
-
         parent::__construct($importBatchRepository);
-    }
-
-    /**
-     * Load all attributes and families to use later
-     */
-    protected function initPersonOrganization(): void
-    {
-        $this->personOrganization = $this->organizationRepository->all();
     }
 
     /**
@@ -134,6 +118,8 @@ class Importer extends AbstractImporter
      */
     public function validateRow(array $rowData, int $rowNumber): bool
     {
+        $rowData = $this->parsedRowData($rowData);
+
         /**
          * If row is already validated than no need for further validation
          */
@@ -147,31 +133,20 @@ class Importer extends AbstractImporter
          * If import action is delete than no need for further validation
          */
         if ($this->import->action == Import::ACTION_DELETE) {
-            if (! $this->isEmailExist($rowData['email'])) {
-                $this->skipRow($rowNumber, self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE);
-
-                return false;
+            foreach ($rowData['emails'] as $email) {
+                if (! $this->isEmailExist($email['value'])) {
+                    $this->skipRow($rowNumber, self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE);
+    
+                    return false;
+                }
+    
+                return true;
             }
-
-            return true;
         }
 
         /**
-         * Check if person group code exists
+         * Validate row data.
          */
-        // if (! $this->personOrganization->where('code', $rowData['person_group_code'])->first()) {
-        //     $this->skipRow($rowNumber, self::ERROR_INVALID_PERSON_GROUP_CODE, 'person_group_code');
-
-        //     return false;
-        // }
-
-        /**
-         * Validate product attributes
-         */
-        
-        $rowData['contact_numbers'] = json_decode($rowData['contact_numbers'], true);
-        $rowData['emails'] = json_decode($rowData['emails'], true);
-
         $validator = Validator::make($rowData, [
             'contact_numbers'         => 'nullable|array',
             'contact_numbers.*.value' => 'nullable|string',
@@ -275,16 +250,29 @@ class Importer extends AbstractImporter
         /**
          * Load person storage with batch emails
          */
-        $this->personStorage->load(Arr::pluck($batch->data, 'email'));
+        $emails = collect(Arr::pluck($batch->data, 'emails'))
+            ->map(function($emails) {
+                $emails = json_decode($emails, true);
+
+                foreach ($emails as $email) {
+                    return $email['value'];
+                }
+            });
+
+        $this->personStorage->load($emails->toArray());
 
         $idsToDelete = [];
 
         foreach ($batch->data as $rowData) {
-            if (! $this->isEmailExist($rowData['email'])) {
-                continue;
+            $rowData = $this->parsedRowData($rowData);
+    
+            foreach ($rowData['emails'] as $email) {
+                if (! $this->isEmailExist($email['value'])) {
+                    continue;
+                }
+    
+                $idsToDelete[] = $this->personStorage->get($email['value']);
             }
-
-            $idsToDelete[] = $this->personStorage->get($rowData['email']);
         }
 
         $idsToDelete = array_unique($idsToDelete);
@@ -383,5 +371,17 @@ class Importer extends AbstractImporter
     public function isEmailExist(string $email): bool
     {
         return $this->personStorage->has($email);
+    }
+
+    /**
+     * Get parsed email and phone
+     */
+    private function parsedRowData(array $rowData): array
+    {
+        $rowData['emails'] = json_decode($rowData['emails'], true);
+        
+        $rowData['contact_numbers'] = json_decode($rowData['contact_numbers'], true);
+
+        return $rowData;
     }
 }
