@@ -29,11 +29,6 @@ class Importer extends AbstractImporter
     const ERROR_DUPLICATE_PHONE = 'duplicated_phone';
 
     /**
-     * Error code for invalid attribute family code
-     */
-    // const ERROR_INVALID_PERSON_GROUP_CODE = 'person_group_code_not_found';
-
-    /**
      * Permanent entity columns
      */
     protected array $validColumnNames = [
@@ -64,7 +59,7 @@ class Importer extends AbstractImporter
     /**
      * Permanent entity column
      */
-    protected string $masterAttributeCode = 'emails';
+    protected string $masterAttributeCode = 'unique_id';
 
     /**
      * Emails storage
@@ -331,10 +326,14 @@ class Importer extends AbstractImporter
 
         foreach ($emails as $email) {
             if ($this->isEmailExist($email)) {
-                $persons['update'][$email] = $rowData;
+                $persons['update'][$email] = [
+                    ...$rowData,
+                    'unique_id' => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
+                ];
             } else {
                 $persons['insert'][$email] = [
                     ...$rowData,
+                    'unique_id' => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
@@ -352,7 +351,7 @@ class Importer extends AbstractImporter
 
             $this->personRepository->upsert(
                 $persons['update'],
-                $this->masterAttributeCode
+                $this->masterAttributeCode,
             );
         }
 
