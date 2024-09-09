@@ -29,12 +29,14 @@
                 {!! view_render_event('admin.settings.data_transfers.edit.edit_button.before') !!}
 
                 <!-- Edit Button -->
-                <a
-                    href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.data-transfer.imports.import.edit-btn')
-                </a>
+                @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
+                    <a
+                        href="{{ route('admin.settings.data_transfer.imports.edit', $import->id) }}"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.data-transfer.imports.import.edit-btn')
+                    </a>
+                @endif
 
                 {!! view_render_event('admin.settings.data_transfers.edit.edit_button.after') !!}
             </div>

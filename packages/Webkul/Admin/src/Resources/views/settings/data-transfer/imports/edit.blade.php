@@ -38,13 +38,15 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.data_transfers.edit.save_button.before') !!}
 
-                    <!-- Save Button -->
-                    <button
-                        type="submit"
-                        class="primary-button"
-                    >
-                        @lang('admin::app.settings.data-transfer.imports.edit.save-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
+                        <!-- Save Button -->
+                        <button
+                            type="submit"
+                            class="primary-button"
+                        >
+                            @lang('admin::app.settings.data-transfer.imports.edit.save-btn')
+                        </button>
+                    @endif
 
                     {!! view_render_event('admin.settings.data_transfers.edit.save_button.after') !!}
                 </div>

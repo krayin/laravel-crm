@@ -39,6 +39,9 @@ return [
         'delete'          => 'Delete',
         'export'          => 'Export',
         'mass-delete'     => 'Mass Delete',
+        'data-transfer'   => 'Data Transfer',
+        'imports'         => 'Imports',
+        'import'          => 'Import',
     ],
 
     'users' => [

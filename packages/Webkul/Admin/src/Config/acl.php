@@ -481,7 +481,7 @@ return [
     ], [
         'key'   => 'settings.data_transfer.imports.import',
         'name'  => 'admin::app.acl.import',
-        'route' => 'admin.settings.data_transfer.imports.import',
+        'route' => 'admin.settings.data_transfer.imports.imports',
         'sort'  => 4,
     ],
     [

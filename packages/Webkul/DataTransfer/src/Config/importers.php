@@ -13,9 +13,9 @@ return [
         'sample_path' => 'data-transfer/samples/products.csv',
     ],
 
-    //     'tax_rates' => [
-    //         'title'       => 'data_transfer::app.importers.tax-rates.title',
-    //         'importer'    => 'Webkul\DataTransfer\Helpers\Importers\TaxRate\Importer',
-    //         'sample_path' => 'data-transfer/samples/tax-rates.csv',
-    //     ],
+    'leads' => [
+        'title'       => 'data_transfer::app.importers.leads.title',
+        'importer'    => 'Webkul\DataTransfer\Helpers\Importers\Leads\Importer',
+        'sample_path' => 'data-transfer/samples/leads.csv',
+    ],
 ];
