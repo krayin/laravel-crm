@@ -26,7 +26,7 @@ class Excel extends AbstractSource
     public function __construct(string $filePath)
     {
         try {
-            $factory = IOFactory::load(Storage::disk('private')->path($filePath));
+            $factory = IOFactory::load(Storage::disk('public')->path($filePath));
 
             $this->reader = $factory->getActiveSheet();
 

@@ -320,7 +320,7 @@ Route::prefix('settings')->group(function () {
 
             Route::get('stats/{id}/{state?}', 'stats')->name('admin.settings.data_transfer.imports.stats');
 
-            Route::get('download-sample/{type?}', 'downloadSample')->name('admin.settings.data_transfer.imports.download_sample');
+            Route::get('download-sample/{sample?}', 'downloadSample')->name('admin.settings.data_transfer.imports.download_sample');
 
             Route::get('download/{id}', 'download')->name('admin.settings.data_transfer.imports.download');
 

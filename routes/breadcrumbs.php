@@ -404,6 +404,19 @@ Breadcrumbs::for('settings.locations.edit', function (BreadcrumbTrail $trail, $l
     $trail->push(trans('admin::app.settings.locations.edit-title'), route('admin.settings.locations.edit', $location->id));
 });
 
+// Dashboard > Settings > Data Transfers
+Breadcrumbs::for('settings.data_transfers', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.index.title'), route('admin.settings.data_transfer.imports.index'));
+});
+
+// Dashboard > Settings > Data Transfers > Create Data Transfer
+Breadcrumbs::for('settings.data_transfers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.create.title'), route('admin.settings.data_transfer.imports.create'));
+});
+
+
 // Configuration
 Breadcrumbs::for('configuration', function (BreadcrumbTrail $trail) {
     $trail->parent('dashboard');

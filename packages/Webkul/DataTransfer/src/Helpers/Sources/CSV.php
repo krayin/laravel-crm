@@ -21,7 +21,7 @@ class CSV extends AbstractSource
         protected string $delimiter = ','
     ) {
         try {
-            $this->reader = fopen(Storage::disk('private')->path($filePath), 'r');
+            $this->reader = fopen(Storage::disk('public')->path($filePath), 'r');
 
             $this->columnNames = fgetcsv($this->reader, 4096, $delimiter);
 

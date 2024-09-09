@@ -89,7 +89,7 @@ class ImportController extends Controller
                     'file_path' => request()->file('file')->storeAs(
                         'imports',
                         time().'-'.request()->file('file')->getClientOriginalName(),
-                        'private'
+                        'public'
                     ),
                 ],
                 $data
@@ -161,15 +161,15 @@ class ImportController extends Controller
             ]
         );
 
-        Storage::disk('private')->delete($import->error_file_path ?? '');
+        Storage::disk('public')->delete($import->error_file_path ?? '');
 
         if (request()->file('file') && request()->file('file')->isValid()) {
-            Storage::disk('private')->delete($import->file_path);
+            Storage::disk('public')->delete($import->file_path);
 
             $data['file_path'] = request()->file('file')->storeAs(
                 'imports',
                 time().'-'.request()->file('file')->getClientOriginalName(),
-                'private'
+                'public'
             );
         }
 
@@ -197,9 +197,9 @@ class ImportController extends Controller
         $import = $this->importRepository->findOrFail($id);
 
         try {
-            Storage::disk('private')->delete($import->file_path);
+            Storage::disk('public')->delete($import->file_path);
 
-            Storage::disk('private')->delete($import->error_file_path ?? '');
+            Storage::disk('public')->delete($import->error_file_path ?? '');
 
             $this->importRepository->delete($id);
 
@@ -491,7 +491,7 @@ class ImportController extends Controller
     {
         $import = $this->importRepository->findOrFail($id);
 
-        return Storage::disk('private')->download($import->file_path);
+        return Storage::disk('public')->download($import->file_path);
     }
 
     /**
@@ -501,6 +501,6 @@ class ImportController extends Controller
     {
         $import = $this->importRepository->findOrFail($id);
 
-        return Storage::disk('private')->download($import->error_file_path);
+        return Storage::disk('public')->download($import->file_path);
     }
 }

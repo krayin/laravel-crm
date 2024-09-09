@@ -1,7 +1,8 @@
 <?php
 
-namespace Webkul\DataTransfer\Helpers\Importers\Customer;
+namespace Webkul\DataTransfer\Helpers\Importers\Person;
 
+use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Customer\Repositories\CustomerRepository;
 
 class Storage
@@ -16,7 +17,7 @@ class Storage
      */
     protected array $selectColumns = [
         'id',
-        'email',
+        'emails',
     ];
 
     /**
@@ -24,7 +25,7 @@ class Storage
      *
      * @return void
      */
-    public function __construct(protected CustomerRepository $customerRepository) {}
+    public function __construct(protected PersonRepository $personRepository) {}
 
     /**
      * Initialize storage
@@ -42,14 +43,21 @@ class Storage
     public function load(array $emails = []): void
     {
         if (empty($emails)) {
-            $customers = $this->customerRepository->all($this->selectColumns);
+            $persons = $this->personRepository->all($this->selectColumns);
         } else {
-            $customers = $this->customerRepository->findWhereIn('email', $emails, $this->selectColumns);
+            $persons = $this->personRepository->scopeQuery(function($query) use ($emails) {
+                return $query->where(function($subQuery) use ($emails) {
+                    foreach ($emails as $email) {
+                        $subQuery->orWhereJsonContains('emails', ['value' => $email]);
+                    }
+                });
+            })->all($this->selectColumns);
         }
 
-        foreach ($customers as $customer) {
-            $this->set($customer->email, $customer->id);
-        }
+        $persons->each(function ($person) {
+            collect($person->emails)
+                ->each(fn($email) => $this->set($email['value'], $person->id));
+        });
     }
 
     /**
