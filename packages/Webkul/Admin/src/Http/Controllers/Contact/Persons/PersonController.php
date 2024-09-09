@@ -187,7 +187,7 @@ class PersonController extends Controller
             $data['contact_numbers'] = collect($data['contact_numbers'])->filter(fn ($number) => ! is_null($number['value']))->toArray();
         }
 
-        $data['unique_id'] = $data['user_id'] . '|' . $data['organization_id'] . '|' . $data['emails'][0]['value'];
+        $data['unique_id'] = $data['user_id'].'|'.$data['organization_id'].'|'.$data['emails'][0]['value'];
 
         return $data;
     }

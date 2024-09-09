@@ -333,7 +333,7 @@ class Importer extends AbstractImporter
             } else {
                 $persons['insert'][$email] = [
                     ...$rowData,
-                    'unique_id' => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
+                    'unique_id'  => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
