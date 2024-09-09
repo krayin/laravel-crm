@@ -1534,6 +1534,7 @@ return [
                         'started-at'    => 'Started At',
                         'state'         => 'State',
                         'summary'       => 'Summary',
+                        'type'          => 'Type',
                         'updated'       => 'Updated',
                         'uploaded-file' => 'Uploaded File',
                     ],
@@ -2060,6 +2061,8 @@ return [
         'warehouses'           => 'Warehouses',
         'warehouse'            => 'Warehouse',
         'warehouses-info'      => 'Add, edit or delete warehouses from CRM',
+        'data_transfer'        => 'Data Transfer',
+        'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],
 
     'user' => [

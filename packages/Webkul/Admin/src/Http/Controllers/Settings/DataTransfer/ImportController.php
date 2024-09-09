@@ -3,8 +3,10 @@
 namespace Webkul\Admin\Http\Controllers\Settings\DataTransfer;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\View\View;
 use Webkul\Admin\DataGrids\Settings\DataTransfer\ImportDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\DataTransfer\Helpers\Import;
@@ -24,10 +26,8 @@ class ImportController extends Controller
 
     /**
      * Display a listing of the resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function index()
+    public function index(): View|JsonResponse
     {
         if (request()->ajax()) {
             return datagrid(ImportDataGrid::class)->process();
@@ -38,20 +38,16 @@ class ImportController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function create()
+    public function create(): View
     {
         return view('admin::settings.data-transfer.imports.create');
     }
 
     /**
      * Store a newly created resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(): RedirectResponse
     {
         $importers = array_keys(config('importers'));
 
@@ -105,10 +101,8 @@ class ImportController extends Controller
 
     /**
      * Show the form for editing a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function edit(int $id)
+    public function edit(int $id): View
     {
         $import = $this->importRepository->findOrFail($id);
 
@@ -117,10 +111,8 @@ class ImportController extends Controller
 
     /**
      * Update a resource in storage.
-     *
-     * @return \Illuminate\Http\Response
      */
-    public function update(int $id)
+    public function update(int $id): RedirectResponse
     {
         $importers = array_keys(config('importers'));
 
@@ -188,11 +180,8 @@ class ImportController extends Controller
 
     /**
      * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(int $id): JsonResponse
     {
         $import = $this->importRepository->findOrFail($id);
 
@@ -203,7 +192,7 @@ class ImportController extends Controller
 
             $this->importRepository->delete($id);
 
-            return new JsonResponse([
+            return response()->json([
                 'message' => trans('admin::app.settings.data-transfer.imports.delete-success'),
             ]);
         } catch (\Exception $e) {
@@ -216,10 +205,8 @@ class ImportController extends Controller
 
     /**
      * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\View\View
      */
-    public function import(int $id)
+    public function import(int $id): View
     {
         $import = $this->importRepository->findOrFail($id);
 

@@ -5,7 +5,6 @@ namespace Webkul\DataTransfer\Helpers\Importers\Person;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
-use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
@@ -66,7 +65,6 @@ class Importer extends AbstractImporter
      * Permanent entity column
      */
     protected string $masterAttributeCode = 'emails';
-
 
     /**
      * Emails storage
@@ -136,10 +134,10 @@ class Importer extends AbstractImporter
             foreach ($rowData['emails'] as $email) {
                 if (! $this->isEmailExist($email['value'])) {
                     $this->skipRow($rowNumber, self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE);
-    
+
                     return false;
                 }
-    
+
                 return true;
             }
         }
@@ -182,7 +180,7 @@ class Importer extends AbstractImporter
                         trans($this->messages[self::ERROR_DUPLICATE_EMAIL]),
                         $email['value']
                     );
-        
+
                     $this->skipRow($rowNumber, self::ERROR_DUPLICATE_EMAIL, 'email', $message);
                 }
             }
@@ -191,10 +189,10 @@ class Importer extends AbstractImporter
         /**
          * Check if phone(s) are unique.
          */
-        if (!empty($rowData['contact_numbers'])) {
+        if (! empty($rowData['contact_numbers'])) {
             foreach ($rowData['contact_numbers'] as $phone) {
                 if (! in_array($phone['value'], $this->phones)) {
-                    if (!empty($phone['value'])) {
+                    if (! empty($phone['value'])) {
                         $this->phones[] = $phone['value'];
                     }
                 } else {
@@ -251,7 +249,7 @@ class Importer extends AbstractImporter
          * Load person storage with batch emails
          */
         $emails = collect(Arr::pluck($batch->data, 'emails'))
-            ->map(function($emails) {
+            ->map(function ($emails) {
                 $emails = json_decode($emails, true);
 
                 foreach ($emails as $email) {
@@ -265,12 +263,12 @@ class Importer extends AbstractImporter
 
         foreach ($batch->data as $rowData) {
             $rowData = $this->parsedRowData($rowData);
-    
+
             foreach ($rowData['emails'] as $email) {
                 if (! $this->isEmailExist($email['value'])) {
                     continue;
                 }
-    
+
                 $idsToDelete[] = $this->personStorage->get($email['value']);
             }
         }
@@ -293,7 +291,7 @@ class Importer extends AbstractImporter
          * Load person storage with batch email
          */
         $emails = collect(Arr::pluck($batch->data, 'emails'))
-            ->map(function($emails) {
+            ->map(function ($emails) {
                 $emails = json_decode($emails, true);
 
                 foreach ($emails as $email) {
@@ -323,7 +321,7 @@ class Importer extends AbstractImporter
     public function preparePersons(array $rowData, array &$persons): void
     {
         $emails = collect($rowData['emails'])
-            ->map(function($emails) {
+            ->map(function ($emails) {
                 $emails = json_decode($emails, true);
 
                 foreach ($emails as $email) {
@@ -379,7 +377,7 @@ class Importer extends AbstractImporter
     private function parsedRowData(array $rowData): array
     {
         $rowData['emails'] = json_decode($rowData['emails'], true);
-        
+
         $rowData['contact_numbers'] = json_decode($rowData['contact_numbers'], true);
 
         return $rowData;

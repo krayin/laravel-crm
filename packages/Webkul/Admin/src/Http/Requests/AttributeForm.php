@@ -116,6 +116,7 @@ class AttributeForm extends FormRequest
         }
 
         dd($this->rules);
+
         return $this->rules;
     }
 }

@@ -3,7 +3,6 @@
 namespace Webkul\DataTransfer\Helpers\Importers\Person;
 
 use Webkul\Contact\Repositories\PersonRepository;
-use Webkul\Customer\Repositories\CustomerRepository;
 
 class Storage
 {
@@ -45,8 +44,8 @@ class Storage
         if (empty($emails)) {
             $persons = $this->personRepository->all($this->selectColumns);
         } else {
-            $persons = $this->personRepository->scopeQuery(function($query) use ($emails) {
-                return $query->where(function($subQuery) use ($emails) {
+            $persons = $this->personRepository->scopeQuery(function ($query) use ($emails) {
+                return $query->where(function ($subQuery) use ($emails) {
                     foreach ($emails as $email) {
                         $subQuery->orWhereJsonContains('emails', ['value' => $email]);
                     }
@@ -56,7 +55,7 @@ class Storage
 
         $persons->each(function ($person) {
             collect($person->emails)
-                ->each(fn($email) => $this->set($email['value'], $person->id));
+                ->each(fn ($email) => $this->set($email['value'], $person->id));
         });
     }
 

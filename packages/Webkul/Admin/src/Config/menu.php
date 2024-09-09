@@ -4,15 +4,6 @@ return [
     /**
      * Dashboard.
      */
-
-    [
-        'key'        => 'data_transfer',
-        'name'       => 'Data Transfer',
-        'info'       => 'Data Transfer imports the persons and leads from CSV files',
-        'route'      => 'admin.settings.data_transfer.imports.index',
-        'sort'       => 1,
-        'icon-class' => 'icon-configuration',
-    ],
     [
         'key'        => 'dashboard',
         'name'       => 'admin::app.layouts.dashboard',
@@ -256,6 +247,14 @@ return [
         'route'      => 'admin.settings.workflows.index',
         'sort'       => 3,
         'icon-class' => 'icon-settings-flow',
+    ],
+    [
+        'key'        => 'settings.automation.data_transfer',
+        'name'       => 'admin::app.layouts.data_transfer',
+        'info'       => 'admin::app.layouts.data_transfer_info',
+        'route'      => 'admin.settings.data_transfer.imports.index',
+        'sort'       => 4,
+        'icon-class' => 'icon-download',
     ], [
         'key'        => 'settings.other_settings',
         'name'       => 'admin::app.layouts.other-settings',

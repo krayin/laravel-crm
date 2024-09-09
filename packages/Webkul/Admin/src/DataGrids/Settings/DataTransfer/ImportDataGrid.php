@@ -2,9 +2,9 @@
 
 namespace Webkul\Admin\DataGrids\Settings\DataTransfer;
 
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
-use Illuminate\Database\Query\Builder;
 
 class ImportDataGrid extends DataGrid
 {
@@ -21,6 +21,7 @@ class ImportDataGrid extends DataGrid
                 'error_file_path',
                 'started_at',
                 'completed_at',
+                'type',
                 'summary',
             );
     }
@@ -34,6 +35,14 @@ class ImportDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.id'),
             'type'       => 'integer',
+            'filterable' => true,
+            'sortable'   => true,
+        ]);
+
+        $this->addColumn([
+            'index'      => 'type',
+            'label'      => trans('admin::app.settings.data-transfer.imports.index.datagrid.type'),
+            'type'       => 'string',
             'filterable' => true,
             'sortable'   => true,
         ]);
