@@ -4,13 +4,13 @@
         @lang('admin::app.settings.data-transfer.imports.create.title')
     </x-slot>
 
-    {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.before') !!}
+    {!! view_render_event('admin.settings.data_transfer.imports.create.before') !!}
 
     <x-admin::form
         :action="route('admin.settings.data_transfer.imports.store')"
         enctype="multipart/form-data"
     >
-        {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.create_form_controls.before') !!}
+        {!! view_render_event('admin.settings.data_transfer.imports.create.create_form_controls.before') !!}
 
         <!-- Page Header -->
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
@@ -51,7 +51,7 @@
         <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
             <!-- Left Container -->
             <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.card.general.before') !!}
+                {!! view_render_event('admin.settings.data_transfer.imports.create.card.general.before') !!}
 
                 <!-- Setup Import Panel -->
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
@@ -107,36 +107,14 @@
 
                         <x-admin::form.control-group.error control-name="file" />
                     </x-admin::form.control-group>
-
-                    <!-- Images Directory Path -->
-                    <x-admin::form.control-group class="!mb-0">
-                        <x-admin::form.control-group.label>
-                            @lang('admin::app.settings.data-transfer.imports.create.images-directory')
-                        </x-admin::form.control-group.label>
-
-                        <x-admin::form.control-group.control
-                            type="text"
-                            name="images_directory_path"
-                            :value="old('images_directory_path')"
-                            :placeholder="trans('admin::app.settings.data-transfer.imports.create.images-directory')"
-                        />
-
-                        <p class="mt-2 text-xs text-gray-600 dark:text-gray-300">
-                            @lang('admin::app.settings.data-transfer.imports.create.file-info')
-                        </p>
-
-                        <p class="mt-2 text-xs text-gray-600 dark:text-gray-300">
-                            @lang('admin::app.settings.data-transfer.imports.create.file-info-example')
-                        </p>
-                    </x-admin::form.control-group>
                 </div>
 
-                {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.card.general.after') !!}
+                {!! view_render_event('admin.settings.data_transfer.imports.create.card.general.after') !!}
             </div>
 
             <!-- Right Container -->
             <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
-                {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.card.accordion.settings.before') !!}
+                {!! view_render_event('admin.settings.data_transfer.imports.create.card.accordion.settings.before') !!}
 
                 <!-- Settings Panel -->
                 <x-admin::accordion>
@@ -245,10 +223,10 @@
                     </x-slot>
                 </x-admin::accordion>
 
-                {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.card.accordion.settings.after') !!}
+                {!! view_render_event('admin.settings.data_transfer.imports.create.card.accordion.settings.after') !!}
             </div>
         </div>
 
-        {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.create_form_controls.after') !!}
+        {!! view_render_event('admin.settings.data_transfer.imports.create.create_form_controls.after') !!}
     </x-admin::form>
 </x-admin::layouts>

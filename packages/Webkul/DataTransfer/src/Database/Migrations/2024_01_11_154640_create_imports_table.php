@@ -25,7 +25,6 @@ return new class extends Migration
             $table->json('errors')->nullable();
             $table->string('field_separator');
             $table->string('file_path');
-            $table->string('images_directory_path')->nullable();
             $table->string('error_file_path')->nullable();
             $table->json('summary')->nullable();
 

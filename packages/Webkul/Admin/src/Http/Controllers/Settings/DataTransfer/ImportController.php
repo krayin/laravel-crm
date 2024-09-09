@@ -70,7 +70,6 @@ class ImportController extends Controller
             'validation_strategy',
             'allowed_errors',
             'field_separator',
-            'images_directory_path',
         ]);
 
         if (! isset($data['process_in_queue'])) {
@@ -138,7 +137,6 @@ class ImportController extends Controller
                 'validation_strategy',
                 'allowed_errors',
                 'field_separator',
-                'images_directory_path',
             ]),
             [
                 'state'                => 'pending',

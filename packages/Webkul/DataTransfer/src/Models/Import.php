@@ -27,7 +27,6 @@ class Import extends Model implements ImportContract
         'errors',
         'field_separator',
         'file_path',
-        'images_directory_path',
         'error_file_path',
         'summary',
         'started_at',

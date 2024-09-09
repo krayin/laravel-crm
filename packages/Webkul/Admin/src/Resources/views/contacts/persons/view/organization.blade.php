@@ -5,7 +5,12 @@
         <h4 class="flex items-center justify-between font-semibold dark:text-white">
             About Organization
 
-            <button class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"></button>
+            <a 
+                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+                href="{{ route('admin.contacts.organizations.edit', $person->organization->id) }}"
+                target="_blank"
+            >
+            </a>
         </h4>
 
         <div class="flex gap-2">
@@ -29,11 +34,11 @@
                         </span>
 
                         <span>
-                            {{ core()->state_name($person->organization->address['state']) }}
+                            {{ core()->state_name($person->organization->address['state'] ?? '') }}
                         </span>
 
                         <span>
-                            {{ core()->country_name($person->organization->address['country']) }}
+                            {{ core()->country_name($person->organization->address['country'] ?? '') }}
                         </span>
                     </div>
                 @endif
