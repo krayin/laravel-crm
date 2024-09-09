@@ -115,6 +115,7 @@ class AttributeForm extends FormRequest
             $this->rules = array_merge($this->rules, $validations);
         }
 
+        dd($this->rules);
         return $this->rules;
     }
 }

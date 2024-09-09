@@ -15,19 +15,19 @@ return [
             ],
         ],
 
-        // 'products' => [
-        //     'title' => 'Products',
+        'products' => [
+            'title' => 'Products',
 
-        //     'validation' => [
-        //         'errors' => [
-        //             'duplicate-url-key'         => 'URL key: \'%s\' was already generated for an item with the SKU: \'%s\'.',
-        //             'invalid-attribute-family'  => 'Invalid value for attribute family column (attribute family doesn\'t exist?)',
-        //             'invalid-type'              => 'Product type is invalid or not supported',
-        //             'sku-not-found'             => 'Product with specified SKU not found',
-        //             'super-attribute-not-found' => 'Super attribute with code: \'%s\' not found or does not belong to the attribute family: \'%s\'',
-        //         ],
-        //     ],
-        // ],
+            'validation' => [
+                'errors' => [
+                    'duplicate-url-key'         => 'URL key: \'%s\' was already generated for an item with the SKU: \'%s\'.',
+                    'invalid-attribute-family'  => 'Invalid value for attribute family column (attribute family doesn\'t exist?)',
+                    'invalid-type'              => 'Product type is invalid or not supported',
+                    'sku-not-found'             => 'Product with specified SKU not found',
+                    'super-attribute-not-found' => 'Super attribute with code: \'%s\' not found or does not belong to the attribute family: \'%s\'',
+                ],
+            ],
+        ],
 
         // 'tax-rates' => [
         //     'title' => 'Tax Rates',
