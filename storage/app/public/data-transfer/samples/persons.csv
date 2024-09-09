@@ -1,0 +1,11 @@
+name,emails,contact_numbers,organization_id,job_title,user_id
+Wilson Fisk,"[{""label"": ""work"", ""value"": ""contact@wilson.com""}, {""label"": ""home"", ""value"": ""contact.home@wilson.com""}]","[{""label"": ""work"", ""value"": ""5454445454""}]",1,Sales Executive,1
+Sasha Calle,"[{""label"": ""work"", ""value"": ""contact@sasha.com""}]","[{""label"": ""work"", ""value"": ""15454445454""}]",1,Sales Representatives,1
+Oliver Queen,"[{""label"": ""work"", ""value"": ""oliver@example.com""}]","[{""label"": ""work"", ""value"": ""8979879879""}]",1,Sales Executive,1
+Carol Denvers,"[{""label"": ""work"", ""value"": ""carol@example.com""}]","[{""label"": ""work"", ""value"": ""564545445""}]",1,Sales Executive,1
+Lucy Mark,"[{""label"": ""work"", ""value"": ""lucy@contact.com""}]","[{""label"": ""work"", ""value"": ""488545445""}]",1,Sales Representatives,1
+Shelly Josh,"[{""label"": ""work"", ""value"": ""shelly@example.com""}]","[{""label"": ""work"", ""value"": ""65456454""}]",1,Sales Executive,1
+Billy James,"[{""label"": ""work"", ""value"": ""Billy@example.com""}]","[{""label"": ""work"", ""value"": ""4545454545""}]",1,Sales Representatives,1
+Eddy Collins,"[{""label"": ""work"", ""value"": ""eddy@example.com""}]","[{""label"": ""work"", ""value"": ""44554545454""}]",1,Sales Manager,1
+Jennifer Morris,"[{""label"": ""work"", ""value"": ""jennifer@example.com""}]","[{""label"": ""work"", ""value"": ""1234567890""}]",1,Marketing Executive,1
+David Scott,"[{""label"": ""work"", ""value"": ""david@example.com""}]","[{""label"": ""work"", ""value"": ""9876543210""}]",1,Marketing Executive,1
