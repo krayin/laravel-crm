@@ -13,27 +13,37 @@
         {!! view_render_event('bagisto.admin.settings.data_transfer.imports.create.create_form_controls.before') !!}
 
         <!-- Page Header -->
-        <div class="flex items-center justify-between">
-            <p class="text-xl font-bold text-gray-800 dark:text-white">
-                @lang('admin::app.settings.data-transfer.imports.create.title')
-            </p>
+        <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+            <div class="flex flex-col gap-2">
+                <div class="flex cursor-pointer items-center">
+                    {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.before') !!}
+
+                    <!-- Breadcrumbs -->
+                    <x-admin::breadcrumbs name="settings.data_transfers.create" />
+
+                    {!! view_render_event('admin.settings.data_transfers.create.breadcrumbs.after') !!}
+                </div>
+
+                <div class="text-xl font-bold dark:text-white">
+                    @lang('admin::app.settings.data-transfer.imports.create.title')
+                </div>
+            </div>
 
             <div class="flex items-center gap-x-2.5">
-                <!-- Back Button -->
-                <a
-                    href="{{ route('admin.settings.data_transfer.imports.index') }}"
-                    class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
-                >
-                    @lang('admin::app.settings.data-transfer.imports.create.back-btn')
-                </a>
+                <!-- Create button for person -->
+                <div class="flex items-center gap-x-2.5">
+                    {!! view_render_event('admin.settings.data_transfers.create.save_button.before') !!}
 
-                <!-- Save Button -->
-                <button
-                    type="submit"
-                    class="primary-button"
-                >
-                    @lang('admin::app.settings.data-transfer.imports.create.save-btn')
-                </button>
+                    <!-- Save Button -->
+                    <button
+                        type="submit"
+                        class="primary-button"
+                    >
+                        @lang('admin::app.settings.data-transfer.imports.create.save-btn')
+                    </button>
+
+                    {!! view_render_event('admin.settings.data_transfers.create.save_button.after') !!}
+                </div>
             </div>
         </div>
 
@@ -59,7 +69,7 @@
                             type="select"
                             name="type"
                             id="import-type"
-                            :value="old('type') ?? 'products'"
+                            :value="old('type') ?? 'persons'"
                             ref="importType"
                             rules="required"
                             :label="trans('admin::app.settings.data-transfer.imports.create.type')"
