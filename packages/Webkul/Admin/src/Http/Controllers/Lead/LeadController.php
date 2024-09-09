@@ -173,7 +173,10 @@ class LeadController extends Controller
 
         $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
-        $lead = $this->leadRepository->create($data);
+        $lead = $this->leadRepository->create([
+            ...$data,
+            'unique_id' => "{$data['user_id']}|{$data['person']['id']}|{$data['lead_source_id']}|{$data['lead_type_id']}|".($data['lead_pipeline_id'] ?? 'NULL'),
+        ]);
 
         Event::dispatch('lead.create.after', $lead);
 
@@ -234,7 +237,10 @@ class LeadController extends Controller
 
         $data['person']['organization_id'] = empty($data['person']['organization_id']) ? null : $data['person']['organization_id'];
 
-        $lead = $this->leadRepository->update($data, $id);
+        $lead = $this->leadRepository->update([
+            ...$data,
+            'unique_id' => "{$data['user_id']}|{$data['person']['id']}|{$data['lead_source_id']}|{$data['lead_type_id']}|".($data['lead_pipeline_id'] ?? 'NULL'),
+        ], $id);
 
         Event::dispatch('lead.update.after', $lead);
 

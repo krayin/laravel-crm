@@ -127,15 +127,6 @@ class LeadForm extends FormRequest
             }
         }
 
-        dd([
-            ...$this->rules,
-            'products'              => 'array',
-            'products.*.product_id' => 'sometimes|required|exists:products,id',
-            'products.*.name'       => 'required_with:products.*.product_id',
-            'products.*.price'      => 'required_with:products.*.product_id',
-            'products.*.quantity'   => 'required_with:products.*.product_id',
-        ]);
-
         return [
             ...$this->rules,
             'products'              => 'array',
