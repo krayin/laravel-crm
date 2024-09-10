@@ -90,7 +90,7 @@
                             :href="'{{ route('admin.settings.data_transfer.imports.download_sample') }}/' + $refs['importType']?.value"
                             target="_blank"
                             id="source-sample-link"
-                            class="mt-1 cursor-pointer text-sm text-blue-600 transition-all hover:underline"
+                            class="mt-1 cursor-pointer text-sm text-brandColor transition-all hover:underline"
                         >
                             @lang('admin::app.settings.data-transfer.imports.edit.download-sample')
                         </a>
