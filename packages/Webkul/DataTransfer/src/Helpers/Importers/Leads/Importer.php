@@ -133,6 +133,19 @@ class Importer extends AbstractImporter
          * Validate product attributes.
          */
         $validator = Validator::make($rowData, [
+            'title'                  => 'required|string',
+            'description'            => 'nullable|string',
+            'lead_value'             => 'nullable|numeric',
+            'status'                 => 'nullable|string',
+            'lost_reason'            => 'nullable|string',
+            'closed_at'              => 'nullable|date',
+            'user_id'                => 'required|numeric',
+            'person_id'              => 'required|numeric',
+            'lead_source_id'         => 'required|numeric',
+            'lead_type_id'           => 'required|numeric',
+            'lead_pipeline_id'       => 'required|numeric',
+            'lead_pipeline_stage_id' => 'nullable|numeric',
+            'expected_close_date'    => 'nullable|date',
         ]);
 
         if ($validator->fails()) {
@@ -225,7 +238,7 @@ class Importer extends AbstractImporter
              * Prepare leads for import.
              */
             $uniqueId = [
-                'unique_id' => "{$rowData['user_id']}|{$rowData['person_id']}|{$rowData['lead_source_id']}|{$rowData['lead_type_id']}|{$rowData['lead_pipeline_id']}"
+                'unique_id' => "{$rowData['user_id']}|{$rowData['person_id']}|{$rowData['lead_source_id']}|{$rowData['lead_type_id']}|{$rowData['lead_pipeline_id']}",
             ];
 
             if ($this->isTitleExist($rowData['title'])) {
