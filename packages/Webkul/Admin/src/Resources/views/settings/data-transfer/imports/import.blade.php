@@ -26,7 +26,7 @@
         <div class="flex items-center gap-x-2.5">
             <!-- Create button for person -->
             <div class="flex items-center gap-x-2.5">
-                {!! view_render_event('admin.settings.data_transfers.edit.edit_button.before') !!}
+                {!! view_render_event('admin.settings.data_transfers.import.edit_button.before') !!}
 
                 <!-- Edit Button -->
                 @if (bouncer()->hasPermission('settings.data_transfer.imports.edit'))
@@ -38,7 +38,7 @@
                     </a>
                 @endif
 
-                {!! view_render_event('admin.settings.data_transfers.edit.edit_button.after') !!}
+                {!! view_render_event('admin.settings.data_transfers.import.edit_button.after') !!}
             </div>
         </div>
     </div>
