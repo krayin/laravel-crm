@@ -18,34 +18,34 @@ use Webkul\Product\Repositories\ProductRepository;
 class Importer extends AbstractImporter
 {
     /**
-     * Error code for non existing SKU
+     * Error code for non existing SKU.
      */
     const ERROR_SKU_NOT_FOUND_FOR_DELETE = 'sku_not_found_to_delete';
 
     /**
-     * Error message templates
+     * Error message templates.
      */
     protected array $messages = [
         self::ERROR_SKU_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.products.validation.errors.sku-not-found',
     ];
 
     /**
-     * Permanent entity columns
+     * Permanent entity columns.
      */
     protected array $permanentAttributes = ['sku'];
 
     /**
-     * Permanent entity column
+     * Permanent entity column.
      */
     protected string $masterAttributeCode = 'sku';
 
     /**
-     * Cached attributes
+     * Cached attributes.
      */
     protected mixed $attributes = [];
 
     /**
-     * Valid csv columns
+     * Valid csv columns.
      */
     protected array $validColumnNames = [
         'sku',
@@ -74,7 +74,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Load all attributes and families to use later
+     * Load all attributes and families to use later.
      */
     protected function initAttributes(): void
     {
@@ -86,7 +86,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Initialize Product error templates
+     * Initialize Product error templates.
      */
     protected function initErrorMessages(): void
     {
@@ -98,7 +98,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save validated batches
+     * Save validated batches.
      */
     protected function saveValidatedBatches(): self
     {
@@ -128,12 +128,12 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Validates row
+     * Validates row.
      */
     public function validateRow(array $rowData, int $rowNumber): bool
     {
         /**
-         * If row is already validated than no need for further validation
+         * If row is already validated than no need for further validation.
          */
         if (isset($this->validatedRows[$rowNumber])) {
             return ! $this->errorHelper->isRowInvalid($rowNumber);
@@ -142,7 +142,7 @@ class Importer extends AbstractImporter
         $this->validatedRows[$rowNumber] = true;
 
         /**
-         * If import action is delete than no need for further validation
+         * If import action is delete than no need for further validation.
          */
         if ($this->import->action == Import::ACTION_DELETE) {
             if (! $this->isSKUExist($rowData['sku'])) {
@@ -177,7 +177,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Start the import process
+     * Start the import process.
      */
     public function importBatch(ImportBatchContract $batch): bool
     {
@@ -190,7 +190,7 @@ class Importer extends AbstractImporter
         }
 
         /**
-         * Update import batch summary
+         * Update import batch summary.
          */
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
@@ -208,12 +208,12 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Delete products from current batch
+     * Delete products from current batch.
      */
     protected function deleteProducts(ImportBatchContract $batch): bool
     {
         /**
-         * Load SKU storage with batch skus
+         * Load SKU storage with batch skus.
          */
         $this->skuStorage->load(Arr::pluck($batch->data, 'sku'));
 
@@ -239,19 +239,19 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save products from current batch
+     * Save products from current batch.
      */
     protected function saveProductsData(ImportBatchContract $batch): bool
     {
         /**
-         * Load SKU storage with batch skus
+         * Load SKU storage with batch skus.
          */
         $this->skuStorage->load(Arr::pluck($batch->data, 'sku'));
 
         $products = [];
 
         /**
-         * Prepare products for import
+         * Prepare products for import.
          */
         foreach ($batch->data as $rowData) {
             $this->prepareProducts($rowData, $products);
@@ -263,7 +263,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Prepare products from current batch
+     * Prepare products from current batch.
      */
     public function prepareProducts(array $rowData, array &$products): void
     {
@@ -279,7 +279,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save products from current batch
+     * Save products from current batch.
      */
     public function saveProducts(array $products): void
     {
@@ -300,7 +300,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save channels from current batch
+     * Save channels from current batch.
      */
     public function saveChannels(array $channels): void
     {
@@ -327,7 +327,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save links
+     * Save links.
      */
     public function loadUnloadedSKUs(array $skus): void
     {
@@ -342,7 +342,7 @@ class Importer extends AbstractImporter
         }
 
         /**
-         * Load not loaded SKUs to the sku storage
+         * Load not loaded SKUs to the sku storage.
          */
         if (! empty($notLoadedSkus)) {
             $this->skuStorage->load($notLoadedSkus);
@@ -350,7 +350,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Check if SKU exists
+     * Check if SKU exists.
      */
     public function isSKUExist(string $sku): bool
     {
@@ -358,7 +358,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Prepare row data to save into the database
+     * Prepare row data to save into the database.
      */
     protected function prepareRowForDb(array $rowData): array
     {

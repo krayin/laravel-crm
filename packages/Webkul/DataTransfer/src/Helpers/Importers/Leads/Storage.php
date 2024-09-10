@@ -7,12 +7,12 @@ use Webkul\Lead\Repositories\LeadRepository;
 class Storage
 {
     /**
-     * Items contains identifier as key and product information as value
+     * Items contains identifier as key and product information as value.
      */
     protected array $items = [];
 
     /**
-     * Columns which will be selected from database
+     * Columns which will be selected from database.
      */
     protected array $selectColumns = [
         'id',
@@ -71,7 +71,7 @@ class Storage
     }
 
     /**
-     * Get unique id information
+     * Get unique id information.
      */
     public function get(string $uniqueId): ?int
     {
@@ -83,7 +83,7 @@ class Storage
     }
 
     /**
-     * Is storage is empty
+     * Is storage is empty.
      */
     public function isEmpty(): int
     {

@@ -7,12 +7,12 @@ use Webkul\Contact\Repositories\PersonRepository;
 class Storage
 {
     /**
-     * Items contains email as key and product information as value
+     * Items contains email as key and product information as value.
      */
     protected array $items = [];
 
     /**
-     * Columns which will be selected from database
+     * Columns which will be selected from database.
      */
     protected array $selectColumns = [
         'id',
@@ -27,7 +27,7 @@ class Storage
     public function __construct(protected PersonRepository $personRepository) {}
 
     /**
-     * Initialize storage
+     * Initialize storage.
      */
     public function init(): void
     {
@@ -37,7 +37,7 @@ class Storage
     }
 
     /**
-     * Load the Emails
+     * Load the Emails.
      */
     public function load(array $emails = []): void
     {
@@ -60,7 +60,7 @@ class Storage
     }
 
     /**
-     * Get email information
+     * Get email information.
      */
     public function set(string $email, int $id): self
     {
@@ -70,7 +70,7 @@ class Storage
     }
 
     /**
-     * Check if email exists
+     * Check if email exists.
      */
     public function has(string $email): bool
     {
@@ -78,7 +78,7 @@ class Storage
     }
 
     /**
-     * Get email information
+     * Get email information.
      */
     public function get(string $email): ?int
     {
@@ -90,7 +90,7 @@ class Storage
     }
 
     /**
-     * Is storage is empty
+     * Is storage is empty.
      */
     public function isEmpty(): int
     {

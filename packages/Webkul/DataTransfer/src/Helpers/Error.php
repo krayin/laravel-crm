@@ -5,32 +5,32 @@ namespace Webkul\DataTransfer\Helpers;
 class Error
 {
     /**
-     * Error Items
+     * Error Items.
      */
     protected array $items = [];
 
     /**
-     * Invalid rows
+     * Invalid rows.
      */
     protected array $invalidRows = [];
 
     /**
-     * Skipped rows
+     * Skipped rows.
      */
     protected array $skippedRows = [];
 
     /**
-     * Errors count
+     * Errors count.
      */
     protected int $errorsCount = 0;
 
     /**
-     * Error message template
+     * Error message template.
      */
     protected array $messageTemplate = [];
 
     /**
-     * Add error message template
+     * Add error message template.
      */
     public function addErrorMessage(string $code, string $template): self
     {
@@ -75,7 +75,7 @@ class Error
     }
 
     /**
-     * Add specific row to invalid list via row number
+     * Add specific row to invalid list via row number.
      */
     protected function addRowToInvalid(?int $rowNumber): self
     {
@@ -91,7 +91,7 @@ class Error
     }
 
     /**
-     * Add specific row to invalid list via row number
+     * Add specific row to invalid list via row number.
      */
     public function addRowToSkip(?int $rowNumber): self
     {
@@ -107,7 +107,7 @@ class Error
     }
 
     /**
-     * Check if row is invalid by row number
+     * Check if row is invalid by row number.
      */
     public function isRowInvalid(int $rowNumber): bool
     {
@@ -115,7 +115,7 @@ class Error
     }
 
     /**
-     * Build an error message via code, message and column name
+     * Build an error message via code, message and column name.
      */
     protected function getErrorMessage(?string $code, ?string $message, ?string $columnName): string
     {
@@ -141,7 +141,7 @@ class Error
     }
 
     /**
-     * Get number of invalid rows
+     * Get number of invalid rows.
      */
     public function getInvalidRowsCount(): int
     {
@@ -149,7 +149,7 @@ class Error
     }
 
     /**
-     * Get current error count
+     * Get current error count.
      */
     public function getErrorsCount(): int
     {
@@ -157,7 +157,7 @@ class Error
     }
 
     /**
-     * Get all errors from an import process
+     * Get all errors from an import process.
      */
     public function getAllErrors(): array
     {
@@ -165,7 +165,7 @@ class Error
     }
 
     /**
-     * Return all errors grouped by code
+     * Return all errors grouped by code.
      */
     public function getAllErrorsGroupedByCode(): array
     {

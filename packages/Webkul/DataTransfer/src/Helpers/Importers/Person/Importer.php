@@ -14,22 +14,22 @@ use Webkul\DataTransfer\Repositories\ImportBatchRepository;
 class Importer extends AbstractImporter
 {
     /**
-     * Error code for non existing email
+     * Error code for non existing email.
      */
     const ERROR_EMAIL_NOT_FOUND_FOR_DELETE = 'email_not_found_to_delete';
 
     /**
-     * Error code for duplicated email
+     * Error code for duplicated email.
      */
     const ERROR_DUPLICATE_EMAIL = 'duplicated_email';
 
     /**
-     * Error code for duplicated phone
+     * Error code for duplicated phone.
      */
     const ERROR_DUPLICATE_PHONE = 'duplicated_phone';
 
     /**
-     * Permanent entity columns
+     * Permanent entity columns.
      */
     protected array $validColumnNames = [
         'contact_numbers',
@@ -41,7 +41,7 @@ class Importer extends AbstractImporter
     ];
 
     /**
-     * Error message templates
+     * Error message templates.
      */
     protected array $messages = [
         self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE  => 'data_transfer::app.importers.persons.validation.errors.email-not-found',
@@ -50,24 +50,24 @@ class Importer extends AbstractImporter
     ];
 
     /**
-     * Permanent entity columns
+     * Permanent entity columns.
      *
      * @var string[]
      */
     protected $permanentAttributes = ['emails'];
 
     /**
-     * Permanent entity column
+     * Permanent entity column.
      */
     protected string $masterAttributeCode = 'unique_id';
 
     /**
-     * Emails storage
+     * Emails storage.
      */
     protected array $emails = [];
 
     /**
-     * Phones storage
+     * Phones storage.
      */
     protected array $phones = [];
 
@@ -85,7 +85,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Initialize Product error templates
+     * Initialize Product error templates.
      */
     protected function initErrorMessages(): void
     {
@@ -107,14 +107,14 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Validates row
+     * Validates row.
      */
     public function validateRow(array $rowData, int $rowNumber): bool
     {
         $rowData = $this->parsedRowData($rowData);
 
         /**
-         * If row is already validated than no need for further validation
+         * If row is already validated than no need for further validation.
          */
         if (isset($this->validatedRows[$rowNumber])) {
             return ! $this->errorHelper->isRowInvalid($rowNumber);
@@ -123,7 +123,7 @@ class Importer extends AbstractImporter
         $this->validatedRows[$rowNumber] = true;
 
         /**
-         * If import action is delete than no need for further validation
+         * If import action is delete than no need for further validation.
          */
         if ($this->import->action == Import::ACTION_DELETE) {
             foreach ($rowData['emails'] as $email) {
@@ -205,7 +205,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Start the import process
+     * Start the import process.
      */
     public function importBatch(ImportBatchContract $batch): bool
     {
@@ -218,7 +218,7 @@ class Importer extends AbstractImporter
         }
 
         /**
-         * Update import batch summary
+         * Update import batch summary.
          */
         $batch = $this->importBatchRepository->update([
             'state' => Import::STATE_PROCESSED,
@@ -236,12 +236,12 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Delete persons from current batch
+     * Delete persons from current batch.
      */
     protected function deletePersons(ImportBatchContract $batch): bool
     {
         /**
-         * Load person storage with batch emails
+         * Load person storage with batch emails.
          */
         $emails = collect(Arr::pluck($batch->data, 'emails'))
             ->map(function ($emails) {
@@ -278,12 +278,12 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save person from current batch
+     * Save person from current batch.
      */
     protected function savePersonData(ImportBatchContract $batch): bool
     {
         /**
-         * Load person storage with batch email
+         * Load person storage with batch email.
          */
         $emails = collect(Arr::pluck($batch->data, 'emails'))
             ->map(function ($emails) {
@@ -300,7 +300,7 @@ class Importer extends AbstractImporter
 
         foreach ($batch->data as $rowData) {
             /**
-             * Prepare persons for import
+             * Prepare persons for import.
              */
             $this->preparePersons($rowData, $persons);
         }
@@ -311,7 +311,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Prepare persons from current batch
+     * Prepare persons from current batch.
      */
     public function preparePersons(array $rowData, array &$persons): void
     {
@@ -340,7 +340,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Save persons from current batch
+     * Save persons from current batch.
      */
     public function savePersons(array $persons): void
     {
@@ -361,7 +361,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Check if email exists
+     * Check if email exists.
      */
     public function isEmailExist(string $email): bool
     {
@@ -369,7 +369,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Get parsed email and phone
+     * Get parsed email and phone.
      */
     private function parsedRowData(array $rowData): array
     {

@@ -269,7 +269,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Check if title exists
+     * Check if title exists.
      */
     public function isTitleExist(string $title): bool
     {
@@ -277,7 +277,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Prepare row data to save into the database
+     * Prepare row data to save into the database.
      */
     protected function prepareRowForDb(array $rowData): array
     {

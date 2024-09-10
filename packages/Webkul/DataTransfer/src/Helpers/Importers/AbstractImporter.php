@@ -68,12 +68,12 @@ abstract class AbstractImporter
     public const BATCH_SIZE = 100;
 
     /**
-     * Is linking required
+     * Is linking required.
      */
     protected bool $linkingRequired = false;
 
     /**
-     * Is indexing required
+     * Is indexing required.
      */
     protected bool $indexingRequired = false;
 
@@ -97,32 +97,32 @@ abstract class AbstractImporter
     protected $source;
 
     /**
-     * Valid column names
+     * Valid column names.
      */
     protected array $validColumnNames = [];
 
     /**
-     * Array of numbers of validated rows as keys and boolean TRUE as values
+     * Array of numbers of validated rows as keys and boolean TRUE as values.
      */
     protected array $validatedRows = [];
 
     /**
-     * Number of rows processed by validation
+     * Number of rows processed by validation.
      */
     protected int $processedRowsCount = 0;
 
     /**
-     * Number of created items
+     * Number of created items.
      */
     protected int $createdItemsCount = 0;
 
     /**
-     * Number of updated items
+     * Number of updated items.
      */
     protected int $updatedItemsCount = 0;
 
     /**
-     * Number of deleted items
+     * Number of deleted items.
      */
     protected int $deletedItemsCount = 0;
 
@@ -134,17 +134,17 @@ abstract class AbstractImporter
     public function __construct(protected ImportBatchRepository $importBatchRepository) {}
 
     /**
-     * Validate data row
+     * Validate data row.
      */
     abstract public function validateRow(array $rowData, int $rowNumber): bool;
 
     /**
-     * Import data rows
+     * Import data rows.
      */
     abstract public function importBatch(ImportBatchContract $importBatchContract): bool;
 
     /**
-     * Initialize Product error messages
+     * Initialize Product error messages.
      */
     protected function initErrorMessages(): void
     {
@@ -200,7 +200,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Retrieve valid column names
+     * Retrieve valid column names.
      */
     public function getValidColumnNames(): array
     {
@@ -233,7 +233,7 @@ abstract class AbstractImporter
         }
 
         /**
-         * Add Columns Errors
+         * Add Columns Errors.
          */
         foreach ($errors as $errorCode => $error) {
             $this->addErrors($errorCode, $error);
@@ -247,7 +247,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Save validated batches
+     * Save validated batches.
      */
     protected function saveValidatedBatches(): self
     {
@@ -258,7 +258,7 @@ abstract class AbstractImporter
         $source->rewind();
 
         /**
-         * Clean previous saved batches
+         * Clean previous saved batches.
          */
         $this->importBatchRepository->deleteWhere([
             'import_id' => $this->import->id,
@@ -297,7 +297,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Start the import process
+     * Start the import process.
      */
     public function importData(?ImportBatchContract $importBatch = null): bool
     {
@@ -363,7 +363,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Add errors to error aggregator
+     * Add errors to error aggregator.
      */
     protected function addErrors(string $code, mixed $errors): void
     {
@@ -375,7 +375,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Add row as skipped
+     * Add row as skipped.
      *
      * @param  int|null  $rowNumber
      * @param  string|null  $columnName
@@ -397,7 +397,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Prepare row data to save into the database
+     * Prepare row data to save into the database.
      */
     protected function prepareRowForDb(array $rowData): array
     {
@@ -409,7 +409,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Returns number of checked rows
+     * Returns number of checked rows.
      */
     public function getProcessedRowsCount(): int
     {
@@ -417,7 +417,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Returns number of created items count
+     * Returns number of created items count.
      */
     public function getCreatedItemsCount(): int
     {
@@ -425,7 +425,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Returns number of updated items count
+     * Returns number of updated items count.
      */
     public function getUpdatedItemsCount(): int
     {
@@ -433,7 +433,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Returns number of deleted items count
+     * Returns number of deleted items count.
      */
     public function getDeletedItemsCount(): int
     {
@@ -441,7 +441,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Is linking resource required for the import operation
+     * Is linking resource required for the import operation.
      */
     public function isLinkingRequired(): bool
     {
@@ -453,7 +453,7 @@ abstract class AbstractImporter
     }
 
     /**
-     * Is indexing resource required for the import operation
+     * Is indexing resource required for the import operation.
      */
     public function isIndexingRequired(): bool
     {

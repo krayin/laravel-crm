@@ -7,17 +7,17 @@ use Webkul\Product\Repositories\ProductRepository;
 class SKUStorage
 {
     /**
-     * Delimiter for SKU information
+     * Delimiter for SKU information.
      */
     private const DELIMITER = '|';
 
     /**
-     * Items contains SKU as key and product information as value
+     * Items contains SKU as key and product information as value.
      */
     protected array $items = [];
 
     /**
-     * Columns which will be selected from database
+     * Columns which will be selected from database.
      */
     protected array $selectColumns = [
         'id',
@@ -32,7 +32,7 @@ class SKUStorage
     public function __construct(protected ProductRepository $productRepository) {}
 
     /**
-     * Initialize storage
+     * Initialize storage.
      */
     public function init(): void
     {
@@ -42,7 +42,7 @@ class SKUStorage
     }
 
     /**
-     * Load the SKU
+     * Load the SKU.
      */
     public function load(array $skus = []): void
     {
@@ -61,7 +61,7 @@ class SKUStorage
     }
 
     /**
-     * Get SKU information
+     * Get SKU information.
      */
     public function set(string $sku, array $data): self
     {
@@ -74,7 +74,7 @@ class SKUStorage
     }
 
     /**
-     * Check if SKU exists
+     * Check if SKU exists.
      */
     public function has(string $sku): bool
     {
@@ -82,7 +82,7 @@ class SKUStorage
     }
 
     /**
-     * Get SKU information
+     * Get SKU information.
      */
     public function get(string $sku): ?array
     {
@@ -98,7 +98,7 @@ class SKUStorage
     }
 
     /**
-     * Is storage is empty
+     * Is storage is empty.
      */
     public function isEmpty(): int
     {
