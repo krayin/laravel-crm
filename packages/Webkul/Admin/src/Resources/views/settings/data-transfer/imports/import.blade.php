@@ -108,7 +108,7 @@
                             class="flex items-center gap-2 dark:text-white"
                             v-else
                         >
-                            <i class="icon-cross h-fit rounded-full bg-red-200 text-2xl text-red-600 dark:!text-red-600"></i>
+                            <i class="icon-error h-fit rounded-full bg-red-200 text-2xl text-red-600 dark:!text-red-600"></i>
 
                             @lang('admin::app.settings.data-transfer.imports.import.validation-failed-info')
                         </p>
