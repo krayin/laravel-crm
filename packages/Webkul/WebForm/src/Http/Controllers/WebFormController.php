@@ -140,7 +140,7 @@ class WebFormController extends Controller
             abort(404);
         }
 
-        return view('web_form::settings.web-forms.preview');
+        return view('web_form::settings.web-forms.preview', compact('webForm'));
     }
 
     /**
@@ -156,6 +156,6 @@ class WebFormController extends Controller
             abort(404);
         }
 
-        return view('web_form::settings.web-forms.preview');
+        return view('web_form::settings.web-forms.preview', compact('webForm'));
     }
 }
