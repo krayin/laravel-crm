@@ -325,15 +325,13 @@ class Importer extends AbstractImporter
             });
 
         foreach ($emails as $email) {
+            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}";
+
             if ($this->isEmailExist($email)) {
-                $persons['update'][$email] = [
-                    ...$rowData,
-                    'unique_id' => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
-                ];
+                $persons['update'][$email] = $rowData;
             } else {
                 $persons['insert'][$email] = [
                     ...$rowData,
-                    'unique_id'  => "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}",
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];

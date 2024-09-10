@@ -233,23 +233,17 @@ class Importer extends AbstractImporter
 
         $taxRates = [];
 
+        /**
+         * Prepare leads for import.
+         */
         foreach ($batch->data as $rowData) {
-            /**
-             * Prepare leads for import.
-             */
-            $uniqueId = [
-                'unique_id' => "{$rowData['user_id']}|{$rowData['person_id']}|{$rowData['lead_source_id']}|{$rowData['lead_type_id']}|{$rowData['lead_pipeline_id']}",
-            ];
+            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['person_id']}|{$rowData['lead_source_id']}|{$rowData['lead_type_id']}|{$rowData['lead_pipeline_id']}";
 
             if ($this->isTitleExist($rowData['title'])) {
-                $taxRates['update'][$rowData['title']] = [
-                    ...$rowData,
-                    ...$uniqueId,
-                ];
+                $taxRates['update'][$rowData['title']] = $rowData;
             } else {
                 $taxRates['insert'][$rowData['title']] = [
                     ...$rowData,
-                    ...$uniqueId,
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
