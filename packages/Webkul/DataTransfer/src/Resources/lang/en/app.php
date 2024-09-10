@@ -45,6 +45,7 @@ return [
             'invalid-attribute'    => 'Header contains invalid attribute(s): "%s".',
             'system'               => 'An unexpected system error occurred.',
             'wrong-quotes'         => 'Curly quotes used instead of straight quotes.',
+            'already-exists'       => 'The :attribute already exists.',
         ],
     ],
 ];

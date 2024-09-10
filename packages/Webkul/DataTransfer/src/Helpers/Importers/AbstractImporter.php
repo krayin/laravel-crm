@@ -4,6 +4,9 @@ namespace Webkul\DataTransfer\Helpers\Importers;
 
 use Illuminate\Support\Facades\Bus;
 use Illuminate\Support\Facades\Event;
+use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
+use Webkul\Core\Contracts\Validations\Decimal;
 use Webkul\DataTransfer\Contracts\Import as ImportContract;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
@@ -131,7 +134,11 @@ abstract class AbstractImporter
      *
      * @return void
      */
-    public function __construct(protected ImportBatchRepository $importBatchRepository) {}
+    public function __construct(
+        protected ImportBatchRepository $importBatchRepository,
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository
+    ) {}
 
     /**
      * Validate data row.
@@ -294,6 +301,84 @@ abstract class AbstractImporter
         }
 
         return $this;
+    }
+
+    /**
+     * Prepare validation rules.
+     */
+    public function getValidationRules(string $entityType, array $rowData): array
+    {
+        if (empty($entityType)) {
+            return [];
+        }
+
+        $rules = [];
+
+        $attributes = $this->attributeRepository->scopeQuery(fn ($query) => $query->whereIn('code', array_keys($rowData))->where('entity_type', $entityType))->get();
+
+        foreach ($attributes as $attribute) {
+            $validations = [];
+
+            if ($attribute->type == 'boolean') {
+                continue;
+            } elseif ($attribute->type == 'address') {
+                if (! $attribute->is_required) {
+                    continue;
+                }
+
+                $validations = [
+                    $attribute->code.'.address'  => 'required',
+                    $attribute->code.'.country'  => 'required',
+                    $attribute->code.'.state'    => 'required',
+                    $attribute->code.'.city'     => 'required',
+                    $attribute->code.'.postcode' => 'required',
+                ];
+            } elseif ($attribute->type == 'email') {
+                $validations = [
+                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable', 'email'],
+                    $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                ];
+            } elseif ($attribute->type == 'phone') {
+                $validations = [
+                    $attribute->code              => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.value'   => [$attribute->is_required ? 'required' : 'nullable'],
+                    $attribute->code.'.*.label'   => $attribute->is_required ? 'required' : 'nullable',
+                ];
+            } else {
+                $validations[$attribute->code] = [$attribute->is_required ? 'required' : 'nullable'];
+
+                if ($attribute->type == 'text' && $attribute->validation) {
+                    array_push($validations[$attribute->code],
+                        $attribute->validation == 'decimal'
+                        ? new Decimal
+                        : $attribute->validation
+                    );
+                }
+
+                if ($attribute->type == 'price') {
+                    array_push($validations[$attribute->code], new Decimal);
+                }
+            }
+
+            if ($attribute->is_unique) {
+                array_push($validations[in_array($attribute->type, ['email', 'phone'])
+                    ? $attribute->code.'.*.value'
+                    : $attribute->code
+                ], function ($field, $value, $fail) use ($attribute) {
+                    if (! $this->attributeValueRepository->isValueUnique(null, $attribute->entity_type, $attribute, $field)) {
+                        $fail(trans('data_transfer::app.validation.errors.already-exists', ['attribute' => $attribute->name]));
+                    }
+                });
+            }
+
+            $rules = [
+                ...$rules,
+                ...$validations,
+            ];
+        }
+
+        return $rules;
     }
 
     /**

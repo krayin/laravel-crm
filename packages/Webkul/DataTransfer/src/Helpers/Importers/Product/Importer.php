@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
 use Webkul\Attribute\Repositories\AttributeOptionRepository;
 use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
@@ -66,9 +67,14 @@ class Importer extends AbstractImporter
         protected AttributeOptionRepository $attributeOptionRepository,
         protected ProductRepository $productRepository,
         protected ProductInventoryRepository $productInventoryRepository,
+        protected AttributeValueRepository $attributeValueRepository,
         protected SKUStorage $skuStorage
     ) {
-        parent::__construct($importBatchRepository);
+        parent::__construct(
+            $importBatchRepository,
+            $attributeRepository,
+            $attributeValueRepository
+        );
 
         $this->initAttributes();
     }
@@ -154,22 +160,18 @@ class Importer extends AbstractImporter
             return true;
         }
 
-        if (! empty($optionsData)) {
-            $validator = Validator::make($optionsData, [
-                'description' => 'nullable|string',
-                'name'        => 'required|string',
-                'price'       => 'required|numeric',
-                'sku'         => 'required|string|unique:products,sku',
-            ]);
+        /**
+         * Validate product attributes
+         */
+        $validator = Validator::make($rowData, $this->getValidationRules('products', $rowData));
 
-            if ($validator->fails()) {
-                foreach ($validator->errors()->getMessages() as $attributeCode => $message) {
-                    $failedAttributes = $validator->failed();
+        if ($validator->fails()) {
+            foreach ($validator->errors()->getMessages() as $attributeCode => $message) {
+                $failedAttributes = $validator->failed();
 
-                    $errorCode = array_key_first($failedAttributes[$attributeCode] ?? []);
+                $errorCode = array_key_first($failedAttributes[$attributeCode] ?? []);
 
-                    $this->skipRow($rowNumber, $errorCode, $attributeCode, current($message));
-                }
+                $this->skipRow($rowNumber, $errorCode, $attributeCode, current($message));
             }
         }
 

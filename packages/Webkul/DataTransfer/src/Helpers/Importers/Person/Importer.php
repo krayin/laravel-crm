@@ -5,6 +5,8 @@ namespace Webkul\DataTransfer\Helpers\Importers\Person;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
+use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
@@ -79,9 +81,15 @@ class Importer extends AbstractImporter
     public function __construct(
         protected ImportBatchRepository $importBatchRepository,
         protected PersonRepository $personRepository,
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository,
         protected Storage $personStorage,
     ) {
-        parent::__construct($importBatchRepository);
+        parent::__construct(
+            $importBatchRepository,
+            $attributeRepository,
+            $attributeValueRepository,
+        );
     }
 
     /**
@@ -141,16 +149,8 @@ class Importer extends AbstractImporter
          * Validate row data.
          */
         $validator = Validator::make($rowData, [
-            'contact_numbers'         => 'nullable|array',
-            'contact_numbers.*.value' => 'nullable|string',
-            'contact_numbers.*.label' => 'nullable|string',
-            'emails'                  => 'nullable|array',
-            'emails.*.value'          => 'nullable|string',
-            'emails.*.label'          => 'nullable|string',
-            'job_title'               => 'nullable|string',
-            'name'                    => 'required|string',
-            'organization_id'         => 'exists:organizations,id|nullable',
-            'user_id'                 => 'exists:users,id|nullable',
+            ...$this->getValidationRules('persons', $rowData),
+            'organization_id' => 'required|exists:organizations,id',
         ]);
 
         if ($validator->fails()) {

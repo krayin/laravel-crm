@@ -5,6 +5,8 @@ namespace Webkul\DataTransfer\Helpers\Importers\Leads;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Validator;
+use Webkul\Attribute\Repositories\AttributeRepository;
+use Webkul\Attribute\Repositories\AttributeValueRepository;
 use Webkul\DataTransfer\Contracts\ImportBatch as ImportBatchContract;
 use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
@@ -75,13 +77,19 @@ class Importer extends AbstractImporter
     public function __construct(
         protected ImportBatchRepository $importBatchRepository,
         protected LeadRepository $leadRepository,
+        protected AttributeRepository $attributeRepository,
+        protected AttributeValueRepository $attributeValueRepository,
         protected Storage $leadsStorage
     ) {
-        parent::__construct($importBatchRepository);
+        parent::__construct(
+            $importBatchRepository,
+            $attributeRepository,
+            $attributeValueRepository,
+        );
     }
 
     /**
-     * Initialize Product error templates.
+     * Initialize leads error templates.
      */
     protected function initErrorMessages(): void
     {
@@ -130,22 +138,19 @@ class Importer extends AbstractImporter
         }
 
         /**
-         * Validate product attributes.
+         * Validate leads attributes.
          */
         $validator = Validator::make($rowData, [
-            'title'                  => 'required|string',
-            'description'            => 'nullable|string',
-            'lead_value'             => 'nullable|numeric',
-            'status'                 => 'nullable|string',
-            'lost_reason'            => 'nullable|string',
-            'closed_at'              => 'nullable|date',
-            'user_id'                => 'required|numeric',
-            'person_id'              => 'required|numeric',
-            'lead_source_id'         => 'required|numeric',
-            'lead_type_id'           => 'required|numeric',
-            'lead_pipeline_id'       => 'required|numeric',
-            'lead_pipeline_stage_id' => 'nullable|numeric',
-            'expected_close_date'    => 'nullable|date',
+            ...$this->getValidationRules('leads', $rowData),
+            ...[
+                'user_id'                => 'required|exists:users,id|numeric',
+                'person_id'              => 'required|exists:persons,id|numeric',
+                'lead_source_id'         => 'required|exists:lead_sources,id|numeric',
+                'lead_type_id'           => 'required|exists:lead_types,id|numeric',
+                'lead_pipeline_id'       => 'required|exists:lead_pipelines,id|numeric',
+                'lead_pipeline_stage_id' => 'nullable|exists:lead_pipeline_stages,id|numeric',
+                'expected_close_date'    => 'nullable|date',
+            ],
         ]);
 
         if ($validator->fails()) {
