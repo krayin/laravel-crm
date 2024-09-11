@@ -11,6 +11,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('email')
@@ -19,6 +20,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('phone')
@@ -27,6 +29,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('lookup')
@@ -35,6 +38,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('select')
@@ -43,6 +47,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     
@@ -52,6 +57,7 @@
             :value="$value"
             :validations="$validations"
         />
+        
         @break
 
     @case('price')
@@ -60,14 +66,16 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
-{{-- 
+
     @case('image')
         <x-admin::attributes.edit.image
             :attribute="$attribute"
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('file')
@@ -76,7 +84,8 @@
             :value="$value"
             :validations="$validations"
         />
-        @break --}}
+
+        @break
 
     @case('textarea')
         <x-admin::attributes.edit.textarea
@@ -84,6 +93,7 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
 
     @case('address')
@@ -92,12 +102,15 @@
             :value="$value"
             :validations="$validations"
         />
+
         @break
+
     @case('date')
         <x-admin::attributes.edit.date
             :attribute="$attribute"
             :value="$value"
             :validations="$validations"
         />
+
         @break
 @endswitch
