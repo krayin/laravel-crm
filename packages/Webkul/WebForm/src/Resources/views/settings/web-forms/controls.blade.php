@@ -100,7 +100,7 @@
                     :label="$parentAttribute->name"
                 />
 
-                <x-web_form::form.control-group.error control-name="{{ $fieldName }}[0][value]" />
+                <x-web_form::form.control-group.error control-name="{{ $fieldName }}" />
                 
                 @break;
 

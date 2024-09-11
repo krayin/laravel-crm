@@ -123,7 +123,7 @@ class WebFormController extends Controller
         } else {
             return response()->json([
                 'redirect' => $webForm->submit_success_content,
-            ], 200);
+            ], 301);
         }
     }
 

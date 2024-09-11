@@ -1,6 +1,6 @@
 <x-web_form::layouts>
     <x-slot:title>
-        @lang('Preview')
+        {{ $webForm->title }}
     </x-slot>
 
     <!-- Web Form -->
@@ -93,10 +93,18 @@
                             .then(response => {
                                 resetForm();
 
+                                this.$refs.webForm.reset();
+
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch(error => {
-                                this.$emitter.emit('add-flash', { type: 'success', message: error.response.data.message });
+                                if (error.response.data.redirect) {
+                                    window.location.href = error.response.data.redirect;
+
+                                    return;
+                                }
+                                
+                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                             })
                             .finally(() => {
                                 this.isStoring = false;
