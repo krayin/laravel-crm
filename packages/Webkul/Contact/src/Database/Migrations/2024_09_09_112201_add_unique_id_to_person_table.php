@@ -18,10 +18,14 @@ return new class extends Migration
 
         DB::statement("
             UPDATE persons
-            SET unique_id = CONCAT(user_id, '|', organization_id, '|', 
-                JSON_UNQUOTE(JSON_EXTRACT(emails, '$[0].value'))
+            SET unique_id = CONCAT(
+                user_id, '|', 
+                organization_id, '|', 
+                JSON_UNQUOTE(JSON_EXTRACT(emails, '$[0].value')), '|',
+                JSON_UNQUOTE(JSON_EXTRACT(contact_numbers, '$[0].value'))
             )
         ");
+    
     }
 
     /**

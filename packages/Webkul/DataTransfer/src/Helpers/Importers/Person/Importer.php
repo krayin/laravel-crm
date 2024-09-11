@@ -298,10 +298,10 @@ class Importer extends AbstractImporter
 
         $persons = [];
 
+        /**
+         * Prepare persons for import.
+         */
         foreach ($batch->data as $rowData) {
-            /**
-             * Prepare persons for import.
-             */
             $this->preparePersons($rowData, $persons);
         }
 
@@ -325,7 +325,9 @@ class Importer extends AbstractImporter
             });
 
         foreach ($emails as $email) {
-            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}";
+            $contactNumber = json_decode($rowData['contact_numbers'], true);
+
+            $rowData['unique_id'] = "{$rowData['user_id']}|{$rowData['organization_id']}|{$email}|{$contactNumber[0]['value']}";
 
             if ($this->isEmailExist($email)) {
                 $persons['update'][$email] = $rowData;
