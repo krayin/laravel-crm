@@ -136,7 +136,7 @@ class Importer extends AbstractImporter
         if ($this->import->action == Import::ACTION_DELETE) {
             foreach ($rowData['emails'] as $email) {
                 if (! $this->isEmailExist($email['value'])) {
-                    $this->skipRow($rowNumber, self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE);
+                    $this->skipRow($rowNumber, self::ERROR_EMAIL_NOT_FOUND_FOR_DELETE, 'email');
 
                     return false;
                 }

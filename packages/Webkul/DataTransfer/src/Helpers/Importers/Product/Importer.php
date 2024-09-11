@@ -152,7 +152,7 @@ class Importer extends AbstractImporter
          */
         if ($this->import->action == Import::ACTION_DELETE) {
             if (! $this->isSKUExist($rowData['sku'])) {
-                $this->skipRow($rowNumber, self::ERROR_SKU_NOT_FOUND_FOR_DELETE);
+                $this->skipRow($rowNumber, self::ERROR_SKU_NOT_FOUND_FOR_DELETE, 'sku');
 
                 return false;
             }

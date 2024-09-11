@@ -25,7 +25,7 @@ return new class extends Migration
                 JSON_UNQUOTE(JSON_EXTRACT(contact_numbers, '$[0].value'))
             )
         ");
-    
+
     }
 
     /**
