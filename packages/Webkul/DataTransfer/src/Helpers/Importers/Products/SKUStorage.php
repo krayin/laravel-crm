@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataTransfer\Helpers\Importers\Product;
+namespace Webkul\DataTransfer\Helpers\Importers\Products;
 
 use Webkul\Product\Repositories\ProductRepository;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataTransfer\Helpers\Importers\Person;
+namespace Webkul\DataTransfer\Helpers\Importers\Persons;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Event;

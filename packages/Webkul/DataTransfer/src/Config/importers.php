@@ -3,13 +3,13 @@
 return [
     'persons' => [
         'title'       => 'data_transfer::app.importers.persons.title',
-        'importer'    => 'Webkul\DataTransfer\Helpers\Importers\Person\Importer',
+        'importer'    => 'Webkul\DataTransfer\Helpers\Importers\Persons\Importer',
         'sample_path' => 'data-transfer/samples/persons.csv',
     ],
 
     'products' => [
         'title'       => 'data_transfer::app.importers.products.title',
-        'importer'    => 'Webkul\DataTransfer\Helpers\Importers\Product\Importer',
+        'importer'    => 'Webkul\DataTransfer\Helpers\Importers\Products\Importer',
         'sample_path' => 'data-transfer/samples/products.csv',
     ],
 

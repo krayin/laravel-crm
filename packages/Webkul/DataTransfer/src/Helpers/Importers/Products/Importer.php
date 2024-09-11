@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\DataTransfer\Helpers\Importers\Product;
+namespace Webkul\DataTransfer\Helpers\Importers\Products;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
