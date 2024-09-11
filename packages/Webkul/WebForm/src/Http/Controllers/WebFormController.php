@@ -29,7 +29,7 @@ class WebFormController extends Controller
         protected LeadRepository $leadRepository,
         protected PipelineRepository $pipelineRepository,
         protected SourceRepository $sourceRepository,
-        protected TypeRepository $typeRepository
+        protected TypeRepository $typeRepository,
     ) {}
 
     /**
@@ -39,7 +39,8 @@ class WebFormController extends Controller
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $formId);
 
-        return response()->view('web_form::settings.web-forms.embed', compact('webForm'));
+        return response()->view('web_form::settings.web-forms.embed', compact('webForm'))
+            ->header('Content-Type', 'text/javascript');
     }
 
     /**
