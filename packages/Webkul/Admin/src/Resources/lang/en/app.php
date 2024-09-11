@@ -993,7 +993,12 @@ return [
                 'save-btn'                 => 'Save Webform',
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
+                'redirect-to-url'          => 'Redirect To Url',
                 'title'                    => 'Create Webform',
+                'choose-value'             => 'Choose Value',
+                'select-file'              => 'Select File',
+                'select-image'             => 'Select Image',
+                'enter-value'              => 'Enter Value',
             ],
 
             'edit' => [
@@ -1024,6 +1029,10 @@ return [
                 'submit-button-label'       => 'Submit Button Label',
                 'submit-success-action'     => 'Submit Success Action',
                 'title'                     => 'Edit Webform',
+                'choose-value'              => 'Choose Value',
+                'select-file'               => 'Select File',
+                'select-image'              => 'Select Image',
+                'enter-value'               => 'Enter Value',
             ],
         ],
 
