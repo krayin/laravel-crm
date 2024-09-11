@@ -39,9 +39,7 @@ class WebFormController extends Controller
     {
         $webForm = $this->webFormRepository->findOneByField('form_id', $formId);
 
-        return response()
-            ->view('web_form::settings.web-forms.form-js', compact('webForm'))
-            ->header('Content-Type', 'text/javascript');
+        return response()->view('web_form::settings.web-forms.embed', compact('webForm'));
     }
 
     /**
@@ -140,7 +138,7 @@ class WebFormController extends Controller
             abort(404);
         }
 
-        return view('web_form::settings.web-forms.preview');
+        return view('web_form::settings.web-forms.preview', compact('webForm'));
     }
 
     /**
@@ -156,6 +154,6 @@ class WebFormController extends Controller
             abort(404);
         }
 
-        return view('web_form::settings.web-forms.preview');
+        return view('web_form::settings.web-forms.preview', compact('webForm'));
     }
 }

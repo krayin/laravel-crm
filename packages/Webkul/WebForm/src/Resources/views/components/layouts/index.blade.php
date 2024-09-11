@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 
 <html
-    class="{{ request()->cookie('dark_mode') ? 'dark' : '' }}"
     lang="{{ app()->getLocale() }}"
     dir="{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'rtl' : 'ltr' }}"
 >
@@ -15,6 +14,7 @@
         http-equiv="X-UA-Compatible"
         content="IE=edge"
     >
+    
     <meta
         http-equiv="content-language"
         content="{{ app()->getLocale() }}"
@@ -45,27 +45,69 @@
         rel="stylesheet"
     />
 
-    <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
-        rel="stylesheet"
-    />
-
-    <link
-        rel="preload"
-        as="image"
-        href="{{ url('cache/logo/bagisto.png') }}"
-    >
+    @if ($favicon = core()->getConfigData('general.design.admin_logo.favicon'))
+        <link
+            type="image/x-icon"
+            href="{{ Storage::url($favicon) }}"
+            rel="shortcut icon"
+            sizes="16x16"
+        >
+    @else
+        <link
+            type="image/x-icon"
+            href="{{ vite()->asset('images/favicon.ico') }}"
+            rel="shortcut icon"
+            sizes="16x16"
+        />
+    @endif
 
     @stack('styles')
+
+    <style>
+        {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
+    </style>
+
+    {!! view_render_event('webform.layout.head') !!}
 </head>
 
-<body class="h-full font-inter dark:bg-gray-950">
-    <div
-        id="app"
-        class="h-full"
-    >
+<body>
+    {!! view_render_event('webform.layout.body.before') !!}
+
+    <div id="app">
+        <!-- Flash Message Blade Component -->
+        <x-web_form::flash-group />
+
+        {!! view_render_event('webform.layout.content.before') !!}
+
+        <!-- Page Content Blade Component -->
         {{ $slot }}
+
+        {!! view_render_event('webform.layout.content.after') !!}
     </div>
+
+    {!! view_render_event('webform.layout.body.after') !!}
+
+    @stack('scripts')
+
+    {!! view_render_event('webform.layout.vue-app-mount.before') !!}
+
+    <script>
+        /**
+         * Load event, the purpose of using the event is to mount the application
+         * after all of our Vue components which is present in blade file have
+         * been registered in the app. No matter what app.mount() should be
+         * called in the last.
+         */
+        window.addEventListener("load", function(event) {
+            app.mount("#app");
+        });
+    </script>
+
+    {!! view_render_event('webform.layout.vue-app-mount.after') !!}
+
+    <script type="text/javascript">
+        {!! core()->getConfigData('general.content.custom_scripts.custom_javascript') !!}
+    </script>
 </body>
 
 </html>

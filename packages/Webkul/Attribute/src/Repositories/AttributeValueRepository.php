@@ -78,7 +78,7 @@ class AttributeValueRepository extends Repository
             }
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
-                $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
+                $data[$attribute->code] = request()->hasFile($attribute->code)
                     ? request()->file($attribute->code)->store($data['entity_type'].'/'.$data['entity_id'])
                     : null;
             }
