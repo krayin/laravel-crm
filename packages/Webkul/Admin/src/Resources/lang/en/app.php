@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Delete',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Click to add',
                 'search'          => 'Search',

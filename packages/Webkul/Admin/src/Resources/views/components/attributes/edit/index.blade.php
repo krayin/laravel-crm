@@ -49,7 +49,6 @@
         />
 
         @break
-
     
     @case('multiselect')
         <x-admin::attributes.edit.multiselect
@@ -107,6 +106,33 @@
 
     @case('date')
         <x-admin::attributes.edit.date
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+
+        @break
+
+    @case('datetime')
+        <x-admin::attributes.edit.datetime
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+
+        @break
+
+    @case('boolean')
+        <x-admin::attributes.edit.boolean
+            :attribute="$attribute"
+            :value="$value"
+            :validations="$validations"
+        />
+
+        @break
+
+    @case('checkbox')
+        <x-admin::attributes.edit.checkbox
             :attribute="$attribute"
             :value="$value"
             :validations="$validations"
