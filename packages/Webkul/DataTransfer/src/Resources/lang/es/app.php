@@ -29,8 +29,7 @@ return [
 
             'validation' => [
                 'errors' => [
-                    'title-not-found' => 'Título: \'%s\' no se encontró en el sistema.',
-                    'duplicate-title' => 'Título: \'%s\' se encontró más de una vez en el archivo de importación.',
+                    'id-not-found' => 'ID: \'%s\' no se encuentra en el sistema.',
                 ],
             ],
         ],

@@ -29,8 +29,7 @@ return [
 
             'validation' => [
                 'errors' => [
-                    'title-not-found' => 'Başlık: \'%s\' sistemde bulunamadı.',
-                    'duplicate-title' => 'Başlık: \'%s\' içe aktarma dosyasında birden fazla kez bulundu.',
+                    'id-not-found' => 'ID: \'%s\' sistemde bulunamadı.',
                 ],
             ],
         ],
