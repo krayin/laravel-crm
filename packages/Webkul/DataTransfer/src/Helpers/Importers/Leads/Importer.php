@@ -348,7 +348,7 @@ class Importer extends AbstractImporter
     }
 
     /**
-     * Check if title exists.
+     * Check if id exists.
      */
     public function isIdExist(string $id): bool
     {
