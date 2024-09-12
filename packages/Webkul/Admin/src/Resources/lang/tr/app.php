@@ -1991,7 +1991,7 @@ return [
                     'reset-password'    => 'Şifreyi Sıfırla',
                     'info'              => 'Bu e-postayı almanız, hesabınız için bir şifre sıfırlama talebi aldığımız anlamına gelir',
                     'final-summary'     => 'Eğer şifre sıfırlama talebinde bulunmadıysanız, herhangi bir ek işlem yapmanıza gerek yoktur',
-                    'thanks'            => 'Teşekkürler!'
+                    'thanks'            => 'Teşekkürler!',
                 ],
             ],
         ],

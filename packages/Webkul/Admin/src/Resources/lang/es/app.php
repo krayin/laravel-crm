@@ -1991,7 +1991,7 @@ return [
                     'reset-password'    => 'Restablecer Contraseña',
                     'info'              => 'Estás recibiendo este correo porque recibimos una solicitud de restablecimiento de contraseña para tu cuenta',
                     'final-summary'     => 'Si no solicitaste el restablecimiento de contraseña, no se requiere ninguna acción adicional',
-                    'thanks'            => '¡Gracias!'
+                    'thanks'            => '¡Gracias!',
                 ],
             ],
         ],
