@@ -69,14 +69,15 @@
         <!-- Editing view -->
         <div
             class="relative flex w-full flex-col"
+            ref="dropdownContainer"
             v-if="isEditing"
         >
-            <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 ltr:pr-16 rtl:pl-16">
+            <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400 ltr:pr-16 rtl:pl-16">
                 <ul class="flex flex-wrap items-center gap-1">
                     <li
                         v-for="option in tempOptions"
                         :key="option.id"
-                        class="flex items-center gap-1 rounded-md bg-slate-100 pl-2"
+                        class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-gray-800 dark:text-white"
                     >
                         <input
                             type="hidden"
@@ -99,7 +100,7 @@
                                     v-if="option.name?.length > 20"
                                 >
                                     <span
-                                        class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900"
+                                        class="whitespace-no-wrap relative z-20 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900"
                                     >
                                         @{{ option.name }}
                                     </span>
@@ -120,15 +121,16 @@
 
             <!-- Dropdown (position dynamic based on space) -->
             <div
-                class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border bg-white p-2 shadow-lg transition-transform"
+                class="absolute z-10 w-full origin-top transform rounded-lg border bg-white shadow-lg dark:border-gray-800 dark:bg-gray-800"
+                :class="dropdownPosition === 'bottom' ? 'top-full mt-1' : 'bottom-full mb-1'"
                 v-if="options.length > 0"
             >
                 <!-- Results List -->
-                <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
+                <ul class="max-h-40 divide-gray-100 overflow-y-auto p-0.5">
                     <li 
                         v-for="option in options" 
                         :key="option.id"
-                        class="cursor-pointer px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 ltr:pr-16 rtl:pl-16"
+                        class="cursor-pointer rounded px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-950 ltr:pr-16 rtl:pl-16"
                         @click="addOption(option)"
                     >
                         @{{ option.name }}
@@ -231,6 +233,10 @@
                     tempOptions: [],
 
                     isRTL: document.documentElement.dir === 'rtl',
+
+                    isDropdownOpen: false,
+
+                    dropdownPosition: "bottom",
                 };
             },
 
@@ -238,6 +244,8 @@
                 this.tempOptions = this.options.filter((data) => this.value.includes(data.id));
 
                 this.options = this.options.filter((data) => !this.value.includes(data.id));
+
+                window.addEventListener("resize", this.setDropdownPosition);
             },
 
             computed: {
@@ -263,6 +271,12 @@
                  */
                 toggle() {
                     this.isEditing = true;
+
+                    this.isDropdownOpen = ! this.isDropdownOpen;
+
+                    if (this.isDropdownOpen) {
+                        this.setDropdownPosition();
+                    }
                 },
 
                 /**
@@ -327,6 +341,25 @@
 
                         this.tempOptions = this.tempOptions.filter((data) => data.id !== option.id);
                     }
+                },
+
+                setDropdownPosition() {
+                    this.$nextTick(() => {
+                        const dropdownContainer = this.$refs.dropdownContainer;
+
+                        if (! dropdownContainer) {
+                            return;     
+                        }
+
+                        const dropdownRect = dropdownContainer.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+
+                        if (dropdownRect.bottom + 250 > viewportHeight) {
+                            this.dropdownPosition = "top";
+                        } else {
+                            this.dropdownPosition = "bottom";
+                        }
+                    });
                 },
             },
         });

@@ -66,6 +66,7 @@
             <!-- Editing view -->
             <div
                 class="relative flex w-full flex-col"
+                ref="dropdownContainer"
                 v-else
             >
                 <x-admin::form.control-group.control
@@ -97,7 +98,8 @@
                 <!-- Popup Box -->
                 <div 
                     v-if="showPopup" 
-                    class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-900"
+                    class="absolute z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-800"
+                    :class="dropdownPosition === 'bottom' ? 'top-full mt-1' : 'bottom-full mb-1'"
                 >
                     <!-- Search Bar -->
                     <input
@@ -220,6 +222,10 @@
 
                     cancelToken: null,
 
+                    isDropdownOpen: false,
+
+                    dropdownPosition: "bottom",
+
                     isRTL: document.documentElement.dir === 'rtl',
                 };
             },
@@ -237,6 +243,10 @@
                 searchTerm(newVal, oldVal) {
                     this.search();
                 },
+            },
+
+            mounted() {
+                window.addEventListener("resize", this.setDropdownPosition);
             },
 
             computed: {
@@ -268,6 +278,12 @@
                     this.searchTerm = '';
 
                     this.selectedItem.name = this.inputValue;
+
+                    this.isDropdownOpen = ! this.isDropdownOpen;
+
+                    if (this.isDropdownOpen) {
+                        this.setDropdownPosition();
+                    }
                 },
 
                 toggleEditor() {
@@ -386,6 +402,25 @@
                             this.isSearching = false;
                         })
                         .finally(() => this.isSearching = false);
+                },
+
+                setDropdownPosition() {
+                    this.$nextTick(() => {
+                        const dropdownContainer = this.$refs.dropdownContainer;
+
+                        if (! dropdownContainer) {
+                            return;     
+                        }
+
+                        const dropdownRect = dropdownContainer.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+
+                        if (dropdownRect.bottom + 250 > viewportHeight) {
+                            this.dropdownPosition = "top";
+                        } else {
+                            this.dropdownPosition = "bottom";
+                        }
+                    });
                 },
             },
         });
