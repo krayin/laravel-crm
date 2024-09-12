@@ -179,7 +179,10 @@ class PersonController extends Controller
      */
     private function sanitizeRequestedPersonData(array $data): array
     {
-        if (empty($data['organization_id'])) {
+        if (
+            array_key_exists('organization_id', $data)
+            && empty($data['organization_id'])
+        ) {
             $data['organization_id'] = null;
         }
 
