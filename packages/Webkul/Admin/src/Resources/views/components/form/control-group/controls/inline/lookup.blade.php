@@ -105,7 +105,7 @@
                         v-model.lazy="searchTerm"
                         v-debounce="200"
                         class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                        placeholder="Search..."
+                        placeholder="@lang('admin::app.components.lookup.search')"
                         ref="searchInput"
                     />
             
@@ -121,7 +121,7 @@
                         </li>
     
                         <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500 dark:text-gray-300">
-                            @lang('No results found')
+                            @lang('admin::app.components.lookup.no-results')
                         </li>
                     </ul>
                 </div>
