@@ -6,6 +6,7 @@ use App\Exceptions\Handler as AppExceptionHandler;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Container\Container;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Validation\ValidationException;
 use PDOException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
@@ -95,6 +96,10 @@ class Handler extends AppExceptionHandler
                 : 500;
 
             return $this->response($path, $statusCode);
+        }
+
+        if ($exception instanceof ValidationException) {
+            return parent::render(request(), $exception);
         }
 
         if ($exception instanceof ModelNotFoundException) {
