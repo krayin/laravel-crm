@@ -19,7 +19,7 @@ class Create extends Mailable
     {
         return $this
             ->to($this->user->email)
-            ->subject(trans('admin::app.mail.user.create-subject'))
+            ->subject(trans('admin::app.emails.common.user.create-subject'))
             ->view('admin::emails.users.create', [
                 'user_name' => $this->user->name,
             ]);

@@ -13,7 +13,7 @@ use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\UserResource;
-use Webkul\Admin\Notifications\User\Create;
+use Webkul\Admin\Notifications\User\Create as UserCreatedNotification;
 use Webkul\User\Repositories\GroupRepository;
 use Webkul\User\Repositories\RoleRepository;
 use Webkul\User\Repositories\UserRepository;
@@ -79,8 +79,9 @@ class UserController extends Controller
         $admin->groups()->sync(request('groups') ?? []);
 
         try {
-            Mail::queue(new Create($admin));
+            Mail::queue(new UserCreatedNotification($admin));
         } catch (\Exception $e) {
+            report($e);
         }
 
         Event::dispatch('settings.user.create.after', $admin);

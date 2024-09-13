@@ -1979,6 +1979,20 @@ return [
         'common' => [
             'dear'   => 'Dear :name',
             'cheers' => 'Cheers,</br>Team :app_name',
+            'user'   => [
+                'dear'           => 'Dear :username',
+                'create-subject' => 'You are added as a member.',
+                'create-body'    => 'Congratulations! You are now a member of our team.',
+
+                'forget-password' => [
+                    'subject'           => 'Customer Reset Password',
+                    'dear'              => 'Dear :username',
+                    'reset-password'    => 'Reset Password',
+                    'info'              => 'You are receiving this email because we received a password reset request for your account',
+                    'final-summary'     => 'If you did not request a password reset, no further action is required',
+                    'thanks'            => 'Thanks!',
+                ],
+            ],
         ],
     ],
 

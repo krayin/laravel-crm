@@ -1979,6 +1979,21 @@ return [
         'common' => [
             'dear'   => 'Sevgili :name',
             'cheers' => 'Saygılar,</br>:app_name Ekibi',
+
+            'user' => [
+                'dear'           => 'Sevgili :username',
+                'create-subject' => 'Bir üye olarak eklendiniz.',
+                'create-body'    => 'Tebrikler! Artık ekibimizin bir üyesisiniz.',
+
+                'forget-password' => [
+                    'subject'           => 'Müşteri Şifre Sıfırlama',
+                    'dear'              => 'Sevgili :username',
+                    'reset-password'    => 'Şifreyi Sıfırla',
+                    'info'              => 'Bu e-postayı almanız, hesabınız için bir şifre sıfırlama talebi aldığımız anlamına gelir',
+                    'final-summary'     => 'Eğer şifre sıfırlama talebinde bulunmadıysanız, herhangi bir ek işlem yapmanıza gerek yoktur',
+                    'thanks'            => 'Teşekkürler!',
+                ],
+            ],
         ],
     ],
 
