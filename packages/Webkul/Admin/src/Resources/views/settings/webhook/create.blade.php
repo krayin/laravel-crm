@@ -511,60 +511,6 @@
 
                 methods: {
                     /**
-                     * Add a new parameter
-                     * 
-                     * @returns {void}
-                     */
-                    addParameter() {
-                        this.parameters.push({ key: '', value: '' });
-                    },
-
-                    /**
-                     * Remove a parameter
-                     * 
-                     * @returns {void}
-                     */
-                    removeParameter(index) {
-                        this.parameters.splice(index, 1);
-                    },
-
-                    /**
-                     * Add a new parameter
-                     * 
-                     * @returns {void}
-                     */
-                    addHeader() {
-                        this.headers.push({ key: '', value: '' });
-                    },
-
-                    /**
-                     * Remove a header
-                     * 
-                     * @returns {void}
-                     */
-                    removeHeader(index) {
-                        this.headers.splice(index, 1);
-                    },
-
-                    /**
-                     * Add a new parameter.
-                     * 
-                     * @returns {void}
-                     */
-                     removeFormBody(index) {
-                        this.tempPayload.splice(index, 1);
-                    },
-
-                    /**
-                     * Add a new parameter.
-                     * 
-                     * @returns {void}
-                     */
-                    addFormBody() {
-                        this.tempPayload.push({ key: '', value: '' });
-                    },
-
-                    /**
                      * Handle editor display.
                      * 
                      * @returns {void}
@@ -644,7 +590,7 @@
                         } catch (error) {
                             return this.baseUrl;
                         }
-                    }
+                    },
                 },
             });
 

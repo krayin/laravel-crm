@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <v-webhooks></v-webhooks>
+            <v-webhooks :errors="errors"></v-webhooks>
         </div>
     </x-admin::form>
 
@@ -58,7 +58,7 @@
     @pushOnce('scripts')
         <script
             type="text/x-template"
-            id="webhooks-template"
+            id="v-webhooks-template"
         >
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 {!! view_render_event('admin.settings.webhook.edit.left.before', ['webhook' => $webhook]) !!}
@@ -106,7 +106,8 @@
                                     rules="required|url"
                                     :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
                                     :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
-                                    v-model="baseUrl"
+                                    v-debounce="500"
+                                    v-model.lazy="baseUrl"
                                 />
                             </div>
                             <x-admin::form.control-group.error control-name="end_point"/>
@@ -125,7 +126,7 @@
                                 <div class="font-sm text-xs dark:text-gray-300">
                                     @lang('admin::app.settings.webhooks.edit.url-preview')
 
-                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint }}</span>
+                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint() }}</span>
                                 </div>
                             </div>
                         </div>
@@ -449,7 +450,9 @@
 
         <script type="module">
             app.component('v-webhooks', {
-                template: '#webhooks-template',
+                template: '#v-webhooks-template',
+
+                props: ['errors'],
 
                 data() {
                     return {
@@ -498,7 +501,11 @@
                      */
                     contentType(newValue, oldValue) {
                         this.handleEditorDisplay();
-                    }
+                    },
+
+                    baseUrl() {
+                        this.urlEndPoint();
+                    },
                 },
 
                 computed: {
@@ -512,33 +519,6 @@
                             this.contentType === 'default'
                             || this.contentType === 'raw'
                         ) && this.contentType !== 'application/x-www-form-urlencoded';
-                    },
-
-                    /**
-                     * Get the URL endpoint with the parameters.
-                     * 
-                     * @returns {string}
-                     */
-                    urlEndPoint() {
-                        if (this.baseUrl === '') {
-                            return '';
-                        }
-
-                        const url = new URL(this.baseUrl);
-
-                        url.search = '';
-
-                        this.parameters.forEach(param => {
-                            if (param.key && param.value) {
-                                url.searchParams.append(param.key, param.value);
-                            }
-                        });
-
-                        const decodeUri = decodeURI(url.toString());
-
-                        this.baseUrl = decodeUri;
-
-                        return decodeUri;
                     },
                 },
 
@@ -587,7 +567,44 @@
 
                             this.codeMirrorInstance?.setOption('mode', mode);
                         }, 0);
-                    }
+                    },
+
+                    /**
+                     * Get the URL endpoint with the parameters
+                     * 
+                     * @returns {string}
+                     */
+                    urlEndPoint() {
+                        if (
+                            this.baseUrl === ''
+                            || this.errors.hasOwnProperty('end_point')
+                        ) {
+                            return this.baseUrl;
+                        }
+
+                        try {
+                            const url = new URL(this.baseUrl);
+
+                            url.search = '';
+
+                            this.parameters.forEach(param => {
+                                if (
+                                    param.key 
+                                    && param.value
+                                ) {
+                                    url.searchParams.append(param.key, param.value);
+                                }
+                            });
+
+                            const decodeUri = decodeURI(url.toString());
+
+                            this.baseUrl = decodeUri;
+
+                            return decodeUri;
+                        } catch (error) {
+                            return this.baseUrl;
+                        }
+                    },
                 },
             });
 
