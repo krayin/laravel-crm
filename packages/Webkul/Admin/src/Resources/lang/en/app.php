@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Delete',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Click to add',
                 'search'          => 'Search',
@@ -993,7 +997,12 @@ return [
                 'save-btn'                 => 'Save Webform',
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
-                'title'                    => 'Create Webform',
+                'redirect-to-url'          => 'Redirect To Url',
+                'title'                    => 'Title',
+                'choose-value'             => 'Choose Value',
+                'select-file'              => 'Select File',
+                'select-image'             => 'Select Image',
+                'enter-value'              => 'Enter Value',
             ],
 
             'edit' => [
@@ -1023,7 +1032,11 @@ return [
                 'save-btn'                  => 'Save Webform',
                 'submit-button-label'       => 'Submit Button Label',
                 'submit-success-action'     => 'Submit Success Action',
-                'title'                     => 'Edit Webform',
+                'title'                     => 'Title',
+                'choose-value'              => 'Choose Value',
+                'select-file'               => 'Select File',
+                'select-image'              => 'Select Image',
+                'enter-value'               => 'Enter Value',
             ],
         ],
 

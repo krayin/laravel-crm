@@ -1,26 +1,28 @@
-<div class="form-group" style="margin-top: 5px;">
-    @php
-        $options = $attribute->lookup_type
-            ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->lookup_type)
-            : $attribute->options()->orderBy('sort_order')->get();
+@php
+    $options = $attribute->lookup_type
+        ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($attribute->lookup_type)
+        : $attribute->options()->orderBy('sort_order')->get();
 
-        $selectedOption = old($attribute->code) ?: $value;
-    @endphp
+    $selectedOption = old($attribute->code) ?: $value;
+@endphp
 
-    <option value=""></option>
+@foreach ($options as $option)
+    <x-admin::form.control-group class="!mb-2 flex items-center gap-2.5">
+        <x-admin::form.control-group.control
+            type="checkbox"
+            :id="$option->id"
+            name="{{ $attribute->code }}[]"
+            :value="$option->id"
+            :for="$option->id" 
+            :label="$option->name"
+            :checked="in_array($option->id, explode(',', $selectedOption))"
+        />
 
-    @foreach ($options as $option)
-        <span class="checkbox" style="margin-top: 5px;">
-            <input
-                type="checkbox"
-                name="{{ $attribute->code }}[]"
-                value="{{ $option->id }}"
-                {{ in_array($option->id, explode(',', $selectedOption)) ? 'checked' : ''}}
-            />
-
-            <label class="checkbox-view"></label>
+        <label
+            class="cursor-pointer text-xs font-medium text-gray-600 dark:text-gray-300"
+            for="{{ $option->id }}"
+        >
             {{ $option->name }}
-        </span>
-    @endforeach
-
-</div>
+        </label>
+    </x-admin::form.control-group>
+@endforeach

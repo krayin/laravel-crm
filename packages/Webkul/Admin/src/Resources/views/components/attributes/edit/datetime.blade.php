@@ -1,10 +1,8 @@
-<datetime>
-    <input
-        type="text"
-        name="{{ $attribute->code }}"
-        class="control"
-        value="{{  old($attribute->code) ?: $value}}"
-        v-validate="'{{$validations}}'"
-        data-vv-as="&quot;{{ $attribute->name }}&quot;"
-    />
-</datetime>
+<x-admin::form.control-group.control
+    type="date"
+    :id="$attribute->code"
+    :name="$attribute->code"
+    :value="old($attribute->code) ?? $value"
+    :rules="$validations.'|regex:^\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}$'"
+    :label="$attribute->name"
+/>

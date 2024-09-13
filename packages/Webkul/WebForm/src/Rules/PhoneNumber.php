@@ -28,6 +28,6 @@ class PhoneNumber implements Rule
      */
     public function message()
     {
-        return __('web_form::app.invalid-phone-number');
+        return __('web_form::app.validations.invalid-phone-number');
     }
 }
