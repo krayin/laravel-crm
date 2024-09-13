@@ -61,6 +61,8 @@
                                 </x-slot>
 
                                 <x-slot:menu>
+                                    {!! view_render_event('admin.components.activities.actions.activity.form_controls.modal.header.dropdown.menu_item.before') !!}
+
                                     <x-admin::dropdown.menu.item
                                         ::class="{ 'bg-gray-100 dark:bg-gray-950': selectedType.value === type.value }"
                                         v-for="type in availableTypes"
@@ -68,6 +70,8 @@
                                     >
                                         @{{ type.label }}
                                     </x-admin::dropdown.menu.item>
+
+                                    {!! view_render_event('admin.components.activities.actions.activity.form_controls.modal.header.dropdown.menu_item.after') !!}
                                 </x-slot>
                             </x-admin::dropdown>
 

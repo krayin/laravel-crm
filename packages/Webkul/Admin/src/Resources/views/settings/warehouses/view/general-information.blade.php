@@ -12,6 +12,8 @@
         ref="modalForm"
     >
         <form @submit="handleSubmit($event, () => {})">
+            {!! view_render_event('admin.leads.view.person.attributes.view.before', ['warehouse' => $warehouse]) !!}
+
             <x-admin::attributes.view
                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                     'entity_type' => 'warehouses',
@@ -21,6 +23,8 @@
                 :url="route('admin.settings.warehouses.update', $warehouse->id)"        
                 :allow-edit="true"
             />
+
+            {!! view_render_event('admin.leads.view.person.attributes.view.after', ['warehouse' => $warehouse]) !!}
         </form>
     </x-admin::form>
 </div>
