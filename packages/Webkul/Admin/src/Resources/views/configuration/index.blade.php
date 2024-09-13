@@ -4,11 +4,15 @@
         @lang('admin::app.configuration.index.title')
     </x-slot>
 
+    {!! view_render_event('admin.configuration.index.header.before') !!}
+
     <!-- Heading of the page -->
     <div class="mb-7 flex items-center justify-between">
         <p class="py-3 text-xl font-bold text-gray-800 dark:text-white">
             @lang('admin::app.configuration.index.title')
         </p>
+
+        {!! view_render_event('admin.configuration.index.header.configuration_search.before') !!}
 
         <!-- Configuration Search Bar Vue Component -->
         <v-configuration-search>
@@ -22,7 +26,13 @@
                 >
             </div>
         </v-configuration-search>
+
+        {!! view_render_event('admin.configuration.index.header.configuration_search.after') !!}
     </div>
+
+    {!! view_render_event('admin.configuration.index.header.after') !!}
+
+    {!! view_render_event('admin.configuration.index.content.before') !!}
 
     <!-- Page Content -->
     <div class="grid gap-y-8">
@@ -68,6 +78,8 @@
             </div>
         @endforeach
     </div>
+
+    {!! view_render_event('admin.configuration.index.content.after') !!}
 
     @pushOnce('scripts')
         <script type="text/x-template" id="v-configuration-search-template">

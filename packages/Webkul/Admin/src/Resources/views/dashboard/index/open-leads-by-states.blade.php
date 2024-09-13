@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.open_leads_by_states.before') !!}
+
 <!-- Total Leads Vue Component -->
 <v-dashboard-open-leads-by-states>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.open-leads-by-states />
 </v-dashboard-open-leads-by-states>
+
+{!! view_render_event('admin.dashboard.index.open_leads_by_states.after') !!}
 
 @pushOnce('scripts')
     <script

@@ -97,6 +97,8 @@
             type="text/x-template"
             id="v-dashboard-filters-template"
         >
+            {!! view_render_event('admin.dashboard.index.date_filters.before') !!}
+
             <div class="flex gap-1.5">
                 <x-admin::flat-picker.date class="!w-[140px]" ::allow-input="false">
                     <input
@@ -114,6 +116,8 @@
                     />
                 </x-admin::flat-picker.date>
             </div>
+
+            {!! view_render_event('admin.dashboard.index.date_filters.after') !!}
         </script>
 
         <script type="module">

@@ -30,7 +30,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('admin.activities.edit.submit-btn.before') !!}
+                        {!! view_render_event('admin.activities.edit.save_button.before') !!}
 
                         <!-- Save Button -->
                         <button
@@ -40,7 +40,7 @@
                             @lang('admin::app.activities.edit.save-btn')
                         </button>
         
-                        {!! view_render_event('admin.activities.edit.submit-btn.after') !!}
+                        {!! view_render_event('admin.activities.edit.save_button.after') !!}
                     </div>
                 </div>
             </div>

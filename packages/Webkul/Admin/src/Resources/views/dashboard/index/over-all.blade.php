@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.over_all.before') !!}
+
 <!-- Over Details Vue Component -->
 <v-dashboard-over-all-stats>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.over-all />
 </v-dashboard-over-all-stats>
+
+{!! view_render_event('admin.dashboard.index.over_all.after') !!}
 
 @pushOnce('scripts')
     <script

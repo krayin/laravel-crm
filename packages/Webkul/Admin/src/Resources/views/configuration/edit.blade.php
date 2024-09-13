@@ -7,6 +7,8 @@
         {{ $name = $activeConfiguration->getName() }}
     </x-slot>
 
+    {!! view_render_event('admin.configuration.edit.form_controls.before') !!}
+
     <!-- Configuration form fields -->
     <x-admin::form
         action=""
@@ -20,6 +22,8 @@
 
             <!-- Save Inventory -->
             <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('admin.configuration.edit.back_button.before') !!}
+
                 <!-- Back Button -->
                 <a
                     href="{{ route('admin.configuration.index') }}"
@@ -28,12 +32,18 @@
                     @lang('admin::app.configuration.index.back')
                 </a>
 
+                {!! view_render_event('admin.configuration.edit.back_button.after') !!}
+
+                {!! view_render_event('admin.configuration.edit.save_button.before') !!}
+
                 <button
                     type="submit"
                     class="primary-button"
                 >
                     @lang('admin::app.configuration.index.save-btn')
                 </button>
+
+                {!! view_render_event('admin.configuration.edit.save_button.after') !!}
             </div>
         </div>
 
@@ -50,6 +60,8 @@
                 </div>
 
                 <div class="box-shadow rounded bg-white p-4 dark:bg-gray-900">
+                    {!! view_render_event('admin.configuration.edit.form_controls.before') !!}
+
                     @foreach ($child->getFields() as $field)
                         @if (
                             $field->getType() == 'blade'
@@ -60,8 +72,12 @@
                             @include ('admin::configuration.field-type')
                         @endif
                     @endforeach
+
+                    {!! view_render_event('admin.configuration.edit.form_controls.after') !!}
                 </div>
             @endforeach
         </div>
     </x-admin::form>
+
+    {!! view_render_event('admin.configuration.edit.form_controls.after') !!}
 </x-admin::layouts>

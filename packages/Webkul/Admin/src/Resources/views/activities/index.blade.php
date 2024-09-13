@@ -3,6 +3,8 @@
         @lang('admin::app.activities.index.title')
     </x-slot>
 
+    {!! view_render_event('admin.activities.index.activities.before') !!}
+
     <!-- Activities Datagrid -->
     <v-activities>
         <div class="flex flex-col gap-4">
@@ -33,6 +35,8 @@
             @endif
         </div>
     </v-activities>
+
+    {!! view_render_event('admin.activities.index.activities.after') !!}
 
     @pushOnce('scripts')
         <script 
