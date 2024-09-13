@@ -55,6 +55,8 @@
                             @lang('admin::app.products.create.general')
                         </p>
 
+                        {!! view_render_event('admin.products.create.attributes.before') !!}
+
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
@@ -62,21 +64,31 @@
                                 ['code' , '!=', 'quantity']
                             ])"
                         />
+
+                        {!! view_render_event('admin.products.create.attributes.after') !!}
                     </div>
                 </div>
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    {!! view_render_event('admin.products.create.accordion.before') !!}
+
                     <x-admin::accordion>
                         <x-slot:header>
+                            {!! view_render_event('admin.products.create.accordion.header.before') !!}
+
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                     @lang('admin::app.products.create.price')
                                 </p>
                             </div>
+
+                            {!! view_render_event('admin.products.create.accordion.header.after') !!}
                         </x-slot>
 
                         <x-slot:content>
+                            {!! view_render_event('admin.products.create.accordion.content.attributes.before') !!}
+
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
@@ -84,8 +96,12 @@
                                     ['code' , '!=', 'quantity']
                                 ])"
                             />
+
+                            {!! view_render_event('admin.products.create.accordion.content.attributes.after') !!}
                         </x-slot>
                     </x-admin::accordion>
+
+                    {!! view_render_event('admin.products.create.accordion.before') !!}
                 </div>
             </div>
         </div>

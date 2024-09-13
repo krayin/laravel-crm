@@ -19,6 +19,8 @@
                     />
                 </div>
 
+                {!! view_render_event('admin.contact.persons.view.tags.before', ['person' => $person]) !!}
+
                 <!-- Tags -->
                 <x-admin::tags
                     :attach-endpoint="route('admin.contacts.persons.tags.attach', $person->id)"
@@ -26,8 +28,13 @@
                     :added-tags="$person->tags"
                 />
 
+                {!! view_render_event('admin.contact.persons.view.tags.after', ['person' => $person]) !!}
+
+                
                 <!-- Title -->
                 <div class="mb-4 flex flex-col gap-0.5">
+                    {!! view_render_event('admin.contact.persons.view.title.before', ['person' => $person]) !!}
+
                     <h3 class="text-lg font-bold dark:text-white">
                         {{ $person->name }}
                     </h3>
@@ -35,10 +42,14 @@
                     <p class="dark:text-white">
                         {{ $person->job_title }}
                     </p>
-                </div>
 
+                    {!! view_render_event('admin.contact.persons.view.title.after', ['person' => $person]) !!}
+                </div>
+                
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
+                    {!! view_render_event('admin.contact.persons.view.actions.before', ['person' => $person]) !!}
+
                     <!-- Mail Activity Action -->
                     <x-admin::activities.actions.mail
                         :entity="$person"
@@ -62,6 +73,8 @@
                         :entity="$person"
                         entity-control-name="person_id"
                     />
+
+                    {!! view_render_event('admin.contact.persons.view.actions.after', ['person' => $person]) !!}
                 </div>
             </div>
 
@@ -74,14 +87,14 @@
 
         {!! view_render_event('admin.contact.persons.view.left.after', ['person' => $person]) !!}
 
-        {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
-
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
+            {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
+
             <!-- Stages Navigation -->
             <x-admin::activities :endpoint="route('admin.contacts.persons.activities.index', $person->id)" />
-        </div>
 
-        {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
+            {!! view_render_event('admin.contact.persons.view.right.after', ['person' => $person]) !!}
+        </div>
     </div>
 </x-admin::layouts>

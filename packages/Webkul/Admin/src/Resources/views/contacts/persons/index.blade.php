@@ -18,6 +18,8 @@
             <div class="flex items-center gap-x-2.5">
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
+                    {!! view_render_event('admin.persons.index.create_button.before') !!}
+
                     @if (bouncer()->hasPermission('admin.contacts.persons.view'))
                         <a
                             href="{{ route('admin.contacts.persons.create') }}"
@@ -26,13 +28,19 @@
                             @lang('admin::app.contacts.persons.index.create-btn')
                         </a>
                     @endif
+
+                    {!! view_render_event('admin.persons.index.create_button.after') !!}
                 </div>
             </div>
         </div>
+
+        {!! view_render_event('admin.persons.index.datagrid.before') !!}
 
         <x-admin::datagrid :src="route('admin.contacts.persons.index')">
             <!-- DataGrid Shimmer -->
             <x-admin::shimmer.datagrid />
         </x-admin::datagrid>
+
+        {!! view_render_event('admin.persons.index.datagrid.after') !!}
     </div>
 </x-admin::layouts>

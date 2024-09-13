@@ -5,6 +5,8 @@
         @lang('admin::app.products.view.attributes.about-product')
     </h4>
 
+    {!! view_render_event('admin.products.view.attributes.view.before', ['product' => $product]) !!}
+
     <x-admin::attributes.view
         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
             'entity_type' => 'products',
@@ -14,6 +16,8 @@
         :url="route('admin.products.update', $product->id)"   
         :allow-edit="true"
     />
+
+    {!! view_render_event('admin.products.view.attributes.view.after', ['product' => $product]) !!}
 </div>
 
 {!! view_render_event('admin.products.view.attributes.before', ['product' => $product]) !!}
