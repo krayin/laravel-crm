@@ -105,9 +105,15 @@ class EmailController extends Controller
             'reply'    => 'required',
         ]);
 
+        $user = auth()->guard('user')->user();
+
         Event::dispatch('email.create.before');
 
-        $email = $this->emailRepository->create(request()->all());
+        $email = $this->emailRepository->create([
+            ...request()->all(),
+            'name'    => $user->name,
+            'user_id' => $user->id,
+        ]);
 
         if (! request('is_draft')) {
             try {

@@ -53,11 +53,9 @@ class EmailRepository extends Repository
             'from'          => config('mail.from.address'),
             'user_type'     => 'admin',
             'folders'       => isset($data['is_draft']) ? ['draft'] : ['outbox'],
-            'name'          => auth()->guard('user')->user()->name,
             'unique_id'     => $uniqueId,
             'message_id'    => $uniqueId,
             'reference_ids' => array_merge($referenceIds, [$uniqueId]),
-            'user_id'       => auth()->guard('user')->user()->id,
         ], $data));
 
         $email = parent::create($data);

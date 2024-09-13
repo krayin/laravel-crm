@@ -135,7 +135,13 @@ class AttributeController extends Controller
      */
     public function lookup($lookup): JsonResponse
     {
-        $results = $this->attributeRepository->getLookUpOptions($lookup, request()->input('query'));
+        $user = auth()->guard('user')->user();
+
+        $results = $this->attributeRepository->getLookUpOptions($lookup, [
+            'query'           => request()->input('query'),
+            'user_id'         => $user->id,
+            'view_permission' => $user->view_permission,
+        ]);
 
         return response()->json($results);
     }

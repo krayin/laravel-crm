@@ -1,3 +1,13 @@
+@php
+    $user = auth()->guard('user')->user();
+                                            
+    $params = [
+        'query'           => '',
+        'user_id'         => $user->id,
+        'view_permission' => $user->view_permission,
+    ];    
+@endphp
+
 <x-web_form::layouts>
     <x-slot:title>
         @lang('Form Preview')
@@ -157,7 +167,7 @@
                                         >
                                             @php
                                                 $options = $parentAttribute->lookup_type
-                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type)
+                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type, $params)
                                                     : $parentAttribute->options()->orderBy('sort_order')->get();
                                             @endphp
 
@@ -188,7 +198,7 @@
 
                                             @php
                                                 $options = $parentAttribute->lookup_type
-                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type)
+                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type, $params)
                                                     : $parentAttribute->options()->orderBy('sort_order')->get();
                                             @endphp
 
@@ -211,7 +221,7 @@
                                         <div class="checkbox-control">
                                             @php
                                                 $options = $parentAttribute->lookup_type
-                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type)
+                                                    ? app('Webkul\Attribute\Repositories\AttributeRepository')->getLookUpOptions($parentAttribute->lookup_type, $params)
                                                     : $parentAttribute->options()->orderBy('sort_order')->get();
                                             @endphp
 
