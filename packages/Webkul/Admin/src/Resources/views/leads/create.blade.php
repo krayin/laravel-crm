@@ -19,6 +19,8 @@
                     </div>
                 </div>
 
+                {!! view_render_event('admin.leads.create.save_button.before') !!}
+
                 <div class="flex items-center gap-x-2.5">
                     <!-- Save button for person -->
                     <div class="flex items-center gap-x-2.5">
@@ -34,6 +36,8 @@
                         {!! view_render_event('admin.leads.create.form_buttons.after') !!}
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.create.save_button.after') !!}
             </div>
 
             @if (request('stage_id'))
@@ -63,6 +67,8 @@
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
+                        {!! view_render_event('admin.leads.create.tabs.before') !!}
+
                         <a
                             :href="'#' + tab.id"
                             :class="[
@@ -74,10 +80,14 @@
                             @click="scrollToSection(tab.id)"
                             :text="tab.label"
                         ></a>
+
+                        {!! view_render_event('admin.leads.create.tabs.after') !!}
                     </template>
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">
+                    {!! view_render_event('admin.leads.create.details.before') !!}
+
                     <!-- Details section -->
                     <div 
                         class="flex flex-col gap-4" 
@@ -94,6 +104,8 @@
                         </div>
 
                         <div class="w-1/2">
+                            {!! view_render_event('admin.leads.create.details.attributes.before') !!}
+
                             <!-- Lead Details Title and Description -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -143,8 +155,14 @@
                                     />
                                 </div>
                             </div>
+
+                            {!! view_render_event('admin.leads.create.details.attributes.after') !!}
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.leads.create.details.after') !!}
+
+                    {!! view_render_event('admin.leads.create.contact_person.before') !!}
 
                     <!-- Contact Person -->
                     <div 
@@ -166,6 +184,8 @@
                             @include('admin::leads.common.contact')
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.leads.create.contact_person.after') !!}
 
                     <!-- Product Section -->
                     <div 

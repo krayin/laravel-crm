@@ -1,10 +1,16 @@
+{!! view_render_event('admin.products.view.inventory.before', ['product' => $product]) !!}
+
 <!-- Product Inventories Component -->
 <v-product-inventories></v-product-inventories>
+
+{!! view_render_event('admin.products.view.inventory.after', ['product' => $product]) !!}
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-product-inventories-template">
         <div class="p-4">
             <div class="flex flex-col gap-4">
+                {!! view_render_event('admin.products.view.inventory.table.before', ['product' => $product]) !!}
+
                 <x-admin::table>
                     <!-- Table Head -->
                     <x-admin::table.thead>
@@ -89,6 +95,10 @@
                     </x-admin::table.tbody>
                 </x-admin::table>
 
+                {!! view_render_event('admin.products.view.inventory.table.after', ['product' => $product]) !!}
+
+                {!! view_render_event('admin.products.view.inventory.source.before', ['product' => $product]) !!}
+
                 <!-- Add Source dropdown -->
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown position="bottom-right">
@@ -99,6 +109,8 @@
                         </x-slot>
 
                         <x-slot:menu>
+                            {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
+
                             <x-admin::dropdown.menu.item
                                 v-for="warehouse in notAddedWarehouses"
                                 @click="addWarehouse(warehouse)"
@@ -106,10 +118,16 @@
                                 @{{ warehouse.name }}
 
                             </x-admin::dropdown.menu.item>
+
+                            {!! view_render_event('admin.products.view.inventory.source.menu.item.after', ['product' => $product]) !!}
                         </x-slot>
                     </x-admin::dropdown>
                 </div>
+
+                {!! view_render_event('admin.products.view.inventory.source.after', ['product' => $product]) !!}
             </div>
+
+            {!! view_render_event('admin.products.view.inventory.form_controls.before', ['product' => $product]) !!}
 
             <!-- Drawer for Add Location -->
             <x-admin::form
@@ -120,6 +138,8 @@
                     @submit="handleSubmit($event, onSubmit)"
                     ref="locationForm"
                 >
+                    {!! view_render_event('admin.products.view.inventory.form_controls.drawer.before', ['product' => $product]) !!}
+
                     <!-- Edit Drawer -->
                     <x-admin::drawer
                         ref="assignLocationDrawer"
@@ -127,6 +147,8 @@
                     >
                         <!-- Drawer Header -->
                         <x-slot:header>
+                            {!! view_render_event('admin.products.view.inventory.form_controls.drawer.header.before', ['product' => $product]) !!}
+
                             <div class="flex items-center justify-between">
                                 <p class="text-xl font-medium dark:text-white"> 
                                     @{{ selectedWarehouse.name }}
@@ -139,17 +161,27 @@
                                      @lang('admin::app.products.view.inventory.save')
                                 </button>
                             </div>
+
+                            {!! view_render_event('admin.products.view.inventory.form_controls.drawer.header.after', ['product' => $product]) !!}
                         </x-slot>
 
                         <!-- Drawer Content -->
                         <x-slot:content>
+                            {!! view_render_event('admin.products.view.inventory.form_controls.drawer.content.before', ['product' => $product]) !!}
+
                             <v-warehouse-location-inventories
                                 :warehouse="selectedWarehouse"
                             ></v-warehouse-location-inventories>
+
+                            {!! view_render_event('admin.products.view.inventory.form_controls.drawer.content.after', ['product' => $product]) !!}
                         </x-slot>
                     </x-admin::drawer>
+
+                    {!! view_render_event('admin.products.view.inventory.form_controls.drawer.after', ['product' => $product]) !!}
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('admin.products.view.inventory.form_controls.after', ['product' => $product]) !!}
         </div>
     </script>
 

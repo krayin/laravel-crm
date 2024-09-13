@@ -15,7 +15,7 @@
         @lang('admin::app.quotes.create.title')
     </x-slot>
 
-    {!! view_render_event('admin.contacts.quotes.edit.form_controls.before') !!}
+    {!! view_render_event('admin.contacts.quotes.create.form_controls.before') !!}
 
     <x-admin::form :action="route('admin.quotes.store')">
         <div class="flex flex-col gap-4">
@@ -35,12 +35,16 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Save button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('admin.contacts.quotes.create.save_button.before') !!}
+
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.quotes.create.save-btn')
                         </button>
+
+                        {!! view_render_event('admin.contacts.quotes.create.save_button.after') !!}
                     </div>
                 </div>
             </div>
@@ -49,7 +53,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('admin.contacts.quotes.edit.form_controls.after') !!}
+    {!! view_render_event('admin.contacts.quotes.create.form_controls.after') !!}
 
     @pushOnce('scripts')
         <script 
@@ -58,6 +62,8 @@
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                       
+                    {!! view_render_event('admin.contacts.quotes.create.tabs.before') !!}
+
                     <template
                         v-for="tab in tabs"
                         :key="tab.id"
@@ -74,9 +80,13 @@
                             :text="tab.label"
                         ></a>
                     </template>
+
+                    {!! view_render_event('admin.contacts.quotes.create.tabs.after') !!}
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">
+                    {!! view_render_event('admin.contacts.quotes.create.quote_information.before') !!}
+                    
                     <!-- Quote information -->
                     <div 
                         id="quote-info"
@@ -92,7 +102,7 @@
                             </p>
                         </div>
 
-                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.before') !!}
+                        {!! view_render_event('admin.contacts.quotes.create.attribute.form_controls.before') !!}
 
                         <div class="w-1/2">
                             <x-admin::attributes
@@ -176,8 +186,12 @@
                             </div>
                         </div>
 
-                        {!! view_render_event('admin.contacts.quotes.edit.attribute.form_controls.after') !!}
+                        {!! view_render_event('admin.contacts.quotes.create.attribute.form_controls.after') !!}
                     </div>
+
+                    {!! view_render_event('admin.contacts.quotes.create.quote_information.after') !!}
+
+                    {!! view_render_event('admin.contacts.quotes.create.address_information.before') !!}
 
                     <!-- Address information -->
                     <div 
@@ -193,6 +207,8 @@
                         </div>
 
                         <div class="w-1/2">
+                            {!! view_render_event('admin.contacts.quotes.create.address_information.attributes.before') !!}
+
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -200,8 +216,14 @@
                                     ])"
                                 :entity="$quote"
                             />
+
+                            {!! view_render_event('admin.contacts.quotes.create.address_information.attributes.after') !!}
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.contacts.quotes.create.address_information.after') !!}
+
+                    {!! view_render_event('admin.contacts.quotes.create.quote_items.before') !!}
 
                     <!-- Quote Item Information -->
                     <div  
@@ -221,6 +243,8 @@
                         <!-- Quote Item List Vue Component -->
                         <v-quote-item-list :errors="errors"></v-quote-item-list>
                     </div>
+
+                    {!! view_render_event('admin.contacts.quotes.create.quote_items.after') !!}
                 </div>
             </div>
         </script>
@@ -230,7 +254,7 @@
             id="v-quote-item-list-template"
         >
             <div>
-                {!! view_render_event('admin.contacts.quotes.edit.table.after') !!}
+                {!! view_render_event('admin.contacts.quotes.create.table.after') !!}
 
                 <!-- Table -->
                 <x-admin::table>
@@ -291,7 +315,7 @@
                     </x-admin::table.tbody>
                 </x-admin::table>
 
-                {!! view_render_event('admin.contacts.quotes.edit.table.before') !!}
+                {!! view_render_event('admin.contacts.quotes.create.table.before') !!}
             </div>
 
             <!-- Add New Qoute Item -->

@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.revenue.after') !!}
+
 <!-- Over Details Vue Component -->
 <v-dashboard-revenue-stats>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.revenue />
 </v-dashboard-revenue-stats>
+
+{!! view_render_event('admin.dashboard.index.revenue.after') !!}
 
 @pushOnce('scripts')
     <script

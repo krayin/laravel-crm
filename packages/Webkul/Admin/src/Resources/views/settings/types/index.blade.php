@@ -156,6 +156,8 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            {!! view_render_event('admin.settings.types.index.footer.create_button.before') !!}
+
                             <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
@@ -164,6 +166,8 @@
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
+
+                            {!! view_render_event('admin.settings.types.index.footer.create_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
 

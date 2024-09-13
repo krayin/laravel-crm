@@ -1,5 +1,8 @@
+{!! view_render_event('admin.leads.view.products.before', ['lead' => $lead]) !!}
 
 <v-lead-products></v-lead-products>
+
+{!! view_render_event('admin.leads.view.products.after', ['lead' => $lead]) !!}
 
 @pushOnce('scripts')
     <script
@@ -7,8 +10,12 @@
         id="v-lead-products-template"
     >
         <div v-if="products.length" class="flex flex-col gap-4 p-3">
+            {!! view_render_event('admin.leads.view.products.table.before', ['lead' => $lead]) !!}
+
             <!-- Table -->
             <x-admin::table>
+                {!! view_render_event('admin.leads.view.products.table.table_head.before', ['lead' => $lead]) !!}
+
                 <!-- Table Head -->
                 <x-admin::table.thead>
                     <x-admin::table.thead.tr>
@@ -34,6 +41,10 @@
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
+                {!! view_render_event('admin.leads.view.products.table.table_head.after', ['lead' => $lead]) !!}
+
+                {!! view_render_event('admin.leads.view.products.table.table_body.before', ['lead' => $lead]) !!}
+
                 <!-- Table Body -->
                 <x-admin::table.tbody>
                     <!-- Product Item Vue Component -->
@@ -45,7 +56,12 @@
                         @onRemoveProduct="removeProduct($event)"
                     ></v-product-item>
                 </x-admin::table.tbody>
+                {!! view_render_event('admin.leads.view.products.table.table_body.after', ['lead' => $lead]) !!}
             </x-admin::table>
+
+            {!! view_render_event('admin.leads.view.products.table.after', ['lead' => $lead]) !!}
+
+            {!! view_render_event('admin.leads.view.products.table.add_more.before', ['lead' => $lead]) !!}
 
             <!-- Add New Product Item -->
             <div>
@@ -56,6 +72,8 @@
                     + @lang('admin::app.leads.view.products.add-more')
                 </span>
             </div>
+
+            {!! view_render_event('admin.leads.view.products.table.add_more.after', ['lead' => $lead]) !!}
         </div>
 
         <div v-else>

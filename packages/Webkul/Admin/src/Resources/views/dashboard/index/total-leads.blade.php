@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.total_leads.before') !!}
+
 <!-- Total Leads Vue Component -->
 <v-dashboard-total-leads>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.total-leads />
 </v-dashboard-total-leads>
+
+{!! view_render_event('admin.dashboard.index.total_leads.after') !!}
 
 @pushOnce('scripts')
     <script

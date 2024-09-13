@@ -43,6 +43,8 @@
 
     {!! view_render_event('admin.leads.index.header.after') !!}
 
+    {!! view_render_event('admin.leads.index.content.before') !!}
+
     <!-- Content -->
     <div class="mt-3.5">
         @if ((request()->view_type ?? "kanban") == "table")
@@ -51,4 +53,6 @@
             @include('admin::leads.index.kanban')
         @endif
     </div>
+
+    {!! view_render_event('admin.leads.index.content.after') !!}
 </x-admin::layouts>

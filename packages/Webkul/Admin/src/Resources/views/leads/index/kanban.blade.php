@@ -30,6 +30,8 @@
                         class="flex min-w-[275px] max-w-[275px] flex-col gap-1 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900"
                         v-for="(stage, index) in stageLeads"
                     >
+                        {!! view_render_event('admin.leads.index.kanban.content.stage.header.before') !!}
+
                         <!-- Stage Header -->
                         <div class="flex flex-col px-2 py-3">
                             <!-- Stage Title and Action -->
@@ -63,6 +65,10 @@
                                 </div>
                             </div>
                         </div>
+
+                        {!! view_render_event('admin.leads.index.kanban.content.stage.header.after') !!}
+                       
+                        {!! view_render_event('admin.leads.index.kanban.content.stage.body.before') !!}
 
                         <!-- Draggable Stage Lead Cards -->
                         <draggable
@@ -112,10 +118,14 @@
 
                             <!-- Lead Card -->
                             <template #item="{ element, index }">
+                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.before') !!}
+
                                 <a
                                     class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400"
                                     :href="'{{ route('admin.leads.view', 'replaceId') }}'.replace('replaceId', element.id)"
                                 >
+                                    {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.header.before') !!}
+
                                     <!-- Header -->
                                     <div class="flex items-start justify-between">
                                         <div class="flex items-center gap-1">
@@ -148,10 +158,16 @@
                                         </div>
                                     </div>
 
+                                    {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.header.after') !!}
+
+                                    {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.title.before') !!}
+
                                     <!-- Lead Title -->
                                     <p class="text-xs font-medium">
                                         @{{ element.title }}
                                     </p>
+
+                                    {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.title.after') !!}
 
                                     <div class="flex flex-wrap gap-1">
                                         <div
@@ -177,6 +193,8 @@
 
                                         <!-- Tags -->
                                         <template v-for="tag in element.tags">
+                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
+
                                             <div
                                                 class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
                                                 :style="{
@@ -186,11 +204,17 @@
                                             >
                                                 @{{ tag.name }}
                                             </div>
+
+                                            {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.after') !!}
                                         </template>
                                     </div>
                                 </a>
+
+                                {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.after') !!}
                             </template>
                         </draggable>
+
+                        {!! view_render_event('admin.leads.index.kanban.content.stage.body.after') !!}
                     </div>
                 </div>
 

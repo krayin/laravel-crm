@@ -13,12 +13,16 @@
         @endif
     </h4>
 
+    {!! view_render_event('admin.leads.view.attributes.form_controls.before', ['lead' => $lead]) !!}
+
     <x-admin::form
         v-slot="{ meta, errors, handleSubmit }"
         as="div"
         ref="modalForm"
     >
         <form @submit="handleSubmit($event, () => {})">
+            {!! view_render_event('admin.leads.view.attributes.form_controls.attributes.view.before', ['lead' => $lead]) !!}
+
             <x-admin::attributes.view
                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                     'entity_type' => 'leads',
@@ -28,8 +32,12 @@
                 :url="route('admin.leads.attributes.update', $lead->id)"
                 :allow-edit="true"
             />
+
+            {!! view_render_event('admin.leads.view.attributes.form_controls.attributes.view.after', ['lead' => $lead]) !!}
         </form>
     </x-admin::form>
+
+    {!! view_render_event('admin.leads.view.attributes.form_controls.after', ['lead' => $lead]) !!}
 </div>
 
 {!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}

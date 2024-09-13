@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.index.kanban.search.before') !!}
+
 <v-kanban-search
     :is-loading="isLoading"
     :available="available"
@@ -5,6 +7,8 @@
     @search="search"
 >
 </v-kanban-search>
+
+{!! view_render_event('admin.leads.index.kanban.search.after') !!}
 
 @pushOnce('scripts')
     <script

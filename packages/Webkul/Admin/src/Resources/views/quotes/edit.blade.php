@@ -25,14 +25,18 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Save button for person -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('admin.contacts.quotes.edit.save_button.before', ['quote' => $quote]) !!}
+                        
+                        <!-- Save button for person -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.quotes.edit.save-btn')
                         </button>
+
+                        {!! view_render_event('admin.contacts.quotes.edit.save_button.after', ['quote' => $quote]) !!}
                     </div>
                 </div>
             </div>
@@ -50,6 +54,8 @@
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                    
+                    {!! view_render_event('admin.contacts.quotes.edit.tags.before', ['quote' => $quote]) !!}
+
                     <template
                         v-for="tab in tabs"
                         :key="tab.id"
@@ -66,6 +72,8 @@
                             :text="tab.label"
                         ></a>
                     </template>
+
+                    {!! view_render_event('admin.contacts.quotes.edit.tags.after', ['quote' => $quote]) !!}
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">

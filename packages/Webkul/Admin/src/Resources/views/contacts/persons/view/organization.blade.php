@@ -9,14 +9,25 @@
         </h4>
 
         <div class="flex gap-2">
+            {!! view_render_event('admin.contacts.persons.view.organization.avatar.before', ['person' => $person]) !!}
+
             <!-- Organization Initials -->
             <x-admin::avatar :name="$person->organization->name" />
 
+            {!! view_render_event('admin.contacts.persons.view.organization.avatar.after', ['person' => $person]) !!}
+
             <!-- Organization Details -->
             <div class="flex flex-col gap-1">
+                {!! view_render_event('admin.contacts.persons.view.organization.name.before', ['person' => $person]) !!}
+
                 <span class="font-semibold text-brandColor">
                     {{ $person->organization->name }}
                 </span>
+
+                {!! view_render_event('admin.contacts.persons.view.organization.name.after', ['person' => $person]) !!}
+
+
+                {!! view_render_event('admin.contacts.persons.view.organization.address.before', ['person' => $person]) !!}
 
                 @if ($person->organization->address)
                     <div class="flex flex-col gap-0.5 dark:text-white">
@@ -37,6 +48,8 @@
                         </span>
                     </div>
                 @endif
+
+                {!! view_render_event('admin.contacts.persons.view.organization.address.after', ['person' => $person]) !!}
             </div>
         </div>
     </div>

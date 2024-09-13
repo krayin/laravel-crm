@@ -28,14 +28,18 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
-                    <!-- Edit button for Product -->
                     <div class="flex items-center gap-x-2.5">
+                        {!! view_render_event('admin.products.edit.create_button.before', ['product' => $product]) !!}
+                        
+                        <!-- Edit button for Product -->
                         <button
                             type="submit"
                             class="primary-button"
                         >
                             @lang('admin::app.products.create.save-btn')
                         </button>
+
+                        {!! view_render_event('admin.products.edit.create_button.after', ['product' => $product]) !!}
                     </div>
                 </div>
             </div>
@@ -48,6 +52,8 @@
                             @lang('admin::app.products.create.general')
                         </p>
 
+                        {!! view_render_event('admin.products.edit.attributes.before', ['product' => $product]) !!}
+
                         <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'products',
@@ -56,21 +62,31 @@
                             ])"
                             :entity="$product"
                         />
+
+                        {!! view_render_event('admin.products.edit.attributes.after', ['product' => $product]) !!}
                     </div>
                 </div>
 
                 <!-- Right sub-component -->
                 <div class="flex w-[360px] max-w-full flex-col gap-2 max-sm:w-full">
+                    {!! view_render_event('admin.products.edit.accordion.before', ['product' => $product]) !!}
+
                     <x-admin::accordion >
                         <x-slot:header>
+                            {!! view_render_event('admin.products.edit.accordion.header.before', ['product' => $product]) !!}
+
                             <div class="flex items-center justify-between">
                                 <p class="p-2.5 text-base font-semibold text-gray-800 dark:text-white">
                                     @lang('admin::app.products.create.price')
                                 </p>
                             </div>
+
+                            {!! view_render_event('admin.products.edit.accordion.header.after', ['product' => $product]) !!}
                         </x-slot>
 
                         <x-slot:content>
+                            {!! view_render_event('admin.products.edit.accordion.content.attributes.before', ['product' => $product]) !!}
+
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'products',
@@ -79,13 +95,16 @@
                                 ])"
                                 :entity="$product"
                             />
+
+                            {!! view_render_event('admin.products.edit.accordion.content.attributes.after', ['product' => $product]) !!}
                         </x-slot>
                     </x-admin::accordion>
+
+                    {!! view_render_event('admin.products.edit.accordion.after', ['product' => $product]) !!}
                 </div>
             </div>
         </div>
     </x-admin::form>
 
     {!! view_render_event('admin.products.edit.form.after') !!}
-
 </x-admin::layouts>

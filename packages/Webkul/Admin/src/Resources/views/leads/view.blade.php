@@ -19,9 +19,6 @@
                     />
                 </div>
 
-                <!-- Tags -->
-                {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
-
                 <div class="mb-2">
                     @if (($days = $lead->rotten_days) > 0)
                         @php
@@ -32,22 +29,32 @@
                         @endphp
                     @endif
 
+                    {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
+
+                    <!-- Tags -->
                     <x-admin::tags
                         :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
                         :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
                         :added-tags="$lead->tags"
                     />
+
+                    {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
                 </div>
 
-                {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
+
+                {!! view_render_event('admin.leads.view.title.before', ['lead' => $lead]) !!}
 
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
                     {{ $lead->title }}
                 </h1>
 
+                {!! view_render_event('admin.leads.view.title.after', ['lead' => $lead]) !!}
+
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
+                    {!! view_render_event('admin.leads.view.actions.before', ['lead' => $lead]) !!}
+
                     @if (bouncer()->hasPermission('mail.compose'))
                         <!-- Mail Activity Action -->
                         <x-admin::activities.actions.mail
@@ -75,6 +82,8 @@
                             entity-control-name="lead_id"
                         />
                     @endif
+
+                    {!! view_render_event('admin.leads.view.actions.after', ['lead' => $lead]) !!}
                 </div>
             </div>
             

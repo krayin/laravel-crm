@@ -15,11 +15,17 @@
         </h4>
 
         <div class="flex gap-2">
+            {!! view_render_event('admin.leads.view.person.avatar.before', ['lead' => $lead]) !!}
+
             <!-- Person Initials -->
             <x-admin::avatar :name="$lead->person->name" />
 
+            {!! view_render_event('admin.leads.view.person.avatar.after', ['lead' => $lead]) !!}
+
             <!-- Person Details -->
             <div class="flex flex-col gap-1">
+                {!! view_render_event('admin.leads.view.person.name.before', ['lead' => $lead]) !!}
+
                 <a
                     href="{{ route('admin.contacts.persons.view', $lead->person->id) }}"
                     class="font-semibold text-brandColor"
@@ -27,6 +33,10 @@
                 >
                     {{ $lead->person->name }}
                 </a>
+
+                {!! view_render_event('admin.leads.view.person.name.after', ['lead' => $lead]) !!}
+
+                {!! view_render_event('admin.leads.view.person.job_title.before', ['lead' => $lead]) !!}
 
                 @if ($lead->person->job_title)
                     <span class="dark:text-white">
@@ -40,7 +50,11 @@
                         @endif
                     </span>
                 @endif
+
+                {!! view_render_event('admin.leads.view.person.job_title.after', ['lead' => $lead]) !!}
             
+                {!! view_render_event('admin.leads.view.person.email.before', ['lead' => $lead]) !!}
+
                 @foreach ($lead->person->emails as $email)
                     <div class="flex gap-1">
                         <a 
@@ -55,6 +69,10 @@
                         </span>
                     </div>
                 @endforeach
+
+                {!! view_render_event('admin.leads.view.person.email.after', ['lead' => $lead]) !!}
+
+                {!! view_render_event('admin.leads.view.person.contact_numbers.before', ['lead' => $lead]) !!}
             
                 @foreach ($lead->person->contact_numbers as $contactNumber)
                     <div class="flex gap-1">
@@ -70,6 +88,8 @@
                         </span>
                     </div>
                 @endforeach
+
+                {!! view_render_event('admin.leads.view.person.contact_numbers.after', ['lead' => $lead]) !!}
             </div>
         </div>
     </div>

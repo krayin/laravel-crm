@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.revenue_by_types.before') !!}
+
 <!-- Total Leads Vue Component -->
 <v-dashboard-revenue-by-types>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.revenue-by-types />
 </v-dashboard-revenue-by-types>
+
+{!! view_render_event('admin.dashboard.index.revenue_by_types.after') !!}
 
 @pushOnce('scripts')
     <script

@@ -1,4 +1,8 @@
+{!! view_render_event('admin.leads.view.quotes.before', ['lead' => $lead]) !!}
+
 <v-lead-quotes></v-lead-quotes>
+
+{!! view_render_event('admin.leads.view.quotes.after', ['lead' => $lead]) !!}
 
 @pushOnce('scripts')
     <script
@@ -7,7 +11,11 @@
     >
         @if (bouncer()->hasPermission('quotes'))
             <div class="p-3">
+                {!! view_render_event('admin.leads.view.quotes.table.before', ['lead' => $lead]) !!}
+
                 <x-admin::table v-if="quotes.length">
+                    {!! view_render_event('admin.leads.view.quotes.table.table_head.before', ['lead' => $lead]) !!}
+
                     <x-admin::table.thead>
                         <x-admin::table.thead.tr>
                             <x-admin::table.th class="!px-2">
@@ -47,6 +55,10 @@
                         </x-admin::table.thead.tr>
                     </x-admin::table.thead>
 
+                    {!! view_render_event('admin.leads.view.quotes.table.table_head.after', ['lead' => $lead]) !!}
+
+                    {!! view_render_event('admin.leads.view.quotes.table.table_body.before', ['lead' => $lead]) !!}
+
                     <x-admin::table.tbody>
                         <x-admin::table.tbody.tr v-for="quote in quotes" class="border-b">
                             <x-admin::table.td class="!px-2">@{{ quote.subject }}</x-admin::table.td>
@@ -64,6 +76,8 @@
                             <x-admin::table.td class="!px-2">@{{ quote.grand_total }}</x-admin::table.td>
 
                             <x-admin::table.td class="!px-2">
+                                {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.before', ['lead' => $lead]) !!}
+
                                 <x-admin::dropdown position="bottom-right">
                                     <x-slot:toggle>
                                         <i class="icon-more text-2xl"></i>
@@ -71,6 +85,8 @@
 
                                     <x-slot:menu class="!min-w-40">
                                         @if (bouncer()->hasPermission('quotes.edit'))
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.before', ['lead' => $lead]) !!}
+
                                             <x-admin::dropdown.menu.item>
                                                 <a :href="'{{ route('admin.quotes.edit') }}/' + quote.id">
                                                     <div class="flex items-center gap-2">
@@ -80,9 +96,13 @@
                                                     </div>
                                                 </a>
                                             </x-admin::dropdown.menu.item>
+
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.after', ['lead' => $lead]) !!}
                                         @endif
 
                                         @if (bouncer()->hasPermission('quotes.print'))
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.before', ['lead' => $lead]) !!}
+
                                             <x-admin::dropdown.menu.item>
                                                 <a :href="'{{ route('admin.quotes.print') }}/' + quote.id" target="_blank">
                                                     <div class="flex items-center gap-2">
@@ -93,9 +113,13 @@
                                                 </a>
 
                                             </x-admin::dropdown.menu.item>
+
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.after', ['lead' => $lead]) !!}
                                         @endif
 
                                         @if (bouncer()->hasPermission('quotes.delete'))
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.before', ['lead' => $lead]) !!}
+
                                             <x-admin::dropdown.menu.item @click="removeQuote(quote)">
                                                 <div class="flex items-center gap-2">
                                                     <span class="icon-delete text-2xl"></span>
@@ -103,13 +127,21 @@
                                                     @lang('admin::app.leads.view.quotes.delete')
                                                 </div>
                                             </x-admin::dropdown.menu.item>
+
+                                            {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.item.after', ['lead' => $lead]) !!}
                                         @endif
                                     </x-slot>
                                 </x-admin::dropdown>
+
+                                {!! view_render_event('admin.leads.view.quotes.table.table_body.dropdown.after', ['lead' => $lead]) !!}
                             </x-admin::table.td>
                         </x-admin::table.tbody.tr>
                     </x-admin::table.tbody>
+
+                    {!! view_render_event('admin.leads.view.quotes.table.table_body.after', ['lead' => $lead]) !!}
                 </x-admin::table>
+
+                {!! view_render_event('admin.leads.view.quotes.table.after', ['lead' => $lead]) !!}
 
                 <div v-else>
                     <div class="grid justify-center justify-items-center gap-3.5 py-12">

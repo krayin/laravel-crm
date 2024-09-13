@@ -6,6 +6,8 @@
     'extraTypes'          => null,
 ])
 
+{!! view_render_event('admin.components.activities.before') !!}
+
 <!-- Lead Activities Vue Component -->
 <v-activities
     endpoint="{{ $endpoint }}"
@@ -24,6 +26,8 @@
     @endforeach
 </v-activities>
 
+{!! view_render_event('admin.components.activities.after') !!}
+
 @pushOnce('scripts')
     <script type="text/x-template" id="v-activities-template">
         <template v-if="isLoading">
@@ -32,8 +36,12 @@
         </template>
 
         <template v-else>
+            {!! view_render_event('admin.components.activities.content.before') !!}
+
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                    {!! view_render_event('admin.components.activities.content.types.before') !!}
+
                     <div
                         v-for="type in types"
                         class="cursor-pointer px-3 py-2.5 text-sm font-medium dark:text-white"
@@ -42,18 +50,26 @@
                     >
                         @{{ type.label }}
                     </div>
+
+                    {!! view_render_event('admin.components.activities.content.types.after') !!}
                 </div>
 
                 <!-- Show Default Activities if selectedType not in extraTypes -->
                 <template v-if="! extraTypes.find(type => type.name == selectedType)">
                     <div class="animate-[on-fade_0.5s_ease-in-out] p-4">
+                        {!! view_render_event('admin.components.activities.content.activity.list.before') !!}
+
                         <!-- Activity List -->
                         <div class="flex flex-col gap-4">
+                            {!! view_render_event('admin.components.activities.content.activity.item.before') !!}
+
                             <!-- Activity Item -->
                             <div
                                 class="flex gap-2"
                                 v-for="(activity, index) in filteredActivities"
                             >
+                                {!! view_render_event('admin.components.activities.content.activity.item.icon.before') !!}
+
                                 <!-- Activity Icon -->
                                 <div
                                     class="mt-2 flex h-9 min-h-9 w-9 min-w-9 items-center justify-center rounded-full text-xl"
@@ -61,12 +77,18 @@
                                 >
                                 </div>
 
+                                {!! view_render_event('admin.components.activities.content.activity.item.icon.after') !!}
+
+                                {!! view_render_event('admin.components.activities.content.activity.item.details.before') !!}
+
                                 <!-- Activity Details -->
                                 <div
                                     class="flex w-full justify-between gap-4 rounded-md p-4"
                                     :class="{'bg-gray-100 dark:bg-gray-950': index % 2 != 0 }"
                                 >
                                     <div class="flex flex-col gap-2">
+                                        {!! view_render_event('admin.components.activities.content.activity.item.title.before') !!}
+
                                         <!-- Activity Title -->
                                         <div
                                             class="flex flex-col gap-1"
@@ -159,12 +181,20 @@
                                             </template>
                                         </div>
 
+                                        {!! view_render_event('admin.components.activities.content.activity.item.title.after') !!}
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.description.before') !!}
+
                                         <!-- Activity Description -->
                                         <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
                                             v-html="activity.comment"
                                         ></p>
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.description.after') !!}
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.attachments.before') !!}
 
                                         <!-- Attachments -->
                                         <div
@@ -189,18 +219,30 @@
                                             </a>
                                         </div>
 
+                                        {!! view_render_event('admin.components.activities.content.activity.item.attachments.after') !!}
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.time_and_user.before') !!}
+
                                         <!-- Activity Time and User -->
                                         <div class="text-gray-500 dark:text-gray-300">
                                             @{{ $admin.formatDate(activity.created_at, 'd MMM yyyy, h:mm A') }},
 
                                             @{{ "@lang('admin::app.components.activities.index.by-user', ['user' => 'replace'])".replace('replace', activity.user.name) }}
                                         </div>
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.time_and_user.after') !!}
                                     </div>
+
+                                    {!! view_render_event('admin.components.activities.content.activity.item.more_actions.before') !!}
 
                                     <!-- Activity More Options -->
                                     <template v-if="activity.type != 'system'">
+                                        {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.after') !!}
+
                                         <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
                                             <x-slot:toggle>
+                                                {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.toggle.before') !!}
+
                                                 <template v-if="! isUpdating[activity.id]">
                                                     <button
                                                         class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800"
@@ -210,9 +252,13 @@
                                                 <template v-else>
                                                     <x-admin::spinner />
                                                 </template>
+
+                                                {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.toggle.after') !!}
                                             </x-slot>
 
                                             <x-slot:menu class="!min-w-40">
+                                                {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.menu_item.before') !!}
+
                                                 <template v-if="activity.type != 'email'">
                                                     @if (bouncer()->hasPermission('activities.edit'))
                                                         <x-admin::dropdown.menu.item
@@ -273,11 +319,21 @@
                                                         </div>
                                                     </x-admin::dropdown.menu.item>
                                                 </template>
+
+                                                {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.menu_item.after') !!}
                                             </x-slot>
                                         </x-admin::dropdown>
+
+                                        {!! view_render_event('admin.components.activities.content.activity.item.more_actions.dropdown.after') !!}
                                     </template>
+
+                                    {!! view_render_event('admin.components.activities.content.activity.item.more_actions.after') !!}
                                 </div>
+
+                                {!! view_render_event('admin.components.activities.content.activity.item.details.after') !!}
                             </div>
+
+                            {!! view_render_event('admin.components.activities.content.activity.item.after') !!}
 
                             <!-- Empty Placeholder -->
                             <div
@@ -300,17 +356,25 @@
                                 </div>
                             </div>
                         </div>
+
+                        {!! view_render_event('admin.components.activities.content.activity.list.after') !!}
                     </div>
                 </template>
 
                 <template v-else>
                     <template v-for="type in extraTypes">
+                        {!! view_render_event('admin.components.activities.content.activity.extra_types.before') !!}
+
                         <div v-show="selectedType == type.name">
                             <slot :name="type.name"></slot>
                         </div>
+
+                        {!! view_render_event('admin.components.activities.content.activity.extra_types.after') !!}
                     </template>
                 </template>
             </div>
+
+            {!! view_render_event('admin.components.activities.content.after') !!}
         </template>
     </script>
 

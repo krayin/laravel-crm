@@ -30,7 +30,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <!-- Create button for person -->
                     <div class="flex items-center gap-x-2.5">
-                        {!! view_render_event('admin.activities.edit.submit-btn.before') !!}
+                        {!! view_render_event('admin.activities.edit.save_button.before') !!}
 
                         <!-- Save Button -->
                         <button
@@ -40,7 +40,7 @@
                             @lang('admin::app.activities.edit.save-btn')
                         </button>
         
-                        {!! view_render_event('admin.activities.edit.submit-btn.after') !!}
+                        {!! view_render_event('admin.activities.edit.save_button.after') !!}
                     </div>
                 </div>
             </div>
@@ -50,6 +50,8 @@
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+                        {!! view_render_event('admin.activities.edit.form_controls.before') !!}
+
                         <!-- Schedule Date -->
                         <x-admin::form.control-group>
                             <div class="flex gap-2"> 
@@ -147,6 +149,8 @@
                                 />
                             </v-lookup-component>
                         </x-admin::form.control-group>
+
+                        {!! view_render_event('admin.activities.edit.form_controls.after') !!}
                     </div>
                 </div>
 

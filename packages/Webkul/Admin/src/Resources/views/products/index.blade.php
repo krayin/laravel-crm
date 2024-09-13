@@ -17,6 +17,8 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
+                {!! view_render_event('admin.products.index.create_button.before') !!}
+
                 <!-- Create button for Product -->
                 @if (bouncer()->hasPermission('products.create'))
                     <div class="flex items-center gap-x-2.5">
@@ -28,12 +30,18 @@
                         </a>
                     </div>
                 @endif
+
+                {!! view_render_event('admin.products.index.create_button.after') !!}
             </div>
         </div>
+
+        {!! view_render_event('admin.products.index.datagrid.before') !!}
 
         <x-admin::datagrid :src="route('admin.products.index')">
             <!-- DataGrid Shimmer -->
             <x-admin::shimmer.datagrid />
         </x-admin::datagrid>
+
+        {!! view_render_event('admin.products.index.datagrid.after') !!}
     </div>
 </x-admin::layouts>
