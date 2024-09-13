@@ -18,6 +18,8 @@
                     />
                 </div>
 
+                {!! view_render_event('admin.settings.warehouses.view.left.tags.before', ['warehouse' => $warehouse]) !!}
+
                 <!-- Tags -->
                 <x-admin::tags
                     :attach-endpoint="route('admin.settings.warehouses.tags.attach', $warehouse->id)"
@@ -25,18 +27,32 @@
                     :added-tags="$warehouse->tags"
                 />
 
+                {!! view_render_event('admin.settings.warehouses.view.left.tags.after', ['warehouse' => $warehouse]) !!}
+
+                {!! view_render_event('admin.settings.warehouses.view.left.title.before', ['warehouse' => $warehouse]) !!}
+
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
                     {{ $warehouse->name }}
                 </h3>
 
+                {!! view_render_event('admin.settings.warehouses.view.left.title.after', ['warehouse' => $warehouse]) !!}
+
+                {!! view_render_event('admin.settings.warehouses.view.left.actions.before', ['warehouse' => $warehouse]) !!}
+
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.file.before', ['warehouse' => $warehouse]) !!}
+
                     <!-- File Activity Action -->
                     <x-admin::activities.actions.file
                         :entity="$warehouse"
                         entity-control-name="warehouse_id"
                     />
+
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.file.after', ['warehouse' => $warehouse]) !!}
+
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.note.before', ['warehouse' => $warehouse]) !!}
 
                     <!-- Note Activity Action -->
                     <x-admin::activities.actions.note
@@ -44,12 +60,20 @@
                         entity-control-name="warehouse_id"
                     />
 
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.note.after', ['warehouse' => $warehouse]) !!}
+
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.activity.before', ['warehouse' => $warehouse]) !!}
+
                     <!-- Activity Action -->
                     <x-admin::activities.actions.activity
                         :entity="$warehouse"
                         entity-control-name="warehouse_id"
                     />
+
+                    {!! view_render_event('admin.settings.warehouses.view.left.actions.activity.after', ['warehouse' => $warehouse]) !!}
                 </div>
+
+                {!! view_render_event('admin.settings.warehouses.view.left.actions.after', ['warehouse' => $warehouse]) !!}
             </div>
             
             <!-- General Information -->
@@ -65,6 +89,8 @@
         
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
+            {!! view_render_event('admin.settings.warehouses.view.right.attributes.before', ['warehouse' => $warehouse]) !!}
+
             <!-- Activity Navigation -->
             <x-admin::activities
                 :endpoint="route('admin.settings.warehouse.activities.index', $warehouse->id)" 
@@ -82,9 +108,10 @@
                     @include ('admin::settings.warehouses.view.locations')
                 </x-slot>
             </x-admin::activities>
+
+            {!! view_render_event('admin.settings.warehouses.view.right.attributes.after', ['warehouse' => $warehouse]) !!}
         </div>
 
         {!! view_render_event('admin.warehouse.view.right.after', ['warehouse' => $warehouse]) !!}
     </div>    
-
 </x-admin::layouts>
