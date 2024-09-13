@@ -1,4 +1,8 @@
+{!! view_render_event('admin.leads.create.products.form_controls.before') !!}
+
 <v-product-list :data="products"></v-product-list>
+
+{!! view_render_event('admin.leads.create.products.form_controls.after') !!}
 
 @pushOnce('scripts')
     <script 
@@ -6,8 +10,12 @@
         id="v-product-list-template"
     >
         <div class="flex flex-col gap-4">
+            {!! view_render_event('admin.leads.create.products.form_controls.table.before') !!}
+
             <!-- Table -->
             <x-admin::table>
+                {!! view_render_event('admin.leads.create.products.form_controls.table.head.before') !!}
+
                 <!-- Table Head -->
                 <x-admin::table.thead>
                     <x-admin::table.thead.tr>
@@ -33,8 +41,14 @@
                     </x-admin::table.thead.tr>
                 </x-admin::table.thead>
 
+                {!! view_render_event('admin.leads.create.products.form_controls.table.head.after') !!}
+
+                {!! view_render_event('admin.leads.create.products.form_controls.table.body.before') !!}
+
                 <!-- Table Body -->
                 <x-admin::table.tbody>
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.before') !!}
+
                     <!-- Product Item Vue Component -->
                     <v-product-item
                         v-for='(product, index) in products'
@@ -43,8 +57,14 @@
                         :index="index"
                         @onRemoveProduct="removeProduct($event)"
                     ></v-product-item>
+
+                    {!! view_render_event('admin.leads.create.products.form_controls.table.body.product_item.after') !!}
                 </x-admin::table.tbody>
+
+                {!! view_render_event('admin.leads.create.products.form_controls.table.body.after') !!}
             </x-admin::table>
+
+            {!! view_render_event('admin.leads.create.products.form_controls.table.after') !!}
 
             <!-- Add New Product Item -->
             <span

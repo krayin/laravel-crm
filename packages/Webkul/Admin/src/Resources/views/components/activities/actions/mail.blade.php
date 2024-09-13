@@ -4,7 +4,9 @@
 ])
 
 <!-- Mail Button -->
-<div class="">
+<div>
+    {!! view_render_event('admin.components.activities.actions.mail.create_btn.before') !!}
+
     <button
         class="flex h-[74px] w-[84px] flex-col items-center justify-center gap-1 rounded-lg border border-transparent bg-green-200 font-medium text-green-900 transition-all hover:border-green-400"
         @click="$refs.mailActionComponent.openModal('mail')"
@@ -14,17 +16,25 @@
         @lang('admin::app.components.activities.actions.mail.btn')
     </button>
 
+    {!! view_render_event('admin.components.activities.actions.mail.create_btn.after') !!}
+
+    {!! view_render_event('admin.components.activities.actions.mail.before') !!}
+
     <!-- Mail Activity Action Vue Component -->
     <v-mail-activity
         ref="mailActionComponent"
         :entity="{{ json_encode($entity) }}"
         entity-control-name="{{ $entityControlName }}"
     ></v-mail-activity>
+
+    {!! view_render_event('admin.components.activities.actions.mail.after') !!}
 </div>
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-mail-activity-template">
         <Teleport to="body">
+            {!! view_render_event('admin.components.activities.actions.mail.form_controls.before') !!}
+
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"
                 enctype="multipart/form-data"
@@ -34,14 +44,25 @@
                     @submit="handleSubmit($event, save)"
                     ref="mailActionForm"
                 >
-                    <x-admin::modal ref="mailActivityModal" position="bottom-right">
+                    {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.before') !!}
+
+                    <x-admin::modal
+                        ref="mailActivityModal"
+                        position="bottom-right"
+                    >
                         <x-slot:header>
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.header.before') !!}
+
                             <h3 class="text-base font-semibold">
                                 @lang('admin::app.components.activities.actions.mail.title')
                             </h3>
+
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.header.before') !!}
                         </x-slot>
 
                         <x-slot:content>
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.content.controls.before') !!}
+
                             <!-- Activity Type -->
                             <x-admin::form.control-group.control
                                 type="hidden"
@@ -169,9 +190,13 @@
                                     hide-button="true"
                                 />
                             </x-admin::form.control-group>
+
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.content.controls.after') !!}
                         </x-slot>
 
                         <x-slot:footer>
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.footer.save_button.before') !!}
+
                             <div class="flex w-full items-center justify-between">
                                 <label
                                     class="icon-attachment cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200"
@@ -185,10 +210,16 @@
                                     ::disabled="isStoring"
                                 />
                             </div>
+
+                            {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.footer.save_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
+
+                    {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.after') !!}
                 </form>
             </x-admin::form>
+
+            {!! view_render_event('admin.components.activities.actions.mail.form_controls.after') !!}
         </Teleport>
     </script>
 

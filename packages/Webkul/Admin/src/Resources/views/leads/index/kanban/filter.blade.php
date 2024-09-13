@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.index.kanban.filter.before') !!}
+
 <v-kanban-filter
     :is-loading="isLoading"
     :available="available"
@@ -5,6 +7,8 @@
     @applyFilters="filter"
 >
 </v-kanban-filter>
+
+{!! view_render_event('admin.leads.index.kanban.filter.after') !!}
 
 @pushOnce('scripts')
     <script

@@ -13,6 +13,8 @@
         @endif
     </h4>
 
+    {!! view_render_event('admin.leads.view.attributes.form_controls.before', ['lead' => $lead]) !!}
+
     <x-admin::form
         v-slot="{ meta, errors, handleSubmit }"
         as="div"
@@ -30,6 +32,8 @@
             />
         </form>
     </x-admin::form>
+
+    {!! view_render_event('admin.leads.view.attributes.form_controls.after', ['lead' => $lead]) !!}
 </div>
 
 {!! view_render_event('admin.leads.view.attributes.before', ['lead' => $lead]) !!}
