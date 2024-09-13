@@ -204,14 +204,17 @@
 
                                         <!-- Table Information -->
                                         <x-admin::table>
-                                            <x-admin::table.thead class="text-sm font-medium dark:bg-gray-800">
+                                            <x-admin::table.thead>
                                                 <x-admin::table.thead.tr>
-                                                    <x-admin::table.th class="!p-0"></x-admin::table.th>
+                                                    <x-admin::table.th></x-admin::table.th>
                                                     <!-- Admin tables heading -->
                                                     <x-admin::table.th>
                                                         @lang('admin::app.settings.attributes.edit.option-name')
                                                     </x-admin::table.th>
 
+                                                    <x-admin::table.th>
+                                                        @lang('admin::app.settings.attributes.edit.actions')
+                                                    </x-admin::table.th>
                                                 </x-admin::table.thead.tr>
                                             </x-admin::table.thead>
 
@@ -219,7 +222,7 @@
                                             <draggable
                                                 tag="tbody"
                                                 ghost-class="draggable-ghost"
-                                                handle=".icon-edit"
+                                                handle=".icon-move"
                                                 v-bind="{animation: 200}"
                                                 :list="optionsData"
                                                 item-key="id"
@@ -243,7 +246,7 @@
 
                                                         <!-- Draggable Icon -->
                                                         <x-admin::table.td class="!px-0 text-center">
-                                                            <i class="icon-edit cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
+                                                            <i class="icon-move cursor-grab text-xl transition-all group-hover:text-gray-700"></i>
 
                                                             <input
                                                                 type="hidden"
