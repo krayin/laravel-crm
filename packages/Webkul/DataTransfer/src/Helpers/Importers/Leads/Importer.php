@@ -133,11 +133,19 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('leads|persons', $rowData),
-            'products'              => 'array',
-            'products.*.product_id' => 'sometimes|required|exists:products,id',
-            'products.*.name'       => 'required_with:products.*.product_id',
-            'products.*.price'      => 'required_with:products.*.product_id',
-            'products.*.quantity'   => 'required_with:products.*.product_id',
+            'id'                     => 'sometimes|required|numeric',
+            'status'                 => 'sometimes|required|in:0,1',
+            'products'               => 'array',
+            'products.*.product_id'  => 'sometimes|required|exists:products,id',
+            'products.*.name'        => 'required_with:products.*.product_id',
+            'products.*.price'       => 'required_with:products.*.product_id',
+            'products.*.quantity'    => 'required_with:products.*.product_id',
+            'user_id'                => 'required|exists:users,id',
+            'person_id'              => 'required|exists:persons,id',
+            'lead_source_id'         => 'required|exists:lead_sources,id',
+            'lead_type_id'           => 'required|exists:lead_types,id',
+            'lead_pipeline_id'       => 'required|exists:lead_pipelines,id',
+            'lead_pipeline_stage_id' => 'required|exists:lead_pipeline_stages,id',
         ]);
 
         if ($validator->fails()) {

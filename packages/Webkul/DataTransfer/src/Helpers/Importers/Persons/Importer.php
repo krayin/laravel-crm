@@ -150,7 +150,14 @@ class Importer extends AbstractImporter
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('persons', $rowData),
-            'organization_id' => 'required|exists:organizations,id',
+            'organization_id'         => 'required|exists:organizations,id',
+            'user_id'                 => 'required|exists:users,id',
+            'contact_numbers'         => 'required|array',
+            'contact_numbers.*.value' => 'required|numeric',
+            'contact_numbers.*.label' => 'required|in:home,work',
+            'emails'                  => 'required|array',
+            'emails.*.value'          => 'required|email',
+            'emails.*.label'          => 'required|in:home,work',
         ]);
 
         if ($validator->fails()) {

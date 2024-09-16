@@ -2107,6 +2107,12 @@ return [
         ],
     ],
 
+    'validations' => [
+        'message' => [
+            'decimal' => ':attribute ondalıklı bir sayı olmalıdır.',
+        ],
+    ],
+
     'errors' => [
         '401' => 'Bu sayfaya erişme yetkiniz yok',
     ],

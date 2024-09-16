@@ -2119,6 +2119,12 @@ return [
         ],
     ],
 
+    'validations' => [
+        'message' => [
+            'decimal' => 'The :attribute must be a decimal.',
+        ],
+    ],
+
     'errors' => [
         '401' => 'You are not authorized to access this page',
     ],
