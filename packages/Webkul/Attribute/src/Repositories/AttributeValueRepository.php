@@ -4,6 +4,7 @@ namespace Webkul\Attribute\Repositories;
 
 use Carbon\Carbon;
 use Illuminate\Container\Container;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Webkul\Attribute\Contracts\AttributeValue;
 use Webkul\Core\Eloquent\Repository;
@@ -78,8 +79,8 @@ class AttributeValueRepository extends Repository
             }
 
             if ($attribute->type === 'image' || $attribute->type === 'file') {
-                $data[$attribute->code] = gettype($data[$attribute->code]) === 'object'
-                    ? request()->file($attribute->code)->store($data['entity_type'].'/'.$data['entity_id'])
+                $data[$attribute->code] = $data[$attribute->code] instanceof UploadedFile
+                    ? $data[$attribute->code]->store($data['entity_type'].'/'.$data['entity_id'])
                     : null;
             }
 
@@ -102,7 +103,9 @@ class AttributeValueRepository extends Repository
                 ], $attributeValue->id);
 
                 if ($attribute->type == 'image' || $attribute->type == 'file') {
-                    Storage::delete($attributeValue->text_value);
+                    if ($attributeValue->text_value) {
+                        Storage::delete($attributeValue->text_value);
+                    }
                 }
             }
         }

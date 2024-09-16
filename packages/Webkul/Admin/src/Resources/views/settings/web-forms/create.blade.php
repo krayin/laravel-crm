@@ -531,8 +531,8 @@
                             value: 'message',
 
                             options: [
-                                { value: 'message', label: '@lang('Display custom message')' },
-                                { value: 'redirect', label: '@lang('Redirect to Url')' },
+                                { value: 'message', label: '@lang('admin::app.settings.webforms.create.display-custom-message')' },
+                                { value: 'redirect', label: '@lang('admin::app.settings.webforms.create.redirect-to-url')' },
                             ],
                         },
 
@@ -652,13 +652,13 @@
                             || attribute.type == 'datetime'
                             || attribute.type == 'date'
                         ) {
-                            return "@lang('web_form::app.choose-value')";
+                            return "@lang('admin::app.settings.webforms.create.choose-value')";
                         } else if (attribute.type == 'file') {
-                            return "@lang('web_form::app.select-file')";
+                            return "@lang('admin::app.settings.webforms.create.select-file')";
                         } else if (attribute.type == 'image') {
-                            return "@lang('web_form::app.select-image')";
+                            return "@lang('admin::app.settings.webforms.create.select-image')";
                         } else {
-                            return "@lang('web_form::app.enter-value')";
+                            return "@lang('admin::app.settings.webforms.create.enter-value')";
                         }
                     },
                 },

@@ -386,6 +386,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Delete',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Click to add',
                 'search'          => 'Search',
@@ -996,7 +1000,12 @@ return [
                 'save-btn'                 => 'Save Webform',
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
-                'title'                    => 'Create Webform',
+                'redirect-to-url'          => 'Redirect To Url',
+                'title'                    => 'Title',
+                'choose-value'             => 'Choose Value',
+                'select-file'              => 'Select File',
+                'select-image'             => 'Select Image',
+                'enter-value'              => 'Enter Value',
             ],
 
             'edit' => [
@@ -1026,7 +1035,11 @@ return [
                 'save-btn'                  => 'Save Webform',
                 'submit-button-label'       => 'Submit Button Label',
                 'submit-success-action'     => 'Submit Success Action',
-                'title'                     => 'Edit Webform',
+                'title'                     => 'Title',
+                'choose-value'              => 'Choose Value',
+                'select-file'               => 'Select File',
+                'select-image'              => 'Select Image',
+                'enter-value'               => 'Enter Value',
             ],
         ],
 
@@ -1425,6 +1438,7 @@ return [
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
+                'actions'               => 'Actions',
             ],
 
             'edit'  => [
@@ -1468,6 +1482,7 @@ return [
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
+                'actions'               => 'Actions',
             ],
         ],
 
@@ -2087,6 +2102,20 @@ return [
         'common' => [
             'dear'   => 'Dear :name',
             'cheers' => 'Cheers,</br>Team :app_name',
+            'user'   => [
+                'dear'           => 'Dear :username',
+                'create-subject' => 'You are added as a member.',
+                'create-body'    => 'Congratulations! You are now a member of our team.',
+
+                'forget-password' => [
+                    'subject'           => 'Customer Reset Password',
+                    'dear'              => 'Dear :username',
+                    'reset-password'    => 'Reset Password',
+                    'info'              => 'You are receiving this email because we received a password reset request for your account',
+                    'final-summary'     => 'If you did not request a password reset, no further action is required',
+                    'thanks'            => 'Thanks!',
+                ],
+            ],
         ],
     ],
 

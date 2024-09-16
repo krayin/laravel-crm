@@ -766,13 +766,13 @@
                             || attribute.type == 'datetime'
                             || attribute.type == 'date'
                         ) {
-                            return "@lang('web_form::app.choose-value')";
+                            return "@lang('admin::app.settings.webforms.edit.choose-value')";
                         } else if (attribute.type == 'file') {
-                            return "@lang('web_form::app.select-file')";
+                            return "@lang('admin::app.settings.webforms.edit.select-file')";
                         } else if (attribute.type == 'image') {
-                            return "@lang('web_form::app.select-image')";
+                            return "@lang('admin::app.settings.webforms.edit.select-image')";
                         } else {
-                            return "@lang('web_form::app.enter-value')";
+                            return "@lang('admin::app.settings.webforms.edit.enter-value')";
                         }
                     },
                 },

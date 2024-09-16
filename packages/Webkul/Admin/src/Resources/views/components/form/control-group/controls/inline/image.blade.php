@@ -32,18 +32,16 @@
                     v-model="inputValue"
                 />
 
-                <span class="pl-[2px] text-sm font-normal">
-                    <a 
-                        :href="inputValue" 
-                        target="_blank"
-                    >
-                        <img
-                            :src="inputValue"
-                            class="h-10 w-10"
-                            :alt="name"
-                        />
-                    </a>
-                </span>
+                <div 
+                    class="group relative !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <img
+                        :src="inputValue"
+                        class="h-5 w-5"
+                        :alt="name"
+                    />
+                </div>
 
                 <template v-if="allowEdit">
                     <i
@@ -63,7 +61,7 @@
                     :name="name"
                     :id="name"
                     :class="[errors.length ? 'border !border-red-600 hover:border-red-600' : '']"
-                    class="w-full rounded-md border px-3 py-2.5 text-sm text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:file:bg-gray-800 dark:file:dark:text-white dark:hover:border-gray-400 dark:focus:border-gray-400"
+                    class="!h-[34px] w-full cursor-pointer rounded-md border !py-0 px-3 text-sm text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-white dark:file:bg-gray-800 dark:file:dark:text-white dark:hover:border-gray-400 dark:focus:border-gray-400 ltr:pr-20 rtl:pl-20"
                     @change="handleChange"
                     ref="input"
                 />

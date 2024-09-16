@@ -1,8 +1,12 @@
+{!! view_render_event('admin.dashboard.index.top_persons.before') !!}
+
 <!-- Top Selling Products Vue Component -->
 <v-dashboard-top-persons>
     <!-- Shimmer -->
     <x-admin::shimmer.dashboard.index.top-persons />
 </v-dashboard-top-persons>
+
+{!! view_render_event('admin.dashboard.index.top_persons.after') !!}
 
 @pushOnce('scripts')
     <script

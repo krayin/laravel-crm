@@ -1,5 +1,9 @@
+{!! view_render_event('admin.components.activities.actions.activity.participants.before') !!}
+
 <!-- Participants Vue Component -->
 <v-activity-participants></v-activity-participants>
+
+{!! view_render_event('admin.components.activities.actions.activity.participants.after') !!}
 
 @pushOnce('scripts')
     <script type="text/x-template" id="v-activity-participants-template">
@@ -11,10 +15,14 @@
             >
                 <ul class="flex flex-wrap items-center gap-1">
                     <template v-for="userType in ['users', 'persons']">
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.before') !!}
+
                         <li
                             class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-gray-950"
                             v-for="(user, index) in addedParticipants[userType]"
                         >
+                            {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.user.before') !!}
+
                             <!-- User Id -->
                             <x-admin::form.control-group.control
                                 type="hidden"
@@ -28,10 +36,16 @@
                                 class="icon-cross-large cursor-pointer p-0.5 text-xl"
                                 @click="remove(userType, user)"
                             ></span>
+
+                            {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.user.after') !!}
                         </li>
+
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.after') !!}
                     </template>
 
                     <li>
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.search_term.before') !!}
+
                         <input
                             type="text"
                             class="w-full px-1 py-1 dark:bg-gray-900"
@@ -39,6 +53,8 @@
                             v-model.lazy="searchTerm"
                             v-debounce="500"
                         />
+
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.search_term.after') !!}
                     </li>
                 </ul>
 
@@ -56,6 +72,8 @@
                 </div>
             </div>
 
+            {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.before') !!}
+
             <!-- Search Dropdown -->
             <div
                 class="absolute z-10 w-full rounded bg-white shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900"
@@ -67,6 +85,8 @@
                         class="flex flex-col gap-2"
                         v-for="userType in ['users', 'persons']"
                     >
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.user_type.before') !!}
+
                         <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">
                             <template v-if="userType === 'users'">
                                 @lang('admin::app.components.activities.actions.activity.participants.users')
@@ -76,6 +96,10 @@
                                 @lang('admin::app.components.activities.actions.activity.participants.persons')
                             </template>
                         </h3>
+
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.user_type.after') !!}
+
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.no_results.before') !!}
 
                         <ul>
                             <li
@@ -95,9 +119,13 @@
                                 @{{ user.name }}
                             </li>
                         </ul>
+
+                        {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.no_results.after') !!}
                     </li>
                 </ul>
             </div>
+
+            {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.after') !!}
         </div>
     </script>
 

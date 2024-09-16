@@ -4,7 +4,7 @@
         @lang('admin::app.leads.edit.title')
     </x-slot>
 
-    {!! view_render_event('admin.leads.edit.form.before') !!}
+    {!! view_render_event('admin.leads.edit.form_controls.before', ['lead' => $lead]) !!}
 
     <!-- Edit Lead Form -->
     <x-admin::form         
@@ -28,6 +28,8 @@
                 </div>
 
                 <div class="flex items-center gap-x-2.5">
+                    {!! view_render_event('admin.leads.edit.save_button.before', ['lead' => $lead]) !!}
+
                     <!-- Save button for Editing Lead -->
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.leads.edit.form_buttons.before') !!}
@@ -41,6 +43,8 @@
 
                         {!! view_render_event('admin.leads.edit.form_buttons.after') !!}
                     </div>
+
+                    {!! view_render_event('admin.leads.edit.save_button.after', ['lead' => $lead]) !!}
                 </div>
             </div>
 
@@ -51,7 +55,7 @@
         </div>
     </x-admin::form>
 
-    {!! view_render_event('admin.leads.edit.form.after') !!}
+    {!! view_render_event('admin.leads.edit.form_controls.after', ['lead' => $lead]) !!}
 
     @pushOnce('scripts')
         <script 
@@ -59,11 +63,11 @@
             id="v-lead-edit-template"
         >
             <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
-                {!! view_render_event('admin.leads.edit.form_controls.before') !!}
-
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
+                        {!! view_render_event('admin.leads.edit.tabs.before', ['lead' => $lead]) !!}
+
                         <a
                             :href="'#' + tab.id"
                             :class="[
@@ -75,10 +79,14 @@
                             @click="scrollToSection(tab.id)"
                             :text="tab.label"
                         ></a>
+
+                        {!! view_render_event('admin.leads.edit.tabs.after', ['lead' => $lead]) !!}
                     </template>
                 </div>
 
                 <div class="flex flex-col gap-4 px-4 py-2">
+                    {!! view_render_event('admin.leads.edit.lead_details.before', ['lead' => $lead]) !!}
+
                     <!-- Details section -->
                     <div 
                         class="flex flex-col gap-4" 
@@ -95,6 +103,8 @@
                         </div>
 
                         <div class="w-1/2">
+                            {!! view_render_event('admin.leads.edit.lead_details.attributes.before', ['lead' => $lead]) !!}
+
                             <!-- Lead Details Title and Description -->
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -147,8 +157,14 @@
                                         />
                                 </div>
                             </div>
+
+                            {!! view_render_event('admin.leads.edit.lead_details.attributes.after', ['lead' => $lead]) !!}
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.leads.edit.lead_details.after', ['lead' => $lead]) !!}
+
+                    {!! view_render_event('admin.leads.edit.contact_person.before', ['lead' => $lead]) !!}
 
                     <!-- Contact Person -->
                     <div 
@@ -171,6 +187,10 @@
                         </div>
                     </div>
 
+                    {!! view_render_event('admin.leads.edit.contact_person.after', ['lead' => $lead]) !!}
+
+                    {!! view_render_event('admin.leads.edit.contact_person.products.before', ['lead' => $lead]) !!}
+
                     <!-- Product Section -->
                     <div 
                         class="flex flex-col gap-4" 
@@ -191,6 +211,8 @@
                             @include('admin::leads.common.products')
                         </div>
                     </div>
+
+                    {!! view_render_event('admin.leads.edit.contact_person.products.after', ['lead' => $lead]) !!}
                 </div>
                 
                 {!! view_render_event('admin.leads.form_controls.after') !!}

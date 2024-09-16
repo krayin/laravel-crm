@@ -1,3 +1,5 @@
+{!! view_render_event('admin.leads.index.kanban.filter.before') !!}
+
 <v-kanban-filter
     :is-loading="isLoading"
     :available="available"
@@ -6,17 +8,23 @@
 >
 </v-kanban-filter>
 
+{!! view_render_event('admin.leads.index.kanban.filter.after') !!}
+
 @pushOnce('scripts')
     <script
         type="text/x-template"
         id="v-kanban-filter-template"
     >
+        {!! view_render_event('admin.leads.index.kanban.filter.drawer.before') !!}
+
         <x-admin::drawer
             width="350px"
             ref="kanbanFilterDrawer"
         >
             <!-- Drawer Toggler -->
             <x-slot:toggle>
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.toggle_button.before') !!}
+
                 <div class="relative flex cursor-pointer items-center rounded-md bg-sky-100 px-4 py-[9px] font-semibold text-sky-600 dark:bg-brandColor dark:text-white">
                     @lang('admin::app.leads.index.kanban.toolbar.filters.filter')
 
@@ -26,10 +34,14 @@
                     >
                     </span>
                 </div>
+
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.toggle_button.after') !!}
             </x-slot>
 
             <!-- Drawer Header -->
             <x-slot:header class="p-3.5">
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.header.title.before') !!}
+
                 <div class="grid gap-3">
                     <div class="flex items-center justify-between">
                         <p class="text-xl font-semibold dark:text-white">
@@ -37,10 +49,14 @@
                         </p>
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.header.title.after') !!}
             </x-slot>
 
             <!-- Drawer Content -->
             <x-slot:content>
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.content.before') !!}
+
                 <div>
                     <div v-for="column in available.columns">
                         <div v-if="column.filterable">
@@ -613,10 +629,14 @@
                         </div>
                     </div>
                 </div>
+
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.content.after') !!}
             </x-slot:content>
 
             <!-- Drawer Footer -->
             <x-slot:footer class="!pb-3">
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.footer.before') !!}
+
                 <div class="flex justify-end gap-2 px-2 pt-3">
                     <!-- Apply Filter Button -->
                     <button
@@ -627,8 +647,12 @@
                         @lang('admin::app.leads.index.kanban.toolbar.filters.apply-filters')
                     </button>
                 </div>
+
+                {!! view_render_event('admin.leads.index.kanban.filter.drawer.footer.after') !!}
             </x-slot>
         </x-admin::drawer>
+
+        {!! view_render_event('admin.leads.index.kanban.filter.drawer.after') !!}
     </script>
 
     <script type="module">

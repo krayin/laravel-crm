@@ -136,6 +136,7 @@
                     </template>
                 </template>
             </x-admin::datagrid>
+            
             {!! view_render_event('admin.settings.tags.index.datagrid.after') !!}
             
             <x-admin::form
@@ -149,6 +150,8 @@
                     <x-admin::modal ref="tagsUpdateAndCreateModal">
                         <!-- Modal Header -->
                         <x-slot:header>
+                            {!! view_render_event('admin.settings.tags.index.form_controls.modal.title.before') !!}
+
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @{{ 
                                     selectedType
@@ -156,6 +159,8 @@
                                     : "@lang('admin::app.settings.tags.index.create.title')"
                                 }}
                             </p>
+
+                            {!! view_render_event('admin.settings.tags.index.form_controls.modal.title.after') !!}
                         </x-slot>
 
                         <!-- Modal Content -->
@@ -216,6 +221,8 @@
 
                         <!-- Modal Footer -->
                         <x-slot:footer>
+                            {!! view_render_event('admin.settings.tags.index.form_controls.modal.footer.save_button.before') !!}
+
                             <!-- Save Button -->
                             <x-admin::button
                                 button-type="submit"
@@ -224,6 +231,8 @@
                                 ::loading="isProcessing"
                                 ::disabled="isProcessing"
                             />
+
+                            {!! view_render_event('admin.settings.tags.index.form_controls.modal.footer.save_button.after') !!}
                         </x-slot>
                     </x-admin::modal>
 

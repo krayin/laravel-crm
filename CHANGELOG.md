@@ -1,3 +1,15 @@
+## **v2.0.2 (13th of September 2024)** - *Release*
+
+* #1603[fixed] Bug: Page resets when entering the first character in "URL And Parameters" while creating a Webhook on mobile.
+
+* #1597[fixed] Issues with Multiselect Attribute Type for Person Entity.
+
+* #1590[fixed] File upload issue.
+
+* #1589[fixed] Date time format.
+
+* #1578[fixed] Create new user.
+
 ## **v2.0.1 (6th of September 2024)** - *Release*
 
 * #1583[enhancement] Workflow create and edit page ui enhancement.

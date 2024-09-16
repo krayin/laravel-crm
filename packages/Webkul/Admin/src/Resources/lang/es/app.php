@@ -1425,6 +1425,7 @@ return [
                 'checkbox'              => 'Casilla de Verificación',
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
+                'actions'               => 'Acciones',
             ],
 
             'edit'  => [
@@ -1468,6 +1469,7 @@ return [
                 'checkbox'              => 'Casilla de Verificación',
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
+                'actions'               => 'Acciones',
             ],
         ],
 
@@ -2087,6 +2089,21 @@ return [
         'common' => [
             'dear'   => 'Estimado/a :name',
             'cheers' => 'Saludos,</br>Equipo :app_name',
+
+            'user' => [
+                'dear'           => 'Estimado/a :username',
+                'create-subject' => 'Has sido agregado como miembro.',
+                'create-body'    => '¡Felicidades! Ahora eres miembro de nuestro equipo.',
+
+                'forget-password' => [
+                    'subject'           => 'Restablecimiento de Contraseña del Cliente',
+                    'dear'              => 'Estimado/a :username',
+                    'reset-password'    => 'Restablecer Contraseña',
+                    'info'              => 'Estás recibiendo este correo porque recibimos una solicitud de restablecimiento de contraseña para tu cuenta',
+                    'final-summary'     => 'Si no solicitaste el restablecimiento de contraseña, no se requiere ninguna acción adicional',
+                    'thanks'            => '¡Gracias!',
+                ],
+            ],
         ],
     ],
 

@@ -66,6 +66,7 @@
             <!-- Editing view -->
             <div
                 class="relative flex w-full flex-col"
+                ref="dropdownContainer"
                 v-else
             >
                 <x-admin::form.control-group.control
@@ -97,7 +98,8 @@
                 <!-- Popup Box -->
                 <div 
                     v-if="showPopup" 
-                    class="absolute top-full z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-900"
+                    class="absolute z-10 mt-1 w-full origin-top transform rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-800 dark:bg-gray-800"
+                    :class="dropdownPosition === 'bottom' ? 'top-full mt-1' : 'bottom-full mb-1'"
                 >
                     <!-- Search Bar -->
                     <input
@@ -105,9 +107,8 @@
                         v-model.lazy="searchTerm"
                         v-debounce="200"
                         class="!mb-2 w-full rounded border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
-                        placeholder="Search..."
+                        placeholder="@lang('admin::app.components.lookup.search')"
                         ref="searchInput"
-                        @keyup="search"
                     />
             
                     <!-- Results List -->
@@ -122,7 +123,7 @@
                         </li>
     
                         <li v-if="filteredResults.length === 0" class="px-4 py-2 text-center text-gray-500 dark:text-gray-300">
-                            @lang('No results found')
+                            @lang('admin::app.components.lookup.no-results')
                         </li>
                     </ul>
                 </div>
@@ -221,6 +222,10 @@
 
                     cancelToken: null,
 
+                    isDropdownOpen: false,
+
+                    dropdownPosition: "bottom",
+
                     isRTL: document.documentElement.dir === 'rtl',
                 };
             },
@@ -234,6 +239,14 @@
                 value(newValue) {
                     this.inputValue = newValue;
                 },
+
+                searchTerm(newVal, oldVal) {
+                    this.search();
+                },
+            },
+
+            mounted() {
+                window.addEventListener("resize", this.setDropdownPosition);
             },
 
             computed: {
@@ -265,6 +278,12 @@
                     this.searchTerm = '';
 
                     this.selectedItem.name = this.inputValue;
+
+                    this.isDropdownOpen = ! this.isDropdownOpen;
+
+                    if (this.isDropdownOpen) {
+                        this.setDropdownPosition();
+                    }
                 },
 
                 toggleEditor() {
@@ -383,6 +402,25 @@
                             this.isSearching = false;
                         })
                         .finally(() => this.isSearching = false);
+                },
+
+                setDropdownPosition() {
+                    this.$nextTick(() => {
+                        const dropdownContainer = this.$refs.dropdownContainer;
+
+                        if (! dropdownContainer) {
+                            return;     
+                        }
+
+                        const dropdownRect = dropdownContainer.getBoundingClientRect();
+                        const viewportHeight = window.innerHeight;
+
+                        if (dropdownRect.bottom + 250 > viewportHeight) {
+                            this.dropdownPosition = "top";
+                        } else {
+                            this.dropdownPosition = "bottom";
+                        }
+                    });
                 },
             },
         });
