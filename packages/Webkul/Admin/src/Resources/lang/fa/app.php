@@ -1422,6 +1422,7 @@ return [
                 'checkbox'              => 'چک باکس',
                 'is_required'           => 'الزامی است',
                 'is_unique'             => 'منحصربه‌فرد است',
+                'actions'               => 'عملیات',
             ],
 
             'edit'  => [
@@ -1465,6 +1466,7 @@ return [
                 'checkbox'              => 'چک باکس',
                 'is_required'           => 'الزامی است',
                 'is_unique'             => 'منحصربه‌فرد است',
+                'actions'               => 'عملیات',
             ],
         ],
     ],

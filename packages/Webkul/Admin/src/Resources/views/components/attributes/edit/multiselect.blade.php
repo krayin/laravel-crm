@@ -14,7 +14,6 @@
     label="{{ $attribute->name }}"
     placeholder="{{ $attribute->name }}"
     multiple
-    value="{{ $selectedOption }}"
 >
     <select
         name="{{ $attribute->code }}[]"
@@ -24,7 +23,7 @@
         @foreach ($options as $option)
             <option
                 value="{{ $option->id }}"
-                {{ in_array($option->id, explode(',', $selectedOption)) ? 'selected' : ''}}
+                {{ in_array($option->id, is_array($selectedOption) ? $selectedOption : explode(',', $selectedOption)) ? 'selected' : ''}}
             >
                 {{ $option->name }}
             </option>

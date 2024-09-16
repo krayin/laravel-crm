@@ -1422,6 +1422,7 @@ return [
                 'checkbox'              => 'Onay Kutusu',
                 'is_required'           => 'Gerekli mi',
                 'is_unique'             => 'Benzersiz mi',
+                'actions'               => 'İşlemler',
             ],
 
             'edit'  => [
@@ -1465,6 +1466,7 @@ return [
                 'checkbox'              => 'Onay Kutusu',
                 'is_required'           => 'Gerekli mi',
                 'is_unique'             => 'Benzersiz mi',
+                'actions'               => 'İşlemler',
             ],
         ],
     ],

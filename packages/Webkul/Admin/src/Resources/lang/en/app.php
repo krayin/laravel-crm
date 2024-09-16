@@ -1435,6 +1435,7 @@ return [
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
+                'actions'               => 'Actions',
             ],
 
             'edit'  => [
@@ -1478,6 +1479,7 @@ return [
                 'checkbox'              => 'Checkbox',
                 'is_required'           => 'Is Required',
                 'is_unique'             => 'Is Unique',
+                'actions'               => 'Actions',
             ],
         ],
     ],

@@ -1422,6 +1422,7 @@ return [
                 'checkbox'              => 'Casilla de Verificación',
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
+                'actions'               => 'Acciones',
             ],
 
             'edit'  => [
@@ -1465,6 +1466,7 @@ return [
                 'checkbox'              => 'Casilla de Verificación',
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
+                'actions'               => 'Acciones',
             ],
         ],
     ],

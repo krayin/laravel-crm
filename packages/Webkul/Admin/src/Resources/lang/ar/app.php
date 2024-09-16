@@ -1422,6 +1422,7 @@ return [
                 'checkbox'              => 'خانة اختيار',
                 'is_required'           => 'مطلوب',
                 'is_unique'             => 'فريد',
+                'actions'               => 'الإجراءات',
             ],
 
             'edit'  => [
@@ -1465,6 +1466,7 @@ return [
                 'checkbox'              => 'خانة اختيار',
                 'is_required'           => 'مطلوب',
                 'is_unique'             => 'فريد',
+                'actions'               => 'الإجراءات',
             ],
         ],
     ],
