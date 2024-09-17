@@ -1841,6 +1841,10 @@ return [
                         'title'       => 'Locale Settings',
                         'title-info'  => 'Defines the language used in the user interface, such as English (en), French (fr), or Japanese (ja).',
                     ],
+                    'currency-settings' => [
+                        'title'       => 'Currency Settings',
+                        'title-info'  => 'Defines the currency used in the user interface, such as US Dollar ($), Euro (€), or Japanese Yen (¥).',
+                    ],
                 ],
             ],
         ],
