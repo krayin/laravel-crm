@@ -449,11 +449,24 @@ class Importer extends AbstractImporter
          * Prepare leads for import.
          */
         foreach ($batch->data as $rowData) {
-            $leads['insert'][$rowData['title']] = [
-                ...Arr::except($rowData, ['id', 'product']),
-                'created_at' => $rowData['created_at'] ?? now(),
-                'updated_at' => $rowData['updated_at'] ?? now(),
-            ];
+            if (isset($rowData['id'])) {
+                $leads['update'][$rowData['id']] = Arr::except($rowData, ['product']);
+            } else {
+                $leads['insert'][$rowData['title']] = [
+                    ...Arr::except($rowData, ['id', 'product']),
+                    'created_at' => $rowData['created_at'] ?? now(),
+                    'updated_at' => $rowData['updated_at'] ?? now(),
+                ];
+            }
+        }
+
+        if (! empty($leads['update'])) {
+            $this->updatedItemsCount += count($leads['update']);
+
+            $this->leadRepository->upsert(
+                $leads['update'],
+                $this->masterAttributeCode
+            );
         }
 
         if (! empty($leads['insert'])) {
