@@ -16,12 +16,12 @@
 
                         {!! view_render_event('admin.settings.webform.create.breadcrumbs.after') !!}
                     </div>
-        
+
                     <div class="text-xl font-bold dark:text-white">
                         @lang('admin::app.settings.webforms.create.title')
                     </div>
                 </div>
-        
+
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.settings.webform.create.save_button.before') !!}
@@ -44,7 +44,7 @@
     </x-admin::form>
 
     @pushOnce('scripts')
-        <script 
+        <script
             type="text/x-template"
             id="v-webform-template"
         >
@@ -101,7 +101,7 @@
                                     ::placeholder="placeholder"
                                 />
                             </div>
-                            
+
                             <x-admin::form.control-group.error control-name="submit_success_content"/>
                         </x-admin::form.control-group>
 
@@ -112,7 +112,7 @@
                             </x-admin::form.control-group.label>
 
                             <label class="relative inline-flex cursor-pointer items-center">
-                                <input  
+                                <input
                                     type="checkbox"
                                     name="create_lead"
                                     :value="1"
@@ -120,7 +120,7 @@
                                     class="peer sr-only"
                                     v-model="createLead"
                                 >
-            
+
                                 <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
                             </label>
                         </x-admin::form.control-group>
@@ -280,13 +280,13 @@
                                         @lang('admin::app.settings.webforms.create.add-attribute-btn')
                                     </button>
                                 </x-slot>
-            
+
                                 <x-slot:menu class="max-h-80 overflow-y-auto !p-0 dark:border-gray-800">
                                     <template v-if="createLead">
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.persons')</div>
+                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.leads')</div>
 
                                         <span
-                                            v-for="attribute in groupedAttributes.persons"
+                                            v-for="attribute in groupedAttributes.leads"
                                             class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             @click="addAttribute(attribute)"
                                         >
@@ -297,10 +297,10 @@
                                     </template>
 
                                     <template v-else>
-                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.leads')</div>
+                                        <div class="m-2 text-lg font-bold">@lang('admin::app.settings.webforms.create.person')</div>
 
                                         <span
-                                            v-for="attribute in groupedAttributes.leads"
+                                            v-for="attribute in groupedAttributes.persons"
                                             class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
                                             @click="addAttribute(attribute)"
                                         >
@@ -349,7 +349,7 @@
 
                                                 <x-admin::form.control-group.error ::name="'attributes[' + element.id + '][name]'"/>
                                             </x-admin::form.control-group>
-        
+
                                         </x-admin::table.td>
 
                                         <!-- Placeholder -->
@@ -516,7 +516,7 @@
                         @input="color = $event.target.value"
                     />
                 </div>
-                
+
                 <x-admin::form.control-group.error ::name="name"/>
             </x-admin::form.control-group>
         </script>
@@ -549,10 +549,10 @@
                 watch: {
                     /**
                      * Watch for the createLead value and remove the added attributes if the value is true.
-                     * 
+                     *
                      * @param {Boolean} newValue
                      * @param {Boolean} oldValue
-                     * 
+                     *
                      * @return {void}
                      */
                     createLead(newValue, oldValue) {
@@ -567,7 +567,7 @@
                 computed:{
                     /**
                      * Get the placeholder value based on the submit success action value.
-                     * 
+                     *
                      * @return {String}
                      */
                     placeholder() {
@@ -576,7 +576,7 @@
 
                     /**
                      * Get the grouped attributes based on the entity type.
-                     * 
+                     *
                      * @return {Object}
                      */
                     groupedAttributes() {
@@ -601,9 +601,9 @@
                 methods: {
                     /**
                      * Add the attribute to the added attributes list.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {void}
                      */
                     addAttribute(attribute) {
@@ -622,9 +622,9 @@
 
                     /**
                      * Remove the attribute from the added attributes list.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {void}
                      */
                     removeAttribute(attribute) {
@@ -638,9 +638,9 @@
 
                     /**
                      * Get the placeholder value based on the attribute type.
-                     * 
+                     *
                      * @param {Object} attribute
-                     * 
+                     *
                      * @return {String}
                      */
                     getPlaceholderValue(attribute) {
