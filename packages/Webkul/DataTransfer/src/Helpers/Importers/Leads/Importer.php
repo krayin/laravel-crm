@@ -13,6 +13,7 @@ use Webkul\DataTransfer\Helpers\Import;
 use Webkul\DataTransfer\Helpers\Importers\AbstractImporter;
 use Webkul\DataTransfer\Repositories\ImportBatchRepository;
 use Webkul\Lead\Repositories\LeadRepository;
+use Webkul\Lead\Repositories\ProductRepository as LeadProductRepository;
 
 class Importer extends AbstractImporter
 {
@@ -39,6 +40,7 @@ class Importer extends AbstractImporter
         'lead_pipeline_id',
         'lead_pipeline_stage_id',
         'expected_close_date',
+        'product',
     ];
 
     /**
@@ -53,12 +55,17 @@ class Importer extends AbstractImporter
      *
      * @var string[]
      */
-    protected $permanentAttributes = ['id'];
+    protected $permanentAttributes = ['title'];
 
     /**
      * Permanent entity column.
      */
     protected string $masterAttributeCode = 'id';
+
+    /**
+     * Is linking required
+     */
+    protected bool $linkingRequired = true;
 
     /**
      * Create a new helper instance.
@@ -68,9 +75,10 @@ class Importer extends AbstractImporter
     public function __construct(
         protected ImportBatchRepository $importBatchRepository,
         protected LeadRepository $leadRepository,
+        protected LeadProductRepository $leadProductRepository,
         protected AttributeRepository $attributeRepository,
         protected AttributeValueRepository $attributeValueRepository,
-        protected Storage $leadsStorage
+        protected Storage $leadsStorage,
     ) {
         parent::__construct(
             $importBatchRepository,
@@ -119,7 +127,7 @@ class Importer extends AbstractImporter
          * If import action is delete than no need for further validation.
          */
         if ($this->import->action == Import::ACTION_DELETE) {
-            if (! $this->isIdExist($rowData['id'])) {
+            if (! $this->isTitleExist($rowData['title'])) {
                 $this->skipRow($rowNumber, self::ERROR_ID_NOT_FOUND_FOR_DELETE, 'id');
 
                 return false;
@@ -128,18 +136,33 @@ class Importer extends AbstractImporter
             return true;
         }
 
+        if (! empty($rowData['product'])) {
+            $product = $this->parseProducts($rowData['product']);
+
+            $validator = Validator::make($product, [
+                'id'       => 'required|exists:products,id',
+                'price'    => 'required',
+                'quantity' => 'required',
+            ]);
+
+            if ($validator->fails()) {
+                $failedAttributes = $validator->failed();
+
+                foreach ($validator->errors()->getMessages() as $attributeCode => $message) {
+                    $errorCode = array_key_first($failedAttributes[$attributeCode] ?? []);
+
+                    $this->skipRow($rowNumber, $errorCode, $attributeCode, current($message));
+                }
+            }
+        }
+
         /**
          * Validate leads attributes.
          */
         $validator = Validator::make($rowData, [
             ...$this->getValidationRules('leads|persons', $rowData),
-            'id'                     => 'sometimes|required|numeric',
+            'id'                     => 'numeric',
             'status'                 => 'sometimes|required|in:0,1',
-            'products'               => 'array',
-            'products.*.product_id'  => 'sometimes|required|exists:products,id',
-            'products.*.name'        => 'required_with:products.*.product_id',
-            'products.*.price'       => 'required_with:products.*.product_id',
-            'products.*.quantity'    => 'required_with:products.*.product_id',
             'user_id'                => 'required|exists:users,id',
             'person_id'              => 'required|exists:persons,id',
             'lead_source_id'         => 'required|exists:lead_sources,id',
@@ -159,6 +182,35 @@ class Importer extends AbstractImporter
         }
 
         return ! $this->errorHelper->isRowInvalid($rowNumber);
+    }
+
+    /**
+     * Prepare row data for lead product.
+     */
+    protected function parseProducts(?string $products): array
+    {
+        $productData = [];
+
+        $productArray = explode(',', $products);
+
+        foreach ($productArray as $product) {
+            if (empty($product)) {
+                continue;
+            }
+
+            list($key, $value) = explode('=', $product);
+
+            $productData[$key] = $value;
+        }
+
+        if (
+            isset($productData['price'])
+            && isset($productData['quantity'])
+        ) {
+            $productData['amount'] = $productData['price'] * $productData['quantity'];
+        }
+
+        return $productData;
     }
 
     /**
@@ -279,6 +331,75 @@ class Importer extends AbstractImporter
     }
 
     /**
+     * Start the products linking process
+     */
+    public function linkBatch(ImportBatchContract $batch): bool
+    {
+        Event::dispatch('data_transfer.imports.batch.linking.before', $batch);
+
+        /**
+         * Load leads storage with batch ids.
+         */
+        $this->leadsStorage->load(Arr::pluck($batch->data, 'title'));
+
+        $products = [];
+
+        foreach ($batch->data as $rowData) {
+            /**
+             * Prepare products.
+             */
+            $this->prepareProducts($rowData, $products);
+        }
+
+        $this->saveProducts($products);
+
+        /**
+         * Update import batch summary
+         */
+        $this->importBatchRepository->update([
+            'state' => Import::STATE_LINKED,
+        ], $batch->id);
+
+        Event::dispatch('data_transfer.imports.batch.linking.after', $batch);
+
+        return true;
+    }
+
+    /**
+     * Prepare products.
+     */
+    public function prepareProducts($rowData, &$product): void
+    {
+        if (! empty($rowData['product'])) {
+            $product[$rowData['title']] = $this->parseProducts($rowData['product']);
+        }
+    }
+
+    /**
+     * Save products.
+     */
+    public function saveProducts(array $products): void
+    {
+        $leadProducts = [];
+
+        foreach ($products as $title => $product) {
+            $lead = $this->leadsStorage->get($title);
+
+            $leadProducts['insert'][] = [
+                'lead_id'    => $lead['id'],
+                'product_id' => $product['id'],
+                'price'      => $product['price'],
+                'quantity'   => $product['quantity'],
+                'amount'     => $product['amount'],
+            ];
+        }
+
+        $this->leadProductRepository->deleteWhere([['product_id', 'IN', Arr::pluck($leadProducts['insert'], 'product_id')]]);
+
+        $this->leadProductRepository->upsert($leadProducts['insert'], ['lead_id', 'product_id']);
+    }
+
+    /**
      * Delete leads from current batch.
      */
     protected function deleteLeads(ImportBatchContract $batch): bool
@@ -286,16 +407,16 @@ class Importer extends AbstractImporter
         /**
          * Load leads storage with batch ids.
          */
-        $this->leadsStorage->load(Arr::pluck($batch->data, 'id'));
+        $this->leadsStorage->load(Arr::pluck($batch->data, 'title'));
 
         $idsToDelete = [];
 
         foreach ($batch->data as $rowData) {
-            if (! $this->isIdExist($rowData['id'])) {
+            if (! $this->isTitleExist($rowData['title'])) {
                 continue;
             }
 
-            $idsToDelete[] = $this->leadsStorage->get($rowData['id']);
+            $idsToDelete[] = $this->leadsStorage->get($rowData['title']);
         }
 
         $idsToDelete = array_unique($idsToDelete);
@@ -313,9 +434,9 @@ class Importer extends AbstractImporter
     protected function saveLeads(ImportBatchContract $batch): bool
     {
         /**
-         * Load lead storage with batch unique ids.
+         * Load lead storage with batch unique title.
          */
-        $this->leadsStorage->load(Arr::pluck($batch->data, 'id'));
+        $this->leadsStorage->load(Arr::pluck($batch->data, 'title'));
 
         $leads = [];
 
@@ -324,13 +445,13 @@ class Importer extends AbstractImporter
          */
         foreach ($batch->data as $rowData) {
             if (
-                ! empty($rowData['id'])
-                && $this->isIdExist($rowData['id'])
+                ! empty($rowData['title'])
+                && $this->isTitleExist($rowData['title'])
             ) {
-                $leads['update'][$rowData['id']] = $rowData;
+                $leads['update'][$rowData['title']] = Arr::except($rowData, ['product']);
             } else {
-                $leads['insert'][] = [
-                    ...Arr::except($rowData, ['id']),
+                $leads['insert'][$rowData['title']] = [
+                    ...Arr::except($rowData, ['id', 'product']),
                     'created_at' => $rowData['created_at'] ?? now(),
                     'updated_at' => $rowData['updated_at'] ?? now(),
                 ];
@@ -350,17 +471,36 @@ class Importer extends AbstractImporter
             $this->createdItemsCount += count($leads['insert']);
 
             $this->leadRepository->insert($leads['insert']);
+
+            /**
+             * Update the sku storage with newly created products
+             */
+            $newLeads = $this->leadRepository->findWhereIn(
+                'title',
+                array_keys($leads['insert']),
+                [
+                    'id',
+                    'title',
+                ]
+            );
+
+            foreach ($newLeads as $lead) {
+                $this->leadsStorage->set($lead->title, [
+                    'id'    => $lead->id,
+                    'title' => $lead->title,
+                ]);
+            }
         }
 
         return true;
     }
 
     /**
-     * Check if id exists.
+     * Check if title exists.
      */
-    public function isIdExist(string $id): bool
+    public function isTitleExist(string $title): bool
     {
-        return $this->leadsStorage->has($id);
+        return $this->leadsStorage->has($title);
     }
 
     /**
