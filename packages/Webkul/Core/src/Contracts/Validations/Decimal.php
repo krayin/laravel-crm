@@ -14,7 +14,7 @@ class Decimal implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (!preg_match('/^\d*(\.\d{1,4})?$/', $value)) {
+        if (! preg_match('/^\d*(\.\d{1,4})?$/', $value)) {
             $fail(trans('admin::app.validations.message.decimal', ['attribute' => $attribute]));
         }
     }

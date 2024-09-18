@@ -198,7 +198,7 @@ class Importer extends AbstractImporter
                 continue;
             }
 
-            list($key, $value) = explode('=', $product);
+            [$key, $value] = explode('=', $product);
 
             $productData[$key] = $value;
         }
