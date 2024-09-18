@@ -394,7 +394,12 @@ class Importer extends AbstractImporter
             ];
         }
 
-        $this->leadProductRepository->deleteWhere([['product_id', 'IN', Arr::pluck($leadProducts['insert'], 'product_id')]]);
+        foreach ($leadProducts['insert'] as $key => $leadProduct) {
+            $this->leadProductRepository->deleteWhere([
+                'lead_id'    => $leadProduct['lead_id'],
+                'product_id' => $leadProduct['product_id'],
+            ]);
+        }
 
         $this->leadProductRepository->upsert($leadProducts['insert'], ['lead_id', 'product_id']);
     }
