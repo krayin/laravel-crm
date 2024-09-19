@@ -2,14 +2,23 @@
 
 namespace Webkul\Email\Helpers;
 
-class Htmlfilter
+class HtmlFilter
 {
+    /**
+     * Tag print.
+     *
+     * @param  string  $tagname
+     * @param  array  $attary
+     * @param  int  $tagtype
+     * @return string
+     */
     public function tln_tagprint($tagname, $attary, $tagtype)
     {
         if ($tagtype == 2) {
             $fulltag = '</'.$tagname.'>';
         } else {
             $fulltag = '<'.$tagname;
+
             if (is_array($attary) && count($attary)) {
                 $atts = [];
 
@@ -34,8 +43,8 @@ class Htmlfilter
      * A small helper function to use with array_walk. Modifies a by-ref
      * value and makes it lowercase.
      *
-     * @param  string  $val  a value passed by-ref.
-     * @return void since it modifies a by-ref value.
+     * @param  string  $val
+     * @return void
      */
     public function tln_casenormalize(&$val)
     {
@@ -46,10 +55,9 @@ class Htmlfilter
      * This function skips any whitespace from the current position within
      * a string and to the next non-whitespace value.
      *
-     * @param  string  $body  the string
-     * @param  int  $offset  the offset within the string where we should start
-     *                       looking for the next non-whitespace character.
-     * @return int the location within the $body where the next non-whitespace char is located.
+     * @param  string  $body
+     * @param  int  $offset
+     * @return int
      */
     public function tln_skipspace($body, $offset)
     {
@@ -72,10 +80,10 @@ class Htmlfilter
      * really just a glorified "strpos", except it catches the failures
      * nicely.
      *
-     * @param  string  $body  The string to look for needle in.
-     * @param  int  $offset  Start looking from this position.
-     * @param  string  $needle  The character/string to look for.
-     * @return int location of the next occurrence of the needle, or strlen($body) if needle wasn't found.
+     * @param  string  $body
+     * @param  int  $offset
+     * @param  string  $needle
+     * @return int
      */
     public function tln_findnxstr($body, $offset, $needle)
     {
@@ -92,14 +100,10 @@ class Htmlfilter
      * This function takes a PCRE-style regexp and tries to match it
      * within the string.
      *
-     * @param  string  $body  The string to look for needle in.
-     * @param  int  $offset  Start looking from here.
-     * @param  string  $reg  A PCRE-style regex to match.
-     * @return array|bool Returns a false if no matches found, or an array
-     *                    with the following members:
-     *                    - integer with the location of the match within $body
-     *                    - string with whatever content between offset and the match
-     *                    - string with whatever it is we matched
+     * @param  string  $body
+     * @param  int  $offset
+     * @param  string  $reg
+     * @return array|bool
      */
     public function tln_findnxreg($body, $offset, $reg)
     {
@@ -125,16 +129,9 @@ class Htmlfilter
     /**
      * This function looks for the next tag.
      *
-     * @param  string  $body  String where to look for the next tag.
-     * @param  int  $offset  Start looking from here.
-     * @return array|bool false if no more tags exist in the body, or
-     *                    an array with the following members:
-     *                    - string with the name of the tag
-     *                    - array with attributes and their values
-     *                    - integer with tag type (1, 2, or 3)
-     *                    - integer where the tag starts (starting "<")
-     *                    - integer where the tag ends (ending ">")
-     *                    first three members will be false, if the tag is invalid.
+     * @param  string  $body
+     * @param  int  $offset
+     * @return array|bool
      */
     public function tln_getnxtag($body, $offset)
     {
@@ -243,14 +240,14 @@ class Htmlfilter
                     return $retary;
                 }
 
-                //intentional fall-through
+                // Intentional fall-through.
             case '>':
                 return [$tagname, false, $tagtype, $lt, $pos];
                 break;
 
             default:
                 /**
-                 * Check if it's whitespace
+                 * Check if it's whitespace.
                  */
                 if (! preg_match('/\s/', $match)) {
                     /**
@@ -357,7 +354,7 @@ class Htmlfilter
                         return $retary;
                     }
 
-                    //intentional fall-through
+                    // Intentional fall-through.
                 case '>':
                     $attary[$attname] = '"yes"';
 
@@ -461,10 +458,10 @@ class Htmlfilter
     /**
      * Translates entities into literal values so they can be checked.
      *
-     * @param  string  $attvalue  the by-ref value to check.
-     * @param  string  $regex  the regular expression to check against.
-     * @param  bool  $hex  whether the entites are hexadecimal.
-     * @return bool True or False depending on whether there were matches.
+     * @param  string  $attvalue
+     * @param  string  $regex
+     * @param  bool  $hex
+     * @return bool
      */
     public function tln_deent(&$attvalue, $regex, $hex = false)
     {
@@ -496,8 +493,8 @@ class Htmlfilter
      * and returns them translated into 8-bit strings so we can run
      * checks on them.
      *
-     * @param  string  $attvalue  A string to run entity check against.
-     * @return Void, modifies a reference value.
+     * @param  string  $attvalue
+     * @return void
      */
     public function tln_defang(&$attvalue)
     {
@@ -525,8 +522,8 @@ class Htmlfilter
      * makers of the browser with 95% market value decided that it'd
      * be funny to make "java[tab]script" be just as good as "javascript".
      *
-     * @param  string  $attvalue  The attribute value before extraneous spaces removed.
-     * @return Void, modifies a reference value.
+     * @param  string  $attvalue
+     * @return void
      */
     public function tln_unspace(&$attvalue)
     {
@@ -542,11 +539,11 @@ class Htmlfilter
     /**
      * This function runs various checks against the attributes.
      *
-     * @param  string  $tagname  String with the name of the tag.
-     * @param  array  $attary  Array with all tag attributes.
-     * @param  array  $rm_attnames  See description for tln_sanitize
-     * @param  array  $bad_attvals  See description for tln_sanitize
-     * @param  array  $add_attr_to_tag  See description for tln_sanitize
+     * @param  string  $tagname
+     * @param  array  $attary
+     * @param  array  $rm_attnames
+     * @param  array  $bad_attvals
+     * @param  array  $add_attr_to_tag
      * @param  string  $trans_image_path
      * @param  bool  $block_external_images
      * @return array with modified attributes.
@@ -645,6 +642,11 @@ class Htmlfilter
         return $attary;
     }
 
+    /**
+     * Fix url.
+     *
+     * @return void
+     */
     public function tln_fixurl($attname, &$attvalue, $trans_image_path, $block_external_images)
     {
         $sQuote = '"';
@@ -662,7 +664,7 @@ class Htmlfilter
          * Replace empty src tags with the blank image.  src is only used
          * for frames, images, and image inputs.  Doing a replace should
          * not affect them working as should be, however it will stop
-         * IE from being kicked off when src for img tags are not set
+         * IE from being kicked off when src for img tags are not set.
          */
         if ($attvalue == '') {
             $attvalue = $sQuote.$trans_image_path.$sQuote;
@@ -718,11 +720,15 @@ class Htmlfilter
         }
     }
 
+    /**
+     * Fix style.
+     *
+     * @return void
+     */
     public function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     {
         $me = 'tln_fixstyle';
 
-        // workaround for </style> in between comments
         $iCurrentPos = $pos;
 
         $content = '';
@@ -862,6 +868,11 @@ class Htmlfilter
         return [$content, $newpos];
     }
 
+    /**
+     * Body to div.
+     *
+     * @return void
+     */
     public function tln_body2div($attary, $trans_image_path)
     {
         $me = 'tln_body2div';
@@ -910,17 +921,19 @@ class Htmlfilter
     }
 
     /**
-     * @param  string  $body  The HTML you wish to filter
-     * @param  array  $tag_list  see description above
-     * @param  array  $rm_tags_with_content  see description above
-     * @param  array  $self_closing_tags  see description above
-     * @param  bool  $force_tag_closing  see description above
-     * @param  array  $rm_attnames  see description above
-     * @param  array  $bad_attvals  see description above
-     * @param  array  $add_attr_to_tag  see description above
+     * Sanitize.
+     *
+     * @param  string  $body
+     * @param  array  $tag_list
+     * @param  array  $rm_tags_with_content
+     * @param  array  $self_closing_tags
+     * @param  bool  $force_tag_closing
+     * @param  array  $rm_attnames
+     * @param  array  $bad_attvals
+     * @param  array  $add_attr_to_tag
      * @param  string  $trans_image_path
      * @param  bool  $block_external_images
-     * @return string Sanitized html safe to show on your pages.
+     * @return string
      */
     public function tln_sanitize(
         $body,
@@ -966,7 +979,7 @@ class Htmlfilter
             $free_content = substr($body, $curpos, $lt - $curpos);
 
             /**
-             * Take care of <style>
+             * Take care of <style>.
              */
             if ($tagname == 'style' && $tagtype == 1) {
                 [$free_content, $curpos] =
@@ -1114,10 +1127,13 @@ class Htmlfilter
         return $trusted;
     }
 
-    //
-    // Use the nifty htmlfilter library
-    //
-    public function HTMLFilter($body, $trans_image_path, $block_external_images = false)
+    /**
+     * HTML filter.
+     *
+     * @param  bool  $block_external_images
+     * @return void
+     */
+    public function process($body, $trans_image_path, $block_external_images = false)
     {
         $tag_list = [
             false,
@@ -1260,40 +1276,5 @@ class Htmlfilter
         );
 
         return $trusted;
-    }
-
-    public function AutoLinkUrls($str, $popup = false)
-    {
-        $str = $this->AutoEmailUrls($str);
-
-        if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $str, $matches)) {
-            $pop = ($popup == true) ? ' target="_blank" ' : '';
-            for ($i = 0; $i < count($matches['0']); $i++) {
-                $period = '';
-                if (preg_match("|\.$|", $matches['6'][$i])) {
-                    $period = '.';
-                    $matches['6'][$i] = substr($matches['6'][$i], 0, -1);
-                }
-                $str = str_replace($matches['0'][$i],
-                    $matches['1'][$i].'<a href="http'.
-                    $matches['4'][$i].'://'.
-                    $matches['5'][$i].
-                    $matches['6'][$i].'"'.$pop.'>http'.
-                    $matches['4'][$i].'://'.
-                    $matches['5'][$i].
-                    $matches['6'][$i].'</a>'.
-                    $period, $str);
-            }//end for
-        }//end if
-
-        return $str;
-    }
-
-    public function AutoEmailUrls($string)
-    {
-        $search = ['/<p>__<\/p>/', '/([a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4})/'];
-        $replace = ['<hr />', '<a href="mailto:$1">$1</a>'];
-
-        return preg_replace($search, $replace, $string);
     }
 }

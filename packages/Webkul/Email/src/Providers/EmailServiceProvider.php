@@ -15,6 +15,11 @@ class EmailServiceProvider extends ServiceProvider
     public function boot(Router $router)
     {
         $this->loadMigrationsFrom(__DIR__.'/../Database/Migrations');
+
+        $this->app->bind(
+            \Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor::class,
+            \Webkul\Email\InboundEmailProcessor\SendgridEmailProcessor::class
+        );
     }
 
     /**
