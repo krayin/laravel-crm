@@ -282,7 +282,10 @@ abstract class DataGrid
             return $this->downloadExportFile();
         }
 
-        return response()->json($this->formatData());
+        return response()->json(
+            data: $this->formatData(),
+            options: JSON_INVALID_UTF8_IGNORE,
+        );
     }
 
     /**
