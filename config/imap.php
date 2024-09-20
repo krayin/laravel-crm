@@ -1,14 +1,4 @@
 <?php
-/*
-* File:     imap.php
-* Category: config
-* Author:   M. Goldenbaum
-* Created:  24.09.16 22:36
-* Updated:  -
-*
-* Description:
-*  -
-*/
 
 return [
 
@@ -45,8 +35,7 @@ return [
     |
     */
     'accounts' => [
-
-        'default' => [// account identifier
+        'default' => [
             'host'           => env('IMAP_HOST', 'localhost'),
             'port'           => env('IMAP_PORT', 993),
             'protocol'       => env('IMAP_PROTOCOL', 'imap'), //might also use imap, [pop3 or nntp (untested)]
@@ -64,28 +53,6 @@ return [
             'timeout'    => 30,
             'extensions' => [],
         ],
-
-        /*
-        'gmail' => [ // account identifier
-            'host' => 'imap.gmail.com',
-            'port' => 993,
-            'encryption' => 'ssl',
-            'validate_cert' => true,
-            'username' => 'example@gmail.com',
-            'password' => 'PASSWORD',
-            'authentication' => 'oauth',
-        ],
-
-        'another' => [ // account identifier
-            'host' => '',
-            'port' => 993,
-            'encryption' => false,
-            'validate_cert' => true,
-            'username' => '',
-            'password' => '',
-            'authentication' => null,
-        ]
-        */
     ],
 
     /*

@@ -86,17 +86,32 @@ class SendgridEmailProcessor implements InboundEmailProcessor
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',
             ]));
+
+            $this->attachmentRepository->uploadAttachments($email, [
+                'source'      => 'email',
+                'attachments' => $this->emailParser->getAttachments(),
+            ]);
         } else {
-            $this->emailRepository->update([
+            $email = $this->emailRepository->update([
                 'folders'       => array_unique(array_merge($email->folders, ['inbox'])),
                 'reference_ids' => array_merge($email->reference_ids ?? [], [$headers['message_id']]),
             ], $email->id);
 
-            $this->emailRepository->create(array_merge($headers, [
+            $this->attachmentRepository->uploadAttachments($email, [
+                'source'      => 'email',
+                'attachments' => $this->emailParser->getAttachments(),
+            ]);
+
+            $email = $this->emailRepository->create(array_merge($headers, [
                 'reply'         => $this->htmlFilter->process($reply, ''),
                 'parent_id'     => $email->id,
                 'user_type'     => 'person',
             ]));
+
+            $this->attachmentRepository->uploadAttachments($email, [
+                'source'      => 'email',
+                'attachments' => $this->emailParser->getAttachments(),
+            ]);
         }
     }
 }

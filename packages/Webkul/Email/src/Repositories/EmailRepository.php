@@ -2,26 +2,11 @@
 
 namespace Webkul\Email\Repositories;
 
-use Illuminate\Container\Container;
 use Webkul\Core\Eloquent\Repository;
 use Webkul\Email\Contracts\Email;
-use Webkul\Email\Helpers\Parser;
 
 class EmailRepository extends Repository
 {
-    /**
-     * Create a new repository instance.
-     *
-     * @return void
-     */
-    public function __construct(
-        protected AttachmentRepository $attachmentRepository,
-        protected Parser $emailParser,
-        Container $container
-    ) {
-        parent::__construct($container);
-    }
-
     /**
      * Specify model class name.
      *
@@ -54,20 +39,12 @@ class EmailRepository extends Repository
             'from'          => config('mail.from.address'),
             'user_type'     => 'admin',
             'folders'       => isset($data['is_draft']) ? ['draft'] : ['outbox'],
-            'name'          => auth()->guard('user')->user()->name,
             'unique_id'     => $uniqueId,
             'message_id'    => $uniqueId,
             'reference_ids' => array_merge($referenceIds, [$uniqueId]),
-            'user_id'       => auth()->guard('user')->user()->id,
         ], $data));
 
-        $email = parent::create($data);
-
-        $this->attachmentRepository
-            ->setEmailParser($this->emailParser)
-            ->uploadAttachments($email, $data);
-
-        return $email;
+        return parent::create($data);
     }
 
     /**
@@ -79,15 +56,7 @@ class EmailRepository extends Repository
      */
     public function update(array $data, $id, $attribute = 'id')
     {
-        $email = parent::findOrFail($id);
-
-        parent::update($this->sanitizeEmails($data), $id);
-
-        $this->attachmentRepository
-            ->setEmailParser($this->emailParser)
-            ->uploadAttachments($email, $data);
-
-        return $email;
+        return parent::update($this->sanitizeEmails($data), $id);
     }
 
     /**
