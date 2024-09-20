@@ -3,7 +3,7 @@
 namespace Webkul\Email\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use Webkul\Email\Console\Commands\ProcessWebklexImapEmails;
+use Webkul\Email\Console\Commands\ProcessInboundEmails;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\InboundEmailProcessor\SendgridEmailProcessor;
 use Webkul\Email\InboundEmailProcessor\WebklexImapEmailProcessor;
@@ -30,7 +30,7 @@ class EmailServiceProvider extends ServiceProvider
                 return $app->make(WebklexImapEmailProcessor::class);
             }
 
-            throw new \Exception("Unsupported mail receiver driver [$driver]");
+            throw new \Exception("Unsupported mail receiver driver [{$driver}].");
         });
     }
 
@@ -51,7 +51,7 @@ class EmailServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                ProcessWebklexImapEmails::class,
+                ProcessInboundEmails::class,
             ]);
         }
     }

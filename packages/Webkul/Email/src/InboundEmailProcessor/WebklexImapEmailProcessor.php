@@ -2,12 +2,18 @@
 
 namespace Webkul\Email\InboundEmailProcessor;
 
+use Webklex\IMAP\Facades\Client;
 use Webkul\Email\InboundEmailProcessor\Contracts\InboundEmailProcessor;
 use Webkul\Email\Repositories\AttachmentRepository;
 use Webkul\Email\Repositories\EmailRepository;
 
 class WebklexImapEmailProcessor implements InboundEmailProcessor
 {
+    /**
+     * Folder name.
+     */
+    protected const FOLDER_NAME = 'INBOX';
+
     /**
      * Create a new repository instance.
      *
@@ -17,6 +23,32 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         protected EmailRepository $emailRepository,
         protected AttachmentRepository $attachmentRepository
     ) {}
+
+    /**
+     * Get the messages from the mail server.
+     */
+    public function getMessages()
+    {
+        try {
+            $client = Client::account('default');
+
+            $client->connect();
+
+            if (! $client->isConnected()) {
+                throw new \Exception('Failed to connect to the mail server.');
+            }
+
+            $folder = $client->getFolder(self::FOLDER_NAME);
+
+            $messages = $folder->query()->since(now()->subDays(10))->get();
+
+            $client->disconnect();
+
+            return $messages;
+        } catch (\Exception $e) {
+            throw new \Exception($e->getMessage());
+        }
+    }
 
     /**
      * Process the inbound email.

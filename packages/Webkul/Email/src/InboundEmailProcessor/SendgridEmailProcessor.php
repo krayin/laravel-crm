@@ -23,11 +23,19 @@ class SendgridEmailProcessor implements InboundEmailProcessor
     ) {}
 
     /**
+     * Get the messages from the mail server.
+     */
+    public function getMessages()
+    {
+        throw new \Exception('Currently bulk processing is not supported for Sendgrid.');
+    }
+
+    /**
      * Process the inbound email.
      */
-    public function process($content = null): void
+    public function process($message = null): void
     {
-        $this->emailParser->setText($content);
+        $this->emailParser->setText($message);
 
         $email = $this->emailRepository->findOneWhere(['message_id' => $messageID = $this->emailParser->getHeader('message-id')]);
 
