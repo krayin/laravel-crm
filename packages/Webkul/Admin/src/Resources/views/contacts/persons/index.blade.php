@@ -144,7 +144,7 @@
                             v-for="record in available.records"
                         >
                             <!-- Mass Action and Person ID. -->
-                            <div class="flex gap-2.5">
+                            <div class="flex items-center gap-2.5">
                                 <input
                                     type="checkbox"
                                     :name="`mass_action_select_record_${record.id}`"
@@ -172,22 +172,22 @@
                             </div>
 
                             <!-- Emails -->
-                            <span>
+                            <p class="flex items-center">
                                 @{{ record.emails }}
-                            </span>
+                            </p>
 
                             <!-- Contact Numbers -->
-                            <span>
+                            <p class="flex items-center">
                                 @{{ record.contact_numbers }}
-                            </span>
+                            </p>
 
                             <!-- Organization -->
-                            <span>
+                            <p class="flex items-center">
                                 @{{ record.organization }}
-                            </span>
+                            </p>
                             
                             <!-- Actions -->
-                            <div class="flex items-center justify-between gap-x-4">
+                            <div class="flex items-center justify-end gap-x-4">
                                 <div class="flex items-center gap-1.5">
                                     <p
                                         class="place-self-end"
