@@ -159,30 +159,30 @@
                                     :for="`mass_action_select_record_${record.id}`"
                                 ></label>
 
-                                <div class="flex flex-col gap-1.5">
+                                <div class="flex flex-col gap-1.5 dark:text-gray-300">
                                     @{{ record.id }}
                                 </div>
                             </div>
 
                             <!-- Name -->
-                            <div class="flex items-center gap-1.5">
+                            <div class="flex items-center gap-1.5 dark:text-gray-300">
                                 <x-admin::avatar ::name="record.person_name" />
                             
                                 @{{ record.person_name }}
                             </div>
 
                             <!-- Emails -->
-                            <p class="flex items-center">
+                            <p class="flex items-center dark:text-gray-300">
                                 @{{ record.emails }}
                             </p>
 
                             <!-- Contact Numbers -->
-                            <p class="flex items-center">
+                            <p class="flex items-center dark:text-gray-300">
                                 @{{ record.contact_numbers }}
                             </p>
 
                             <!-- Organization -->
-                            <p class="flex items-center">
+                            <p class="flex items-center dark:text-gray-300">
                                 @{{ record.organization }}
                             </p>
                             
