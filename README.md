@@ -52,6 +52,8 @@ Take advantage of two of the hottest frameworks used in this project -- Laravel 
 
 ### Documentation
 
+[![Open in DevZero](https://assets.devzero.io/open-in-devzero.svg)](https://www.devzero.io/dashboard/recipes/new?repo-url=https://github.com/krayin/laravel-crm)
+
 #### Krayin Documentation [https://devdocs.krayincrm.com](https://devdocs.krayincrm.com)
 
 ### Requirements
