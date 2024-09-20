@@ -12,7 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('webklex-imap-emails:process')->everyFiveMinutes();
+        $schedule->command('inbound-emails:process')->everyFiveMinutes();
     }
 
     /**

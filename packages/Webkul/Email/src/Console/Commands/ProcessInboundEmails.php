@@ -12,7 +12,7 @@ class ProcessInboundEmails extends Command
      *
      * @var string
      */
-    protected $signature = 'webklex-imap-emails:process';
+    protected $signature = 'inbound-emails:process';
 
     /**
      * The console command description.
