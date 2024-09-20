@@ -5,16 +5,16 @@ namespace Webkul\Email\InboundEmailProcessor\Contracts;
 interface InboundEmailProcessor
 {
     /**
-     * Get the messages from the mail server.
+     * Process messages from all folders.
      *
      * @return mixed
      */
-    public function getMessages();
+    public function processMessagesFromAllFolders();
 
     /**
      * Process the inbound email.
      *
      * @param  mixed|null  $content
      */
-    public function process($content = null): void;
+    public function processMessage($content = null): void;
 }

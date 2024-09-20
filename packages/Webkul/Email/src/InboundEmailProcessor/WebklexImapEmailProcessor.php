@@ -10,9 +10,9 @@ use Webkul\Email\Repositories\EmailRepository;
 class WebklexImapEmailProcessor implements InboundEmailProcessor
 {
     /**
-     * Folder name.
+     * The IMAP client instance.
      */
-    protected const FOLDER_NAME = 'INBOX';
+    protected $client;
 
     /**
      * Create a new repository instance.
@@ -22,29 +22,33 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     public function __construct(
         protected EmailRepository $emailRepository,
         protected AttachmentRepository $attachmentRepository
-    ) {}
+    ) {
+        $this->client = Client::account('default');
+
+        $this->client->connect();
+
+        if (! $this->client->isConnected()) {
+            throw new \Exception('Failed to connect to the mail server.');
+        }
+    }
 
     /**
-     * Get the messages from the mail server.
+     * Close the connection.
      */
-    public function getMessages()
+    public function __destruct()
+    {
+        $this->client->disconnect();
+    }
+
+    /**
+     * Process messages from all folders.
+     */
+    public function processMessagesFromAllFolders()
     {
         try {
-            $client = Client::account('default');
+            $rootFolders = $this->client->getFolders();
 
-            $client->connect();
-
-            if (! $client->isConnected()) {
-                throw new \Exception('Failed to connect to the mail server.');
-            }
-
-            $folder = $client->getFolder(self::FOLDER_NAME);
-
-            $messages = $folder->query()->since(now()->subDays(10))->get();
-
-            $client->disconnect();
-
-            return $messages;
+            $this->processMessagesFromLeafFolders($rootFolders);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage());
         }
@@ -53,7 +57,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
     /**
      * Process the inbound email.
      */
-    public function process($message = null): void
+    public function processMessage($message = null): void
     {
         $attributes = $message->getAttributes();
 
@@ -84,7 +88,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         $email = $this->emailRepository->create([
             'from'          => $attributes['from']->first()->mail,
             'subject'       => $attributes['subject']->first(),
-            'name'          => $attributes['subject']->first(),
+            'name'          => $attributes['from']->first()->personal,
             'reply'         => $message->bodies['html'] ?? $message->bodies['text'],
             'is_read'       => 0,
             'folders'       => [strtolower('inbox')],
@@ -106,5 +110,25 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
                 'attachments' => $message->getAttachments(),
             ]);
         }
+    }
+
+    /**
+     * Process the messages from all folders.
+     *
+     * @param  \Webklex\IMAP\Support\FolderCollection  $rootFoldersCollection
+     */
+    protected function processMessagesFromLeafFolders($rootFoldersCollection = null): void
+    {
+        $rootFoldersCollection->each(function ($folder) {
+            if (! $folder->children->isEmpty()) {
+                $this->processMessagesFromLeafFolders($folder->children);
+
+                return;
+            }
+
+            return $folder->query()->since(now()->subDays(10))->get()->each(function ($message) {
+                $this->processMessage($message);
+            });
+        });
     }
 }

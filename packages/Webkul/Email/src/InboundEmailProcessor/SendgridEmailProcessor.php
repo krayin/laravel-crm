@@ -23,17 +23,22 @@ class SendgridEmailProcessor implements InboundEmailProcessor
     ) {}
 
     /**
-     * Get the messages from the mail server.
+     * Process messages from all folders.
      */
-    public function getMessages()
+    public function processMessagesFromAllFolders()
     {
+        /**
+         * SendGrid's Inbound Parse is a specialized tool for developers to handle incoming emails in
+         * their applications, but it doesn't replace the full functionality of IMAP for typical
+         * email client usage. Thats why we can't process the messages.
+         */
         throw new \Exception('Currently bulk processing is not supported for Sendgrid.');
     }
 
     /**
      * Process the inbound email.
      */
-    public function process($message = null): void
+    public function processMessage($message = null): void
     {
         $this->emailParser->setText($message);
 

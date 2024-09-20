@@ -203,7 +203,7 @@ class EmailController extends Controller
      */
     public function inboundParse(InboundEmailProcessor $inboundEmailProcessor)
     {
-        $inboundEmailProcessor->process(request('email'));
+        $inboundEmailProcessor->processMessage(request('email'));
 
         return response()->json([], 200);
     }

@@ -41,11 +41,7 @@ class ProcessInboundEmails extends Command
     {
         $this->info('Processing the incoming emails.');
 
-        $messages = $this->inboundEmailProcessor->getMessages();
-
-        foreach ($messages as $message) {
-            $this->inboundEmailProcessor->process($message);
-        }
+        $this->inboundEmailProcessor->processMessagesFromAllFolders();
 
         $this->info('Incoming emails processed successfully.');
     }
