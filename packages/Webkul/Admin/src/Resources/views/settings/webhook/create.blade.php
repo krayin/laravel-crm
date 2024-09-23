@@ -255,9 +255,9 @@
 
                                 <template v-else>
                                     <v-key-and-value
-                                        title="@lang('Key and Value')"
+                                        title="@lang('admin::app.settings.webhooks.create.key-and-value')"
                                         name="payload"
-                                        :add-btn-title="'Add new payload'"
+                                        :add-btn-title="'@lang('admin::app.settings.webhooks.create.add-new-payload')'"
                                         :fields="tempPayload"
                                         :placeholders="placeholders"
                                     ></v-key-and-value>

@@ -1281,6 +1281,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',

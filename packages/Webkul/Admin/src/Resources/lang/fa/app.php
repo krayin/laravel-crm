@@ -1281,6 +1281,8 @@ return [
                 'body'                  => 'بدن',
                 'default'               => 'پیش‌فرض',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'کلید و مقدار',
+                'add-new-payload'       => 'اضافه کردن بار جدید',
                 'raw'                   => 'خام',
                 'general'               => 'عمومی',
                 'name'                  => 'نام',

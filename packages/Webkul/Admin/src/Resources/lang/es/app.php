@@ -1281,6 +1281,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',

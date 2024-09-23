@@ -1281,6 +1281,8 @@ return [
                 'body'                  => 'Gövde',
                 'default'               => 'Varsayılan',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Anahtar ve Değer',
+                'add-new-payload'       => 'Yeni yük ekle',
                 'raw'                   => 'Ham',
                 'general'               => 'Genel',
                 'name'                  => 'Ad',
