@@ -18,7 +18,7 @@
         src="{{ Storage::url($value) }}"
         field-data="{{ json_encode($field) }}"
     >
-        <div class="shimmer mb-1.5 h-4 w-24"></div>
+        <div class="shimmer mb-1.5 h-5 w-24"></div>
 
         <div class="shimmer flex h-[42px] w-full rounded-md"></div>
     </v-configurable>
