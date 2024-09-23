@@ -878,46 +878,48 @@
         >
             {!! view_render_event('admin.mail.view.contact_form.before', ['email' => $email]) !!}
 
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-            >
-                <form
-                    @submit="handleSubmit($event, create)"
-                    ref="contactForm"
+            <Teleport to="body">
+                <x-admin::form
+                    v-slot="{ meta, errors, handleSubmit }"
+                    as="div"
                 >
-                    <!-- Add Contact Modal -->
-                    <x-admin::modal 
-                        ref="contactModal"
-                        @toggle="toggleModal"
+                    <form
+                        @submit="handleSubmit($event, create)"
+                        ref="contactForm"
                     >
-                        <x-slot:header>
-                            <div class="flex items-center justify-between">
-                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    @lang('admin::app.mail.view.create-new-contact')
-                                </p>
-                            </div>
-                        </x-slot>
+                        <!-- Add Contact Modal -->
+                        <x-admin::modal 
+                            ref="contactModal"
+                            @toggle="toggleModal"
+                        >
+                            <x-slot:header>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.mail.view.create-new-contact')
+                                    </p>
+                                </div>
+                            </x-slot>
 
-                        <x-slot:content>
-                            <x-admin::attributes
-                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'persons',
-                                ])"
-                            />
-                        </x-slot>
+                            <x-slot:content>
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'persons',
+                                    ])"
+                                />
+                            </x-slot>
 
-                        <x-slot:footer>
-                            <x-admin::button
-                                class="primary-button"
-                                :title="trans('admin::app.mail.view.save-contact')"
-                                ::loading="isStoring"
-                                ::disabled="isStoring"
-                            />
-                        </x-slot>
-                    </x-admin::modal>
-                </form>
-            </x-admin::form>
+                            <x-slot:footer>
+                                <x-admin::button
+                                    class="primary-button"
+                                    :title="trans('admin::app.mail.view.save-contact')"
+                                    ::loading="isStoring"
+                                    ::disabled="isStoring"
+                                />
+                            </x-slot>
+                        </x-admin::modal>
+                    </form>
+                </x-admin::form>
+            </Teleport>
 
             {!! view_render_event('admin.mail.view.contact_form.after', ['email' => $email]) !!}
         </script>
