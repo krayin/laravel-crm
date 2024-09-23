@@ -1843,6 +1843,27 @@ return [
                     ],
                 ],
             ],
+
+            'email' => [
+                'title' => 'Email Settings',
+                'info'  => 'Email configuration for the application.',
+
+                'imap' => [
+                    'title' => 'IMAP Settings',
+                    'info'  => 'IMAP email configuration for receiving emails.',
+
+                    'account' => [
+                        'title'         => 'IMAP Account',
+                        'title-info'    => 'Configure your IMAP account settings here.',
+                        'host'          => 'Host',
+                        'port'          => 'Port',
+                        'encryption'    => 'Encryption Type',
+                        'validate-cert' => 'Validate SSL Certificate',
+                        'username'      => 'IMAP Username',
+                        'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
         ],
     ],
 

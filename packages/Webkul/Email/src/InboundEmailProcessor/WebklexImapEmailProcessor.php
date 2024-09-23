@@ -24,7 +24,7 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         protected EmailRepository $emailRepository,
         protected AttachmentRepository $attachmentRepository
     ) {
-        $this->client = Client::account('default');
+        $this->client = Client::make($this->getDefaultConfigs());
 
         $this->client->connect();
 
@@ -202,5 +202,27 @@ class WebklexImapEmailProcessor implements InboundEmailProcessor
         $targetTimezone = $targetTimezone ?: config('app.timezone');
 
         return $carbonDate->clone()->setTimezone($targetTimezone);
+    }
+
+    /**
+     * Get the default configurations.
+     */
+    protected function getDefaultConfigs(): array
+    {
+        $defaultConfig = config('imap.accounts.default');
+
+        $defaultConfig['host'] = core()->getConfigData('email.imap.account.host') ?: $defaultConfig['host'];
+
+        $defaultConfig['port'] = core()->getConfigData('email.imap.account.port') ?: $defaultConfig['port'];
+
+        $defaultConfig['encryption'] = core()->getConfigData('email.imap.account.encryption') ?: $defaultConfig['encryption'];
+
+        $defaultConfig['validate_cert'] = (bool) core()->getConfigData('email.imap.account.validate_cert');
+
+        $defaultConfig['username'] = core()->getConfigData('email.imap.account.username') ?: $defaultConfig['username'];
+
+        $defaultConfig['password'] = core()->getConfigData('email.imap.account.password') ?: $defaultConfig['password'];
+
+        return $defaultConfig;
     }
 }
