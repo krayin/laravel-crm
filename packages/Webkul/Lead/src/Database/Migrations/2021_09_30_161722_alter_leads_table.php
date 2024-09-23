@@ -14,6 +14,8 @@ return new class extends Migration
      */
     public function up()
     {
+        $tablePrefix = DB::getTablePrefix();
+
         Schema::table('leads', function (Blueprint $table) {
             $table->integer('lead_pipeline_stage_id')->after('lead_pipeline_id')->unsigned()->nullable();
             $table->foreign('lead_pipeline_stage_id')->references('id')->on('lead_pipeline_stages')->onDelete('cascade');
@@ -21,11 +23,11 @@ return new class extends Migration
 
         DB::table('leads')
             ->update([
-                'leads.lead_pipeline_stage_id' => DB::raw(DB::getTablePrefix().'leads.lead_stage_id'),
+                'leads.lead_pipeline_stage_id' => DB::raw($tablePrefix.'leads.lead_stage_id'),
             ]);
 
-        Schema::table('leads', function (Blueprint $table) {
-            $table->dropForeign(DB::getTablePrefix().'leads_lead_stage_id_foreign');
+        Schema::table('leads', function (Blueprint $table) use($tablePrefix) {
+            $table->dropForeign($tablePrefix.'leads_lead_stage_id_foreign');
             $table->dropColumn('lead_stage_id');
         });
     }

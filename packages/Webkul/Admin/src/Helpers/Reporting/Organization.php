@@ -51,14 +51,16 @@ class Organization extends AbstractReporting
      */
     public function getTopOrganizationsByRevenue($limit = null): Collection
     {
+        $tablePrefix = DB::getTablePrefix();
+
         $items = $this->organizationRepository
             ->resetModel()
             ->leftJoin('persons', 'organizations.id', '=', 'persons.organization_id')
             ->leftJoin('leads', 'persons.id', '=', 'leads.person_id')
             ->select('*', 'persons.id as id')
-            ->addSelect(DB::raw('SUM('.DB::getTablePrefix().'leads.lead_value) as revenue'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'leads.lead_value) as revenue'))
             ->whereBetween('leads.closed_at', [$this->startDate, $this->endDate])
-            ->having(DB::raw('SUM('.DB::getTablePrefix().'leads.lead_value)'), '>', 0)
+            ->having(DB::raw('SUM('.$tablePrefix.'leads.lead_value)'), '>', 0)
             ->groupBy('organization_id')
             ->orderBy('revenue', 'DESC')
             ->limit($limit)
