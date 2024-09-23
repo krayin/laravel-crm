@@ -306,7 +306,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
@@ -451,7 +451,7 @@
                             ::errors="errors"
                             :label="trans('admin::app.quotes.create.total')"
                             :placeholder="trans('admin::app.quotes.create.total')"
-                            ::allowEdit="false"
+                            :allowEdit="false"
                             position="center"
                             ::value-label="$admin.formatPrice(product.price * product.quantity)"
                         />
@@ -502,7 +502,7 @@
                             ::name="`${inputName}[final_total]`"
                             ::errors="errors"
                             ::value="parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount)"
-                            ::allowEdit="false"
+                            :allowEdit="false"
                             position="center"
                             ::value-label="$admin.formatPrice(parseFloat(product.price * product.quantity) + parseFloat(product.tax_amount) - parseFloat(product.discount_amount))"
                         />
