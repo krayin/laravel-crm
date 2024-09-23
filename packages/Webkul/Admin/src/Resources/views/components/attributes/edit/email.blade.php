@@ -7,19 +7,21 @@
         <div class="mb-2 flex items-center">
             <input
                 type="text"
-                class="w-full rounded rounded-r-none border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
+                class="w-full rounded rounded-r-none border border-gray-200 px-2.5 py-2 text-sm font-normal text-gray-800 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
             >
 
             <div class="relative">
-                <select class="custom-select w-full rounded rounded-l-none border bg-white px-2.5 py-2 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:mr-6 rtl:ml-6">
+                <select class="custom-select w-full rounded rounded-l-none border bg-white px-2.5 py-2 text-sm font-normal text-gray-800 hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 ltr:mr-6 ltr:pr-8 rtl:ml-6 rtl:pl-8">
                     <option value="work" selected>@lang('admin::app.common.custom-attributes.work')</option>
                     <option value="home">@lang('admin::app.common.custom-attributes.home')</option>
                 </select>
             </div>
         </div>
 
-        <span class="cursor-pointer text-brandColor">
-            + @lang("admin::app.common.custom-attributes.add-more")
+        <span class="flex cursor-pointer items-center gap-2 text-brandColor">
+            <i class="icon-add text-md !text-brandColor"></i>
+
+            @lang("admin::app.common.custom-attributes.add-more")
         </span>
     </v-email-component>
 @endif
@@ -46,7 +48,7 @@
                         type="select"
                         ::id="attribute.code"
                         ::name="`${attribute['code']}[${index}][label]`"
-                        class="rounded-l-none ltr:pr-8 rtl:pl-8 ltr:mr-6 rtl:ml-6"
+                        class="rounded-l-none ltr:mr-6 ltr:pr-8 rtl:ml-6 rtl:pl-8"
                         rules="required"
                         ::label="attribute.name"
                         v-model="email['label']"
@@ -69,10 +71,12 @@
         </template>
 
         <span
-            class="cursor-pointer text-brandColor"
+            class="flex cursor-pointer items-center gap-2 text-brandColor"
             @click="add"
         >
-            + @lang("admin::app.common.custom-attributes.add-more")
+            <i class="icon-add text-md !text-brandColor"></i>
+
+            @lang("admin::app.common.custom-attributes.add-more")
         </span>
     </script>
 

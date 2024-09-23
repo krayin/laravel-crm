@@ -65,7 +65,7 @@
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -444,12 +444,15 @@
                     </div>
             
                     <div class="inline-block">
-                        <span
-                            class="cursor-pointer py-2 text-xs font-semibold text-brandColor hover:text-sky-500 hover:underline"
+                        <button
+                            type="button"
+                            class="flex max-w-max items-center gap-2 text-brandColor"
                             @click="add(index)" 
                         >
-                            + @{{ addBtnTitle }}
-                        </span>
+                            <i class="icon-add text-md !text-brandColor"></i>
+
+                            @{{ addBtnTitle }}
+                        </button>
                     </div>
                 </div>
             </x-admin::form.control-group>
