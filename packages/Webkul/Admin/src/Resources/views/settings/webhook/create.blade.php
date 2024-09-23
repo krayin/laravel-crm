@@ -477,6 +477,8 @@
                     if (Array.isArray(this.payload)) {
                         this.tempPayload = this.payload;
                     }
+
+                    this.$emitter.on('change-theme', (theme) => this.handleEditorDisplay());
                 },
 
                 watch: {
@@ -485,7 +487,7 @@
                      * 
                      * @return {void}
                      */
-                     rawType(newValue, oldValue) {
+                    rawType(newValue, oldValue) {
                         this.handleEditorDisplay();
                     },
 
@@ -589,11 +591,7 @@
                                 }
                             });
 
-                            const decodeUri = decodeURI(url.toString());
-
-                            this.baseUrl = decodeUri;
-
-                            return decodeUri;
+                            return decodeURI(url.toString());
                         } catch (error) {
                             return this.baseUrl;
                         }
@@ -692,6 +690,9 @@
         ></link>
 
         <!-- Dark theme css -->
-        <link rel="stylesheet" href="https://codemirror.net/5/theme/ayu-dark.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/ayu-dark.min.css"
+        >
     @endPushOnce
 </x-admin::layouts>

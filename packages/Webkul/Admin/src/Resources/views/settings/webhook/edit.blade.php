@@ -105,7 +105,7 @@
                                             name="end_point"
                                             id="end_point"
                                             class="rounded-l-none"
-                                            :value="old('end_point')"
+                                            :value="old('end_point') ?? $webhook->end_point"
                                             rules="required|url"
                                             :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
                                             :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
@@ -489,6 +489,8 @@
                     if (Array.isArray(this.payload)) {
                         this.tempPayload = this.payload;
                     }
+
+                    this.$emitter.on('change-theme', (theme) => this.handleEditorDisplay());
                 },
 
                 watch: {
@@ -564,7 +566,7 @@
                                     mode: this.contentType === 'default' ? 'application/json' : mode,
                                     styleActiveLine: true,
                                     lint: true,
-                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'eclipse',
+                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'default',
                                 });
 
                                 this.codeMirrorInstance.on('changes', () => this.payload = this.codeMirrorInstance.getValue());
@@ -603,11 +605,7 @@
                                 }
                             });
 
-                            const decodeUri = decodeURI(url.toString());
-
-                            this.baseUrl = decodeUri;
-
-                            return decodeUri;
+                            return decodeURI(url.toString());
                         } catch (error) {
                             return this.baseUrl;
                         }
@@ -705,6 +703,9 @@
         ></link>
 
         <!-- Dark theme css -->
-        <link rel="stylesheet" href="https://codemirror.net/5/theme/ayu-dark.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/ayu-dark.min.css"
+        >
     @endPushOnce
 </x-admin::layouts>
