@@ -977,6 +977,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'إنشاء استمارة ويب',
                 'add-attribute-btn'        => 'زر إضافة سمة',
                 'attribute-label-color'    => 'لون تسمية السمة',
                 'attributes'               => 'السمات',
@@ -998,7 +999,6 @@ return [
                 'submit-button-label'      => 'تسمية زر الإرسال',
                 'submit-success-action'    => 'إجراء نجاح الإرسال',
                 'redirect-to-url'          => 'إعادة التوجيه إلى الرابط',
-                'title'                    => 'العنوان',
                 'choose-value'             => 'اختر قيمة',
                 'select-file'              => 'اختر ملف',
                 'select-image'             => 'اختر صورة',
@@ -1006,6 +1006,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'تعديل استمارة ويب',
                 'add-attribute-btn'         => 'زر إضافة سمة',
                 'attribute-label-color'     => 'لون تسمية السمة',
                 'attributes'                => 'السمات',
@@ -1032,7 +1033,6 @@ return [
                 'save-btn'                  => 'حفظ نموذج الويب',
                 'submit-button-label'       => 'تسمية زر الإرسال',
                 'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'title'                     => 'Title',
                 'choose-value'              => 'Choose Value',
                 'select-file'               => 'Select File',
                 'select-image'              => 'Select Image',
@@ -1266,6 +1266,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',

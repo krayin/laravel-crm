@@ -977,6 +977,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Web Formu Oluştur',
                 'add-attribute-btn'        => 'Öznitelik Düğmesi Ekle',
                 'attribute-label-color'    => 'Öznitelik Etiketi Rengi',
                 'attributes'               => 'Öznitelikler',
@@ -998,7 +999,6 @@ return [
                 'submit-button-label'      => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action'    => 'Gönderim Başarı Eylemi',
                 'redirect-to-url'          => 'URL\'ye Yönlendir',
-                'title'                    => 'Başlık',
                 'choose-value'             => 'Değer Seç',
                 'select-file'              => 'Dosya Seç',
                 'select-image'             => 'Görüntü Seç',
@@ -1006,6 +1006,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'Web Formunu Düzenle',
                 'add-attribute-btn'         => 'Öznitelik Düğmesi Ekle',
                 'attribute-label-color'     => 'Öznitelik Etiketi Rengi',
                 'attributes'                => 'Öznitelikler',
@@ -1028,12 +1029,10 @@ return [
                 'preview'                   => 'Önizleme',
                 'person'                    => 'Kişi',
                 'public-url'                => 'Genel URL',
-                'redirect-to-url'           => 'URL\'ye Yönlendir',
                 'save-btn'                  => 'Web Formunu Kaydet',
                 'submit-button-label'       => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action'     => 'Gönderim Başarı Eylemi',
                 'redirect-to-url'           => 'URL\'ye Yönlendir',
-                'title'                     => 'Başlık',
                 'choose-value'              => 'Değer Seç',
                 'select-file'               => 'Dosya Seç',
                 'select-image'              => 'Görüntü Seç',
@@ -1267,6 +1266,8 @@ return [
                 'body'                  => 'Gövde',
                 'default'               => 'Varsayılan',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Anahtar ve Değer',
+                'add-new-payload'       => 'Yeni yük ekle',
                 'raw'                   => 'Ham',
                 'general'               => 'Genel',
                 'name'                  => 'Ad',

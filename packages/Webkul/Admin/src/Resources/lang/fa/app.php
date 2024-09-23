@@ -977,6 +977,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'ایجاد فرم وب',
                 'add-attribute-btn'        => 'افزودن دکمه ویژگی',
                 'attribute-label-color'    => 'رنگ برچسب ویژگی',
                 'attributes'               => 'ویژگی‌ها',
@@ -998,7 +999,6 @@ return [
                 'submit-button-label'      => 'برچسب دکمه ارسال',
                 'submit-success-action'    => 'عملکرد موفقیت آمیز ارسال',
                 'redirect-to-url'          => 'انتقال به آدرس',
-                'title'                    => 'عنوان',
                 'choose-value'             => 'انتخاب مقدار',
                 'select-file'              => 'انتخاب فایل',
                 'select-image'             => 'انتخاب تصویر',
@@ -1006,6 +1006,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'ویرایش فرم وب',
                 'add-attribute-btn'         => 'افزودن دکمه ویژگی',
                 'attribute-label-color'     => 'رنگ برچسب ویژگی',
                 'attributes'                => 'ویژگی‌ها',
@@ -1032,7 +1033,6 @@ return [
                 'submit-button-label'       => 'برچسب دکمه ارسال',
                 'submit-success-action'     => 'عملکرد موفقیت آمیز ارسال',
                 'redirect-to-url'           => 'انتقال به آدرس',
-                'title'                     => 'عنوان',
                 'choose-value'              => 'انتخاب مقدار',
                 'select-file'               => 'انتخاب فایل',
                 'select-image'              => 'انتخاب تصویر',
@@ -1266,6 +1266,8 @@ return [
                 'body'                  => 'بدن',
                 'default'               => 'پیش‌فرض',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'کلید و مقدار',
+                'add-new-payload'       => 'اضافه کردن بار جدید',
                 'raw'                   => 'خام',
                 'general'               => 'عمومی',
                 'name'                  => 'نام',

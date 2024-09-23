@@ -977,6 +977,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Crear formulario web',
                 'add-attribute-btn'        => 'Agregar Botón de Atributo',
                 'attribute-label-color'    => 'Color de Etiqueta del Atributo',
                 'attributes'               => 'Atributos',
@@ -998,7 +999,6 @@ return [
                 'submit-button-label'      => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'    => 'Acción en caso de éxito de envío',
                 'redirect-to-url'          => 'Redirigir a la URL',
-                'title'                    => 'Título',
                 'choose-value'             => 'Elige un valor',
                 'select-file'              => 'Seleccionar archivo',
                 'select-image'             => 'Seleccionar imagen',
@@ -1006,6 +1006,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'Editar formulario web',
                 'add-attribute-btn'         => 'Agregar Botón de Atributo',
                 'attribute-label-color'     => 'Color de Etiqueta del Atributo',
                 'attributes'                => 'Atributos',
@@ -1032,7 +1033,6 @@ return [
                 'submit-button-label'       => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'     => 'Acción en caso de éxito de envío',
                 'redirect-to-url'           => 'Redirigir a la URL',
-                'title'                     => 'Título',
                 'choose-value'              => 'Elige un valor',
                 'select-file'               => 'Seleccionar archivo',
                 'select-image'              => 'Seleccionar imagen',
@@ -1266,6 +1266,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',
