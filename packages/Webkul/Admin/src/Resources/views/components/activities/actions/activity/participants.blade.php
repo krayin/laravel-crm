@@ -18,7 +18,7 @@
                         {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.before') !!}
 
                         <li
-                            class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-gray-950"
+                            class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-gray-950 dark:text-gray-300"
                             v-for="(user, index) in addedParticipants[userType]"
                         >
                             {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.user.before') !!}
@@ -48,7 +48,7 @@
 
                         <input
                             type="text"
-                            class="w-full px-1 py-1 dark:bg-gray-900"
+                            class="w-full px-1 py-1 dark:bg-gray-900 dark:text-gray-300"
                             placeholder="@lang('admin::app.components.activities.actions.activity.participants.placeholder')"
                             v-model.lazy="searchTerm"
                             v-debounce="500"
