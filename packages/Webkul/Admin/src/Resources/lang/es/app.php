@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Eliminar',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Haz clic para agregar',
                 'search'          => 'Buscar',
@@ -993,7 +997,12 @@ return [
                 'save-btn'                 => 'Guardar Webform',
                 'submit-button-label'      => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'    => 'Acción en caso de éxito de envío',
-                'title'                    => 'Crear Webform',
+                'redirect-to-url'          => 'Redirigir a la URL',
+                'title'                    => 'Título',
+                'choose-value'             => 'Elige un valor',
+                'select-file'              => 'Seleccionar archivo',
+                'select-image'             => 'Seleccionar imagen',
+                'enter-value'              => 'Introducir valor',
             ],
 
             'edit' => [
@@ -1019,11 +1028,15 @@ return [
                 'preview'                   => 'Vista Previa',
                 'person'                    => 'Persona',
                 'public-url'                => 'URL Pública',
-                'redirect-to-url'           => 'Redirigir a URL',
                 'save-btn'                  => 'Guardar Webform',
                 'submit-button-label'       => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'     => 'Acción en caso de éxito de envío',
-                'title'                     => 'Editar Webform',
+                'redirect-to-url'          => 'Redirigir a la URL',
+                'title'                    => 'Título',
+                'choose-value'             => 'Elige un valor',
+                'select-file'              => 'Seleccionar archivo',
+                'select-image'             => 'Seleccionar imagen',
+                'enter-value'              => 'Introducir valor',
             ],
         ],
 

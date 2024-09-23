@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Sil',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Eklemek için tıklayın',
                 'search'          => 'Arama',
@@ -993,7 +997,12 @@ return [
                 'save-btn'                 => 'Web Formunu Kaydet',
                 'submit-button-label'      => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action'    => 'Gönderim Başarı Eylemi',
-                'title'                    => 'Web Formu Oluştur',
+                'redirect-to-url'          => 'URL\'ye Yönlendir',
+                'title'                    => 'Başlık',
+                'choose-value'             => 'Değer Seç',
+                'select-file'              => 'Dosya Seç',
+                'select-image'             => 'Görüntü Seç',
+                'enter-value'              => 'Değer Gir',
             ],
 
             'edit' => [
@@ -1023,7 +1032,12 @@ return [
                 'save-btn'                  => 'Web Formunu Kaydet',
                 'submit-button-label'       => 'Gönderim Düğmesi Etiketi',
                 'submit-success-action'     => 'Gönderim Başarı Eylemi',
-                'title'                     => 'Web Formunu Düzenle',
+                'redirect-to-url'           => 'URL\'ye Yönlendir',
+                'title'                     => 'Başlık',
+                'choose-value'              => 'Değer Seç',
+                'select-file'               => 'Dosya Seç',
+                'select-image'              => 'Görüntü Seç',
+                'enter-value'               => 'Değer Gir',
             ],
         ],
 

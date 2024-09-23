@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'حذف',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'برای اضافه کردن کلیک کنید',
                 'search'          => 'جستجو',
@@ -993,7 +997,12 @@ return [
                 'save-btn'                 => 'ذخیره فرم وب',
                 'submit-button-label'      => 'برچسب دکمه ارسال',
                 'submit-success-action'    => 'عملکرد موفقیت آمیز ارسال',
-                'title'                    => 'ایجاد فرم وب',
+                'redirect-to-url'          => 'انتقال به آدرس',
+                'title'                    => 'عنوان',
+                'choose-value'             => 'انتخاب مقدار',
+                'select-file'              => 'انتخاب فایل',
+                'select-image'             => 'انتخاب تصویر',
+                'enter-value'              => 'مقدار را وارد کنید',
             ],
 
             'edit' => [
@@ -1019,11 +1028,15 @@ return [
                 'preview'                   => 'پیش‌نمایش',
                 'person'                    => 'شخص',
                 'public-url'                => 'آدرس عمومی',
-                'redirect-to-url'           => 'انتقال به URL',
                 'save-btn'                  => 'ذخیره فرم وب',
                 'submit-button-label'       => 'برچسب دکمه ارسال',
                 'submit-success-action'     => 'عملکرد موفقیت آمیز ارسال',
-                'title'                     => 'ویرایش فرم وب',
+                'redirect-to-url'          => 'انتقال به آدرس',
+                'title'                    => 'عنوان',
+                'choose-value'             => 'انتخاب مقدار',
+                'select-file'              => 'انتخاب فایل',
+                'select-image'             => 'انتخاب تصویر',
+                'enter-value'              => 'مقدار را وارد کنید',
             ],
         ],
 
