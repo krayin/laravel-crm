@@ -2,6 +2,8 @@
 
 * #1633[enhancement] Use variable instead of calling every time of use db table prefix.
 
+* #1621[enhancement] Person view page refactor.
+
 * #1632[fixed] Update mail view render event.
 
 * #1631[fixed] Dark Mode UI.
