@@ -44,14 +44,16 @@
                 </x-admin::table.tbody>
             </x-admin::table>
 
-            <div>
-                <span
-                    class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
-                    @click="openModal()"
-                >
-                    + @lang('admin::app.settings.warehouses.view.locations.add-location')
-                </span>
-            </div>
+            <!-- Add Location -->
+            <button
+                type="button"
+                class="flex max-w-max items-center gap-2 text-brandColor"
+                @click="openModal()"
+            >
+                <i class="icon-add text-md !text-brandColor"></i>
+
+                @lang('admin::app.settings.warehouses.view.locations.add-location')
+            </button>
 
             <x-admin::form
                 v-slot="{ meta, errors, handleSubmit }"

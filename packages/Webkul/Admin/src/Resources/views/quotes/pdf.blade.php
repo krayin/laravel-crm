@@ -1,94 +1,43 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html
-    lang="{{ app()->getLocale() }}"
-    dir="{{ app()->getLocale    () }}"
+    lang="{{ $locale = app()->getLocale() }}"
+    dir="{{ in_array($locale, ['fa', 'ar']) ? 'rtl' : 'ltr' }}"
 >
     <head>
         <!-- meta tags -->
-        <meta http-equiv="Cache-control" content="no-cache">
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta
+            http-equiv="Cache-control"
+            content="no-cache"
+        >
+
+        <meta
+            http-equiv="Content-Type"
+            content="text/html; charset=utf-8"
+        />
 
         @php
-            $fontPath = [];
-            
-            $fontFamily = [
-                'regular' => 'Arial, sans-serif',
-                'bold'    => 'Arial, sans-serif',
-            ];
-
-            if (in_array(app()->getLocale(), ['ar', 'he', 'fa', 'tr', 'ru', 'uk'])) {
+            if ($locale == 'en') {
                 $fontFamily = [
                     'regular' => 'DejaVu Sans',
                     'bold'    => 'DejaVu Sans',
                 ];
-            } elseif (app()->getLocale() == 'zh_CN') {
-                $fontPath = [
-                    'regular' => asset('fonts/NotoSansSC-Regular.ttf'),
-                    'bold'    => asset('fonts/NotoSansSC-Bold.ttf'),
-                ];
-                
+            }  else {
                 $fontFamily = [
-                    'regular' => 'Noto Sans SC',
-                    'bold'    => 'Noto Sans SC Bold',
+                    'regular' => 'Arial, sans-serif',
+                    'bold'    => 'Arial, sans-serif',
                 ];
-            } elseif (app()->getLocale() == 'ja') {
-                $fontPath = [
-                    'regular' => asset('fonts/NotoSansJP-Regular.ttf'),
-                    'bold'    => asset('fonts/NotoSansJP-Bold.ttf'),
-                ];
-                
+            }
+
+            if (in_array($locale, ['ar', 'fa', 'tr'])) {
                 $fontFamily = [
-                    'regular' => 'Noto Sans JP',
-                    'bold'    => 'Noto Sans JP Bold',
-                ];
-            } elseif (app()->getLocale() == 'hi_IN') {
-                $fontPath = [
-                    'regular' => asset('fonts/Hind-Regular.ttf'),
-                    'bold'    => asset('fonts/Hind-Bold.ttf'),
-                ];
-                
-                $fontFamily = [
-                    'regular' => 'Hind',
-                    'bold'    => 'Hind Bold',
-                ];
-            } elseif (app()->getLocale() == 'bn') {
-                $fontPath = [
-                    'regular' => asset('fonts/NotoSansBengali-Regular.ttf'),
-                    'bold'    => asset('fonts/NotoSansBengali-Bold.ttf'),
-                ];
-                
-                $fontFamily = [
-                    'regular' => 'Noto Sans Bengali',
-                    'bold'    => 'Noto Sans Bengali Bold',
-                ];
-            } elseif (app()->getLocale() == 'sin') {
-                $fontPath = [
-                    'regular' => asset('fonts/NotoSansSinhala-Regular.ttf'),
-                    'bold'    => asset('fonts/NotoSansSinhala-Bold.ttf'),
-                ];
-                
-                $fontFamily = [
-                    'regular' => 'Noto Sans Sinhala',
-                    'bold'    => 'Noto Sans Sinhala Bold',
+                    'regular' => 'DejaVu Sans',
+                    'bold'    => 'DejaVu Sans',
                 ];
             }
         @endphp
 
         <!-- lang supports inclusion -->
         <style type="text/css">
-            @if (! empty($fontPath['regular']))
-                @font-face {
-                    src: url({{ $fontPath['regular'] }}) format('truetype');
-                    font-family: {{ $fontFamily['regular'] }};
-                }
-            @endif
-            
-            @if (! empty($fontPath['bold']))
-                @font-face {
-                    src: url({{ $fontPath['bold'] }}) format('truetype');
-                    font-family: {{ $fontFamily['bold'] }};
-                    font-style: bold;
-                }
             @endif
             
             * {
@@ -212,7 +161,7 @@
         </style>
     </head>
 
-    <body dir="{{ app()->getLocale() }}">
+    <body dir="{{ $locale }}">
         <div class="page">
             <!-- Header -->
             <div class="page-header">
@@ -272,7 +221,7 @@
                 </table>
 
                 <!-- Billing & Shipping Address -->
-                <table class="{{ app()->getLocale() }}">
+                <table class="{{ $locale }}">
                     <thead>
                         <tr>
                             @if ($quote->billing_address)
@@ -297,11 +246,11 @@
                         <tr>
                             @if ($quote->billing_address)
                                 <td style="width: 50%">
-                                    <div>{{ $quote->billing_address['address'] }}</div>
+                                    <div>{{ $quote->billing_address['address'] ?? '' }}</div>
 
-                                    <div>{{ $quote->billing_address['postcode'] . ' ' .$quote->billing_address['city'] }} </div>
+                                    <div>{{ $quote->billing_address['postcode'] ?? '' . ' ' .$quote->billing_address['city'] ?? '' }} </div>
 
-                                    <div>{{ $quote->billing_address['state'] }}</div>
+                                    <div>{{ $quote->billing_address['state'] ?? '' }}</div>
 
                                     <div>{{ core()->country_name($quote->billing_address['country'] ?? '') }}</div>
                                 </td>
@@ -309,11 +258,11 @@
                             
                             @if ($quote->shipping_address)
                                 <td style="width: 50%">
-                                    <div>{{ $quote->shipping_address['address'] }}</div>
+                                    <div>{{ $quote->shipping_address['address'] ?? ''}}</div>
 
-                                    <div>{{ $quote->shipping_address['postcode'] . ' ' .$quote->shipping_address['city'] }} </div>
+                                    <div>{{ $quote->shipping_address['postcode'] ?? '' . ' ' .$quote->shipping_address['city'] ?? '' }} </div>
 
-                                    <div>{{ $quote->shipping_address['state'] }}</div>
+                                    <div>{{ $quote->shipping_address['state'] ?? '' }}</div>
 
                                     <div>{{ core()->country_name($quote->shipping_address['country'] ?? '') }}</div>
                                 </td>

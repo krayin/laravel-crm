@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'حذف',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'برای اضافه کردن کلیک کنید',
                 'search'          => 'جستجو',
@@ -539,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'درباره شخص',
+                'title'              => ':name',
+                'about-person'       => 'درباره شخص',
+                'about-organization' => 'درباره سازمان',
 
                 'activities' => [
                     'index' => [
@@ -973,6 +978,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'ایجاد فرم وب',
                 'add-attribute-btn'        => 'افزودن دکمه ویژگی',
                 'attribute-label-color'    => 'رنگ برچسب ویژگی',
                 'attributes'               => 'ویژگی‌ها',
@@ -993,10 +999,15 @@ return [
                 'save-btn'                 => 'ذخیره فرم وب',
                 'submit-button-label'      => 'برچسب دکمه ارسال',
                 'submit-success-action'    => 'عملکرد موفقیت آمیز ارسال',
-                'title'                    => 'ایجاد فرم وب',
+                'redirect-to-url'          => 'انتقال به آدرس',
+                'choose-value'             => 'انتخاب مقدار',
+                'select-file'              => 'انتخاب فایل',
+                'select-image'             => 'انتخاب تصویر',
+                'enter-value'              => 'مقدار را وارد کنید',
             ],
 
             'edit' => [
+                'title'                     => 'ویرایش فرم وب',
                 'add-attribute-btn'         => 'افزودن دکمه ویژگی',
                 'attribute-label-color'     => 'رنگ برچسب ویژگی',
                 'attributes'                => 'ویژگی‌ها',
@@ -1019,11 +1030,14 @@ return [
                 'preview'                   => 'پیش‌نمایش',
                 'person'                    => 'شخص',
                 'public-url'                => 'آدرس عمومی',
-                'redirect-to-url'           => 'انتقال به URL',
                 'save-btn'                  => 'ذخیره فرم وب',
                 'submit-button-label'       => 'برچسب دکمه ارسال',
                 'submit-success-action'     => 'عملکرد موفقیت آمیز ارسال',
-                'title'                     => 'ویرایش فرم وب',
+                'redirect-to-url'           => 'انتقال به آدرس',
+                'choose-value'              => 'انتخاب مقدار',
+                'select-file'               => 'انتخاب فایل',
+                'select-image'              => 'انتخاب تصویر',
+                'enter-value'               => 'مقدار را وارد کنید',
             ],
         ],
 
@@ -1253,6 +1267,8 @@ return [
                 'body'                  => 'بدن',
                 'default'               => 'پیش‌فرض',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'کلید و مقدار',
+                'add-new-payload'       => 'اضافه کردن بار جدید',
                 'raw'                   => 'خام',
                 'general'               => 'عمومی',
                 'name'                  => 'نام',
@@ -1281,6 +1297,8 @@ return [
                 'body'                  => 'بدن',
                 'default'               => 'پیش‌فرض',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'کلید و مقدار',
+                'add-new-payload'       => 'اضافه کردن بار جدید',
                 'raw'                   => 'خام',
                 'general'               => 'عمومی',
                 'name'                  => 'نام',

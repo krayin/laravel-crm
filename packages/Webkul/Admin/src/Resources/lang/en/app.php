@@ -543,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'About Person',
+                'title'              => ':name',
+                'about-person'       => 'About Person',
+                'about-organization' => 'About Organization',
 
                 'activities' => [
                     'index' => [
@@ -977,6 +978,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Create Webform',
                 'add-attribute-btn'        => 'Add Attribute Button',
                 'attribute-label-color'    => 'Attribute Label Color',
                 'attributes'               => 'Attributes',
@@ -998,7 +1000,6 @@ return [
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
                 'redirect-to-url'          => 'Redirect To Url',
-                'title'                    => 'Title',
                 'choose-value'             => 'Choose Value',
                 'select-file'              => 'Select File',
                 'select-image'             => 'Select Image',
@@ -1006,6 +1007,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'Edit Webform',
                 'add-attribute-btn'         => 'Add Attribute Button',
                 'attribute-label-color'     => 'Attribute Label Color',
                 'attributes'                => 'Attributes',
@@ -1032,7 +1034,6 @@ return [
                 'save-btn'                  => 'Save Webform',
                 'submit-button-label'       => 'Submit Button Label',
                 'submit-success-action'     => 'Submit Success Action',
-                'title'                     => 'Title',
                 'choose-value'              => 'Choose Value',
                 'select-file'               => 'Select File',
                 'select-image'              => 'Select Image',
@@ -1266,6 +1267,8 @@ return [
                 'body'                  => 'Body',
                 'default'               => 'Default',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Key and Value',
+                'add-new-payload'       => 'Add new payload',
                 'raw'                   => 'Raw',
                 'general'               => 'General',
                 'name'                  => 'Name',
@@ -1294,6 +1297,8 @@ return [
                 'body'                  => 'Body',
                 'default'               => 'Default',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Key and Value',
+                'add-new-payload'       => 'Add new payload',
                 'raw'                   => 'Raw',
                 'general'               => 'General',
                 'name'                  => 'Name',
@@ -1994,6 +1999,7 @@ return [
         'common' => [
             'dear'   => 'Dear :name',
             'cheers' => 'Cheers,</br>Team :app_name',
+
             'user'   => [
                 'dear'           => 'Dear :username',
                 'create-subject' => 'You are added as a member.',

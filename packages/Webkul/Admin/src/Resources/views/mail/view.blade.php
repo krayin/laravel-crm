@@ -329,7 +329,7 @@
 
                 {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
                 
-                <div class="w-[926px] gap-2 rounded border p-4">
+                <div class="w-[926px] gap-2 rounded border p-4 dark:border-gray-800">
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
                         enctype="multipart/form-data"
@@ -340,7 +340,7 @@
                             ref="mailActionForm"
                         >
                             <div class="flex flex-col gap-2">
-                                <div>
+                                <div class="border-b dark:border-gray-800">
                                     <!-- Activity Type -->
                                     <x-admin::form.control-group.control
                                         type="hidden"
@@ -366,14 +366,14 @@
 
                                             <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                                 <span
-                                                    class="cursor-pointer font-medium hover:underline"
+                                                    class="cursor-pointer font-medium hover:underline dark:text-gray-300"
                                                     @click="showCC = ! showCC"
                                                 >
                                                     @lang('admin::app.mail.view.cc')
                                                 </span>
 
                                                 <span
-                                                    class="cursor-pointer font-medium hover:underline"
+                                                    class="cursor-pointer font-medium hover:underline dark:text-gray-300"
                                                     @click="showBCC = ! showBCC"
                                                 >
                                                     @lang('admin::app.mail.view.bcc')
@@ -446,13 +446,13 @@
                                     </x-admin::form.control-group>
 
                                     <!-- Divider -->
-                                    <hr class="h-1">
+                                    {{-- <hr class="h-1 dark:text-gray-800"> --}}
                                 </div>
                             
                                 <!-- Action and Attachement -->
                                 <div class="flex w-full items-center justify-between">
                                     <label
-                                        class="flex cursor-pointer items-center gap-1"
+                                        class="flex cursor-pointer items-center gap-1 dark:text-gray-300"
                                         for="file-upload"
                                     >
                                         <i class="icon-attachment text-xl font-medium"></i>
@@ -462,7 +462,7 @@
                                                             
                                     <div class="flex items-center justify-center gap-4">
                                         <label
-                                            class="flex cursor-pointer items-center gap-1 font-semibold"
+                                            class="flex cursor-pointer items-center gap-1 font-semibold dark:text-gray-300"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
@@ -509,9 +509,25 @@
                                 <div class="flex flex-col gap-1">
                                     <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                    <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                    <!-- Emails -->
+                                    <template v-for="email in email?.person?.emails.map(item => item.value)">
+                                        <a 
+                                            class="text-brandColor"
+                                            :href="`mailto:${email}`"
+                                        >
+                                            @{{ email }}
+                                        </a>
+                                    </template>
 
-                                    <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                    <!-- Contact Numbers -->
+                                    <template v-for="contactNumber in email.person?.contact_numbers.map(item => item.value)">
+                                        <a
+                                            class="text-brandColor"
+                                            :href="`tel:${contactNumber}`"
+                                        >
+                                            @{{ contactNumber }}
+                                        </a>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -634,12 +650,15 @@
 
                             <!-- Add New Contact Button -->
                             @if (bouncer()->hasPermission('contacts.persons.create'))
-                                <div
-                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors"
+                                <button
+                                    type="button"
+                                    class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-brandColor transition-colors"
                                     @click="toggleContactModal"
                                 >
-                                    <span>+ @lang('admin::app.mail.view.add-new-contact')</span>
-                                </div>
+                                    <i class="icon-add text-md !text-brandColor"></i>
+                
+                                    @lang('admin::app.mail.view.add-new-contact')
+                                </button>
                             @endif
                         </div>
                     </div>
@@ -658,7 +677,7 @@
 
                 <template v-if="email?.lead_id">
                     <div class="flex">
-                        <div class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
+                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
@@ -849,12 +868,15 @@
 
                                 <!-- Add New Lead Button -->
                                 @if (bouncer()->hasPermission('leads.create'))
-                                    <div
-                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-blue-600 transition-colors dark:border-gray-700"
+                                    <button
+                                        type="button"
+                                        class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-brandColor transition-colors dark:border-gray-700"
                                         @click="toggleLeadModal"
                                     >
-                                        <span>+ @lang('admin::app.mail.view.add-new-lead')</span>
-                                    </div>
+                                        <i class="icon-add text-md !text-brandColor"></i>
+                    
+                                        @lang('admin::app.mail.view.add-new-lead')
+                                    </button>
                                 @endif
                             </div>
                         </div>
@@ -872,46 +894,48 @@
         >
             {!! view_render_event('admin.mail.view.contact_form.before', ['email' => $email]) !!}
 
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-            >
-                <form
-                    @submit="handleSubmit($event, create)"
-                    ref="contactForm"
+            <Teleport to="body">
+                <x-admin::form
+                    v-slot="{ meta, errors, handleSubmit }"
+                    as="div"
                 >
-                    <!-- Add Contact Modal -->
-                    <x-admin::modal 
-                        ref="contactModal"
-                        @toggle="toggleModal"
+                    <form
+                        @submit="handleSubmit($event, create)"
+                        ref="contactForm"
                     >
-                        <x-slot:header>
-                            <div class="flex items-center justify-between">
-                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    @lang('admin::app.mail.view.create-new-contact')
-                                </p>
-                            </div>
-                        </x-slot>
+                        <!-- Add Contact Modal -->
+                        <x-admin::modal 
+                            ref="contactModal"
+                            @toggle="toggleModal"
+                        >
+                            <x-slot:header>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.mail.view.create-new-contact')
+                                    </p>
+                                </div>
+                            </x-slot>
 
-                        <x-slot:content>
-                            <x-admin::attributes
-                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'persons',
-                                ])"
-                            />
-                        </x-slot>
+                            <x-slot:content>
+                                <x-admin::attributes
+                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                        'entity_type' => 'persons',
+                                    ])"
+                                />
+                            </x-slot>
 
-                        <x-slot:footer>
-                            <x-admin::button
-                                class="primary-button"
-                                :title="trans('admin::app.mail.view.save-contact')"
-                                ::loading="isStoring"
-                                ::disabled="isStoring"
-                            />
-                        </x-slot>
-                    </x-admin::modal>
-                </form>
-            </x-admin::form>
+                            <x-slot:footer>
+                                <x-admin::button
+                                    class="primary-button"
+                                    :title="trans('admin::app.mail.view.save-contact')"
+                                    ::loading="isStoring"
+                                    ::disabled="isStoring"
+                                />
+                            </x-slot>
+                        </x-admin::modal>
+                    </form>
+                </x-admin::form>
+            </Teleport>
 
             {!! view_render_event('admin.mail.view.contact_form.after', ['email' => $email]) !!}
         </script>
@@ -922,179 +946,189 @@
         >
             {!! view_render_event('admin.mail.view.lead_form.before', ['email' => $email]) !!}
 
-            <x-admin::form
-                v-slot="{ meta, errors, handleSubmit }"
-                as="div"
-            >
-                <form
-                    @submit="handleSubmit($event, create)"
-                    ref="leadForm"
+            <Teleport to="body">
+                <x-admin::form
+                    v-slot="{ meta, errors, handleSubmit }"
+                    as="div"
                 >
-                    <!-- Add Contact Modal -->
-                    <x-admin::modal
-                        ref="leadModal"
-                        @toggle="toggleModal"
-                        size="large"
+                    <form
+                        @submit="handleSubmit($event, create)"
+                        ref="leadForm"
                     >
-                        <x-slot:header>
-                            <div class="flex items-center justify-between">
-                                <p class="text-xl font-semibold text-gray-800 dark:text-white">
-                                    @lang('admin::app.mail.view.create-lead')
-                                </p>
-                            </div>
-                        </x-slot>
-
-                        <x-slot:content>
-                            <div class="flex flex-col gap-2">
-                                <!-- Tabs -->
-                                <div class="flex gap-4 border-b border-gray-200">
-                                    <div
-                                        v-for="type in types"
-                                        class="cursor-pointer px-3 py-2.5 text-sm font-medium"
-                                        :class="{'border-brandColor border-b-2 !text-brandColor transition': selectedType == type.name }"
-                                        @click="selectedType = type.name"
-                                    >
-                                        @{{ type.label }}
-                                    </div>
+                        <!-- Add Contact Modal -->
+                        <x-admin::modal
+                            ref="leadModal"
+                            @toggle="toggleModal"
+                            size="large"
+                        >
+                            <x-slot:header>
+                                <div class="flex items-center justify-between">
+                                    <p class="text-xl font-semibold text-gray-800 dark:text-white">
+                                        @lang('admin::app.mail.view.create-lead')
+                                    </p>
                                 </div>
+                            </x-slot>
 
-                                <!-- Container -->
-                                <div>
-                                    <div v-show="selectedType == 'lead'">
-                                        <div class="w-full">
-                                            <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2">
+                            <x-slot:content>
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
+                                        <!-- Tabs -->
+                                        <template 
+                                            v-for="type in types"
+                                            :key="type.name"
+                                        >
+                                            <span
+                                                :class="[
+                                                    'inline-block px-3 py-2.5 border-b-2 cursor-pointer text-sm font-medium ',
+                                                    selectedType == type.name
+                                                    ? 'text-brandColor border-brandColor dark:brandColor dark:brandColor'
+                                                    : 'text-gray-600 dark:text-gray-300  border-transparent hover:text-gray-800 hover:border-gray-400 dark:hover:border-gray-400  dark:hover:text-white'
+                                                ]"
+                                                @click="selectedType = type.name"
+                                            >
+                                                @{{ type.label }}
+                                            </span>
+                                        </template>
+                                    </div>
+
+                                    <!-- Container -->
+                                    <div>
+                                        <div v-show="selectedType == 'lead'">
+                                            <div class="w-full">
+                                                <div class="flex gap-4 max-sm:flex-wrap">
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['title']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
+
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['lead_value']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
+                                                </div>
+
+                                                <div class="flex w-full gap-4 max-sm:flex-wrap">
+                                                    <!-- Description -->
                                                     <x-admin::attributes
                                                         :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['title']],
+                                                            ['code', 'IN', ['description']],
                                                             'entity_type' => 'leads',
                                                             'quick_add'   => 1
                                                         ])"
                                                     />
                                                 </div>
 
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_value']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
-                                                </div>
-                                            </div>
 
-                                            <div class="flex w-full gap-4 max-sm:flex-wrap">
-                                                <!-- Description -->
-                                                <x-admin::attributes
-                                                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                        ['code', 'IN', ['description']],
-                                                        'entity_type' => 'leads',
-                                                        'quick_add'   => 1
-                                                    ])"
-                                                />
-                                            </div>
+                                                <div class="flex gap-4 max-sm:flex-wrap">
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['lead_pipeline_id']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
 
-
-                                            <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_pipeline_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['lead_pipeline_stage_id']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
                                                 </div>
 
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_pipeline_stage_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
-                                                </div>
-                                            </div>
+                                                <div class="flex gap-4 max-sm:flex-wrap">
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['lead_type_id']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
 
-                                            <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_type_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['lead_source_id']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
                                                 </div>
 
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['lead_source_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
-                                                </div>
-                                            </div>
-
-                                            <div class="flex gap-4 max-sm:flex-wrap">
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['user_id']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                    />
-                                                </div>
-                                                
-                                                <div class="w-1/2">
-                                                    <x-admin::attributes
-                                                        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                                            ['code', 'IN', ['expected_close_date']],
-                                                            'entity_type' => 'leads',
-                                                            'quick_add'   => 1
-                                                        ])"
-                                                        :custom-validations="[
-                                                            'expected_close_date' => [
-                                                                'date_format:yyyy-MM-dd',
-                                                                'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                                            ],
-                                                        ]"
-                                                    />
+                                                <div class="flex gap-4 max-sm:flex-wrap">
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['user_id']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                        />
+                                                    </div>
+                                                    
+                                                    <div class="w-1/2">
+                                                        <x-admin::attributes
+                                                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                                                ['code', 'IN', ['expected_close_date']],
+                                                                'entity_type' => 'leads',
+                                                                'quick_add'   => 1
+                                                            ])"
+                                                            :custom-validations="[
+                                                                'expected_close_date' => [
+                                                                    'date_format:yyyy-MM-dd',
+                                                                    'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                                                ],
+                                                            ]"
+                                                        />
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-                                        
-                                    <div v-show="selectedType == 'person'">
-                                        @include('admin::leads.common.contact')
-                                    </div>
+                                            
+                                        <div v-show="selectedType == 'person'">
+                                            @include('admin::leads.common.contact')
+                                        </div>
 
-                                    <div 
-                                        class="overflow-y-auto"
-                                        v-show="selectedType == 'product'"
-                                    >
-                                        @include('admin::leads.common.products')
+                                        <div 
+                                            class="overflow-y-auto"
+                                            v-show="selectedType == 'product'"
+                                        >
+                                            @include('admin::leads.common.products')
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </x-slot>
+                            </x-slot>
 
-                        <x-slot:footer>
-                            <x-admin::button
-                                class="primary-button"
-                                :title="trans('Save Lead')"
-                                ::loading="isStoring"
-                                ::disabled="isStoring"
-                            />
-                        </x-slot>
-                    </x-admin::modal>
-                </form>
-            </x-admin::form>
+                            <x-slot:footer>
+                                <x-admin::button
+                                    class="primary-button"
+                                    :title="trans('Save Lead')"
+                                    ::loading="isStoring"
+                                    ::disabled="isStoring"
+                                />
+                            </x-slot>
+                        </x-admin::modal>
+                    </form>
+                </x-admin::form>
+            </Teleport>
 
             {!! view_render_event('admin.mail.view.lead_form.after', ['email' => $email]) !!}
         </script>

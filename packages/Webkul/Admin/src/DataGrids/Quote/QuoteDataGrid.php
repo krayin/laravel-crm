@@ -13,6 +13,8 @@ class QuoteDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
+        $tablePrefix = DB::getTablePrefix();
+
         $queryBuilder = DB::table('quotes')
             ->addSelect(
                 'quotes.id',
@@ -45,9 +47,9 @@ class QuoteDataGrid extends DataGrid
         $this->addFilter('created_at', 'quotes.created_at');
 
         if (request()->input('expired_quotes.in') == 1) {
-            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'quotes.expired_at) >= '.DB::getTablePrefix().'NOW()'));
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.$tablePrefix.'quotes.expired_at) >= '.$tablePrefix.'NOW()'));
         } else {
-            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'quotes.expired_at) < '.DB::getTablePrefix().'NOW()'));
+            $this->addFilter('expired_quotes', DB::raw('DATEDIFF(NOW(), '.$tablePrefix.'quotes.expired_at) < '.$tablePrefix.'NOW()'));
         }
 
         return $queryBuilder;

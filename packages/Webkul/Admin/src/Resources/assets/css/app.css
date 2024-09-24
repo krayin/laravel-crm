@@ -380,11 +380,19 @@
         @apply max-w-max rounded-md bg-red-200 px-3 py-1.5 text-xs font-medium text-red-800;
     }  
 
-    .sidebar-rounded::after {
+    [dir="ltr"] .sidebar-rounded::after {
         @apply content-[''] w-[30px] h-[30px] top-0 right-[-30px] absolute bg-no-repeat pointer-events-none bg-[url("../images/corner-clip.svg")] transition-all;
     }
 
+    [dir="rtl"] .sidebar-rounded::before {
+        @apply content-[''] w-[30px] h-[30px] top-0 left-[-30px] absolute bg-no-repeat pointer-events-none bg-[url("../images/corner-clip.svg")] transition-all rotate-90;
+    }
+
     .dark .sidebar-rounded::after {
+        @apply bg-[url("../images/dark-corner-clip.svg")]
+    }
+
+    .dark .sidebar-rounded::before {
         @apply bg-[url("../images/dark-corner-clip.svg")]
     }
 

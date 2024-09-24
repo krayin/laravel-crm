@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-d9eb26ec.css",
+    "file": "assets/app-2fb722dd.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },

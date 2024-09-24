@@ -50,7 +50,7 @@
                         <x-slot:header>
                             {!! view_render_event('admin.components.activities.actions.file.form_controls.modal.header.title.before') !!}
 
-                            <h3 class="text-base font-semibold">
+                            <h3 class="text-base font-semibold dark:text-white">
                                 @lang('admin::app.components.activities.actions.file.title')
                             </h3>
 
