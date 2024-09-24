@@ -329,7 +329,7 @@
 
                 {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
                 
-                <div class="w-[926px] gap-2 rounded border p-4">
+                <div class="w-[926px] gap-2 rounded border p-4 dark:border-gray-800">
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
                         enctype="multipart/form-data"
@@ -340,7 +340,7 @@
                             ref="mailActionForm"
                         >
                             <div class="flex flex-col gap-2">
-                                <div>
+                                <div class="border-b dark:border-gray-800">
                                     <!-- Activity Type -->
                                     <x-admin::form.control-group.control
                                         type="hidden"
@@ -366,14 +366,14 @@
 
                                             <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                                 <span
-                                                    class="cursor-pointer font-medium hover:underline"
+                                                    class="cursor-pointer font-medium hover:underline dark:text-gray-300"
                                                     @click="showCC = ! showCC"
                                                 >
                                                     @lang('admin::app.mail.view.cc')
                                                 </span>
 
                                                 <span
-                                                    class="cursor-pointer font-medium hover:underline"
+                                                    class="cursor-pointer font-medium hover:underline dark:text-gray-300"
                                                     @click="showBCC = ! showBCC"
                                                 >
                                                     @lang('admin::app.mail.view.bcc')
@@ -446,13 +446,13 @@
                                     </x-admin::form.control-group>
 
                                     <!-- Divider -->
-                                    <hr class="h-1">
+                                    {{-- <hr class="h-1 dark:text-gray-800"> --}}
                                 </div>
                             
                                 <!-- Action and Attachement -->
                                 <div class="flex w-full items-center justify-between">
                                     <label
-                                        class="flex cursor-pointer items-center gap-1"
+                                        class="flex cursor-pointer items-center gap-1 dark:text-gray-300"
                                         for="file-upload"
                                     >
                                         <i class="icon-attachment text-xl font-medium"></i>
@@ -462,7 +462,7 @@
                                                             
                                     <div class="flex items-center justify-center gap-4">
                                         <label
-                                            class="flex cursor-pointer items-center gap-1 font-semibold"
+                                            class="flex cursor-pointer items-center gap-1 font-semibold dark:text-gray-300"
                                             @click="$emit('onDiscard')"
                                         >
                                             @lang('admin::app.mail.view.discard')
