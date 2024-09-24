@@ -509,9 +509,25 @@
                                 <div class="flex flex-col gap-1">
                                     <span class="text-[10px]">@{{ email.person.job_title }}</span>
 
-                                    <span class="text-brandColor">@{{ email.person?.emails.map(item => item.value).join(', ') }}</span>
+                                    <!-- Emails -->
+                                    <template v-for="email in email?.person?.emails.map(item => item.value)">
+                                        <a 
+                                            class="text-brandColor"
+                                            :href="`mailto:${email}`"
+                                        >
+                                            @{{ email }}
+                                        </a>
+                                    </template>
 
-                                    <span class="text-brandColor">@{{ email.person?.contact_numbers.map(item => item.value).join(', ') }}</span>
+                                    <!-- Contact Numbers -->
+                                    <template v-for="contactNumber in email.person?.contact_numbers.map(item => item.value)">
+                                        <a
+                                            class="text-brandColor"
+                                            :href="`tel:${contactNumber}`"
+                                        >
+                                            @{{ contactNumber }}
+                                        </a>
+                                    </template>
                                 </div>
                             </div>
                         </div>
@@ -658,7 +674,7 @@
 
                 <template v-if="email?.lead_id">
                     <div class="flex">
-                        <div class="lead-item flex cursor-pointer flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
+                        <div class="lead-item flex flex-col gap-5 rounded-md border border-gray-100 bg-gray-50 p-2 dark:border-gray-400 dark:bg-gray-400">
                             <!-- Header -->
                             <div
                                 class="flex items-start justify-between"
