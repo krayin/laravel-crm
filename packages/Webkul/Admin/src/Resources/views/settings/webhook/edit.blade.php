@@ -65,7 +65,7 @@
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -78,194 +78,201 @@
                             </div>
                         </div>
 
-                        <!-- Method and URL endpoint -->
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.webhooks.edit.url-and-parameters')
-                            </x-admin::form.control-group.label>
+                        <!-- Basic Details -->
+                        <div class="flex flex-col gap-4">
+                            <div>
+                                <!-- Method and URL endpoint -->
+                                <x-admin::form.control-group>
+                                    <x-admin::form.control-group.label class="required">
+                                        @lang('admin::app.settings.webhooks.edit.url-and-parameters')
+                                    </x-admin::form.control-group.label>
 
-                            <div class="flex">
-                                <x-admin::form.control-group.control
-                                    type="select"
-                                    name="method"
-                                    id="method"
-                                    :value="old('method') ?? $webhook->method"
-                                    class="!w-1/6 rounded-r-none"
-                                    :label="trans('admin::app.settings.webhooks.edit.method')"
-                                >
-                                    <option value="post">@lang('admin::app.settings.webhooks.edit.post')</option>
-                                    <option value="put">@lang('admin::app.settings.webhooks.edit.put')</option>
-                                </x-admin::form.control-group.control>
+                                    <div class="flex">
+                                        <x-admin::form.control-group.control
+                                            type="select"
+                                            name="method"
+                                            id="method"
+                                            :value="old('method') ?? $webhook->method"
+                                            class="!w-1/6 rounded-r-none"
+                                            :label="trans('admin::app.settings.webhooks.edit.method')"
+                                        >
+                                            <option value="post">@lang('admin::app.settings.webhooks.edit.post')</option>
+                                            <option value="put">@lang('admin::app.settings.webhooks.edit.put')</option>
+                                        </x-admin::form.control-group.control>
 
-                                <x-admin::form.control-group.control
-                                    type="text"
-                                    name="end_point"
-                                    id="end_point"
-                                    class="rounded-l-none"
-                                    :value="old('end_point')"
-                                    rules="required|url"
-                                    :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
-                                    :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
-                                    v-debounce="500"
-                                    v-model.lazy="baseUrl"
-                                />
-                            </div>
-                            <x-admin::form.control-group.error control-name="end_point"/>
-                        </x-admin::form.control-group>
+                                        <x-admin::form.control-group.control
+                                            type="text"
+                                            name="end_point"
+                                            id="end_point"
+                                            class="rounded-l-none"
+                                            :value="old('end_point') ?? $webhook->end_point"
+                                            rules="required|url"
+                                            :label="trans('admin::app.settings.webhooks.edit.url-endpoint')"
+                                            :placeholder="trans('admin::app.settings.webhooks.edit.url-endpoint')"
+                                            v-debounce="500"
+                                            v-model.lazy="baseUrl"
+                                        />
+                                    </div>
+                                    <x-admin::form.control-group.error control-name="end_point"/>
+                                </x-admin::form.control-group>
 
-                        <v-key-and-value
-                            title="@lang('admin::app.settings.webhooks.edit.parameters')"
-                            name="query_params"
-                            :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-parameter')'"
-                            :fields="parameters"
-                            :placeholders="placeholders"
-                        ></v-key-and-value>
-                        
-                        <div class="flex w-full items-center justify-between rounded-sm border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
-                            <div class="my-2 flex gap-3">
-                                <div class="font-sm text-xs dark:text-gray-300">
-                                    @lang('admin::app.settings.webhooks.edit.url-preview')
-
-                                    <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint() }}</span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <hr class="my-4 w-full"/>
-
-                        <v-key-and-value
-                            title="@lang('admin::app.settings.webhooks.edit.headers')"
-                            name="headers"
-                            :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-header')'"
-                            :fields="headers"
-                            :placeholders="placeholders"
-                        ></v-key-and-value>
-
-                        <hr class="my-4 w-full"/>
-
-                        <x-admin::form.control-group>
-                            <x-admin::form.control-group.label class="required">
-                                @lang('admin::app.settings.webhooks.edit.body')
-                            </x-admin::form.control-group.label>
-
-                            <div class="mb-4 flex items-center gap-2">
-                                <div class="flex cursor-pointer items-center justify-center">
-                                    <input
-                                        id="default"
-                                        type="radio"
-                                        v-model="contentType"
-                                        value="default"
-                                        name="payload_type"
-                                        class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                                    >
-                                    <label
-                                        for="default"
-                                        class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
-                                    >
-                                        @lang('admin::app.settings.webhooks.edit.default')
-                                    </label>
-                                </div>
+                                <!-- Parameters -->
+                                <v-key-and-value
+                                    title="@lang('admin::app.settings.webhooks.edit.parameters')"
+                                    name="query_params"
+                                    :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-parameter')'"
+                                    :fields="parameters"
+                                    :placeholders="placeholders"
+                                ></v-key-and-value>
                                 
-                                <div class="flex cursor-pointer items-center justify-center">
-                                    <input
-                                        id="x-www-form-urlencoded"
-                                        type="radio"
-                                        v-model="contentType"
-                                        value="x-www-form-urlencoded"
-                                        name="payload_type"
-                                        class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                                    >
-                                    <label
-                                        for="x-www-form-urlencoded"
-                                        class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
-                                    >
-                                        @lang('admin::app.settings.webhooks.edit.x-www-form-urlencoded')
-                                    </label>
-                                </div>
+                                <!-- URL Preview -->
+                                <div class="flex w-full items-center justify-between rounded-sm border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
+                                    <div class="my-2 flex gap-3">
+                                        <div class="font-sm text-xs dark:text-gray-300">
+                                            @lang('admin::app.settings.webhooks.edit.url-preview')
 
-                                <div class="flex items-center justify-center gap-5">
+                                            <span class="text-sm font-medium text-gray-800 dark:text-gray-300">@{{ urlEndPoint() }}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Headers -->
+                            <div class="border-y border-gray-200 dark:border-gray-800">
+                                <v-key-and-value
+                                    title="@lang('admin::app.settings.webhooks.edit.headers')"
+                                    name="headers"
+                                    :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-header')'"
+                                    :fields="headers"
+                                    :placeholders="placeholders"
+                                ></v-key-and-value>
+                            </div>
+
+                            <!-- Content -->
+                            <x-admin::form.control-group>
+                                <x-admin::form.control-group.label class="required">
+                                    @lang('admin::app.settings.webhooks.edit.body')
+                                </x-admin::form.control-group.label>
+
+                                <div class="mb-4 flex items-center gap-2">
                                     <div class="flex cursor-pointer items-center justify-center">
                                         <input
-                                            id="raw"
+                                            id="default"
                                             type="radio"
                                             v-model="contentType"
-                                            value="raw"
+                                            value="default"
                                             name="payload_type"
                                             class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
-                                            @click="contentType = 'raw'"
                                         >
-
                                         <label
-                                            for="raw"
+                                            for="default"
                                             class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
-                                            @click="contentType = 'raw';rawType = 'json'"
                                         >
-                                            @lang('admin::app.settings.webhooks.edit.raw')
+                                            @lang('admin::app.settings.webhooks.edit.default')
+                                        </label>
+                                    </div>
+                                    
+                                    <div class="flex cursor-pointer items-center justify-center">
+                                        <input
+                                            id="x-www-form-urlencoded"
+                                            type="radio"
+                                            v-model="contentType"
+                                            value="x-www-form-urlencoded"
+                                            name="payload_type"
+                                            class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                                        >
+                                        <label
+                                            for="x-www-form-urlencoded"
+                                            class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
+                                        >
+                                            @lang('admin::app.settings.webhooks.edit.x-www-form-urlencoded')
                                         </label>
                                     </div>
 
-                                    <template v-if="contentType == 'raw'">
-                                        <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
-                                            <x-slot:toggle>
-                                                <div class="flex items-center justify-center">
-                                                    <span class="cursor-pointer text-xs font-normal text-brandColor dark:text-gray-300">@{{ rawType }}</span>
+                                    <div class="flex items-center justify-center gap-5">
+                                        <div class="flex cursor-pointer items-center justify-center">
+                                            <input
+                                                id="raw"
+                                                type="radio"
+                                                v-model="contentType"
+                                                value="raw"
+                                                name="payload_type"
+                                                class="h-4 w-4 cursor-pointer border-gray-300 bg-gray-100 text-blue-600 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800"
+                                                @click="contentType = 'raw'"
+                                            >
 
-                                                    <i class="icon-down-arrow -mt-px text-xs text-brandColor"></i>
-                                                </div>
-                                            </x-slot>
-                        
-                                            <x-slot:menu class="!p-0 dark:border-gray-800">
-                                                <input
-                                                    type="hidden"
-                                                    name="raw_payload_type"
-                                                    v-model="rawType"
-                                                >
+                                            <label
+                                                for="raw"
+                                                class="ms-2 cursor-pointer text-xs font-normal text-gray-900 dark:text-gray-300"
+                                                @click="contentType = 'raw';rawType = 'json'"
+                                            >
+                                                @lang('admin::app.settings.webhooks.edit.raw')
+                                            </label>
+                                        </div>
 
-                                                <span
-                                                    class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'json'}"
-                                                    @click="rawType = 'json'"
-                                                >
-                                                    <div class="items flex items-center gap-1.5">
-                                                        @lang('admin::app.settings.webhooks.edit.json')
+                                        <template v-if="contentType == 'raw'">
+                                            <x-admin::dropdown class="rounded-lg dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400">
+                                                <x-slot:toggle>
+                                                    <div class="flex items-center justify-center">
+                                                        <span class="cursor-pointer text-xs font-normal text-brandColor dark:text-gray-300">@{{ rawType }}</span>
+
+                                                        <i class="icon-down-arrow -mt-px text-xs text-brandColor"></i>
                                                     </div>
-                                                </span>
+                                                </x-slot>
+                            
+                                                <x-slot:menu class="!p-0 dark:border-gray-800">
+                                                    <input
+                                                        type="hidden"
+                                                        name="raw_payload_type"
+                                                        v-model="rawType"
+                                                    >
 
-                                                <span
-                                                    class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
-                                                    :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'text'}"
-                                                    @click="rawType = 'text'"
-                                                >
-                                                    <div class="items flex items-center gap-1.5">
-                                                        @lang('admin::app.settings.webhooks.edit.text')
-                                                    </div>
-                                                </span>
-                                            </x-slot>
-                                        </x-admin::dropdown>
-                                    </template>
+                                                    <span
+                                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                                        :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'json'}"
+                                                        @click="rawType = 'json'"
+                                                    >
+                                                        <div class="items flex items-center gap-1.5">
+                                                            @lang('admin::app.settings.webhooks.edit.json')
+                                                        </div>
+                                                    </span>
+
+                                                    <span
+                                                        class="whitespace-no-wrap flex cursor-pointer items-center justify-between gap-1.5 rounded-t px-2 py-2 text-sm text-gray-600 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-950"
+                                                        :class="{'bg-gray-100 dark:bg-gray-950': rawType === 'text'}"
+                                                        @click="rawType = 'text'"
+                                                    >
+                                                        <div class="items flex items-center gap-1.5">
+                                                            @lang('admin::app.settings.webhooks.edit.text')
+                                                        </div>
+                                                    </span>
+                                                </x-slot>
+                                            </x-admin::dropdown>
+                                        </template>
+                                    </div>
                                 </div>
-                            </div>
-                           
-                            <template v-if="showEditor">
-                                <textarea
-                                    ref="payload"
-                                    id="payload"
-                                    name="payload"
-                                >@{{ payload }}</textarea>
-                            </template>
+                            
+                                <template v-if="showEditor">
+                                    <textarea
+                                        ref="payload"
+                                        id="payload"
+                                        name="payload"
+                                    >@{{ payload }}</textarea>
+                                </template>
 
-                            <template v-else>
-                                <v-key-and-value
-                                    title="@lang('Key and Value')"
-                                    name="payload"
-                                    :add-btn-title="'Add new payload'"
-                                    :fields="tempPayload"
-                                    :placeholders="placeholders"
-                                ></v-key-and-value>
-                            </template>
+                                <template v-else>
+                                    <v-key-and-value
+                                        title="@lang('admin::app.settings.webhooks.edit.key-and-value')"
+                                        name="payload"
+                                        :add-btn-title="'@lang('admin::app.settings.webhooks.edit.add-new-payload')'"
+                                        :fields="tempPayload"
+                                        :placeholders="placeholders"
+                                    ></v-key-and-value>
+                                </template>
 
-                            <x-admin::form.control-group.error control-name="payload" />
-                        </x-admin::form.control-group>
+                                <x-admin::form.control-group.error control-name="payload" />
+                            </x-admin::form.control-group>
+                        </div>
                     </div>
                 </div>
 
@@ -437,12 +444,15 @@
                     </div>
             
                     <div class="inline-block">
-                        <span
-                            class="cursor-pointer py-2 text-xs font-semibold text-brandColor hover:text-sky-500 hover:underline"
+                        <button
+                            type="button"
+                            class="flex max-w-max items-center gap-2 text-brandColor"
                             @click="add(index)" 
                         >
-                            + @{{ addBtnTitle }}
-                        </span>
+                            <i class="icon-add text-md !text-brandColor"></i>
+
+                            @{{ addBtnTitle }}
+                        </button>
                     </div>
                 </div>
             </x-admin::form.control-group>
@@ -482,6 +492,8 @@
                     if (Array.isArray(this.payload)) {
                         this.tempPayload = this.payload;
                     }
+
+                    this.$emitter.on('change-theme', (theme) => this.handleEditorDisplay());
                 },
 
                 watch: {
@@ -557,7 +569,7 @@
                                     mode: this.contentType === 'default' ? 'application/json' : mode,
                                     styleActiveLine: true,
                                     lint: true,
-                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'eclipse',
+                                    theme: document.documentElement.classList.contains('dark') ? 'ayu-dark' : 'default',
                                 });
 
                                 this.codeMirrorInstance.on('changes', () => this.payload = this.codeMirrorInstance.getValue());
@@ -596,11 +608,7 @@
                                 }
                             });
 
-                            const decodeUri = decodeURI(url.toString());
-
-                            this.baseUrl = decodeUri;
-
-                            return decodeUri;
+                            return decodeURI(url.toString());
                         } catch (error) {
                             return this.baseUrl;
                         }
@@ -698,6 +706,9 @@
         ></link>
 
         <!-- Dark theme css -->
-        <link rel="stylesheet" href="https://codemirror.net/5/theme/ayu-dark.css">
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.63.3/theme/ayu-dark.min.css"
+        >
     @endPushOnce
 </x-admin::layouts>

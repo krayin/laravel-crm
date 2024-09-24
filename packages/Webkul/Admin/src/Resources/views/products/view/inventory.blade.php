@@ -103,8 +103,10 @@
                 <div v-if="notAddedWarehouses.length">
                     <x-admin::dropdown position="bottom-right">
                         <x-slot:toggle>
-                            <p class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor">
-                                + @lang('admin::app.products.view.inventory.add-source')
+                            <p class="text-md flex cursor-pointer items-center gap-2 font-semibold text-brandColor dark:text-brandColor">
+                                <i class="icon-add text-md !text-brandColor"></i>
+
+                                @lang('admin::app.products.view.inventory.add-source')
                             </p>
                         </x-slot>
 
@@ -220,12 +222,15 @@
             </x-admin::table>
 
             <!-- Add more button for location -->
-            <span
-                class="cursor-pointer text-brandColor"
+            <button
+                type="button"
+                class="flex max-w-max items-center gap-2 text-brandColor"
                 @click="addLocation"
             >
-                + @lang('admin::app.products.view.inventory.add-more')
-            </span>
+                <i class="icon-add text-md !text-brandColor"></i>
+
+                @lang('admin::app.products.view.inventory.add-more')
+            </button>
         </div>
     </script>
 

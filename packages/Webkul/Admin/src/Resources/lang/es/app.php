@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Eliminar',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Haz clic para agregar',
                 'search'          => 'Buscar',
@@ -974,6 +978,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Crear formulario web',
                 'add-attribute-btn'        => 'Agregar Botón de Atributo',
                 'attribute-label-color'    => 'Color de Etiqueta del Atributo',
                 'attributes'               => 'Atributos',
@@ -994,10 +999,15 @@ return [
                 'save-btn'                 => 'Guardar Webform',
                 'submit-button-label'      => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'    => 'Acción en caso de éxito de envío',
-                'title'                    => 'Crear Webform',
+                'redirect-to-url'          => 'Redirigir a la URL',
+                'choose-value'             => 'Elige un valor',
+                'select-file'              => 'Seleccionar archivo',
+                'select-image'             => 'Seleccionar imagen',
+                'enter-value'              => 'Introducir valor',
             ],
 
             'edit' => [
+                'title'                     => 'Editar formulario web',
                 'add-attribute-btn'         => 'Agregar Botón de Atributo',
                 'attribute-label-color'     => 'Color de Etiqueta del Atributo',
                 'attributes'                => 'Atributos',
@@ -1020,11 +1030,14 @@ return [
                 'preview'                   => 'Vista Previa',
                 'person'                    => 'Persona',
                 'public-url'                => 'URL Pública',
-                'redirect-to-url'           => 'Redirigir a URL',
                 'save-btn'                  => 'Guardar Webform',
                 'submit-button-label'       => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'     => 'Acción en caso de éxito de envío',
-                'title'                     => 'Editar Webform',
+                'redirect-to-url'           => 'Redirigir a la URL',
+                'choose-value'              => 'Elige un valor',
+                'select-file'               => 'Seleccionar archivo',
+                'select-image'              => 'Seleccionar imagen',
+                'enter-value'               => 'Introducir valor',
             ],
         ],
 
@@ -1254,6 +1267,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',
@@ -1282,6 +1297,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',

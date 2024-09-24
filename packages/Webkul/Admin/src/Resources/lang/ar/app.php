@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'حذف',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'انقر للإضافة',
                 'search'          => 'بحث',
@@ -974,6 +978,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'إنشاء استمارة ويب',
                 'add-attribute-btn'        => 'زر إضافة سمة',
                 'attribute-label-color'    => 'لون تسمية السمة',
                 'attributes'               => 'السمات',
@@ -994,10 +999,15 @@ return [
                 'save-btn'                 => 'حفظ نموذج الويب',
                 'submit-button-label'      => 'تسمية زر الإرسال',
                 'submit-success-action'    => 'إجراء نجاح الإرسال',
-                'title'                    => 'إنشاء نموذج ويب',
+                'redirect-to-url'          => 'إعادة التوجيه إلى الرابط',
+                'choose-value'             => 'اختر قيمة',
+                'select-file'              => 'اختر ملف',
+                'select-image'             => 'اختر صورة',
+                'enter-value'              => 'أدخل القيمة',
             ],
 
             'edit' => [
+                'title'                     => 'تعديل استمارة ويب',
                 'add-attribute-btn'         => 'زر إضافة سمة',
                 'attribute-label-color'     => 'لون تسمية السمة',
                 'attributes'                => 'السمات',
@@ -1024,7 +1034,10 @@ return [
                 'save-btn'                  => 'حفظ نموذج الويب',
                 'submit-button-label'       => 'تسمية زر الإرسال',
                 'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'title'                     => 'تعديل نموذج الويب',
+                'choose-value'              => 'Choose Value',
+                'select-file'               => 'Select File',
+                'select-image'              => 'Select Image',
+                'enter-value'               => 'Enter Value',
             ],
         ],
 
@@ -1254,6 +1267,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',
@@ -1282,6 +1297,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',
