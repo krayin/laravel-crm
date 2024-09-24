@@ -28,7 +28,7 @@ return new class extends Migration
                 'lead_pipeline_stages.name' => DB::raw($tablePrefix.'lead_stages.name'),
             ]);
 
-        Schema::table('lead_pipeline_stages', function (Blueprint $table) use($tablePrefix) {
+        Schema::table('lead_pipeline_stages', function (Blueprint $table) use ($tablePrefix) {
             $table->dropForeign($tablePrefix.'lead_pipeline_stages_lead_stage_id_foreign');
             $table->dropColumn('lead_stage_id');
 
