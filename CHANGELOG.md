@@ -1,4 +1,24 @@
-## **v2.0.2 (13th of September 2024)** - *Release*
+## **v2.0.2 (24th of September 2024)** - *Release*
+
+* #1633[enhancement] Use variable instead of calling every time of use db table prefix.
+
+* #1632[fixed] Update mail view render event.
+
+* #1631[fixed] Dark Mode UI.
+
+* #1629[fixed] Activities participants dark mode ui fixed.
+
+* #1628[fixed] Refactor the quotes edit and create page.
+
+* #1627[fixed] Leads actions ui.
+
+* #1626[fixed] Mail View Page Refactor
+
+* #1625[fixed] Sidebar rounded menu fix in rtl view.
+
+* #1619[fixed] Persons view page avatar and organization edit button.
+
+* #1617[fixed] When Printing to pdf, currency Symbol gets printed with ? instead of the Symbol.
 
 * #1603[fixed] Bug: Page resets when entering the first character in "URL And Parameters" while creating a Webhook on mobile.
 
