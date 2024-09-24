@@ -289,8 +289,8 @@
 
                             this.get()
                                 .then(response => {
-                                    for (let [stageId, data] of Object.entries(response.data)) {
-                                        this.stageLeads[stageId] = data;
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
                                     }
                                 });
 
@@ -299,9 +299,9 @@
                     }
 
                     this.get()
-                        .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                        .then(response => {                            
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -432,6 +432,10 @@
                  * @returns {void}
                  */
                 updateStage: function (stage, event) {
+                    if (event.moved) {
+                        return;
+                    }
+
                     if (event.removed) {
                         stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
 
