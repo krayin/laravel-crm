@@ -543,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'Sobre la Persona',
+                'title'              => ':name',
+                'about-person'       => 'Sobre la Persona',
+                'about-organization' => 'Acerca de la organización',
 
                 'activities' => [
                     'index' => [

@@ -1,5 +1,5 @@
 <v-avatar {{ $attributes }}>
-    <div class="flex h-9 w-9 rounded-full text-xs shimmer"></div>
+    <div class="shimmer h-9 w-9 rounded-full"></div>
 </v-avatar>
 
 @pushOnce('scripts')
@@ -8,10 +8,10 @@
         id="v-avatar-template"
     >
         <div
-            class="flex h-9 w-9 items-center justify-center rounded-full text-xs font-medium"
+            class="flex h-9 min-w-9 items-center justify-center rounded-full text-xs font-medium"
             :class="colorClasses()"
         >
-            @{{ name.split(' ').map(word => word[0].toUpperCase()).join('') }}
+            @{{ name.split(' ').slice(0, 2).map(word => word[0].toUpperCase()).join('') }}
         </div>
     </script>
 

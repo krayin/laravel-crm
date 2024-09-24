@@ -543,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'Kişi Hakkında',
+                'title'              => ':name',
+                'about-person'       => 'Kişi Hakkında',
+                'about-organization' => 'Kuruluş Hakkında',
 
                 'activities' => [
                     'index' => [

@@ -53,7 +53,7 @@
                         <x-slot:header>
                             {!! view_render_event('admin.components.activities.actions.mail.form_controls.modal.header.before') !!}
 
-                            <h3 class="text-base font-semibold">
+                            <h3 class="text-base font-semibold dark:text-white">
                                 @lang('admin::app.components.activities.actions.mail.title')
                             </h3>
 
