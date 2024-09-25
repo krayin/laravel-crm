@@ -2018,7 +2018,7 @@ return [
     ],
 
     'errors' => [
-        '401' => 'No estás autorizado para acceder a esta página',
+        '401'       => 'No estás autorizado para acceder a esta página',
         'dashboard' => 'Tablero',
         'go-back'   => 'Volver',
         'support'   => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',

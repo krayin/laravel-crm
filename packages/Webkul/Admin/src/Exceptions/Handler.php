@@ -112,6 +112,6 @@ class Handler extends AppExceptionHandler
             ], $errorCode);
         }
 
-        return response()->view("admin::errors.index", compact('errorCode'));
+        return response()->view('admin::errors.index', compact('errorCode'));
     }
 }
