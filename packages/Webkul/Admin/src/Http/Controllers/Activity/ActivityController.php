@@ -17,6 +17,8 @@ use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 
+use function Pest\Laravel\call;
+
 class ActivityController extends Controller
 {
     /**
@@ -184,9 +186,13 @@ class ActivityController extends Controller
      */
     public function download(int $id): StreamedResponse
     {
-        $file = $this->fileRepository->findOrFail($id);
+        try {
+            $file = $this->fileRepository->findOrFail($id);
 
-        return Storage::download($file->path);
+            return Storage::download($file->path);
+        } catch(\Exception $exception) {
+            abort(404);
+        }
     }
 
     /*

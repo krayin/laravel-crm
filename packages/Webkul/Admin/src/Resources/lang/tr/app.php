@@ -2018,6 +2018,34 @@ return [
     ],
 
     'errors' => [
-        '401' => 'Bu sayfaya erişme yetkiniz yok',
+        '401' => 'Bu sayfaya erişim izniniz yok',
+        'dashboard' => 'Kontrol Paneli',
+        'go-back'   => 'Geri Dön',
+        'support'   => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+
+        '404' => [
+            'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
+            'title'       => '404 Sayfa Bulunamadı',
+        ],
+
+        '401' => [
+            'description' => 'Oops! Bu sayfaya erişim izniniz yok gibi görünüyor. Gerekli yetkilere sahip değilsiniz.',
+            'title'       => '401 Yetkisiz',
+        ],
+
+        '403' => [
+            'description' => 'Oops! Bu sayfa erişime kapalı. Bu içeriği görüntülemek için gerekli izinlere sahip değilsiniz gibi görünüyor.',
+            'title'       => '403 Yasak',
+        ],
+
+        '500' => [
+            'description' => 'Oops! Bir şeyler ters gitti. Aradığınız sayfa yüklenirken sorun yaşıyoruz gibi görünüyor.',
+            'title'       => '500 Sunucu Hatası',
+        ],
+
+        '503' => [
+            'description' => 'Oops! Görünüşe göre geçici bir bakım nedeniyle kapalıyız. Lütfen kısa süre sonra tekrar kontrol edin.',
+            'title'       => '503 Hizmet Kullanılamıyor',
+        ],
     ],
 ];
