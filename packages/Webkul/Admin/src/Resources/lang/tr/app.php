@@ -2018,7 +2018,6 @@ return [
     ],
 
     'errors' => [
-        '401'       => 'Bu sayfaya erişim izniniz yok',
         'dashboard' => 'Kontrol Paneli',
         'go-back'   => 'Geri Dön',
         'support'   => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',

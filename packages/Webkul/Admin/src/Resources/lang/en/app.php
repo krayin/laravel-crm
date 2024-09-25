@@ -2018,7 +2018,6 @@ return [
     ],
 
     'errors' => [
-        '401'       => 'You are not authorized to access this page',
         'dashboard' => 'Dashboard',
         'go-back'   => 'Go Back',
         'support'   => 'If the problem persists, reach out to us at <a href=":link" class=":class">:email</a> for assistance.',
