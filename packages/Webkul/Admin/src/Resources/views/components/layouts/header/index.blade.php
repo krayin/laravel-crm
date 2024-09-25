@@ -203,8 +203,8 @@
             </x-slot>
 
             <!-- Admin Dropdown -->
-            <x-slot:content class="!p-0">
-                <div class="flex items-center gap-1.5 border border-b-gray-300 px-5 py-2.5 dark:border-gray-800">
+            <x-slot:content class="mt-2 border-t-0 !p-0">
+                <div class="flex items-center gap-1.5 border border-x-0 border-b-gray-300 px-5 py-2.5 dark:border-gray-800">
                     <img
                         src="{{ url('cache/logo.png') }}"
                         width="24"

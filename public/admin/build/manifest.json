@@ -220,7 +220,7 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-2fb722dd.css",
+    "file": "assets/app-a6f23afc.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -235,6 +235,10 @@
   "src/Resources/assets/images/dark-corner-clip.svg": {
     "file": "assets/dark-corner-clip-142f6b73.svg",
     "src": "src/Resources/assets/images/dark-corner-clip.svg"
+  },
+  "src/Resources/assets/images/dark-error.svg": {
+    "file": "assets/dark-error-317165d4.svg",
+    "src": "src/Resources/assets/images/dark-error.svg"
   },
   "src/Resources/assets/images/dark-logo.svg": {
     "file": "assets/dark-logo-efbc17e1.svg",
@@ -299,6 +303,10 @@
   "src/Resources/assets/images/empty-placeholders/users.svg": {
     "file": "assets/users-39e2d8eb.svg",
     "src": "src/Resources/assets/images/empty-placeholders/users.svg"
+  },
+  "src/Resources/assets/images/error.svg": {
+    "file": "assets/error-4179d5c7.svg",
+    "src": "src/Resources/assets/images/error.svg"
   },
   "src/Resources/assets/images/favicon.ico": {
     "file": "assets/favicon-a99d4e55.ico",

@@ -2018,6 +2018,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'No estás autorizado para acceder a esta página',
+        'dashboard' => 'Tablero',
+        'go-back'   => 'Volver',
+        'support'   => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+
+        '404' => [
+            'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
+            'title'       => '404 Página No Encontrada',
+        ],
+
+        '401' => [
+            'description' => '¡Ups! Parece que no tienes permiso para acceder a esta página. Parece que te faltan las credenciales necesarias.',
+            'title'       => '401 No Autorizado',
+        ],
+
+        '403' => [
+            'description' => '¡Ups! Esta página está fuera de límites. Parece que no tienes los permisos necesarios para ver este contenido.',
+            'title'       => '403 Prohibido',
+        ],
+
+        '500' => [
+            'description' => '¡Ups! Algo salió mal. Parece que tenemos problemas para cargar la página que estás buscando.',
+            'title'       => '500 Error Interno del Servidor',
+        ],
+
+        '503' => [
+            'description' => '¡Ups! Parece que estamos temporalmente fuera de servicio por mantenimiento. Vuelve a intentarlo en un rato.',
+            'title'       => '503 Servicio No Disponible',
+        ],
     ],
 ];

@@ -184,9 +184,13 @@ class ActivityController extends Controller
      */
     public function download(int $id): StreamedResponse
     {
-        $file = $this->fileRepository->findOrFail($id);
+        try {
+            $file = $this->fileRepository->findOrFail($id);
 
-        return Storage::download($file->path);
+            return Storage::download($file->path);
+        } catch (\Exception $exception) {
+            abort(404);
+        }
     }
 
     /*

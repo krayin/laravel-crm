@@ -53,16 +53,6 @@ class Handler extends AppExceptionHandler
     }
 
     /**
-     * Report the exception.
-     *
-     * @return void
-     */
-    public function report(Throwable $exception)
-    {
-        //
-    }
-
-    /**
      * Convert an authentication exception into a response.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -84,18 +74,12 @@ class Handler extends AppExceptionHandler
      */
     private function renderCustomResponse(Throwable $exception)
     {
-        $path = request()->routeIs('admin.*') ? 'admin' : 'front';
-
-        if ($path == 'front') {
-            return redirect()->route('admin.session.create');
-        }
-
         if ($exception instanceof HttpException) {
             $statusCode = in_array($exception->getStatusCode(), [401, 403, 404, 503])
                 ? $exception->getStatusCode()
                 : 500;
 
-            return $this->response($path, $statusCode);
+            return $this->response($statusCode);
         }
 
         if ($exception instanceof ValidationException) {
@@ -103,9 +87,11 @@ class Handler extends AppExceptionHandler
         }
 
         if ($exception instanceof ModelNotFoundException) {
-            return $this->response($path, 404);
+            return $this->response(404);
         } elseif ($exception instanceof PDOException || $exception instanceof \ParseError) {
-            return $this->response($path, 500);
+            return $this->response(500);
+        } else {
+            return $this->response(500);
         }
     }
 
@@ -113,19 +99,19 @@ class Handler extends AppExceptionHandler
      * Return custom response.
      *
      * @param  string  $path
-     * @param  string  $statusCode
+     * @param  string  $errorCode
      * @return mixed
      */
-    private function response($path, $statusCode)
+    private function response($errorCode)
     {
         if (request()->expectsJson()) {
             return response()->json([
-                'message' => isset($this->jsonErrorMessages[$statusCode])
-                    ? $this->jsonErrorMessages[$statusCode]
+                'message' => isset($this->jsonErrorMessages[$errorCode])
+                    ? $this->jsonErrorMessages[$errorCode]
                     : trans('admin::app.common.something-went-wrong'),
-            ], $statusCode);
+            ], $errorCode);
         }
 
-        return response()->view("{$path}::errors.{$statusCode}", [], $statusCode);
+        return response()->view('admin::errors.index', compact('errorCode'));
     }
 }
