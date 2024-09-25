@@ -1844,7 +1844,7 @@ return [
                     'info'            => 'Actualiza tus ajustes generales aquí.',
                     'locale-settings' => [
                         'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Inglés (en), Francés (fr) o Japonés (ja).',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
                     ],
                 ],
             ],
