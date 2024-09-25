@@ -56,6 +56,13 @@ trait CustomAttribute
             }
         }
 
+        // check key === 'price' and return the price attribute value
+        if (isset($this->id) && $key === 'price') {
+            $attribute = app(AttributeRepository::class)->getAttributeByCode($key);
+
+            return $this->getCustomAttributeValue($attribute);
+        }
+
         return parent::getAttribute($key);
     }
 
@@ -112,7 +119,15 @@ trait CustomAttribute
 
         $attributeValue = $this->attribute_values->where('attribute_id', $attribute->id)->first();
 
-        return $attributeValue[self::$attributeTypeFields[$attribute->type]] ?? null;
+        $value = $attributeValue[self::$attributeTypeFields[$attribute->type]] ?? null;
+
+        // Custom handling for price attribute
+        if ($attribute->code === 'price') {
+            // Format price, e.g., add currency symbol and format decimal places
+            $value = round($value, 2);
+        }
+
+        return $value;
     }
 
     /**

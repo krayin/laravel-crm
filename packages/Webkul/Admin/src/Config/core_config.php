@@ -27,4 +27,19 @@ return [
             ],
         ],
     ],
+    [
+        'key'    => 'general.general.currency-settings',
+        'name'   => 'admin::app.configuration.index.general.general.currency-settings.title',
+        'info'   => 'admin::app.configuration.index.general.general.currency-settings.title-info',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'    => 'currency',
+                'title'   => 'admin::app.configuration.index.general.general.currency-settings.title',
+                'type'    => 'select',
+                'default' => 'USD',
+                'options' => 'Webkul\Core\Core@retrieveCurrencies',
+            ],
+        ],
+    ],
 ];

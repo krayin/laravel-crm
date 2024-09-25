@@ -13,7 +13,7 @@
             ['code', 'IN', ['SKU', 'price', 'quantity', 'status']]
         ])->sortBy('sort_order')"
         :entity="$product"
-        :url="route('admin.products.update', $product->id)"   
+        :url="route('admin.products.update', $product->id)"
         :allow-edit="true"
     />
 

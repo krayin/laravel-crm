@@ -69,6 +69,25 @@ class Core
     }
 
     /**
+     * Retrieve all currencies.
+     */
+    public function retrieveCurrencies(): array
+    {
+        $options = [];
+
+        foreach (config('app.available_currencies') as $key => $title) {
+            $formattedTitle = ucwords(str_replace('-', ' ', $title));
+
+            $options[] = [
+                'title' => $formattedTitle,
+                'value' => $key,
+            ];
+        }
+
+        return $options;
+    }
+
+    /**
      * Retrieve all countries.
      *
      * @return \Illuminate\Support\Collection
@@ -197,10 +216,10 @@ class Core
     /**
      * Return currency symbol from currency code.
      *
-     * @param  float  $price
+     * @param $code
      * @return string
      */
-    public function currencySymbol($code)
+    public function currencySymbol($code): string
     {
         $formatter = new \NumberFormatter(app()->getLocale().'@currency='.$code, \NumberFormatter::CURRENCY);
 
@@ -211,18 +230,16 @@ class Core
      * Format price with base currency symbol. This method also give ability to encode
      * the base currency symbol and its optional.
      *
-     * @param  float  $price
+     * @param float $price
      * @return string
      */
-    public function formatBasePrice($price)
+    public function formatBasePrice(float $price)
     {
-        if (is_null($price)) {
-            $price = 0;
-        }
-
         $formatter = new \NumberFormatter(app()->getLocale(), \NumberFormatter::CURRENCY);
 
-        return $formatter->formatCurrency($price, config('app.currency'));
+        return $formatter->formatCurrency($price,
+            system_config()->getConfigData('general.general.currency-settings.currency')
+            ?? config('app.currency'));
     }
 
     /**
