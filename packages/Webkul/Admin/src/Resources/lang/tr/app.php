@@ -1962,6 +1962,8 @@ return [
         'email-templates-info' => 'CRM’den e-posta şablonları ekleyin, düzenleyin veya silin',
         'workflows'            => 'İş Akışları',
         'workflows-info'       => 'CRM’den iş akışlarını ekleyin, düzenleyin veya silin',
+        'webhooks'             => 'Webhooklar',
+        'webhooks-info'        => 'CRM’den webhookları ekleyin, düzenleyin veya silin',
         'other-settings'       => 'Diğer Ayarlar',
         'other-settings-info'  => 'CRM’de tüm ekstra ayarlarınızı yönetin',
         'tags'                 => 'Etiketler',

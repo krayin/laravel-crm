@@ -1962,6 +1962,8 @@ return [
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Add, edit or delete webhooks from CRM',
         'other-settings'       => 'Other Settings',
         'other-settings-info'  => 'Manage all your extra settings in the CRM',
         'tags'                 => 'Tags',

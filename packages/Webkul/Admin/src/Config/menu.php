@@ -235,8 +235,8 @@ return [
         'icon-class' => 'icon-settings-mail',
     ], [
         'key'        => 'settings.automation.webhooks',
-        'name'       => 'Webhooks',
-        'info'       => 'Add Edit Delete Webhooks from CRM',
+        'name'       => 'admin::app.layouts.webhooks',
+        'info'       => 'admin::app.layouts.webhooks-info',
         'route'      => 'admin.settings.webhooks.index',
         'sort'       => 2,
         'icon-class' => 'icon-settings-webhooks',

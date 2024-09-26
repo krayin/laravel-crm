@@ -1962,6 +1962,8 @@ return [
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Agregar, editar o eliminar webhooks desde CRM',
         'other-settings'       => 'Otras Configuraciones',
         'other-settings-info'  => 'Administra todas tus configuraciones adicionales en el CRM',
         'tags'                 => 'Etiquetas',
