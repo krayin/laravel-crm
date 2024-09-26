@@ -1544,9 +1544,11 @@ return [
         'create-success'       => 'Activity created successfully.',
         'update-success'       => 'Activity updated successfully.',
         'overlapping-error'    => 'Participants have another meeting at this time.',
-        'mass-update-success'  => 'Activities updated successfully.',
         'destroy-success'      => 'Activity deleted successfully.',
         'delete-failed'        => 'Activity can not be deleted.',
+        'mass-update-success'  => 'Activities updated successfully.',
+        'mass-destroy-success' => 'Activities deleted successfully.',
+        'mass-delete-failed'   => 'Activities can not be deleted.',
     ],
 
     'mail' => [

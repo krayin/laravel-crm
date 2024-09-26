@@ -1538,15 +1538,17 @@ return [
             'users'           => 'Kullanıcılar',
         ],
 
-        'updated'              => ':attribute güncellendi',
+        'updated'              => 'Güncellendi :attribute',
         'created'              => 'Oluşturuldu',
-        'duration-overlapping' => 'Katılımcıların bu zamanda başka bir toplantısı var. Devam etmek istiyor musunuz?',
+        'duration-overlapping' => 'Katılımcıların bu saatte başka bir toplantısı var. Devam etmek istiyor musunuz?',
         'create-success'       => 'Etkinlik başarıyla oluşturuldu.',
         'update-success'       => 'Etkinlik başarıyla güncellendi.',
-        'overlapping-error'    => 'Katılımcıların bu zamanda başka bir toplantısı var.',
-        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'overlapping-error'    => 'Katılımcıların bu saatte başka bir toplantısı var.',
         'destroy-success'      => 'Etkinlik başarıyla silindi.',
-        'delete-failed'        => 'Etkinlik silinemedi.',
+        'delete-failed'        => 'Etkinlik silinemiyor.',
+        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'mass-destroy-success' => 'Etkinlikler başarıyla silindi.',
+        'mass-delete-failed'   => 'Etkinlikler silinemiyor.',
     ],
 
     'mail' => [
