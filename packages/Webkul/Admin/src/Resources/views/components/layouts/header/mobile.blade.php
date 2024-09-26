@@ -298,12 +298,15 @@
                                     </p>
                                 </a>
         
-                                @if ($menuItem->haveChildren())
+                                @if (
+                                    ! in_array($menuItem->getKey(), ['settings', 'configuration'])
+                                    && $menuItem->haveChildren()
+                                )
                                     <div class="{{ $menuItem->isActive() ? ' !grid bg-gray-100 dark:bg-gray-950' : '' }} hidden min-w-[180px] ltr:pl-10 rtl:pr-10 pb-2 rounded-b-lg z-[100]">
                                         @foreach ($menuItem->getChildren() as $subMenuItem)
                                             <a
                                                 href="{{ $subMenuItem->getUrl() }}"
-                                                class="text-sm text-{{ $subMenuItem->isActive() ? 'blue':'gray' }}-600 dark:text-{{ $subMenuItem->isActive() ? 'blue':'gray' }}-300 whitespace-nowrap py-1 group-[.sidebar-collapsed]/container:px-5 group-[.sidebar-collapsed]/container:py-2.5 group-[.inactive]/item:px-5 group-[.inactive]/item:py-2.5 hover:text-brandColor dark:hover:bg-gray-950"
+                                                class="text-sm text-{{ $subMenuItem->isActive() ? 'brandColor':'gray-600' }} dark:text-{{ $subMenuItem->isActive() ? 'brandColor':'gray-300' }} whitespace-nowrap py-1 group-[.sidebar-collapsed]/container:px-5 group-[.sidebar-collapsed]/container:py-2.5 group-[.inactive]/item:px-5 group-[.inactive]/item:py-2.5 hover:text-brandColor dark:hover:bg-gray-950"
                                             >
                                                 {{ $subMenuItem->getName() }}
                                             </a>

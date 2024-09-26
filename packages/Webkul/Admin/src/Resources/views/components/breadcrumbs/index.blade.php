@@ -4,7 +4,7 @@
     'route'  => null,
 ])
 
-<div class="flex justify-start max-lg:hidden">
+<div class="flex justify-start">
     <div class="flex items-center gap-x-3.5">        
         @if($route)
             {{ Breadcrumbs::view('admin::partials.breadcrumbs', $name, $route, $entity) }}
