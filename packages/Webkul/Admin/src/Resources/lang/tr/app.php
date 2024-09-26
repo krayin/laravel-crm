@@ -1846,7 +1846,7 @@ return [
                     'info'            => 'Genel ayarlarınızı buradan güncelleyebilirsiniz.',
                     'locale-settings' => [
                         'title'       => 'Yerel Ayarlar',
-                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin İngilizce (en), Fransızca (fr) veya Japonca (ja).',
+                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
                     ],
                 ],
             ],

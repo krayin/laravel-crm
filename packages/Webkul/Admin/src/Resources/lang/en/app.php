@@ -1846,7 +1846,7 @@ return [
                     'info'            => 'Update your general settings here.',
                     'locale-settings' => [
                         'title'       => 'Locale Settings',
-                        'title-info'  => 'Defines the language used in the user interface, such as English (en), French (fr), or Japanese (ja).',
+                        'title-info'  => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
                     ],
                 ],
             ],
