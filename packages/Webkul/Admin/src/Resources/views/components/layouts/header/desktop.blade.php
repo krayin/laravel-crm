@@ -5,9 +5,8 @@
 
         <a href="{{ route('admin.dashboard.index') }}">
             <img
-                class="h-10"
+                class="logo-image h-10"
                 src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
-                id="logo-image"
                 alt="{{ config('app.name') }}"
             />
         </a>
@@ -734,11 +733,11 @@
                     if (this.isDarkMode) {
                         this.$emitter.emit('change-theme', 'dark');
 
-                        document.getElementById('logo-image').src = this.dark_logo;
+                        document.getElementsByClassName('logo-image').forEach(logo => logo.src = this.dark_logo);
                     } else {
                         this.$emitter.emit('change-theme', 'light');
 
-                        document.getElementById('logo-image').src = this.logo;
+                        document.getElementsByClassName('logo-image').forEach(logo => logo.src = this.logo);
                     }
                 },
 

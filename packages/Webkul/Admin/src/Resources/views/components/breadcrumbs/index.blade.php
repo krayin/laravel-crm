@@ -13,3 +13,6 @@
         @endif
     </div>
 </div>
+
+
+<div class="table-auto"></div>
