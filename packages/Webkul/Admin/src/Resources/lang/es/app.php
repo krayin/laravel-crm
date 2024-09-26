@@ -1540,13 +1540,15 @@ return [
 
         'updated'              => 'Actualizado :attribute',
         'created'              => 'Creado',
-        'duration-overlapping' => 'Los participantes tienen otra reunión a esta hora. ¿Desea continuar?',
+        'duration-overlapping' => 'Los participantes tienen otra reunión en este momento. ¿Deseas continuar?',
         'create-success'       => 'Actividad creada con éxito.',
         'update-success'       => 'Actividad actualizada con éxito.',
-        'overlapping-error'    => 'Los participantes tienen otra reunión a esta hora.',
-        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'overlapping-error'    => 'Los participantes tienen otra reunión en este momento.',
         'destroy-success'      => 'Actividad eliminada con éxito.',
         'delete-failed'        => 'No se puede eliminar la actividad.',
+        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'mass-destroy-success' => 'Actividades eliminadas con éxito.',
+        'mass-delete-failed'   => 'No se pueden eliminar las actividades.',
     ],
 
     'mail' => [

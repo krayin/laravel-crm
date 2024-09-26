@@ -1540,13 +1540,15 @@ return [
 
         'updated'              => 'تم تحديث :attribute',
         'created'              => 'تم الإنشاء',
-        'duration-overlapping' => 'المشاركون لديهم اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
+        'duration-overlapping' => 'لدى المشاركين اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
         'create-success'       => 'تم إنشاء النشاط بنجاح.',
         'update-success'       => 'تم تحديث النشاط بنجاح.',
-        'overlapping-error'    => 'المشاركون لديهم اجتماع آخر في هذا الوقت.',
-        'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
+        'overlapping-error'    => 'لدى المشاركين اجتماع آخر في هذا الوقت.',
         'destroy-success'      => 'تم حذف النشاط بنجاح.',
         'delete-failed'        => 'لا يمكن حذف النشاط.',
+        'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
+        'mass-destroy-success' => 'تم حذف الأنشطة بنجاح.',
+        'mass-delete-failed'   => 'لا يمكن حذف الأنشطة.',
     ],
 
     'mail' => [

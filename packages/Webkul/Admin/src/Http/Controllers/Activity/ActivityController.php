@@ -13,6 +13,7 @@ use Webkul\Activity\Repositories\ActivityRepository;
 use Webkul\Activity\Repositories\FileRepository;
 use Webkul\Admin\DataGrids\Activity\ActivityDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
+use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Requests\MassUpdateRequest;
 use Webkul\Admin\Http\Resources\ActivityResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
@@ -220,9 +221,9 @@ class ActivityController extends Controller
     /**
      * Mass Delete the specified resources.
      */
-    public function massDestroy(MassUpdateRequest $massUpdateRequest): JsonResponse
+    public function massDestroy(MassDestroyRequest $massDestroyRequest): JsonResponse
     {
-        $activities = $this->activityRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $activities = $this->activityRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
         try {
             foreach ($activities as $activity) {
@@ -234,11 +235,11 @@ class ActivityController extends Controller
             }
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success'),
+                'message' => trans('admin::app.activities.mass-destroy-success'),
             ]);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed'),
+                'message' => trans('admin::app.activities.mass-delete-failed'),
             ], 400);
         }
     }
