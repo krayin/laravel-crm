@@ -21,7 +21,7 @@
         <!-- Total Sales Section -->
         <template v-else>
             <!-- Stats Cards -->
-            <div class="grid grid-cols-3 gap-4">
+            <div class="grid grid-cols-2 gap-4 lg:grid-cols-3">
                 <!-- Average Revenue Card -->
                 <div class="flex flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">
                     <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
@@ -29,7 +29,7 @@
                     </p>
 
                     <div class="flex gap-2">
-                        <p class="text-xl font-bold dark:text-gray-300">
+                        <p class="text-xl font-bold dark:text-gray-300 max-sm:text-sm">
                             @{{ report.statistics.average_lead_value.formatted_total }}
                         </p>
 
