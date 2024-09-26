@@ -1960,6 +1960,8 @@ return [
         'email-templates-info' => 'إضافة أو تعديل أو حذف قوالب البريد الإلكتروني من نظام CRM',
         'workflows'            => 'سير العمل',
         'workflows-info'       => 'إضافة أو تعديل أو حذف سير العمل من نظام CRM',
+        'webhooks'             => 'الويب هوك',
+        'webhooks-info'        => 'إضافة، تحرير أو حذف الويب هوك من CRM',
         'other-settings'       => 'إعدادات أخرى',
         'other-settings-info'  => 'إدارة جميع إعداداتك الإضافية في نظام CRM',
         'tags'                 => 'العلامات',

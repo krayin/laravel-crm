@@ -1960,6 +1960,8 @@ return [
         'email-templates-info' => 'اضافه، ویرایش یا حذف قالب‌های ایمیل از CRM',
         'workflows'            => 'فرایندها',
         'workflows-info'       => 'اضافه، ویرایش یا حذف فرایندها از CRM',
+        'webhooks'             => 'وب‌هوک‌ها',
+        'webhooks-info'        => 'افزودن، ویرایش یا حذف وب‌هوک‌ها از CRM',
         'other-settings'       => 'تنظیمات دیگر',
         'other-settings-info'  => 'مدیریت همه تنظیمات اضافی در CRM',
         'tags'                 => 'برچسب‌ها',

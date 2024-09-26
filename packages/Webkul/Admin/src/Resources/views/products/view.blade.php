@@ -96,7 +96,7 @@
                     ['name' => 'system', 'label' => trans('admin::app.products.view.change-logs')],
                 ]"
                 :extra-types="[
-                    ['name' => 'inventory', 'label' => 'Inventory'],
+                    ['name' => 'inventory', 'label' => trans('admin::app.products.view.inventories')],
                 ]"
             >
                 <x-slot:inventory>
