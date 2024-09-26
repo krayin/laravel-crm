@@ -507,7 +507,7 @@
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
-                                    <span class="text-[10px]">@{{ email.person.job_title }}</span>
+                                    <span class="text-[10px] dark:text-gray-300">@{{ email.person.job_title }}</span>
 
                                     <!-- Emails -->
                                     <template v-for="email in email?.person?.emails.map(item => item.value)">
@@ -1257,18 +1257,12 @@
 
                 props: ['index', 'email', 'action'],
 
-                emits: ['on-discard'],
+                emits: ['on-discard', 'on-email-action'],
 
-                data() {
-                    return {
-                        hovering: '',
-                    };
-                },
-    
                 methods: {
                     emailAction(type) {
                         if (type != 'delete') {
-                            this.$emit('onEmailAction', {type, email: this.email});
+                            this.$emit('on-email-action', {type, email: this.email});
                         } else {
                             this.$emitter.emit('open-confirm-modal', {
                                 agree: () => {

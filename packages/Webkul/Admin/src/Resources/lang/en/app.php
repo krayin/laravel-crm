@@ -1544,9 +1544,11 @@ return [
         'create-success'       => 'Activity created successfully.',
         'update-success'       => 'Activity updated successfully.',
         'overlapping-error'    => 'Participants have another meeting at this time.',
-        'mass-update-success'  => 'Activities updated successfully.',
         'destroy-success'      => 'Activity deleted successfully.',
         'delete-failed'        => 'Activity can not be deleted.',
+        'mass-update-success'  => 'Activities updated successfully.',
+        'mass-destroy-success' => 'Activities deleted successfully.',
+        'mass-delete-failed'   => 'Activities can not be deleted.',
     ],
 
     'mail' => [
@@ -2020,6 +2022,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'You are not authorized to access this page',
+        'dashboard' => 'Dashboard',
+        'go-back'   => 'Go Back',
+        'support'   => 'If the problem persists, reach out to us at <a href=":link" class=":class">:email</a> for assistance.',
+
+        '404' => [
+            'description' => 'Oops! The page you\'re looking for is on vacation. It seems we couldn\'t find what you were searching for.',
+            'title'       => '404 Page Not Found',
+        ],
+
+        '401' => [
+            'description' => 'Oops! Looks like you\'re not allowed to access this page. It seems you\'re missing the necessary credentials.',
+            'title'       => '401 Unauthorized',
+        ],
+
+        '403' => [
+            'description' => 'Oops! This page is off-limits. It appears you don\'t have the required permissions to view this content.',
+            'title'       => '403 Forbidden',
+        ],
+
+        '500' => [
+            'description' => 'Oops! Something went wrong. It seems we\'re having trouble loading the page you\'re looking for.',
+            'title'       => '500 Internal Server Error',
+        ],
+
+        '503' => [
+            'description' => 'Oops! Looks like we\'re temporarily down for maintenance. Please check back in a bit.',
+            'title'       => '503 Service Unavailable',
+        ],
     ],
 ];
