@@ -162,9 +162,9 @@
                         
                         data: {
                             labels: [
-                            "@lang('admin::app.dashboard.index.revenue.won-revenue')",
-                            "@lang('admin::app.dashboard.index.revenue.lost-revenue')"
-                        ],
+                                "@lang('admin::app.dashboard.index.revenue.won-revenue')",
+                                "@lang('admin::app.dashboard.index.revenue.lost-revenue')"
+                            ],
 
                             datasets: [{
                                 axis: 'y',
@@ -185,8 +185,6 @@
                         },
                 
                         options: {
-                            aspectRatio: 7,
-
                             indexAxis: 'y',
                             
                             plugins: {
