@@ -377,8 +377,8 @@
 
                     this.get()
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -397,8 +397,8 @@
 
                     this.get()
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -412,13 +412,13 @@
                 append(params) {
                     this.get(params)
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                if (! this.stageLeads[stageId]) {
-                                    this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                if (! this.stageLeads[sortOrder]) {
+                                    this.stageLeads[sortOrder] = data;
                                 } else {
-                                    this.stageLeads[stageId].leads.data = this.stageLeads[stageId].leads.data.concat(data.leads.data);
+                                    this.stageLeads[sortOrder].leads.data = this.stageLeads[sortOrder].leads.data.concat(data.leads.data);
 
-                                    this.stageLeads[stageId].leads.meta = data.leads.meta;
+                                    this.stageLeads[sortOrder].leads.meta = data.leads.meta;
                                 }
                             }
                         });
@@ -439,14 +439,14 @@
                     if (event.removed) {
                         stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
 
-                        this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total - 1;
+                        this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total - 1;
 
                         return;
                     }
 
                     stage.lead_value = parseFloat(stage.lead_value) + parseFloat(event.added.element.lead_value);
 
-                    this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
+                    this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total + 1;
 
                     this.$axios
                         .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
@@ -468,20 +468,20 @@
                  * @returns {void}
                  */
                 handleScroll(stage, event) {
-                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight
+                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
 
                     if (! bottom) {
                         return;
                     }
 
-                    if (this.stageLeads[stage.id].leads.meta.current_page == this.stageLeads[stage.id].leads.meta.last_page) {
+                    if (this.stageLeads[stage.sort_order].leads.meta.current_page == this.stageLeads[stage.sort_order].leads.meta.last_page) {
                         return;
                     }
 
                     this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
-                        page: this.stageLeads[stage.id].leads.meta.current_page + 1,
+                        page: this.stageLeads[stage.sort_order].leads.meta.current_page + 1,
                         limit: 10,
                     });
                 },
