@@ -80,9 +80,8 @@ class Menu
             $this->prepareMenuItems();
         }
 
-        $items = collect($this->items)->sortBy(fn ($item) => $item->getPosition());
-
-        return $items;
+        return collect($this->removeUnauthorizedMenuItem())
+            ->sortBy(fn ($item) => $item->getPosition());
     }
 
     /**
@@ -184,5 +183,31 @@ class Menu
         }
 
         return null;
+    }
+
+    /**
+     * Remove unauthorized menu item.
+     */
+    private function removeUnauthorizedMenuItem(): array
+    {
+        return collect($this->items)->map(function ($item) {
+            $this->removeChildrenUnauthorizedMenuItem($item);
+
+            return $item;
+        })->toArray();
+    }
+
+    /**
+     * Remove unauthorized menuItem's children. This will handle all levels.
+     */
+    private function removeChildrenUnauthorizedMenuItem(MenuItem &$menuItem): void
+    {
+        if ($menuItem->haveChildren()) {
+            $firstChildrenItem = $menuItem->getChildren()->first();
+
+            $menuItem->setRoute($firstChildrenItem->getRoute());
+
+            $this->removeChildrenUnauthorizedMenuItem($firstChildrenItem);
+        }
     }
 }
