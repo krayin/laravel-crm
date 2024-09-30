@@ -62,7 +62,7 @@
             type="text/x-template"
             id="v-lead-edit-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
@@ -102,7 +102,7 @@
                             </p>
                         </div>
 
-                        <div class="flex w-1/2 flex-col max-sm:!w-full">
+                        <div class="flex flex-col max-sm:!w-full lg:w-1/2">
                             {!! view_render_event('admin.leads.edit.lead_details.attributes.before', ['lead' => $lead]) !!}
 
                             <!-- Lead Details Title and Description -->
@@ -181,7 +181,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="lg:w-1/2">
                             <!-- Contact Person Component -->
                             @include('admin::leads.common.contact')
                         </div>

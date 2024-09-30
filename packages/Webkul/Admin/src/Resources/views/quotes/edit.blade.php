@@ -52,7 +52,7 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                    
                     {!! view_render_event('admin.contacts.quotes.edit.tags.before', ['quote' => $quote]) !!}
 
@@ -92,7 +92,7 @@
                             <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.quote-info-info')</p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="lg:w-1/2">
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',
@@ -141,7 +141,7 @@
                                 />
                             </div>
 
-                            <div class="flex gap-4">
+                            <div class="flex flex-col gap-4 lg:flex-row">
                                 <x-admin::attributes
                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -198,7 +198,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="lg:w-1/2">
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -243,7 +243,7 @@
             type="text/x-template"
             id="v-quote-item-list-template"
         >
-            <div>
+            <div class="overflow-x-scroll lg:overflow-hidden">
                 <!-- Table -->
                 <x-admin::table>
                     <!-- Table Head -->
@@ -306,7 +306,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
