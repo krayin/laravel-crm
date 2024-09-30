@@ -66,6 +66,7 @@ class AttributeDataGrid extends DataGrid
             'index'      => 'entity_type',
             'label'      => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
             'type'       => 'string',
+            'sortable'   => true,
             'searchable' => false,
             'filterable' => true,
             'closure'    => fn ($row) => ucfirst($row->entity_type),
