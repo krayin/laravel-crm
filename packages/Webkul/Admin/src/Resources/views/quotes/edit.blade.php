@@ -124,7 +124,7 @@
                                 :entity="$quote"
                             />
 
-                            <div class="flex gap-4">
+                            <div class="flex flex-col gap-4 lg:flex-row">
                                 <x-admin::attributes
                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -314,7 +314,7 @@
 
             <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
                 <div class="flex-auto">
-                    <div class="flex justify-end">
+                    <div class="flex justify-center sm:justify-end md:justify-end lg:justify-end">
                         <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
                             <div class="flex w-full justify-between gap-x-5">
                                 @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
