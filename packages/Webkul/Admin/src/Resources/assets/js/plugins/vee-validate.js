@@ -106,16 +106,20 @@ export default {
 
         defineRule("", () => true);
 
-        // @TODO handle this
-        // @suraj-webkul
         defineRule("date_format", (value) => {
-            return true;
+            const regex = /^\d{4}-\d{2}-\d{2}$/;
+            
+            return regex.test(value);
         });
 
-        // @TODO handle this
-        // @suraj-webkul
         defineRule("after", (value) => {
-            return true;
+            const today = new Date();
+            const inputDate = new Date(value);
+          
+            today.setHours(0, 0, 0, 0);
+            inputDate.setHours(0, 0, 0, 0);
+          
+            return inputDate >= today;
         });
 
         configure({
