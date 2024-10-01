@@ -23,7 +23,7 @@
                     @if (($days = $lead->rotten_days) > 0)
                         @php
                             $lead->tags->prepend([
-                                'name'  => '<span class="icon-rotten text-base"></span>' . trans('admin::app.leads.view.rotten-days', ['days' => $days]),
+                                'name'  => '<span class="icon-rotten text-base"></span>'.trans('admin::app.leads.view.rotten-days', ['days' => $days]),
                                 'color' => '#FEE2E2'
                             ]);
                         @endphp
@@ -47,7 +47,7 @@
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
                     {{ $lead->title }}
-                </h1>
+                </h3>
 
                 {!! view_render_event('admin.leads.view.title.after', ['lead' => $lead]) !!}
 
