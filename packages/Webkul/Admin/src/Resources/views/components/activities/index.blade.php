@@ -83,7 +83,7 @@
 
                                 <!-- Activity Details -->
                                 <div
-                                    class="flex w-full justify-between gap-4 rounded-md p-4"
+                                    class="flex w-full justify-between gap-4 overflow-x-scroll rounded-md p-4 md:overflow-hidden lg:overflow-hidden"
                                     :class="{'bg-gray-100 dark:bg-gray-950': index % 2 != 0 }"
                                 >
                                     <div class="flex flex-col gap-2">

@@ -36,12 +36,10 @@
             </div>
         </div>
 
-        <x-admin::shimmer.datagrid />
-        <!-- DataGrid Shimmer -->
-        {{--
-            <v-users-settings ref="userSettings">
-            </v-users-settings> 
-        --}}
+        <v-users-settings ref="userSettings">
+            <!-- DataGrid Shimmer -->
+            <x-admin::shimmer.datagrid />
+        </v-users-settings> 
     </div>
 
     @pushOnce('scripts')
