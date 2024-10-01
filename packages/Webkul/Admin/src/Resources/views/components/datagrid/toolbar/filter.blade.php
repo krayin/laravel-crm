@@ -34,6 +34,7 @@
             <template v-else>
                 <x-admin::drawer
                     width="350px"
+                    class="[&>div:nth-child(3)]:rounded-none [&>div:nth-child(3)]:m-0 lg:[&>div:nth-child(3)]:rounded-lg lg:[&>div:nth-child(3)]:m-3"
                     ref="filterDrawer"
                 >
                     <x-slot:toggle>

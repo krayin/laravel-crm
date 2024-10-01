@@ -26,7 +26,7 @@
 
             <template v-else>
                 <div class="flex items-center gap-x-2">
-                    <p class="whitespace-nowrap text-gray-600 dark:text-gray-300 max-sm:hidden">
+                    <p class="whitespace-nowrap text-gray-600 dark:text-gray-300">
                         @lang('admin::app.components.datagrid.toolbar.per-page')
                     </p>
 
