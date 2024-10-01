@@ -54,7 +54,7 @@ class SessionController extends Controller
             return redirect()->route('admin.session.create');
         }
 
-        return redirect()->intended(route('admin.dashboard.index'));
+        return redirect()->intended(menu()->getItems('admin')->first()->getRoute());
     }
 
     /**
