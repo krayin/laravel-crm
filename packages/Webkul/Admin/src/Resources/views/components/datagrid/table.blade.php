@@ -62,12 +62,12 @@
 
                             <!-- Columns -->
                             <template v-for="column in available.columns">
-                                <p
+                                <div
                                     class="flex items-center gap-1.5 break-words"
                                     :class="{'cursor-pointer select-none hover:text-gray-800 dark:hover:text-white': column.sortable}"
                                     @click="sort(column)"
                                     v-if="column.visibility"
-                                >
+                                > 
                                     <p v-html="column.label"></p>
 
                                     <i
@@ -75,7 +75,7 @@
                                         :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
                                         v-if="column.index == applied.sort.column"
                                     ></i>
-                                </p>
+                                </div>
                             </template>
 
                             <!-- Actions -->
