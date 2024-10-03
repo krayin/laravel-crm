@@ -322,7 +322,6 @@
 
     .icon-product:before {
         content: "\e916";
-        @apply text-[28px]
     }
 
     .icon-contact:before {

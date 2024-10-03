@@ -120,25 +120,44 @@
                     isLoading: true,
                     
                     chart: undefined,
+
+                    aspectRatio: 5,
                 }
             },
 
             mounted() {
                 this.getStats({});
 
+                this.checkDeviceType();
+    
+                window.addEventListener("resize", this.checkDeviceType);
+
                 this.$emitter.on('reporting-filter-updated', this.getStats);
             },
 
+            beforeDestroy() {
+                window.removeEventListener("resize", this.checkDeviceType);
+            },
+
             methods: {
-                getStats(filtets) {
+                checkDeviceType() {
+                    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+                
+                    this.aspectRatio = isMobile ? 2 : 5;
+                },
+
+                getStats(filters) {
                     this.isLoading = true;
 
-                    var filtets = Object.assign({}, filtets);
+                    var filters = Object.assign({}, filters);
 
-                    filtets.type = 'revenue-stats';
+                    filters.type = 'revenue-stats';
 
                     this.$axios.get("{{ route('admin.dashboard.stats') }}", {
-                            params: filtets
+                            params: {
+                                ...filters,
+                                start: "2024-07-28",
+                            },
                         })
                         .then(response => {
                             this.report = response.data;
@@ -185,6 +204,8 @@
                         },
                 
                         options: {
+                            aspectRatio: this.aspectRatio,
+
                             indexAxis: 'y',
                             
                             plugins: {
