@@ -3,7 +3,7 @@
 </template>
 
 <template v-else>
-    <div class="flex h-[58px] items-center justify-between gap-4 rounded-t-lg border border-b-0 border-gray-200 bg-white pl-2 pr-4 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 max-md:flex-wrap">
+    <div class="flex flex-col items-center justify-between gap-4 rounded-t-lg border border-b-0 border-gray-200 bg-white py-2 pl-2 pr-4 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 md:flex-row lg:flex-row">
         <!-- Left Toolbar -->
         <div class="flex gap-x-1">
             {{ $toolbarLeftBefore }}
@@ -66,7 +66,7 @@
         </div>
 
         <!-- Right Toolbar -->
-        <div class="flex gap-x-4">
+        <div class="flex flex-col gap-4 gap-x-4 md:flex-row md:gap-0 lg:flex-row lg:gap-0">
             {{ $toolbarRightBefore }}
             
             <!-- Pagination Panel -->

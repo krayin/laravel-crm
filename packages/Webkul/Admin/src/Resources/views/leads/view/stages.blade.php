@@ -12,7 +12,7 @@
     <script type="text/x-template" id="v-lead-stages-template">
         <!-- Stages Container -->
         <div
-            class="flex"
+            class="flex overflow-y-hidden overflow-x-scroll lg:overflow-hidden"
             :class="{'opacity-50 pointer-events-none': isUpdating}"
         >
             <!-- Stages Item -->

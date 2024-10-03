@@ -13,7 +13,7 @@
         type="text/x-template"
         id="v-address-component-template"
     >
-        <div class="flex gap-4">
+        <div class="flex flex-col gap-4 lg:flex-row">
             <div class="w-full">
                 <!-- Address (Textarea field) -->
                 <x-admin::form.control-group>

@@ -39,7 +39,7 @@
         <v-users-settings ref="userSettings">
             <!-- DataGrid Shimmer -->
             <x-admin::shimmer.datagrid />
-        </v-users-settings>
+        </v-users-settings> 
     </div>
 
     @pushOnce('scripts')

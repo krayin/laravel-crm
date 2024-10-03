@@ -21,7 +21,7 @@
         <!-- Total Sales Section -->
         <template v-else>
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-4">
+                <div class="flex flex-col gap-4 lg:flex-row">
                     <!-- Total Revenue -->
                     <div class="flex flex-col gap-2">
                         <!-- Won Reveneue Card -->
@@ -120,25 +120,41 @@
                     isLoading: true,
                     
                     chart: undefined,
+
+                    aspectRatio: 5,
                 }
             },
 
             mounted() {
                 this.getStats({});
 
+                this.checkDeviceType();
+    
+                window.addEventListener("resize", this.checkDeviceType);
+
                 this.$emitter.on('reporting-filter-updated', this.getStats);
             },
 
+            beforeDestroy() {
+                window.removeEventListener("resize", this.checkDeviceType);
+            },
+
             methods: {
-                getStats(filtets) {
+                checkDeviceType() {
+                    const isMobile = window.matchMedia("(max-width: 768px)").matches;
+                
+                    this.aspectRatio = isMobile ? 2 : 5;
+                },
+
+                getStats(filters) {
                     this.isLoading = true;
 
-                    var filtets = Object.assign({}, filtets);
+                    var filters = Object.assign({}, filters);
 
-                    filtets.type = 'revenue-stats';
+                    filters.type = 'revenue-stats';
 
                     this.$axios.get("{{ route('admin.dashboard.stats') }}", {
-                            params: filtets
+                            params: filters,
                         })
                         .then(response => {
                             this.report = response.data;
@@ -162,9 +178,9 @@
                         
                         data: {
                             labels: [
-                            "@lang('admin::app.dashboard.index.revenue.won-revenue')",
-                            "@lang('admin::app.dashboard.index.revenue.lost-revenue')"
-                        ],
+                                "@lang('admin::app.dashboard.index.revenue.won-revenue')",
+                                "@lang('admin::app.dashboard.index.revenue.lost-revenue')"
+                            ],
 
                             datasets: [{
                                 axis: 'y',
@@ -185,7 +201,7 @@
                         },
                 
                         options: {
-                            aspectRatio: 7,
+                            aspectRatio: this.aspectRatio,
 
                             indexAxis: 'y',
                             

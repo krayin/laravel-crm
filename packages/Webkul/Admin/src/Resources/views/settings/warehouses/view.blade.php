@@ -3,11 +3,11 @@
         @lang ($warehouse->name)
     </x-slot>
 
-    <div class="flex gap-4">
+    <div class="relative flex flex-col gap-4 lg:flex-row">
         <!-- Left Panel -->
         {!! view_render_event('admin.settings.warehouses.view.left.before', ['warehouse' => $warehouse]) !!}
 
-        <div class="sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+        <div class="top-[73px] flex flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:sticky lg:min-w-[394px] lg:max-w-[394px]">
             <!-- Product Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
                 <!-- Breadcrums -->

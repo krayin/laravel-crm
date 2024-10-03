@@ -300,6 +300,10 @@
         content: "\e911";
     }
 
+    .icon-hamburger-menu:before {
+        content: "\e955";
+    }
+    
     .icon-mail:before {
         content: "\e912";
     }
