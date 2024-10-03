@@ -154,10 +154,7 @@
                     filters.type = 'revenue-stats';
 
                     this.$axios.get("{{ route('admin.dashboard.stats') }}", {
-                            params: {
-                                ...filters,
-                                start: "2024-07-28",
-                            },
+                            params: filters,
                         })
                         .then(response => {
                             this.report = response.data;
