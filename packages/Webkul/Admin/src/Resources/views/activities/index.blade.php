@@ -31,7 +31,7 @@
                 request()->get('view-type') == 'table'
                 || ! request()->has('view-type')
             )
-                <x-admin::shimmer.datagrid />
+                <x-admin::shimmer.datagrid :is-multi-row="true"/>
             @endif
         </div>
     </v-activities>

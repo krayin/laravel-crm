@@ -1,7 +1,7 @@
 <x-admin::form.control-group.controls.inline.text
     type="inline"
     ::name="'{{ $attribute->code }}'"
-    ::value="'{{ $value }}'"
+    :value="$value"
     position="left"
     rules="required"
     :label="$attribute->name"

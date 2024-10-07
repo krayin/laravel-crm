@@ -1,10 +1,8 @@
-
 <?php
 
 return [
     'acl' => [
         'title'  => 'Web Forms',
-        'view'   => 'View',
         'view'   => 'View',
         'create' => 'Create',
         'edit'   => 'Edit',

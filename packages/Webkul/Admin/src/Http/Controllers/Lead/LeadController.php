@@ -104,9 +104,9 @@ class LeadController extends Controller
 
             $stage->lead_value = (clone $query)->sum('lead_value');
 
-            $data[$stage->id] = (new StageResource($stage))->jsonSerialize();
+            $data[$stage->sort_order] = (new StageResource($stage))->jsonSerialize();
 
-            $data[$stage->id]['leads'] = [
+            $data[$stage->sort_order]['leads'] = [
                 'data' => LeadResource::collection($paginator = $query->with([
                     'tags',
                     'type',
