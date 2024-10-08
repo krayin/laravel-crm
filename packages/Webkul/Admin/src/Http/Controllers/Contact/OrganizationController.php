@@ -43,7 +43,6 @@ class OrganizationController extends Controller
         return view('admin::contacts.organizations.create');
     }
 
-
     /**
      * Store a newly created resource in storage.
      *
@@ -54,7 +53,11 @@ class OrganizationController extends Controller
     {
         Event::dispatch('contacts.organization.create.before');
 
-        $organization = $this->organizationRepository->create(request()->all());
+        $organization = $this->organizationRepository->create([
+            'name'        => htmlspecialchars($request->input('name')),
+            'address'     => $request->input('address'),
+            'entity_type' => $request->input('entity_type'),
+        ]);
 
         Event::dispatch('contacts.organization.create.after', $organization);
 
@@ -87,7 +90,11 @@ class OrganizationController extends Controller
     {
         Event::dispatch('contacts.organization.update.before', $id);
 
-        $organization = $this->organizationRepository->update(request()->all(), $id);
+        $organization = $this->organizationRepository->update([
+            'name'        => htmlspecialchars($request->input('name')),
+            'address'     => $request->input('address'),
+            'entity_type' => $request->input('entity_type'),
+        ], $id);
 
         Event::dispatch('contacts.organization.update.after', $organization);
 
