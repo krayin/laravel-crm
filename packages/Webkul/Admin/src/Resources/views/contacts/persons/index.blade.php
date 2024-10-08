@@ -38,7 +38,7 @@
 
         <v-persons>
             <!-- Datagrid shimmer -->
-            <x-admin::shimmer.datagrid />
+            <x-admin::shimmer.datagrid :is-multi-row="true"/>
         </v-persons>
 
         {!! view_render_event('admin.persons.index.datagrid.after') !!}
