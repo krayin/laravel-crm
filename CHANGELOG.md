@@ -1,3 +1,7 @@
+## **v1.3.1 (9th of October 2024)** - *Release*
+
+* Fix security issues.
+
 ## **v1.3.0 (21st of June 2024)** - *Release*
 
 * #1251[upgrade] Upgraded the Laravel framework to version 10, incorporating the latest features and enhancements for improved performance, security, and developer experience and Installer package.
