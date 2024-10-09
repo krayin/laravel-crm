@@ -318,7 +318,7 @@ trait ProvideCollection
     {
         foreach ($this->columns as $index => $column) {
             if (isset($column['closure'])) {
-                $record->{$column['index']} = ($column['closure']($record));
+                $record->{$column['index']} = $column['closure']($record);
             } else {
                 if ($column['type'] == 'price') {
                     if (isset($column['currencyCode'])) {
