@@ -1911,7 +1911,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Version : :version',
+        'app-version'          => 'Version: :version',
         'dashboard'            => 'Dashboard',
         'leads'                => 'Leads',
         'quotes'               => 'Quotes',

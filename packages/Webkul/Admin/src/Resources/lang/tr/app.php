@@ -1911,7 +1911,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Sürüm : :version',
+        'app-version'          => 'Sürüm: :version',
         'dashboard'            => 'Gösterge Paneli',
         'leads'                => 'Leadler',
         'quotes'               => 'Teklifler',

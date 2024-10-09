@@ -1911,7 +1911,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'نسخه : :version',
+        'app-version'          => 'نسخه: :version',
         'dashboard'            => 'داشبورد',
         'leads'                => 'لیدها',
         'quotes'               => 'نقل قول‌ها',

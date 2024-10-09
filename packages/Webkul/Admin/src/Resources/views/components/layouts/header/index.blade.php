@@ -186,7 +186,7 @@
         </v-dark>
 
         <!-- Admin profile -->
-        <x-admin::dropdown position="bottom-right">
+        <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
             <x-slot:toggle>
                 @if (auth()->guard('user')->user()->image)
                     <button class="flex h-9 w-9 cursor-pointer overflow-hidden rounded-full hover:opacity-80 focus:opacity-80">
@@ -213,7 +213,7 @@
 
                     <!-- Version -->
                     <p class="text-gray-400">
-                        Version: v{{ core()->version() }}
+                        @lang('admin::app.layouts.app-version', ['version' => core()->version()])
                     </p>
                 </div>
 
@@ -222,7 +222,7 @@
                         class="cursor-pointer px-5 py-2 text-base text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
                         href="{{ route('admin.user.account.edit') }}"
                     >
-                        My Account
+                        @lang('admin::app.layouts.my-account')
                     </a>
 
                     <!--Admin logout-->
@@ -238,7 +238,7 @@
                         href="{{ route('admin.session.destroy') }}"
                         onclick="event.preventDefault(); document.getElementById('adminLogout').submit();"
                     >
-                        Logout
+                        @lang('admin::app.layouts.sign-out')
                     </a>
                 </div>
             </x-slot>

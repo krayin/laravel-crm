@@ -1911,7 +1911,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'الإصدار : :version',
+        'app-version'          => 'الإصدار: :version',
         'dashboard'            => 'لوحة القيادة',
         'leads'                => 'العملاء المحتملين',
         'quotes'               => 'العروض',
