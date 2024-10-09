@@ -38,8 +38,6 @@
 
         <!-- lang supports inclusion -->
         <style type="text/css">
-            @endif
-            
             * {
                 margin: 0;
                 padding: 0;

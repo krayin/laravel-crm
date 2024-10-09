@@ -79,7 +79,7 @@
                 {!! view_render_event('admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
                 
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.attributes.edit.labels')
                         </p>
@@ -449,7 +449,7 @@
                                         disabled="disabled"
                                     >
                                         <!-- Here! All Needed types are defined -->
-                                        @foreach(['number', 'email', 'decimal', 'url'] as $type)
+                                        @foreach(['numeric', 'email', 'decimal', 'url'] as $type)
                                             <option value="{{ $type }}" {{ $attribute->validation == $type ? 'selected' : '' }}>
                                                 @lang('admin::app.settings.attributes.edit.' . $type)
                                             </option>
