@@ -40,23 +40,23 @@ class SessionController extends Controller
             'password' => 'required',
         ]);
 
-        $user = auth()->guard('user');
+        $userGuard = auth()->guard('user');
 
-        if (! $user->attempt(request(['email', 'password']), request('remember'))) {
+        if (! $userGuard->attempt(request(['email', 'password']), request('remember'))) {
             session()->flash('error', trans('admin::app.users.login-error'));
 
             return redirect()->back();
         }
 
-        if ($user->user()->status == 0) {
+        if ($userGuard->user()->status == 0) {
             session()->flash('warning', trans('admin::app.users.activate-warning'));
 
-            $user->logout();
+            $userGuard->logout();
 
             return redirect()->route('admin.session.create');
         }
 
-        if ($user->user()->role->permission_type !== 'all') {
+        if ($userGuard->user()->role->permission_type !== 'all') {
             return redirect()->route(menu()->getItems('admin')->first()->getRoute());
         }
 
