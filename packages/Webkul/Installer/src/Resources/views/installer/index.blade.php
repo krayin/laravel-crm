@@ -4,9 +4,7 @@
     dir="{{ in_array(app()->getLocale(), ['ar', 'fa', 'he']) ? 'rtl' : 'ltr' }}"
 >
     <head>
-        <title>
-            @lang('installer::app.installer.index.title')
-        </title>
+        <title>@lang('installer::app.installer.index.title')</title>
 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,22 +27,18 @@
             rel="stylesheet"
         />
 
-        {{-- <link
+        <link
             type="image/x-icon"
-            href="{{ vite()->asset('images/installer/favicon.ico', 'installer') }}"
+            href="{{ vite()->asset('images/favicon.ico') }}"
             rel="shortcut icon"
             sizes="16x16"
-        /> --}}
+        />
 
         @stack('styles')
     </head>
 
     @php
-        $locales = [
-            'ar'    => 'arabic',
-            'en'    => 'english',
-            'tr'    => 'turkish',
-        ];
+        $locales = config('app.available_locales');
 
         $currencies = [
             'AED' => 'united-arab-emirates-dirham',
@@ -691,7 +685,7 @@
                             <div class="grid gap-2.5">
                                 <!-- Spinner -->
                                 <img
-                                    class="text-brandColor h-5 w-5 animate-spin"
+                                    class="h-5 w-5 animate-spin text-brandColor"
                                     src="{{ vite()->asset('images/installer/spinner.svg', 'installer') }}"
                                     alt="Loading"
                                 />
