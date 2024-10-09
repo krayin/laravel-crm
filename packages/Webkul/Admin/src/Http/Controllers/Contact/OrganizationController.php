@@ -54,7 +54,7 @@ class OrganizationController extends Controller
         Event::dispatch('contacts.organization.create.before');
 
         $organization = $this->organizationRepository->create([
-            'name'        => htmlspecialchars($request->input('name')),
+            'name'        => $request->input('name'),
             'address'     => $request->input('address'),
             'entity_type' => $request->input('entity_type'),
         ]);
@@ -91,7 +91,7 @@ class OrganizationController extends Controller
         Event::dispatch('contacts.organization.update.before', $id);
 
         $organization = $this->organizationRepository->update([
-            'name'        => htmlspecialchars($request->input('name')),
+            'name'        => $request->input('name'),
             'address'     => $request->input('address'),
             'entity_type' => $request->input('entity_type'),
         ], $id);

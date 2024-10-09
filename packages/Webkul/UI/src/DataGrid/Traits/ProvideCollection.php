@@ -89,6 +89,8 @@ trait ProvideCollection
     public function formatCollection()
     {
         $this->collection->transform(function ($record) {
+            $record = $this->sanitizeRecord($record);
+
             $this->transformRows($record);
 
             $this->transformActions($record);
@@ -316,7 +318,7 @@ trait ProvideCollection
     {
         foreach ($this->columns as $index => $column) {
             if (isset($column['closure'])) {
-                $record->{$column['index']} = $column['closure']($record);
+                $record->{$column['index']} = ($column['closure']($record));
             } else {
                 if ($column['type'] == 'price') {
                     if (isset($column['currencyCode'])) {
@@ -414,5 +416,30 @@ trait ProvideCollection
         $validatedStrings = Str::slug($title, '_');
 
         return strtolower($validatedStrings) . $suffix;
+    }
+
+    /**
+     * Prepare all the setup for datagrid.
+     */
+    protected function sanitizeRecord($record)
+    {
+        /**
+         * Convert stdClass to array.
+         */
+        $tempRow = json_decode(json_encode($record), true);
+
+        foreach ($tempRow as $column => $value) {
+            if (! is_string($tempRow[$column])) {
+                continue;
+            }
+
+            if (is_array($value)) {
+                return $this->sanitizeRow($tempRow[$column]);
+            } else {
+                $record->{$column} = strip_tags($value);
+            }
+        }
+
+        return $record;
     }
 }
