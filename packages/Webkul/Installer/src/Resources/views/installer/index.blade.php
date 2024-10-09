@@ -29,7 +29,7 @@
 
         <link
             type="image/x-icon"
-            href="{{ vite()->asset('images/favicon.ico') }}"
+            href="{{ vite()->asset('images/favicon.ico', 'installer') }}"
             rel="shortcut icon"
             sizes="16x16"
         />
@@ -129,7 +129,7 @@
                     <div class="m-auto grid h-[100vh] max-w-[362px] items-end">
                         <div class="grid gap-4">
                             <img
-                                src="{{ vite()->asset('images/installer/krayin-logo.svg', 'installer') }}"
+                                src="{{ vite()->asset('images/krayin-logo.svg', 'installer') }}"
                                 alt="@lang('installer::app.installer.index.krayin-logo')"
                             >
 
@@ -686,7 +686,7 @@
                                 <!-- Spinner -->
                                 <img
                                     class="h-5 w-5 animate-spin text-brandColor"
-                                    src="{{ vite()->asset('images/installer/spinner.svg', 'installer') }}"
+                                    src="{{ vite()->asset('images/spinner.svg', 'installer') }}"
                                     alt="Loading"
                                 />
 

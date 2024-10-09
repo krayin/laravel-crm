@@ -129,7 +129,7 @@
 	}
 
 	.primary-button {
-		@apply bg-brandColor border border-brandColor cursor-pointer flex focus: opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all;
+        @apply bg-brandColor border border-brandColor cursor-pointer flex focus:opacity-[0.9] font-semibold gap-x-1 hover:opacity-[0.9] items-center place-content-center px-3 py-1.5 rounded-md text-gray-50 transition-all;
 	}
 
 	.secondary-button {
@@ -137,7 +137,7 @@
 	}
 
 	.transparent-button {
-		@apply flex cursor-pointer appearance-none place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-transparent px-3 py-1.5 font-semibold text-gray-600 transition-all marker: shadow hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-950;
+		@apply marker: flex cursor-pointer appearance-none place-content-center items-center gap-x-1 whitespace-nowrap rounded-md border-2 border-transparent px-3 py-1.5 font-semibold text-gray-600 shadow transition-all hover:bg-gray-100 focus:bg-gray-100 dark:hover:bg-gray-950;
 	}
 
 	.journal-scroll::-webkit-scrollbar {
