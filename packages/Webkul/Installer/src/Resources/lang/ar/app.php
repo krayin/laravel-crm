@@ -74,11 +74,11 @@ return [
             'title'                 => 'العنوان',
             'type'                  => 'النوع',
         ],
-    
+
         'lead' => [
             'pipeline' => [
                 'default' => 'قناة المبيعات الافتراضية',
-    
+
                 'pipeline-stages' => [
                     'follow-up'   => 'متابعة',
                     'lost'        => 'مفقود',
@@ -88,7 +88,7 @@ return [
                     'won'         => 'مُنتصر',
                 ],
             ],
-    
+
             'source' => [
                 'direct'   => 'مباشر',
                 'email'    => 'البريد الإلكتروني',
@@ -96,20 +96,20 @@ return [
                 'web'      => 'ويب',
                 'web-form' => 'نموذج ويب',
             ],
-    
+
             'type' => [
                 'existing-business' => 'عمل موجود',
                 'new-business'      => 'عمل جديد',
             ],
         ],
-    
+
         'user' => [
             'role' => [
                 'administrator-role' => 'دور المسؤول',
                 'administrator'      => 'مسؤول',
             ],
         ],
-    
+
         'workflow' => [
             'email-to-participants-after-activity-updation' => 'رسائل بريد إلكتروني للمشاركين بعد تحديث النشاط',
             'email-to-participants-after-activity-creation' => 'رسائل بريد إلكتروني للمشاركين بعد إنشاء النشاط',
