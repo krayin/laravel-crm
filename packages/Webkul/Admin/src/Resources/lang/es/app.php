@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiqueta creada con éxito.',
+                    'destroy-success' => 'Etiqueta eliminada con éxito.',
+                ],
             ],
 
             'create' => [
@@ -1370,6 +1375,11 @@ return [
 
                 'contact-information' => [
                     'title' => 'Información de Contacto',
+                ],
+
+                'tags' => [
+                    'create-success'  => 'Etiqueta creada con éxito.',
+                    'destroy-success' => 'Etiqueta eliminada con éxito.',
                 ],
             ],
         ],

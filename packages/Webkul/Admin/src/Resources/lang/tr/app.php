@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                    'destroy-success' => 'Etiket başarıyla silindi.',
+                ],
             ],
 
             'create' => [
@@ -1370,6 +1375,11 @@ return [
 
                 'contact-information' => [
                     'title' => 'İletişim Bilgileri',
+                ],
+
+                'tags' => [
+                    'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                    'destroy-success' => 'Etiket başarıyla silindi.',
                 ],
             ],
         ],

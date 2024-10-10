@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                    'destroy-success' => 'برچسب با موفقیت حذف شد.',
+                ],
             ],
 
             'create' => [
@@ -1370,6 +1375,11 @@ return [
 
                 'contact-information' => [
                     'title' => 'اطلاعات تماس',
+                ],
+
+                'tags' => [
+                    'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                    'destroy-success' => 'برچسب با موفقیت حذف شد.',
                 ],
             ],
         ],

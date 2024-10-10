@@ -9,6 +9,18 @@
     detach-endpoint="{{ $detachEndpoint }}"
     :added-tags='@json($addedTags)'
 >
+    @isset($tagBefore)
+        <template #tag-before>
+            {{ $tagBefore ?? '' }}
+        </template>
+    @endisset
+
+    @isset($tagAfter)
+        <template #tag-after>
+            {{ $tagAfter ?? '' }}
+        </template>
+    @endisset
+
     <x-admin::shimmer.tags count="3" />
 </v-tags>
 
@@ -16,6 +28,8 @@
     <script type="text/x-template" id="v-tags-template">
         <div class="flex flex-wrap items-center gap-1">
             <!-- Tags -->
+            <slot name="tag-before"></slot>
+            
             <span
                 class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                 :style="{
@@ -23,9 +37,11 @@
                     'color': backgroundColors.find(color => color.background === tag.color)?.text
                 }"
                 v-for="(tag, index) in tags"
-                v-html="tag.name"
+                v-text="tag.name"
             >
             </span>
+
+            <slot name="tag-after"></slot>
 
             <!-- Add Button -->
             <x-admin::dropdown ::close-on-click="false" position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}">

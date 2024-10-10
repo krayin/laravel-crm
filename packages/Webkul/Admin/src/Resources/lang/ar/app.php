@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'تم إنشاء العلامة بنجاح.',
+                    'destroy-success' => 'تم حذف العلامة بنجاح.',
+                ],
             ],
 
             'create' => [
@@ -1370,6 +1375,11 @@ return [
 
                 'contact-information' => [
                     'title' => 'معلومات الاتصال',
+                ],
+
+                'tags' => [
+                    'create-success'  => 'تم إنشاء العلامة بنجاح.',
+                    'destroy-success' => 'تم حذف العلامة بنجاح.',
                 ],
             ],
         ],
