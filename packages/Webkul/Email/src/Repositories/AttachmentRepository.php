@@ -4,38 +4,23 @@ namespace Webkul\Email\Repositories;
 
 use Illuminate\Support\Facades\Storage;
 use Webkul\Core\Eloquent\Repository;
+use Webkul\Email\Contracts\Attachment;
 
 class AttachmentRepository extends Repository
 {
     /**
-     * Parser object
-     *
-     * @var \Webkul\Email\Helpers\Parser
-     */
-    protected $emailParser;
-
-    /**
-     * Specify Model class name
+     * Specify model class name.
      *
      * @return mixed
      */
     public function model()
     {
-        return 'Webkul\Email\Contracts\Attachment';
+        return Attachment::class;
     }
 
     /**
-     * @param  \Webkul\Email\Helpers\Parser  $emailParser
-     * @return self
-     */
-    public function setEmailParser($emailParser)
-    {
-        $this->emailParser = $emailParser;
-
-        return $this;
-    }
-
-    /**
+     * Upload attachments.
+     *
      * @param  \Webkul\Email\Contracts\Email  $email
      * @return void
      */
@@ -46,7 +31,7 @@ class AttachmentRepository extends Repository
         }
 
         if ($data['source'] == 'email') {
-            foreach ($this->emailParser->getAttachments() as $attachment) {
+            foreach ($data['attachments'] as $attachment) {
                 Storage::put($path = 'emails/'.$email->id.'/'.$attachment->getFilename(), $attachment->getContent());
 
                 $this->create([
