@@ -136,7 +136,9 @@
                                     <!-- Content -->
                                     <div class="flex-frow flex items-center gap-2">
                                         <!-- Attachments -->
-                                        <p v-html="record.attachments"></p>
+                                        <p v-if="record.attachments > 0">
+                                            <i class="icon-attachment text-2xl"></i>
+                                        </p>
 
                                         <!-- Tags -->
                                         <span
@@ -146,7 +148,7 @@
                                                 'color': backgroundColors.find(color => color.background === tag.color)?.text
                                             }"
                                             v-for="(tag, index) in record.tags"
-                                            v-html="tag.name"
+                                            v-text="tag.name"
                                         >
                                         </span>
 
@@ -155,8 +157,8 @@
 
                                         <!-- Reply(Content) -->
                                         <p
-                                            class="!font-normal"
-                                            v-html="truncatedReply(record.reply)"
+                                            class="max-w-[600px] truncate !font-normal"
+                                            v-text="record.reply"
                                         ></p>
                                     </div>
                                 

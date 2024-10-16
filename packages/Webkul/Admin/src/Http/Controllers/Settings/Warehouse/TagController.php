@@ -34,7 +34,7 @@ class TagController extends Controller
         Event::dispatch('warehouse.tag.create.after', $warehouse);
 
         return response()->json([
-            'message' => trans('admin::app.warehouse.view.tags.create-success'),
+            'message' => trans('admin::app.settings.warehouses.view.tags.create-success'),
         ]);
     }
 
@@ -55,7 +55,7 @@ class TagController extends Controller
         Event::dispatch('warehouse.tag.delete.after', $warehouse);
 
         return response()->json([
-            'message' => trans('admin::app.leads.view.tags.destroy-success'),
+            'message' => trans('admin::app.settings.warehouses.view.tags.destroy-success'),
         ]);
     }
 }

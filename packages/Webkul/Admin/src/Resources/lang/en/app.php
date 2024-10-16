@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
+                ],
             ],
 
             'create' => [
@@ -1370,6 +1375,11 @@ return [
 
                 'contact-information' => [
                     'title' => 'Contact Information',
+                ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
                 ],
             ],
         ],
