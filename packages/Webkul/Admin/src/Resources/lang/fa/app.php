@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'ارسال ایمیل به شخص',
                 'add-tag'                    => 'افزودن برچسب',
                 'add-note-as-activity'       => 'افزودن یادداشت به‌عنوان فعالیت',
+                'update-quote'               => 'به‌روزرسانی نقل‌قول',
             ],
 
             'create' => [
