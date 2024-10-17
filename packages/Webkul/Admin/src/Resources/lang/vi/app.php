@@ -391,6 +391,7 @@ return [
                 'click-to-add'    => 'Nhấn để thêm',
                 'search'          => 'Tìm kiếm',
                 'no-result-found' => 'Không tìm thấy kết quả',
+                'search'          => 'Tìm kiếm...',
             ],
         ],
 
@@ -885,6 +886,7 @@ return [
                 'send-email-to-person'       => 'Gửi email đến người',
                 'add-tag'                    => 'Thêm Thẻ',
                 'add-note-as-activity'       => 'Thêm Ghi chú như Hoạt động',
+                'update-quote'               => 'Cập nhật báo giá',
             ],
 
             'create' => [
@@ -1543,9 +1545,11 @@ return [
         'create-success'       => 'Hoạt động đã được tạo thành công.',
         'update-success'       => 'Hoạt động đã được cập nhật thành công.',
         'overlapping-error'    => 'Người tham gia có cuộc họp khác vào thời điểm này.',
-        'mass-update-success'  => 'Các hoạt động đã được cập nhật thành công.',
         'destroy-success'      => 'Hoạt động đã được xóa thành công.',
         'delete-failed'        => 'Hoạt động không thể bị xóa.',
+        'mass-update-success'  => 'Hoạt động được cập nhật thành công.',
+        'mass-destroy-success' => 'Hoạt động được xóa thành công.',
+        'mass-delete-failed'   => 'Không thể xóa các hoạt động.',
     ],
 
     'mail' => [
@@ -1959,6 +1963,8 @@ return [
         'email-templates-info' => 'Thêm, chỉnh sửa hoặc xóa mẫu email khỏi CRM',
         'workflows'            => 'Quy Trình',
         'workflows-info'       => 'Thêm, chỉnh sửa hoặc xóa quy trình khỏi CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Thêm, chỉnh sửa hoặc xóa webhooks từ CRM',
         'other-settings'       => 'Cài Đặt Khác',
         'other-settings-info'  => 'Quản lý tất cả các cài đặt khác trong CRM',
         'tags'                 => 'Thẻ',
@@ -1968,6 +1974,7 @@ return [
         'back'                 => 'Quay Lại',
         'name'                 => 'Tên',
         'configuration'        => 'Cấu Hình',
+        'activities'           => 'Hoạt động',
         'howdy'                => 'Xin Chào!',
         'warehouses'           => 'Kho Hàng',
         'warehouse'            => 'Kho Hàng',
@@ -2016,6 +2023,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'Bạn không được phép truy cập trang này',
+        'dashboard' => 'Bảng điều khiển',
+        'go-back'   => 'Quay lại',
+        'support'   => 'Nếu vấn đề vẫn tiếp diễn, hãy liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
+
+        '404' => [
+            'description' => 'Ôi! Trang bạn đang tìm kiếm đang nghỉ phép. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm.',
+            'title'       => '404 Không Tìm Thấy Trang',
+        ],
+
+        '401' => [
+            'description' => 'Ôi! Có vẻ như bạn không được phép truy cập vào trang này. Có vẻ như bạn thiếu thông tin xác thực cần thiết.',
+            'title'       => '401 Chưa Được Ủy Quyền',
+        ],
+
+        '403' => [
+            'description' => 'Ôi! Trang này bị giới hạn. Có vẻ như bạn không có quyền truy cập vào nội dung này.',
+            'title'       => '403 Cấm Truy Cập',
+        ],
+
+        '500' => [
+            'description' => 'Ôi! Có điều gì đó đã sai. Có vẻ như chúng tôi đang gặp sự cố khi tải trang bạn đang tìm.',
+            'title'       => '500 Lỗi Máy Chủ Nội Bộ',
+        ],
+
+        '503' => [
+            'description' => 'Ôi! Có vẻ như chúng tôi tạm thời đang bảo trì. Vui lòng quay lại sau.',
+            'title'       => '503 Dịch Vụ Không Khả Dụng',
+        ],
     ],
 ];

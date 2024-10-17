@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'إرسال بريد إلكتروني إلى الشخص',
                 'add-tag'                    => 'إضافة علامة',
                 'add-note-as-activity'       => 'إضافة ملاحظة كنشاط',
+                'update-quote'               => 'تحديث العرض',
             ],
 
             'create' => [
