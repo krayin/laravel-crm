@@ -3,22 +3,22 @@
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Activity\ActivityController;
 
-Route::controller(ActivityController::class)->prefix('activities')->group(function () {
-    Route::get('', 'index')->name('admin.activities.index');
+Route::controller(ActivityController::class)->prefix('activities')->name('admin.activities.')->group(function () {
+    Route::get('', 'index')->name('index');
 
-    Route::get('get', 'get')->name('admin.activities.get');
+    Route::get('get', 'get')->name('get');
 
-    Route::post('create', 'store')->name('admin.activities.store');
+    Route::post('create', 'store')->name('store');
 
-    Route::get('edit/{id}', 'edit')->name('admin.activities.edit');
+    Route::get('edit/{id}', 'edit')->name('edit');
 
-    Route::put('edit/{id}', 'update')->name('admin.activities.update');
+    Route::put('edit/{id}', 'update')->name('update');
 
-    Route::get('download/{id}', 'download')->name('admin.activities.file_download');
+    Route::get('download/{id}', 'download')->name('file_download');
 
-    Route::delete('{id}', 'destroy')->name('admin.activities.delete');
+    Route::delete('{id}', 'destroy')->name('delete');
 
-    Route::post('mass-update', 'massUpdate')->name('admin.activities.mass_update');
+    Route::post('mass-update', 'massUpdate')->name('mass_update');
 
-    Route::post('mass-destroy', 'massDestroy')->name('admin.activities.mass_delete');
+    Route::post('mass-destroy', 'massDestroy')->name('mass_delete');
 });
