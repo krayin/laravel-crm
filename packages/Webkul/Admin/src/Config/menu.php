@@ -103,35 +103,12 @@ return [
      * Contacts.
      */
     [
-        'key'        => 'contacts',
-        'name'       => 'admin::app.layouts.contacts',
+        'key'        => 'persons',
+        'name'       => 'admin::app.layouts.persons',
         'route'      => 'admin.contacts.persons.index',
         'sort'       => 6,
         'icon-class' => 'icon-contact',
-    ], [
-        'key'        => 'contacts.persons',
-        'name'       => 'admin::app.layouts.persons',
-        'route'      => 'admin.contacts.persons.index',
-        'sort'       => 1,
-        'icon-class' => '',
-    ], [
-        'key'        => 'contacts.organizations',
-        'name'       => 'admin::app.layouts.organizations',
-        'route'      => 'admin.contacts.organizations.index',
-        'sort'       => 2,
-        'icon-class' => '',
-    ],
-
-    /**
-     * Products.
-     */
-    [
-        'key'        => 'products',
-        'name'       => 'admin::app.layouts.products',
-        'route'      => 'admin.products.index',
-        'sort'       => 7,
-        'icon-class' => 'icon-product',
-    ],
+    ], 
 
     /**
      * Settings.
