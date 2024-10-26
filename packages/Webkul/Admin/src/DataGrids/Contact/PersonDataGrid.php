@@ -24,8 +24,8 @@ class PersonDataGrid extends DataGrid
         $queryBuilder = DB::table('persons')
             ->addSelect(
                 'persons.id',
+                'persons.user_id',
                 'persons.name as person_name',
-                'persons.emails',
                 'persons.contact_numbers',
                 'organizations.name as organization',
                 'organizations.id as organization_id'
@@ -37,6 +37,7 @@ class PersonDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'persons.id');
+        $this->addFilter('user_id', 'persons.user_id');
         $this->addFilter('person_name', 'persons.name');
         $this->addFilter('organization', 'organizations.name');
 
@@ -48,6 +49,7 @@ class PersonDataGrid extends DataGrid
      */
     public function prepareColumns(): void
     {
+
         $this->addColumn([
             'index'      => 'id',
             'label'      => trans('admin::app.contacts.persons.index.datagrid.id'),
@@ -58,22 +60,21 @@ class PersonDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'person_name',
-            'label'      => trans('admin::app.contacts.persons.index.datagrid.name'),
-            'type'       => 'string',
+            'index'      => 'user_id',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.user-id'),
+            'type'       => 'integer',
             'sortable'   => true,
             'filterable' => true,
             'searchable' => true,
         ]);
 
         $this->addColumn([
-            'index'      => 'emails',
-            'label'      => trans('admin::app.contacts.persons.index.datagrid.emails'),
+            'index'      => 'person_name',
+            'label'      => trans('admin::app.contacts.persons.index.datagrid.name'),
             'type'       => 'string',
-            'sortable'   => false,
+            'sortable'   => true,
             'filterable' => true,
             'searchable' => true,
-            'closure'    => fn ($row) => collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', '),
         ]);
 
         $this->addColumn([

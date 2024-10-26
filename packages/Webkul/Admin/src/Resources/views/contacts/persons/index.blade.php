@@ -70,7 +70,7 @@
                         <div class="row grid grid-cols-[.1fr_.2fr_.2fr_.2fr_.2fr_.2fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800">
                             <div
                                 class="flex select-none items-center gap-2.5"
-                                v-for="(columnGroup, index) in [['id'], ['person_name'], ['emails'], ['contact_numbers'], ['organization']]"
+                                v-for="(columnGroup, index) in [['id'], ['user_id'], ['person_name'], ['contact_numbers'], ['organization']]"
                             >
                                 <label
                                     class="flex w-max cursor-pointer select-none items-center gap-1"

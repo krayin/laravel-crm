@@ -534,7 +534,7 @@ return [
                     'contact-numbers'   => 'Contact Numbers',
                     'delete'            => 'Delete',
                     'edit'              => 'Edit',
-                    'emails'            => 'Emails',
+                    'user-id'           => 'Coroner',
                     'id'                => 'ID',
                     'view'              => 'View',
                     'name'              => 'Name',

@@ -4,6 +4,7 @@ namespace Webkul\Contact\Providers;
 
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
+use Webkul\Contact\Models\Person;
 
 class ContactServiceProvider extends ServiceProvider
 {
