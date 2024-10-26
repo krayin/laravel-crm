@@ -14,7 +14,7 @@ return [
         'activities'      => 'Activities',
         'webhook'         => 'Webhook',
         'contacts'        => 'Contacts',
-        'persons'         => 'Persons',
+        'persons'         => 'Deceased',
         'organizations'   => 'Organizations',
         'products'        => 'Products',
         'settings'        => 'Settings',
@@ -143,7 +143,7 @@ return [
                         'title'       => 'Participants',
                         'placeholder' => 'Type to search participants',
                         'users'       => 'Users',
-                        'persons'     => 'Persons',
+                        'persons'     => 'Deceased',
                         'no-results'  => 'No result found...',
                     ],
                 ],
@@ -366,7 +366,7 @@ return [
                     'tabs' => [
                         'leads'    => 'Leads',
                         'quotes'   => 'Quotes',
-                        'persons'  => 'Persons',
+                        'persons'  => 'Deceased',
                         'products' => 'Products',
                     ],
 
@@ -425,7 +425,7 @@ return [
                 'expired-at'     => 'Expired At',
                 'created-at'     => 'Created At',
                 'expired-quotes' => 'Expired Quote',
-                'person'         => 'Person',
+                'person'         => 'Deceased',
                 'subtotal'       => 'Subtotal',
                 'discount'       => 'Discount',
                 'tax'            => 'Tax',
@@ -523,12 +523,12 @@ return [
     'contacts' => [
         'persons' => [
             'index' => [
-                'title'          => 'Persons',
-                'create-btn'     => 'Create Person',
-                'create-success' => 'Person created successfully.',
-                'update-success' => 'Person updated successfully.',
-                'delete-success' => 'Person deleted successfully.',
-                'delete-failed'  => 'Person can not be deleted.',
+                'title'          => 'Deceased',
+                'create-btn'     => 'Create Deceased',
+                'create-success' => 'Deceased created successfully.',
+                'update-success' => 'Deceased updated successfully.',
+                'delete-success' => 'Deceased deleted successfully.',
+                'delete-failed'  => 'Deceased can not be deleted.',
 
                 'datagrid' => [
                     'contact-numbers'   => 'Contact Numbers',
@@ -544,7 +544,7 @@ return [
 
             'view' => [
                 'title'              => ':name',
-                'about-person'       => 'About Person',
+                'about-person'       => 'About Deceased',
                 'about-organization' => 'About Organization',
 
                 'activities' => [
@@ -613,13 +613,13 @@ return [
             ],
 
             'create' => [
-                'title'    => 'Create Person',
-                'save-btn' => 'Save Person',
+                'title'    => 'Create Deceased',
+                'save-btn' => 'Save Deceased',
             ],
 
             'edit' => [
-                'title'    => 'Edit Person',
-                'save-btn' => 'Save Person',
+                'title'    => 'Edit Deceased',
+                'save-btn' => 'Save Deceased',
             ],
         ],
 
@@ -637,7 +637,7 @@ return [
                     'edit'          => 'Edit',
                     'id'            => 'ID',
                     'name'          => 'Name',
-                    'persons-count' => 'Person Count',
+                    'persons-count' => 'Deceased Count',
                 ],
             ],
 
@@ -883,7 +883,7 @@ return [
                 'send-email-to-participants' => 'Send email to participants',
                 'add-webhook'                => 'Add Webhook',
                 'update-lead'                => 'Update Lead',
-                'update-person'              => 'Update Person',
+                'update-person'              => 'Update Deceased',
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
@@ -995,7 +995,7 @@ return [
                 'form-title-color'         => 'Form Title Color',
                 'general'                  => 'General',
                 'leads'                    => 'Leads',
-                'person'                   => 'Person',
+                'person'                   => 'Deceased',
                 'save-btn'                 => 'Save Webform',
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
@@ -1028,7 +1028,7 @@ return [
                 'form-title-color'          => 'Form Title Color',
                 'general'                   => 'General',
                 'preview'                   => 'Preview',
-                'person'                    => 'Person',
+                'person'                    => 'Deceased',
                 'public-url'                => 'Public URL',
                 'redirect-to-url'           => 'Redirect To URL',
                 'save-btn'                  => 'Save Webform',
@@ -1533,7 +1533,7 @@ return [
             'lead'            => 'Lead',
             'participants'    => 'Participants',
             'general'         => 'General',
-            'persons'         => 'Persons',
+            'persons'         => 'Deceased',
             'no-result-found' => 'Records not found.',
             'users'           => 'Users',
         ],
@@ -1807,7 +1807,7 @@ return [
             ],
 
             'persons' => [
-                'title'     => 'About Persons',
+                'title'     => 'About Deceased',
                 'job-title' => ':job_title at :organization',
             ],
 
@@ -1867,7 +1867,7 @@ return [
                 'total-leads'           => 'Total Leads',
                 'average-leads-per-day' => 'Average Leads Per Day',
                 'total-quotations'      => 'Total Quotations',
-                'total-persons'         => 'Total Persons',
+                'total-persons'         => 'Total Deceased',
                 'total-organizations'   => 'Total Organizations',
             ],
 
@@ -1897,8 +1897,8 @@ return [
             ],
 
             'top-persons' => [
-                'title'       => 'Top Persons',
-                'empty-title' => 'No Persons Found',
+                'title'       => 'Top Deceased',
+                'empty-title' => 'No Deceased Found',
                 'empty-info'  => 'No persons available for selected interval',
             ],
 
@@ -1928,8 +1928,8 @@ return [
         ],
         'activities'           => 'Activities',
         'contacts'             => 'Contacts',
-        'persons'              => 'Persons',
-        'person'               => 'Person',
+        'persons'              => 'Deceased',
+        'person'               => 'Deceased',
         'organizations'        => 'Organizations',
         'organization'         => 'Organization',
         'products'             => 'Products',
