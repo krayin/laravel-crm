@@ -19,13 +19,13 @@ class RemoveJobTitleFromAttributes extends Migration
     {
         // Store existing attributes before deletion
         $this->attributes = DB::table('attributes')
-            ->whereIn('code', ['job_title', 'emails'])
+            ->whereIn('code', ['job_title', 'emails', 'organization_id'])
             ->where('entity_type', 'persons')
             ->get()
             ->toArray();
 
         DB::table('attributes')
-            ->whereIn('code', ['job_title', 'emails'])
+            ->whereIn('code', ['job_title', 'emails', 'organization_id'])
             ->where('entity_type', 'persons')
             ->delete();
     }
