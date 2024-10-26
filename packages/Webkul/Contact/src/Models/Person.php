@@ -24,13 +24,6 @@ class Person extends Model implements PersonContract
     protected $table = 'persons';
 
     /**
-     * Eager loading.
-     *
-     * @var string
-     */
-    protected $with = 'organization';
-
-    /**
      * The attributes that are castable.
      *
      * @var array
@@ -48,7 +41,6 @@ class Person extends Model implements PersonContract
         'name',
         'contact_numbers',
         'user_id',
-        'organization_id',
     ];
 
     /**
@@ -57,16 +49,6 @@ class Person extends Model implements PersonContract
     public function user()
     {
         return $this->belongsTo(UserProxy::modelClass());
-    }
-
-    /**
-     * Get the organization that owns the person.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function organization()
-    {
-        return $this->belongsTo(OrganizationProxy::modelClass());
     }
 
     /**

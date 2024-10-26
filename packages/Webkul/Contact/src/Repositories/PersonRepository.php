@@ -15,11 +15,7 @@ class PersonRepository extends Repository
      */
     protected $fieldSearchable = [
         'name',
-        'emails',
         'contact_numbers',
-        'organization_id',
-        'job_title',
-        'organization.name',
         'user_id',
         'user.name',
     ];
