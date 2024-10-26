@@ -522,6 +522,7 @@ return [
 
     'contacts' => [
         'persons' => [
+            'print' => 'Print Report',
             'index' => [
                 'title'          => 'Deceased',
                 'create-btn'     => 'Create Deceased',

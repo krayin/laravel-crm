@@ -5,6 +5,8 @@ namespace Webkul\Admin\Http\Controllers\Contact\Persons;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Http\Response;
+use Illuminate\Http\StreamedResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
@@ -14,9 +16,12 @@ use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
 use Webkul\Admin\Http\Resources\PersonResource;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Core\Traits\PDFHandler;
 
 class PersonController extends Controller
 {
+    use PDFHandler;
+
     /**
      * Create a new class instance.
      *
@@ -191,5 +196,18 @@ class PersonController extends Controller
         }
 
         return $data;
+    }
+
+    /**
+     * Print the person information.
+     */
+    public function print(int $id): Response|StreamedResponse
+    {
+        $person = $this->personRepository->findOrFail($id);
+
+        return $this->downloadPDF(
+            view('admin::contacts.persons.pdf', compact('person'))->render(),
+            'Person_' . $person->name . '_' . $person->created_at->format('d-m-Y')
+        );
     }
 }

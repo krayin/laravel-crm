@@ -31,20 +31,6 @@
                 {!! view_render_event('admin.contact.persons.view.tags.after', ['person' => $person]) !!}
 
                 
-                <!-- Title -->
-                <div class="mb-4 flex flex-col gap-0.5">
-                    {!! view_render_event('admin.contact.persons.view.title.before', ['person' => $person]) !!}
-
-                    <h3 class="text-lg font-bold dark:text-white">
-                        {{ $person->name }}
-                    </h3>
-
-                    <p class="dark:text-white">
-                        {{ $person->job_title }}
-                    </p>
-
-                    {!! view_render_event('admin.contact.persons.view.title.after', ['person' => $person]) !!}
-                </div>
                 
                 <!-- Activity Actions -->
                 <div class="flex flex-wrap gap-2">
@@ -81,8 +67,6 @@
             <!-- Person Attributes -->
             @include ('admin::contacts.persons.view.attributes')
 
-            <!-- Contact Organization -->
-            @include ('admin::contacts.persons.view.organization')
         </div>
 
         {!! view_render_event('admin.contact.persons.view.left.after', ['person' => $person]) !!}
@@ -90,7 +74,12 @@
         <!-- Right Panel -->
         <div class="flex w-full flex-col gap-4 rounded-lg">
             {!! view_render_event('admin.contact.persons.view.right.before', ['person' => $person]) !!}
-
+            <a 
+                    href="{{ route('admin.contacts.persons.print', $person->id) }}"
+                    class="primary-button"
+                >
+                    @lang('admin::app.contacts.persons.print')
+                </a>
             <!-- Stages Navigation -->
             <x-admin::activities :endpoint="route('admin.contacts.persons.activities.index', $person->id)" />
 

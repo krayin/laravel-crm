@@ -25,6 +25,8 @@ Route::prefix('contacts')->group(function () {
 
         Route::get('search', 'search')->name('admin.contacts.persons.search');
 
+        Route::get('{id}/print', 'print')->name('admin.contacts.persons.print');
+
         Route::middleware(['throttle:100,60'])->delete('{id}', 'destroy')->name('admin.contacts.persons.delete');
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.contacts.persons.mass_delete');
