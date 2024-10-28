@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Ad',
-                    'save-btn' => 'Türü Kaydet',
-                    'title'    => 'Tür Oluştur',
+                    'save-btn' => 'Kaynağı Kaydet',
+                    'title'    => 'Kaynak Oluştur',
                 ],
 
                 'edit' => [
-                    'title' => 'Tür Düzenle',
+                    'title' => 'Kaynağı Düzenle',
                 ],
             ],
         ],

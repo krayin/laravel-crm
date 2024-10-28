@@ -849,13 +849,13 @@ return [
                 ],
 
                 'create' => [
-                    'name'     => 'Name',
-                    'save-btn' => 'Save Type',
-                    'title'    => 'Create Type',
+                    'name'     => 'اسم',
+                    'save-btn' => 'حفظ المصدر',
+                    'title'    => 'إنشاء مصدر',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Type',
+                    'title' => 'تعديل المصدر',
                 ],
             ],
         ],
