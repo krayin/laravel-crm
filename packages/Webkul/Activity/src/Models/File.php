@@ -10,6 +10,8 @@ class File extends Model implements FileContract
 {
     protected $table = 'activity_files';
 
+    protected $appends = ['url'];
+
     /**
      * The attributes that are mass assignable.
      *
