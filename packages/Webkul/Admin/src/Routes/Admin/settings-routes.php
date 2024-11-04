@@ -295,21 +295,21 @@ Route::prefix('settings')->group(function () {
     /**
      * Events Routes.
      */
-    Route::group(['prefix' => 'marketing'], function() {
+    Route::group(['prefix' => 'marketing'], function () {
         Route::controller(EventController::class)->prefix('events')->group(function () {
             Route::get('', 'index')->name('admin.settings.marketing.events.index');
-    
+
             Route::post('create', 'store')->name('admin.settings.marketing_events.store');
-    
+
             Route::get('edit/{id?}', 'edit')->name('admin.settings.marketing_events.edit');
-    
+
             Route::put('edit/{id}', 'update')->name('admin.settings.marketing_events.update');
-    
+
             Route::delete('{id}', 'destroy')->name('admin.settings.marketing_events.delete');
-    
+
             Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing_events.mass_delete');
         });
-    
+
         Route::controller(CampaignsController::class)->prefix('campaigns')->group(function () {
             Route::get('', 'index')->name('admin.settings.marketing.campaigns.index');
         });
