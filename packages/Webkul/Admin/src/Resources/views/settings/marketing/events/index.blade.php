@@ -299,7 +299,7 @@
                     },
 
                     edit(record) {
-                        this.$refs.eventForm.setValues({...record });
+                        this.$refs.eventForm.setValues(record);
 
                         this.toggleModal();
                     },
