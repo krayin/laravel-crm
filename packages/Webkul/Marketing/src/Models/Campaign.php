@@ -7,6 +7,8 @@ use Webkul\Marketing\Contracts\Campaign as CampaignContract;
 
 class Campaign extends Model implements CampaignContract
 {
+    protected $table = 'marketing_campaigns';
+
     /**
      * The attributes that are fillable.
      *
