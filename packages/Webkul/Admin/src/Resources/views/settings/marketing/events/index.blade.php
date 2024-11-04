@@ -272,14 +272,15 @@
                     createOrUpdate(paramas, { resetForm, setErrors }) {
                         this.isStoring = true;
 
-                        if (paramas.id) {
-                            paramas._method = 'PUT';
-                        }
+                        const isUpdating = paramas.id && this.actionType === 'edit';
+
+                        isUpdating && (paramas._method = 'PUT');
 
                         this.$axios.post(
-                            paramas.id 
+                            isUpdating
                             ? `{{ route('admin.settings.marketing_events.update', '') }}/${paramas.id}`
-                            : '{{ route('admin.settings.marketing_events.store') }}', paramas
+                            : '{{ route('admin.settings.marketing_events.store') }}', 
+                            paramas
                         )
                             .then(response => {
                                 this.isStoring = false;
