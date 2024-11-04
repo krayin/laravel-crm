@@ -1,7 +1,7 @@
 <x-admin::layouts>
     <!-- Page Title -->
     <x-slot:title>
-        @lang('admin::app.settings.marketing.events.index.title')
+        @lang('admin::app.settings.marketing.campaigns.index.title')
     </x-slot>
 
     <div class="flex flex-col gap-4">
@@ -9,51 +9,51 @@
         <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
-                    {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.settings.marketing.campaigns.index.breadcrumbs.before') !!}
 
                     <!-- Bredcrumbs -->
-                    <x-admin::breadcrumbs name="settings.marketing.events" />
+                    <x-admin::breadcrumbs name="settings.marketing.campaigns" />
 
-                    {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.settings.marketing.campaigns.index.breadcrumbs.after') !!}
                 </div>
 
                 <div class="text-xl font-bold dark:text-gray-300">
-                    @lang('admin::app.settings.marketing.events.index.title')
+                    @lang('admin::app.settings.marketing.campaigns.index.title')
                 </div>
             </div>
 
             <div class="flex items-center gap-x-2.5">                
-                <!-- Create button for Marketing Event -->
+                <!-- Create button for Campaings -->
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.settings.marketing.campaigns.index.breadcrumbs.after') !!}
 
                     <button
                         type="button"
                         class="primary-button"
-                        @click="$refs.marketingEvent.actionType = 'create';$refs.marketingEvent.toggleModal()"
+                        @click="$refs.marketingCampaigns.actionType = 'create';$refs.marketingCampaigns.toggleModal()"
                     >
-                        @lang('admin::app.settings.marketing.events.index.create-btn')
+                        @lang('admin::app.settings.marketing.campaigns.index.create-btn')
                     </button>
 
-                    {!! view_render_event('admin.settings.marketing.events.index.create_button.after') !!}
+                    {!! view_render_event('admin.settings.marketing.campaigns.index.create_button.after') !!}
                 </div>
             </div>
         </div>
         
-        <v-marketing-events ref="marketingEvent">
+        <v-campaigns ref="marketingCampaigns">
             <x-admin::shimmer.datagrid />
-        </v-marketing-events>
+        </v-campaigns>
     </div>
 
     @pushOnce('scripts')
         <script 
             type="text/x-template" 
-            id="v-marketing-events-template"
+            id="v-campaigns-template"
         >
             <div>
                 <!-- Datagrid -->
                 <x-admin::datagrid
-                    :src="route('admin.settings.marketing.events.index')"
+                    :src="route('admin.settings.marketing.campaigns.index')"
                     ref="datagrid"
                 >
                     <template #body="{
@@ -91,17 +91,17 @@
                                     ></label>
                                 </div>
                                 
-                                <!-- Marketing Event Id -->
+                                <!-- Campaings Id -->
                                 <p>@{{ record.id }}</p>
             
-                                <!-- Marketing Event Name -->
+                                <!-- Campaings Name -->
                                 <p>@{{ record.name }}</p>
 
-                                <!-- Marketing Event Description -->
-                                <p>@{{ record.description }}</p>
+                                <!-- Campaings subject -->
+                                <p>@{{ record.subject }}</p>
 
-                                <!-- Marketing Event Date -->
-                                <p>@{{ record.date }}</p>
+                                <!-- Campaings Type -->
+                                <p>@{{ record.type }}</p>
 
                                 <!-- Actions -->
                                 <div class="flex justify-end">
@@ -127,7 +127,7 @@
                 </x-admin::datagrid>
 
                 <Teleport to="body">
-                    {!! view_render_event('admin.settings.marketing.events.index.form_controls.before') !!}
+                    {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.before') !!}
         
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
@@ -135,30 +135,30 @@
                         ref="eventForm"
                     >
                         <form @submit="handleSubmit($event, createOrUpdate)">
-                            {!! view_render_event('admin.settings.marketing.events.index.form_controls.modal.before') !!}
+                            {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.before') !!}
         
                             <x-admin::modal ref="marketingModal">
                                 <x-slot:header>
-                                    {!! view_render_event('admin.settings.marketing.events.index.form_controls.modal.header.dropdown.before') !!}
+                                    {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.header.dropdown.before') !!}
         
                                     <p class="text-lg font-bold text-gray-800 dark:text-white">
                                         @{{ 
                                             actionType == 'create'
-                                            ? "@lang('admin::app.settings.marketing.events.index.create.title')"
-                                            : "@lang('admin::app.settings.marketing.events.index.edit.title')" 
+                                            ? "@lang('admin::app.settings.marketing.campaigns.index.create.title')"
+                                            : "@lang('admin::app.settings.marketing.campaigns.index.edit.title')" 
                                         }}
                                     </p>
 
-                                    {!! view_render_event('admin.settings.marketing.events.index.form_controls.modal.header.dropdown.after') !!}
+                                    {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.header.dropdown.after') !!}
                                 </x-slot>
         
                                 <x-slot:content>
-                                    {!! view_render_event('admin.settings.marketing.events.index.form_controls.modal.content.controls.before') !!}
+                                    {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.content.controls.before') !!}
         
                                     <!-- Name -->
                                     <x-admin::form.control-group>
                                         <x-admin::form.control-group.label class="required">
-                                            @lang('admin::app.settings.marketing.events.index.create.name')
+                                            @lang('admin::app.settings.marketing.campaigns.index.create.name')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
@@ -170,46 +170,46 @@
                                             type="text"
                                             name="name"
                                             rules="required"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.name')"
+                                            :label="trans('admin::app.settings.marketing.campaigns.index.create.name')"
                                         />
         
                                         <x-admin::form.control-group.error control-name="name" />
                                     </x-admin::form.control-group>
         
-                                    <!-- Description -->
+                                    <!-- Subject -->
                                     <x-admin::form.control-group>
                                         <x-admin::form.control-group.label class="required">
-                                            @lang('admin::app.settings.marketing.events.index.create.description')
+                                            @lang('admin::app.settings.marketing.campaigns.index.create.subject')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
-                                            type="textarea"
-                                            name="description"
+                                            type="text"
+                                            name="subject"
                                             rules="required"
                                             rows="4"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.description')"
+                                            :label="trans('admin::app.settings.marketing.campaigns.index.create.subject')"
                                         />
         
-                                        <x-admin::form.control-group.error control-name="description" />
+                                        <x-admin::form.control-group.error control-name="subject" />
                                     </x-admin::form.control-group>
 
-                                    <!-- Date -->
+                                    <!-- Type -->
                                     <x-admin::form.control-group>
                                         <x-admin::form.control-group.label class="required">
-                                            @lang('admin::app.settings.marketing.events.index.create.date')
+                                            @lang('admin::app.settings.marketing.campaigns.index.create.type')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
-                                            type="date"
-                                            name="date"
+                                            type="text"
+                                            name="type"
                                             rules="required"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.date')"
+                                            :label="trans('admin::app.settings.marketing.campaigns.index.create.type')"
                                         />
         
-                                        <x-admin::form.control-group.error control-name="date" />
+                                        <x-admin::form.control-group.error control-name="type" />
                                     </x-admin::form.control-group>
 
-                                    {!! view_render_event('admin.settings.marketing.events.index.form_controls.modal.content.controls.after') !!}
+                                    {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.content.controls.after') !!}
                                 </x-slot>
         
                                 <x-slot:footer>
@@ -237,8 +237,8 @@
         </script>
 
         <script type="module">
-            app.component('v-marketing-events', {
-                template: '#v-marketing-events-template',
+            app.component('v-campaigns', {
+                template: '#v-campaigns-template',
 
                 data() {
                     return {

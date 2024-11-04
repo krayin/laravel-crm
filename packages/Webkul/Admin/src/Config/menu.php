@@ -233,16 +233,21 @@ return [
         'route'      => 'admin.settings.email_templates.index',
         'sort'       => 2,
         'icon-class' => 'icon-settings-mail',
-    ],
-    [
+    ], [
         'key'        => 'settings.automation.events',
         'name'       => 'admin::app.layouts.events',
         'info'       => 'admin::app.layouts.events-info',
         'route'      => 'admin.settings.marketing.events.index',
         'sort'       => 2,
         'icon-class' => 'icon-settings-mail',
-    ],
-    [
+    ], [
+        'key'        => 'settings.automation.campaigns',
+        'name'       => 'admin::app.layouts.campaigns',
+        'info'       => 'admin::app.layouts.campaigns-info',
+        'route'      => 'admin.settings.marketing.campaigns.index',
+        'sort'       => 2,
+        'icon-class' => 'icon-settings-mail',
+    ], [
         'key'        => 'settings.automation.webhooks',
         'name'       => 'admin::app.layouts.webhooks',
         'info'       => 'admin::app.layouts.webhooks-info',

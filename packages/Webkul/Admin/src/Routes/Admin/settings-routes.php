@@ -5,6 +5,7 @@ use Webkul\Admin\Http\Controllers\Settings\AttributeController;
 use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
+use Webkul\Admin\Http\Controllers\Settings\Marketing\CampaignsController;
 use Webkul\Admin\Http\Controllers\Settings\Marketing\EventController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
@@ -294,17 +295,23 @@ Route::prefix('settings')->group(function () {
     /**
      * Events Routes.
      */
-    Route::controller(EventController::class)->prefix('events')->group(function () {
-        Route::get('', 'index')->name('admin.settings.marketing.events.index');
-
-        Route::post('create', 'store')->name('admin.settings.marketing_events.store');
-
-        Route::get('edit/{id?}', 'edit')->name('admin.settings.marketing_events.edit');
-
-        Route::put('edit/{id}', 'update')->name('admin.settings.marketing_events.update');
-
-        Route::delete('{id}', 'destroy')->name('admin.settings.marketing_events.delete');
-
-        Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing_events.mass_delete');
+    Route::group(['prefix' => 'marketing'], function() {
+        Route::controller(EventController::class)->prefix('events')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.events.index');
+    
+            Route::post('create', 'store')->name('admin.settings.marketing_events.store');
+    
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.marketing_events.edit');
+    
+            Route::put('edit/{id}', 'update')->name('admin.settings.marketing_events.update');
+    
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing_events.delete');
+    
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing_events.mass_delete');
+        });
+    
+        Route::controller(CampaignsController::class)->prefix('campaigns')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.campaigns.index');
+        });
     });
 });

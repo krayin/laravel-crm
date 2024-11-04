@@ -1113,6 +1113,38 @@ return [
                     ],
                 ],
             ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'     => 'Create Campaigns',
+                    'title'          => 'Campaigns',
+                    'create-success' => 'Campaigns created successfully.',
+                    'update-success' => 'Campaigns updated successfully.',
+                    'delete-success' => 'Campaigns deleted successfully.',
+                    'delete-failed'  => 'Campaigns can not be deleted.',
+
+                    'datagrid'   => [
+                        'id'           => 'ID',
+                        'name'         => 'Name',
+                        'subject'      => 'Subject',
+                        'status'       => 'Status',
+                        'type'         => 'Type',
+                        'edit'         => 'Edit',
+                        'delete'       => 'Delete',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Create Campaigns',
+                        'name'        => 'Name',
+                        'type'        => 'Type',
+                        'subject'     => 'Subject',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Campaigns',
+                    ],
+                ],
+            ],
         ],
 
         'tags' => [
@@ -1995,6 +2027,8 @@ return [
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
         'events'               => 'Events',
         'events-info'          => 'Add, edit or delete events from CRM',
+        'campaigns'            => 'Campaigns',
+        'campaigns-info'       => 'Add, edit or delete campaigns from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
         'webhooks'             => 'Webhooks',
