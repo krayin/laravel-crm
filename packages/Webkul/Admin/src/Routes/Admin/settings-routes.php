@@ -295,7 +295,7 @@ Route::prefix('settings')->group(function () {
      * Events Routes.
      */
     Route::controller(EventController::class)->prefix('events')->group(function () {
-        Route::get('', 'index')->name('admin.settings.marketing_events.index');
+        Route::get('', 'index')->name('admin.settings.marketing.events.index');
 
         Route::post('create', 'store')->name('admin.settings.marketing_events.store');
 

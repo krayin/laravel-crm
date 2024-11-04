@@ -238,7 +238,7 @@ return [
         'key'        => 'settings.automation.events',
         'name'       => 'admin::app.layouts.events',
         'info'       => 'admin::app.layouts.events-info',
-        'route'      => 'admin.settings.marketing_events.index',
+        'route'      => 'admin.settings.marketing.events.index',
         'sort'       => 2,
         'icon-class' => 'icon-settings-mail',
     ],

@@ -293,7 +293,7 @@ Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $tra
 // Settings > Marketing Events
 Breadcrumbs::for('settings.marketing_events', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
-    $trail->push(trans('admin::app.settings.marketing.events.index.title'), route('admin.settings.marketing_events.index'));
+    $trail->push(trans('admin::app.settings.marketing.events.index.title'), route('admin.settings.marketing.events.index'));
 });
 
 // Settings > Workflows

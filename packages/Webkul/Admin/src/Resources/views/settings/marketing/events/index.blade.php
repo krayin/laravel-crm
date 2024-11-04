@@ -53,7 +53,7 @@
             <div>
                 <!-- Datagrid -->
                 <x-admin::datagrid
-                    :src="route('admin.settings.marketing_events.index')"
+                    :src="route('admin.settings.marketing.events.index')"
                     ref="datagrid"
                 >
                     <template #body="{
