@@ -61,6 +61,7 @@
             "Webkul\\Core\\": "packages/Webkul/Core/src",
             "Webkul\\Email\\": "packages/Webkul/Email/src",
             "Webkul\\EmailTemplate\\": "packages/Webkul/EmailTemplate/src",
+            "Webkul\\Marketing\\": "packages/Webkul/Marketing/src",
             "Webkul\\Installer\\": "packages/Webkul/Installer/src",
             "Webkul\\Lead\\": "packages/Webkul/Lead/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",

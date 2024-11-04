@@ -290,6 +290,12 @@ Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $tra
     $trail->push(trans('admin::app.settings.email-template.edit.title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
 });
 
+// Settings > Marketing Events
+Breadcrumbs::for('settings.marketing_events', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.marketing.events.index.title'), route('admin.settings.marketing_events.index'));
+});
+
 // Settings > Workflows
 Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');

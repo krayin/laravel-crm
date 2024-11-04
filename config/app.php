@@ -208,6 +208,7 @@ return [
         Webkul\DataGrid\Providers\DataGridServiceProvider::class,
         Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
+        Webkul\Marketing\Providers\MarketingServiceProvider::class,
         Webkul\Installer\Providers\InstallerServiceProvider::class,
         Webkul\Lead\Providers\LeadServiceProvider::class,
         Webkul\Product\Providers\ProductServiceProvider::class,

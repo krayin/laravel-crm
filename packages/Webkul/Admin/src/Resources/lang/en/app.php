@@ -1082,6 +1082,39 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'     => 'Create Marketing Event',
+                    'title'          => 'Marketing Events',
+                    'create-success' => 'Marketing Event created successfully.',
+                    'update-success' => 'Marketing Event updated successfully.',
+                    'delete-success' => 'Marketing Event deleted successfully.',
+                    'delete-failed'  => 'Marketing Event can not be deleted.',
+
+                    'datagrid'   => [
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                        'id'           => 'ID',
+                        'name'         => 'Name',
+                        'description'  => 'Description',
+                        'date'         => 'Date',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Create Marketing Event',
+                        'name'        => 'Name',
+                        'date'        => 'Date',
+                        'description' => 'Description',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Marketing Event',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Create Tag',
@@ -1776,7 +1809,7 @@ return [
                 'title' => 'About Lead',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Subject',
                 'expired-at'      => 'Expired At',
                 'sub-total'       => 'Sub Total',
@@ -1960,6 +1993,8 @@ return [
         'email-templates'      => 'Email Templates',
         'email'                => 'Email',
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
+        'events'               => 'Events',
+        'events-info'          => 'Add, edit or delete events from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
         'webhooks'             => 'Webhooks',
