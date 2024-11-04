@@ -47,7 +47,7 @@ class EventController extends Controller
         Event::dispatch('settings.marketing-event.create.after', $marketingEvent);
 
         return response()->json([
-            'message' => trans('admin::app.settings.marketing-events.index.create-success'),
+            'message' => trans('admin::app.settings.marketing.events.index.create-success'),
             'data'    => $marketingEvent,
         ]);
     }
@@ -70,7 +70,7 @@ class EventController extends Controller
         Event::dispatch('settings.marketing-event.update.after', $marketingEvent);
 
         return response()->json([
-            'message' => trans('admin::app.settings.marketing-events.index.update-success'),
+            'message' => trans('admin::app.settings.marketing.events.index.update-success'),
             'data'    => $marketingEvent,
         ]);
     }
@@ -87,7 +87,7 @@ class EventController extends Controller
         Event::dispatch('settings.marketing-event.delete.after', $id);
 
         return response()->json([
-            'message' => trans('admin::app.settings.marketing-events.index.delete-success'),
+            'message' => trans('admin::app.settings.marketing.events.index.delete-success'),
         ]);
     }
 
@@ -109,7 +109,7 @@ class EventController extends Controller
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.marketing-events.index.delete-success'),
+            'message' => trans('admin::app.settings.marketing.events.index.delete-success'),
         ]);
     }
 }
