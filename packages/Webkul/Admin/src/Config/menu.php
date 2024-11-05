@@ -239,14 +239,14 @@ return [
         'info'       => 'admin::app.layouts.events-info',
         'route'      => 'admin.settings.marketing.events.index',
         'sort'       => 2,
-        'icon-class' => 'icon-settings-mail',
+        'icon-class' => 'icon-calendar',
     ], [
         'key'        => 'settings.automation.campaigns',
         'name'       => 'admin::app.layouts.campaigns',
         'info'       => 'admin::app.layouts.campaigns-info',
         'route'      => 'admin.settings.marketing.campaigns.index',
         'sort'       => 2,
-        'icon-class' => 'icon-settings-mail',
+        'icon-class' => 'icon-note',
     ], [
         'key'        => 'settings.automation.webhooks',
         'name'       => 'admin::app.layouts.webhooks',

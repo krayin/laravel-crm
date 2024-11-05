@@ -3,6 +3,7 @@
 namespace Webkul\Marketing\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use Webkul\Marketing\Console\Commands\CampaignCommand;
 
 class MarketingServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,20 @@ class MarketingServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
+        $this->registerCommands();
+
         $this->app->register(ModuleServiceProvider::class);
+    }
+
+    /**
+     * Register the commands.
+     */
+    private function registerCommands(): void
+    {
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                CampaignCommand::class
+            ]);
+        }
     }
 }
