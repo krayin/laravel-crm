@@ -17,7 +17,6 @@ class CampaignDatagrid extends DataGrid
                 'marketing_campaigns.id',
                 'marketing_campaigns.name',
                 'marketing_campaigns.subject',
-                'marketing_campaigns.type',
             );
 
         $this->addFilter('id', 'marketing_campaigns.id');

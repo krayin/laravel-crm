@@ -27,13 +27,15 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.marketing.campaigns.index.breadcrumbs.after') !!}
 
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="$refs.marketingCampaigns.actionType = 'create';$refs.marketingCampaigns.toggleModal()"
-                    >
-                        @lang('admin::app.settings.marketing.campaigns.index.create-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('settings.automation.campaigns.create'))
+                        <button
+                            type="button"
+                            class="primary-button"
+                            @click="$refs.marketingCampaigns.actionType = 'create';$refs.marketingCampaigns.toggleModal()"
+                        >
+                            @lang('admin::app.settings.marketing.campaigns.index.create-btn')
+                        </button>
+                    @endif
 
                     {!! view_render_event('admin.settings.marketing.campaigns.index.create_button.after') !!}
                 </div>
@@ -75,21 +77,23 @@
                                 :style="`grid-template-columns: repeat(${gridsCount}, minmax(0, 1fr))`"
                             >
                                 <!-- Mass Actions, Title and Created By -->
-                                <div class="flex select-none items-center gap-16">
-                                    <input
-                                        type="checkbox"
-                                        :name="`mass_action_select_record_${record.id}`"
-                                        :id="`mass_action_select_record_${record.id}`"
-                                        :value="record.id"
-                                        class="peer hidden"
-                                        v-model="applied.massActions.indices"
-                                    >
+                                @if (bouncer()->hasPermission('settings.automation.campaigns.mass_delete'))
+                                    <div class="flex select-none items-center gap-16">
+                                        <input
+                                            type="checkbox"
+                                            :name="`mass_action_select_record_${record.id}`"
+                                            :id="`mass_action_select_record_${record.id}`"
+                                            :value="record.id"
+                                            class="peer hidden"
+                                            v-model="applied.massActions.indices"
+                                        >
 
-                                    <label
-                                        class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
-                                        :for="`mass_action_select_record_${record.id}`"
-                                    ></label>
-                                </div>
+                                        <label
+                                            class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl text-gray-600 peer-checked:text-brandColor dark:text-gray-300"
+                                            :for="`mass_action_select_record_${record.id}`"
+                                        ></label>
+                                    </div>
+                                @endif
                                 
                                 <!-- Campaings Id -->
                                 <p>@{{ record.id }}</p>
@@ -102,21 +106,25 @@
 
                                 <!-- Actions -->
                                 <div class="flex justify-end">
-                                    <a @click.prevent="actionType = 'edit';edit(record)">
-                                        <span
-                                            :class="record.actions.find(action => action.index === 'edit')?.icon"
-                                            class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                        >
-                                        </span>
-                                    </a>
+                                    @if (bouncer()->hasPermission('settings.automation.campaigns.edit'))
+                                        <a @click.prevent="actionType = 'edit';edit(record)">
+                                            <span
+                                                :class="record.actions.find(action => action.index === 'edit')?.icon"
+                                                class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                            >
+                                            </span>
+                                        </a>
+                                    @endif
 
-                                    <a @click.prevent="performAction(record.actions.find(action => action.index === 'delete'))">
-                                        <span
-                                            :class="record.actions.find(action => action.index === 'delete')?.icon"
-                                            class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
-                                        >
-                                        </span>
-                                    </a>
+                                    @if (bouncer()->hasPermission('settings.automation.campaigns.delete'))
+                                        <a @click.prevent="performAction(record.actions.find(action => action.index === 'delete'))">
+                                            <span
+                                                :class="record.actions.find(action => action.index === 'delete')?.icon"
+                                                class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
+                                            >
+                                            </span>
+                                        </a>
+                                    @endif
                                 </div>
                             </div>
                         </template>
