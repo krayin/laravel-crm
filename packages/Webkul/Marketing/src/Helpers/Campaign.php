@@ -40,15 +40,14 @@ class Campaign
             ->get();
 
         collect($campaigns)->each(function ($campaign) {
-            collect($this->getPersonsEmails())->each(fn ($email) => Mail::queue(new CampaignMail($email, $campaign))
-            );
+            collect($this->getPersonsEmails())->each(fn ($email) => Mail::queue(new CampaignMail($email, $campaign)));
         });
     }
 
     /**
      * Get the email address.
      */
-    public function getPersonsEmails(): array
+    private function getPersonsEmails(): array
     {
         return $this->personRepository->pluck('emails')
             ->flatMap(fn ($emails) => collect($emails)->pluck('value'))
