@@ -322,6 +322,8 @@ Route::prefix('settings')->group(function () {
             Route::get('{id}', 'show')->name('admin.settings.marketing.campaigns.show');
 
             Route::put('{id}', 'update')->name('admin.settings.marketing.campaigns.update');
+
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.campaigns.mass_delete');
         });
     });
 });

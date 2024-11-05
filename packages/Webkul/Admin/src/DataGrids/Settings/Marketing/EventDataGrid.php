@@ -72,22 +72,25 @@ class EventDataGrid extends DataGrid
      */
     public function prepareActions()
     {
-        // TODO: Implement the bouncer for this actions.
-        $this->addAction([
-            'index'  => 'edit',
-            'icon'   => 'icon-edit',
-            'title'  => trans('admin::app.settings.marketing.events.index.datagrid.edit'),
-            'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.marketing.events.edit', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.events.edit')) {
+            $this->addAction([
+                'index'  => 'edit',
+                'icon'   => 'icon-edit',
+                'title'  => trans('admin::app.settings.marketing.events.index.datagrid.edit'),
+                'method' => 'GET',
+                'url'    => fn ($row) => route('admin.settings.marketing.events.edit', $row->id),
+            ]);
+        }
 
-        $this->addAction([
-            'index'          => 'delete',
-            'icon'           => 'icon-delete',
-            'title'          => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
-            'method'         => 'DELETE',
-            'url'            => fn ($row) => route('admin.settings.marketing.events.delete', $row->id),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.events.delete')) {
+            $this->addAction([
+                'index'          => 'delete',
+                'icon'           => 'icon-delete',
+                'title'          => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
+                'method'         => 'DELETE',
+                'url'            => fn ($row) => route('admin.settings.marketing.events.delete', $row->id),
+            ]);
+        }
     }
 
     /**
@@ -95,11 +98,13 @@ class EventDataGrid extends DataGrid
      */
     public function prepareMassActions(): void
     {
-        $this->addMassAction([
-            'icon'   => 'icon-delete',
-            'title'  => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
-            'method' => 'POST',
-            'url'    => route('admin.settings.marketing.events.mass_delete'),
-        ]);
+        if (bouncer()->hasPermission('settings.automation.events.delete')) {
+            $this->addMassAction([
+                'icon'   => 'icon-delete',
+                'title'  => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
+                'method' => 'POST',
+                'url'    => route('admin.settings.marketing.events.mass_delete'),
+            ]);
+        }
     }
 }

@@ -406,8 +406,47 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.workflows.delete',
         'sort'  => 3,
-    ],
-    [
+    ], [
+        'key'   => 'settings.automation.events',
+        'name'  => 'admin::app.acl.marketing-event',
+        'route' => 'admin.settings.marketing.events.index',
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.events.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.marketing.events.create', 'admin.settings.marketing.events.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.events.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.marketing.events.edit', 'admin.settings.marketing.events.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.events.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => ['admin.settings.marketing.events.delete', 'admin.settings.marketing.events.mass_delete'],
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.automation.campaigns',
+        'name'  => 'admin::app.acl.marketing-campaigns',
+        'route' => 'admin.settings.marketing.campaigns.index',
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.campaigns.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.marketing.campaigns.create', 'admin.settings.marketing.campaigns.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.campaigns.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.marketing.campaigns.edit', 'admin.settings.marketing.campaigns.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.campaigns.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => ['admin.settings.marketing.campaigns.delete', 'admin.settings.marketing.campaigns.mass_delete'],
+        'sort'  => 3,
+    ], [
         'key'   => 'settings.automation.webhooks',
         'name'  => 'admin::app.acl.webhook',
         'route' => 'admin.settings.webhooks.index',

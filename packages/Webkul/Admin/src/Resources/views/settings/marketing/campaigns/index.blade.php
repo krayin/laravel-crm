@@ -338,22 +338,45 @@
                 },
 
                 methods: {
+                    /**
+                     * Toggle the modal.
+                     * 
+                     * @return {void}
+                     */
                     toggleModal() {
                         this.$refs.campaignModal.toggle();
                     },
 
+                    /**
+                     * Get the all marketing events.
+                     * 
+                     * @return {void}
+                     */
                     getEvents() {
                         this.$axios.get('{{ route('admin.settings.marketing.campaigns.events') }}')
                             .then(response => this.events = response.data.data)
                             .catch(error => {});
                     },
 
+                    /**
+                     * Get the all Email Templates.
+                     * 
+                     * @return {void}
+                     */
                     getEmailTemplates() {
                         this.$axios.get('{{ route('admin.settings.marketing.campaigns.email-templates') }}')
                             .then(response => this.emailTemplates = response.data.data)
                             .catch(error => {});
                     },
 
+                    /**
+                     * Create or Update the campaigns.
+                     * 
+                     * @param {Object} params
+                     * @param {Function} helpers.resetForm
+                     * @param {Function} helpers.setErrors
+                     * @return {void}
+                     */
                     createOrUpdate(paramas, { resetForm, setErrors }) {
                         this.isStoring = true;
 
@@ -382,6 +405,11 @@
                             .finally(() => this.isStoring = false);
                     },
 
+                    /**
+                     * Get the particular campaign record, so that we can use for edit.
+                     * 
+                     * @param {Object} record
+                     */
                     edit(record) {
                         this.$axios.get(`{{ route('admin.settings.marketing.campaigns.show', '') }}/${record.id}`)
                             .then(response => {

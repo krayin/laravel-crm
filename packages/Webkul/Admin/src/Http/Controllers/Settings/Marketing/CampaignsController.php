@@ -14,7 +14,7 @@ use Webkul\Marketing\Repositories\EventRepository;
 class CampaignsController extends Controller
 {
     /**
-     * CampaignRepository object
+     * Create new a controller instance.
      */
     public function __construct(
         protected CampaignRepository $campaignRepository,

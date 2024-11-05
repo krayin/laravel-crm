@@ -27,13 +27,15 @@
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.after') !!}
 
-                    <button
-                        type="button"
-                        class="primary-button"
-                        @click="$refs.marketingEvent.actionType = 'create';$refs.marketingEvent.toggleModal()"
-                    >
-                        @lang('admin::app.settings.marketing.events.index.create-btn')
-                    </button>
+                    @if (bouncer()->hasPermission('settings.automation.events.create'))
+                        <button
+                            type="button"
+                            class="primary-button"
+                            @click="$refs.marketingEvent.actionType = 'create';$refs.marketingEvent.toggleModal()"
+                        >
+                            @lang('admin::app.settings.marketing.events.index.create-btn')
+                        </button>
+                    @endif
 
                     {!! view_render_event('admin.settings.marketing.events.index.create_button.after') !!}
                 </div>
@@ -265,10 +267,22 @@
                 },
 
                 methods: {
+                    /**
+                     * Toggle the modal. 
+                     */
                     toggleModal() {
                         this.$refs.marketingModal.toggle();
                     },
 
+                    /**
+                     * Create or Update the Events.
+                     * 
+                     * @param {Object} params
+                     * @param {Function} helpers.resetForm
+                     * @param {Function} helpers.setErrors
+                     * 
+                     * @return {void}
+                     */
                     createOrUpdate(paramas, { resetForm, setErrors }) {
                         this.isStoring = true;
 
@@ -298,6 +312,11 @@
                             });
                     },
 
+                    /**
+                     * Get the particular event record, so that we can use for edit.
+                     * 
+                     * @param {Object} record
+                     */
                     edit(record) {
                         this.$refs.eventForm.setValues(record);
 
