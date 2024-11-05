@@ -6,7 +6,7 @@ return [
         'name'  => 'admin::app.layouts.dashboard',
         'route' => 'admin.dashboard.index',
         'sort'  => 1,
-    ],  [
+    ], [
         'key'   => 'leads',
         'name'  => 'admin::app.acl.leads',
         'route' => 'admin.leads.index',
@@ -56,7 +56,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.quotes.delete', 'admin.quotes.mass_delete'],
         'sort'  => 4,
-    ],  [
+    ], [
         'key'   => 'mail',
         'name'  => 'admin::app.acl.mail',
         'route' => 'admin.mail.index',
@@ -131,7 +131,7 @@ return [
         'name'  => 'admin::app.acl.contacts',
         'route' => 'admin.contacts.users.index',
         'sort'  => 6,
-    ],  [
+    ], [
         'key'   => 'contacts.persons',
         'name'  => 'admin::app.acl.persons',
         'route' => 'admin.contacts.persons.index',
@@ -181,7 +181,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.contacts.organizations.delete', 'admin.contacts.organizations.mass_delete'],
         'sort'  => 3,
-    ],  [
+    ], [
         'key'   => 'products',
         'name'  => 'admin::app.acl.products',
         'route' => 'admin.products.index',
