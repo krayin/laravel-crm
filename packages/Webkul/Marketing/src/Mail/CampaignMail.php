@@ -2,11 +2,11 @@
 
 namespace Webkul\Marketing\Mail;
 
+use Illuminate\Mail\Mailable as Mailable;
 use Illuminate\Mail\Mailables\Address;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Webkul\Marketing\Contracts\Campaign;
-use Illuminate\Mail\Mailable as Mailable;
 
 class CampaignMail extends Mailable
 {

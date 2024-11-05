@@ -33,7 +33,6 @@ class CampaignCommand extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle()
     {
@@ -44,7 +43,7 @@ class CampaignCommand extends Command
 
             $this->info('✅ Campaign processing completed successfully!');
         } catch (\Exception $e) {
-            $this->error('❌ An error occurred during campaign processing: ' . $e->getMessage());
+            $this->error('❌ An error occurred during campaign processing: '.$e->getMessage());
         }
     }
 }

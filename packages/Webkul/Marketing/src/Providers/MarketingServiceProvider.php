@@ -32,7 +32,7 @@ class MarketingServiceProvider extends ServiceProvider
     {
         if ($this->app->runningInConsole()) {
             $this->commands([
-                CampaignCommand::class
+                CampaignCommand::class,
             ]);
         }
     }

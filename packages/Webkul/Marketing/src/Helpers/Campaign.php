@@ -5,9 +5,9 @@ namespace Webkul\Marketing\Helpers;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Webkul\Contact\Repositories\PersonRepository;
+use Webkul\Marketing\Mail\CampaignMail;
 use Webkul\Marketing\Repositories\CampaignRepository;
 use Webkul\Marketing\Repositories\EventRepository;
-use Webkul\Marketing\Mail\CampaignMail;
 
 class Campaign
 {
@@ -39,11 +39,8 @@ class Campaign
             })
             ->get();
 
-        collect($campaigns)->each(function($campaign) {
-            $emails = $this->getPersonsEmails();
-
-            collect($emails)->each(fn ($email) => 
-                Mail::queue(new CampaignMail($email, $campaign))
+        collect($campaigns)->each(function ($campaign) {
+            collect($this->getPersonsEmails())->each(fn ($email) => Mail::queue(new CampaignMail($email, $campaign))
             );
         });
     }
