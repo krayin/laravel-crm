@@ -8,6 +8,11 @@ use Webkul\Marketing\Contracts\Campaign as CampaignContract;
 
 class Campaign extends Model implements CampaignContract
 {
+    /**
+     * Define the table for the model.
+     *
+     * @var string
+     */
     protected $table = 'marketing_campaigns';
 
     /**
