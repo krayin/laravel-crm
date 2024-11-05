@@ -1133,7 +1133,7 @@ return [
                     ],
 
                     'create'     => [
-                        'title'          => 'Create Campaigns',
+                        'title'          => 'Create Campaign',
                         'name'           => 'Name',
                         'type'           => 'Type',
                         'subject'        => 'Subject',
@@ -1143,7 +1143,7 @@ return [
                     ],
 
                     'edit' => [
-                        'title' => 'Edit Campaigns',
+                        'title' => 'Edit Campaign',
                     ],
                 ],
             ],

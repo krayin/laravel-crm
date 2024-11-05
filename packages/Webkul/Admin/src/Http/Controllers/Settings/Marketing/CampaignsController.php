@@ -78,7 +78,7 @@ class CampaignsController extends Controller
         Event::dispatch('settings.marketing.campaign.create.after', $marketingCampaign);
 
         return response()->json([
-            'message' => trans('Campanigs created successfully.'),
+            'message' => trans('admin::app.settings.marketing.campaigns.index.create-success'),
         ]);
     }
 
@@ -95,10 +95,26 @@ class CampaignsController extends Controller
     }
 
     /**
-     * Update the specified resource.
+     * Update the specified marketing campaign in storage.
      */
     public function update(int $id): JsonResponse
     {
-        return response()->json([]);
+        $validatedData = $this->validate(request(), [
+            'name'                  => 'required|string|max:255',
+            'subject'               => 'required|string|max:255',
+            'marketing_template_id' => 'required|exists:email_templates,id',
+            'marketing_event_id'    => 'required|exists:marketing_events,id',
+            'status'                => 'sometimes|required|in:0,1',
+        ]);
+
+        Event::dispatch('settings.marketing.campaign.update.before', $id);
+
+        $marketingCampaign = $this->campaignRepository->update($validatedData, $id);
+
+        Event::dispatch('settings.marketing.campaign.update.after', $marketingCampaign);
+
+        return response()->json([
+            'message' => trans('admin::app.settings.marketing.campaigns.index.update-success'),
+        ]);
     }
 }

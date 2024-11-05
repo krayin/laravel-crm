@@ -129,9 +129,11 @@
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
                         as="div"
-                        ref="eventForm"
                     >
-                        <form @submit="handleSubmit($event, createOrUpdate)">
+                        <form 
+                            @submit="handleSubmit($event, createOrUpdate)"
+                            ref="campaignForm"
+                        >
                             {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.before') !!}
         
                             <x-admin::modal ref="campaignModal">
@@ -161,12 +163,14 @@
                                         <x-admin::form.control-group.control
                                             type="hidden"
                                             name="id"
+                                            ::value="campaign.id"
                                         />
 
                                         <x-admin::form.control-group.control
                                             type="text"
                                             name="name"
                                             rules="required"
+                                            ::value="campaign.name"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.name')"
                                         />
         
@@ -184,6 +188,7 @@
                                             name="subject"
                                             rules="required"
                                             rows="4"
+                                            ::value="campaign.subject"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.subject')"
                                         />
         
@@ -201,10 +206,11 @@
                                             class="cursor-pointer"
                                             name="marketing_event_id"
                                             rules="required"
+                                            ::value="campaign.marketing_event_id"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.event')"
                                         >
                                             <option
-                                                v-for="event in campaigns.events"
+                                                v-for="event in events"
                                                 v-text="event.name"
                                                 :value="event.id"
                                             ></option>
@@ -213,6 +219,7 @@
                                         <x-admin::form.control-group.error control-name="marketing_event_id" />
                                     </x-admin::form.control-group>
 
+                                    <!-- Email Template -->
                                     <x-admin::form.control-group>
                                         <x-admin::form.control-group.label class="required">
                                             @lang('admin::app.settings.marketing.campaigns.index.create.email-template')
@@ -223,10 +230,11 @@
                                             class="cursor-pointer"
                                             name="marketing_template_id"
                                             rules="required"
+                                            ::value="campaign.marketing_template_id"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.email-template')"
                                         >
                                             <option
-                                                v-for="template in campaigns.emailTemplates"
+                                                v-for="template in emailTemplates"
                                                 v-text="template.name"
                                                 :value="template.id"
                                             ></option>
@@ -235,19 +243,30 @@
                                         <x-admin::form.control-group.error control-name="marketing_template_id" />
                                     </x-admin::form.control-group>
 
+                                    <!-- Status -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label>
                                             @lang('admin::app.settings.marketing.campaigns.index.create.status')
                                         </x-admin::form.control-group.label>
-            
-                                        <x-admin::form.control-group.control
-                                            type="switch"
+        
+                                        <input
+                                            type="hidden"
                                             name="status"
-                                            value="1"
-                                            :label="trans('admin::app.settings.marketing.campaigns.index.create.status')"
+                                            :value="0"
                                         />
-            
-                                        <x-admin::form.control-group.error control-name="status" />
+                                
+                                        <label class="relative inline-flex cursor-pointer items-center">
+                                            <input  
+                                                type="checkbox"
+                                                name="status"
+                                                :value="1"
+                                                id="status"
+                                                class="peer sr-only"
+                                                :checked="parseInt(campaign.status || 0)"
+                                            >
+        
+                                            <div class="peer h-5 w-9 cursor-pointer rounded-full bg-gray-200 after:absolute after:top-0.5 after:h-4 after:w-4 after:rounded-full after:border after:border-gray-300 after:bg-white after:transition-all after:content-[''] peer-checked:bg-blue-600 peer-checked:after:border-white peer-focus:outline-none peer-focus:ring-blue-300 dark:bg-gray-800 dark:after:border-white dark:after:bg-white dark:peer-checked:bg-gray-950 after:ltr:left-0.5 peer-checked:after:ltr:translate-x-full after:rtl:right-0.5 peer-checked:after:rtl:-translate-x-full"></div>
+                                        </label>
                                     </x-admin::form.control-group>
 
                                     {!! view_render_event('admin.settings.marketing.campaigns.index.form_controls.modal.content.controls.after') !!}
@@ -256,6 +275,7 @@
                                 <x-slot:footer>
                                     {!! view_render_event('admin.components.activities.actions.activity.form_controls.modal.footer.save_button.before') !!}
         
+                                    <!-- Save Button -->
                                     <x-admin::button
                                         type="submit"
                                         class="primary-button"
@@ -287,10 +307,11 @@
 
                         actionType: 'create',
 
-                        campaigns: {
-                            events: [],
-                            emailTemplates: [],
-                        },
+                        campaign: {},
+
+                        events: [],
+
+                        emailTemplates: [],
                     };
                 },
 
@@ -323,30 +344,30 @@
 
                     getEvents() {
                         this.$axios.get('{{ route('admin.settings.marketing.campaigns.events') }}')
-                            .then(response => this.campaigns.events = response.data.data)
+                            .then(response => this.events = response.data.data)
                             .catch(error => {});
                     },
 
                     getEmailTemplates() {
                         this.$axios.get('{{ route('admin.settings.marketing.campaigns.email-templates') }}')
-                            .then(response => this.campaigns.emailTemplates = response.data.data)
+                            .then(response => this.emailTemplates = response.data.data)
                             .catch(error => {});
                     },
 
                     createOrUpdate(paramas, { resetForm, setErrors }) {
                         this.isStoring = true;
 
+                        const campaignForm = new FormData(this.$refs.campaignForm);
+
                         const isUpdating = paramas.id && this.actionType === 'edit';
 
-                        isUpdating && (paramas._method = 'PUT');
-
-                        paramas.status = paramas.status ?? 0;
+                        campaignForm.append('_method', isUpdating ? 'put' : 'post');
 
                         this.$axios.post(
                             isUpdating
                             ? `{{ route('admin.settings.marketing.campaigns.update', '') }}/${paramas.id}`
                             : '{{ route('admin.settings.marketing.campaigns.store') }}', 
-                            paramas,
+                            campaignForm,
                         )
                             .then(response => {
                                 this.$refs.campaignModal.toggle();
@@ -356,7 +377,7 @@
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch(error => {
-                                setErrors(error.response.data.errors);
+                                setErrors(error.response.data?.errors);
                             })
                             .finally(() => this.isStoring = false);
                     },
@@ -364,7 +385,7 @@
                     edit(record) {
                         this.$axios.get(`{{ route('admin.settings.marketing.campaigns.show', '') }}/${record.id}`)
                             .then(response => {
-                                this.$refs.eventForm.setValues(response.data.data);
+                                this.campaign = response.data.data;
 
                                 this.toggleModal();
                             })
