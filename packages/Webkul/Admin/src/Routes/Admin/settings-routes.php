@@ -319,9 +319,11 @@ Route::prefix('settings')->group(function () {
 
             Route::post('', 'store')->name('admin.settings.marketing.campaigns.store');
 
-            Route::get('{id}', 'show')->name('admin.settings.marketing.campaigns.show');
+            Route::get('{id}', 'show')->name('admin.settings.marketing.campaigns.edit');
 
             Route::put('{id}', 'update')->name('admin.settings.marketing.campaigns.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing.campaigns.delete');
 
             Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.campaigns.mass_delete');
         });

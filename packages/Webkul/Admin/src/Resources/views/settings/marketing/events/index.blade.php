@@ -178,7 +178,7 @@
                                             type="text"
                                             name="name"
                                             rules="required"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.name')"
+                                            :label="trans('admin::app.settings.marketing.events.index.create.name')"
                                         />
         
                                         <x-admin::form.control-group.error control-name="name" />
@@ -195,7 +195,7 @@
                                             name="description"
                                             rules="required"
                                             rows="4"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.description')"
+                                            :label="trans('admin::app.settings.marketing.events.index.create.description')"
                                         />
         
                                         <x-admin::form.control-group.error control-name="description" />
@@ -211,7 +211,7 @@
                                             type="date"
                                             name="date"
                                             rules="required"
-                                            :label="trans('admin::app.settings.marketing-events.index.create.date')"
+                                            :label="trans('admin::app.settings.marketing.events.index.create.date')"
                                         />
         
                                         <x-admin::form.control-group.error control-name="date" />

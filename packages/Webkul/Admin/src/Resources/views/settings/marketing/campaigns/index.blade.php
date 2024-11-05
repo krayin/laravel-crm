@@ -419,7 +419,7 @@
                      * @param {Object} record
                      */
                     edit(record) {
-                        this.$axios.get(`{{ route('admin.settings.marketing.campaigns.show', '') }}/${record.id}`)
+                        this.$axios.get(`{{ route('admin.settings.marketing.campaigns.edit', '') }}/${record.id}`)
                             .then(response => {
                                 this.campaign = response.data.data;
 

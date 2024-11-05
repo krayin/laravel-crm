@@ -1087,12 +1087,13 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'     => 'Create Marketing Event',
-                    'title'          => 'Marketing Events',
-                    'create-success' => 'Marketing Event created successfully.',
-                    'update-success' => 'Marketing Event updated successfully.',
-                    'delete-success' => 'Marketing Event deleted successfully.',
-                    'delete-failed'  => 'Marketing Event can not be deleted.',
+                    'create-btn'          => 'Create Marketing Event',
+                    'title'               => 'Marketing Events',
+                    'create-success'      => 'Marketing Event created successfully.',
+                    'update-success'      => 'Marketing Event updated successfully.',
+                    'delete-success'      => 'Marketing Event deleted successfully.',
+                    'delete-failed'       => 'Marketing Event can not be deleted.',
+                    'mass-delete-success' => 'Marketing Events deleted successfully',
 
                     'datagrid'   => [
                         'delete'       => 'Delete',
@@ -1118,12 +1119,13 @@ return [
 
             'campaigns' => [
                 'index' => [
-                    'create-btn'     => 'Create Campaigns',
-                    'title'          => 'Campaigns',
-                    'create-success' => 'Campaigns created successfully.',
-                    'update-success' => 'Campaigns updated successfully.',
-                    'delete-success' => 'Campaigns deleted successfully.',
-                    'delete-failed'  => 'Campaigns can not be deleted.',
+                    'create-btn'          => 'Create Campaigns',
+                    'title'               => 'Campaigns',
+                    'create-success'      => 'Campaign created successfully.',
+                    'update-success'      => 'Campaign updated successfully.',
+                    'delete-success'      => 'Campaign deleted successfully.',
+                    'delete-failed'       => 'Campaign can not be deleted.',
+                    'mass-delete-success' => 'Campaigns deleted successfully.',
 
                     'datagrid'   => [
                         'id'           => 'ID',

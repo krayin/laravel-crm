@@ -40,11 +40,11 @@ class EventController extends Controller
             'date'        => 'required|date|after_or_equal:today',
         ]);
 
-        Event::dispatch('settings.marketing-event.create.before');
+        Event::dispatch('settings.marketing.events.create.before');
 
         $marketingEvent = $this->eventRepository->create($validatedData);
 
-        Event::dispatch('settings.marketing-event.create.after', $marketingEvent);
+        Event::dispatch('settings.marketing.events.create.after', $marketingEvent);
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.create-success'),
@@ -63,11 +63,11 @@ class EventController extends Controller
             'date'        => 'required|date|after_or_equal:today',
         ]);
 
-        Event::dispatch('settings.marketing-event.update.before', $id);
+        Event::dispatch('settings.marketing.events.update.before', $id);
 
         $marketingEvent = $this->eventRepository->update($validatedData, $id);
 
-        Event::dispatch('settings.marketing-event.update.after', $marketingEvent);
+        Event::dispatch('settings.marketing.events.update.after', $marketingEvent);
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.update-success'),
@@ -80,11 +80,11 @@ class EventController extends Controller
      */
     public function destroy(int $id): JsonResponse
     {
-        Event::dispatch('settings.marketing-event.delete.before', $id);
+        Event::dispatch('settings.marketing.events.delete.before', $id);
 
         $this->eventRepository->delete($id);
 
-        Event::dispatch('settings.marketing-event.delete.after', $id);
+        Event::dispatch('settings.marketing.events.delete.after', $id);
 
         return response()->json([
             'message' => trans('admin::app.settings.marketing.events.index.delete-success'),
@@ -98,18 +98,16 @@ class EventController extends Controller
     {
         $marketingEvents = $this->eventRepository->findWhereIn('id', $massDestroyRequest->input('indices'));
 
-        dd($marketingEvents);
-
         foreach ($marketingEvents as $marketingEvent) {
-            Event::dispatch('settings.marketing-event.delete.before', $marketingEvent);
+            Event::dispatch('settings.marketing.events.delete.before', $marketingEvent);
 
             $this->eventRepository->delete($marketingEvent->id);
 
-            Event::dispatch('settings.marketing-event.delete.after', $marketingEvent);
+            Event::dispatch('settings.marketing.events.delete.after', $marketingEvent);
         }
 
         return response()->json([
-            'message' => trans('admin::app.settings.marketing.events.index.delete-success'),
+            'message' => trans('admin::app.settings.marketing.events.index.mass-delete-success'),
         ]);
     }
 }
