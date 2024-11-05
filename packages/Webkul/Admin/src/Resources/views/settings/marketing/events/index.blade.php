@@ -165,7 +165,10 @@
         
                                     <!-- Name -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label
+                                            class="required"
+                                            for="name"
+                                        >
                                             @lang('admin::app.settings.marketing.events.index.create.name')
                                         </x-admin::form.control-group.label>
                                         
@@ -177,6 +180,7 @@
                                         <x-admin::form.control-group.control
                                             type="text"
                                             name="name"
+                                            id="name"
                                             rules="required"
                                             :label="trans('admin::app.settings.marketing.events.index.create.name')"
                                         />
@@ -186,13 +190,17 @@
         
                                     <!-- Description -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label 
+                                            class="required"
+                                            for="description"
+                                        >
                                             @lang('admin::app.settings.marketing.events.index.create.description')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
                                             type="textarea"
                                             name="description"
+                                            id="description"
                                             rules="required"
                                             rows="4"
                                             :label="trans('admin::app.settings.marketing.events.index.create.description')"
@@ -203,13 +211,17 @@
 
                                     <!-- Date -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label 
+                                            class="required"
+                                            for="date"
+                                        >
                                             @lang('admin::app.settings.marketing.events.index.create.date')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
                                             type="date"
                                             name="date"
+                                            id="date"
                                             rules="required"
                                             :label="trans('admin::app.settings.marketing.events.index.create.date')"
                                         />

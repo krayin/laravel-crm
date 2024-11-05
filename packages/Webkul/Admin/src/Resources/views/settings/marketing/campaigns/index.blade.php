@@ -95,14 +95,21 @@
                                     </div>
                                 @endif
                                 
-                                <!-- Campaings Id -->
+                                <!-- Id -->
                                 <p>@{{ record.id }}</p>
             
-                                <!-- Campaings Name -->
+                                <!-- Name -->
                                 <p>@{{ record.name }}</p>
 
-                                <!-- Campaings subject -->
+                                <!-- Subject -->
                                 <p>@{{ record.subject }}</p>
+
+                                <!-- Status -->
+                                <span
+                                    :class="record.status == 1 ? 'label-active' : 'label-inactive'"
+                                >
+                                    @{{ record.status == 1 ? '@lang('admin::app.settings.marketing.campaigns.index.datagrid.active')' : '@lang('admin::app.settings.marketing.campaigns.index.datagrid.inactive')' }}
+                                </span>
 
                                 <!-- Actions -->
                                 <div class="flex justify-end">
@@ -164,7 +171,10 @@
         
                                     <!-- Name -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label 
+                                            class="required"
+                                            for="name"
+                                        >
                                             @lang('admin::app.settings.marketing.campaigns.index.create.name')
                                         </x-admin::form.control-group.label>
                                         
@@ -177,6 +187,7 @@
                                         <x-admin::form.control-group.control
                                             type="text"
                                             name="name"
+                                            id="name"
                                             rules="required"
                                             ::value="campaign.name"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.name')"
@@ -187,13 +198,17 @@
         
                                     <!-- Subject -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label
+                                            class="required"
+                                            for="subject"
+                                        >
                                             @lang('admin::app.settings.marketing.campaigns.index.create.subject')
                                         </x-admin::form.control-group.label>
                                         
                                         <x-admin::form.control-group.control
                                             type="text"
                                             name="subject"
+                                            id="subject"
                                             rules="required"
                                             rows="4"
                                             ::value="campaign.subject"
@@ -205,7 +220,10 @@
 
                                     <!-- Event -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label 
+                                            class="required"
+                                            for="marketing_event_id"
+                                        >
                                             @lang('admin::app.settings.marketing.campaigns.index.create.event')
                                         </x-admin::form.control-group.label>
 
@@ -213,6 +231,7 @@
                                             type="select"
                                             class="cursor-pointer"
                                             name="marketing_event_id"
+                                            id="marketing_event_id"
                                             rules="required"
                                             ::value="campaign.marketing_event_id"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.event')"
@@ -229,7 +248,10 @@
 
                                     <!-- Email Template -->
                                     <x-admin::form.control-group>
-                                        <x-admin::form.control-group.label class="required">
+                                        <x-admin::form.control-group.label
+                                            class="required"
+                                            for="marketing_template_id"
+                                        >
                                             @lang('admin::app.settings.marketing.campaigns.index.create.email-template')
                                         </x-admin::form.control-group.label>
 
@@ -237,6 +259,7 @@
                                             type="select"
                                             class="cursor-pointer"
                                             name="marketing_template_id"
+                                            id="marketing_template_id"
                                             rules="required"
                                             ::value="campaign.marketing_template_id"
                                             :label="trans('admin::app.settings.marketing.campaigns.index.create.email-template')"

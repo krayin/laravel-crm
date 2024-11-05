@@ -17,6 +17,7 @@ class CampaignDatagrid extends DataGrid
                 'marketing_campaigns.id',
                 'marketing_campaigns.name',
                 'marketing_campaigns.subject',
+                'marketing_campaigns.status',
             );
 
         $this->addFilter('id', 'marketing_campaigns.id');
@@ -52,6 +53,13 @@ class CampaignDatagrid extends DataGrid
         $this->addColumn([
             'index'    => 'subject',
             'label'    => trans('admin::app.settings.marketing.campaigns.index.datagrid.subject'),
+            'type'     => 'string',
+            'sortable' => true,
+        ]);
+
+        $this->addColumn([
+            'index'    => 'status',
+            'label'    => trans('admin::app.settings.marketing.campaigns.index.datagrid.status'),
             'type'     => 'string',
             'sortable' => true,
         ]);

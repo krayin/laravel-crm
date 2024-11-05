@@ -28,7 +28,7 @@ class CampaignsController extends Controller
      */
     public function index(): View|JsonResponse
     {
-        if (request()->ajax()) {
+        if (request()->isXmlHttpRequest()) {
             return datagrid(CampaignDatagrid::class)->process();
         }
 
@@ -134,7 +134,6 @@ class CampaignsController extends Controller
             'message' => trans('admin::app.settings.marketing.campaigns.index.delete-success'),
         ]);
     }
-
 
     /**
      * Remove the specified marketing campaigns from storage.

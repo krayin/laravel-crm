@@ -1128,12 +1128,14 @@ return [
                     'mass-delete-success' => 'Campaigns deleted successfully.',
 
                     'datagrid'   => [
-                        'id'           => 'ID',
-                        'name'         => 'Name',
-                        'subject'      => 'Subject',
-                        'status'       => 'Status',
-                        'edit'         => 'Edit',
-                        'delete'       => 'Delete',
+                        'id'       => 'ID',
+                        'name'     => 'Name',
+                        'subject'  => 'Subject',
+                        'status'   => 'Status',
+                        'active'   => 'Active',
+                        'inactive' => 'Inactive',
+                        'edit'     => 'Edit',
+                        'delete'   => 'Delete',
                     ],
 
                     'create'     => [
