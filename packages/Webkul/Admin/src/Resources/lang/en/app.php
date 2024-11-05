@@ -1128,16 +1128,18 @@ return [
                         'name'         => 'Name',
                         'subject'      => 'Subject',
                         'status'       => 'Status',
-                        'type'         => 'Type',
                         'edit'         => 'Edit',
                         'delete'       => 'Delete',
                     ],
 
                     'create'     => [
-                        'title'       => 'Create Campaigns',
-                        'name'        => 'Name',
-                        'type'        => 'Type',
-                        'subject'     => 'Subject',
+                        'title'          => 'Create Campaigns',
+                        'name'           => 'Name',
+                        'type'           => 'Type',
+                        'subject'        => 'Subject',
+                        'event'          => 'Event',
+                        'email-template' => 'Email Template',
+                        'status'         => 'Status',
                     ],
 
                     'edit' => [

@@ -278,8 +278,8 @@
 
                         this.$axios.post(
                             isUpdating
-                            ? `{{ route('admin.settings.marketing_events.update', '') }}/${paramas.id}`
-                            : '{{ route('admin.settings.marketing_events.store') }}', 
+                            ? `{{ route('admin.settings.marketing.events.update', '') }}/${paramas.id}`
+                            : '{{ route('admin.settings.marketing.events.store') }}', 
                             paramas
                         )
                             .then(response => {

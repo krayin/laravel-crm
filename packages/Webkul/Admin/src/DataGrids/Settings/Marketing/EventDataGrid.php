@@ -78,7 +78,7 @@ class EventDataGrid extends DataGrid
             'icon'   => 'icon-edit',
             'title'  => trans('admin::app.settings.marketing.events.index.datagrid.edit'),
             'method' => 'GET',
-            'url'    => fn ($row) => route('admin.settings.marketing_events.edit', $row->id),
+            'url'    => fn ($row) => route('admin.settings.marketing.events.edit', $row->id),
         ]);
 
         $this->addAction([
@@ -86,7 +86,7 @@ class EventDataGrid extends DataGrid
             'icon'           => 'icon-delete',
             'title'          => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
             'method'         => 'DELETE',
-            'url'            => fn ($row) => route('admin.settings.marketing_events.delete', $row->id),
+            'url'            => fn ($row) => route('admin.settings.marketing.events.delete', $row->id),
         ]);
     }
 
@@ -99,7 +99,7 @@ class EventDataGrid extends DataGrid
             'icon'   => 'icon-delete',
             'title'  => trans('admin::app.settings.marketing.events.index.datagrid.delete'),
             'method' => 'POST',
-            'url'    => route('admin.settings.marketing_events.mass_delete'),
+            'url'    => route('admin.settings.marketing.events.mass_delete'),
         ]);
     }
 }
