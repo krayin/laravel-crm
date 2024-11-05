@@ -231,17 +231,17 @@ class EmailController extends Controller
      */
     public function massUpdate(MassUpdateRequest $massUpdateRequest): JsonResponse
     {
-        $leads = $this->leadRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
+        $emails = $this->emailRepository->findWhereIn('id', $massUpdateRequest->input('indices'));
 
         try {
-            foreach ($leads as $lead) {
-                Event::dispatch('email.update.before', $lead->id);
+            foreach ($emails as $email) {
+                Event::dispatch('email.update.before', $email->id);
 
                 $this->emailRepository->update([
                     'folders' => request('folders'),
-                ], $lead->id);
+                ], $email->id);
 
-                Event::dispatch('email.update.after', $lead->id);
+                Event::dispatch('email.update.after', $email->id);
             }
 
             return response()->json([
