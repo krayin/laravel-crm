@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Name',
-                    'save-btn' => 'Save Type',
-                    'title'    => 'Create Type',
+                    'save-btn' => 'Save Source',
+                    'title'    => 'Create Source',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Type',
+                    'title' => 'Edit Source',
                 ],
             ],
         ],

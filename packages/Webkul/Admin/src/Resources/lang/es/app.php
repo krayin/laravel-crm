@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar Fuente',
-                    'title'    => 'Crear Fuente',
+                    'save-btn' => 'Guardar fuente',
+                    'title'    => 'Crear fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fuente',
+                    'title' => 'Editar fuente',
                 ],
             ],
         ],
