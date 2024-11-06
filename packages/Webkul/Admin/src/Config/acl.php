@@ -408,7 +408,7 @@ return [
         'sort'  => 3,
     ], [
         'key'   => 'settings.automation.events',
-        'name'  => 'admin::app.acl.marketing-event',
+        'name'  => 'admin::app.acl.event',
         'route' => 'admin.settings.marketing.events.index',
         'sort'  => 2,
     ], [
@@ -428,7 +428,7 @@ return [
         'sort'  => 3,
     ], [
         'key'   => 'settings.automation.campaigns',
-        'name'  => 'admin::app.acl.marketing-campaigns',
+        'name'  => 'admin::app.acl.campaigns',
         'route' => 'admin.settings.marketing.campaigns.index',
         'sort'  => 2,
     ], [

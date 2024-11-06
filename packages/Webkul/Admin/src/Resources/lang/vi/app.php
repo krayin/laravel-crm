@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Cài đặt khác',
         'tags'            => 'Thẻ',
         'configuration'   => 'Cấu hình',
+        'campaigns'       => 'Chiến dịch',
+        'event'           => 'Sự kiện',
         'create'          => 'Tạo mới',
         'edit'            => 'Chỉnh sửa',
         'view'            => 'Xem',
@@ -391,6 +393,7 @@ return [
                 'click-to-add'    => 'Nhấn để thêm',
                 'search'          => 'Tìm kiếm',
                 'no-result-found' => 'Không tìm thấy kết quả',
+                'search'          => 'Tìm kiếm...',
             ],
         ],
 
@@ -1080,6 +1083,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Tạo Sự kiện',
+                    'title'               => 'Sự kiện',
+                    'create-success'      => 'Sự kiện đã được tạo thành công.',
+                    'update-success'      => 'Sự kiện đã được cập nhật thành công.',
+                    'delete-success'      => 'Sự kiện đã được xóa thành công.',
+                    'delete-failed'       => 'Không thể xóa sự kiện.',
+                    'mass-delete-success' => 'Các sự kiện đã được xóa thành công',
+
+                    'datagrid'   => [
+                        'delete'       => 'Xóa',
+                        'edit'         => 'Chỉnh sửa',
+                        'id'           => 'ID',
+                        'name'         => 'Tên',
+                        'description'  => 'Mô tả',
+                        'date'         => 'Ngày',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Tạo Sự kiện',
+                        'name'        => 'Tên',
+                        'date'        => 'Ngày',
+                        'description' => 'Mô tả',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Chỉnh sửa Sự kiện',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Tạo Chiến dịch',
+                    'title'               => 'Chiến dịch',
+                    'create-success'      => 'Chiến dịch đã được tạo thành công.',
+                    'update-success'      => 'Chiến dịch đã được cập nhật thành công.',
+                    'delete-success'      => 'Chiến dịch đã được xóa thành công.',
+                    'delete-failed'       => 'Không thể xóa chiến dịch.',
+                    'mass-delete-success' => 'Các chiến dịch đã được xóa thành công',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Tên',
+                        'subject'  => 'Chủ đề',
+                        'status'   => 'Trạng thái',
+                        'active'   => 'Kích hoạt',
+                        'inactive' => 'Không kích hoạt',
+                        'edit'     => 'Chỉnh sửa',
+                        'delete'   => 'Xóa',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Tạo Chiến dịch',
+                        'name'           => 'Tên',
+                        'type'           => 'Loại',
+                        'subject'        => 'Chủ đề',
+                        'event'          => 'Sự kiện',
+                        'email-template' => 'Mẫu Email',
+                        'status'         => 'Trạng thái',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Chỉnh sửa Chiến dịch',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Tạo Thẻ',
@@ -1537,15 +1611,17 @@ return [
             'users'           => 'Người Dùng',
         ],
 
-        'updated'              => 'Cập Nhật :attribute',
-        'created'              => 'Đã Tạo',
-        'duration-overlapping' => 'Người tham gia có cuộc họp khác vào thời điểm này. Bạn có muốn tiếp tục không?',
-        'create-success'       => 'Hoạt động đã được tạo thành công.',
-        'update-success'       => 'Hoạt động đã được cập nhật thành công.',
-        'overlapping-error'    => 'Người tham gia có cuộc họp khác vào thời điểm này.',
-        'mass-update-success'  => 'Các hoạt động đã được cập nhật thành công.',
+        'updated'              => 'Đã cập nhật :attribute',
+        'created'              => 'Đã tạo',
+        'duration-overlapping' => 'Người tham gia có một cuộc họp khác vào thời điểm này. Bạn có muốn tiếp tục không?',
+        'create-success'       => 'Hoạt động được tạo thành công.',
+        'update-success'       => 'Hoạt động được cập nhật thành công.',
+        'overlapping-error'    => 'Người tham gia có một cuộc họp khác vào thời điểm này.',
         'destroy-success'      => 'Hoạt động đã được xóa thành công.',
-        'delete-failed'        => 'Hoạt động không thể bị xóa.',
+        'delete-failed'        => 'Không thể xóa hoạt động.',
+        'mass-update-success'  => 'Hoạt động được cập nhật thành công.',
+        'mass-destroy-success' => 'Hoạt động đã được xóa thành công.',
+        'mass-delete-failed'   => 'Không thể xóa hoạt động.',
     ],
 
     'mail' => [
@@ -1957,21 +2033,28 @@ return [
         'email-templates'      => 'Mẫu Email',
         'email'                => 'Email',
         'email-templates-info' => 'Thêm, chỉnh sửa hoặc xóa mẫu email khỏi CRM',
+        'events'               => 'Sự kiện',
+        'events-info'          => 'Thêm, chỉnh sửa hoặc xóa sự kiện từ CRM',
+        'campaigns'            => 'Chiến dịch',
+        'campaigns-info'       => 'Thêm, chỉnh sửa hoặc xóa chiến dịch từ CRM',
         'workflows'            => 'Quy Trình',
         'workflows-info'       => 'Thêm, chỉnh sửa hoặc xóa quy trình khỏi CRM',
+        'webhooks'             => 'Webhook',
+        'webhooks-info'        => 'Thêm, chỉnh sửa hoặc xóa webhook từ CRM',
         'other-settings'       => 'Cài Đặt Khác',
         'other-settings-info'  => 'Quản lý tất cả các cài đặt khác trong CRM',
         'tags'                 => 'Thẻ',
         'tags-info'            => 'Thêm, chỉnh sửa hoặc xóa thẻ khỏi CRM',
         'my-account'           => 'Tài Khoản Của Tôi',
         'sign-out'             => 'Đăng Xuất',
-        'back'                 => 'Quay Lại',
+        'back'                 => 'Quay lại',
         'name'                 => 'Tên',
-        'configuration'        => 'Cấu Hình',
-        'howdy'                => 'Xin Chào!',
-        'warehouses'           => 'Kho Hàng',
-        'warehouse'            => 'Kho Hàng',
-        'warehouses-info'      => 'Thêm, chỉnh sửa hoặc xóa kho hàng khỏi CRM',
+        'configuration'        => 'Cấu hình',
+        'activities'           => 'Hoạt động',
+        'howdy'                => 'Xin chào!',
+        'warehouses'           => 'Kho hàng',
+        'warehouse'            => 'Kho hàng',
+        'warehouses-info'      => 'Thêm, chỉnh sửa hoặc xóa kho hàng từ CRM',
     ],
 
     'user' => [
@@ -2016,6 +2099,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'Bạn không được phép truy cập trang này',
+        'dashboard' => 'Bảng điều khiển',
+        'go-back'   => 'Quay lại',
+        'support'   => 'Nếu sự cố vẫn tiếp diễn, vui lòng liên hệ với chúng tôi tại <a href=":link" class=":class">:email</a> để được hỗ trợ.',
+
+        '404' => [
+            'description' => 'Rất tiếc! Trang bạn đang tìm kiếm hiện không có ở đây. Có vẻ như chúng tôi không thể tìm thấy những gì bạn đang tìm kiếm.',
+            'title'       => '404 Không Tìm Thấy Trang',
+        ],
+
+        '401' => [
+            'description' => 'Rất tiếc! Có vẻ như bạn không được phép truy cập vào trang này. Có vẻ bạn đang thiếu thông tin xác thực cần thiết.',
+            'title'       => '401 Không Được Phép',
+        ],
+
+        '403' => [
+            'description' => 'Rất tiếc! Trang này bị hạn chế. Có vẻ bạn không có quyền truy cập vào nội dung này.',
+            'title'       => '403 Cấm Truy Cập',
+        ],
+
+        '500' => [
+            'description' => 'Rất tiếc! Đã xảy ra sự cố. Có vẻ như chúng tôi đang gặp khó khăn trong việc tải trang mà bạn đang tìm kiếm.',
+            'title'       => '500 Lỗi Máy Chủ Nội Bộ',
+        ],
+
+        '503' => [
+            'description' => 'Rất tiếc! Có vẻ chúng tôi đang tạm ngừng để bảo trì. Vui lòng quay lại sau.',
+            'title'       => '503 Dịch Vụ Không Khả Dụng',
+        ],
     ],
 ];

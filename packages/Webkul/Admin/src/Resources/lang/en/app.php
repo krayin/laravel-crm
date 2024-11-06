@@ -32,8 +32,8 @@ return [
         'other-settings'      => 'Other Settings',
         'tags'                => 'Tags',
         'configuration'       => 'Configuration',
-        'marketing-campaigns' => 'Marketing Campaigns',
-        'marketing-event'     => 'Marketing Event',
+        'campaigns'           => 'Campaigns',
+        'event'               => 'Event',
         'create'              => 'Create',
         'edit'                => 'Edit',
         'view'                => 'View',
@@ -1087,13 +1087,13 @@ return [
         'marketing' => [
             'events' => [
                 'index' => [
-                    'create-btn'          => 'Create Marketing Event',
-                    'title'               => 'Marketing Events',
-                    'create-success'      => 'Marketing Event created successfully.',
-                    'update-success'      => 'Marketing Event updated successfully.',
-                    'delete-success'      => 'Marketing Event deleted successfully.',
-                    'delete-failed'       => 'Marketing Event can not be deleted.',
-                    'mass-delete-success' => 'Marketing Events deleted successfully',
+                    'create-btn'          => 'Create Event',
+                    'title'               => 'Events',
+                    'create-success'      => 'Event created successfully.',
+                    'update-success'      => 'Event updated successfully.',
+                    'delete-success'      => 'Event deleted successfully.',
+                    'delete-failed'       => 'Event can not be deleted.',
+                    'mass-delete-success' => 'Events deleted successfully',
 
                     'datagrid'   => [
                         'delete'       => 'Delete',
@@ -1105,14 +1105,14 @@ return [
                     ],
 
                     'create'     => [
-                        'title'       => 'Create Marketing Event',
+                        'title'       => 'Create Event',
                         'name'        => 'Name',
                         'date'        => 'Date',
                         'description' => 'Description',
                     ],
 
                     'edit' => [
-                        'title' => 'Edit Marketing Event',
+                        'title' => 'Edit Event',
                     ],
                 ],
             ],

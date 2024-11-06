@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'سایر تنظیمات',
         'tags'            => 'برچسب‌ها',
         'configuration'   => 'پیکربندی',
+        'campaigns'       => 'کمپین‌ها',
+        'event'           => 'رویداد',
         'create'          => 'ایجاد',
         'edit'            => 'ویرایش',
         'view'            => 'نمایش',
@@ -1082,6 +1084,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'ایجاد رویداد',
+                    'title'               => 'رویدادها',
+                    'create-success'      => 'رویداد با موفقیت ایجاد شد.',
+                    'update-success'      => 'رویداد با موفقیت به‌روزرسانی شد.',
+                    'delete-success'      => 'رویداد با موفقیت حذف شد.',
+                    'delete-failed'       => 'رویداد قابل حذف نیست.',
+                    'mass-delete-success' => 'رویدادها با موفقیت حذف شدند',
+
+                    'datagrid'   => [
+                        'delete'       => 'حذف',
+                        'edit'         => 'ویرایش',
+                        'id'           => 'شناسه',
+                        'name'         => 'نام',
+                        'description'  => 'توضیحات',
+                        'date'         => 'تاریخ',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'ایجاد رویداد',
+                        'name'        => 'نام',
+                        'date'        => 'تاریخ',
+                        'description' => 'توضیحات',
+                    ],
+
+                    'edit' => [
+                        'title' => 'ویرایش رویداد',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'ایجاد کمپین',
+                    'title'               => 'کمپین‌ها',
+                    'create-success'      => 'کمپین با موفقیت ایجاد شد.',
+                    'update-success'      => 'کمپین با موفقیت به‌روزرسانی شد.',
+                    'delete-success'      => 'کمپین با موفقیت حذف شد.',
+                    'delete-failed'       => 'کمپین قابل حذف نیست.',
+                    'mass-delete-success' => 'کمپین‌ها با موفقیت حذف شدند',
+
+                    'datagrid'   => [
+                        'id'       => 'شناسه',
+                        'name'     => 'نام',
+                        'subject'  => 'موضوع',
+                        'status'   => 'وضعیت',
+                        'active'   => 'فعال',
+                        'inactive' => 'غیرفعال',
+                        'edit'     => 'ویرایش',
+                        'delete'   => 'حذف',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'ایجاد کمپین',
+                        'name'           => 'نام',
+                        'type'           => 'نوع',
+                        'subject'        => 'موضوع',
+                        'event'          => 'رویداد',
+                        'email-template' => 'قالب ایمیل',
+                        'status'         => 'وضعیت',
+                    ],
+
+                    'edit' => [
+                        'title' => 'ویرایش کمپین',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'ایجاد برچسب',
@@ -1960,6 +2033,10 @@ return [
         'email-templates'      => 'قالب‌های ایمیل',
         'email'                => 'ایمیل',
         'email-templates-info' => 'اضافه، ویرایش یا حذف قالب‌های ایمیل از CRM',
+        'events'               => 'رویدادها',
+        'events-info'          => 'افزودن، ویرایش یا حذف رویدادها از CRM',
+        'campaigns'            => 'کمپین‌ها',
+        'campaigns-info'       => 'افزودن، ویرایش یا حذف کمپین‌ها از CRM',
         'workflows'            => 'فرایندها',
         'workflows-info'       => 'اضافه، ویرایش یا حذف فرایندها از CRM',
         'webhooks'             => 'وب‌هوک‌ها',
