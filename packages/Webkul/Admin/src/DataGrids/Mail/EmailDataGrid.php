@@ -63,7 +63,11 @@ class EmailDataGrid extends DataGrid
             'searchable' => false,
             'filterable' => false,
             'sortable'   => false,
-            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
+            'closure'    => function ($row) {
+                $emails = app(EmailRepository::class)->find($row->id)->emails()->withCount('attachments')->get();
+
+                return $emails->sum('attachments_count');
+            },
         ]);
 
         $this->addColumn([
