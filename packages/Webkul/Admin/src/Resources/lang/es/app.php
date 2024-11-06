@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [

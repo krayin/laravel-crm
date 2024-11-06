@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
+                'update-quote'               => 'Update Quote',
             ],
 
             'create' => [
