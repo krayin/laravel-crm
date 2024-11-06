@@ -2,19 +2,19 @@
 
 return [
     'acl' => [
-        'title'  => 'نماذج الويب',
-        'view'   => 'عرض',
-        'create' => 'إنشاء',
-        'edit'   => 'تحرير',
-        'delete' => 'حذف',
+        'title'  => 'Web Forms',
+        'view'   => 'View',
+        'create' => 'Create',
+        'edit'   => 'Edit',
+        'delete' => 'Delete',
     ],
 
     'menu' => [
-        'title'      => 'نماذج الويب',
-        'title-info' => 'إضافة، تعديل أو حذف نماذج الويب من CRM',
+        'title'      => 'Web Forms',
+        'title-info' => 'Add, edit, or delete web forms from the CRM',
     ],
 
     'validations' => [
-        'invalid-phone-number' => 'رقم الهاتف غير صالح',
+        'invalid-phone-number' => 'Invalid phone number',
     ],
 ];
