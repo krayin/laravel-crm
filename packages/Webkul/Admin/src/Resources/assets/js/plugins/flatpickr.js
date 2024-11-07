@@ -51,8 +51,6 @@ export default {
 
         changeTheme(currentTheme);
 
-        window.emitter.on("change-theme", (theme) => {
-            changeTheme(theme);
-        });
+        window.emitter.on("change-theme", (theme) => changeTheme(theme));
     },
 };
