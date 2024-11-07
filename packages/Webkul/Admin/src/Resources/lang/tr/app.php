@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
+                'update-quote'               => 'Teklifi Güncelle',
             ],
 
             'create' => [
