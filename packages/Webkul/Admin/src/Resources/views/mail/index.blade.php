@@ -415,16 +415,6 @@
                 },
 
                 methods: {
-                    truncatedReply(reply) {
-                        const maxLength = 100;
-
-                        if (reply.length > maxLength) {
-                            return `${reply.substring(0, maxLength)}...`;
-                        }
-                        
-                        return reply;
-                    },
-
                     toggleModal() {
                         this.draft.reply_to = [];
 
