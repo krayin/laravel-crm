@@ -118,12 +118,14 @@ import VueCal from "./plugins/vue-cal";
     VueCal,
 ].forEach((plugin) => app.use(plugin));
 
-
 /**
  * Global directives.
  */
 import Debounce from "./directives/debounce";
+import DOMPurify from "./directives/dompurify";
 
 app.directive("debounce", Debounce);
+app.directive("safe-html", DOMPurify);
 
 export default app;
+

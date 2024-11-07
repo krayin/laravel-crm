@@ -220,7 +220,11 @@
     "src": "node_modules/vue-cal/dist/i18n/zh-hk.es.js"
   },
   "src/Resources/assets/css/app.css": {
+<<<<<<< HEAD
     "file": "assets/app-d6168e0d.css",
+=======
+    "file": "assets/app-1b23879e.css",
+>>>>>>> 4848b68af8ce1b973fc60018860c8a8347d2b7bd
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -370,7 +374,7 @@
       "node_modules/vue-cal/dist/i18n/zh-hk.es.js",
       "node_modules/vue-cal/dist/drag-and-drop.es.js"
     ],
-    "file": "assets/app-2032dc2b.js",
+    "file": "assets/app-3d9f948a.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   },
