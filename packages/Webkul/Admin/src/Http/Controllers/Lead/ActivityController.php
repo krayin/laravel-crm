@@ -75,6 +75,7 @@ class ActivityController extends Controller
                         'id'         => $attachment->id,
                         'name'       => $attachment->name,
                         'path'       => $attachment->path,
+                        'url'        => $attachment->url,
                         'created_at' => $attachment->created_at,
                         'updated_at' => $attachment->updated_at,
                     ];

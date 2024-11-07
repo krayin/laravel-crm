@@ -101,8 +101,9 @@ class EmailController extends Controller
     public function store()
     {
         $this->validate(request(), [
-            'reply_to' => 'required|array|min:1',
-            'reply'    => 'required',
+            'reply_to'   => 'required|array|min:1',
+            'reply_to.*' => 'email',
+            'reply'      => 'required',
         ]);
 
         Event::dispatch('email.create.before');
