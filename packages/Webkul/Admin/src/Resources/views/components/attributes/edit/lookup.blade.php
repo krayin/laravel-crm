@@ -8,10 +8,18 @@
         :validations="'{{ $validations }}'"
         :value="{{ json_encode($lookUpEntityData)}}"
     >
-        <x-admin::form.control-group.control
-            type="text"
-            :placeholder="trans('admin::app.components.attributes.lookup.click-to-add')"
-        />
+        <div class="relative inline-block w-full">
+            <!-- Input Container -->
+            <div class="relative flex items-center justify-between rounded border border-gray-200 p-2 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:text-gray-300">
+                @lang('admin::app.components.attributes.lookup.click-to-add')
+
+                <!-- Icons Container -->
+                <div class="flex items-center gap-2">
+                    <!-- Arrow Icon -->
+                    <i class="icon-down-arrow text-2xl text-gray-600"></i>
+                </div>
+            </div>
+        </div>
     </v-lookup-component>
 @endif
 

@@ -208,7 +208,7 @@
     
                                         <label 
                                             :for="index" 
-                                            class="peer-checked:border-gray-850 block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-4 peer-checked:border-solid"
+                                            class="block h-6 w-6 cursor-pointer rounded-full shadow-md transition duration-200 ease-in-out peer-checked:border-2 peer-checked:border-solid peer-checked:border-brandColor"
                                             :style="`background-color: ${color.background}`"
                                         >
                                         </label>

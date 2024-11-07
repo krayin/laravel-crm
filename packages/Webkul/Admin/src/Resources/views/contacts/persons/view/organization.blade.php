@@ -3,14 +3,13 @@
 @if ($person?->organization)
     <div class="flex w-full flex-col gap-4 border-b border-gray-200 p-4 dark:border-gray-800">
         <h4 class="flex items-center justify-between font-semibold dark:text-white">
-            About Organization
+            @lang('admin::app.contacts.persons.view.about-organization')
 
-            <a 
-                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
+            <a
                 href="{{ route('admin.contacts.organizations.edit', $person->organization->id) }}"
+                class="icon-edit rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                 target="_blank"
-            >
-            </a>
+            ></a>
         </h4>
 
         <div class="flex gap-2">

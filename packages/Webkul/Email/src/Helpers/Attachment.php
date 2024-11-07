@@ -92,7 +92,7 @@ class Attachment
 
     /**
      * Retrieve the file content in one go
-     * Once you retreive the content you cannot use MimeMailParser_attachment::read()
+     * Once you retrieve the content you cannot use MimeMailParser_attachment::read()
      *
      * @return string
      */

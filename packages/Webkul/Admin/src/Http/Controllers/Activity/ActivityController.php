@@ -185,9 +185,13 @@ class ActivityController extends Controller
      */
     public function download(int $id): StreamedResponse
     {
-        $file = $this->fileRepository->findOrFail($id);
+        try {
+            $file = $this->fileRepository->findOrFail($id);
 
-        return Storage::download($file->path);
+            return Storage::download($file->path);
+        } catch (\Exception $exception) {
+            abort(404);
+        }
     }
 
     /*
@@ -231,11 +235,11 @@ class ActivityController extends Controller
             }
 
             return response()->json([
-                'message' => trans('admin::app.response.destroy-success'),
+                'message' => trans('admin::app.activities.mass-destroy-success'),
             ]);
         } catch (\Exception $exception) {
             return response()->json([
-                'message' => trans('admin::app.response.destroy-failed'),
+                'message' => trans('admin::app.activities.mass-delete-failed'),
             ], 400);
         }
     }

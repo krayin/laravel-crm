@@ -99,9 +99,11 @@
                         <li
                             v-if="searchTerm.length > 2 && canAddNew"
                             @click="selectItem({ id: '', name: searchTerm })"
-                            class="cursor-pointer border-t border-gray-800 px-4 py-2 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-brandColor dark:hover:text-white"
+                            class="cursor-pointer border-t border-gray-800 px-4 py-2 text-gray-500 hover:bg-brandColor hover:text-white dark:border-gray-300 dark:text-gray-400 dark:hover:bg-gray-900 dark:hover:text-white"
                         >
-                            + @lang('admin::app.components.lookup.add-as-new')
+                            <i class="icon-add text-md"></i>
+
+                            @lang('admin::app.components.lookup.add-as-new')
                         </li>
                     </template>
                 </ul>

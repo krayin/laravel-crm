@@ -17,6 +17,7 @@
 2. [Documentation](#documentation)
 3. [Requirements](#requirements)
 4. [Installation & Configuration](#installation-and-configuration)
+4. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
 5. [License](#license)
 6. [Security Vulnerabilities](#security-vulnerabilities)
 
@@ -123,8 +124,8 @@ password:admin123
 
 ### License
 
-Krayin CRM is a truly opensource CRM framework which will always be free under the [MIT License](https://github.com/krayin/laravel-crm/blob/master/LICENSE).
+Krayin CRM is a truly opensource CRM framework which will always be free under the [OSL-3.0 License](https://github.com/krayin/laravel-crm/blob/master/LICENSE.txt).
 
 ### Security Vulnerabilities
 
-Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Krayin CRM then please email us: mailto:sales@krayincrm.com.
+Please don't disclose security vulnerabilities publicly. If you find any security vulnerability in Krayin CRM then please email us: sales@krayincrm.com.

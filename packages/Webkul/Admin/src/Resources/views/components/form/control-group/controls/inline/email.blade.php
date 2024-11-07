@@ -38,7 +38,7 @@
                         class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
                         v-if="inputValue.map(item => `${item.value}(${item.label})`).join(', ').length > 20"
                     >
-                        <span class="whitespace-no-wrap relative z-10 max-w-60 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg">
+                        <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue.map(item => `${item.value}(${item.label})`).join(', \n') }}
                         </span>
 
@@ -106,12 +106,15 @@
                                     <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
                                 </template>
                         
-                                <span
-                                    class="cursor-pointer text-brandColor"
+                                <button
+                                    type="button"
+                                    class="flex max-w-max items-center gap-2 text-brandColor"
                                     @click="add"
                                 >
-                                    + @lang("admin::app.common.custom-attributes.add-more")
-                                </span>
+                                    <i class="icon-add text-md !text-brandColor"></i>
+
+                                    @lang("admin::app.common.custom-attributes.add-more")
+                                </button>
                             </x-slot>
 
                             <!-- Modal Footer -->
@@ -259,8 +262,8 @@
                     });
                 },
 
-                remove(email) {
-                    this.emails = this.emails.filter(email => email !== email);
+                remove(contactEmail) {
+                    this.emails = this.emails.filter(email => email !== contactEmail);
                 },
 
                 extendValidations() {

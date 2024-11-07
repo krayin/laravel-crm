@@ -49,7 +49,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
                         {!! view_render_event('admin.activities.edit.form_controls.before') !!}
 
                         <!-- Schedule Date -->
@@ -259,7 +259,7 @@
                         <!-- Added Participants -->
                         <template v-for="userType in ['users', 'persons']">
                             <li
-                                class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-slate-950"
+                                class="flex items-center gap-1 rounded-md bg-slate-100 pl-2 dark:bg-slate-950 dark:text-gray-300"
                                 v-for="(user, index) in addedParticipants[userType]"
                             >
                                 <!-- Person and User Hidden Input Field -->

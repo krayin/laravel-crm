@@ -386,6 +386,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'Eliminar',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'Haz clic para agregar',
                 'search'          => 'Buscar',
@@ -542,8 +546,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'Sobre la Persona',
+                'title'              => ':name',
+                'about-person'       => 'Sobre la Persona',
+                'about-organization' => 'Acerca de la organización',
 
                 'activities' => [
                     'index' => [
@@ -976,6 +981,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Crear formulario web',
                 'add-attribute-btn'        => 'Agregar Botón de Atributo',
                 'attribute-label-color'    => 'Color de Etiqueta del Atributo',
                 'attributes'               => 'Atributos',
@@ -996,10 +1002,15 @@ return [
                 'save-btn'                 => 'Guardar Webform',
                 'submit-button-label'      => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'    => 'Acción en caso de éxito de envío',
-                'title'                    => 'Crear Webform',
+                'redirect-to-url'          => 'Redirigir a la URL',
+                'choose-value'             => 'Elige un valor',
+                'select-file'              => 'Seleccionar archivo',
+                'select-image'             => 'Seleccionar imagen',
+                'enter-value'              => 'Introducir valor',
             ],
 
             'edit' => [
+                'title'                     => 'Editar formulario web',
                 'add-attribute-btn'         => 'Agregar Botón de Atributo',
                 'attribute-label-color'     => 'Color de Etiqueta del Atributo',
                 'attributes'                => 'Atributos',
@@ -1022,11 +1033,14 @@ return [
                 'preview'                   => 'Vista Previa',
                 'person'                    => 'Persona',
                 'public-url'                => 'URL Pública',
-                'redirect-to-url'           => 'Redirigir a URL',
                 'save-btn'                  => 'Guardar Webform',
                 'submit-button-label'       => 'Etiqueta del Botón de Enviar',
                 'submit-success-action'     => 'Acción en caso de éxito de envío',
-                'title'                     => 'Editar Webform',
+                'redirect-to-url'           => 'Redirigir a la URL',
+                'choose-value'              => 'Elige un valor',
+                'select-file'               => 'Seleccionar archivo',
+                'select-image'              => 'Seleccionar imagen',
+                'enter-value'               => 'Introducir valor',
             ],
         ],
 
@@ -1256,6 +1270,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',
@@ -1284,6 +1300,8 @@ return [
                 'body'                  => 'Cuerpo',
                 'default'               => 'Predeterminado',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Clave y Valor',
+                'add-new-payload'       => 'Añadir nueva carga',
                 'raw'                   => 'Crudo',
                 'general'               => 'General',
                 'name'                  => 'Nombre',
@@ -1628,13 +1646,15 @@ return [
 
         'updated'              => 'Actualizado :attribute',
         'created'              => 'Creado',
-        'duration-overlapping' => 'Los participantes tienen otra reunión a esta hora. ¿Desea continuar?',
+        'duration-overlapping' => 'Los participantes tienen otra reunión en este momento. ¿Deseas continuar?',
         'create-success'       => 'Actividad creada con éxito.',
         'update-success'       => 'Actividad actualizada con éxito.',
-        'overlapping-error'    => 'Los participantes tienen otra reunión a esta hora.',
-        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'overlapping-error'    => 'Los participantes tienen otra reunión en este momento.',
         'destroy-success'      => 'Actividad eliminada con éxito.',
         'delete-failed'        => 'No se puede eliminar la actividad.',
+        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'mass-destroy-success' => 'Actividades eliminadas con éxito.',
+        'mass-delete-failed'   => 'No se pueden eliminar las actividades.',
     ],
 
     'mail' => [
@@ -1932,7 +1952,7 @@ return [
                     'info'            => 'Actualiza tus ajustes generales aquí.',
                     'locale-settings' => [
                         'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Inglés (en), Francés (fr) o Japonés (ja).',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
                     ],
                 ],
             ],
@@ -1997,7 +2017,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Versión : :version',
+        'app-version'          => 'Versión: :version',
         'dashboard'            => 'Tablero',
         'leads'                => 'Leads',
         'quotes'               => 'Cotizaciones',
@@ -2048,6 +2068,8 @@ return [
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Agregar, editar o eliminar webhooks desde CRM',
         'other-settings'       => 'Otras Configuraciones',
         'other-settings-info'  => 'Administra todas tus configuraciones adicionales en el CRM',
         'tags'                 => 'Etiquetas',
@@ -2114,6 +2136,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'No estás autorizado para acceder a esta página',
+        'dashboard' => 'Tablero',
+        'go-back'   => 'Volver',
+        'support'   => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+
+        '404' => [
+            'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
+            'title'       => '404 Página No Encontrada',
+        ],
+
+        '401' => [
+            'description' => '¡Ups! Parece que no tienes permiso para acceder a esta página. Parece que te faltan las credenciales necesarias.',
+            'title'       => '401 No Autorizado',
+        ],
+
+        '403' => [
+            'description' => '¡Ups! Esta página está fuera de límites. Parece que no tienes los permisos necesarios para ver este contenido.',
+            'title'       => '403 Prohibido',
+        ],
+
+        '500' => [
+            'description' => '¡Ups! Algo salió mal. Parece que tenemos problemas para cargar la página que estás buscando.',
+            'title'       => '500 Error Interno del Servidor',
+        ],
+
+        '503' => [
+            'description' => '¡Ups! Parece que estamos temporalmente fuera de servicio por mantenimiento. Vuelve a intentarlo en un rato.',
+            'title'       => '503 Servicio No Disponible',
+        ],
     ],
 ];

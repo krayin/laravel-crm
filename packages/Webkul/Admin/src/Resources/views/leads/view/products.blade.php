@@ -65,12 +65,15 @@
 
             <!-- Add New Product Item -->
             <div>
-                <span
-                    class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                <button
+                    type="button"
+                    class="flex max-w-max items-center gap-2 text-brandColor"
                     @click="addProduct"
                 >
-                    + @lang('admin::app.leads.view.products.add-more')
-                </span>
+                    <i class="icon-add text-md !text-brandColor"></i>
+
+                    @lang('admin::app.leads.view.products.add-more')
+                </button>
             </div>
 
             {!! view_render_event('admin.leads.view.products.table.add_more.after', ['lead' => $lead]) !!}
