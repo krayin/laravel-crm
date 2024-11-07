@@ -1653,7 +1653,8 @@ return [
 
     'leads' => [
         'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
+        'update-success'    => 'Leads updated successfully.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 
