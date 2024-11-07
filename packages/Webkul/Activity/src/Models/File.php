@@ -17,7 +17,7 @@ class File extends Model implements FileContract
 
     /**
      * The attributes that should be appended to the model.
-     * 
+     *
      * @var array
      */
     protected $appends = ['url'];
