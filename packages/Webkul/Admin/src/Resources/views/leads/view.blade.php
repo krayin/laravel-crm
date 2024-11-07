@@ -20,15 +20,6 @@
                 </div>
 
                 <div class="mb-2">
-                    @if (($days = $lead->rotten_days) > 0)
-                        @php
-                            $lead->tags->prepend([
-                                'name'  => '<span class="icon-rotten text-base"></span>' . trans('admin::app.leads.view.rotten-days', ['days' => $days]),
-                                'color' => '#FEE2E2'
-                            ]);
-                        @endphp
-                    @endif
-
                     {!! view_render_event('admin.leads.view.tags.before', ['lead' => $lead]) !!}
 
                     <!-- Tags -->
@@ -36,7 +27,21 @@
                         :attach-endpoint="route('admin.leads.tags.attach', $lead->id)"
                         :detach-endpoint="route('admin.leads.tags.detach', $lead->id)"
                         :added-tags="$lead->tags"
-                    />
+                    >
+                        <x-slot:tag-before>
+                            @if (($days = $lead->rotten_days) > 0)
+                                <span
+                                    class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                    :style="{
+                                        'background-color': '#FEE2E2',
+                                        'color': '#DC2626',
+                                    }"
+                                >
+                                    <span class="icon-rotten text-base"></span> @lang('admin::app.leads.view.rotten-days', ['days' => $days])
+                                </span>
+                            @endif
+                        </x-slot>
+                    </x-admin::tags>
 
                     {!! view_render_event('admin.leads.view.tags.after', ['lead' => $lead]) !!}
                 </div>

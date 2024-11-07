@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                    'destroy-success' => 'برچسب با موفقیت حذف شد.',
+                ],
             ],
 
             'create' => [
@@ -1371,6 +1376,11 @@ return [
                 'contact-information' => [
                     'title' => 'اطلاعات تماس',
                 ],
+
+                'tags' => [
+                    'create-success'  => 'برچسب با موفقیت ایجاد شد.',
+                    'destroy-success' => 'برچسب با موفقیت حذف شد.',
+                ],
             ],
         ],
 
@@ -1654,7 +1664,6 @@ return [
     'leads' => [
         'create-success'    => 'سرنخ با موفقیت ایجاد شد.',
         'update-success'    => 'سرنخ با موفقیت به‌روزرسانی شد.',
-        'update-failed'     => 'سرنخ‌ها قابل حذف نیستند.',
         'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 

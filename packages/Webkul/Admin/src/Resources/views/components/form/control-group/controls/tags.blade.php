@@ -44,8 +44,6 @@
                             :placeholder="placeholder"
                             :label="label"
                             @keydown.enter.prevent="addTag"
-                            autocomplete="new-email"
-                            @blur="addTag"
                         />
                     </v-field>
 
@@ -108,13 +106,7 @@
                         return;
                     }
 
-                    const tag = this.input.trim();
-
-                    if (! tag) {
-                        return;
-                    }
-
-                    this.tags.push(tag);
+                    this.tags.push(this.input.trim());
                     
                     this.$emit('tags-updated', this.tags);
 

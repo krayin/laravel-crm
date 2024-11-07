@@ -11,7 +11,7 @@ return [
 
     'menu' => [
         'title'      => 'Web Forms',
-        'title-info' => 'Add, edit, or delete web forms from the CRM',
+        'title-info' => 'Add, edit or delete web forms from CRM',
     ],
 
     'validations' => [

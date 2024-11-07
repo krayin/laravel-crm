@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                    'destroy-success' => 'Etiket başarıyla silindi.',
+                ],
             ],
 
             'create' => [
@@ -850,12 +855,12 @@ return [
 
                 'create' => [
                     'name'     => 'Ad',
-                    'save-btn' => 'Kaynağı Kaydet',
-                    'title'    => 'Kaynak Oluştur',
+                    'save-btn' => 'Türü Kaydet',
+                    'title'    => 'Tür Oluştur',
                 ],
 
                 'edit' => [
-                    'title' => 'Kaynağı Düzenle',
+                    'title' => 'Tür Düzenle',
                 ],
             ],
         ],
@@ -1371,6 +1376,11 @@ return [
                 'contact-information' => [
                     'title' => 'İletişim Bilgileri',
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiket başarıyla oluşturuldu.',
+                    'destroy-success' => 'Etiket başarıyla silindi.',
+                ],
             ],
         ],
 
@@ -1654,7 +1664,6 @@ return [
     'leads' => [
         'create-success'    => 'Lead başarıyla oluşturuldu.',
         'update-success'    => 'Lead başarıyla güncellendi.',
-        'update-failed'     => 'Potansiyel müşteriler silinemez.',
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 

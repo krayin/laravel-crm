@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiqueta creada con éxito.',
+                    'destroy-success' => 'Etiqueta eliminada con éxito.',
+                ],
             ],
 
             'create' => [
@@ -850,12 +855,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar fuente',
-                    'title'    => 'Crear fuente',
+                    'save-btn' => 'Guardar Fuente',
+                    'title'    => 'Crear Fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar fuente',
+                    'title' => 'Editar Fuente',
                 ],
             ],
         ],
@@ -1371,6 +1376,11 @@ return [
                 'contact-information' => [
                     'title' => 'Información de Contacto',
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Etiqueta creada con éxito.',
+                    'destroy-success' => 'Etiqueta eliminada con éxito.',
+                ],
             ],
         ],
 
@@ -1654,7 +1664,6 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
-        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 

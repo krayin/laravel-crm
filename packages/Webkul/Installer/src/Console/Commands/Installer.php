@@ -41,8 +41,6 @@ class Installer extends Command
         'ar' => 'Arabic',
         'en' => 'English',
         'tr' => 'Turkish',
-        'es' => 'Spanish',
-        'fa' => 'Persian',
     ];
 
     /**

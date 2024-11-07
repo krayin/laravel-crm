@@ -610,6 +610,11 @@ return [
                         ],
                     ],
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
+                ],
             ],
 
             'create' => [
@@ -850,12 +855,12 @@ return [
 
                 'create' => [
                     'name'     => 'Name',
-                    'save-btn' => 'Save Source',
-                    'title'    => 'Create Source',
+                    'save-btn' => 'Save Type',
+                    'title'    => 'Create Type',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Source',
+                    'title' => 'Edit Type',
                 ],
             ],
         ],
@@ -1371,6 +1376,11 @@ return [
                 'contact-information' => [
                     'title' => 'Contact Information',
                 ],
+
+                'tags' => [
+                    'create-success'  => 'Tag created successfully.',
+                    'destroy-success' => 'Tag deleted successfully.',
+                ],
             ],
         ],
 
@@ -1653,8 +1663,7 @@ return [
 
     'leads' => [
         'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Leads updated successfully.',
-        'update-failed'     => 'Leads can not be deleted.',
+        'update-success'    => 'Lead updated successfully.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 

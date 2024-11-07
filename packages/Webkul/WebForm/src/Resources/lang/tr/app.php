@@ -11,7 +11,7 @@ return [
 
     'menu' => [
         'title'      => 'Web Formları',
-        'title-info' => 'CRM’den web formlarını ekle, düzenle veya sil',
+        'title-info' => 'CRM’den web formları ekleyin, düzenleyin veya silin',
     ],
 
     'validations' => [

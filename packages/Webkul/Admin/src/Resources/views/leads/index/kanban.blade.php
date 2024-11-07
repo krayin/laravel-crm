@@ -196,7 +196,8 @@
                                             {!! view_render_event('admin.leads.index.kanban.content.stage.body.card.tag.before') !!}
 
                                             <div
-                                                class="rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
+                                                class="truncate rounded-xl bg-gray-200 px-2 py-1 text-xs font-medium dark:bg-gray-800"
+                                                :title="tag.name"
                                                 :style="{
                                                     backgroundColor: tag.color,
                                                     color: tagTextColor[tag.color]
