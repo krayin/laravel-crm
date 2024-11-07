@@ -1654,6 +1654,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead başarıyla oluşturuldu.',
         'update-success'    => 'Lead başarıyla güncellendi.',
+        'update-failed'     => 'Potansiyel müşteriler silinemez.',
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
