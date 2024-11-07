@@ -1654,6 +1654,7 @@ return [
     'leads' => [
         'create-success'    => 'تم إنشاء العميل المحتمل بنجاح.',
         'update-success'    => 'تم تحديث العميل المحتمل بنجاح.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'تم حذف العميل المحتمل بنجاح.',
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
