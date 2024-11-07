@@ -1654,6 +1654,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
+        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
