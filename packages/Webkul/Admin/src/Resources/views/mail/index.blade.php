@@ -192,6 +192,7 @@
 
                                     <p class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap leading-none">
                                         <x-admin::avatar ::name="record.name" />
+
                                         @{{ record.name }}
                                     </p>
                                 </div>
@@ -204,12 +205,11 @@
                                         <p
                                             v-if="record.attachments"
                                             v-html="record.attachments"
-                                            class="w-10 flex-shrink-0"
                                         ></p>
 
                                         <!-- Tags -->
                                         <span
-                                            class="flex items-center gap-1 rounded-md bg-rose-100 p-1"
+                                            class="flex items-center gap-1 rounded-2xl bg-rose-100 px-2 py-1"
                                             :style="{
                                                 'background-color': tag.color,
                                                 'color': backgroundColors.find(color => color.background === tag.color)?.text

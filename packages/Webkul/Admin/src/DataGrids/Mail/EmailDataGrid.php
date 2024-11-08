@@ -5,6 +5,7 @@ namespace Webkul\Admin\DataGrids\Mail;
 use Carbon\Carbon;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Webkul\Admin\Http\Resources\EmailResource;
 use Webkul\DataGrid\DataGrid;
 use Webkul\Email\Repositories\EmailRepository;
 use Webkul\Tag\Repositories\TagRepository;
@@ -63,7 +64,15 @@ class EmailDataGrid extends DataGrid
             'searchable' => false,
             'filterable' => false,
             'sortable'   => true,
-            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
+            'closure'    => function ($row) {
+                $email = app(EmailRepository::class)->find($row->id);
+
+                $hasAttachments = collect($email->emails)->contains(function($email) {
+                    return $email->attachments()->exists();
+                });
+
+                return $hasAttachments ? '<i class="icon-attachment text-2xl"></i>' : '';
+            },
         ]);
 
         $this->addColumn([
