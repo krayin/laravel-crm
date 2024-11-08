@@ -1576,11 +1576,12 @@ return [
 
             'datagrid' => [
                 'id'            => 'ID',
-                'from'          => 'Kimden',
-                'to'            => 'Kime',
+                'from'          => 'Gönderen',
+                'to'            => 'Alıcı',
                 'subject'       => 'Konu',
-                'tag-name'      => 'Etiket Adı',
-                'created-at'    => 'Oluşturulma Tarihi',
+                'tags'          => 'Etiketler',
+                'content'       => 'İçerik',
+                'date'          => 'Tarih',
                 'move-to-inbox' => 'Gelen Kutusuna Taşı',
                 'edit'          => 'Düzenle',
                 'view'          => 'Görüntüle',
