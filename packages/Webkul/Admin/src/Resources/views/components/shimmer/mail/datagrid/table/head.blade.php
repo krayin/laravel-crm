@@ -6,7 +6,7 @@
     </div>
 
     <div class="flex w-full items-center justify-between gap-4">
-        <div class="shimmer h-[17px] w-[200px]"></div>
+        <div class="shimmer h-[17px] w-[280px]"></div>
 
         <div class="shimmer float-right h-[17px] w-[75px]"></div>
     </div>
