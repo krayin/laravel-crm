@@ -1,5 +1,3 @@
-
-
 <x-admin::layouts>
     <x-slot:title>
         @lang('admin::app.mail.index.' . request('route'))
