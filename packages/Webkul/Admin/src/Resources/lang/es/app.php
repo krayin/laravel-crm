@@ -1581,6 +1581,7 @@ return [
                 'subject'       => 'Asunto',
                 'tags'          => 'Etiquetas',
                 'content'       => 'Contenido',
+                'attachments'   => 'Archivos adjuntos',
                 'date'          => 'Fecha',
                 'move-to-inbox' => 'Mover a la bandeja de entrada',
                 'edit'          => 'Editar',

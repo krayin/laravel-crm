@@ -1581,6 +1581,7 @@ return [
                 'subject'       => 'Konu',
                 'tags'          => 'Etiketler',
                 'content'       => 'İçerik',
+                'content'       => 'Eklentiler',
                 'date'          => 'Tarih',
                 'move-to-inbox' => 'Gelen Kutusuna Taşı',
                 'edit'          => 'Düzenle',

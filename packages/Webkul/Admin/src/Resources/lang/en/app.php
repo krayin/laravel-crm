@@ -1581,6 +1581,7 @@ return [
                 'subject'       => 'Subject',
                 'tags'          => 'Tags',
                 'content'       => 'Content',
+                'attachments'   => 'Attachments',
                 'date'          => 'Date',
                 'move-to-inbox' => 'Moved To Inbox',
                 'edit'          => 'Edit',

@@ -1581,6 +1581,7 @@ return [
                 'subject'       => 'Chủ đề',
                 'tags'          => 'Thẻ',
                 'content'       => 'Nội dung',
+                'attachments'   => 'Tệp đính kèm',
                 'date'          => 'Ngày',
                 'move-to-inbox' => 'Di chuyển vào hộp thư đến',
                 'edit'          => 'Chỉnh sửa',
