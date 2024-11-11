@@ -565,14 +565,14 @@
                             this.$axios.put("{{ route('admin.activities.update', 'replaceId') }}".replace('replaceId', activity.id), {
                                     'is_done': 1
                                 })
-                                .then ((response) => {
+                                .then((response) => {
                                     this.isUpdating[activity.id] = false;
 
                                     activity.is_done = 1;
 
                                     this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch ((error) => {
+                                .catch((error) => {
                                     this.isUpdating[activity.id] = false;
 
                                     this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
@@ -587,14 +587,14 @@
                             this.isUpdating[activity.id] = true;
 
                             this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', activity.id))
-                                .then ((response) => {
+                                .then((response) => {
                                     this.isUpdating[activity.id] = false;
 
                                     this.activities.splice(this.activities.indexOf(activity), 1);
 
                                     this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch (function (error) {
+                                .catch((error) => {
                                     this.isUpdating[activity.id] = false;
 
                                     this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
@@ -613,7 +613,7 @@
                                         email_id: emailId,
                                     }
                                 })
-                                .then (response => {
+                                .then((response) => {
                                     let relatedActivities = this.activities.filter(activity => activity.parent_id == emailId || activity.id == emailId);
 
                                     relatedActivities.forEach(activity => {
@@ -626,8 +626,8 @@
 
                                     this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch (error => {
-                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                .catch((error) => {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
                         }
                     });
