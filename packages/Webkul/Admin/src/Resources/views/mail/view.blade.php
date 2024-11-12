@@ -33,7 +33,7 @@
                         @lang('admin::app.mail.view.title') 
                     </div>
                     
-                    <span class="label-active">{{ request('route') }}</span>
+                    <span class="label-active">{{ ucfirst(request('route')) }}</span>
 
                     {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
 
@@ -243,9 +243,9 @@
                     {!! view_render_event('admin.mail.view.mail_body.before', ['email' => $email]) !!}
 
                     <!-- Mail Body -->
-                    <div
-                        v-html="email.reply"
+                    <div 
                         class="dark:text-gray-300"
+                        v-safe-html="email.reply"
                     ></div>
                    
                     {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
