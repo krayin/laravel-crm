@@ -36,11 +36,9 @@
                             class="flex max-w-[360px] items-center gap-2 rounded-lg p-2 transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
                             href="{{ $child->getUrl() }}"
                         >
-                            @if ($icon = $child->getIcon())
-                                <div class="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
-                                    <i class="{{ $child->getIcon() }} text-3xl "></i>
-                                </div>
-                            @endif
+                            <div class="rounded-lg bg-gray-100 p-3 dark:bg-gray-800">
+                                <i class="{{ $child->getIcon() }} text-3xl"></i>
+                            </div>
 
                             <div class="grid">
                                 <p class="mb-1.5 text-base font-semibold text-gray-800 dark:text-white">

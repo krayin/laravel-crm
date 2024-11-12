@@ -849,13 +849,13 @@ return [
                 ],
 
                 'create' => [
-                    'name'     => 'الاسم',
-                    'save-btn' => 'حفظ النوع',
-                    'title'    => 'إنشاء نوع',
+                    'name'     => 'اسم',
+                    'save-btn' => 'حفظ المصدر',
+                    'title'    => 'إنشاء مصدر',
                 ],
 
                 'edit' => [
-                    'title' => 'تعديل النوع',
+                    'title' => 'تعديل المصدر',
                 ],
             ],
         ],
@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'إرسال بريد إلكتروني إلى الشخص',
                 'add-tag'                    => 'إضافة علامة',
                 'add-note-as-activity'       => 'إضافة ملاحظة كنشاط',
+                'update-quote'               => 'تحديث العرض',
             ],
 
             'create' => [
@@ -1034,10 +1035,10 @@ return [
                 'save-btn'                  => 'حفظ نموذج الويب',
                 'submit-button-label'       => 'تسمية زر الإرسال',
                 'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'choose-value'              => 'Choose Value',
-                'select-file'               => 'Select File',
-                'select-image'              => 'Select Image',
-                'enter-value'               => 'Enter Value',
+                'choose-value'              => 'اختر القيمة',
+                'select-file'               => 'اختر ملف',
+                'select-image'              => 'اختر صورة',
+                'enter-value'               => 'أدخل القيمة',
             ],
         ],
 
@@ -1654,6 +1655,7 @@ return [
     'leads' => [
         'create-success'    => 'تم إنشاء العميل المحتمل بنجاح.',
         'update-success'    => 'تم تحديث العميل المحتمل بنجاح.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'تم حذف العميل المحتمل بنجاح.',
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 

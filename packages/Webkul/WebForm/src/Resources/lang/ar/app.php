@@ -5,16 +5,16 @@ return [
         'title'  => 'نماذج الويب',
         'view'   => 'عرض',
         'create' => 'إنشاء',
-        'edit'   => 'تحرير',
+        'edit'   => 'تعديل',
         'delete' => 'حذف',
     ],
 
     'menu' => [
         'title'      => 'نماذج الويب',
-        'title-info' => 'إضافة، تحرير أو حذف نماذج الويب من CRM',
+        'title-info' => 'إضافة، تعديل أو حذف نماذج الويب من CRM',
     ],
 
     'validations' => [
-        'invalid-phone-number' => 'رقم الهاتف غير صالح',
+        'invalid-phone-number' => 'رقم الهاتف غير صحيح',
     ],
 ];
