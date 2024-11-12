@@ -188,16 +188,18 @@
         <!-- Admin profile -->
         <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'left' : 'right' }}">
             <x-slot:toggle>
-                @if (auth()->guard('user')->user()->image)
+                @php($user = auth()->guard('user')->user())
+
+                @if ($user->image)
                     <button class="flex h-9 w-9 cursor-pointer overflow-hidden rounded-full hover:opacity-80 focus:opacity-80">
                         <img
-                            src="{{ auth()->guard('user')->user()->image_url }}"
-                            class="w-full"
+                            src="{{ $user->image_url }}"
+                            class="h-full w-full object-cover"
                         />
                     </button>
                 @else
                     <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-pink-400 font-semibold leading-6 text-white">
-                        {{ substr(auth()->guard('user')->user()->name, 0, 1) }}
+                        {{ substr($user->name, 0, 1) }}
                     </button>
                 @endif
             </x-slot>

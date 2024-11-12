@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Diğer Ayarlar',
         'tags'            => 'Etiketler',
         'configuration'   => 'Yapılandırma',
+        'campaigns'       => 'Kampanyalar',
+        'event'           => 'Etkinlik',
         'create'          => 'Oluştur',
         'edit'            => 'Düzenle',
         'view'            => 'Görüntüle',
@@ -1082,6 +1084,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Etkinlik Oluştur',
+                    'title'               => 'Etkinlikler',
+                    'create-success'      => 'Etkinlik başarıyla oluşturuldu.',
+                    'update-success'      => 'Etkinlik başarıyla güncellendi.',
+                    'delete-success'      => 'Etkinlik başarıyla silindi.',
+                    'delete-failed'       => 'Etkinlik silinemedi.',
+                    'mass-delete-success' => 'Etkinlikler başarıyla silindi',
+
+                    'datagrid'   => [
+                        'delete'       => 'Sil',
+                        'edit'         => 'Düzenle',
+                        'id'           => 'ID',
+                        'name'         => 'Ad',
+                        'description'  => 'Açıklama',
+                        'date'         => 'Tarih',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Etkinlik Oluştur',
+                        'name'        => 'Ad',
+                        'date'        => 'Tarih',
+                        'description' => 'Açıklama',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Etkinliği Düzenle',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Kampanya Oluştur',
+                    'title'               => 'Kampanyalar',
+                    'create-success'      => 'Kampanya başarıyla oluşturuldu.',
+                    'update-success'      => 'Kampanya başarıyla güncellendi.',
+                    'delete-success'      => 'Kampanya başarıyla silindi.',
+                    'delete-failed'       => 'Kampanya silinemedi.',
+                    'mass-delete-success' => 'Kampanyalar başarıyla silindi',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Ad',
+                        'subject'  => 'Konu',
+                        'status'   => 'Durum',
+                        'active'   => 'Aktif',
+                        'inactive' => 'Pasif',
+                        'edit'     => 'Düzenle',
+                        'delete'   => 'Sil',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Kampanya Oluştur',
+                        'name'           => 'Ad',
+                        'type'           => 'Tür',
+                        'subject'        => 'Konu',
+                        'event'          => 'Etkinlik',
+                        'email-template' => 'E-posta Şablonu',
+                        'status'         => 'Durum',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Kampanyayı Düzenle',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Etiket Oluştur',
@@ -1960,6 +2033,10 @@ return [
         'email-templates'      => 'E-posta Şablonları',
         'email'                => 'E-posta',
         'email-templates-info' => 'CRM’den e-posta şablonları ekleyin, düzenleyin veya silin',
+        'events'               => 'Etkinlikler',
+        'events-info'          => 'CRM üzerinden etkinlikleri ekleyin, düzenleyin veya silin',
+        'campaigns'            => 'Kampanyalar',
+        'campaigns-info'       => 'CRM üzerinden kampanyaları ekleyin, düzenleyin veya silin',
         'workflows'            => 'İş Akışları',
         'workflows-info'       => 'CRM’den iş akışlarını ekleyin, düzenleyin veya silin',
         'webhooks'             => 'Webhooklar',
