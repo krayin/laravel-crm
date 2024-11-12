@@ -247,6 +247,14 @@ return [
         'route'      => 'admin.settings.workflows.index',
         'sort'       => 3,
         'icon-class' => 'icon-settings-flow',
+    ],
+    [
+        'key'        => 'settings.automation.data_transfer',
+        'name'       => 'admin::app.layouts.data_transfer',
+        'info'       => 'admin::app.layouts.data_transfer_info',
+        'route'      => 'admin.settings.data_transfer.imports.index',
+        'sort'       => 4,
+        'icon-class' => 'icon-download',
     ], [
         'key'        => 'settings.other_settings',
         'name'       => 'admin::app.layouts.other-settings',
@@ -273,4 +281,5 @@ return [
         'sort'       => 9,
         'icon-class' => 'icon-configuration',
     ],
+
 ];

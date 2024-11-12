@@ -44,11 +44,11 @@
                         </span>
 
                         <span>
-                            {{ core()->state_name($person->organization->address['state']) }}
+                            {{ core()->state_name($person->organization->address['state'] ?? '') }}
                         </span>
 
                         <span>
-                            {{ core()->country_name($person->organization->address['country']) }}
+                            {{ core()->country_name($person->organization->address['country'] ?? '') }}
                         </span>
                     </div>
                 @endif
