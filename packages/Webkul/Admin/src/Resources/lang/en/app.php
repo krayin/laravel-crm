@@ -1850,6 +1850,10 @@ return [
                         'title'       => 'Locale Settings',
                         'title-info'  => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
                     ],
+                    'currency-settings' => [
+                        'title'       => 'Currency Settings',
+                        'title-info'  => 'Defines the currency used in the user interface, such as US Dollar ($), Euro (€), or Japanese Yen (¥).',
+                    ],
                 ],
             ],
         ],

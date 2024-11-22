@@ -30,7 +30,7 @@
                 <div class="flex items-center gap-x-2.5">
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.products.edit.create_button.before', ['product' => $product]) !!}
-                        
+
                         <!-- Edit button for Product -->
                         <button
                             type="submit"

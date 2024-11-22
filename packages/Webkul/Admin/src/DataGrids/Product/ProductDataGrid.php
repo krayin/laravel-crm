@@ -70,7 +70,7 @@ class ProductDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
-            'closure'    => fn ($row) => round($row->price, 2),
+            'closure'    => fn ($row) => core()->formatBasePrice(round($row->price, 2)),
         ]);
 
         $this->addColumn([
