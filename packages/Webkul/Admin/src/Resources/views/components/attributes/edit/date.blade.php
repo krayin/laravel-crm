@@ -1,5 +1,5 @@
 @php
-    if (!empty($value)) {
+    if (! empty($value)) {
         if ($value instanceof \Carbon\Carbon) {
             $value = $value->format('Y-m-d');
         } elseif (is_string($value)) {
