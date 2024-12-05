@@ -543,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'About Person',
+                'title'              => ':name',
+                'about-person'       => 'About Person',
+                'about-organization' => 'About Organization',
 
                 'activities' => [
                     'index' => [
@@ -849,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Name',
-                    'save-btn' => 'Save Type',
-                    'title'    => 'Create Type',
+                    'save-btn' => 'Save Source',
+                    'title'    => 'Create Source',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Type',
+                    'title' => 'Edit Source',
                 ],
             ],
         ],
@@ -886,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
+                'update-quote'               => 'Update Quote',
             ],
 
             'create' => [
@@ -977,6 +979,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'Create Webform',
                 'add-attribute-btn'        => 'Add Attribute Button',
                 'attribute-label-color'    => 'Attribute Label Color',
                 'attributes'               => 'Attributes',
@@ -998,7 +1001,6 @@ return [
                 'submit-button-label'      => 'Submit Button Label',
                 'submit-success-action'    => 'Submit Success Action',
                 'redirect-to-url'          => 'Redirect To Url',
-                'title'                    => 'Title',
                 'choose-value'             => 'Choose Value',
                 'select-file'              => 'Select File',
                 'select-image'             => 'Select Image',
@@ -1006,6 +1008,7 @@ return [
             ],
 
             'edit' => [
+                'title'                     => 'Edit Webform',
                 'add-attribute-btn'         => 'Add Attribute Button',
                 'attribute-label-color'     => 'Attribute Label Color',
                 'attributes'                => 'Attributes',
@@ -1032,7 +1035,6 @@ return [
                 'save-btn'                  => 'Save Webform',
                 'submit-button-label'       => 'Submit Button Label',
                 'submit-success-action'     => 'Submit Success Action',
-                'title'                     => 'Title',
                 'choose-value'              => 'Choose Value',
                 'select-file'               => 'Select File',
                 'select-image'              => 'Select Image',
@@ -1266,6 +1268,8 @@ return [
                 'body'                  => 'Body',
                 'default'               => 'Default',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Key and Value',
+                'add-new-payload'       => 'Add new payload',
                 'raw'                   => 'Raw',
                 'general'               => 'General',
                 'name'                  => 'Name',
@@ -1294,6 +1298,8 @@ return [
                 'body'                  => 'Body',
                 'default'               => 'Default',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'Key and Value',
+                'add-new-payload'       => 'Add new payload',
                 'raw'                   => 'Raw',
                 'general'               => 'General',
                 'name'                  => 'Name',
@@ -1539,9 +1545,11 @@ return [
         'create-success'       => 'Activity created successfully.',
         'update-success'       => 'Activity updated successfully.',
         'overlapping-error'    => 'Participants have another meeting at this time.',
-        'mass-update-success'  => 'Activities updated successfully.',
         'destroy-success'      => 'Activity deleted successfully.',
         'delete-failed'        => 'Activity can not be deleted.',
+        'mass-update-success'  => 'Activities updated successfully.',
+        'mass-destroy-success' => 'Activities deleted successfully.',
+        'mass-delete-failed'   => 'Activities can not be deleted.',
     ],
 
     'mail' => [
@@ -1646,7 +1654,8 @@ return [
 
     'leads' => [
         'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
+        'update-success'    => 'Leads updated successfully.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 
@@ -1839,7 +1848,7 @@ return [
                     'info'            => 'Update your general settings here.',
                     'locale-settings' => [
                         'title'       => 'Locale Settings',
-                        'title-info'  => 'Defines the language used in the user interface, such as English (en), French (fr), or Japanese (ja).',
+                        'title-info'  => 'Defines the language used in the user interface, such as Arabic (ar), English (en), Spanish (es), Persian(fa) and Turkish (tr).',
                     ],
                 ],
             ],
@@ -1925,7 +1934,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Version : :version',
+        'app-version'          => 'Version: :version',
         'dashboard'            => 'Dashboard',
         'leads'                => 'Leads',
         'quotes'               => 'Quotes',
@@ -1976,6 +1985,8 @@ return [
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Add, edit or delete webhooks from CRM',
         'other-settings'       => 'Other Settings',
         'other-settings-info'  => 'Manage all your extra settings in the CRM',
         'tags'                 => 'Tags',
@@ -2015,6 +2026,7 @@ return [
         'common' => [
             'dear'   => 'Dear :name',
             'cheers' => 'Cheers,</br>Team :app_name',
+
             'user'   => [
                 'dear'           => 'Dear :username',
                 'create-subject' => 'You are added as a member.',
@@ -2033,6 +2045,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'You are not authorized to access this page',
+        'dashboard' => 'Dashboard',
+        'go-back'   => 'Go Back',
+        'support'   => 'If the problem persists, reach out to us at <a href=":link" class=":class">:email</a> for assistance.',
+
+        '404' => [
+            'description' => 'Oops! The page you\'re looking for is on vacation. It seems we couldn\'t find what you were searching for.',
+            'title'       => '404 Page Not Found',
+        ],
+
+        '401' => [
+            'description' => 'Oops! Looks like you\'re not allowed to access this page. It seems you\'re missing the necessary credentials.',
+            'title'       => '401 Unauthorized',
+        ],
+
+        '403' => [
+            'description' => 'Oops! This page is off-limits. It appears you don\'t have the required permissions to view this content.',
+            'title'       => '403 Forbidden',
+        ],
+
+        '500' => [
+            'description' => 'Oops! Something went wrong. It seems we\'re having trouble loading the page you\'re looking for.',
+            'title'       => '500 Internal Server Error',
+        ],
+
+        '503' => [
+            'description' => 'Oops! Looks like we\'re temporarily down for maintenance. Please check back in a bit.',
+            'title'       => '503 Service Unavailable',
+        ],
     ],
 ];

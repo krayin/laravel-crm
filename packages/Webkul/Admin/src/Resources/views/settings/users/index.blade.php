@@ -92,37 +92,27 @@
                             <!-- Users Id -->
                             <p>@{{ record.id }}</p>
         
-                            <!-- Users Name -->
-                            <p>
-                                <div class="flex items-center gap-2.5">
-                                    <div
-                                        class="border-3 mr-2 inline-block h-9 w-9 overflow-hidden rounded-full border-gray-800 text-center align-middle"
-                                        v-if="record.name.image"
-                                    >
-                                        <img
-                                            class="h-9 w-9"
-                                            :src="record.name.image"
-                                            alt="record.name"
-                                        />
-                                    </div>
+                            <!-- Users Name and Profile -->
+                            <div class="flex items-center gap-2.5">
+                                <template v-if="record.name.image">
+                                    <img
+                                        class="flex h-9 w-9 items-center justify-center rounded-full"
+                                        :src="record.name.image"
+                                        alt="record.name"
+                                    />
+                                </template>
 
-                                    <div
-                                        class="profile-info-icon"
-                                        v-else
-                                    >
-                                        <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-blue-400 text-sm font-semibold leading-6 text-white transition-all hover:bg-blue-500 focus:bg-blue-500">
-                                            @{{ record.name.name[0].toUpperCase() }}
-                                        </button>
-                                    </div>
+                                <template v-else>
+                                    <x-admin::avatar ::name="record.name.name"/>
+                                </template>
 
-                                    <div class="text-sm">
-                                        @{{ record.name.name }}
-                                    </div>
+                                <div class="text-sm">
+                                    @{{ record.name.name }}
                                 </div>
-                            </p>
+                            </div>
 
                             <!-- Users Email -->
-                            <p>@{{ record.email }}</p>
+                            <p class="truncate">@{{ record.email }}</p>
 
                             <!-- Users Status -->
                             <span

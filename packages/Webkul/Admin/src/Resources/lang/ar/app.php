@@ -383,6 +383,10 @@ return [
         ],
 
         'attributes' => [
+            'edit'   => [
+                'delete' => 'حذف',
+            ],
+
             'lookup' => [
                 'click-to-add'    => 'انقر للإضافة',
                 'search'          => 'بحث',
@@ -539,8 +543,9 @@ return [
             ],
 
             'view' => [
-                'title'        => ':name',
-                'about-person' => 'عن الشخص',
+                'title'              => ':name',
+                'about-person'       => 'عن الشخص',
+                'about-organization' => 'حول المؤسسة',
 
                 'activities' => [
                     'index' => [
@@ -844,13 +849,13 @@ return [
                 ],
 
                 'create' => [
-                    'name'     => 'الاسم',
-                    'save-btn' => 'حفظ النوع',
-                    'title'    => 'إنشاء نوع',
+                    'name'     => 'اسم',
+                    'save-btn' => 'حفظ المصدر',
+                    'title'    => 'إنشاء مصدر',
                 ],
 
                 'edit' => [
-                    'title' => 'تعديل النوع',
+                    'title' => 'تعديل المصدر',
                 ],
             ],
         ],
@@ -882,6 +887,7 @@ return [
                 'send-email-to-person'       => 'إرسال بريد إلكتروني إلى الشخص',
                 'add-tag'                    => 'إضافة علامة',
                 'add-note-as-activity'       => 'إضافة ملاحظة كنشاط',
+                'update-quote'               => 'تحديث العرض',
             ],
 
             'create' => [
@@ -973,6 +979,7 @@ return [
             ],
 
             'create' => [
+                'title'                    => 'إنشاء استمارة ويب',
                 'add-attribute-btn'        => 'زر إضافة سمة',
                 'attribute-label-color'    => 'لون تسمية السمة',
                 'attributes'               => 'السمات',
@@ -993,10 +1000,15 @@ return [
                 'save-btn'                 => 'حفظ نموذج الويب',
                 'submit-button-label'      => 'تسمية زر الإرسال',
                 'submit-success-action'    => 'إجراء نجاح الإرسال',
-                'title'                    => 'إنشاء نموذج ويب',
+                'redirect-to-url'          => 'إعادة التوجيه إلى الرابط',
+                'choose-value'             => 'اختر قيمة',
+                'select-file'              => 'اختر ملف',
+                'select-image'             => 'اختر صورة',
+                'enter-value'              => 'أدخل القيمة',
             ],
 
             'edit' => [
+                'title'                     => 'تعديل استمارة ويب',
                 'add-attribute-btn'         => 'زر إضافة سمة',
                 'attribute-label-color'     => 'لون تسمية السمة',
                 'attributes'                => 'السمات',
@@ -1023,7 +1035,10 @@ return [
                 'save-btn'                  => 'حفظ نموذج الويب',
                 'submit-button-label'       => 'تسمية زر الإرسال',
                 'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'title'                     => 'تعديل نموذج الويب',
+                'choose-value'              => 'اختر القيمة',
+                'select-file'               => 'اختر ملف',
+                'select-image'              => 'اختر صورة',
+                'enter-value'               => 'أدخل القيمة',
             ],
         ],
 
@@ -1253,6 +1268,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',
@@ -1281,6 +1298,8 @@ return [
                 'body'                  => 'الجسم',
                 'default'               => 'افتراضي',
                 'x-www-form-urlencoded' => 'x-www-form-urlencoded',
+                'key-and-value'         => 'المفتاح والقيمة',
+                'add-new-payload'       => 'إضافة حمولة جديدة',
                 'raw'                   => 'خام',
                 'general'               => 'عام',
                 'name'                  => 'الاسم',
@@ -1522,13 +1541,15 @@ return [
 
         'updated'              => 'تم تحديث :attribute',
         'created'              => 'تم الإنشاء',
-        'duration-overlapping' => 'المشاركون لديهم اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
+        'duration-overlapping' => 'لدى المشاركين اجتماع آخر في هذا الوقت. هل تريد المتابعة؟',
         'create-success'       => 'تم إنشاء النشاط بنجاح.',
         'update-success'       => 'تم تحديث النشاط بنجاح.',
-        'overlapping-error'    => 'المشاركون لديهم اجتماع آخر في هذا الوقت.',
-        'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
+        'overlapping-error'    => 'لدى المشاركين اجتماع آخر في هذا الوقت.',
         'destroy-success'      => 'تم حذف النشاط بنجاح.',
         'delete-failed'        => 'لا يمكن حذف النشاط.',
+        'mass-update-success'  => 'تم تحديث الأنشطة بنجاح.',
+        'mass-destroy-success' => 'تم حذف الأنشطة بنجاح.',
+        'mass-delete-failed'   => 'لا يمكن حذف الأنشطة.',
     ],
 
     'mail' => [
@@ -1634,6 +1655,7 @@ return [
     'leads' => [
         'create-success'    => 'تم إنشاء العميل المحتمل بنجاح.',
         'update-success'    => 'تم تحديث العميل المحتمل بنجاح.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'تم حذف العميل المحتمل بنجاح.',
         'destroy-failed'    => 'لا يمكن حذف العميل المحتمل.',
 
@@ -1826,7 +1848,7 @@ return [
                     'info'            => 'قم بتحديث إعداداتك العامة هنا.',
                     'locale-settings' => [
                         'title'       => 'إعدادات اللغة',
-                        'title-info'  => 'تحدد اللغة المستخدمة في واجهة المستخدم، مثل الإنجليزية (en) أو الفرنسية (fr) أو اليابانية (ja).',
+                        'title-info'  => 'يحدد اللغة المستخدمة في واجهة المستخدم، مثل العربية (ar)، الإنجليزية (en)، الإسبانية (es)، الفارسية (fa) والتركية (tr).',
                     ],
                 ],
             ],
@@ -1912,7 +1934,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'الإصدار : :version',
+        'app-version'          => 'الإصدار: :version',
         'dashboard'            => 'لوحة القيادة',
         'leads'                => 'العملاء المحتملين',
         'quotes'               => 'العروض',
@@ -1963,6 +1985,8 @@ return [
         'email-templates-info' => 'إضافة أو تعديل أو حذف قوالب البريد الإلكتروني من نظام CRM',
         'workflows'            => 'سير العمل',
         'workflows-info'       => 'إضافة أو تعديل أو حذف سير العمل من نظام CRM',
+        'webhooks'             => 'الويب هوك',
+        'webhooks-info'        => 'إضافة، تحرير أو حذف الويب هوك من CRM',
         'other-settings'       => 'إعدادات أخرى',
         'other-settings-info'  => 'إدارة جميع إعداداتك الإضافية في نظام CRM',
         'tags'                 => 'العلامات',
@@ -2021,6 +2045,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'أنت غير مخول للوصول إلى هذه الصفحة',
+        'dashboard' => 'لوحة التحكم',
+        'go-back'   => 'العودة',
+        'support'   => 'إذا استمرت المشكلة، تواصل معنا على <a href=":link" class=":class">:email</a> للحصول على المساعدة.',
+
+        '404' => [
+            'description' => 'عذرًا! الصفحة التي تبحث عنها في إجازة. يبدو أننا لم نجد ما كنت تبحث عنه.',
+            'title'       => '404 الصفحة غير موجودة',
+        ],
+
+        '401' => [
+            'description' => 'عذرًا! يبدو أنك غير مصرح لك بالوصول إلى هذه الصفحة. يبدو أنك تفتقد الأوراق اللازمة.',
+            'title'       => '401 غير مصرح',
+        ],
+
+        '403' => [
+            'description' => 'عذرًا! هذه الصفحة محظورة. يبدو أنك لا تملك الأذونات اللازمة لعرض هذا المحتوى.',
+            'title'       => '403 ممنوع الدخول',
+        ],
+
+        '500' => [
+            'description' => 'عذرًا! حدث خطأ ما. يبدو أننا نواجه مشكلة في تحميل الصفحة التي تبحث عنها.',
+            'title'       => '500 خطأ داخلي في الخادم',
+        ],
+
+        '503' => [
+            'description' => 'عذرًا! يبدو أننا متوقفون مؤقتًا للصيانة. يرجى العودة لاحقًا.',
+            'title'       => '503 الخدمة غير متوفرة',
+        ],
     ],
 ];

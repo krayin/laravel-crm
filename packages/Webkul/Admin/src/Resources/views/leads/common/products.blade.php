@@ -67,12 +67,15 @@
             {!! view_render_event('admin.leads.create.products.form_controls.table.after') !!}
 
             <!-- Add New Product Item -->
-            <span
-                class="text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+            <button
+                type="button"
+                class="flex max-w-max items-center gap-2 text-brandColor"
                 @click="addProduct"
             >
-                + @lang('admin::app.leads.common.products.add-more')
-            </span>
+                <i class="icon-add text-md !text-brandColor"></i>
+
+                @lang('admin::app.leads.common.products.add-more')
+            </button>
         </div>
     </script>
 

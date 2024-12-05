@@ -28,7 +28,7 @@
 
             <div class="flex items-center gap-x-2.5">
                 <div class="flex items-center gap-x-2.5">
-                    {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
+                    {!! view_render_event('admin.mail.create.compose_mail_btn.before') !!}
 
                     <!-- Create button for person -->
                     @if (bouncer()->hasPermission('mail.compose'))
@@ -41,7 +41,7 @@
                         </button>
                     @endif
 
-                    {!! view_render_event('admin.mail.create.breadcrumbs.after') !!}
+                    {!! view_render_event('admin.mail.create.compose_mail_btn.after') !!}
                 </div>
             </div>
         </div>

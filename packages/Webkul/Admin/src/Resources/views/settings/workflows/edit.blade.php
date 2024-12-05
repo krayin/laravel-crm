@@ -216,7 +216,7 @@
                             </p>
                         </div>
 
-                        <div class="w-1/2">
+                        <div class="flex w-1/2 flex-col gap-2">
                             <!-- Condition Type -->
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -260,10 +260,10 @@
 
                             <button
                                 type="button"
-                                class="mt-4 flex max-w-max items-center gap-2 text-brandColor"
+                                class="flex max-w-max items-center gap-2 text-brandColor"
                                 @click="addCondition"
                             >
-                                <i class="icon-add text-xl"></i>
+                                <i class="icon-add text-md !text-brandColor"></i>
 
                                 @lang('admin::app.settings.workflows.edit.add-condition')
                             </button>
@@ -321,10 +321,10 @@
 
                         <button
                             type="button"
-                            class="mt-4 flex max-w-max items-center gap-2 text-brandColor"
+                            class="flex max-w-max items-center gap-2 text-brandColor"
                             @click="addAction"
                         >
-                            <i class="icon-add text-xl"></i>
+                            <i class="icon-add text-md !text-brandColor"></i>
 
                             @lang('admin::app.settings.workflows.edit.add-action')
                         </button>
@@ -341,7 +341,7 @@
             type="text/x-template"
             id="v-workflow-condition-item-template"
         >
-            <div class="mt-4 flex justify-between gap-4">
+            <div class="flex justify-between gap-4">
                 <div class="flex flex-1 gap-4 max-sm:flex-1 max-sm:flex-wrap">
                     <!-- Select main condition. -->
                     <select

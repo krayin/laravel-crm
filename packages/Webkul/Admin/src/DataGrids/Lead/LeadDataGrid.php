@@ -46,6 +46,8 @@ class LeadDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
+        $tablePrefix = DB::getTablePrefix();
+
         $queryBuilder = DB::table('leads')
             ->addSelect(
                 'leads.id',
@@ -65,7 +67,7 @@ class LeadDataGrid extends DataGrid
                 'tags.name as tag_name',
                 'lead_pipelines.rotten_days as pipeline_rotten_days',
                 'lead_pipeline_stages.code as stage_code',
-                DB::raw('CASE WHEN DATEDIFF(NOW(),'.DB::getTablePrefix().'leads.created_at) >='.DB::getTablePrefix().'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
+                DB::raw('CASE WHEN DATEDIFF(NOW(),'.$tablePrefix.'leads.created_at) >='.$tablePrefix.'lead_pipelines.rotten_days THEN 1 ELSE 0 END as rotten_lead'),
             )
             ->leftJoin('users', 'leads.user_id', '=', 'users.id')
             ->leftJoin('persons', 'leads.person_id', '=', 'persons.id')
@@ -83,7 +85,7 @@ class LeadDataGrid extends DataGrid
         }
 
         if (! is_null(request()->input('rotten_lead.in'))) {
-            $queryBuilder->havingRaw(DB::getTablePrefix().'rotten_lead = '.request()->input('rotten_lead.in'));
+            $queryBuilder->havingRaw($tablePrefix.'rotten_lead = '.request()->input('rotten_lead.in'));
         }
 
         $this->addFilter('id', 'leads.id');
@@ -97,7 +99,7 @@ class LeadDataGrid extends DataGrid
         $this->addFilter('tag_name', 'tags.name');
         $this->addFilter('expected_close_date', 'leads.expected_close_date');
         $this->addFilter('created_at', 'leads.created_at');
-        $this->addFilter('rotten_lead', DB::raw('DATEDIFF(NOW(), '.DB::getTablePrefix().'leads.created_at) >= '.DB::getTablePrefix().'lead_pipelines.rotten_days'));
+        $this->addFilter('rotten_lead', DB::raw('DATEDIFF(NOW(), '.$tablePrefix.'leads.created_at) >= '.$tablePrefix.'lead_pipelines.rotten_days'));
 
         return $queryBuilder;
     }

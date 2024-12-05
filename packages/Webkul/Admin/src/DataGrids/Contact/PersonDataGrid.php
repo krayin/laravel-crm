@@ -64,24 +64,6 @@ class PersonDataGrid extends DataGrid
             'sortable'   => true,
             'filterable' => true,
             'searchable' => true,
-            'closure'    => function ($row) {
-                [$bgColorClass, $textColorClass] = $this->generateRandomColorClasses();
-
-                $nameParts = explode(' ', $row->person_name);
-
-                $sortName = '';
-
-                if (count($nameParts) >= 2) {
-                    $sortName = ($nameParts[0][0].$nameParts[1][0]);
-                } elseif (count($nameParts) === 1) {
-                    $sortName = substr($nameParts[0], 0, 2);
-                }
-
-                return "<div class='flex items-center gap-3'>
-                            <div class='$bgColorClass $textColorClass flex h-9 w-9 cursor-pointer items-center justify-center rounded-full text-sm'>$sortName</div>
-                            <p class='text-sm text-black dark:bg-gray-900 dark:text-gray-300'>$row->person_name</p>
-                        </div>";
-            },
         ]);
 
         $this->addColumn([
@@ -91,9 +73,7 @@ class PersonDataGrid extends DataGrid
             'sortable'   => false,
             'filterable' => true,
             'searchable' => true,
-            'closure'    => function ($row) {
-                return collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', ');
-            },
+            'closure'    => fn ($row) => collect(json_decode($row->emails, true) ?? [])->pluck('value')->join(', '),
         ]);
 
         $this->addColumn([
@@ -176,19 +156,5 @@ class PersonDataGrid extends DataGrid
                 'url'    => route('admin.contacts.persons.mass_delete'),
             ]);
         }
-    }
-
-    /**
-     * Generate random color classes.
-     */
-    public function generateRandomColorClasses(): array
-    {
-        return collect([
-            ['bg-orange-100', 'text-orange-800'],
-            ['bg-red-100', 'text-red-800'],
-            ['bg-green-100', 'text-green-800'],
-            ['bg-blue-100', 'text-blue-800'],
-            ['bg-purple-100', 'text-purple-800'],
-        ])->random();
     }
 }

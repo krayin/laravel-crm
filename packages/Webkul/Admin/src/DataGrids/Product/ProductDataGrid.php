@@ -13,6 +13,8 @@ class ProductDataGrid extends DataGrid
      */
     public function prepareQueryBuilder(): Builder
     {
+        $tablePrefix = DB::getTablePrefix();
+
         $queryBuilder = DB::table('products')
             ->leftJoin('product_inventories', 'products.id', '=', 'product_inventories.product_id')
             ->select(
@@ -21,9 +23,9 @@ class ProductDataGrid extends DataGrid
                 'products.name',
                 'products.price',
             )
-            ->addSelect(DB::raw('SUM('.DB::getTablePrefix().'product_inventories.in_stock) as total_in_stock'))
-            ->addSelect(DB::raw('SUM('.DB::getTablePrefix().'product_inventories.allocated) as total_allocated'))
-            ->addSelect(DB::raw('SUM('.DB::getTablePrefix().'product_inventories.in_stock - '.DB::getTablePrefix().'product_inventories.allocated) as total_on_hand'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock) as total_in_stock'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.allocated) as total_allocated'))
+            ->addSelect(DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated) as total_on_hand'))
             ->groupBy('products.id');
 
         if (request()->route('id')) {
@@ -31,9 +33,9 @@ class ProductDataGrid extends DataGrid
         }
 
         $this->addFilter('id', 'products.id');
-        $this->addFilter('total_in_stock', DB::raw('SUM('.DB::getTablePrefix().'product_inventories.in_stock'));
-        $this->addFilter('total_allocated', DB::raw('SUM('.DB::getTablePrefix().'product_inventories.allocated'));
-        $this->addFilter('total_on_hand', DB::raw('SUM('.DB::getTablePrefix().'product_inventories.in_stock - '.DB::getTablePrefix().'product_inventories.allocated'));
+        $this->addFilter('total_in_stock', DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock'));
+        $this->addFilter('total_allocated', DB::raw('SUM('.$tablePrefix.'product_inventories.allocated'));
+        $this->addFilter('total_on_hand', DB::raw('SUM('.$tablePrefix.'product_inventories.in_stock - '.$tablePrefix.'product_inventories.allocated'));
 
         return $queryBuilder;
     }

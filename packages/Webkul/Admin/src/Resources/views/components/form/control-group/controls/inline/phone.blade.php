@@ -105,12 +105,15 @@
                                     <x-admin::form.control-group.error ::name="`${name}[${index}].value`"/>
                                 </template>
                         
-                                <span
-                                    class="cursor-pointer text-brandColor"
+                                <button
+                                    type="button"
+                                    class="flex max-w-max items-center gap-2 text-brandColor"
                                     @click="add"
                                 >
-                                    + @lang("admin::app.common.custom-attributes.add-more")
-                                </span>
+                                    <i class="icon-add text-md !text-brandColor"></i>
+
+                                    @lang("admin::app.common.custom-attributes.add-more")
+                                </button>
                             </x-slot>
 
                             <!-- Modal Footer -->

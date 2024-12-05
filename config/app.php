@@ -113,6 +113,7 @@ return [
         'es' => 'Español',
         'fa' => 'Persian',
         'tr' => 'Türkçe',
+        'vi' => 'Vietnamese',
     ],
 
     /*

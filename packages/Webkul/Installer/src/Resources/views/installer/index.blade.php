@@ -4,9 +4,7 @@
     dir="{{ in_array(app()->getLocale(), ['ar', 'fa', 'he']) ? 'rtl' : 'ltr' }}"
 >
     <head>
-        <title>
-            @lang('installer::app.installer.index.title')
-        </title>
+        <title>@lang('installer::app.installer.index.title')</title>
 
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,22 +27,18 @@
             rel="stylesheet"
         />
 
-        {{-- <link
+        <link
             type="image/x-icon"
-            href="{{ vite()->asset('images/installer/favicon.ico', 'installer') }}"
+            href="{{ vite()->asset('images/favicon.ico', 'installer') }}"
             rel="shortcut icon"
             sizes="16x16"
-        /> --}}
+        />
 
         @stack('styles')
     </head>
 
     @php
-        $locales = [
-            'ar'    => 'arabic',
-            'en'    => 'english',
-            'tr'    => 'turkish',
-        ];
+        $locales = config('app.available_locales');
 
         $currencies = [
             'AED' => 'united-arab-emirates-dirham',
@@ -135,7 +129,7 @@
                     <div class="m-auto grid h-[100vh] max-w-[362px] items-end">
                         <div class="grid gap-4">
                             <img
-                                src="{{ vite()->asset('images/installer/krayin-logo.svg', 'installer') }}"
+                                src="{{ vite()->asset('images/krayin-logo.svg', 'installer') }}"
                                 alt="@lang('installer::app.installer.index.krayin-logo')"
                             >
 
@@ -691,8 +685,8 @@
                             <div class="grid gap-2.5">
                                 <!-- Spinner -->
                                 <img
-                                    class="text-brandColor h-5 w-5 animate-spin"
-                                    src="{{ vite()->asset('images/installer/spinner.svg', 'installer') }}"
+                                    class="h-5 w-5 animate-spin text-brandColor"
+                                    src="{{ vite()->asset('images/spinner.svg', 'installer') }}"
                                     alt="Loading"
                                 />
 
@@ -829,7 +823,7 @@
                                         >
                                             @foreach ($locales as $value => $label)
                                                 <option value="{{ $value }}">
-                                                    @lang("installer::app.installer.index.$label")
+                                                    {{ $label }}
                                                 </option>
                                             @endforeach
                                         </x-installer::form.control-group.control>
