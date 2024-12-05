@@ -12,6 +12,13 @@ use Webkul\Tag\Repositories\TagRepository;
 class EmailDataGrid extends DataGrid
 {
     /**
+     * Default sort column of datagrid.
+     *
+     * @var ?string
+     */
+    protected $sortColumn = 'created_at';
+
+    /**
      * Prepare query builder.
      */
     public function prepareQueryBuilder(): Builder
