@@ -777,13 +777,11 @@
                                                                             @{{ getFormattedDates(column) }}
                                                                         </span>
 
-                                                                        <div>
-                                                                            <span
-                                                                                class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
-                                                                                @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
-                                                                            >
-                                                                            </span>
-                                                                        </div>
+                                                                        <span
+                                                                            class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                            @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
+                                                                        >
+                                                                        </span>
                                                                     </p>
                                                                 </template>
 
@@ -799,13 +797,11 @@
                                                                                 @{{ appliedColumnValue }}
                                                                             </span>
 
-                                                                            <div>
-                                                                                <span
-                                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
-                                                                                    @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
-                                                                                >
-                                                                                </span>
-                                                                            </div>
+                                                                            <span
+                                                                                class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                                @click="removeSavedFilterColumnValue(column, appliedColumnValue)"
+                                                                            >
+                                                                            </span>
                                                                         </p>
                                                                     </template>
 
@@ -816,13 +812,11 @@
                                                                                 @{{ column.value }}
                                                                             </span>
 
-                                                                            <div>
-                                                                                <span
-                                                                                    class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
-                                                                                    @click="removeSavedFilterColumnValue(column, column.value)"
-                                                                                >
-                                                                                </span>
-                                                                            </div>
+                                                                            <span
+                                                                                class="icon-cross-large cursor-pointer text-lg text-white ltr:ml-1.5 rtl:mr-1.5"
+                                                                                @click="removeSavedFilterColumnValue(column, column.value)"
+                                                                            >
+                                                                            </span>
                                                                         </p>
                                                                     </template>
                                                                 </template>
@@ -1433,7 +1427,7 @@
             </x-slot>
 
             <!-- Dropdown Content -->
-            <x-slot:menu>
+            <x-slot:menu class="mt-1 rounded-md border border-gray-200 dark:border-gray-800">
                 <div class="relative">
                     <div class="relative rounded">
                         <ul class="list-reset">

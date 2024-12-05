@@ -1,10 +1,8 @@
-
 <?php
 
 return [
     'acl' => [
         'title'  => 'Web Forms',
-        'view'   => 'View',
         'view'   => 'View',
         'create' => 'Create',
         'edit'   => 'Edit',
@@ -13,7 +11,7 @@ return [
 
     'menu' => [
         'title'      => 'Web Forms',
-        'title-info' => 'Add, edit or delete web forms from CRM',
+        'title-info' => 'Add, edit, or delete web forms from the CRM',
     ],
 
     'validations' => [

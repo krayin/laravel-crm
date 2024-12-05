@@ -31,7 +31,7 @@
                 request()->get('view-type') == 'table'
                 || ! request()->has('view-type')
             )
-                <x-admin::shimmer.datagrid />
+                <x-admin::shimmer.datagrid :is-multi-row="true"/>
             @endif
         </div>
     </v-activities>
@@ -306,7 +306,7 @@
 
                 data() {
                     return {
-                        viewType: (new URLSearchParams(window.location.search))?.get('view-type') || 'table',
+                        viewType: '{{ request('view-type') }}' || 'table',
                     };
                 },
 

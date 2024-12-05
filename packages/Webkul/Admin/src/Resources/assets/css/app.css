@@ -622,3 +622,11 @@
 .tox .tox-toolbar__group:last-child button[aria-disabled="true"] {
     @apply cursor-not-allowed opacity-50;
 }
+
+.tox .tox-toolbar__group:last-child button {
+    @apply !bg-transparent;
+}
+
+.tox .tox-toolbar__group:last-child button:hover {
+    @apply border-0 !bg-[#3389ec] text-white shadow-none;
+}

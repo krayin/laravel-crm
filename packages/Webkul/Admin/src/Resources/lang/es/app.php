@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar Fuente',
-                    'title'    => 'Crear Fuente',
+                    'save-btn' => 'Guardar fuente',
+                    'title'    => 'Crear fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fuente',
+                    'title' => 'Editar fuente',
                 ],
             ],
         ],
@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [
@@ -1540,13 +1541,15 @@ return [
 
         'updated'              => 'Actualizado :attribute',
         'created'              => 'Creado',
-        'duration-overlapping' => 'Los participantes tienen otra reunión a esta hora. ¿Desea continuar?',
+        'duration-overlapping' => 'Los participantes tienen otra reunión en este momento. ¿Deseas continuar?',
         'create-success'       => 'Actividad creada con éxito.',
         'update-success'       => 'Actividad actualizada con éxito.',
-        'overlapping-error'    => 'Los participantes tienen otra reunión a esta hora.',
-        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'overlapping-error'    => 'Los participantes tienen otra reunión en este momento.',
         'destroy-success'      => 'Actividad eliminada con éxito.',
         'delete-failed'        => 'No se puede eliminar la actividad.',
+        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'mass-destroy-success' => 'Actividades eliminadas con éxito.',
+        'mass-delete-failed'   => 'No se pueden eliminar las actividades.',
     ],
 
     'mail' => [
@@ -1652,6 +1655,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
+        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
@@ -1844,7 +1848,7 @@ return [
                     'info'            => 'Actualiza tus ajustes generales aquí.',
                     'locale-settings' => [
                         'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Inglés (en), Francés (fr) o Japonés (ja).',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
                     ],
                 ],
             ],
@@ -1909,7 +1913,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Versión : :version',
+        'app-version'          => 'Versión: :version',
         'dashboard'            => 'Tablero',
         'leads'                => 'Leads',
         'quotes'               => 'Cotizaciones',
@@ -1960,6 +1964,8 @@ return [
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Agregar, editar o eliminar webhooks desde CRM',
         'other-settings'       => 'Otras Configuraciones',
         'other-settings-info'  => 'Administra todas tus configuraciones adicionales en el CRM',
         'tags'                 => 'Etiquetas',
@@ -2018,6 +2024,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'No estás autorizado para acceder a esta página',
+        'dashboard' => 'Tablero',
+        'go-back'   => 'Volver',
+        'support'   => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+
+        '404' => [
+            'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
+            'title'       => '404 Página No Encontrada',
+        ],
+
+        '401' => [
+            'description' => '¡Ups! Parece que no tienes permiso para acceder a esta página. Parece que te faltan las credenciales necesarias.',
+            'title'       => '401 No Autorizado',
+        ],
+
+        '403' => [
+            'description' => '¡Ups! Esta página está fuera de límites. Parece que no tienes los permisos necesarios para ver este contenido.',
+            'title'       => '403 Prohibido',
+        ],
+
+        '500' => [
+            'description' => '¡Ups! Algo salió mal. Parece que tenemos problemas para cargar la página que estás buscando.',
+            'title'       => '500 Error Interno del Servidor',
+        ],
+
+        '503' => [
+            'description' => '¡Ups! Parece que estamos temporalmente fuera de servicio por mantenimiento. Vuelve a intentarlo en un rato.',
+            'title'       => '503 Servicio No Disponible',
+        ],
     ],
 ];

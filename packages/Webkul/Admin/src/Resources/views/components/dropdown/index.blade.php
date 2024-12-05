@@ -12,7 +12,7 @@
     @isset($content)
         <template #content="{ isActive, positionStyles }">
             <div
-                {{ $content->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-5 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900']) }}
+                {{ $content->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-5 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900 border border-gray-300 dark:border-gray-800']) }}
                 :style="positionStyles"
                 v-show="isActive"
             >

@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Ad',
-                    'save-btn' => 'Türü Kaydet',
-                    'title'    => 'Tür Oluştur',
+                    'save-btn' => 'Kaynağı Kaydet',
+                    'title'    => 'Kaynak Oluştur',
                 ],
 
                 'edit' => [
-                    'title' => 'Tür Düzenle',
+                    'title' => 'Kaynağı Düzenle',
                 ],
             ],
         ],
@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
+                'update-quote'               => 'Teklifi Güncelle',
             ],
 
             'create' => [
@@ -1538,15 +1539,17 @@ return [
             'users'           => 'Kullanıcılar',
         ],
 
-        'updated'              => ':attribute güncellendi',
+        'updated'              => 'Güncellendi :attribute',
         'created'              => 'Oluşturuldu',
-        'duration-overlapping' => 'Katılımcıların bu zamanda başka bir toplantısı var. Devam etmek istiyor musunuz?',
+        'duration-overlapping' => 'Katılımcıların bu saatte başka bir toplantısı var. Devam etmek istiyor musunuz?',
         'create-success'       => 'Etkinlik başarıyla oluşturuldu.',
         'update-success'       => 'Etkinlik başarıyla güncellendi.',
-        'overlapping-error'    => 'Katılımcıların bu zamanda başka bir toplantısı var.',
-        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'overlapping-error'    => 'Katılımcıların bu saatte başka bir toplantısı var.',
         'destroy-success'      => 'Etkinlik başarıyla silindi.',
-        'delete-failed'        => 'Etkinlik silinemedi.',
+        'delete-failed'        => 'Etkinlik silinemiyor.',
+        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'mass-destroy-success' => 'Etkinlikler başarıyla silindi.',
+        'mass-delete-failed'   => 'Etkinlikler silinemiyor.',
     ],
 
     'mail' => [
@@ -1652,6 +1655,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead başarıyla oluşturuldu.',
         'update-success'    => 'Lead başarıyla güncellendi.',
+        'update-failed'     => 'Potansiyel müşteriler silinemez.',
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
@@ -1844,7 +1848,7 @@ return [
                     'info'            => 'Genel ayarlarınızı buradan güncelleyebilirsiniz.',
                     'locale-settings' => [
                         'title'       => 'Yerel Ayarlar',
-                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin İngilizce (en), Fransızca (fr) veya Japonca (ja).',
+                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
                     ],
                 ],
             ],
@@ -1909,7 +1913,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Sürüm : :version',
+        'app-version'          => 'Sürüm: :version',
         'dashboard'            => 'Gösterge Paneli',
         'leads'                => 'Leadler',
         'quotes'               => 'Teklifler',
@@ -1960,6 +1964,8 @@ return [
         'email-templates-info' => 'CRM’den e-posta şablonları ekleyin, düzenleyin veya silin',
         'workflows'            => 'İş Akışları',
         'workflows-info'       => 'CRM’den iş akışlarını ekleyin, düzenleyin veya silin',
+        'webhooks'             => 'Webhooklar',
+        'webhooks-info'        => 'CRM’den webhookları ekleyin, düzenleyin veya silin',
         'other-settings'       => 'Diğer Ayarlar',
         'other-settings-info'  => 'CRM’de tüm ekstra ayarlarınızı yönetin',
         'tags'                 => 'Etiketler',
@@ -2018,6 +2024,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'Bu sayfaya erişme yetkiniz yok',
+        'dashboard' => 'Kontrol Paneli',
+        'go-back'   => 'Geri Dön',
+        'support'   => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+
+        '404' => [
+            'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
+            'title'       => '404 Sayfa Bulunamadı',
+        ],
+
+        '401' => [
+            'description' => 'Oops! Bu sayfaya erişim izniniz yok gibi görünüyor. Gerekli yetkilere sahip değilsiniz.',
+            'title'       => '401 Yetkisiz',
+        ],
+
+        '403' => [
+            'description' => 'Oops! Bu sayfa erişime kapalı. Bu içeriği görüntülemek için gerekli izinlere sahip değilsiniz gibi görünüyor.',
+            'title'       => '403 Yasak',
+        ],
+
+        '500' => [
+            'description' => 'Oops! Bir şeyler ters gitti. Aradığınız sayfa yüklenirken sorun yaşıyoruz gibi görünüyor.',
+            'title'       => '500 Sunucu Hatası',
+        ],
+
+        '503' => [
+            'description' => 'Oops! Görünüşe göre geçici bir bakım nedeniyle kapalıyız. Lütfen kısa süre sonra tekrar kontrol edin.',
+            'title'       => '503 Hizmet Kullanılamıyor',
+        ],
     ],
 ];

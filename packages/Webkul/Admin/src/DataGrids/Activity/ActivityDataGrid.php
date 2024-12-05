@@ -38,7 +38,7 @@ class ActivityDataGrid extends DataGrid
                     $query->whereIn('activities.user_id', $userIds)
                         ->orWhereIn('activity_participants.user_id', $userIds);
                 }
-            });
+            })->groupBy('activities.id', 'leads.id', 'users.id');
 
         $this->addFilter('id', 'activities.id');
         $this->addFilter('title', 'activities.title');
