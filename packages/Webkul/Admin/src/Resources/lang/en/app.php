@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Name',
-                    'save-btn' => 'Save Type',
-                    'title'    => 'Create Type',
+                    'save-btn' => 'Save Source',
+                    'title'    => 'Create Source',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Type',
+                    'title' => 'Edit Source',
                 ],
             ],
         ],
@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
+                'update-quote'               => 'Update Quote',
             ],
 
             'create' => [
@@ -1653,7 +1654,8 @@ return [
 
     'leads' => [
         'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
+        'update-success'    => 'Leads updated successfully.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 

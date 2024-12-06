@@ -306,7 +306,7 @@
 
                 data() {
                     return {
-                        viewType: (new URLSearchParams(window.location.search))?.get('view-type') || 'table',
+                        viewType: '{{ request('view-type') }}' || 'table',
                     };
                 },
 

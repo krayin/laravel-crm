@@ -11,6 +11,8 @@ return [
                 'source'              => 'المصدر',
                 'title'               => 'العنوان',
                 'type'                => 'النوع',
+                'pipeline'            => 'قناة المبيعات',
+                'stage'               => 'المرحلة',
             ],
 
             'persons' => [
@@ -33,7 +35,7 @@ return [
                 'name'        => 'الاسم',
                 'price'       => 'السعر',
                 'quantity'    => 'الكمية',
-                'sku'         => 'رمز المخزون',
+                'sku'         => 'SKU',
             ],
 
             'quotes' => [
@@ -42,20 +44,20 @@ return [
                 'description'       => 'الوصف',
                 'discount-amount'   => 'مبلغ الخصم',
                 'discount-percent'  => 'نسبة الخصم',
-                'expired-at'        => 'تنتهي في',
-                'grand-total'       => 'الإجمالي النهائي',
-                'person'            => 'الشخص',
+                'expired-at'        => 'منتهي في',
+                'grand-total'       => 'الإجمالي',
+                'person'            => 'شخص',
                 'sales-owner'       => 'مالك المبيعات',
                 'shipping-address'  => 'عنوان الشحن',
                 'sub-total'         => 'الإجمالي الفرعي',
                 'subject'           => 'الموضوع',
-                'tax-amount'        => 'قيمة الضريبة',
+                'tax-amount'        => 'مبلغ الضريبة',
             ],
 
             'warehouses' => [
                 'contact-address' => 'عنوان الاتصال',
-                'contact-emails'  => 'البريد الإلكتروني للاتصال',
-                'contact-name'    => 'اسم جهة الاتصال',
+                'contact-emails'  => 'البريد الإلكتروني للتواصل',
+                'contact-name'    => 'اسم الاتصال',
                 'contact-numbers' => 'أرقام الاتصال',
                 'description'     => 'الوصف',
                 'name'            => 'الاسم',
@@ -67,7 +69,7 @@ return [
             'activity-modified'     => 'تم تعديل النشاط',
             'date'                  => 'التاريخ',
             'new-activity'          => 'لديك نشاط جديد، يرجى العثور على التفاصيل أدناه',
-            'new-activity-modified' => 'تم تعديل نشاط جديد، يرجى العثور على التفاصيل أدناه',
+            'new-activity-modified' => 'تم تعديل النشاط الجديد، يرجى العثور على التفاصيل أدناه',
             'participants'          => 'المشاركون',
             'title'                 => 'العنوان',
             'type'                  => 'النوع',
@@ -75,15 +77,15 @@ return [
 
         'lead' => [
             'pipeline' => [
-                'default' => 'مجرى العمل الافتراضي',
+                'default' => 'قناة المبيعات الافتراضية',
 
                 'pipeline-stages' => [
                     'follow-up'   => 'متابعة',
-                    'lost'        => 'خسارة',
+                    'lost'        => 'مفقود',
                     'negotiation' => 'مفاوضات',
                     'new'         => 'جديد',
-                    'prospect'    => 'فرصة محتملة',
-                    'won'         => 'ربح',
+                    'prospect'    => 'عميل محتمل',
+                    'won'         => 'مُنتصر',
                 ],
             ],
 
@@ -91,12 +93,12 @@ return [
                 'direct'   => 'مباشر',
                 'email'    => 'البريد الإلكتروني',
                 'phone'    => 'الهاتف',
-                'web'      => 'الويب',
-                'web-form' => 'نموذج الويب',
+                'web'      => 'ويب',
+                'web-form' => 'نموذج ويب',
             ],
 
             'type' => [
-                'existing-business' => 'عمل قائم',
+                'existing-business' => 'عمل موجود',
                 'new-business'      => 'عمل جديد',
             ],
         ],
@@ -104,13 +106,13 @@ return [
         'user' => [
             'role' => [
                 'administrator-role' => 'دور المسؤول',
-                'administrator'      => 'المسؤول',
+                'administrator'      => 'مسؤول',
             ],
         ],
 
         'workflow' => [
-            'email-to-participants-after-activity-updation' => 'إرسال بريد إلكتروني للمشاركين بعد تحديث النشاط',
-            'email-to-participants-after-activity-creation' => 'إرسال بريد إلكتروني للمشاركين بعد إنشاء النشاط',
+            'email-to-participants-after-activity-updation' => 'رسائل بريد إلكتروني للمشاركين بعد تحديث النشاط',
+            'email-to-participants-after-activity-creation' => 'رسائل بريد إلكتروني للمشاركين بعد إنشاء النشاط',
         ],
     ],
 
@@ -271,34 +273,15 @@ return [
                 'xml'         => 'XML',
             ],
 
-            'arabic'                   => 'العربية',
             'back'                     => 'رجوع',
             'krayin'                   => 'Krayin',
             'krayin-info'              => 'مشروع مجتمعي من قبل',
             'krayin-logo'              => 'شعار Krayin',
-            'bengali'                  => 'البنغالية',
-            'chinese'                  => 'الصينية',
             'continue'                 => 'متابعة',
-            'dutch'                    => 'هولندي',
-            'english'                  => 'الإنجليزية',
-            'french'                   => 'الفرنسية',
-            'german'                   => 'ألماني',
-            'hebrew'                   => 'العبرية',
-            'hindi'                    => 'الهندية',
             'installation-description' => 'عادة ما تتضمن عملية تثبيت Krayin عدة خطوات. إليك نظرة عامة عامة على عملية التثبيت krayin',
             'installation-info'        => 'نحن سعداء برؤيتك هنا!',
             'installation-title'       => 'مرحبًا بك في التثبيت',
-            'italian'                  => 'الإيطالية',
-            'japanese'                 => 'اليابانية',
-            'persian'                  => 'الفارسية',
-            'polish'                   => 'البولندية',
-            'portuguese'               => 'البرتغالية البرازيلية',
-            'russian'                  => 'الروسية',
-            'sinhala'                  => 'السنهالية',
-            'spanish'                  => 'الإسبانية',
             'title'                    => 'مثبت Krayin',
-            'turkish'                  => 'التركية',
-            'ukrainian'                => 'الأوكرانية',
             'webkul'                   => 'Webkul',
         ],
     ],

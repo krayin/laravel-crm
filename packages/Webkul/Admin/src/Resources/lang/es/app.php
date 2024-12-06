@@ -850,12 +850,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar Fuente',
-                    'title'    => 'Crear Fuente',
+                    'save-btn' => 'Guardar fuente',
+                    'title'    => 'Crear fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fuente',
+                    'title' => 'Editar fuente',
                 ],
             ],
         ],
@@ -887,6 +887,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [
@@ -1654,6 +1655,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
+        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
