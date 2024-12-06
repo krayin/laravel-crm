@@ -108,11 +108,12 @@ return [
      */
 
     'available_locales' => [
-        'ar' => 'Arabic',
-        'en' => 'English',
-        'es' => 'Español',
-        'fa' => 'Persian',
-        'tr' => 'Türkçe',
+        'ar'    => 'Arabic',
+        'en'    => 'English',
+        'es'    => 'Español',
+        'fa'    => 'Persian',
+        'tr'    => 'Türkçe',
+        'pt_BR' => 'Portuguese',
     ],
 
     /*
