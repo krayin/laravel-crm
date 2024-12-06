@@ -68,8 +68,6 @@ Added support for Brazilian Portuguese (PT_BR) Language.
 
 * #1594[fixed] Stage Sorting in Pipeline not working - Krayin CRM Version. 
 
-
-
 ## **v2.0.2 (24th of September 2024)** - *Release*
 
 * #1633[enhancement] Use variable instead of calling every time of use db table prefix.
