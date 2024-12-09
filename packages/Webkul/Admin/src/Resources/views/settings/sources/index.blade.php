@@ -81,7 +81,7 @@
                             <p>@{{ record.id }}</p>
         
                             <!-- Sources Name -->
-                            <p>@{{ record.name }}</p>
+                            <p class="break-words">@{{ record.name }}</p>
 
                             <!-- Actions -->
                             <div class="flex justify-end">
