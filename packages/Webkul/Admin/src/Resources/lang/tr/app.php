@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
         'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+        'not-permission'   => 'Yönetici paneline erişim izniniz yok.',
 
         'login' => [
             'email'                => 'E-posta Adresi',
