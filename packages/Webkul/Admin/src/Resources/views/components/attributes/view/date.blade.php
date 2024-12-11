@@ -9,8 +9,8 @@
 @endphp
 
 <x-admin::form.control-group.controls.inline.date
-    ::name="'{{$attribute->code}}'"
-    ::value="'{{$value}}'"
+    ::name="'{{ $attribute->code }}'"
+    ::value="'{{ $value }}'"
     rules="required"
     position="left"
     :label="$attribute->name"
