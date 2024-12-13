@@ -156,7 +156,10 @@
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
                                     <div class="flex items-center justify-between">
-                                        <span class="py-1 font-medium dark:text-gray-300">
+                                        <span 
+                                            class="py-1 font-medium dark:text-gray-300 line-clamp-1"
+                                            :title="element.name ? element.name : 'New Added'"
+                                        >
                                             @{{ element.name ? element.name : 'New Added' }} 
                                         </span>
 
