@@ -224,7 +224,6 @@ return [
             ],
         ],
 
-
         'media' => [
             'images' => [
                 'add-image-btn'     => 'Ajouter une image',
