@@ -151,7 +151,7 @@ return [
 
             'index' => [
                 'from'         => 'De',
-        	    'to'           => 'A',
+                'to'           => 'A',
                 'cc'           => 'Cc',
                 'bcc'          => 'Bcc',
                 'all'          => 'Tous',
