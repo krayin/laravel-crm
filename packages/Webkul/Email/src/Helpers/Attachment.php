@@ -5,14 +5,11 @@ namespace Webkul\Email\Helpers;
 class Attachment
 {
     /**
+     * Content.
+     *
      * @var File Content
      */
-    private $content;
-
-    /**
-     * @var Filename extension
-     */
-    private $extension;
+    private $content = null;
 
     /**
      * Create an helper instance
@@ -24,12 +21,10 @@ class Attachment
         public $contentDisposition = 'attachment',
         public $contentId = '',
         public $headers = []
-    ) {
-        $this->content = null;
-    }
+    ) {}
 
     /**
-     * retrieve the attachment filename
+     * Retrieve the attachment filename.
      *
      * @return string
      */
@@ -39,7 +34,7 @@ class Attachment
     }
 
     /**
-     * Retrieve the Attachment Content-Type
+     * Retrieve the attachment content type.
      *
      * @return string
      */
@@ -49,7 +44,7 @@ class Attachment
     }
 
     /**
-     * Retrieve the Attachment Content-Disposition
+     * Retrieve the attachment content disposition.
      *
      * @return string
      */
@@ -59,7 +54,7 @@ class Attachment
     }
 
     /**
-     * Retrieve the Attachment Content-ID
+     * Retrieve the attachment content ID.
      *
      * @return string
      */
@@ -69,7 +64,7 @@ class Attachment
     }
 
     /**
-     * Retrieve the Attachment Headers
+     * Retrieve the attachment headers.
      *
      * @return string
      */
@@ -79,8 +74,9 @@ class Attachment
     }
 
     /**
-     * Read the contents a few bytes at a time until completed
-     * Once read to completion, it always returns false
+     * Read the contents a few bytes at a time until completed.
+     *
+     * Once read to completion, it always returns false.
      *
      * @param  int  $bytes
      * @return string
@@ -91,8 +87,9 @@ class Attachment
     }
 
     /**
-     * Retrieve the file content in one go
-     * Once you retrieve the content you cannot use MimeMailParser_attachment::read()
+     * Retrieve the file content in one go.
+     *
+     * Once you retrieve the content you cannot use MimeMailParser_attachment::read().
      *
      * @return string
      */
