@@ -32,11 +32,9 @@ return new class extends Migration
                 ->references('id')->on('persons')
                 ->onDelete('restrict');
 
-
             $table->foreign('lead_source_id')
                 ->references('id')->on('lead_sources')
                 ->onDelete('restrict');
-
 
             $table->foreign('lead_type_id')
                 ->references('id')->on('lead_types')
