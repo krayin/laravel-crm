@@ -1,0 +1,27 @@
+{
+    "name": "assetsallocation/assetsallocation",
+    "description": "assetsallocation",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\AssetsAllocation\\Webkul\AssetsAllocation\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Webkul\AssetsAllocation\\Providers\\Webkul\AssetsAllocationServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

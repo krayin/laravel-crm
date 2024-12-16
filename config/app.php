@@ -216,6 +216,15 @@ return [
         Webkul\User\Providers\UserServiceProvider::class,
         Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
+        Webkul\Expense\Providers\ExpenseServiceProvider::class,
+        Webkul\Client\Providers\ClientServiceProvider::class,
+        Webkul\Approval\Providers\ApprovalServiceProvider::class,
+        Webkul\Order\Providers\OrderServiceProvider::class,
+        Webkul\Invoice\Providers\InvoiceServiceProvider::class,
+        Webkul\Asset\Providers\AssetServiceProvider::class,
+        Webkul\Employee\Providers\EmployeeServiceProvider::class,
+        Webkul\AssetsAllocation\Providers\AssetsAllocationServiceProvider::class,
+
     ])->toArray(),
 
     /*

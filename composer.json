@@ -70,7 +70,15 @@
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\Expense\\": "packages/Webkul/Expense/src",
+            "Webkul\\Client\\": "packages/Webkul/Client/src",
+            "Webkul\\Approval\\": "packages/Webkul/Approval/src",
+            "Webkul\\Order\\": "packages/Webkul/Order/src",
+            "Webkul\\Invoice\\": "packages/Webkul/Invoice/src",
+            "Webkul\\Asset\\": "packages/Webkul/Asset/src",
+            "Webkul\\Employee\\": "packages/Webkul/Employee/src",
+            "Webkul\\AssetsAllocation\\": "packages/Webkul/AssetsAllocation/src"
         }
     },
     "autoload-dev": {
