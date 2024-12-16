@@ -12,13 +12,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\Employee\\Webkul\Employee\\": "src/"
+            "Webkul\\Employee\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\Webkul\Employee\\Providers\\Webkul\EmployeeServiceProvider"
+                "Webkul\\Employee\\Providers\\EmployeeServiceProvider"
             ],
             "aliases": {}
         }
