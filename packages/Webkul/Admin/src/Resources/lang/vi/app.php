@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Tài khoản của bạn chưa được kích hoạt. Vui lòng liên hệ quản trị viên.',
         'login-error'      => 'Thông tin đăng nhập không khớp với hồ sơ của chúng tôi.',
+        'not-permission'   => 'Bạn không có quyền truy cập vào bảng quản trị.',
 
         'login' => [
             'email'                => 'Địa chỉ Email',

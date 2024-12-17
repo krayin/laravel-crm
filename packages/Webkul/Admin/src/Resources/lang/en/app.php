@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Your account is not activated yet. Please contact the administrator.',
         'login-error'      => 'The credentials do not match our records.',
+        'not-permission'   => 'You do not have permission to access the admin panel.',
 
         'login' => [
             'email'                => 'Email Address',
