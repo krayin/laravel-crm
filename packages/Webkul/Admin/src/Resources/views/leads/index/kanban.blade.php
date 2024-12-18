@@ -36,9 +36,18 @@
                         <div class="flex flex-col px-2 py-3">
                             <!-- Stage Title and Action -->
                             <div class="flex items-center justify-between">
-                                <span class="text-xs font-medium dark:text-white">
-                                    @{{ stage.name }} (@{{ stage.leads.meta.total }})
-                                </span>
+                                <div class="flex text-xs font-medium dark:text-white gap-px">
+                                    <span 
+                                        class="line-clamp-1"
+                                        :title="stage.name"
+                                    >
+                                        @{{ stage.name }}
+                                    </span>
+                                    
+                                    <span>
+                                       (@{{ stage.leads.meta.total }})
+                                    </span>
+                                </div>
 
                                 @if (bouncer()->hasPermission('leads.create'))
                                     <a
