@@ -111,7 +111,6 @@ return [
         'ar' => 'Arabic',
         'en' => 'English',
         'es' => 'Español',
-        'fr' => 'Français',
         'fa' => 'Persian',
         'tr' => 'Türkçe',
         'vi' => 'Vietnamese',
