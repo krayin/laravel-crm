@@ -134,10 +134,20 @@
                         .then(response => {
                             this.report = response.data;
 
+                            this.extendColors(this.report.statistics.length);
+
                             this.isLoading = false;
                         })
                         .catch(error => {});
-                }
+                },
+
+                extendColors(length) {
+                    while (this.colors.length < length) {
+                        const hue = Math.floor(Math.random() * 360);
+                        const newColor = `hsl(${hue}, 70%, 60%)`;
+                        this.colors.push(newColor);
+                    }
+                },
             }
         });
     </script>
