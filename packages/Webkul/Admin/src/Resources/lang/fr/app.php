@@ -1241,7 +1241,7 @@ return [
                 'update-success' => 'Webhook mis à jour avec succès.',
                 'delete-success' => 'Webhook supprimé avec succès.',
                 'delete-failed'  => 'Le webhook ne peut pas être supprimé.',
-                
+
                 'datagrid' => [
                     'id'          => 'ID',
                     'delete'      => 'Supprimer',
@@ -1563,7 +1563,7 @@ return [
             'trash'             => 'Corbeille',
             'compose-mail-btn'  => 'Écrire un mail',
             'btn'               => 'Mail',
-            
+
             'mail'              => [
                 'title'         => 'Rédiger un mail',
                 'to'            => 'À',
@@ -1660,11 +1660,11 @@ return [
         'update-failed'     => 'Les prospects ne peuvent pas être supprimés.',
         'destroy-success'   => 'Prospect supprimé avec succès.',
         'destroy-failed'    => 'Le prospect ne peut pas être supprimé.',
-        
+
         'index' => [
             'title'      => 'Prospects',
             'create-btn' => 'Créer un Prospect',
-            
+
             'datagrid' => [
                 'id'                  => 'ID',
                 'sales-person'        => 'Commercial',
@@ -1690,7 +1690,7 @@ return [
                 'empty-list'             => 'Votre liste de prospects est vide',
                 'empty-list-description' => 'Créez un prospect pour organiser vos objectifs.',
                 'create-lead-btn'        => 'Créer un Prospect',
-                
+
                 'columns' => [
                     'contact-person'      => 'Contact',
                     'id'                  => 'ID',
@@ -1769,7 +1769,7 @@ return [
         'view' => [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days jours',
-            
+
             'tabs'        => [
                 'description' => 'Description',
                 'products'    => 'Produits',
@@ -1844,11 +1844,11 @@ return [
             'general'  => [
                 'title'   => 'Général',
                 'info'    => 'Configuration générale',
-                
+
                 'general' => [
                     'title'           => 'Général',
                     'info'            => 'Mettez à jour vos paramètres généraux ici.',
-                    
+
                     'locale-settings' => [
                         'title'       => 'Paramètres de langue',
                         'title-info'  => 'Définit la langue utilisée dans l\'interface utilisateur, telles que l\'arabe (ar), l\'anglais (en), l\'espagnol (es), le français(fr), le persan (fa) et le turc (tr).',
@@ -1921,7 +1921,7 @@ return [
         'leads'                => 'Leads',
         'quotes'               => 'Devis',
         'quote'                => 'Devis',
-        
+
         'mail'                 => [
             'title'   => 'Mail',
             'compose' => 'Composer',
@@ -2032,7 +2032,7 @@ return [
         'dashboard' => 'Tableau de bord',
         'go-back'   => 'Retourner',
         'support'   => 'Si le problème persiste, contactez-nous à <a href=":link" class=":class">:email</a> pour obtenir de l\'aide.',
-        
+
         '404' => [
             'description' => 'Oups ! La page que vous recherchez est introuvable. Il semble que nous n\'ayons pas trouvé ce que vous cherchiez.',
             'title'       => 'Page 404 Introuvable',
