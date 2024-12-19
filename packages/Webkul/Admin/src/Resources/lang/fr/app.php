@@ -305,11 +305,9 @@ return [
                     ],
                 ],
 
-                //TODO
                 'custom-filters' => [
                     'clear-all' => 'Tout effacer',
                     'title'     => 'Filtres personnalisés',
-                    
                 ],
 
                 'boolean-options' => [
@@ -456,7 +454,6 @@ return [
                 'sales-person'     => 'Commercial',
                 'date'             => 'Date',
                 'quote-id'         => 'ID du Devis',
-                
             ],
         ],
 
@@ -590,7 +587,6 @@ return [
                             'description'   => 'Description',
                             'file'          => 'Fichier',
                             'save-btn'      => 'Enregistrer le fichier',
-                            
                         ],
 
                         'note' => [
@@ -666,7 +662,6 @@ return [
             'update-success' => 'Produit mis à jour avec succès.',
             'delete-success' => 'Produit supprimé avec succès.',
             'delete-failed'  => 'Le produit ne peut pas être supprimé.',
-            
 
             'datagrid'   => [
                 'allocated' => 'Alloué',
@@ -679,7 +674,6 @@ return [
                 'price'     => 'Prix',
                 'sku'       => 'SKU',
                 'view'      => 'Voir',
-                
             ],
         ],
 
@@ -688,7 +682,6 @@ return [
             'title'     => 'Créer des produits',
             'general'   => 'Général',
             'price'     => 'Prix',
-            
         ],
 
         'edit' => [
@@ -696,7 +689,6 @@ return [
             'save-btn'  => 'Enregistrer les produits',
             'general'   => 'Général',
             'price'     => 'Prix',
-            
         ],
 
         'view' => [
@@ -706,7 +698,6 @@ return [
             'files'       => 'Fichiers',
             'inventories' => 'Inventaire',
             'change-logs' => 'Journaux de modifications',
-            
 
             'attributes' => [
                 'about-product' => 'À propos du produit',
@@ -723,7 +714,6 @@ return [
                 'location'   => 'Emplacement',
                 'add-more'   => 'Ajouter plus',
                 'save'       => 'Enregistrer',
-                
             ],
         ],
     ],
@@ -739,7 +729,6 @@ return [
                 'update-success'    => 'Groupe mis à jour avec succès.',
                 'destroy-success'   => 'Groupe supprimé avec succès.',
                 'delete-failed'     => 'Le groupe ne peut pas être supprimé.',
-                
 
                 'datagrid'   => [
                     'delete'      => 'Supprimer',
@@ -747,7 +736,6 @@ return [
                     'edit'        => 'Modifier',
                     'id'          => 'ID',
                     'name'        => 'Nom',
-                    
                 ],
 
                 'edit' => [
@@ -759,7 +747,6 @@ return [
                     'title'       => 'Créer un groupe',
                     'description' => 'Description',
                     'save-btn'    => 'Enregistrer le groupe',
-                    
                 ],
             ],
         ],
@@ -801,7 +788,6 @@ return [
                 'permissions'    => 'Permissions',
                 'save-btn'       => 'Enregistrer le rôle',
                 'title'          => 'Créer un rôle',
-                
             ],
 
             'edit' => [
@@ -842,7 +828,8 @@ return [
                 ],
 
                 'edit' => [
-                    'title' => 'Modifier le type',                ],
+                    'title' => 'Modifier le type',                
+                ],
             ],
         ],
 
@@ -854,21 +841,18 @@ return [
                 'delete-success' => 'Source supprimée avec succès.',
                 'title'          => 'Sources',
                 'update-success' => 'Source mise à jour avec succès.',
-                
 
                 'datagrid' => [
                     'delete' => 'Supprimer',
                     'edit'   => 'Modifier',
                     'id'     => 'ID',
                     'name'   => 'Nom',
-                    
                 ],
 
                 'create' => [
                     'name'     => 'Nom',
                     'save-btn' => 'Enregistrer la Source',
                     'title'    => 'Créer une Source',
-                    
                 ],
 
                 'edit' => [
@@ -1067,7 +1051,6 @@ return [
                 'update-success' => 'Modèle d\'email mis à jour avec succès.',
                 'delete-success' => 'Modèle d\'email supprimé avec succès.',
                 'delete-failed'  => 'Le modèle d\'email ne peut pas être supprimé.',
-                
 
                 'datagrid'   => [
                     'delete'       => 'Supprimer',
@@ -1075,7 +1058,6 @@ return [
                     'id'           => 'ID',
                     'name'         => 'Nom',
                     'subject'      => 'Sujet',
-                    
                 ],
             ],
 
@@ -1088,7 +1070,6 @@ return [
                 'subject-placeholders' => 'Espaces Réservés pour le Sujet',
                 'general'              => 'Général',
                 'name'                 => 'Nom',
-                
             ],
 
             'edit' => [
@@ -1100,7 +1081,6 @@ return [
                 'subject-placeholders' => 'Espaces Réservés pour le Sujet',
                 'general'              => 'Général',
                 'name'                 => 'Nom',
-                
             ],
         ],
 
@@ -1112,7 +1092,6 @@ return [
                 'update-success' => 'Tag mis à jour avec succès.',
                 'delete-success' => 'Tag supprimé avec succès.',
                 'delete-failed'  => 'Le tag ne peut pas être supprimé.',
-                
 
                 'datagrid' => [
                     'delete'      => 'Supprimer',
@@ -1121,7 +1100,6 @@ return [
                     'name'        => 'Nom',
                     'users'       => 'Utilisateurs',
                     'created-at'  => 'Créé le',
-                    
                 ],
 
                 'create' => [
@@ -1129,7 +1107,6 @@ return [
                     'save-btn' => 'Enregistrer le tag',
                     'title'    => 'Créer un tag',
                     'color'    => 'Couleur',
-                    
                 ],
 
                 'edit' => [
@@ -1154,7 +1131,6 @@ return [
                 'user-define-error'   => 'Impossible de supprimer un utilisateur système.',
                 'active'              => 'Actif',
                 'inactive'            => 'Inactif',
-                
 
                 'datagrid' => [
                     'active'        => 'Actif',
@@ -1168,7 +1144,6 @@ return [
                     'status'        => 'Statut',
                     'update-status' => 'Mettre à jour le statut',
                     'users'         => 'Utilisateurs',
-                    
                 ],
 
                 'create' => [
@@ -1186,7 +1161,6 @@ return [
                     'status'           => 'Statut',
                     'title'            => 'Créer un utilisateur',
                     'view-permission'  => 'Voir la permission',
-                    
                 ],
 
                 'edit' => [
@@ -1204,7 +1178,6 @@ return [
                 'delete-success'       => 'Pipeline supprimé avec succès.',
                 'delete-failed'        => 'Le pipeline ne peut pas être supprimé.',
                 'default-delete-error' => 'Le pipeline par défaut ne peut pas être supprimé.',
-                
 
                 'datagrid' => [
                     'delete'      => 'Supprimer',
@@ -1237,7 +1210,6 @@ return [
                 'add-stage-info'       => 'Ajoutez une nouvelle étape pour votre pipeline',
                 'newly-added'          => 'Nouvellement ajouté',
                 'stage-delete-success' => 'Étape supprimée avec succès',
-                
             ],
 
             'edit'  => [
@@ -1258,7 +1230,6 @@ return [
                 'add-new-stages'       => 'Ajouter de nouvelles étapes',
                 'add-stage-info'       => 'Ajoutez une nouvelle étape à votre pipeline',
                 'stage-delete-success' => 'Étape supprimée avec succès',
-                
             ],
         ],
 
@@ -1271,7 +1242,6 @@ return [
                 'delete-success' => 'Webhook supprimé avec succès.',
                 'delete-failed'  => 'Le webhook ne peut pas être supprimé.',
                 
-
                 'datagrid' => [
                     'id'          => 'ID',
                     'delete'      => 'Supprimer',
@@ -1279,7 +1249,6 @@ return [
                     'name'        => 'Nom',
                     'entity-type' => 'Type d\'entité',
                     'end-point'   => 'Point de terminaison',
-                    
                 ],
             ],
 
@@ -1310,7 +1279,6 @@ return [
                 'description'           => 'Description',
                 'json'                  => 'Json',
                 'text'                  => 'Texte',
-                
             ],
 
             'edit' => [
@@ -1341,7 +1309,6 @@ return [
                 'description'           => 'Description',
                 'json'                  => 'Json',
                 'text'                  => 'Texte',
-                
             ],
         ],
 
@@ -1354,7 +1321,6 @@ return [
                 'update-success' => 'Entrepôt mis à jour avec succès.',
                 'delete-success' => 'Entrepôt supprimé avec succès.',
                 'delete-failed'  => 'L\'entrepôt ne peut pas être supprimé.',
-                
 
                 'datagrid' => [
                     'id'              => 'ID',
@@ -1367,7 +1333,6 @@ return [
                     'products'        => 'Produits',
                     'contact-emails'  => 'E-mails de contact',
                     'contact-numbers' => 'Numéros de contact',
-                    
                 ],
             ],
 
@@ -1375,14 +1340,12 @@ return [
                 'title'         => 'Créer un entrepôt',
                 'save-btn'      => 'Enregistrer l\'entrepôt',
                 'contact-info'  => 'Informations de contact',
-                
             ],
 
             'edit' => [
                 'title'         => 'Modifier l\'entrepôt',
                 'save-btn'      => 'Enregistrer l\'entrepôt',
                 'contact-info'  => 'Informations de contact',
-                
             ],
 
             'view' => [
@@ -1391,7 +1354,6 @@ return [
                 'files'       => 'Fichiers',
                 'location'    => 'Emplacement',
                 'change-logs' => 'Journaux des modifications',
-                
 
                 'locations' => [
                     'action'         => 'Action',
@@ -1402,7 +1364,6 @@ return [
                     'delete-success' => 'Emplacement supprimé avec succès.',
                     'name'           => 'Nom',
                     'save-btn'       => 'Enregistrer',
-                    
                 ],
 
                 'general-information' => [
@@ -1425,7 +1386,6 @@ return [
                 'delete-failed'      => 'Les attributs ne peuvent pas être supprimés.',
                 'user-define-error'  => 'Impossible de supprimer un attribut système.',
                 'mass-delete-failed' => 'Les attributs système ne peuvent pas être supprimés.',
-                
 
                 'datagrid' => [
                     'yes'         => 'Oui',
@@ -1438,7 +1398,6 @@ return [
                     'is-default'  => 'Par défaut',
                     'edit'        => 'Modifier',
                     'delete'      => 'Supprimer',
-                    
                 ],
             ],
 
@@ -1484,7 +1443,7 @@ return [
                 'is_required'           => 'Est requis',
                 'is_unique'             => 'Est unique',
                 'actions'               => 'Actions',
-                            ],
+            ],
 
             'edit'  => [
                 'title'                 => 'Modifier l\'attribut',
@@ -1528,7 +1487,6 @@ return [
                 'is_required'           => 'Est requis',
                 'is_unique'             => 'Est unique',
                 'actions'               => 'Actions',
-                
             ],
         ],
     ],
@@ -1559,7 +1517,6 @@ return [
                 'call'          => 'Appel',
                 'meeting'       => 'Réunion',
                 'lunch'         => 'Déjeuner',
-                
             ],
         ],
 
@@ -1581,7 +1538,6 @@ return [
             'persons'         => 'Personnes',
             'no-result-found' => 'Aucun enregistrement trouvé.',
             'users'           => 'Utilisateurs',
-            
         ],
 
         'updated'              => ':attribute mis à jour ',
@@ -1595,7 +1551,6 @@ return [
         'mass-update-success'  => 'Activités mises à jour avec succès.',
         'mass-destroy-success' => 'Activités supprimées avec succès.',
         'mass-delete-failed'   => 'Les activités ne peuvent pas être supprimées.',
-        
     ],
 
     'mail' => [
@@ -1619,7 +1574,6 @@ return [
                 'send-btn'      => 'Envoyer',
                 'message'       => 'Message',
                 'draft'         => 'Brouillon',
-                
             ],
 
             'datagrid' => [
@@ -1633,7 +1587,6 @@ return [
                 'edit'          => 'Modifier',
                 'view'          => 'Voir',
                 'delete'        => 'Supprimer',
-                
             ],
         ],
 
@@ -1642,7 +1595,6 @@ return [
         'mass-update-success' => 'E-mails mis à jour avec succès.',
         'delete-success'      => 'E-mail supprimé avec succès.',
         'delete-failed'       => 'L’e-mail ne peut pas être supprimé.',
-        
 
         'view' => [
             'title'                      => 'Mails',
@@ -1678,12 +1630,10 @@ return [
             'lead-details'               => 'Détails du Lead',
             'contact-person'             => 'Contact',
             'product'                    => 'Produit',
-            
 
             'tags' => [
                 'create-success'  => 'Tag créé avec succès.',
                 'destroy-success' => 'Tag supprimé avec succès.',
-                
             ],
         ],
     ],
@@ -1701,7 +1651,6 @@ return [
             'select'         => 'Sélectionner',
             'country'        => 'Pays',
             'address'        => 'Adresse',
-            
         ],
     ],
 
@@ -1712,12 +1661,10 @@ return [
         'destroy-success'   => 'Prospect supprimé avec succès.',
         'destroy-failed'    => 'Le prospect ne peut pas être supprimé.',
         
-
         'index' => [
             'title'      => 'Prospects',
             'create-btn' => 'Créer un Prospect',
             
-
             'datagrid' => [
                 'id'                  => 'ID',
                 'sales-person'        => 'Commercial',
@@ -1736,7 +1683,6 @@ return [
                 'delete'              => 'Supprimer',
                 'mass-delete'         => 'Suppression de Masse',
                 'mass-update'         => 'Mise à Jour de Masse',
-                
             ],
 
             'kanban' => [
@@ -1745,7 +1691,6 @@ return [
                 'empty-list-description' => 'Créez un prospect pour organiser vos objectifs.',
                 'create-lead-btn'        => 'Créer un Prospect',
                 
-
                 'columns' => [
                     'contact-person'      => 'Contact',
                     'id'                  => 'ID',
@@ -1757,7 +1702,6 @@ return [
                     'tags'                => 'Étiquettes',
                     'expected-close-date' => 'Date de Clôture Prévue',
                     'created-at'          => 'Créé le',
-                    
                 ],
 
                 'toolbar' => [
@@ -1771,7 +1715,6 @@ return [
                         'filter'        => 'Filtrer',
                         'filters'       => 'Filtres',
                         'select'        => 'Sélectionner',
-                        
                     ],
                 ],
             ],
@@ -1779,7 +1722,6 @@ return [
             'view-switcher' => [
                 'all-pipelines'       => 'Tous les pipelines',
                 'create-new-pipeline' => 'Créer un nouveau pipeline',
-                
             ],
         ],
 
@@ -1792,7 +1734,6 @@ return [
             'contact-info'   => 'Informations sur le contact',
             'products'       => 'Produits',
             'products-info'  => 'Informations sur les produits',
-            
         ],
 
         'edit' => [
@@ -1804,7 +1745,6 @@ return [
             'contact-info'   => 'Informations sur le contact',
             'products'       => 'Produits',
             'products-info'  => 'Informations sur les produits',
-            
         ],
 
         'common' => [
@@ -1813,7 +1753,6 @@ return [
                 'email'          => 'Email',
                 'contact-number' => 'Numéro de contact',
                 'organization'   => 'Organisation',
-                
             ],
 
             'products' => [
@@ -1824,7 +1763,6 @@ return [
                 'action'       => 'Action',
                 'add-more'     => 'Ajouter plus',
                 'total'        => 'Total',
-                
             ],
         ],
 
@@ -1832,12 +1770,10 @@ return [
             'title'       => 'Lead: :title',
             'rotten-days' => ':days jours',
             
-
             'tabs'        => [
                 'description' => 'Description',
                 'products'    => 'Produits',
                 'quotes'      => 'Devis',
-                
             ],
 
             'attributes' => [
@@ -1872,13 +1808,11 @@ return [
                 'empty-title'  => 'Aucun produit trouvé',
                 'empty-info'   => 'Aucun produit trouvé pour ce lead',
                 'add-product'  => 'Ajouter un produit',
-                
             ],
 
             'persons' => [
                 'title'     => 'À propos des personnes',
                 'job-title' => ':job_title chez :organization',
-                
             ],
 
             'stages' => [
@@ -1890,13 +1824,11 @@ return [
                 'won-value'      => 'Valeur gagnée',
                 'lost-reason'    => 'Raison de la perte',
                 'save-btn'       => 'Sauvegarder',
-                
             ],
 
             'tags' => [
                 'create-success'  => 'Étiquette créée avec succès.',
                 'destroy-success' => 'Étiquette supprimée avec succès.',
-                
             ],
         ],
     ],
@@ -1908,13 +1840,11 @@ return [
             'save-success' => 'Configuration enregistrée avec succès.',
             'search'       => 'Rechercher',
             'title'        => 'Configuration',
-            
 
             'general'  => [
                 'title'   => 'Général',
                 'info'    => 'Configuration générale',
                 
-
                 'general' => [
                     'title'           => 'Général',
                     'info'            => 'Mettez à jour vos paramètres généraux ici.',
@@ -1935,7 +1865,6 @@ return [
             'revenue' => [
                 'lost-revenue' => 'Revenus Perdus',
                 'won-revenue'  => 'Revenus Gagnés',
-                
             ],
 
             'over-all' => [
@@ -1945,7 +1874,6 @@ return [
                 'total-quotations'      => 'Total des Devis',
                 'total-persons'         => 'Total des Personnes',
                 'total-organizations'   => 'Total des Organisations',
-                
             ],
 
             'total-leads' => [
@@ -1953,42 +1881,36 @@ return [
                 'total' => 'Total des Leads',
                 'won'   => 'Leads Gagnés',
                 'lost'  => 'Leads Perdus',
-                
             ],
 
             'revenue-by-sources' => [
                 'title'       => 'Revenu Par Sources',
                 'empty-title' => 'Aucune Donnée Disponible',
                 'empty-info'  => 'Aucune donnée disponible pour l\'intervalle sélectionné',
-                
             ],
 
             'revenue-by-types' => [
                 'title'       => 'Revenu Par Types',
                 'empty-title' => 'Aucune Donnée Disponible',
                 'empty-info'  => 'Aucune donnée disponible pour l\'intervalle sélectionné',
-                
             ],
 
             'top-selling-products' => [
                 'title'       => 'Produits Principaux',
                 'empty-title' => 'Aucun Produit Trouvé',
                 'empty-info'  => 'Aucun produit disponible pour l\'intervalle sélectionné',
-                
             ],
 
             'top-persons' => [
                 'title'       => 'Personnes Principales',
                 'empty-title' => 'Aucune Personne Trouvée',
                 'empty-info'  => 'Aucune personne disponible pour l\'intervalle sélectionné',
-                
             ],
 
             'open-leads-by-states' => [
                 'title'       => 'Leads Ouverts Par États',
                 'empty-title' => 'Aucune Donnée Disponible',
                 'empty-info'  => 'Aucune donnée disponible pour l\'intervalle sélectionné',
-                
             ],
         ],
     ],
@@ -2009,8 +1931,8 @@ return [
             'sent'    => 'Envoyé',
             'trash'   => 'Corbeille',
             'setting' => 'Paramètres',
-            
         ],
+
         'activities'           => 'Activités',
         'contacts'             => 'Contacts',
         'persons'              => 'Personnes',
@@ -2063,7 +1985,7 @@ return [
         'warehouses'           => 'Entrepôts',
         'warehouse'            => 'Entrepôt',
         'warehouses-info'      => 'Ajoutez, modifiez ou supprimez des entrepôts dans le CRM.',
-            ],
+    ],
 
     'user' => [
         'account' => [
@@ -2081,7 +2003,6 @@ return [
             'upload_image_pix'      => 'Téléchargez une image de profil (100px x 100px)',
             'upload_image_format'   => 'au format PNG ou JPG',
             'image_upload_message'  => 'Seules les images (.jpeg, .jpg, .png, ...) sont autorisées.',
-            
         ],
     ],
 
@@ -2089,13 +2010,11 @@ return [
         'common' => [
             'dear'   => 'Cher(e) :name',
             'cheers' => 'Cordialement,</br>L\'équipe :app_name',
-            
 
             'user'   => [
                 'dear'           => 'Cher(e) :username',
                 'create-subject' => 'Vous avez été ajouté en tant que membre.',
                 'create-body'    => 'Félicitations ! Vous êtes maintenant membre de notre équipe.',
-                
 
                 'forget-password' => [
                     'subject'           => 'Réinitialisation du mot de passe du client',
@@ -2104,7 +2023,6 @@ return [
                     'info'              => 'Vous recevez cet e-mail car nous avons reçu une demande de réinitialisation de mot de passe pour votre compte.',
                     'final-summary'     => 'Si vous n\'avez pas demandé de réinitialisation, aucune autre action n\'est requise.',
                     'thanks'            => 'Merci !',
-                    
                 ],
             ],
         ],
@@ -2138,7 +2056,6 @@ return [
         '503' => [
             'description' => 'Oups ! Il semble que nous soyons temporairement hors service pour maintenance. Veuillez revenir dans quelques instants.',
             'title'       => '503 Service Indisponible',
-            
         ],
     ],
 ];
