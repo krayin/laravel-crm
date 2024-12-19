@@ -763,7 +763,7 @@ return [
                 'settings'                  => 'Paramètres',
                 'title'                     => 'Rôles',
                 'update-success'            => 'Rôle mis à jour avec succès.',
-                'user-define-error'         => 'Impossible de supprimer le rôle système.',                
+                'user-define-error'         => 'Impossible de supprimer le rôle système.',
 
                 'datagrid'   => [
                     'all'             => 'Tout',
@@ -773,7 +773,7 @@ return [
                     'edit'            => 'Modifier',
                     'id'              => 'ID',
                     'name'            => 'Nom',
-                    'permission-type' => 'Type de permission',                    
+                    'permission-type' => 'Type de permission',
                 ],
             ],
 
@@ -800,7 +800,7 @@ return [
                 'name'           => 'Nom',
                 'permissions'    => 'Permissions',
                 'save-btn'       => 'Enregistrer le rôle',
-                'title'          => 'Modifier le rôle',                
+                'title'          => 'Modifier le rôle',
             ],
         ],
 
@@ -818,7 +818,7 @@ return [
                     'description' => 'Description',
                     'edit'        => 'Modifier',
                     'id'          => 'ID',
-                    'name'        => 'Nom',                    
+                    'name'        => 'Nom',
                 ],
 
                 'create' => [
@@ -828,7 +828,7 @@ return [
                 ],
 
                 'edit' => [
-                    'title' => 'Modifier le type',                
+                    'title' => 'Modifier le type',
                 ],
             ],
         ],
@@ -923,7 +923,7 @@ return [
                 'type'                   => 'Type',
                 'contain'                => 'Contient',
                 'contains'               => 'Contient',
-                'does-not-contain'       => 'Ne contient pas',                
+                'does-not-contain'       => 'Ne contient pas',
             ],
 
             'edit' => [
@@ -958,7 +958,7 @@ return [
                 'less-than'              => 'Inférieur à',
                 'contain'                => 'Contient',
                 'contains'               => 'Contient',
-                'does-not-contain'       => 'Ne contient pas',                
+                'does-not-contain'       => 'Ne contient pas',
             ],
         ],
 
@@ -975,7 +975,7 @@ return [
                     'id'     => 'ID',
                     'title'  => 'Titre',
                     'edit'   => 'Modifier',
-                    'delete' => 'Supprimer',                    
+                    'delete' => 'Supprimer',
                 ],
             ],
 
@@ -1005,7 +1005,7 @@ return [
                 'choose-value'             => 'Choisir une valeur',
                 'select-file'              => 'Sélectionner un fichier',
                 'select-image'             => 'Sélectionner une image',
-                'enter-value'              => 'Entrer une valeur',                
+                'enter-value'              => 'Entrer une valeur',
             ],
 
             'edit' => [
@@ -1039,7 +1039,7 @@ return [
                 'choose-value'              => 'Choisir une valeur',
                 'select-file'               => 'Sélectionner un fichier',
                 'select-image'              => 'Sélectionner une image',
-                'enter-value'               => 'Entrer une valeur',                
+                'enter-value'               => 'Entrer une valeur',
             ],
         ],
 
@@ -1164,7 +1164,7 @@ return [
                 ],
 
                 'edit' => [
-                    'title' => 'Modifier l\'utilisateur',               
+                    'title' => 'Modifier l\'utilisateur',
                 ],
             ],
         ],

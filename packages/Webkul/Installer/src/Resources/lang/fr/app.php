@@ -13,7 +13,6 @@ return [
                 'type'                => 'Type',
                 'pipeline'            => 'Pipeline',
                 'stage'               => 'Étape',
-                
             ],
 
             'persons' => [
@@ -23,14 +22,12 @@ return [
                 'name'            => 'Nom',
                 'organization'    => 'Organisation',
                 'sales-owner'     => 'Responsable commercial',
-                
             ],
 
             'organizations' => [
                 'address'     => 'Adresse',
                 'name'        => 'Nom',
                 'sales-owner' => 'Responsable commercial',
-                
             ],
 
             'products' => [
@@ -39,7 +36,7 @@ return [
                 'price'       => 'Prix',
                 'quantity'    => 'Quantité',
                 'sku'         => 'SKU',
-                
+
             ],
 
             'quotes' => [
@@ -56,7 +53,6 @@ return [
                 'sub-total'         => 'Sous-total',
                 'subject'           => 'Sujet',
                 'tax-amount'        => 'Montant de la taxe',
-                
             ],
 
             'warehouses' => [
@@ -66,7 +62,6 @@ return [
                 'contact-numbers' => 'Numéros de contact',
                 'description'     => 'Description',
                 'name'            => 'Nom',
-                
             ],
         ],
 
@@ -79,7 +74,6 @@ return [
             'participants'          => 'Participants',
             'title'                 => 'Titre',
             'type'                  => 'Type',
-            
         ],
 
         'lead' => [
@@ -93,7 +87,6 @@ return [
                     'new'         => 'Nouveau',
                     'prospect'    => 'Prospect',
                     'won'         => 'Gagné',
-                    
                 ],
             ],
 
@@ -103,7 +96,6 @@ return [
                 'phone'    => 'Téléphone',
                 'web'      => 'Web',
                 'web-form' => 'Formulaire Web',
-                
             ],
 
             'type' => [
@@ -116,7 +108,6 @@ return [
             'role' => [
                 'administrator-role' => 'Rôle d\'administrateur',
                 'administrator'      => 'Administrateur',
-                
             ],
         ],
 
@@ -225,14 +216,12 @@ return [
                 'vietnamese-dong'             => 'Dong Vietnamien (VND)',
                 'warning-message'             => 'Attention ! Les paramètres pour la langue système par défaut et la monnaie par défaut sont permanents et ne peuvent pas être modifiés une fois définis.',
                 'zambian-kwacha'              => 'Kwacha Zambien (ZMW)',
-                
             ],
 
             'installation-processing' => [
                 'krayin'       => 'Installation Krayin',
                 'krayin-info'  => 'Création des tables de la base de données, cela peut prendre quelques instants',
                 'title'        => 'Installation',
-                
             ],
 
             'installation-completed' => [
@@ -242,7 +231,6 @@ return [
                 'explore-krayin-extensions'  => 'Explorer les extensions Krayin',
                 'title'                      => 'Installation terminée',
                 'title-info'                 => 'Krayin a été installé avec succès sur votre système.',
-                
             ],
 
             'ready-for-installation' => [
@@ -296,7 +284,6 @@ return [
             'installation-info'        => 'Nous sommes ravis de vous voir ici !',
             'installation-title'       => 'Bienvenue dans l\'installation',
             'title'                    => 'Installateur Krayin',
-            
             'webkul'                   => 'Webkul',
         ],
     ],
