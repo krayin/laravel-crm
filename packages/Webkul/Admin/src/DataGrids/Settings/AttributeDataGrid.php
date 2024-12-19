@@ -64,12 +64,23 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'entity_type',
-            'label'      => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => false,
-            'filterable' => true,
+            'index'              => 'entity_type',
+            'label'              => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'searchable'         => false,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app(AttributeRepository::class)
+                ->select('entity_type as label', 'entity_type as value')
+                ->distinct()
+                ->get()
+                ->map(function ($item) {
+                    $item->label = ucwords($item->label);
+
+                    return $item;
+                })
+                ->toArray(),
             'closure'    => fn ($row) => ucfirst($row->entity_type),
         ]);
 
@@ -84,6 +95,11 @@ class AttributeDataGrid extends DataGrid
                 ->select('type as label', 'type as value')
                 ->distinct()
                 ->get()
+                ->map(function ($item) {
+                    $item->label = ucwords($item->label);
+
+                    return $item;
+                })
                 ->toArray(),
         ]);
 
