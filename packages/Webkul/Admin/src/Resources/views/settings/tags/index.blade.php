@@ -116,7 +116,7 @@
 
                             <!-- Actions -->
                             <div class="flex justify-end">
-                                <a @click="selectedType=true; editModal(record.actions.find(action => action.index === 'edit')?.url)">
+                                <a @click="selectedTag=true; editModal(record.actions.find(action => action.index === 'edit')?.url)">
                                     <span
                                         :class="record.actions.find(action => action.index === 'edit')?.icon"
                                         class="cursor-pointer rounded-md p-1.5 text-2xl transition-all hover:bg-gray-200 dark:hover:bg-gray-800 max-sm:place-self-center"
@@ -154,7 +154,7 @@
 
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
                                 @{{ 
-                                    selectedType
+                                    selectedTag
                                     ? "@lang('admin::app.settings.tags.index.edit.title')" 
                                     : "@lang('admin::app.settings.tags.index.create.title')"
                                 }}
@@ -248,6 +248,8 @@
                 data() {
                     return {
                         isProcessing: false,
+                        
+                        selectedTag: false,
 
                         colors: [
                             {
@@ -285,6 +287,8 @@
 
                 methods: {
                     openModal() {
+                        this.selectedTag=false;
+                        
                         this.$refs.tagsUpdateAndCreateModal.toggle();
                     },
                     

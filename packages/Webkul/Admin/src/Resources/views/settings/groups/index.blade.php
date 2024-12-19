@@ -221,6 +221,8 @@
                 data() {
                     return {
                         isProcessing: false,
+
+                        selectedGroup: false,
                     };
                 },
         
@@ -242,6 +244,8 @@
 
                 methods: {
                     openModal() {
+                        this.selectedGroup=false;
+                        
                         this.$refs.groupUpdateAndCreateModal.toggle();
                     },
                     

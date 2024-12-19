@@ -183,6 +183,8 @@
                 data() {
                     return {
                         isProcessing: false,
+
+                        selectedType: false,
                     };
                 },
         
@@ -204,6 +206,8 @@
 
                 methods: {
                     openModal() {
+                        this.selectedType=false;
+                        
                         this.$refs.typeUpdateAndCreateModal.toggle();
                     },
                     
