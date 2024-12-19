@@ -72,7 +72,7 @@
 
                                     <i
                                         class="align-text-bottom text-base text-gray-600 dark:text-gray-300"
-                                        :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
+                                        :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
                                         v-if="column.index == applied.sort.column"
                                     ></i>
                                 </div>
