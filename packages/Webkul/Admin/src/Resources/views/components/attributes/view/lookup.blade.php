@@ -12,4 +12,5 @@
     :placeholder="$attribute->name"
     :url="$url"
     :allow-edit="$allowEdit"
+    :value-label="$lookUpEntity?->name ?? '--'"
 />
