@@ -366,7 +366,7 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Search',
+                    'title'   => 'Mega Search',
 
                     'tabs' => [
                         'leads'    => 'Leads',

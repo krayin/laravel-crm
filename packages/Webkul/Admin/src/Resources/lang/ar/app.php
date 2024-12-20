@@ -362,7 +362,7 @@ return [
         'layouts' => [
             'header' => [
                 'mega-search' => [
-                    'title'   => 'بحث',
+                    'title'   => 'البحث الشامل',
 
                     'tabs' => [
                         'leads'    => 'العملاء المحتملين',
