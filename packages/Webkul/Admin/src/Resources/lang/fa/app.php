@@ -359,6 +359,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'توسعه یافته توسط :krayin، یک پروژه متن باز از :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'جستجو',
