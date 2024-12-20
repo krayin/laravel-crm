@@ -1031,6 +1031,7 @@ return [
                 'form-submit-button-color'  => 'Cor do Botão de Envio do Formulário',
                 'form-title-color'          => 'Cor do Título do Formulário',
                 'general'                   => 'Geral',
+                'leads'                     => 'Leads',
                 'preview'                   => 'Visualizar',
                 'person'                    => 'Pessoa',
                 'public-url'                => 'URL Pública',
