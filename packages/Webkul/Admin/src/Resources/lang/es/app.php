@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Tu cuenta aún no está activada. Por favor, contacta al administrador.',
         'login-error'      => 'Las credenciales no coinciden con nuestros registros.',
+        'not-permission'   => 'No tienes permiso para acceder al panel de administración.',
 
         'login' => [
             'email'                => 'Dirección de correo electrónico',
@@ -359,6 +360,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Desarrollado por :krayin, un proyecto de código abierto de :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Buscar',
@@ -887,6 +892,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [

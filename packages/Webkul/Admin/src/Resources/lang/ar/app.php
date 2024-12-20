@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'حسابك لم يتم تفعيله بعد. يرجى الاتصال بالمسؤول.',
         'login-error'      => 'بيانات الاعتماد لا تتطابق مع سجلاتنا.',
+        'not-permission'   => 'ليس لديك إذن للوصول إلى لوحة الإدارة.',
 
         'login' => [
             'email'                => 'عنوان البريد الإلكتروني',
@@ -887,6 +888,7 @@ return [
                 'send-email-to-person'       => 'إرسال بريد إلكتروني إلى الشخص',
                 'add-tag'                    => 'إضافة علامة',
                 'add-note-as-activity'       => 'إضافة ملاحظة كنشاط',
+                'update-quote'               => 'تحديث العرض',
             ],
 
             'create' => [
@@ -1034,10 +1036,10 @@ return [
                 'save-btn'                  => 'حفظ نموذج الويب',
                 'submit-button-label'       => 'تسمية زر الإرسال',
                 'submit-success-action'     => 'إجراء نجاح الإرسال',
-                'choose-value'              => 'Choose Value',
-                'select-file'               => 'Select File',
-                'select-image'              => 'Select Image',
-                'enter-value'               => 'Enter Value',
+                'choose-value'              => 'اختر القيمة',
+                'select-file'               => 'اختر ملف',
+                'select-image'              => 'اختر صورة',
+                'enter-value'               => 'أدخل القيمة',
             ],
         ],
 
