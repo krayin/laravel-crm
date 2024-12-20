@@ -1,4 +1,4 @@
-## **v2.0.3 (6th of December 2024)** - *Release*
+## **v2.0.4 (19th of December 2024)** - *Release*
 
 Added support for Brazilian Portuguese (PT_BR) Language.
 

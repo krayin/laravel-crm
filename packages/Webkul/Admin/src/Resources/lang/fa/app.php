@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'حساب شما هنوز فعال نشده است. لطفاً با مدیر سیستم تماس بگیرید.',
         'login-error'      => 'اطلاعات وارد شده با سوابق ما مطابقت ندارد.',
+        'not-permission'   => 'شما اجازه دسترسی به پنل مدیریت را ندارید.',
 
         'login' => [
             'email'                => 'آدرس ایمیل',
@@ -359,6 +360,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'توسعه یافته توسط :krayin، یک پروژه متن باز از :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'جستجو',
