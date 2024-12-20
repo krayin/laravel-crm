@@ -136,7 +136,9 @@
                                     <!-- Content -->
                                     <div class="flex-frow flex items-center gap-2">
                                         <!-- Attachments -->
-                                        <p v-html="record.attachments"></p>
+                                        <p v-if="record.attachments > 0">
+                                            <i class="icon-attachment text-2xl"></i>
+                                        </p>
 
                                         <!-- Tags -->
                                         <span
@@ -155,8 +157,8 @@
 
                                         <!-- Reply(Content) -->
                                         <p
-                                            class="!font-normal"
-                                            v-html="truncatedReply(record.reply)"
+                                            class="max-w-[600px] truncate !font-normal"
+                                            v-text="record.reply"
                                         ></p>
                                     </div>
                                 
@@ -413,16 +415,6 @@
                 },
 
                 methods: {
-                    truncatedReply(reply) {
-                        const maxLength = 100;
-
-                        if (reply.length > maxLength) {
-                            return `${reply.substring(0, maxLength)}...`;
-                        }
-                        
-                        return reply;
-                    },
-
                     toggleModal() {
                         this.draft.reply_to = [];
 
