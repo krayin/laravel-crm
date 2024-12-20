@@ -108,10 +108,16 @@
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar />
 
-            <div class="max-w-full flex-1 bg-gray-100 px-4 pb-6 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4 ltr:pl-[85px] rtl:pr-[85px]">
+            <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 px-4 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4 ltr:pl-[85px] rtl:pr-[85px]">
                 <!-- Page Content Blade Component -->
                 {{ $slot }}
-            </div>
+            
+                <div class="mt-auto pt-6">
+                    <div class="rounded-lg border bg-white p-6 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white">
+                        Powered by <a class="text-brandColor hover:underline dark:text-brandColor" href="https://krayincrm.com/">Krayin</a>, an open-source project by <a class="text-brandColor hover:underline dark:text-brandColor" href="https://webkul.com/">Webkul.</a>
+                    </div>
+                </div>
+            </div>            
         </div>
 
         {!! view_render_event('admin.layout.content.after') !!}

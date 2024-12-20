@@ -4,7 +4,7 @@
         @lang('admin::app.users.login.title')
     </x-slot>
 
-    <div class="flex h-[100vh] items-center justify-center">
+    <div class="flex h-[100vh] flex-col items-center justify-center gap-10">
         <div class="flex flex-col items-center gap-5">
             <!-- Logo -->
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
@@ -100,6 +100,10 @@
 
                 {!! view_render_event('admin.sessions.login.form_controls.after') !!}
             </div>
+        </div>
+
+        <div class="text-sm font-normal">
+            Powered by  <a class="text-brandColor hover:underline"href="https://krayincrm.com/">Krayin</a> , an open-source project by <a class="text-brandColor hover:underline"href="https://webkul.com/">Webkul.</a>
         </div>
     </div>
 
