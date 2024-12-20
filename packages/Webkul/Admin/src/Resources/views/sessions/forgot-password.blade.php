@@ -75,8 +75,12 @@
             </div>
         </div>
 
+        <!-- Powered By -->
         <div class="text-sm font-normal">
-            Powered by  <a class="text-brandColor hover:underline"href="https://krayincrm.com/">Krayin</a> , an open-source project by <a class="text-brandColor hover:underline"href="https://webkul.com/">Webkul.</a>
+            @lang('admin::app.components.layouts.powered-by.description', [
+                'krayin' => '<a class="text-brandColor hover:underline " href="https://krayincrm.com/">Krayin</a>',
+                'webkul' => '<a class="text-brandColor hover:underline " href="https://webkul.com/">Webkul</a>',
+            ]) 
         </div>
     </div>
 </x-admin::layouts.anonymous>
