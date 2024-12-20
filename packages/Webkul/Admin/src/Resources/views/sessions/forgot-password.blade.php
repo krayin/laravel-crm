@@ -4,7 +4,7 @@
         @lang('admin::app.users.forget-password.create.page-title')
     </x-slot>
 
-    <div class="flex h-[100vh] items-center justify-center">
+    <div class="flex h-[100vh] flex-col items-center justify-center gap-10">
         <div class="flex flex-col items-center gap-5">
             <!-- Logo -->
             @if ($logo = core()->getConfigData('general.design.admin_logo.logo_image'))
@@ -73,6 +73,14 @@
 
                 {!! view_render_event('admin.sessions.forgor_password.form_controls.after') !!}
             </div>
+        </div>
+
+        <!-- Powered By -->
+        <div class="text-sm font-normal">
+            @lang('admin::app.components.layouts.powered-by.description', [
+                'krayin' => '<a class="text-brandColor hover:underline " href="https://krayincrm.com/">Krayin</a>',
+                'webkul' => '<a class="text-brandColor hover:underline " href="https://webkul.com/">Webkul</a>',
+            ]) 
         </div>
     </div>
 </x-admin::layouts.anonymous>

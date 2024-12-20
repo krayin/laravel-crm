@@ -100,7 +100,7 @@
 
                 <!-- Pipeline Default Switcher -->
                 <x-admin::form.control-group class="mt-4 flex items-center gap-4">
-                    <x-admin::form.control-group.label class="!required mb-0">
+                    <x-admin::form.control-group.label class="mb-0">
                         @lang('admin::app.settings.pipelines.edit.mark-as-default')
                     </x-admin::form.control-group.label>
 
