@@ -106,16 +106,20 @@ export default {
 
         defineRule("", () => true);
 
-        // @TODO handle this
-        // @suraj-webkul
         defineRule("date_format", (value) => {
-            return true;
+            const regex = /^\d{4}-\d{2}-\d{2}$/;
+            
+            return regex.test(value);
         });
 
-        // @TODO handle this
-        // @suraj-webkul
         defineRule("after", (value) => {
-            return true;
+            const today = new Date();
+            const inputDate = new Date(value);
+          
+            today.setHours(0, 0, 0, 0);
+            inputDate.setHours(0, 0, 0, 0);
+          
+            return inputDate >= today;
         });
 
         configure({
@@ -129,30 +133,16 @@ export default {
                     messages: {
                         ...ar.messages,
                         phone: "يجب أن يكون هذا {field} رقم هاتف صالحًا",
+                        after: "يجب أن يكون {field} تاريخًا في المستقبل أو اليوم.",
                     },
                 },
         
-                bn: {
-                    ...bn,
-                    messages: {
-                        ...bn.messages,
-                        phone: "এই {field} একটি বৈধ ফোন নম্বর হতে হবে",
-                    },
-                },
-        
-                de: {
-                    ...de,
-                    messages: {
-                        ...de.messages,
-                        phone: "Dieses {field} muss eine gültige Telefonnummer sein.",
-                    },
-                },
-
                 en: {
                     ...en,
                     messages: {
                         ...en.messages,
                         phone: "This {field} must be a valid phone number",
+                        after: "The {field} must be a date in the future or today.",
                     },
                 },
         
@@ -161,6 +151,7 @@ export default {
                     messages: {
                         ...es.messages,
                         phone: "Este {field} debe ser un número de teléfono válido.",
+                        after: "El {field} debe ser una fecha en el futuro o hoy.",
                     },
                 },
         
@@ -169,86 +160,7 @@ export default {
                     messages: {
                         ...fa.messages,
                         phone: "این {field} باید یک شماره تلفن معتبر باشد.",
-                    },
-                },
-        
-                fr: {
-                    ...fr,
-                    messages: {
-                        ...fr.messages,
-                        phone: "Ce {field} doit être un numéro de téléphone valide.",
-                    },
-                },
-        
-                he: {
-                    ...he,
-                    messages: {
-                        ...he.messages,
-                        phone: "זה {field} חייב להיות מספר טלפון תקין.",
-                    },
-                },
-        
-                hi_IN: {
-                    ...hi_IN,
-                    messages: {
-                        ...hi_IN.messages,
-                        phone: "यह {field} कोई मान्य फ़ोन नंबर होना चाहिए।",
-                    },
-                },
-        
-                it: {
-                    ...it,
-                    messages: {
-                        ...it.messages,
-                        phone: "Questo {field} deve essere un numero di telefono valido.",
-                    },
-                },
-        
-                ja: {
-                    ...ja,
-                    messages: {
-                        ...ja.messages,
-                        phone: "この{field}は有効な電話番号である必要があります。",
-                    },
-                },
-        
-                nl: {
-                    ...nl,
-                    messages: {
-                        ...nl.messages,
-                        phone: "Dit {field} moet een geldig telefoonnummer zijn.",
-                    },
-                },
-        
-                pl: {
-                    ...pl,
-                    messages: {
-                        ...pl.messages,
-                        phone: "To {field} musi być prawidłowy numer telefonu.",
-                    },
-                },
-        
-                pt_BR: {
-                    ...pt_BR,
-                    messages: {
-                        ...pt_BR.messages,
-                        phone: "Este {field} deve ser um número de telefone válido.",
-                    },
-                },
-        
-                ru: {
-                    ...ru,
-                    messages: {
-                        ...ru.messages,
-                        phone: "Это {field} должно быть действительным номером телефона.",
-                    },
-                },
-        
-                sin: {
-                    ...sin,
-                    messages: {
-                        ...sin.messages,
-                        phone: "මෙම {field} වටේ වලංගු දුරකතන අංකය විය යුතුයි.",
+                        after: "{field} باید یک تاریخ در آینده یا امروز باشد.",
                     },
                 },
         
@@ -257,22 +169,7 @@ export default {
                     messages: {
                         ...tr.messages,
                         phone: "Bu {field} geçerli bir telefon numarası olmalıdır.",
-                    },
-                },
-        
-                uk: {
-                    ...uk,
-                    messages: {
-                        ...uk.messages,
-                        phone: "Це {field} повинно бути дійсним номером телефону.",
-                    },
-                },
-        
-                zh_CN: {
-                    ...zh_CN,
-                    messages: {
-                        ...zh_CN.messages,
-                        phone: "这个 {field} 必须是一个有效的电话号码。",
+                        after: "{field} gelecekte veya bugün olmalıdır.",
                     },
                 },
             }),

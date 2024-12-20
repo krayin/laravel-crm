@@ -46,6 +46,7 @@ return [
     'users' => [
         'activate-warning' => 'Tài khoản của bạn chưa được kích hoạt. Vui lòng liên hệ quản trị viên.',
         'login-error'      => 'Thông tin đăng nhập không khớp với hồ sơ của chúng tôi.',
+        'not-permission'   => 'Bạn không có quyền truy cập vào bảng quản trị.',
 
         'login' => [
             'email'                => 'Địa chỉ Email',
@@ -361,6 +362,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Được hỗ trợ bởi :krayin, một dự án mã nguồn mở được phát triển bởi :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Tìm kiếm',
@@ -888,6 +893,7 @@ return [
                 'send-email-to-person'       => 'Gửi email đến người',
                 'add-tag'                    => 'Thêm Thẻ',
                 'add-note-as-activity'       => 'Thêm Ghi chú như Hoạt động',
+                'update-quote'               => 'Cập nhật báo giá',
             ],
 
             'create' => [
@@ -2050,7 +2056,6 @@ return [
         'back'                 => 'Quay lại',
         'name'                 => 'Tên',
         'configuration'        => 'Cấu hình',
-        'activities'           => 'Hoạt động',
         'howdy'                => 'Xin chào!',
         'warehouses'           => 'Kho hàng',
         'warehouse'            => 'Kho hàng',

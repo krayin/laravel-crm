@@ -362,11 +362,9 @@ class LeadController extends Controller
             foreach ($leads as $lead) {
                 Event::dispatch('lead.update.before', $lead->id);
 
-                $this->leadRepository->update(
-                    ['lead_pipeline_stage_id' => $massUpdateRequest->input('value')],
-                    $lead->id,
-                    ['lead_pipeline_stage_id']
-                );
+                $lead = $this->leadRepository->find($lead->id);
+
+                $lead?->update(['lead_pipeline_stage_id' => $massUpdateRequest->input('value')]);
 
                 Event::dispatch('lead.update.before', $lead->id);
             }
@@ -376,7 +374,7 @@ class LeadController extends Controller
             ]);
         } catch (\Exception $th) {
             return response()->json([
-                'message' => trans('admin::app.leads.destroy-failed'),
+                'message' => trans('admin::app.leads.update-failed'),
             ], 400);
         }
     }

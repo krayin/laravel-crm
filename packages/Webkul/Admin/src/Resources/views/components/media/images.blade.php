@@ -16,7 +16,7 @@
     height="{{ $height }}"
     :errors="errors"
 >
-    <x-admin::shimmer.image class="h-[110px] w-[110px] rounded" />
+    <x-admin::shimmer.image class="h-[120px] w-[120px] rounded" />
 </v-media-images>
 
 @pushOnce('scripts')

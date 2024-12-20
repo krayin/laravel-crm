@@ -46,6 +46,7 @@ return [
     'users' => [
         'activate-warning' => 'Your account is not activated yet. Please contact the administrator.',
         'login-error'      => 'The credentials do not match our records.',
+        'not-permission'   => 'You do not have permission to access the admin panel.',
 
         'login' => [
             'email'                => 'Email Address',
@@ -361,6 +362,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Powered by :krayin, an open-source project by :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Search',
@@ -852,12 +857,12 @@ return [
 
                 'create' => [
                     'name'     => 'Name',
-                    'save-btn' => 'Save Type',
-                    'title'    => 'Create Type',
+                    'save-btn' => 'Save Source',
+                    'title'    => 'Create Source',
                 ],
 
                 'edit' => [
-                    'title' => 'Edit Type',
+                    'title' => 'Edit Source',
                 ],
             ],
         ],
@@ -889,6 +894,7 @@ return [
                 'send-email-to-person'       => 'Send email to person',
                 'add-tag'                    => 'Add Tag',
                 'add-note-as-activity'       => 'Add Note as Activity',
+                'update-quote'               => 'Update Quote',
             ],
 
             'create' => [
@@ -1726,7 +1732,8 @@ return [
 
     'leads' => [
         'create-success'    => 'Lead created successfully.',
-        'update-success'    => 'Lead updated successfully.',
+        'update-success'    => 'Leads updated successfully.',
+        'update-failed'     => 'Leads can not be deleted.',
         'destroy-success'   => 'Lead deleted successfully.',
         'destroy-failed'    => 'Lead can not be deleted.',
 

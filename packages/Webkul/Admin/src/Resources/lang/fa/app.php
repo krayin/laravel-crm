@@ -46,6 +46,7 @@ return [
     'users' => [
         'activate-warning' => 'حساب شما هنوز فعال نشده است. لطفاً با مدیر سیستم تماس بگیرید.',
         'login-error'      => 'اطلاعات وارد شده با سوابق ما مطابقت ندارد.',
+        'not-permission'   => 'شما اجازه دسترسی به پنل مدیریت را ندارید.',
 
         'login' => [
             'email'                => 'آدرس ایمیل',
@@ -361,6 +362,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'توسعه یافته توسط :krayin، یک پروژه متن باز از :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'جستجو',
@@ -889,6 +894,7 @@ return [
                 'send-email-to-person'       => 'ارسال ایمیل به شخص',
                 'add-tag'                    => 'افزودن برچسب',
                 'add-note-as-activity'       => 'افزودن یادداشت به‌عنوان فعالیت',
+                'update-quote'               => 'به‌روزرسانی نقل‌قول',
             ],
 
             'create' => [
@@ -1727,6 +1733,7 @@ return [
     'leads' => [
         'create-success'    => 'سرنخ با موفقیت ایجاد شد.',
         'update-success'    => 'سرنخ با موفقیت به‌روزرسانی شد.',
+        'update-failed'     => 'سرنخ‌ها قابل حذف نیستند.',
         'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 

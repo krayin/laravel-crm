@@ -8,7 +8,7 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.1",
+        "php": "^8.2",
         "barryvdh/laravel-dompdf": "^2.0.0",
         "diglactic/laravel-breadcrumbs": "^8.0",
         "doctrine/dbal": "^3.0",
@@ -79,6 +79,13 @@
             "Tests\\": "tests/"
         }
     },
+    "repositories": [{
+        "type": "path",
+        "url": "packages/*/*",
+        "options": {
+            "symlink": true
+        }
+    }],
     "minimum-stability": "stable",
     "prefer-stable": true,
     "scripts": {
