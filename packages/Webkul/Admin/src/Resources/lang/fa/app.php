@@ -366,7 +366,7 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'جستجو',
+                    'title'   => 'جستجوی بزرگ',
 
                     'tabs' => [
                         'leads'    => 'سرنخ‌ها',
