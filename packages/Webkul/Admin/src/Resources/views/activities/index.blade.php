@@ -66,8 +66,8 @@
             
                         <i
                             class="icon-calendar cursor-pointer rounded-md p-2 text-2xl"
-                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
-                            @click="toggleView('calendor')"
+                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendar'}"
+                            @click="toggleView('calendar')"
                         ></i>
                     </div>
 
