@@ -81,7 +81,7 @@
                             <p>@{{ record.id }}</p>
         
                             <!-- Sources Name -->
-                            <p>@{{ record.name }}</p>
+                            <p class="break-words">@{{ record.name }}</p>
 
                             <!-- Actions -->
                             <div class="flex justify-end">
@@ -189,6 +189,8 @@
                 data() {
                     return {
                         isProcessing: false,
+                        
+                        selectedType: false,
                     };
                 },
         
@@ -210,6 +212,8 @@
 
                 methods: {
                     openModal() {
+                        this.selectedType = false;
+                        
                         this.$refs.sourceUpdateAndCreateModal.toggle();
                     },
                     
