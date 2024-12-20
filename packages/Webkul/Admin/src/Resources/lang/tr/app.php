@@ -1910,7 +1910,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Durumlara Göre Açık Leadler',
+                'title'       => 'Aşamalara Göre Açık Leadler',
                 'empty-title' => 'Veri Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için veri bulunamadı',
             ],
