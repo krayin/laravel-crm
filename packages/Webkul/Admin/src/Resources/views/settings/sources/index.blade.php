@@ -212,7 +212,7 @@
 
                 methods: {
                     openModal() {
-                        this.selectedType=false;
+                        this.selectedType = false;
                         
                         this.$refs.sourceUpdateAndCreateModal.toggle();
                     },
