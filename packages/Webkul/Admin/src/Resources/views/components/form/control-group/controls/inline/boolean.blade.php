@@ -32,14 +32,19 @@
                     v-model="inputValue"
                 />
 
-                <span class="cursor-pointer truncate rounded">
-                    @{{ valueLabel ? valueLabel : selectedValue?.name }}
-                </span>
+                <div
+                    class="group relative h-[18px] !w-full pl-2.5"
+                    :style="{ 'text-align': position }"
+                >
+                    <span class="cursor-pointer truncate rounded">
+                        @{{ valueLabel ? valueLabel : options[inputValue].name }}
+                    </span>
+                </div>
 
                 <template v-if="allowEdit">
                     <i
                         @click="toggle"
-                        class="icon-edit cursor-pointer rounded text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950"
+                        class="icon-edit cursor-pointer rounded p-0.5 text-2xl opacity-0 hover:bg-gray-200 group-hover:opacity-100 dark:hover:bg-gray-950 ltr:mr-1 rtl:ml-1"
                     ></i>
                 </template>
             </div>

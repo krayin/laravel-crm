@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
         'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+        'not-permission'   => 'Yönetici paneline erişim izniniz yok.',
 
         'login' => [
             'email'                => 'E-posta Adresi',
@@ -359,6 +360,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :krayin tarafından desteklenmektedir.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Arama',
@@ -887,6 +892,7 @@ return [
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
+                'update-quote'               => 'Teklifi Güncelle',
             ],
 
             'create' => [
