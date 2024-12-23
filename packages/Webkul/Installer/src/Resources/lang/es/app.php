@@ -281,6 +281,7 @@ return [
             'installation-description' => 'La instalación de Krayin generalmente implica varios pasos. Aquí hay un esquema general del proceso de instalación de Krayin.',
             'installation-info'        => '¡Estamos encantados de verte aquí!',
             'installation-title'       => 'Bienvenido a la Instalación',
+            'asistente-de-instalación' => 'Idioma del Asistente de Instalación',
             'title'                    => 'Instalador de Krayin',
             'webkul'                   => 'Webkul',
         ],
