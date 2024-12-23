@@ -28,7 +28,7 @@
 
                 <a
                     href="{{ route('admin.contacts.persons.view', $lead->person->id) }}"
-                    class="font-semibold text-brandColor"
+                    class="font-semibold"
                     target="_blank"
                 >
                     {{ $lead->person->name }}

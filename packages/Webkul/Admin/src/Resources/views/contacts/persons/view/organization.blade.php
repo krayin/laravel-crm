@@ -24,7 +24,7 @@
             <div class="flex flex-col gap-1">
                 {!! view_render_event('admin.contacts.persons.view.organization.name.before', ['person' => $person]) !!}
 
-                <span class="font-semibold text-brandColor">
+                <span class="font-semibold">
                     {{ $person->organization->name }}
                 </span>
 
