@@ -145,7 +145,6 @@
                     <!-- Edit Drawer -->
                     <x-admin::drawer
                         ref="assignLocationDrawer"
-                        width="600px"
                         class="text-left"
                     >
                         <!-- Drawer Header -->
@@ -198,11 +197,11 @@
                             @lang('admin::app.products.view.inventory.location')
                         </x-admin::table.th>
                         
-                        <x-admin::table.th class="!w-[150px]">
+                        <x-admin::table.th>
                             @lang('admin::app.products.view.inventory.in-stock')
                         </x-admin::table.th>
 
-                        <x-admin::table.th class="!w-[150px]">
+                        <x-admin::table.th>
                             @lang('admin::app.products.view.inventory.allocated')
                         </x-admin::table.th>
 
