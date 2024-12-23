@@ -184,6 +184,22 @@
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
+
+                            <!-- Custom Attributes -->   
+                            <x-admin::attributes
+                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                    'entity_type' => 'quotes',
+                                    ['code', 'NOTIN', ['subject', 'description', 'expired_at', 'user_id', 'person_id','billing_address', 'shipping_address']],
+                                ])->sortBy('sort_order')"
+                                :custom-validations="[
+                                    'expired_at' => [
+                                        'required',
+                                        'date_format:yyyy-MM-dd',
+                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
+                                    ],
+                                ]"
+                                :entity="$quote"
+                            />
                         </div>
 
                         {!! view_render_event('admin.contacts.quotes.create.attribute.form_controls.after') !!}
@@ -320,7 +336,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
