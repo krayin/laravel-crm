@@ -76,7 +76,7 @@ class AttributeDataGrid extends DataGrid
                 ->distinct()
                 ->get()
                 ->map(function ($item) {
-                    $item->label = trans('admin::app.settings.attributes.index.datagrid.entity-types.' . $item->label);
+                    $item->label = trans('admin::app.settings.attributes.index.datagrid.entity-types.'.$item->label);
 
                     return $item;
                 })
@@ -96,7 +96,7 @@ class AttributeDataGrid extends DataGrid
                 ->distinct()
                 ->get()
                 ->map(function ($item) {
-                    $item->label = trans('admin::app.settings.attributes.index.datagrid.types.' . $item->label);
+                    $item->label = trans('admin::app.settings.attributes.index.datagrid.types.'.$item->label);
 
                     return $item;
                 })

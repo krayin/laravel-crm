@@ -1422,7 +1422,7 @@ return [
                         'select'   => 'Seç',
                         'text'     => 'Metin',
                         'textarea' => 'Metin Alanı',
-                    ]
+                    ],
                 ],
             ],
 

@@ -1421,7 +1421,7 @@ return [
                         'select'   => 'Chọn',
                         'text'     => 'Văn bản',
                         'textarea' => 'Khung văn bản',
-                    ]
+                    ],
                 ],
             ],
 

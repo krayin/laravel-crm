@@ -1420,7 +1420,7 @@ return [
                         'select'   => 'Seleção',
                         'text'     => 'Texto',
                         'textarea' => 'Área de Texto',
-                    ]
+                    ],
                 ],
             ],
 

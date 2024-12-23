@@ -1422,7 +1422,7 @@ return [
                         'select'   => 'Select',
                         'text'     => 'Text',
                         'textarea' => 'Textarea',
-                    ]
+                    ],
                 ],
             ],
 
