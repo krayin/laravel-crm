@@ -1401,6 +1401,27 @@ return [
                     'is-default'  => 'Mặc Định',
                     'edit'        => 'Chỉnh sửa',
                     'delete'      => 'Xóa',
+
+                    'entity-types' => [
+                        'leads'         => 'Khách hàng tiềm năng',
+                        'organizations' => 'Tổ chức',
+                        'persons'       => 'Người',
+                        'products'      => 'Sản phẩm',
+                        'quotes'        => 'Báo giá',
+                        'warehouses'    => 'Kho hàng',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Địa chỉ',
+                        'date'     => 'Ngày',
+                        'email'    => 'Email',
+                        'lookup'   => 'Tra cứu',
+                        'phone'    => 'Điện thoại',
+                        'price'    => 'Giá',
+                        'select'   => 'Chọn',
+                        'text'     => 'Văn bản',
+                        'textarea' => 'Khung văn bản',
+                    ]
                 ],
             ],
 

@@ -1402,6 +1402,27 @@ return [
                     'is-default'  => 'پیش‌فرض است',
                     'edit'        => 'ویرایش',
                     'delete'      => 'حذف',
+
+                    'entity-types' => [
+                        'leads'         => 'سرنخ‌ها',
+                        'organizations' => 'سازمان‌ها',
+                        'persons'       => 'افراد',
+                        'products'      => 'محصولات',
+                        'quotes'        => 'نقل‌قول‌ها',
+                        'warehouses'    => 'انبارها',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'آدرس',
+                        'date'     => 'تاریخ',
+                        'email'    => 'ایمیل',
+                        'lookup'   => 'جستجو',
+                        'phone'    => 'تلفن',
+                        'price'    => 'قیمت',
+                        'select'   => 'انتخاب',
+                        'text'     => 'متن',
+                        'textarea' => 'میدان متن',
+                    ]
                 ],
             ],
 

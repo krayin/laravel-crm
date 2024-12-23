@@ -1402,6 +1402,27 @@ return [
                     'is-default'  => 'Varsayılan mı',
                     'edit'        => 'Düzenle',
                     'delete'      => 'Sil',
+
+                    'entity-types' => [
+                        'leads'         => 'Potansiyeller',
+                        'organizations' => 'Organizasyonlar',
+                        'persons'       => 'Kişiler',
+                        'products'      => 'Ürünler',
+                        'quotes'        => 'Teklifler',
+                        'warehouses'    => 'Depolar',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Adres',
+                        'date'     => 'Tarih',
+                        'email'    => 'E-posta',
+                        'lookup'   => 'Arama',
+                        'phone'    => 'Telefon',
+                        'price'    => 'Fiyat',
+                        'select'   => 'Seç',
+                        'text'     => 'Metin',
+                        'textarea' => 'Metin Alanı',
+                    ]
                 ],
             ],
 
