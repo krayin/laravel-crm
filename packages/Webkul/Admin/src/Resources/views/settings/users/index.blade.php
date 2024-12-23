@@ -457,7 +457,9 @@
         
                 methods: {
                     openModal() {
-                        this.user = {};
+                        this.user = {
+                            groups: [],
+                        };
 
                         this.$refs.userUpdateAndCreateModal.toggle();
                     },
