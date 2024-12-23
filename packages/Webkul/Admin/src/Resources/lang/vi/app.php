@@ -366,7 +366,7 @@ return [
 
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Tìm kiếm',
+                    'title'   => 'Tìm kiếm Mega',
 
                     'tabs' => [
                         'leads'    => 'Khách hàng tiềm năng',
