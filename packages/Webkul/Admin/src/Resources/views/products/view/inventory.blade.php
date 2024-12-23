@@ -110,7 +110,7 @@
                             </p>
                         </x-slot>
 
-                        <x-slot:menu>
+                        <x-slot:menu class="!top-[30px] max-h-[200px] overflow-auto">
                             {!! view_render_event('admin.products.view.inventory.source.menu.item.before', ['product' => $product]) !!}
 
                             <x-admin::dropdown.menu.item
