@@ -1910,7 +1910,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Open Leads By States',
+                'title'       => 'Open Leads By Stages',
                 'empty-title' => 'No Data Available',
                 'empty-info'  => 'No data available for selected interval',
             ],
