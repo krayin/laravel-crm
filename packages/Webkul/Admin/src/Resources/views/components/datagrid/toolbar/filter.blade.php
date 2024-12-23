@@ -106,7 +106,7 @@
                                                 <span class="text-xs font-medium text-gray-800 dark:text-white">@{{ filter.name }}</span>
 
                                                 <span
-                                                    class="icon-cross-large-large rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
+                                                    class="icon-cross-large rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
                                                     @click.stop="deleteSavedFilter(filter)"
                                                 >
                                                 </span>
