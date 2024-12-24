@@ -6,7 +6,10 @@
 {!! view_render_event('admin.products.view.inventory.after', ['product' => $product]) !!}
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-product-inventories-template">
+    <script
+        type="text/x-template"
+        id="v-product-inventories-template"
+    >
         <div class="p-4">
             <div class="flex flex-col gap-4">
                 {!! view_render_event('admin.products.view.inventory.table.before', ['product' => $product]) !!}
@@ -187,7 +190,10 @@
         </div>
     </script>
 
-    <script type="text/x-template" id="v-warehouse-location-inventories-template">
+    <script
+        type="text/x-template"
+        id="v-warehouse-location-inventories-template"
+    >
         <div class="flex flex-col gap-2">
             <!-- Add location header -->
             <x-admin::table class="!min-w-[480px]">
@@ -234,7 +240,10 @@
         </div>
     </script>
 
-    <script type="text/x-template" id="v-warehouse-location-inventory-item-template">
+    <script
+        type="text/x-template"
+        id="v-warehouse-location-inventory-item-template"
+    >
         <!-- Input fields for add locations -->
         <x-admin::table.tbody.tr>
             <x-admin::table.td class="!px-2">
@@ -279,7 +288,7 @@
                     type="number"
                     ::name="'inventories[inventory_' + index + '][allocated]'"
                     v-model="location.allocated"
-                    rules="required|numeric|min_value:0"
+                    ::rules="`required|numeric|min_value:0|max_value:${location.in_stock}`"
                     :label="trans('admin::app.products.view.inventory.allocated')"
                     :placeholder="trans('admin::app.products.view.inventory.allocated')"
                 />
