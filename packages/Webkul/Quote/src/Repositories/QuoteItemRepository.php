@@ -31,10 +31,14 @@ class QuoteItemRepository extends Repository
     }
 
     /**
-     * @return \Webkul\Quote\Contracts\QuoteItem
+     * @return mixed
      */
     public function create(array $data)
     {
+        if (empty($data['product_id'])) {
+            return null;
+        }
+
         $product = $this->productRepository->findOrFail($data['product_id']);
 
         $quoteItem = parent::create(array_merge($data, [
