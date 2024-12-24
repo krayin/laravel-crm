@@ -251,7 +251,7 @@ class LeadDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'expected_close_date',
-            'label'           => trans('admin::app.leads.index.datagrid.expected-close-date'),
+            'label'           => trans('admin::app.leads.index.datagrid.date-to'),
             'type'            => 'date',
             'searchable'      => false,
             'sortable'        => true,
