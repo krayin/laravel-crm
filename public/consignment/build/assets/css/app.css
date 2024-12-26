@@ -1,0 +1,9 @@
+.icon-consignment::before {
+    content: ""; /* Clear content, using background instead */
+    display: inline-block; /* Ensure it behaves as a block-level element */
+    width: 20px; /* Set width */
+    height: 20px; /* Set height */
+    background-image: url('../images/Icon-Temp.svg'); /* Set the image */
+    background-size: contain; /* Ensure the image scales correctly */
+    background-repeat: no-repeat; /* Prevent repeating */
+}

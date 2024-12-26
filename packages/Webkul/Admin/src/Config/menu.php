@@ -15,71 +15,71 @@ return [
     /**
      * Leads.
      */
-    [
-        'key'        => 'leads',
-        'name'       => 'admin::app.layouts.leads',
-        'route'      => 'admin.leads.index',
-        'sort'       => 2,
-        'icon-class' => 'icon-leads',
-    ],
+    // [
+    //     'key'        => 'leads',
+    //     'name'       => 'admin::app.layouts.leads',
+    //     'route'      => 'admin.leads.index',
+    //     'sort'       => 2,
+    //     'icon-class' => 'icon-leads',
+    // ],
 
     /**
      * Quotes.
      */
-    [
-        'key'        => 'quotes',
-        'name'       => 'admin::app.layouts.quotes',
-        'route'      => 'admin.quotes.index',
-        'sort'       => 3,
-        'icon-class' => 'icon-quote',
-    ],
+    // [
+    //     'key'        => 'quotes',
+    //     'name'       => 'admin::app.layouts.quotes',
+    //     'route'      => 'admin.quotes.index',
+    //     'sort'       => 3,
+    //     'icon-class' => 'icon-quote',
+    // ],
 
     /**
      * Emails.
      */
-    [
-        'key'        => 'mail',
-        'name'       => 'admin::app.layouts.mail.title',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'compose'],
-        'sort'       => 4,
-        'icon-class' => 'icon-mail',
-    ], [
-        'key'        => 'mail.inbox',
-        'name'       => 'admin::app.layouts.mail.inbox',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'inbox'],
-        'sort'       => 2,
-        'icon-class' => '',
-    ], [
-        'key'        => 'mail.draft',
-        'name'       => 'admin::app.layouts.mail.draft',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'draft'],
-        'sort'       => 3,
-        'icon-class' => '',
-    ], [
-        'key'        => 'mail.outbox',
-        'name'       => 'admin::app.layouts.mail.outbox',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'outbox'],
-        'sort'       => 4,
-        'icon-class' => '',
-    ], [
-        'key'        => 'mail.sent',
-        'name'       => 'admin::app.layouts.mail.sent',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'sent'],
-        'sort'       => 4,
-        'icon-class' => '',
-    ], [
-        'key'        => 'mail.trash',
-        'name'       => 'admin::app.layouts.mail.trash',
-        'route'      => 'admin.mail.index',
-        'params'     => ['route' => 'trash'],
-        'sort'       => 5,
-        'icon-class' => '',
-    ],
+    // [
+    //     'key'        => 'mail',
+    //     'name'       => 'admin::app.layouts.mail.title',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'compose'],
+    //     'sort'       => 4,
+    //     'icon-class' => 'icon-mail',
+    // ], [
+    //     'key'        => 'mail.inbox',
+    //     'name'       => 'admin::app.layouts.mail.inbox',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'inbox'],
+    //     'sort'       => 2,
+    //     'icon-class' => '',
+    // ], [
+    //     'key'        => 'mail.draft',
+    //     'name'       => 'admin::app.layouts.mail.draft',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'draft'],
+    //     'sort'       => 3,
+    //     'icon-class' => '',
+    // ], [
+    //     'key'        => 'mail.outbox',
+    //     'name'       => 'admin::app.layouts.mail.outbox',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'outbox'],
+    //     'sort'       => 4,
+    //     'icon-class' => '',
+    // ], [
+    //     'key'        => 'mail.sent',
+    //     'name'       => 'admin::app.layouts.mail.sent',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'sent'],
+    //     'sort'       => 4,
+    //     'icon-class' => '',
+    // ], [
+    //     'key'        => 'mail.trash',
+    //     'name'       => 'admin::app.layouts.mail.trash',
+    //     'route'      => 'admin.mail.index',
+    //     'params'     => ['route' => 'trash'],
+    //     'sort'       => 5,
+    //     'icon-class' => '',
+    // ],
     // , [
     //     'key'        => 'mail.setting',
     //     'name'       => 'admin::app.layouts.mail.setting',
@@ -91,47 +91,47 @@ return [
     /**
      * Activities.
      */
-    [
-        'key'        => 'activities',
-        'name'       => 'admin::app.layouts.activities',
-        'route'      => 'admin.activities.index',
-        'sort'       => 5,
-        'icon-class' => 'icon-activity',
-    ],
+    // [
+    //     'key'        => 'activities',
+    //     'name'       => 'admin::app.layouts.activities',
+    //     'route'      => 'admin.activities.index',
+    //     'sort'       => 5,
+    //     'icon-class' => 'icon-activity',
+    // ],
 
     /**
      * Contacts.
      */
-    [
-        'key'        => 'contacts',
-        'name'       => 'admin::app.layouts.contacts',
-        'route'      => 'admin.contacts.persons.index',
-        'sort'       => 6,
-        'icon-class' => 'icon-contact',
-    ], [
-        'key'        => 'contacts.persons',
-        'name'       => 'admin::app.layouts.persons',
-        'route'      => 'admin.contacts.persons.index',
-        'sort'       => 1,
-        'icon-class' => '',
-    ], [
-        'key'        => 'contacts.organizations',
-        'name'       => 'admin::app.layouts.organizations',
-        'route'      => 'admin.contacts.organizations.index',
-        'sort'       => 2,
-        'icon-class' => '',
-    ],
+    // [
+    //     'key'        => 'contacts',
+    //     'name'       => 'admin::app.layouts.contacts',
+    //     'route'      => 'admin.contacts.persons.index',
+    //     'sort'       => 6,
+    //     'icon-class' => 'icon-contact',
+    // ], [
+    //     'key'        => 'contacts.persons',
+    //     'name'       => 'admin::app.layouts.persons',
+    //     'route'      => 'admin.contacts.persons.index',
+    //     'sort'       => 1,
+    //     'icon-class' => '',
+    // ], [
+    //     'key'        => 'contacts.organizations',
+    //     'name'       => 'admin::app.layouts.organizations',
+    //     'route'      => 'admin.contacts.organizations.index',
+    //     'sort'       => 2,
+    //     'icon-class' => '',
+    // ],
 
     /**
      * Products.
      */
-    [
-        'key'        => 'products',
-        'name'       => 'admin::app.layouts.products',
-        'route'      => 'admin.products.index',
-        'sort'       => 7,
-        'icon-class' => 'icon-product',
-    ],
+    // [
+    //     'key'        => 'products',
+    //     'name'       => 'admin::app.layouts.products',
+    //     'route'      => 'admin.products.index',
+    //     'sort'       => 7,
+    //     'icon-class' => 'icon-product',
+    // ],
 
     /**
      * Settings.
@@ -140,7 +140,7 @@ return [
         'key'        => 'settings',
         'name'       => 'admin::app.layouts.settings',
         'route'      => 'admin.settings.index',
-        'sort'       => 8,
+        'sort'       => 88,
         'icon-class' => 'icon-setting',
     ], [
         'key'        => 'settings.user',
@@ -266,11 +266,11 @@ return [
     /**
      * Configuration.
      */
-    [
-        'key'        => 'configuration',
-        'name'       => 'admin::app.layouts.configuration',
-        'route'      => 'admin.configuration.index',
-        'sort'       => 9,
-        'icon-class' => 'icon-configuration',
-    ],
+    // [
+    //     'key'        => 'configuration',
+    //     'name'       => 'admin::app.layouts.configuration',
+    //     'route'      => 'admin.configuration.index',
+    //     'sort'       => 9,
+    //     'icon-class' => 'icon-configuration',
+    // ],
 ];

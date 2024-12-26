@@ -217,6 +217,20 @@ return [
         Webkul\User\Providers\UserServiceProvider::class,
         Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
+
+        // created by shubham
+        Webkul\Announcement\Providers\AnnouncementServiceProvider::class,
+        Webkul\Consignment\Providers\ConsignmentServiceProvider::class,
+        Webkul\Inventory\Providers\InventoryServiceProvider::class,
+        Webkul\PriceFinder\Providers\PriceFinderServiceProvider::class,
+        Webkul\Reporting\Providers\ReportingServiceProvider::class,
+        Webkul\Transaction\Providers\TransactionServiceProvider::class,
+        Webkul\Budget\Providers\BudgetServiceProvider::class,
+        Webkul\AssetManagement\Providers\AssetManagementServiceProvider::class,
+        Webkul\OrderManagement\Providers\OrderManagementServiceProvider::class,
+        Webkul\SecondarySales\Providers\SecondarySalesServiceProvider::class,
+        Webkul\RepositoryDetails\Providers\RepositoryDetailsServiceProvider::class,
+
     ])->toArray(),
 
     /*

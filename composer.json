@@ -70,7 +70,18 @@
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
             "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\Announcement\\": "packages/Webkul/Announcement/src",
+            "Webkul\\Consignment\\": "packages/Webkul/Consignment/src",
+            "Webkul\\Inventory\\": "packages/Webkul/Inventory/src",
+            "Webkul\\PriceFinder\\": "packages/Webkul/PriceFinder/src",
+            "Webkul\\Reporting\\": "packages/Webkul/Reporting/src",
+            "Webkul\\Transaction\\": "packages/Webkul/Transaction/src",
+            "Webkul\\Budget\\": "packages/Webkul/Budget/src",
+            "Webkul\\AssetManagement\\": "packages/Webkul/AssetManagement/src",
+            "Webkul\\OrderManagement\\": "packages/Webkul/OrderManagement/src",
+            "Webkul\\SecondarySales\\": "packages/Webkul/SecondarySales/src",
+            "Webkul\\RepositoryDetails\\": "packages/Webkul/RepositoryDetails/src"
         }
     },
     "autoload-dev": {
