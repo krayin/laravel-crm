@@ -40,11 +40,7 @@
                         </span>
                         
                         <span>
-                            {{ $person->organization->address['postcode'] . '  ' . $person->organization->address['city'] }}
-                        </span>
-
-                        <span>
-                            {{ core()->state_name($person->organization->address['state']) }}
+                            {{ $person->organization->address['city'] . ' ' . core()->state_name($person->organization->address['state']) . ' ' . $person->organization->address['postcode'] }}
                         </span>
 
                         <span>
