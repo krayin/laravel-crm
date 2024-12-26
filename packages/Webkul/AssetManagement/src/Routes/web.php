@@ -8,6 +8,7 @@ use Webkul\AssetManagement\Http\Controllers\InstrumentController;
 
 Route::middleware(['web','admin_locale','user'])->prefix(config('app.admin_path'))->group(function(){
     Route::prefix('instrument')->group(function () {
+        
         Route::get('', [InstrumentController::class, 'index'])->name('admin.instrument.index');
         Route::get('create', [InstrumentController::class, 'create'])->name('admin.instrument.create');
         Route::post('store', [InstrumentController::class, 'store'])->name('admin.instrument.store');
