@@ -85,7 +85,7 @@ class PersonRepository extends Repository
         $data['organization_id'] = $data['organization_id'] ?? $person->organization_id;
 
         $person->update($data);
-        
+
         /**
          * If attributes are provided then only save the provided attributes and return.
          */
