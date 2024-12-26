@@ -22,7 +22,7 @@
             <!-- Non-editing view -->
             <div
                 v-if="! isEditing"
-                class="flex h-[34px] items-center rounded border border-transparent transition-all"
+                class="flex h-[34px] items-center justify-between rounded border border-transparent transition-all"
                 :class="allowEdit ? 'hover:bg-gray-100 dark:hover:bg-gray-800' : ''"
             >
                 <x-admin::form.control-group.control
@@ -36,7 +36,7 @@
                     :href="inputValue" 
                     target="_blank"
                 >
-                    <span class="icon-down-arrow pl-[2px] text-2xl font-normal"></span>
+                    <span class="icon-download pl-[2px] text-2xl font-normal"></span>
                 </a>
 
                 <template v-if="allowEdit">
