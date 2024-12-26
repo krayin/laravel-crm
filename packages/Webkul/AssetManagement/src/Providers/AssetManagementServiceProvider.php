@@ -17,8 +17,11 @@ class AssetManagementServiceProvider extends ServiceProvider
         $this->loadMigrationsFrom(__DIR__ . '/../Database/Migrations');
 
         $this->loadRoutesFrom(__DIR__ . '/../Routes/web.php');
+        $this->loadRoutesFrom(__DIR__ . '/../Routes/breadcrumbs.php');
 
-        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'assetmanagement');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'warehouse');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'assetUtilization');
+        $this->loadTranslationsFrom(__DIR__ . '/../Resources/lang', 'instrument');
 
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'assetmanagement');
 
