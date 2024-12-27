@@ -25,6 +25,6 @@ class Decimal implements Rule
      */
     public function message()
     {
-        return trans('core::validation.decimal');
+        return trans('The field must be a decimal number');
     }
 }
