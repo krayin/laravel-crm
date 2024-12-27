@@ -50,27 +50,10 @@
                 {!! view_render_event('admin.contacts.organizations.create.form_controls.before') !!}
 
                 <x-admin::attributes
-                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                    'entity_type' => 'organizations',
-                ])"
-                :custom-validations="[
-                    'name' => [
-                        'max:100',
-                    ],
-                    'address' => [
-                        'max:150',
-                    ],
-                    'city' => [
-                        'max:100',
-                    ],
-                    'state' => [
-                        'max:100',
-                    ],
-                    'postcode' => [
-                        'max:20',
-                    ],
-                ]"
-            />
+                    :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                        'entity_type' => 'organizations',
+                    ])"
+                />
 
 
                 {!! view_render_event('admin.contacts.organizations.edit.form_controls.after') !!}
