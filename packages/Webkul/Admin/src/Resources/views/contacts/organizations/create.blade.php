@@ -55,7 +55,6 @@
                     ])"
                 />
 
-
                 {!! view_render_event('admin.contacts.organizations.edit.form_controls.after') !!}
             </div>
         </div>
