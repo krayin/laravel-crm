@@ -74,10 +74,6 @@ class PersonRepository extends Repository
      */
     public function update(array $data, $id, $attributes = [])
     {
-        // if (isset($data['user_id'])) {
-        //     $data['user_id'] = $data['user_id'] ?: null;
-        // }
-
         $data['user_id'] = $data['user_id'] ?? null;
 
         $person = $this->find($id);
