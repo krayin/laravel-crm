@@ -95,6 +95,11 @@
                                     ['code', 'IN', ['price']],
                                     ['code' , '!=', 'quantity']
                                 ])"
+                                :custom-validations="[
+                                    'price' => [
+                                        'min:0',
+                                    ],
+                                ]"
                             />
 
                             {!! view_render_event('admin.products.create.accordion.content.attributes.after') !!}
