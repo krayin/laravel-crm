@@ -939,11 +939,11 @@ class Htmlfilter
          */
         $rm_tags = array_shift($tag_list);
 
-        @array_walk($tag_list, 'tln_casenormalize');
+        @array_walk($tag_list, [$this, 'tln_casenormalize']);
 
-        @array_walk($rm_tags_with_content, 'tln_casenormalize');
+        @array_walk($rm_tags_with_content, [$this, 'tln_casenormalize']);
 
-        @array_walk($self_closing_tags, 'tln_casenormalize');
+        @array_walk($self_closing_tags, [$this, 'tln_casenormalize']);
 
         /**
          * See if tag_list is of tags to remove or tags to allow.
