@@ -6,6 +6,6 @@ return [
         'name'       => 'Repository',
         'route'      => 'admin.repositorydetails.index',
         'sort'       => 12,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-repository',
     ]
 ];

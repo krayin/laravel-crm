@@ -6,6 +6,6 @@ return [
         'name'       => 'Inventory',
         'route'      => 'admin.inventory.index',
         'sort'       => 4,
-        'icon-class' => '',
+        'icon-class' => 'icon-inventory',
     ]
 ];

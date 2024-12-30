@@ -6,6 +6,6 @@ return [
         'name'       => 'Budget Management',
         'route'      => 'admin.budget.index',
         'sort'       => 3,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-budget',
     ]
 ];

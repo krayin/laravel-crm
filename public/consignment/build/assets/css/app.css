@@ -3,7 +3,7 @@
     display: inline-block; /* Ensure it behaves as a block-level element */
     width: 20px; /* Set width */
     height: 20px; /* Set height */
-    background-image: url('../images/Icon-Temp.svg'); /* Set the image */
+    background-image: url('../images/consignment_Stock.svg'); /* Set the image */
     background-size: contain; /* Ensure the image scales correctly */
     background-repeat: no-repeat; /* Prevent repeating */
 }

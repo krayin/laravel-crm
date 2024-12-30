@@ -6,6 +6,6 @@ return [
         'name'       => 'Secondary Sales',
         'route'      => 'admin.secondarysales.index',
         'sort'       => 7,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-sales',
     ]
 ];

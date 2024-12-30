@@ -27,6 +27,10 @@ class BudgetServiceProvider extends ServiceProvider
         Event::listen('admin.layout.head.after', function($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('budget::components.layouts.style');
         });
+
+        $this->publishes([
+            __DIR__ . '/../Resources/Assets' => public_path('budget/build/assets'),
+        ], 'public');
     }
 
     /**
@@ -52,6 +56,10 @@ class BudgetServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/acl.php', 'acl'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/krayin-vite.php', 'krayin-vite.viters'
         );
     }
 }

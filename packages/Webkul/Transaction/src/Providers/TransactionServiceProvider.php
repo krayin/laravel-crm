@@ -29,6 +29,10 @@ class TransactionServiceProvider extends ServiceProvider
         Event::listen('admin.layout.head.after', function($viewRenderEventManager) {
             $viewRenderEventManager->addTemplate('transaction::components.layouts.style');
         });
+
+        $this->publishes([
+            __DIR__ . '/../Resources/Assets' => public_path('transaction/build/assets'),
+        ], 'public');
     }
 
     /**
@@ -54,6 +58,10 @@ class TransactionServiceProvider extends ServiceProvider
 
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/acl.php', 'acl'
+        );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/krayin-vite.php', 'krayin-vite.viters'
         );
     }
 }

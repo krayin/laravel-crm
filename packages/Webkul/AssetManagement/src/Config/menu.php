@@ -6,7 +6,7 @@ return [
         'name'       => 'Asset Management',
         'route'      => 'admin.assetmanagement.index',
         'sort'       => 11,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-assetManagement',
     ],
     [
         'key'        => 'assetmanagement.instrument',

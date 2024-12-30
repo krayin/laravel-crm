@@ -6,6 +6,6 @@ return [
         'name'       => 'Transaction Analysis',
         'route'      => 'admin.transaction.index',
         'sort'       => 2,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-transaction',
     ]
 ];

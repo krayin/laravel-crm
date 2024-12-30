@@ -6,6 +6,6 @@ return [
         'name'       => 'Price Finder',
         'route'      => 'admin.pricefinder.index',
         'sort'       => 8,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-priceFinder',
     ]
 ];

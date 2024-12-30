@@ -6,6 +6,6 @@ return [
         'name'       => 'Reporting',
         'route'      => 'admin.reporting.index',
         'sort'       => 9,
-        'icon-class' => 'temp-icon',
+        'icon-class' => 'icon-reporting',
     ]
 ];

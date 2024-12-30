@@ -1,0 +1,19 @@
+.icon-order-management::before {
+    content: ""; /* Clear content, using background instead */
+    display: inline-block; /* Ensure it behaves as a block-level element */
+    width: 20px; /* Set width */
+    height: 20px; /* Set height */
+    background-image: url('../images/order_management.svg');
+    background-size: contain; /* Ensure the image scales correctly */
+    background-repeat: no-repeat; /* Prevent repeating */
+}
+
+.icon-order-create::before {
+    content: ""; /* Clear content, using background instead */
+    display: inline-block; /* Ensure it behaves as a block-level element */
+    width: 20px; /* Set width */
+    height: 20px; /* Set height */
+    background-image: url('../images/create_order.svg');
+    background-size: contain; /* Ensure the image scales correctly */
+    background-repeat: no-repeat; /* Prevent repeating */
+}
