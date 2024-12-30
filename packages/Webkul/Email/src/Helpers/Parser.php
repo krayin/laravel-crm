@@ -356,7 +356,20 @@ class Parser
                         $textBody .= $this->decodeContentTransfer($this->getPartBody($part), $encodingType);
                         $textBody = nl2br($this->charset->decodeCharset($textBody, $this->getPartCharset($part)));
                     } elseif ($this->getPart('content-type', $part) == 'text/plain; (error)') {
-                        $part_from_sender = is_array($part['headers']['from']) ? $part['headers']['from'][0] : $part['headers']['from'];
+                        if (empty($part['headers']) || !isset($part['headers']['from'])) {
+                            $parentKey = explode('.', $key)[0];
+                            if (isset($this->parts[$parentKey]) && isset($this->parts[$parentKey]['headers']['from'])) {
+                                $part_from_sender = is_array($this->parts[$parentKey]['headers']['from']) 
+                                    ? $this->parts[$parentKey]['headers']['from'][0] 
+                                    : $this->parts[$parentKey]['headers']['from'];
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            $part_from_sender = is_array($part['headers']['from']) 
+                                ? $part['headers']['from'][0] 
+                                : $part['headers']['from'];
+                        }
                         $mail_part_addresses = mailparse_rfc822_parse_addresses($part_from_sender);
 
                         if (! empty($mail_part_addresses[0]['address'])
