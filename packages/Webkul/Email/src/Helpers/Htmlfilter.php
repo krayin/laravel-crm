@@ -13,8 +13,8 @@ class Htmlfilter
             if (is_array($attary) && count($attary)) {
                 $atts = [];
 
-                while ([$attname, $attvalue] = each($attary)) {
-                    array_push($atts, "$attname=$attvalue");
+                foreach ($attary as $attname => $attvalue) {
+                    $atts[] = "$attname=$attvalue";
                 }
 
                 $fulltag .= ' '.implode(' ', $atts);
