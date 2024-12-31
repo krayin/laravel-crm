@@ -13,7 +13,7 @@
         </a>
     </div>
 
-    <div class="flex items-center gap-1.5">
+    {{-- <div class="flex items-center gap-1.5">
         <!-- Mega Search Bar Vue Component -->
         <v-mega-search>
             <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
@@ -173,7 +173,7 @@
                 </x-admin::dropdown>
             @endif
         </div>
-    </div>
+    </div> --}}
 
     <div class="flex items-center gap-2.5">
         <!-- Dark mode -->

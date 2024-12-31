@@ -3,7 +3,7 @@
 return [
     [
         'key'        => 'assetmanagement',
-        'name'       => 'Asset Management',
+        'name'       => 'Assets',
         'route'      => 'admin.assetmanagement.index',
         'sort'       => 11,
         'icon-class' => 'icon-assetManagement',
