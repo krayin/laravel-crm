@@ -701,7 +701,7 @@ class Parser
         } elseif ($encodingType == 'quoted-printable') {
             return quoted_printable_decode($encodedString);
         } else {
-            return $encodedString; //8bit, 7bit, binary
+            return $encodedString; // 8bit, 7bit, binary
         }
     }
 
