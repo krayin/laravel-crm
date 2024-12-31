@@ -14,7 +14,7 @@ class Htmlfilter
                 $atts = [];
 
                 foreach ($attary as $attname => $attvalue) {
-                    $atts[] = "$attname=$attvalue";
+                    array_push($atts, "$attname=$attvalue");
                 }
 
                 $fulltag .= ' '.implode(' ', $atts);
