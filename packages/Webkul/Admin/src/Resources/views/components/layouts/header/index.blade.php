@@ -176,6 +176,27 @@
     </div> --}}
 
     <div class="flex items-center gap-2.5">
+
+        <!-- Notification -->
+        <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}">
+            <x-slot:toggle>
+                <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-950">
+                    <i class="icon-notification text-2xl"></i>
+                </button>
+            </x-slot>
+
+            {{-- <!-- Notification Dropdown -->
+            <x-slot:content class="mt-2 border-t-0 !p-0">
+                <div class="flex items
+                -center justify-between border-b p-4 dark:border-gray-800">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        @lang('admin::app.layouts.no-new-notifications')
+                    </p>
+                </div>
+            </x-slot> --}}
+        </x-admin::dropdown>
+
+
         <!-- Dark mode -->
         <v-dark>
             <div class="flex">
