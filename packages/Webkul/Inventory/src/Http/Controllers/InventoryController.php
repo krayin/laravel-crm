@@ -12,6 +12,8 @@ use Webkul\Inventory\DataGrids\InventoryDataGrid;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Http\JsonResponse;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Inventory\Exports\InventoryExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 
 class InventoryController extends Controller
@@ -135,5 +137,10 @@ class InventoryController extends Controller
         return new JsonResponse([
             'message' => trans('inventory::app.inventories.index.delete-success'),
         ]);
+    }
+    
+    public function export()
+    {
+        return Excel::download(new InventoryExport, 'inventory.xlsx');
     }
 }

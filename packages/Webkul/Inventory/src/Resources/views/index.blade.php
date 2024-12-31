@@ -19,7 +19,17 @@
             <div class="flex items-center gap-x-2.5">
                 {!! view_render_event('admin.inventories.index.create_button.before') !!}
 
-                <!-- Create button for Product -->
+                {{-- create export for inventory --}}
+                @if (bouncer()->hasPermission('inventory.export'))
+                    <a
+                        href="{{ route('admin.inventory.export') }}"
+                        class="primary-button"
+                    >
+                        @lang('inventory::app.inventories.index.export-btn')
+                    </a>
+                @endif
+
+                <!-- Create button for inventory -->
                 @if (bouncer()->hasPermission('inventory.create'))
                     <div class="flex items-center gap-x-2.5">
                         <a

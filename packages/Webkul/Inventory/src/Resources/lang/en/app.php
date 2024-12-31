@@ -10,6 +10,7 @@ return [
       'create-success' => 'Inventory created successfully',
       'update-success' => 'Inventory updated successfully',
       'delete-success' => 'Inventory deleted successfully',
+      'export-btn' => 'Export',
 
     ],
     'create' => [

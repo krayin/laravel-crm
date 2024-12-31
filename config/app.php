@@ -217,6 +217,7 @@ return [
         Webkul\User\Providers\UserServiceProvider::class,
         Webkul\Warehouse\Providers\WarehouseServiceProvider::class,
         Webkul\WebForm\Providers\WebFormServiceProvider::class,
+        Maatwebsite\Excel\ExcelServiceProvider::class,
 
         // created by shubham
         Webkul\Announcement\Providers\AnnouncementServiceProvider::class,
@@ -244,6 +245,10 @@ return [
     |
      */
 
-    'aliases' => Facade::defaultAliases()->merge([])->toArray(),
+    'aliases' => Facade::defaultAliases()->merge([])->toArray(
+        [
+            'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        ]
+    ),
 
 ];

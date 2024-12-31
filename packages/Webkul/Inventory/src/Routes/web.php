@@ -13,5 +13,6 @@ Route::middleware(['web','admin_locale','user'])->prefix(config('app.admin_path'
         Route::put('update/{id}', [InventoryController::class, 'update'])->name('admin.inventory.update');
         Route::delete('delete/{id}', [InventoryController::class, 'destroy'])->name('admin.inventory.delete');
         Route::post('mass_delete', [InventoryController::class, 'massDestroy'])->name('admin.inventory.mass_delete');
+        Route::get('export', [InventoryController::class, 'export'])->name('admin.inventory.export');
     });
 });

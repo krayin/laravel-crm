@@ -27,3 +27,9 @@ Breadcrumbs::for('inventory.view', function (BreadcrumbTrail $trail, $lead) {
     $trail->parent('inventory');
     $trail->push('#'.$lead->id, route('admin.inventory.view', $lead->id));
 });
+
+// Dashboard > inventory > Export
+Breadcrumbs::for('inventory.export', function (BreadcrumbTrail $trail) {
+    $trail->parent('inventory');
+    $trail->push(trans('inventory::app.inventories.export.title'), route('admin.inventory.export'));
+});
