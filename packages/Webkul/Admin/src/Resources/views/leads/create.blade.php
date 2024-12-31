@@ -121,7 +121,7 @@
                                 ]"
                             />
 
-                            <!-- Lead Details Oter input fields -->
+                            <!-- Lead Details Other input fields -->
                             <div class="flex gap-4 max-sm:flex-wrap">
                                 <div class="w-full">
                                     <x-admin::attributes
