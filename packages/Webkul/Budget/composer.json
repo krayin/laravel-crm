@@ -1,0 +1,27 @@
+{
+    "name": "budget/budget",
+    "description": "budget",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Budget\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Providers\\BudgetServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

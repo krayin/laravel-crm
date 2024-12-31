@@ -240,6 +240,10 @@
     "file": "assets/dark-logo-efbc17e1.svg",
     "src": "src/Resources/assets/images/dark-logo.svg"
   },
+  "src/Resources/assets/images/avana-logo.png": {
+    "file": "assets/avana-logo.png",
+    "src": "src/Resources/assets/images/avana-logo.png"
+  },
   "src/Resources/assets/images/empty-placeholders/activities.svg": {
     "file": "assets/activities-94382bdd.svg",
     "src": "src/Resources/assets/images/empty-placeholders/activities.svg"

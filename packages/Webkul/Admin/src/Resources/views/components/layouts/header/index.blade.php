@@ -6,14 +6,14 @@
         <a href="{{ route('admin.dashboard.index') }}">
             <img
                 class="h-10"
-                src="{{ request()->cookie('dark_mode') ? vite()->asset('images/dark-logo.svg') : vite()->asset('images/logo.svg') }}"
+                src="{{ request()->cookie('dark_mode') ? vite()->asset('images/avana-logo.png') : vite()->asset('images/avana-logo.png') }}"
                 id="logo-image"
                 alt="{{ config('app.name') }}"
             />
         </a>
     </div>
 
-    <div class="flex items-center gap-1.5">
+    {{-- <div class="flex items-center gap-1.5">
         <!-- Mega Search Bar Vue Component -->
         <v-mega-search>
             <div class="relative flex w-[525px] max-w-[525px] items-center max-lg:w-[400px] ltr:ml-2.5 rtl:mr-2.5">
@@ -173,9 +173,30 @@
                 </x-admin::dropdown>
             @endif
         </div>
-    </div>
+    </div> --}}
 
     <div class="flex items-center gap-2.5">
+
+        <!-- Notification -->
+        <x-admin::dropdown position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}">
+            <x-slot:toggle>
+                <button class="flex h-9 w-9 cursor-pointer items-center justify-center rounded-full bg-white text-gray-600 hover:bg-gray-100 dark:bg-gray-900 dark:text-gray-300 dark:hover:bg-gray-950">
+                    <i class="icon-notification text-2xl"></i>
+                </button>
+            </x-slot>
+
+            {{-- <!-- Notification Dropdown -->
+            <x-slot:content class="mt-2 border-t-0 !p-0">
+                <div class="flex items
+                -center justify-between border-b p-4 dark:border-gray-800">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        @lang('admin::app.layouts.no-new-notifications')
+                    </p>
+                </div>
+            </x-slot> --}}
+        </x-admin::dropdown>
+
+
         <!-- Dark mode -->
         <v-dark>
             <div class="flex">

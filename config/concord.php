@@ -18,6 +18,19 @@ return [
         \Webkul\User\Providers\ModuleServiceProvider::class,
         \Webkul\Warehouse\Providers\ModuleServiceProvider::class,
         \Webkul\WebForm\Providers\ModuleServiceProvider::class,
+
+        // created by shubham
+        \Webkul\Announcement\Providers\ModuleServiceProvider::class,
+        \Webkul\Consignment\Providers\ModuleServiceProvider::class,
+        \Webkul\Inventory\Providers\ModuleServiceProvider::class,
+        \Webkul\PriceFinder\Providers\ModuleServiceProvider::class,
+        \Webkul\Reporting\Providers\ModuleServiceProvider::class,
+        \Webkul\Transaction\Providers\ModuleServiceProvider::class,
+        \Webkul\Budget\Providers\ModuleServiceProvider::class,
+        \Webkul\AssetManagement\Providers\ModuleServiceProvider::class,
+        \Webkul\OrderManagement\Providers\ModuleServiceProvider::class,
+        \Webkul\SecondarySales\Providers\ModuleServiceProvider::class,
+        \Webkul\RepositoryDetails\Providers\ModuleServiceProvider::class,
     ],
 
     'register_route_models' => true,

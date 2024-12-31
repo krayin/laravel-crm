@@ -1,0 +1,27 @@
+{
+    "name": "assetmanagement/assetmanagement",
+    "description": "assetmanagement",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\AssetManagement\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\AssetManagement\\Providers\\AssetManagementServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,27 @@
+{
+    "name": "transaction/transaction",
+    "description": "transaction",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\Transaction\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Transaction\\Providers\\TransactionServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,27 @@
+{
+    "name": "pricefinder/pricefinder",
+    "description": "pricefinder",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\\PriceFinder\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Providers\\PriceFinderServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}
