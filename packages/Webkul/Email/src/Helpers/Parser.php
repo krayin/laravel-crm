@@ -55,7 +55,7 @@ class Parser
     }
 
     /**
-     * Free the held resouces
+     * Free the held resources
      *
      * @return void
      */
@@ -101,7 +101,12 @@ class Parser
         // streams have to be cached to file first
         $meta = @stream_get_meta_data($stream);
 
-        if (! $meta || ! $meta['mode'] || $meta['mode'][0] != 'r' || $meta['eof']) {
+        if (
+            ! $meta
+            || ! $meta['mode']
+            || $meta['mode'][0] != 'r'
+            || $meta['eof']
+        ) {
             throw new \Exception(
                 'setStream() expects parameter stream to be readable stream resource.'
             );
@@ -119,7 +124,7 @@ class Parser
             $this->stream = &$tmp_fp;
         } else {
             throw new \Exception(
-                'Could not create temporary files for attachments. Your tmp directory may be unwritable by PHP.'
+                'Could not create temporary files for attachments. Your tmp directory may be un-writable by PHP.'
             );
         }
 
@@ -161,8 +166,6 @@ class Parser
      * Parse the Message into parts
      *
      * @return void
-     *
-     * @private
      */
     private function parse()
     {
@@ -501,7 +504,7 @@ class Parser
                     && ! strpos($this->getPart('content-type', $part), 'image/')
                     && ! stripos($filename, 'noname') == false
                 ) {
-                    //skip
+                    // skip
                 } else {
                     $attachments[] = new Attachment(
                         $filename,
@@ -710,7 +713,7 @@ class Parser
      */
     private function decodeHeader($input)
     {
-        //Sometimes we have 2 label From so we take only the first
+        // Sometimes we have 2 label From so we take only the first
         if (is_array($input)) {
             return $this->decodeSingleHeader($input[0]);
         }

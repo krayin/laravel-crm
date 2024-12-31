@@ -243,7 +243,7 @@ class Htmlfilter
 
                 break;
 
-                //intentional fall-through
+                // intentional fall-through
             case '>':
                 return [$tagname, false, $tagtype, $lt, $pos];
                 break;
@@ -360,7 +360,7 @@ class Htmlfilter
 
                     break;
 
-                    //intentional fall-through
+                    // intentional fall-through
                 case '>':
                     $attary[$attname] = '"yes"';
 
