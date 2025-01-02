@@ -24,7 +24,7 @@
                         rows="10"
                         ::value="data ? data['address'] : ''"
                         :label="trans('admin::app.common.custom-attributes.address')"
-                        ::rules="attribute.is_required ? 'required' : validations"
+                        ::rules="attribute.is_required ? 'required|' + validations : validations"
                     />
 
                     <x-admin::form.control-group.error ::name="attribute['code'] + '[address]'" />
