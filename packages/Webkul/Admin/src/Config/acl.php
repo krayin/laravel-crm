@@ -181,7 +181,12 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.contacts.organizations.delete', 'admin.contacts.organizations.mass_delete'],
         'sort'  => 3,
-    ],  [
+    ], [
+        'key'   => 'contacts.organizations.view',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.contacts.organizations.view'],
+        'sort'  => 4,
+    ], [
         'key'   => 'products',
         'name'  => 'admin::app.acl.products',
         'route' => 'admin.products.index',

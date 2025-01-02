@@ -1,6 +1,6 @@
 <?php
 
-namespace Webkul\Admin\Http\Controllers\Contact;
+namespace Webkul\Admin\Http\Controllers\Contact\Organizations;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -58,6 +58,16 @@ class OrganizationController extends Controller
         session()->flash('success', trans('admin::app.contacts.organizations.index.create-success'));
 
         return redirect()->route('admin.contacts.organizations.index');
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(int $id): View
+    {
+        $organization = $this->organizationRepository->findOrFail($id);
+
+        return view('admin::contacts.organizations.view', compact('organization'));
     }
 
     /**
