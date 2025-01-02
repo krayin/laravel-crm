@@ -62,6 +62,12 @@ class ActivityRepository extends Repository
             ]);
         }
 
+        foreach ($data['participants']['organizations'] ?? [] as $userId) {
+            $activity->participants()->create([
+                'user_id' => $userId,
+            ]);
+        }
+
         return $activity;
     }
 

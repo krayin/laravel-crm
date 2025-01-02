@@ -65,6 +65,8 @@ Route::prefix('contacts')->group(function () {
 
         Route::delete('{id}', 'destroy')->name('admin.contacts.organizations.delete');
 
+        Route::get('search', 'search')->name('admin.contacts.organizations.search');
+
         Route::put('mass-destroy', 'massDestroy')->name('admin.contacts.organizations.mass_delete');
 
         /**

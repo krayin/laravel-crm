@@ -4,12 +4,15 @@ namespace Webkul\Admin\Http\Controllers\Contact\Organizations;
 
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
+use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Contact\OrganizationDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\AttributeForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
+use Webkul\Admin\Http\Resources\OrganizationResource;
 use Webkul\Contact\Repositories\OrganizationRepository;
 
 class OrganizationController extends Controller
@@ -94,6 +97,24 @@ class OrganizationController extends Controller
         session()->flash('success', trans('admin::app.contacts.organizations.index.update-success'));
 
         return redirect()->route('admin.contacts.organizations.index');
+    }
+
+    /**
+     * Search person results.
+     */
+    public function search(): JsonResource
+    {
+        if ($userIds = bouncer()->getAuthorizedUserIds()) {
+            $organization = $this->organizationRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->findWhereIn('user_id', $userIds);
+        } else {
+            $organization = $this->organizationRepository
+                ->pushCriteria(app(RequestCriteria::class))
+                ->all();
+        }
+
+        return OrganizationResource::collection($organization);
     }
 
     /**

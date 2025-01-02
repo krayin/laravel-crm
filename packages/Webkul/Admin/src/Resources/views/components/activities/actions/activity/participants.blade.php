@@ -1,7 +1,7 @@
 {!! view_render_event('admin.components.activities.actions.activity.participants.before') !!}
 
 <!-- Participants Vue Component -->
-<v-activity-participants></v-activity-participants>
+<v-activity-participants :entity='@json($entity)'></v-activity-participants>
 
 {!! view_render_event('admin.components.activities.actions.activity.participants.after') !!}
 
@@ -14,7 +14,7 @@
                 role="button"
             >
                 <ul class="flex flex-wrap items-center gap-1">
-                    <template v-for="userType in ['users', 'persons']">
+                    <template v-for="userType in ['users', 'persons', 'organizations']">
                         {!! view_render_event('admin.components.activities.actions.activity.participants.user_type.before') !!}
 
                         <li
@@ -59,7 +59,7 @@
                 </ul>
 
                 <div>
-                    <template v-if="! isSearching.users && ! isSearching.persons">
+                    <template v-if="! isSearching.users && ! isSearching.persons && ! isSearching.organizations">
                         <span
                             class="absolute right-1.5 top-1.5 text-2xl"
                             :class="[searchTerm.length >= 2 ? 'icon-up-arrow' : 'icon-down-arrow']"
@@ -80,16 +80,20 @@
                 v-if="searchTerm.length >= 2"
             >
                 <ul class="flex flex-col gap-1 p-2">
-                    <!-- Users -->
+                    <!-- Users, Persons, and Organizations -->
                     <li
                         class="flex flex-col gap-2"
-                        v-for="userType in ['users', 'persons']"
+                        v-for="userType in ['users', 'persons', 'organizations']"
                     >
                         {!! view_render_event('admin.components.activities.actions.activity.participants.dropdown.user_type.before') !!}
 
                         <h3 class="text-sm font-bold text-gray-600 dark:text-gray-300">
                             <template v-if="userType === 'users'">
                                 @lang('admin::app.components.activities.actions.activity.participants.users')
+                            </template>
+
+                            <template v-else-if="userType === 'organizations'">
+                                @lang('admin::app.components.activities.actions.activity.participants.organizations')
                             </template>
 
                             <template v-else>
@@ -140,8 +144,15 @@
                         users: [],
 
                         persons: [],
+
+                        organizations: [],
                     })
-                }
+                },
+
+                entity: {
+                    type: String,
+                    default: '',
+                },
             },
 
             data: function () {
@@ -150,6 +161,8 @@
                         users: false,
                         
                         persons: false,
+
+                        organizations: false,
                     },
 
                     searchTerm: '',
@@ -158,18 +171,24 @@
                         users: [],
                         
                         persons: [],
+
+                        organizations: [],
                     },
 
                     searchedParticipants: {
                         users: [],
                         
                         persons: [],
+
+                        organizations: [],
                     },
 
                     searchEnpoints: {
                         users: "{{ route('admin.settings.users.search') }}",
                         
                         persons: "{{ route('admin.contacts.persons.search') }}",
+
+                        organizations: "{{ route('admin.contacts.organizations.search') }}",
                     },
                 }
             },
@@ -179,6 +198,8 @@
                     this.search('users');
                     
                     this.search('persons');
+
+                    this.search('organizations');
                 },
             },
 
@@ -199,16 +220,16 @@
                     this.isSearching[userType] = true;
 
                     let self = this;
-                    
+
                     this.$axios.get(this.searchEnpoints[userType], {
                             params: {
                                 search: 'name:' + this.searchTerm,
                                 searchFields: 'name:like',
                             }
                         })
-                        .then (function(response) {
-                            self.addedParticipants[userType].forEach(function(addedParticipant) {
-                                response.data.data = response.data.data.filter(function(participant) {
+                        .then(function (response) {
+                            self.addedParticipants[userType].forEach(function (addedParticipant) {
+                                response.data.data = response.data.data.filter(function (participant) {
                                     return participant.id !== addedParticipant.id;
                                 });
                             });
@@ -217,7 +238,7 @@
 
                             self.isSearching[userType] = false;
                         })
-                        .catch (function (error) {
+                        .catch(function (error) {
                             self.isSearching[userType] = false;
                         });
                 },
@@ -229,17 +250,17 @@
 
                     this.searchedParticipants = {
                         users: [],
-                        
                         persons: [],
+                        organizations: [],
                     };
                 },
 
                 remove(userType, participant) {
-                    this.addedParticipants[userType] = this.addedParticipants[userType].filter(function(addedParticipant) {
+                    this.addedParticipants[userType] = this.addedParticipants[userType].filter(function (addedParticipant) {
                         return addedParticipant.id !== participant.id;
                     });
                 },
-            },
+            }
         });
     </script>
 @endPushOnce
