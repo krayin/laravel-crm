@@ -95,11 +95,11 @@
 
                                     <div class="flex flex-col items-center gap-4">
                                         <div class="flex flex-col items-center gap-2">
-                                            <p class="text-xl font-semibold dark:text-white">
+                                            <p class="!text-base font-semibold dark:text-white">
                                                 @lang('admin::app.leads.index.kanban.empty-list')
                                             </p>
 
-                                            <p class="text-gray-400 dark:text-gray-400">
+                                            <p class="!text-sm text-gray-400 dark:text-gray-400">
                                                 @lang('admin::app.leads.index.kanban.empty-list-description')
                                             </p>
                                         </div>
