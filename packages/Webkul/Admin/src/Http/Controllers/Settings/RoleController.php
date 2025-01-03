@@ -48,6 +48,7 @@ class RoleController extends Controller
             'name'            => 'required',
             'permission_type' => 'required',
             'description'     => 'required',
+            'permissions'     => 'required',
         ]);
 
         Event::dispatch('settings.role.create.before');
@@ -93,6 +94,7 @@ class RoleController extends Controller
             'name'            => 'required',
             'permission_type' => 'required|in:all,custom',
             'description'     => 'required',
+            'permissions'     => 'required',
         ]);
 
         Event::dispatch('settings.role.update.before', $id);

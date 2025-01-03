@@ -52,7 +52,7 @@
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <!-- Create Role for -->
                         <v-access-control>
                             <!-- Shimmer Effect -->
@@ -184,6 +184,8 @@
                 {!! view_render_event('admin.settings.roles.create.form.permission_type.after') !!}
 
                 <div v-if="permission_type == 'custom'">
+                    <x-admin::form.control-group.error control-name="permissions" />
+
                     {!! view_render_event('admin.settings.roles.create.form.tree-view.before') !!}
 
                     <x-admin::tree.view
