@@ -43,11 +43,11 @@
                             class="flex w-full flex-col border-b border-gray-200 pb-[9px] pt-2.5 last:border-none dark:border-gray-800"
                             v-for="(stat, index) in report.statistics"
                         >
-                            <span class="text-sm font-semibold dark:text-gray-300">
+                            <span class="text-sm font-semibold dark:text-gray-100">
                                 @{{ stat.total }}
                             </span>
 
-                            <span class="text-sm font-semibold dark:text-gray-300">
+                            <span class="text-sm font-semibold dark:text-gray-100">
                                 @{{ stat.name }}
                             </span>
                         </li>
@@ -139,7 +139,7 @@
 
                     // Create gradient
                     const gradient = ctx.createLinearGradient(0, 0, 0, 400);
-                    gradient.addColorStop(0, 'rgba(144, 247, 236, 1)');
+                    gradient.addColorStop(0, 'rgba(144, 247, 236, 0.8)');
                     gradient.addColorStop(1, 'rgba(50, 204, 188, 1)');
 
                     this.chart = new Chart(ctx, {
