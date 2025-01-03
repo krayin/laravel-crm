@@ -11,7 +11,7 @@
 
         <div class="flex flex-col gap-2">
             <div class="flex cursor-pointer items-center">
-                <!-- Bredcrumbs -->
+                <!-- Breadcrumb's -->
                 <x-admin::breadcrumbs name="leads" />
             </div>
 

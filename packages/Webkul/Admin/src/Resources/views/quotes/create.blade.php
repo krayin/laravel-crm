@@ -211,9 +211,17 @@
 
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                        'entity_type' => 'quotes',
-                                        ['code', 'IN', ['billing_address', 'shipping_address']],
-                                    ])"
+                                    'entity_type' => 'quotes',
+                                    ['code', 'IN', ['billing_address', 'shipping_address']],
+                                ])"
+                                :custom-validations="[
+                                    'billing_address' => [
+                                        'max:100',
+                                    ],
+                                    'shipping_address' => [
+                                        'max:100',
+                                    ],
+                                ]"
                                 :entity="$quote"
                             />
 
@@ -320,7 +328,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
