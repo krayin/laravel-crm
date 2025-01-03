@@ -49,7 +49,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         {!! view_render_event('admin.activities.edit.form_controls.before') !!}
 
                         <!-- Schedule Date -->
@@ -109,7 +109,7 @@
                                 @lang('admin::app.activities.edit.participants')
                             </x-admin::form.control-group.label>
 
-                            <!-- Participants Multilookup Vue Component -->
+                            <!-- Participants Multi lookup Vue Component -->
                             <v-multi-lookup-component>
                                 <div 
                                     class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
