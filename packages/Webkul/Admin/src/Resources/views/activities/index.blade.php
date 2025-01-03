@@ -221,7 +221,8 @@
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    @{{ record.comment }}
+                                                    {{-- @{{ record.comment }} --}}
+                                                    @{{ record.comment.length > 180 ? record.comment.slice(0, 180) + '...' : record.comment }}
                                                 </p>
 
                                                 <p v-html="record.lead_title"></p>
@@ -232,7 +233,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="flex items-center justify-between gap-x-4">
+                                        <div class="flex items-start justify-between gap-x-4">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.schedule_from ?? 'N/A' }}
