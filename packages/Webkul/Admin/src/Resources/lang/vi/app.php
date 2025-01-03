@@ -1032,6 +1032,7 @@ return [
                 'form-submit-button-color'  => 'Màu Nút Gửi Biểu Mẫu',
                 'form-title-color'          => 'Màu Tiêu Đề Biểu Mẫu',
                 'general'                   => 'Chung',
+                'leads'                     => 'Dẫn Dắt',
                 'preview'                   => 'Xem Trước',
                 'person'                    => 'Người',
                 'public-url'                => 'URL Công Khai',
