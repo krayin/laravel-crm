@@ -295,7 +295,7 @@
                 :events="events"
                 @ready="getActivities"
                 @view-change="getActivities"
-                :on-event-click="goToActivity"
+                @event-click="goToActivity"
                 locale="{{ app()->getLocale() }}"
             ></v-vue-cal>
         </script>
