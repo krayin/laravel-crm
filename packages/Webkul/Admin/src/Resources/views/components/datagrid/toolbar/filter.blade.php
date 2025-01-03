@@ -251,9 +251,7 @@
                                                         >
                                                         </p>
 
-                                                        <x-admin::flat-picker.date 
-                                                           ::allow-input="false"
-                                                        >
+                                                        <x-admin::flat-picker.date ::allow-input="false">
                                                             <input
                                                                 type="date"
                                                                 :name="`${column.index}[from]`"
