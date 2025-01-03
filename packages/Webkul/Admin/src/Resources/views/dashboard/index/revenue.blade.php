@@ -24,7 +24,7 @@
                 <div class="flex gap-4">
                     <!-- Total Revenue -->
                     <div class="flex flex-col gap-2">
-                        <!-- Won Reveneue Card -->
+                        <!-- Won Revenue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')
@@ -130,15 +130,15 @@
             },
 
             methods: {
-                getStats(filtets) {
+                getStats(filters) {
                     this.isLoading = true;
 
-                    var filtets = Object.assign({}, filtets);
+                    var filters = Object.assign({}, filters);
 
-                    filtets.type = 'revenue-stats';
+                    filters.type = 'revenue-stats';
 
                     this.$axios.get("{{ route('admin.dashboard.stats') }}", {
-                            params: filtets
+                            params: filters
                         })
                         .then(response => {
                             this.report = response.data;
