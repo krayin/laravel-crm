@@ -3,6 +3,7 @@
 namespace Webkul\Admin\Listeners;
 
 use Webkul\Activity\Contracts\Activity as ActivityContract;
+use Webkul\Contact\Repositories\OrganizationRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Product\Repositories\ProductRepository;
@@ -19,7 +20,8 @@ class Activity
         protected LeadRepository $leadRepository,
         protected PersonRepository $personRepository,
         protected ProductRepository $productRepository,
-        protected WarehouseRepository $warehouseRepository
+        protected WarehouseRepository $warehouseRepository,
+        protected OrganizationRepository $organizationRepository
     ) {}
 
     /**
@@ -50,6 +52,12 @@ class Activity
 
             if (! $product->activities->contains($activity->id)) {
                 $product->activities()->attach($activity->id);
+            }
+        } elseif (request()->input('organization_id')) {
+            $organization = $this->organizationRepository->find(request()->input('organization_id'));
+
+            if (! $organization->activities->contains($activity->id)) {
+                $organization->activities()->attach($activity->id);
             }
         }
     }

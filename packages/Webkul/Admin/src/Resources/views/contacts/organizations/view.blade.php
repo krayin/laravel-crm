@@ -38,6 +38,24 @@
                 <div class="flex flex-wrap gap-2">
                     {!! view_render_event('admin.contact.organizations.view.actions.before', ['organization' => $organization]) !!}
 
+                    <!-- Mail Activity Action -->
+                    <x-admin::activities.actions.mail
+                        :entity="$organization"
+                        entity-control-name="organization_id"
+                    />
+
+                    <!-- File Activity Action -->
+                    <x-admin::activities.actions.file
+                        :entity="$organization"
+                        entity-control-name="organization_id"
+                    />
+
+                    <!-- Note Activity Action -->
+                    <x-admin::activities.actions.note
+                        :entity="$organization"
+                        entity-control-name="organization_id"
+                    />
+
                     <!-- Activity Action -->
                     <x-admin::activities.actions.activity
                         :entity="$organization"
@@ -59,13 +77,7 @@
             {!! view_render_event('admin.contact.organizations.view.right.before', ['organization' => $organization]) !!}
 
             <!-- Stages Navigation -->
-            <x-admin::activities
-                :endpoint="route('admin.contacts.organizations.activities.index', $organization->id)" 
-                :types="[
-                    ['name' => 'all', 'label' => trans('admin::app.products.view.all')],
-                    ['name' => 'system', 'label' => trans('admin::app.products.view.change-logs')],
-                ]"
-            ></x-admin::activities>
+            <x-admin::activities :endpoint="route('admin.contacts.organizations.activities.index', $organization->id)"></x-admin::activities>
 
             {!! view_render_event('admin.contact.organizations.view.right.after', ['organization' => $organization]) !!}
         </div>

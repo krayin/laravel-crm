@@ -31,7 +31,10 @@
 </div>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-mail-activity-template">
+    <script
+        type="text/x-template"
+        id="v-mail-activity-template"
+    >
         <Teleport to="body">
             {!! view_render_event('admin.components.activities.actions.mail.form_controls.before') !!}
 
@@ -176,7 +179,6 @@
                                     name="reply"
                                     id="reply"
                                     rules="required"
-                                    {{-- tinymce="true" --}}
                                     :label="trans('admin::app.components.activities.actions.mail.message')"
                                 />
 
