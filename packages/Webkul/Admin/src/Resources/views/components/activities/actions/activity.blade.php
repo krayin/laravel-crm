@@ -30,7 +30,6 @@
     {!! view_render_event('admin.components.activities.actions.activity.after') !!}
 </div>
 
-
 @pushOnce('scripts')
     <script type="text/x-template" id="v-activity-template">
         <Teleport to="body">
@@ -129,7 +128,8 @@
                                     @lang('admin::app.components.activities.actions.activity.participants.title')
                                 </x-admin::form.control-group.label>
 
-                                <x-admin::activities.actions.activity.participants />
+                                <x-admin::activities.actions.activity.participants :entity="$entity->getTable()" />
+
                             </x-admin::form.control-group>
 
                             <!-- Schedule Date -->

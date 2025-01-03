@@ -640,10 +640,16 @@ return [
                 'datagrid' => [
                     'delete'        => 'Delete',
                     'edit'          => 'Edit',
+                    'view'          => 'View',
                     'id'            => 'ID',
                     'name'          => 'Name',
                     'persons-count' => 'Person Count',
                 ],
+            ],
+
+            'view' => [
+                'title'              => ':name',
+                'about-organization' => 'About Organization',
             ],
 
             'create' => [

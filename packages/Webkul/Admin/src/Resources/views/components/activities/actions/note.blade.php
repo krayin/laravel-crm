@@ -31,7 +31,10 @@
 </div>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-note-activity-template">
+    <script
+        type="text/x-template"
+        id="v-note-activity-template"
+    >
         <Teleport to="body">
             {!! view_render_event('admin.components.activities.actions.note.form_controls.before') !!}
 

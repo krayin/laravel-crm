@@ -31,7 +31,10 @@
 </div>
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-file-activity-template">
+    <script
+        type="text/x-template"
+        id="v-file-activity-template"
+    >
         <Teleport to="body">
             {!! view_render_event('admin.components.activities.actions.file.form_controls.before') !!}
 

@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Webkul\Admin\Http\Controllers\Contact\OrganizationController;
+use Webkul\Admin\Http\Controllers\Contact\Organizations\ActivityController as OrganizationActivityController;
+use Webkul\Admin\Http\Controllers\Contact\Organizations\OrganizationController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\ActivityController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\PersonController;
 use Webkul\Admin\Http\Controllers\Contact\Persons\TagController;
@@ -56,12 +57,23 @@ Route::prefix('contacts')->group(function () {
 
         Route::post('create', 'store')->name('admin.contacts.organizations.store');
 
+        Route::get('view/{id}', 'show')->name('admin.contacts.organizations.view');
+
         Route::get('edit/{id?}', 'edit')->name('admin.contacts.organizations.edit');
 
         Route::put('edit/{id}', 'update')->name('admin.contacts.organizations.update');
 
         Route::delete('{id}', 'destroy')->name('admin.contacts.organizations.delete');
 
+        Route::get('search', 'search')->name('admin.contacts.organizations.search');
+
         Route::put('mass-destroy', 'massDestroy')->name('admin.contacts.organizations.mass_delete');
+
+        /**
+         * Activity routes.
+         */
+        Route::controller(OrganizationActivityController::class)->prefix('{id}/activities')->group(function () {
+            Route::get('', 'index')->name('admin.contacts.organizations.activities.index');
+        });
     });
 });
