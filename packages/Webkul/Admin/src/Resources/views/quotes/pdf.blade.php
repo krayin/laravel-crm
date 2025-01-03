@@ -180,6 +180,16 @@
                                     #{{ $quote->id }}
                                 </span>
                             </td>
+
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('admin::app.quotes.index.pdf.person'):
+                                </b>
+
+                                <span>
+                                    {{ $quote->person->name }}
+                                </span>
+                            </td>
                         </tr>
 
                         <tr>
@@ -190,6 +200,16 @@
 
                                 <span>
                                     {{ $quote->user->name }}
+                                </span>
+                            </td>
+
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('admin::app.quotes.index.pdf.subject'):
+                                </b>
+
+                                <span>
+                                    {{ $quote->subject }}
                                 </span>
                             </td>
                         </tr>
@@ -205,6 +225,18 @@
                                 </span>
                             </td>
 
+                            <td style="width: 50%; padding: 2px 18px;border:none;">
+                                <b>
+                                    @lang('admin::app.quotes.index.pdf.sales-person'):
+                                </b>
+
+                                <span>
+                                    {{ $quote->user->name }}
+                                </span>
+                            </td>
+                        </tr>
+
+                        <tr>
                             <td style="width: 50%; padding: 2px 18px;border:none;">
                                 <b>
                                     @lang('admin::app.quotes.index.pdf.expired-at'):
