@@ -103,6 +103,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
+                'data'    => $person,
                 'message' => trans('admin::app.contacts.persons.index.update-success'),
             ], 200);
         }

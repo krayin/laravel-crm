@@ -123,6 +123,7 @@ class WarehouseController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
+                'data'    => $warehouse,
                 'message' => trans('admin::app.settings.warehouses.index.update-success'),
             ]);
         }

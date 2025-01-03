@@ -289,17 +289,24 @@
                     this.inputValue = params.contact_emails;
 
                     if (this.url) {
+                        this.isProcessing = true;
+
                         this.$axios.put(this.url, {
                                 [this.name]: this.inputValue,
                             })
                             .then((response) => {
+                                this.emails = response.data.data.emails || this.emails;
+
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch((error) => {
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                            });                        
+                            })
+                            .finally(() => {
+                                this.isProcessing = false;
+                            });
                     }
 
                     this.$emit('on-save', params);
