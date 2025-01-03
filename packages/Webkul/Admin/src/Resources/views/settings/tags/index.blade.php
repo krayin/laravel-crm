@@ -183,7 +183,7 @@
                                     type="text"
                                     id="name"
                                     name="name"
-                                    rules="required"
+                                    rules="required|max:50"
                                     :label="trans('admin::app.settings.tags.index.create.name')"
                                     :placeholder="trans('admin::app.settings.tags.index.create.name')"
                                 />
