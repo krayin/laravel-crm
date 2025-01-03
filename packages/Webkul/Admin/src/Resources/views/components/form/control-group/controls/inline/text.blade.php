@@ -37,13 +37,13 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ valueLabel ? valueLabel : inputValue.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        @{{ valueLabel ? valueLabel : inputValue?.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
                     </span>
                     
                     <!-- Tooltip -->
                     <div
                         class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex"
-                        v-if="inputValue.length > 20"
+                        v-if="inputValue?.length > 20"
                     >
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue }}
