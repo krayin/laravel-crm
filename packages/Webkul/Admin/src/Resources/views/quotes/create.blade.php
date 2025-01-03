@@ -49,7 +49,9 @@
                 </div>
             </div>
 
-            <v-quote :errors="errors"></v-quote>
+            <v-quote :errors="errors">
+                <x-admin::shimmer.quotes />
+            </v-quote>
         </div>
     </x-admin::form>
 
@@ -320,7 +322,7 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
