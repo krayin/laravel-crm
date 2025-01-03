@@ -167,7 +167,7 @@
                                         </i>
                                     </div>
                                     
-                                    <!-- Crads input fiels -->
+                                    <!-- Cards input fields -->
                                     <div>
                                         <!-- Hidden Inputs -->
                                         <!-- Code -->
@@ -195,7 +195,7 @@
                                                 type="text"
                                                 ::name="'stages[' + element.id + '][name]'"
                                                 v-model="element['name']"
-                                                ::rules="getValidation"
+                                                ::rules="{ required: true, unique_name: stages, min: 0, max: 100 }"
                                                 :label="trans('admin::app.settings.pipelines.edit.name')"
                                                 ::readonly="! canDrag(element)"
                                             />
@@ -207,7 +207,7 @@
 
                                         {!! view_render_event('admin.settings.pipelines.edit.form.stages.probability.before', ['pipeline' => $pipeline]) !!}
 
-                                        <!-- Probabilty -->
+                                        <!-- Probability -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.settings.pipelines.edit.probability')
@@ -289,15 +289,6 @@
 
                         stageCount: 1,
                     };
-                },
-                
-                computed: {
-                    getValidation() {
-                        return {
-                            required: true,
-                            unique_name: this.stages,
-                        };
-                    },
                 },
 
                 created() {
