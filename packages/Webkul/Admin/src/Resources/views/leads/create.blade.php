@@ -50,7 +50,9 @@
             @endif
 
             <!-- Lead Create Component -->
-            <v-lead-create></v-lead-create>
+            <v-lead-create>
+                <x-admin::shimmer.leads.datagrid />
+            </v-lead-create>
         </div>
     </x-admin::form>
 
