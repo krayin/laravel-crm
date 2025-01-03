@@ -44,10 +44,8 @@ class TagDataGrid extends DataGrid
             'index'      => 'id',
             'label'      => trans('admin::app.settings.tags.index.datagrid.id'),
             'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
-            'sortable'   => true,
             'searchable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
@@ -56,9 +54,7 @@ class TagDataGrid extends DataGrid
             'label'      => trans('admin::app.settings.tags.index.datagrid.name'),
             'type'       => 'string',
             'searchable' => true,
-            'sortable'   => false,
             'sortable'   => true,
-            'searchable' => true,
             'filterable' => true,
         ]);
 
@@ -66,9 +62,8 @@ class TagDataGrid extends DataGrid
             'index'      => 'user_name',
             'label'      => trans('admin::app.settings.tags.index.datagrid.users'),
             'type'       => 'string',
-            'searchable' => false,
-            'sortable'   => true,
             'searchable' => true,
+            'sortable'   => true,
             'filterable' => true,
         ]);
 
