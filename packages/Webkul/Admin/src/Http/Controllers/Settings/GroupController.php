@@ -37,7 +37,7 @@ class GroupController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'name' => 'required|unique:groups,name|max:50',
+            'name'        => 'required|unique:groups,name|max:50',
             'description' => 'required|max:250',
         ]);
 
@@ -74,7 +74,7 @@ class GroupController extends Controller
     public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
-            'name' => 'required|max:50|unique:groups,name,'.$id,
+            'name'        => 'required|max:50|unique:groups,name,'.$id,
             'description' => 'required|max:250',
         ]);
 
