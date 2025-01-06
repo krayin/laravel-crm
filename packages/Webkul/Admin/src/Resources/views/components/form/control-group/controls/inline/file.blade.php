@@ -34,10 +34,17 @@
 
                 <a 
                     :href="inputValue" 
+                    v-if="inputValue"
                     target="_blank"
                 >
                     <span class="icon-download pl-[2px] text-2xl font-normal"></span>
                 </a>
+
+                <span
+                    v-else
+                    class="icon-download cursor-pointer pl-[2px] text-2xl font-normal"
+                >
+                </span>
 
                 <template v-if="allowEdit">
                     <i
