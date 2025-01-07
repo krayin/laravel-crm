@@ -1,0 +1,27 @@
+{
+    "name": "productmanagement/productmanagement",
+    "description": "productmanagement",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Webkul",
+            "email": "example@webkul.com"
+        }
+    ],
+    "require": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webkul\ProductManagement\\Webkul\ProductManagement\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Webkul\\Webkul\ProductManagement\\Providers\\Webkul\ProductManagementServiceProvider"
+            ],
+            "aliases": {}
+        }
+    },
+    "minimum-stability": "dev"
+}

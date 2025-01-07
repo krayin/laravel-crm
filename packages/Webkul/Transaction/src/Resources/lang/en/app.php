@@ -3,7 +3,7 @@
 return [
   'transactions' => [
     'index' => [
-      'title' => 'Transaction Stock Management',
+      'title' => 'Transaction Analysis',
       'create-btn' => 'Add Stock',
       'delete-success' => 'Transaction deleted successfully',
       'delete-failed' => 'Transaction cannot be deleted',
@@ -29,6 +29,6 @@ return [
   ],
 
   'layouts' => [
-    'transaction'=> 'Transaction Stock',
+    'transaction'=> 'Transaction Analysis',
 ],
 ];

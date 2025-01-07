@@ -231,6 +231,7 @@ return [
         Webkul\OrderManagement\Providers\OrderManagementServiceProvider::class,
         Webkul\SecondarySales\Providers\SecondarySalesServiceProvider::class,
         Webkul\RepositoryDetails\Providers\RepositoryDetailsServiceProvider::class,
+        Webkul\ProductManagement\Providers\ProductManagementServiceProvider::class,
 
     ])->toArray(),
 

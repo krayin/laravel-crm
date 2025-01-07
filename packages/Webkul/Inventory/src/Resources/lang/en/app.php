@@ -14,7 +14,7 @@ return [
 
     ],
     'create' => [
-      'title' => 'Create Inventory',
+      'title' => 'Add Inventory',
       'save-btn' => 'Save Inventory',
       'general' => 'General',
     ],

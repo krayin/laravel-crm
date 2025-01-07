@@ -81,7 +81,8 @@
             "Webkul\\AssetManagement\\": "packages/Webkul/AssetManagement/src",
             "Webkul\\OrderManagement\\": "packages/Webkul/OrderManagement/src",
             "Webkul\\SecondarySales\\": "packages/Webkul/SecondarySales/src",
-            "Webkul\\RepositoryDetails\\": "packages/Webkul/RepositoryDetails/src"
+            "Webkul\\RepositoryDetails\\": "packages/Webkul/RepositoryDetails/src",
+            "Webkul\\ProductManagement\\": "packages/Webkul/ProductManagement/src"
         }
     },
     "autoload-dev": {

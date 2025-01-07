@@ -31,6 +31,7 @@ return [
         \Webkul\OrderManagement\Providers\ModuleServiceProvider::class,
         \Webkul\SecondarySales\Providers\ModuleServiceProvider::class,
         \Webkul\RepositoryDetails\Providers\ModuleServiceProvider::class,
+        \Webkul\ProductManagement\Providers\ModuleServiceProvider::class,
     ],
 
     'register_route_models' => true,
