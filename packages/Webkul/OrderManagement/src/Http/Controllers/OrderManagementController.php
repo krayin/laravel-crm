@@ -18,7 +18,7 @@ class OrderManagementController extends Controller
      */
     public function index()
     {
-        return view('ordermanagement::index');
+        return view('order_management::index');
     }
 
     /**
@@ -28,7 +28,7 @@ class OrderManagementController extends Controller
      */
     public function create()
     {
-        return view('ordermanagement::create');
+        return view('order_management::create');
     }
 
     /**
