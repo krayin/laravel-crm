@@ -5,15 +5,25 @@ namespace Webkul\Consignment\DataGrids;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
 use Webkul\DataGrid\DataGrid;
+use Webkul\ProductManagement\Repositories\ProductRepository;
 
 class ConsignmentDataGrid extends DataGrid
 {
     /**
      * Prepare query builder.
      */
+
+    public function __construct(protected ProductRepository $productRepository)
+    {
+    }
+
     public function prepareQueryBuilder(): Builder
     {
-        $queryBuilder = DB::table('consignments_stock')->addSelect('id');
+        $queryBuilder = DB::table('consignments_stock')->orderBy('id', 'desc');
+
+        // dd($queryBuilder);
+        // $this->leftJoin('product_management', 'consignments_stock.product_id', '=', 'product_management.id');
+        // $this->addFilter('product_id', 'product_management.id');
 
         return $queryBuilder;
     }
@@ -32,14 +42,25 @@ class ConsignmentDataGrid extends DataGrid
             'filterable' => true,
         ]);
 
-    
+
         $this->addColumn([
-            'index'      => 'product_name',
+            'index'      => 'product_id',
             'label'      => 'Product Name',
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return $this->productRepository->find($row->product_id)->name;
+            },
+            'filterable_type'    => 'searchable_dropdown',
+            'filterable_options' => [
+                'repository' => ProductRepository::class,
+                'column'     => [
+                    'label' => 'name',
+                    'value' => 'name',
+                ],
+            ],
         ]);
 
         $this->addColumn([
@@ -48,7 +69,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -57,7 +78,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -66,7 +87,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -75,7 +96,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -84,7 +105,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
         $this->addColumn([
@@ -93,7 +114,7 @@ class ConsignmentDataGrid extends DataGrid
             'type'       => 'string',
             'sortable'   => true,
             'searchable' => true,
-            'filterable' => true,
+            // 'filterable' => true,
         ]);
 
 

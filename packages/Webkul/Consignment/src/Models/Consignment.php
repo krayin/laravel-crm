@@ -7,5 +7,12 @@ use Webkul\Consignment\Contracts\Consignment as ConsignmentContract;
 
 class Consignment extends Model implements ConsignmentContract
 {
-    protected $fillable = [];
+    protected $table = 'consignments_stock';
+    protected $fillable = [
+        'consignment_id',
+        'product_id',
+        'quantity',
+        'amount',
+        'date'
+    ];
 }

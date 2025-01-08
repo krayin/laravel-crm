@@ -60,5 +60,9 @@ class ConsignmentServiceProvider extends ServiceProvider
         $this->mergeConfigFrom(
             dirname(__DIR__) . '/Config/krayin-vite.php', 'krayin-vite.viters'
         );
+
+        $this->mergeConfigFrom(
+            dirname(__DIR__) . '/Config/attribute_entity_types.php', 'attribute_entity_types'
+        );
     }
 }

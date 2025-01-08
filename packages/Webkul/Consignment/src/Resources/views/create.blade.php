@@ -50,7 +50,7 @@
 
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                <div class="flex flex-1 w-1/2 flex-col gap-4 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('consignment::app.consignments.create.general')
@@ -58,11 +58,27 @@
 
                         {!! view_render_event('admin.consignments.create.attributes.before') !!}
 
-                        <x-admin::attributes
+                        <div class="flex gap-10">
+                            <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'consignments',
+                                'entity_type' => 'Consignment', ['code', 'IN', ['consignment_id','product_id']],
                             ])->sortBy('sort_order')"
                         />
+                        </div>
+                        <div class="flex gap-10">
+                            <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'Consignment', ['code', 'IN', ['quantity','amount']],
+                            ])->sortBy('sort_order')"
+                        />
+                        </div>
+                        <div class="w-1/2 center">
+                            <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'Consignment', ['code', 'IN', ['date']],
+                            ])->sortBy('sort_order')"
+                        />
+                        </div>
 
                         {!! view_render_event('admin.consignments.create.attributes.after') !!}
                     </div>

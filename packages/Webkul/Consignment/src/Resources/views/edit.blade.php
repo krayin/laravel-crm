@@ -55,13 +55,29 @@
 
                         {!! view_render_event('admin.consignments.edit.attributes.before', ['consignment' => $consignment]) !!}
 
-                        <x-admin::attributes
+                        <div class="flex gap-10">
+                            <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                'entity_type' => 'consignments',
-
-                            ])->sortBy('sort_order')"
-                            :entity="$consignment"
+                                'entity_type' => 'Consignment', ['code', 'IN', ['consignment_id','product_id']],
+                            ])->sortBy('sort_order')":entity="$consignment"
                         />
+                        </div>
+                        <div class="flex gap-10">
+                            <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'Consignment', ['code', 'IN', ['quantity','amount']],
+                            ])->sortBy('sort_order')":entity="$consignment"
+                        />
+                        </div>
+                        <div class="w-1/2 center">
+                            <x-admin::attributes
+                            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+                                'entity_type' => 'Consignment', ['code', 'IN', ['date']],
+                            ])->sortBy('sort_order')":entity="$consignment"
+                        />
+                        </div>
+
+
 
                         {!! view_render_event('admin.consignments.edit.attributes.after', ['consignment' => $consignment]) !!}
                     </div>
