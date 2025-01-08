@@ -12,13 +12,13 @@
     },
     "autoload": {
         "psr-4": {
-            "Webkul\ProductManagement\\Webkul\ProductManagement\\": "src/"
+            "Webkul\\ProductManagement\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Webkul\\Webkul\ProductManagement\\Providers\\Webkul\ProductManagementServiceProvider"
+                "Webkul\\ProductManagement\\Providers\\ProductManagementServiceProvider"
             ],
             "aliases": {}
         }
