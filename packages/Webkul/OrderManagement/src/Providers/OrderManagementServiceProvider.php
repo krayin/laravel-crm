@@ -23,7 +23,7 @@ class OrderManagementServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__ . '/../Resources/views', 'order_management');
 
         Event::listen('admin.layout.head.after', function($viewRenderEventManager) {
-            $viewRenderEventManager->addTemplate('ordermanagement::components.layouts.style');
+            $viewRenderEventManager->addTemplate('order_management::components.layouts.style');
         });
 
         // publishing the view files for the assets
