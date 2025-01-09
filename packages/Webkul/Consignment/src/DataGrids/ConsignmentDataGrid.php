@@ -123,16 +123,16 @@ class ConsignmentDataGrid extends DataGrid
     public function prepareActions(): void
     {
 
-        if (bouncer()->hasPermission('consignment.view')) {
-            $this->addAction([
-                'icon'   => 'icon-eye',
-                'title'  => 'View',
-                'method' => 'GET',
-                'url'    => function ($row) {
-                    return route('admin.consignment.view', $row->id);
-                },
-            ]);
-        }
+        // if (bouncer()->hasPermission('consignment.view')) {
+        //     $this->addAction([
+        //         'icon'   => 'icon-eye',
+        //         'title'  => 'View',
+        //         'method' => 'GET',
+        //         'url'    => function ($row) {
+        //             return route('admin.consignment.view', $row->id);
+        //         },
+        //     ]);
+        // }
 
 
         if (bouncer()->hasPermission('consignment.edit')) {

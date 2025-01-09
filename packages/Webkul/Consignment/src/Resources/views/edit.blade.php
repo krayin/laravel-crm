@@ -16,11 +16,14 @@
             <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
+                        {!! view_render_event('admin.consignments.edit.breadcrumbs.before') !!}
+
                         <!-- Breadcrumbs -->
-                        <x-admin::breadcrumbs
-                            name="consignment.edit"
+                        <x-admin::breadcrumbs name="consignment.edit"
                             :entity="$consignment"
                         />
+
+                        {!! view_render_event('admin.consignments.edit.breadcrumbs.after') !!}
                     </div>
 
                     <div class="text-xl font-bold dark:text-white">
@@ -32,13 +35,15 @@
                     <div class="flex items-center gap-x-2.5">
                         {!! view_render_event('admin.consignments.edit.create_button.before', ['consignment' => $consignment]) !!}
 
-                        <!-- Edit button for consignment -->
-                        <button
-                            type="submit"
-                            class="primary-button"
-                        >
-                            @lang('consignment::app.consignments.create.save-btn')
-                        </button>
+                        <!-- edit button for Product -->
+                        @if (bouncer()->hasPermission('settings.user.groups.edit'))
+                            <button
+                                type="submit"
+                                class="primary-button"
+                            >
+                                @lang('consignment::app.consignments.edit.save-btn')
+                            </button>
+                        @endif
 
                         {!! view_render_event('admin.consignments.edit.create_button.after', ['consignment' => $consignment]) !!}
                     </div>
@@ -47,10 +52,10 @@
 
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
-                <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
+                <div class="flex flex-1 w-1/2 flex-col gap-4 max-xl:flex-auto">
                     <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
-                            @lang('consignment::app.consignments.create.general')
+                            @lang('consignment::app.consignments.edit.general')
                         </p>
 
                         {!! view_render_event('admin.consignments.edit.attributes.before', ['consignment' => $consignment]) !!}
@@ -59,21 +64,21 @@
                             <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'Consignment', ['code', 'IN', ['consignment_id','product_id']],
-                            ])->sortBy('sort_order')":entity="$consignment"
+                            ])->sortBy('sort_order')" :entity="$consignment"
                         />
                         </div>
                         <div class="flex gap-10">
                             <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'Consignment', ['code', 'IN', ['quantity','amount']],
-                            ])->sortBy('sort_order')":entity="$consignment"
+                            ])->sortBy('sort_order')" :entity="$consignment"
                         />
                         </div>
                         <div class="w-1/2 center">
                             <x-admin::attributes
                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                 'entity_type' => 'Consignment', ['code', 'IN', ['date']],
-                            ])->sortBy('sort_order')":entity="$consignment"
+                            ])->sortBy('sort_order')" :entity="$consignment"
                         />
                         </div>
 
