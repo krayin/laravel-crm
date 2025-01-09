@@ -1,4 +1,4 @@
-@extends('secondarysales::layouts.master')
+@extends('order_management::layouts.master')
 
 @section('page_title')
 Create Order
@@ -11,7 +11,7 @@ Create Order
 <div class="flex items-center gap-x-2.5">
     <div class="flex items-center gap-x-2.5">
 
-        Secondary sales index
+        Complete Order
 
     </div>
 </div>
@@ -26,10 +26,5 @@ Create Order
 
 
 @push('scripts')
-
-<script>
-    console.log('create order');
-
-</script>
 
 @endpush

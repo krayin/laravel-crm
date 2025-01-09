@@ -33,3 +33,13 @@ Create Order
 @push('styles')
 
 @endpush
+
+
+@push('scripts')
+
+<script>
+    console.log('create order');
+
+</script>
+
+@endpush

@@ -25,4 +25,10 @@ Route::middleware(['web','admin_locale','user'])->prefix(config('app.admin_path'
     Route::prefix('createOrder')->group(function () {
         Route::get('', [OrderManagementController::class, 'create'])->name('admin.ordermanagement.create');
     });
+    // regular booking
+    Route::get('regular-booking', [OrderManagementController::class, 'regularBooking'])->name('admin.ordermanagement.regular_booking');
+    Route::post('regular-booking', [OrderManagementController::class, 'storeRegularBooking'])->name('admin.ordermanagement.store_regular_booking');
+    // special-price-request
+    Route::get('special-price-request', [OrderManagementController::class, 'specialPriceRequest'])->name('admin.ordermanagement.special_price_request');
+    Route::post('special-price-request', [OrderManagementController::class, 'storeSpecialPriceRequest'])->name('admin.ordermanagement.store_special_price_request');
 });

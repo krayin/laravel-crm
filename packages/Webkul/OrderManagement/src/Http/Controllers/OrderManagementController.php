@@ -73,4 +73,25 @@ class OrderManagementController extends Controller
     {
 
     }
+
+    public function regularBooking()
+    {
+        return view('order_management::regular-booking');
+    }
+
+    public function storeRegularBooking()
+    {
+        return redirect()->route('admin.ordermanagement.regular_booking')->with('success',"order created successfully");
+    }
+
+    public function specialPriceRequest()
+    {
+        return view('order_management::special-price-request');
+    }
+
+    public function storeSpecialPriceRequest()
+    {
+        return redirect()->route('admin.ordermanagement.special_price_request')->with('success',"order created successfully");
+    }
+
 }
