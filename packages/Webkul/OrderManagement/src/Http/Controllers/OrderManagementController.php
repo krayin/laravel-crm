@@ -94,4 +94,33 @@ class OrderManagementController extends Controller
         return redirect()->route('admin.ordermanagement.special_price_request')->with('success',"order created successfully");
     }
 
+    public function completeOrder()
+    {
+        return view('order_management::complete-order');
+    }
+
+    public function storeCompleteOrder()
+    {
+        return redirect()->route('admin.ordermanagement.complete_order')->with('success',"order created successfully");
+    }
+
+    public function cancelOrder()
+    {
+        return view('order_management::cancel-order');
+    }
+
+    public function storeCancelOrder()
+    {
+        return redirect()->route('admin.ordermanagement.cancel_order')->with('success',"order created successfully");
+    }
+
+    public function tracking()
+    {
+        return view('order_management::tracking');
+    }
+
+    public function storeTracking()
+    {
+        return redirect()->route('admin.ordermanagement.tracking')->with('success',"order created successfully");
+    }
 }
