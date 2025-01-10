@@ -68,12 +68,12 @@
                         </div>
 
                         <!-- Save Filter Title -->
-                        <div v-else class="flex items-center gap-x-2">
-                            <span
-                                class="icon-arrow-right rtl:icon-arrow-left mt-0.5 cursor-pointer text-3xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                        <div v-else class="flex items-center gap-x-1">
+                            <i
+                                class="icon-left-arrow rtl:icon-right-arrow mt-0.5 cursor-pointer text-[26px] !font-bold hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                 @click="backToFilters"
                             >
-                            </span>
+                            </i>
 
                             <p class="text-xl font-semibold text-gray-800 dark:text-white">
                                 @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
