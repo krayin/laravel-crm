@@ -13,7 +13,7 @@ class Htmlfilter
             if (is_array($attary) && count($attary)) {
                 $atts = [];
 
-                while ([$attname, $attvalue] = each($attary)) {
+                foreach ($attary as $attname => $attvalue) {
                     array_push($atts, "$attname=$attvalue");
                 }
 
@@ -56,12 +56,11 @@ class Htmlfilter
         preg_match('/^(\s*)/s', substr($body, $offset), $matches);
 
         try {
-            if (count($matches[1])) {
+            if (! empty($matches[1])) {
                 $count = strlen($matches[1]);
                 $offset += $count;
             }
         } catch (\Exception $e) {
-            // Do nothing ...
         }
 
         return $offset;
@@ -171,6 +170,7 @@ class Htmlfilter
         switch (substr($body, $pos, 1)) {
             case '/':
                 $tagtype = 2;
+
                 $pos++;
                 break;
 
@@ -196,12 +196,9 @@ class Htmlfilter
                 break;
 
             default:
-                /**
-                 * Assume tagtype 1 for now. If it's type 3, we'll switch values
-                 * later.
-                 */
                 $tagtype = 1;
                 break;
+
         }
 
         /**
@@ -238,12 +235,15 @@ class Htmlfilter
                     $tagtype = 3;
                 } else {
                     $gt = $this->tln_findnxstr($body, $pos, '>');
+
                     $retary = [false, false, false, $lt, $gt];
 
                     return $retary;
                 }
 
-                //intentional fall-through
+                break;
+
+                // intentional fall-through
             case '>':
                 return [$tagname, false, $tagtype, $lt, $pos];
                 break;
@@ -296,6 +296,7 @@ class Htmlfilter
 
                 if ($matches[2] == '/>') {
                     $tagtype = 3;
+
                     $pos++;
                 }
 
@@ -357,7 +358,9 @@ class Htmlfilter
                         return $retary;
                     }
 
-                    //intentional fall-through
+                    break;
+
+                    // intentional fall-through
                 case '>':
                     $attary[$attname] = '"yes"';
 
@@ -427,22 +430,13 @@ class Htmlfilter
 
                             [$pos, $attval, $match] = $regary;
 
-                            /**
-                             * If it's ">" it will be caught at the top.
-                             */
                             $attval = preg_replace('/\"/s', '&quot;', $attval);
 
                             $attary[$attname] = '"'.$attval.'"';
                         }
                     } elseif (preg_match('|[\w/>]|', $char)) {
-                        /**
-                         * That was attribute type 4.
-                         */
                         $attary[$attname] = '"yes"';
                     } else {
-                        /**
-                         * An illegal character. Find next '>' and return.
-                         */
                         $gt = $this->tln_findnxstr($body, $pos, '>');
 
                         return [false, false, false, $lt, $gt];
@@ -560,7 +554,12 @@ class Htmlfilter
         $trans_image_path,
         $block_external_images
     ) {
-        while ([$attname, $attvalue] = each($attary)) {
+        /**
+        * Convert to array if is not
+        */
+        $attary = is_array($attary) ? $attary : [];
+        
+        foreach ($attary as $attname => $attvalue) {
             /**
              * See if this attribute should be removed.
              */
@@ -570,23 +569,13 @@ class Htmlfilter
                         if (preg_match($matchattr, $attname)) {
                             unset($attary[$attname]);
 
-                            continue;
+                            continue 2;
                         }
                     }
                 }
             }
 
-            /**
-             * Remove any backslashes, entities, or extraneous whitespace.
-             */
-            $oldattvalue = $attvalue;
-
             $this->tln_defang($attvalue);
-
-            // if ($attname == 'style' && $attvalue !== $oldattvalue) {
-            //     $attvalue = "idiocy";
-            //     $attary{$attname} = $attvalue;
-            // }
 
             $this->tln_unspace($attvalue);
 
@@ -600,11 +589,6 @@ class Htmlfilter
                 if (preg_match($matchtag, $tagname)) {
                     foreach ($matchattrs as $matchattr => $valary) {
                         if (preg_match($matchattr, $attname)) {
-                            /**
-                             * There are two arrays in valary.
-                             * First is matches.
-                             * Second one is replacements
-                             */
                             [$valmatch, $valrepl] = $valary;
 
                             $newvalue = preg_replace($valmatch, $valrepl, $attvalue);
@@ -617,20 +601,6 @@ class Htmlfilter
                     }
                 }
             }
-
-            // if ($attname == 'style') {
-            //     if (preg_match('/[\0-\37\200-\377]+/', $attvalue)) {
-            //         $attary{$attname} = '"disallowed character"';
-            //     }
-            //     preg_match_all("/url\s*\((.+)\)/si", $attvalue, $aMatch);
-            //     if (count($aMatch)) {
-            //         foreach($aMatch[1] as $sMatch) {
-            //             $urlvalue = $sMatch;
-            //             $this->tln_fixurl($attname, $urlvalue, $trans_image_path, $block_external_images);
-            //             $attary{$attname} = str_replace($sMatch, $urlvalue, $attvalue);
-            //         }
-            //     }
-            // }
         }
 
         /**
@@ -677,6 +647,7 @@ class Htmlfilter
                     default:
                         $attvalue = $sQuote.$trans_image_path.$sQuote;
                         break;
+
                 }
             } else {
                 $aUrl = parse_url($attvalue);
@@ -699,12 +670,15 @@ class Htmlfilter
                                 $attvalue = $sQuote.$attvalue.$sQuote;
                             }
                             break;
+
                         case 'outbind':
                             $attvalue = $sQuote.$attvalue.$sQuote;
                             break;
+
                         case 'cid':
                             $attvalue = $sQuote.$attvalue.$sQuote;
                             break;
+
                         default:
                             $attvalue = $sQuote.$trans_image_path.$sQuote;
                             break;
@@ -721,9 +695,6 @@ class Htmlfilter
     public function tln_fixstyle($body, $pos, $trans_image_path, $block_external_images)
     {
         $me = 'tln_fixstyle';
-
-        // workaround for </style> in between comments
-        $iCurrentPos = $pos;
 
         $content = '';
 
@@ -743,21 +714,29 @@ class Htmlfilter
                 case '/':
                     if ($sToken == '<') {
                         $sToken .= $char;
+
                         $bEndTag = true;
                     } else {
                         $content .= $char;
                     }
+
                     break;
+
                 case '>':
                     if ($bEndTag) {
                         $sToken .= $char;
+
                         if (preg_match('/\<\/\s*style\s*\>/i', $sToken, $aMatch)) {
                             $newpos = $i + 1;
+
                             $bSucces = true;
+
                             break 2;
+
                         } else {
                             $content .= $sToken;
                         }
+
                         $bEndTag = false;
                     } else {
                         $content .= $char;
@@ -765,12 +744,13 @@ class Htmlfilter
                     break;
                 case '!':
                     if ($sToken == '<') {
-                        // possible comment
                         if (isset($body[$i + 2]) && substr($body, $i, 3) == '!--') {
                             $i = strpos($body, '-->', $i + 3);
-                            if ($i === false) { // no end comment
+
+                            if (! $i) {
                                 $i = strlen($body);
                             }
+
                             $sToken = '';
                         }
                     } else {
@@ -787,7 +767,7 @@ class Htmlfilter
             }
         }
 
-        if ($bSucces == false) {
+        if (! $bSucces) {
             return [false, strlen($body)];
         }
 
@@ -800,12 +780,6 @@ class Htmlfilter
         $content = preg_replace("|body(\s*\{.*?\})|si", '.bodyclass\\1', $content);
 
         $trans_image_path = $trans_image_path;
-
-        /**
-         * Fix url('blah') declarations.
-         */
-        //   $content = preg_replace("|url\s*\(\s*([\'\"])\s*\S+script\s*:.*?([\'\"])\s*\)|si",
-        //                           "url(\\1$trans_image_path\\2)", $content);
 
         // first check for 8bit sequences and disallowed control characters
         if (preg_match('/[\16-\37\200-\377]+/', $content)) {
@@ -825,7 +799,6 @@ class Htmlfilter
             $aValue = $aReplace = [];
 
             foreach ($aMatch[1] as $sMatch) {
-                // url value
                 $urlvalue = $sMatch;
                 $this->tln_fixurl('style', $urlvalue, $trans_image_path, $block_external_images);
                 $aValue[] = $sMatch;
@@ -868,8 +841,6 @@ class Htmlfilter
 
         $divattary = ['class' => "'bodyclass'"];
 
-        $text = '#000000';
-
         $has_bgc_stl = $has_txt_stl = false;
 
         $styledef = '';
@@ -884,21 +855,25 @@ class Htmlfilter
                     case 'background':
                         $styledef .= "background-image: url('$trans_image_path'); ";
                         break;
+
                     case 'bgcolor':
                         $has_bgc_stl = true;
+
                         $styledef .= "background-color: $attvalue; ";
                         break;
+
                     case 'text':
                         $has_txt_stl = true;
+
                         $styledef .= "color: $attvalue; ";
                         break;
+
                 }
             }
 
-            // Outlook defines a white bgcolor and no text color. This can lead to
-            // white text on a white bg with certain themes.
+            // Outlook defines a white bgcolor and no text color. This can lead to white text on a white bg with certain themes.
             if ($has_bgc_stl && ! $has_txt_stl) {
-                $styledef .= "color: $text; ";
+                $styledef .= 'color: #000000; ';
             }
 
             if (strlen($styledef) > 0) {
@@ -939,11 +914,11 @@ class Htmlfilter
          */
         $rm_tags = array_shift($tag_list);
 
-        @array_walk($tag_list, 'tln_casenormalize');
+        @array_walk($tag_list, [$this, 'tln_casenormalize']);
 
-        @array_walk($rm_tags_with_content, 'tln_casenormalize');
+        @array_walk($rm_tags_with_content, [$this, 'tln_casenormalize']);
 
-        @array_walk($self_closing_tags, 'tln_casenormalize');
+        @array_walk($self_closing_tags, [$this, 'tln_casenormalize']);
 
         /**
          * See if tag_list is of tags to remove or tags to allow.
@@ -1003,9 +978,6 @@ class Htmlfilter
             if ($tagname != false) {
                 if ($tagtype == 2) {
                     if ($skip_content == $tagname) {
-                        /**
-                         * Got to the end of tag we needed to remove.
-                         */
                         $tagname = false;
 
                         $skip_content = false;
@@ -1025,15 +997,9 @@ class Htmlfilter
                         }
                     }
                 } else {
-                    /**
-                     * $rm_tags_with_content
-                     */
-                    if ($skip_content == false) {
-                        /**
-                         * See if this is a self-closing type and change
-                         * tagtype appropriately.
-                         */
-                        if ($tagtype == 1
+                    if (! $skip_content) {
+                        if (
+                            $tagtype == 1
                             && in_array($tagname, $self_closing_tags)
                         ) {
                             $tagtype = 3;
@@ -1043,15 +1009,19 @@ class Htmlfilter
                          * See if we should skip this tag and any content
                          * inside it.
                          */
-                        if ($tagtype == 1
+                        if (
+                            $tagtype == 1
                             && in_array($tagname, $rm_tags_with_content)
                         ) {
                             $skip_content = $tagname;
                         } else {
-                            if (($rm_tags == false
-                                 && in_array($tagname, $tag_list)) ||
-                                ($rm_tags == true
-                                    && ! in_array($tagname, $tag_list))
+                            if ((
+                                ! $rm_tags
+                                && in_array($tagname, $tag_list))
+                                || (
+                                    $rm_tags
+                                    && ! in_array($tagname, $tag_list)
+                                )
                             ) {
                                 $tagname = false;
                             } else {
@@ -1114,9 +1084,14 @@ class Htmlfilter
         return $trusted;
     }
 
-    //
-    // Use the nifty htmlfilter library
-    //
+    /**
+     * Use the nifty htmlfilter library
+     *
+     * @param  mixed  $body
+     * @param  mixed  $trans_image_path
+     * @param  mixed  $block_external_images
+     * @return string
+     */
     public function HTMLFilter($body, $trans_image_path, $block_external_images = false)
     {
         $tag_list = [
@@ -1155,12 +1130,10 @@ class Htmlfilter
 
         $rm_attnames = [
             '/.*/' => [
-                // "/target/i",
                 '/^on.*/i',
                 '/^dynsrc/i',
                 '/^data.*/i',
                 '/^lowsrc.*/i',
-                // "/^style/i",
             ],
         ];
 
@@ -1171,54 +1144,24 @@ class Htmlfilter
                         '/^([\'"])\s*\S+script\s*:.*([\'"])/si',
                         '/^([\'"])\s*mocha\s*:*.*([\'"])/si',
                         '/^([\'"])\s*about\s*:.*([\'"])/si',
-                    ],
-                    [
+                    ], [
                         "\\1$trans_image_path\\2",
                         "\\1$trans_image_path\\2",
                         "\\1$trans_image_path\\2",
                     ],
                 ],
+
                 '/^href|action/i' => [
                     [
                         '/^([\'"])\s*\S+script\s*:.*([\'"])/si',
                         '/^([\'"])\s*mocha\s*:*.*([\'"])/si',
                         '/^([\'"])\s*about\s*:.*([\'"])/si',
-                    ],
-                    [
+                    ], [
                         '\\1#\\1',
                         '\\1#\\1',
                         '\\1#\\1',
                     ],
                 ],
-                // "/^style/i" =>
-                // array(
-                //     array(
-                //         "/\/\*.*\*\//",
-                //         "/expression/i",
-                //         "/binding/i",
-                //         "/behaviou*r/i",
-                //         "/include-source/i",
-                //         '/position\s*:/i',
-                //         '/(\\\\)?u(\\\\)?r(\\\\)?l(\\\\)?/i',
-                //         '/url\s*\(\s*([\'"])\s*\S+script\s*:.*([\'"])\s*\)/si',
-                //         '/url\s*\(\s*([\'"])\s*mocha\s*:.*([\'"])\s*\)/si',
-                //         '/url\s*\(\s*([\'"])\s*about\s*:.*([\'"])\s*\)/si',
-                //         '/(.*)\s*:\s*url\s*\(\s*([\'"]*)\s*\S+script\s*:.*([\'"]*)\s*\)/si'
-                //     ),
-                //     array(
-                //         "",
-                //         "idiocy",
-                //         "idiocy",
-                //         "idiocy",
-                //         "idiocy",
-                //         "idiocy",
-                //         "url",
-                //         "url(\\1#\\1)",
-                //         "url(\\1#\\1)",
-                //         "url(\\1#\\1)",
-                //         "\\1:url(\\2#\\3)"
-                //     )
-                // )
             ],
         ];
 
@@ -1232,14 +1175,6 @@ class Htmlfilter
                 $bad_attvals['/.*/']['/^src|background/i'][1],
                 "\\1$trans_image_path\\1"
             );
-            // array_push(
-            //     $bad_attvals{'/.*/'}{'/^style/i'}[0],
-            //     '/url\(([\'\"])\s*https*:.*([\'\"])\)/si'
-            // );
-            // array_push(
-            //     $bad_attvals{'/.*/'}{'/^style/i'}[1],
-            //     "url(\\1$trans_image_path\\1)"
-            // );
         }
 
         $add_attr_to_tag = [
@@ -1268,12 +1203,16 @@ class Htmlfilter
 
         if (preg_match_all("#(^|\s|\()((http(s?)://)|(www\.))(\w+[^\s\)\<]+)#i", $str, $matches)) {
             $pop = ($popup == true) ? ' target="_blank" ' : '';
+
             for ($i = 0; $i < count($matches['0']); $i++) {
                 $period = '';
+
                 if (preg_match("|\.$|", $matches['6'][$i])) {
                     $period = '.';
+
                     $matches['6'][$i] = substr($matches['6'][$i], 0, -1);
                 }
+
                 $str = str_replace($matches['0'][$i],
                     $matches['1'][$i].'<a href="http'.
                     $matches['4'][$i].'://'.
@@ -1283,8 +1222,8 @@ class Htmlfilter
                     $matches['5'][$i].
                     $matches['6'][$i].'</a>'.
                     $period, $str);
-            }//end for
-        }//end if
+            }
+        }
 
         return $str;
     }
