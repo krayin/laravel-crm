@@ -555,10 +555,10 @@ class Htmlfilter
         $block_external_images
     ) {
         /**
-        * Convert to array if is not
-        */
+         * Convert to array if is not.
+         */
         $attary = is_array($attary) ? $attary : [];
-        
+
         foreach ($attary as $attname => $attvalue) {
             /**
              * See if this attribute should be removed.
