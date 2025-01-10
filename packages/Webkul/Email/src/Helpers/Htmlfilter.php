@@ -56,7 +56,7 @@ class Htmlfilter
         preg_match('/^(\s*)/s', substr($body, $offset), $matches);
 
         try {
-            if (count($matches[1])) {
+            if (! empty($matches[1])) {
                 $count = strlen($matches[1]);
                 $offset += $count;
             }
