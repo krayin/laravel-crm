@@ -13,7 +13,7 @@ class Htmlfilter
             if (is_array($attary) && count($attary)) {
                 $atts = [];
 
-                while ([$attname, $attvalue] = each($attary)) {
+                foreach ($attary as $attname => $attvalue) {
                     array_push($atts, "$attname=$attvalue");
                 }
 
