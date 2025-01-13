@@ -1404,6 +1404,27 @@ return [
                     'is-default'  => 'Is Default',
                     'edit'        => 'Edit',
                     'delete'      => 'Delete',
+
+                    'entity-types' => [
+                        'leads'         => 'Leads',
+                        'organizations' => 'Organizations',
+                        'persons'       => 'Persons',
+                        'products'      => 'Products',
+                        'quotes'        => 'Quotes',
+                        'warehouses'    => 'Warehouses',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Address',
+                        'date'     => 'Date',
+                        'email'    => 'Email',
+                        'lookup'   => 'Lookup',
+                        'phone'    => 'Phone',
+                        'price'    => 'Price',
+                        'select'   => 'Select',
+                        'text'     => 'Text',
+                        'textarea' => 'Textarea',
+                    ],
                 ],
             ],
 

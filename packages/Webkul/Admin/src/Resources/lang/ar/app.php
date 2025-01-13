@@ -1400,6 +1400,27 @@ return [
                     'is-default'  => 'افتراضي',
                     'edit'        => 'تعديل',
                     'delete'      => 'حذف',
+
+                    'entity-types' => [
+                        'leads'         => 'العملاء المحتملين',
+                        'organizations' => 'المنظمات',
+                        'persons'       => 'الأشخاص',
+                        'products'      => 'المنتجات',
+                        'quotes'        => 'عروض الأسعار',
+                        'warehouses'    => 'المستودعات',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'عنوان',
+                        'date'     => 'تاريخ',
+                        'email'    => 'بريد إلكتروني',
+                        'lookup'   => 'بحث',
+                        'phone'    => 'هاتف',
+                        'price'    => 'سعر',
+                        'select'   => 'اختيار',
+                        'text'     => 'نص',
+                        'textarea' => 'منطقة نص',
+                    ],
                 ],
             ],
 

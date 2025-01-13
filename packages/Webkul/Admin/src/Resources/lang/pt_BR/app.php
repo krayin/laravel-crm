@@ -1402,6 +1402,27 @@ return [
                     'is-default'  => 'É Padrão',
                     'edit'        => 'Editar',
                     'delete'      => 'Deletar',
+
+                    'entity-types' => [
+                        'leads'         => 'Leads',
+                        'organizations' => 'Organizações',
+                        'persons'       => 'Pessoas',
+                        'products'      => 'Produtos',
+                        'quotes'        => 'Cotações',
+                        'warehouses'    => 'Armazéns',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Endereço',
+                        'date'     => 'Data',
+                        'email'    => 'E-mail',
+                        'lookup'   => 'Pesquisa',
+                        'phone'    => 'Telefone',
+                        'price'    => 'Preço',
+                        'select'   => 'Seleção',
+                        'text'     => 'Texto',
+                        'textarea' => 'Área de Texto',
+                    ],
                 ],
             ],
 
