@@ -829,7 +829,7 @@
                                                         <div class="grid">
                                                             <div class="flex items-center gap-5 py-2.5">
                                                                 <img
-                                                                    src="{{ asset('images/icon-add-product.svg') }}"
+                                                                    src="{{ vite()->asset('images/empty-placeholders/products.svg') }}"
                                                                     class="h-20 w-20 dark:border-gray-800 dark:mix-blend-exclusion dark:invert"
                                                                 >
 
@@ -865,7 +865,7 @@
                                 type="button"
                                 v-if="hasAnyColumn"
                                 @click="isShowSavedFilters = ! isShowSavedFilters"
-                                class="text-gray-900"
+                                class="text-gray-900 dark:text-white"
                                 :disabled="isFilterDirty || ! filters.columns.length > 0"
                             >
                                 @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
