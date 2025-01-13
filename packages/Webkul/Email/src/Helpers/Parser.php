@@ -55,7 +55,7 @@ class Parser
     }
 
     /**
-     * Free the held resouces
+     * Free the held resources
      *
      * @return void
      */
@@ -101,7 +101,12 @@ class Parser
         // streams have to be cached to file first
         $meta = @stream_get_meta_data($stream);
 
-        if (! $meta || ! $meta['mode'] || $meta['mode'][0] != 'r' || $meta['eof']) {
+        if (
+            ! $meta
+            || ! $meta['mode']
+            || $meta['mode'][0] != 'r'
+            || $meta['eof']
+        ) {
             throw new \Exception(
                 'setStream() expects parameter stream to be readable stream resource.'
             );
@@ -119,7 +124,7 @@ class Parser
             $this->stream = &$tmp_fp;
         } else {
             throw new \Exception(
-                'Could not create temporary files for attachments. Your tmp directory may be unwritable by PHP.'
+                'Could not create temporary files for attachments. Your tmp directory may be un-writable by PHP.'
             );
         }
 
@@ -161,8 +166,6 @@ class Parser
      * Parse the Message into parts
      *
      * @return void
-     *
-     * @private
      */
     private function parse()
     {
@@ -356,7 +359,20 @@ class Parser
                         $textBody .= $this->decodeContentTransfer($this->getPartBody($part), $encodingType);
                         $textBody = nl2br($this->charset->decodeCharset($textBody, $this->getPartCharset($part)));
                     } elseif ($this->getPart('content-type', $part) == 'text/plain; (error)') {
-                        $part_from_sender = is_array($part['headers']['from']) ? $part['headers']['from'][0] : $part['headers']['from'];
+                        if (empty($part['headers']) || ! isset($part['headers']['from'])) {
+                            $parentKey = explode('.', $key)[0];
+                            if (isset($this->parts[$parentKey]) && isset($this->parts[$parentKey]['headers']['from'])) {
+                                $part_from_sender = is_array($this->parts[$parentKey]['headers']['from'])
+                                    ? $this->parts[$parentKey]['headers']['from'][0]
+                                    : $this->parts[$parentKey]['headers']['from'];
+                            } else {
+                                continue;
+                            }
+                        } else {
+                            $part_from_sender = is_array($part['headers']['from'])
+                                ? $part['headers']['from'][0]
+                                : $part['headers']['from'];
+                        }
                         $mail_part_addresses = mailparse_rfc822_parse_addresses($part_from_sender);
 
                         if (! empty($mail_part_addresses[0]['address'])
@@ -501,7 +517,7 @@ class Parser
                     && ! strpos($this->getPart('content-type', $part), 'image/')
                     && ! stripos($filename, 'noname') == false
                 ) {
-                    //skip
+                    // skip
                 } else {
                     $attachments[] = new Attachment(
                         $filename,
@@ -698,7 +714,7 @@ class Parser
         } elseif ($encodingType == 'quoted-printable') {
             return quoted_printable_decode($encodedString);
         } else {
-            return $encodedString; //8bit, 7bit, binary
+            return $encodedString; // 8bit, 7bit, binary
         }
     }
 
@@ -710,7 +726,7 @@ class Parser
      */
     private function decodeHeader($input)
     {
-        //Sometimes we have 2 label From so we take only the first
+        // Sometimes we have 2 label From so we take only the first
         if (is_array($input)) {
             return $this->decodeSingleHeader($input[0]);
         }
