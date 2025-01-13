@@ -49,12 +49,16 @@
                             '!bg-green-500 text-white dark:text-gray-900 after:bg-green-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'won',
                             '!bg-red-500 text-white dark:text-gray-900 after:bg-red-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'lost',
                         }"
+                        @click="stageToggler = ! stageToggler"
                     >
                         <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
                             {{ __('admin::app.leads.view.stages.won-lost') }}
                         </span>
 
-                        <span class="icon-down-arrow text-2xl dark:text-gray-900"></span>
+                        <span 
+                            class="text-2xl dark:text-gray-900"
+                            :class="{'icon-up-arrow': stageToggler, 'icon-down-arrow': ! stageToggler}"
+                        ></span>
                     </div>
 
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.toggle.after', ['lead' => $lead]) !!}
@@ -190,6 +194,8 @@
                     nextStage: null,
 
                     stages: @json($lead->pipeline->stages),
+
+                    stageToggler: '',
                 }
             },
 
@@ -231,26 +237,26 @@
 
                     this.isUpdating = true;
 
-                    let self = this;
-
                     this.$axios
                         .put("{{ route('admin.leads.stage.update', $lead->id) }}", params ?? {
                             'lead_pipeline_stage_id': stage.id
                         })
-                        .then (function(response) {
-                            self.isUpdating = false;
+                        .then ((response) => {
+                            this.isUpdating = false;
 
-                            self.currentStage = stage;
+                            this.currentStage = stage;
 
-                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$parent.$refs.activities.get();
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
-                        .catch (function (error) {
-                            self.isUpdating = false;
+                        .catch ((error) => {
+                            this.isUpdating = false;
 
-                            self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                         });
                 },
-            }
+            },
         });
     </script>
 @endPushOnce

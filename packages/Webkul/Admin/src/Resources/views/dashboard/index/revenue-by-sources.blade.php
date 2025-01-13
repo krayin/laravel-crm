@@ -121,23 +121,33 @@
             },
 
             methods: {
-                getStats(filtets) {
+                getStats(filters) {
                     this.isLoading = true;
 
-                    var filtets = Object.assign({}, filtets);
+                    var filters = Object.assign({}, filters);
 
-                    filtets.type = 'revenue-by-sources';
+                    filters.type = 'revenue-by-sources';
 
                     this.$axios.get("{{ route('admin.dashboard.stats') }}", {
-                            params: filtets
+                            params: filters
                         })
                         .then(response => {
                             this.report = response.data;
 
+                            this.extendColors(this.report.statistics.length);
+
                             this.isLoading = false;
                         })
                         .catch(error => {});
-                }
+                },
+                
+                extendColors(length) {
+                    while (this.colors.length < length) {
+                        const hue = Math.floor(Math.random() * 360);
+                        const newColor = `hsl(${hue}, 70%, 60%)`;
+                        this.colors.push(newColor);
+                    }
+                },
             }
         });
     </script>

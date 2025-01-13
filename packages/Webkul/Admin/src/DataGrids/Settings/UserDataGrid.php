@@ -17,20 +17,18 @@ class UserDataGrid extends DataGrid
         $queryBuilder = DB::table('users')
             ->distinct()
             ->addSelect(
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.image',
-                'users.status',
-                'users.created_at'
+                'id',
+                'name',
+                'email',
+                'image',
+                'status',
+                'created_at'
             )
-            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
+            ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('users.user_id', $userIds);
+            $queryBuilder->whereIn('id', $userIds);
         }
-
-        $this->addFilter('id', 'users.id');
 
         return $queryBuilder;
     }
@@ -84,11 +82,10 @@ class UserDataGrid extends DataGrid
             'index'           => 'created_at',
             'label'           => trans('admin::app.settings.users.index.datagrid.created-at'),
             'type'            => 'date',
-            'searchable'      => true,
-            'filterable'      => true,
             'sortable'        => true,
+            'searchable'      => true,
             'filterable_type' => 'date_range',
-            'closure'         => fn ($row) => core()->formatDate($row->created_at),
+            'filterable'      => true,
         ]);
     }
 

@@ -1,5 +1,5 @@
 <x-admin::form.control-group.control
-    type="date"
+    type="datetime"
     :id="$attribute->code"
     :name="$attribute->code"
     :value="old($attribute->code) ?? $value"
