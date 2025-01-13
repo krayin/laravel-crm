@@ -20,17 +20,17 @@
 
             props: {
                 labels: {
-                    type: Array, 
+                    type: Array,
                     default: [],
                 },
 
                 datasets: {
-                    type: Array, 
-                    default: true,
+                    type: Array,
+                    default: [],
                 },
 
                 aspectRatio: {
-                    type: Number, 
+                    type: Number,
                     default: 3.23,
                 },
             },
@@ -47,6 +47,12 @@
 
             methods: {
                 prepare() {
+                    const barCount = this.datasets.length;
+                    
+                    this.datasets.forEach((dataset) => {
+                        dataset.barThickness = Math.max(4, 36 / barCount);
+                    });
+        
                     if (this.chart) {
                         this.chart.destroy();
                     }
@@ -59,7 +65,7 @@
 
                             datasets: this.datasets,
                         },
-                
+
                         options: {
                             aspectRatio: this.aspectRatio,
                             
