@@ -25,6 +25,6 @@ class Code implements Rule
      */
     public function message()
     {
-        return trans('This value must be valid.');
+        return trans('core::app.validations.code');
     }
 }

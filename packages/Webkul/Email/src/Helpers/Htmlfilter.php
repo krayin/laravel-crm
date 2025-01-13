@@ -13,7 +13,7 @@ class Htmlfilter
             if (is_array($attary) && count($attary)) {
                 $atts = [];
 
-                while ([$attname, $attvalue] = each($attary)) {
+                foreach ($attary as $attname => $attvalue) {
                     array_push($atts, "$attname=$attvalue");
                 }
 
@@ -56,7 +56,7 @@ class Htmlfilter
         preg_match('/^(\s*)/s', substr($body, $offset), $matches);
 
         try {
-            if (count($matches[1])) {
+            if (! empty($matches[1])) {
                 $count = strlen($matches[1]);
                 $offset += $count;
             }
@@ -554,7 +554,12 @@ class Htmlfilter
         $trans_image_path,
         $block_external_images
     ) {
-        while ([$attname, $attvalue] = each($attary)) {
+        /**
+         * Convert to array if is not.
+         */
+        $attary = is_array($attary) ? $attary : [];
+
+        foreach ($attary as $attname => $attvalue) {
             /**
              * See if this attribute should be removed.
              */
@@ -564,7 +569,7 @@ class Htmlfilter
                         if (preg_match($matchattr, $attname)) {
                             unset($attary[$attname]);
 
-                            continue;
+                            continue 2;
                         }
                     }
                 }
@@ -909,11 +914,11 @@ class Htmlfilter
          */
         $rm_tags = array_shift($tag_list);
 
-        @array_walk($tag_list, 'tln_casenormalize');
+        @array_walk($tag_list, [$this, 'tln_casenormalize']);
 
-        @array_walk($rm_tags_with_content, 'tln_casenormalize');
+        @array_walk($rm_tags_with_content, [$this, 'tln_casenormalize']);
 
-        @array_walk($self_closing_tags, 'tln_casenormalize');
+        @array_walk($self_closing_tags, [$this, 'tln_casenormalize']);
 
         /**
          * See if tag_list is of tags to remove or tags to allow.
