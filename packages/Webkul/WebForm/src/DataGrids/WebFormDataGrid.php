@@ -41,7 +41,6 @@ class WebFormDataGrid extends DataGrid
             'label'      => trans('admin::app.settings.webforms.index.datagrid.title'),
             'type'       => 'string',
             'sortable'   => true,
-            'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
         ]);
