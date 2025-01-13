@@ -237,26 +237,26 @@
 
                     this.isUpdating = true;
 
-                    let self = this;
-
                     this.$axios
                         .put("{{ route('admin.leads.stage.update', $lead->id) }}", params ?? {
                             'lead_pipeline_stage_id': stage.id
                         })
-                        .then (function(response) {
-                            self.isUpdating = false;
+                        .then ((response) => {
+                            this.isUpdating = false;
 
-                            self.currentStage = stage;
+                            this.currentStage = stage;
 
-                            self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                            this.$parent.$refs.activities.get();
+
+                            this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                         })
-                        .catch (function (error) {
-                            self.isUpdating = false;
+                        .catch ((error) => {
+                            this.isUpdating = false;
 
-                            self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                         });
                 },
-            }
+            },
         });
     </script>
 @endPushOnce
