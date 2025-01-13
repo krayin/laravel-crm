@@ -47,6 +47,7 @@ return [
     'users' => [
         'activate-warning' => 'Tu cuenta aún no está activada. Por favor, contacta al administrador.',
         'login-error'      => 'Las credenciales no coinciden con nuestros registros.',
+        'not-permission'   => 'No tienes permiso para acceder al panel de administración.',
 
         'login' => [
             'email'                => 'Dirección de correo electrónico',
@@ -362,6 +363,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Desarrollado por :krayin, un proyecto de código abierto de :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Buscar',
@@ -853,12 +858,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar Fuente',
-                    'title'    => 'Crear Fuente',
+                    'save-btn' => 'Guardar fuente',
+                    'title'    => 'Crear fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fuente',
+                    'title' => 'Editar fuente',
                 ],
             ],
         ],
@@ -890,6 +895,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [
@@ -1760,6 +1766,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
+        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 

@@ -47,6 +47,7 @@ return [
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
         'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+        'not-permission'   => 'Yönetici paneline erişim izniniz yok.',
 
         'login' => [
             'email'                => 'E-posta Adresi',
@@ -362,6 +363,10 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :krayin tarafından desteklenmektedir.',
+            ],
+
             'header' => [
                 'mega-search' => [
                     'title'   => 'Arama',
@@ -853,12 +858,12 @@ return [
 
                 'create' => [
                     'name'     => 'Ad',
-                    'save-btn' => 'Türü Kaydet',
-                    'title'    => 'Tür Oluştur',
+                    'save-btn' => 'Kaynağı Kaydet',
+                    'title'    => 'Kaynak Oluştur',
                 ],
 
                 'edit' => [
-                    'title' => 'Tür Düzenle',
+                    'title' => 'Kaynağı Düzenle',
                 ],
             ],
         ],
@@ -890,6 +895,7 @@ return [
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
+                'update-quote'               => 'Teklifi Güncelle',
             ],
 
             'create' => [
@@ -1760,6 +1766,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead başarıyla oluşturuldu.',
         'update-success'    => 'Lead başarıyla güncellendi.',
+        'update-failed'     => 'Potansiyel müşteriler silinemez.',
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
