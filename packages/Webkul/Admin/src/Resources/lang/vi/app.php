@@ -1934,7 +1934,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Leads Mở Theo Tình Trạng',
+                'title'       => 'Khách hàng tiềm năng mở theo giai đoạn',
                 'empty-title' => 'Không Có Dữ Liệu',
                 'empty-info'  => 'Không có dữ liệu cho khoảng thời gian được chọn',
             ],

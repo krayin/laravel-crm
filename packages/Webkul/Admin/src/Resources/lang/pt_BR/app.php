@@ -1930,7 +1930,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Leads Abertos por Estados',
+                'title'       => 'Leads Abertos por Estágios',
                 'empty-title' => 'Nenhum Dado Disponível',
                 'empty-info'  => 'Nenhum dado disponível para o intervalo selecionado',
             ],
