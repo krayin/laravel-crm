@@ -39,7 +39,7 @@ class TagController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'name' => ['required', 'unique:tags,name'],
+            'name' => ['required', 'unique:tags,name', 'max:50'],
         ]);
 
         Event::dispatch('settings.tag.create.before');
@@ -77,7 +77,7 @@ class TagController extends Controller
     public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
-            'name' => 'required|unique:tags,name,'.$id,
+            'name' => 'required|max:50|unique:tags,name,'.$id,
         ]);
 
         Event::dispatch('settings.tag.update.before', $id);
