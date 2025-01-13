@@ -9,7 +9,6 @@
 
     <x-admin::form
         :action="route('admin.products.update', $product->id)"
-        encType="multipart/form-data"
         method="PUT"
     >
         <div class="flex flex-col gap-4">

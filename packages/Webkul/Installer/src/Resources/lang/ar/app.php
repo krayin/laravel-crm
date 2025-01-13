@@ -281,7 +281,6 @@ return [
             'installation-description' => 'عادة ما تتضمن عملية تثبيت Krayin عدة خطوات. إليك نظرة عامة عامة على عملية التثبيت krayin',
             'installation-info'        => 'نحن سعداء برؤيتك هنا!',
             'installation-title'       => 'مرحبًا بك في التثبيت',
-            'installation-wizard'      => 'لغة معالج التثبيت',
             'title'                    => 'مثبت Krayin',
             'webkul'                   => 'Webkul',
         ],

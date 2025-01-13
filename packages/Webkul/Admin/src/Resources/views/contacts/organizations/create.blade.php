@@ -46,6 +46,7 @@
                 </div>
             </div>
 
+            <!-- Left sub-component -->
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.contacts.organizations.create.form_controls.before') !!}
 
@@ -53,17 +54,6 @@
                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                         'entity_type' => 'organizations',
                     ])"
-                    :custom-validations="[
-                        'name' => [
-                            'max:100',
-                        ],
-                        'address' => [
-                            'max:100',
-                        ],
-                        'postcode' => [
-                            'max:20',
-                        ],
-                    ]"
                 />
 
                 {!! view_render_event('admin.contacts.organizations.edit.form_controls.after') !!}

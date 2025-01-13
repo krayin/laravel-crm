@@ -8,7 +8,7 @@
     <!-- Input Form -->
     <x-admin::form
         :action="route('admin.settings.attributes.update', $attribute->id)"
-        encType="multipart/form-data"
+        enctype="multipart/form-data"
         method="PUT"
     >
         <div class="flex flex-col gap-4">
@@ -132,10 +132,7 @@
                                     {!! view_render_event('admin.settings.attributes.edit.form_controls.option_type.before', ['attribute' => $attribute]) !!}
 
                                     <!-- Input Option Type -->
-                                    <x-admin::form.control-group
-                                        v-if="attributeType != 'lookup'"
-                                        class="mb-2.5 w-1/2"
-                                    >
+                                    <x-admin::form.control-group v-if="attributeType != 'lookup'" class="mb-2.5 w-1/2">
                                         <x-admin::form.control-group.label>
                                             @lang('admin::app.settings.attributes.create.option-type')
                                         </x-admin::form.control-group.label>
@@ -151,7 +148,6 @@
                                             <option value="lookup">
                                                 @lang('admin::app.settings.attributes.create.lookup')
                                             </option>
-
                                             <option value="options">
                                                 @lang('admin::app.settings.attributes.create.options')
                                             </option>
@@ -617,13 +613,9 @@
 
                         isNullOptionChecked: false,
 
-                        swatchValue: [
-                            {
-                                image: [],
-                            }
-                        ],
+                        swatchValue: [],
 
-                        optionsData: [],
+                        optionsData: @json($attribute->options()->orderBy('sort_order')->get()),
 
                         optionIsNew: true,
 
@@ -633,10 +625,6 @@
 
                         optionType: "{{ $attribute->lookup_type ? 'lookup' : 'options' }}",
                     }
-                },
-
-                created () {
-                    this.getAttributesOption();
                 },
 
                 methods: {
@@ -655,12 +643,6 @@
                         }
 
                         let formData = new FormData(this.$refs.editOptionsForm);
-
-                        const sliderImage = formData.get("swatch_value[]");
-
-                        if (sliderImage) {
-                            params.swatch_value = sliderImage;
-                        }
 
                         this.$refs.addOptionsRow.toggle();
 
@@ -701,34 +683,6 @@
                         if (! event.isActive) {
                             this.isNullOptionChecked = false;
                         }
-                    },
-
-                    getAttributesOption() {
-                        this.$axios.get(`{{ route('admin.settings.attributes.options', $attribute->id) }}`)
-                            .then(response => {
-                                let options = response.data;
-
-                                options.forEach((option) => {
-                                    let row = {
-                                        'id': option.id,
-                                        'name': option.name,
-                                        'sort_order': option.sort_order,
-                                        'attribute_id': option.attribute_id,
-                                        'isNew': false,
-                                        'isDelete': false,
-                                    };
-
-                                    if (! option.label) {
-                                        this.isNullOptionChecked = true;
-
-                                        row['notRequired'] = true;
-                                    } else {
-                                        row['notRequired'] = false;
-                                    }
-
-                                    this.optionsData.push(row);
-                                });
-                            });
                     },
 
                     setFile(file, id) {

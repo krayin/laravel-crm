@@ -57,7 +57,7 @@
 
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.roles.edit.access-control')
                         </p>
@@ -191,8 +191,6 @@
                 
                 <!-- Tree structure -->
                 <div v-if="permission_type == 'custom'">
-                    <x-admin::form.control-group.error control-name="permissions" />
-
                     {!! view_render_event('admin.settings.roles.edit.form.tree_view.before', ['role' => $role]) !!}
 
                     <x-admin::tree.view

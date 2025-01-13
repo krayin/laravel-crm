@@ -50,9 +50,7 @@
             @endif
 
             <!-- Lead Create Component -->
-            <v-lead-create>
-                <x-admin::shimmer.leads.datagrid />
-            </v-lead-create>
+            <v-lead-create></v-lead-create>
         </div>
     </x-admin::form>
 
@@ -63,7 +61,7 @@
             type="text/x-template"
             id="v-lead-create-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 {!! view_render_event('admin.leads.edit.form_controls.before') !!}
                 
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
@@ -105,7 +103,7 @@
                             </p>
                         </div>
 
-                        <div class="lg:w-1/2">
+                        <div class="w-1/2">
                             {!! view_render_event('admin.leads.create.details.attributes.before') !!}
 
                             <!-- Lead Details Title and Description -->
@@ -123,7 +121,7 @@
                                 ]"
                             />
 
-                            <!-- Lead Details Other input fields -->
+                            <!-- Lead Details Oter input fields -->
                             <div class="flex gap-4 max-sm:flex-wrap">
                                 <div class="w-full">
                                     <x-admin::attributes
@@ -181,7 +179,7 @@
                             </p>
                         </div>
 
-                        <div class="lg:w-1/2">
+                        <div class="w-1/2">
                             <!-- Contact Person Component -->
                             @include('admin::leads.common.contact')
                         </div>

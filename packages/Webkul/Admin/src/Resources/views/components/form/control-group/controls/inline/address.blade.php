@@ -30,14 +30,14 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ valueLabel ? valueLabel : `${inputValue?.address} ${inputValue?.city} ${inputValue?.state} ${inputValue?.postcode} ${inputValue?.country}`.length > 20 ? `${inputValue?.address} ${inputValue?.city} ${inputValue?.state} ${inputValue?.postcode} ${inputValue?.country}`.substring(0, 20) + '...' : `${inputValue?.address} ${inputValue?.city} ${inputValue?.state} ${inputValue?.postcode} ${inputValue?.country}` }}
+                        @{{ valueLabel ? valueLabel : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.length > 20 ? `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}`.substring(0, 20) + '...' : `${inputValue?.address} ${inputValue?.postcode} ${inputValue?.city} ${inputValue?.state} ${inputValue?.country}` }}
                     </span>
 
                     <div class="absolute bottom-0 mb-5 hidden flex-col group-hover:flex">
                         <span class="whitespace-no-wrap relative z-10 rounded-md bg-black px-4 py-2 text-xs leading-none text-white shadow-lg dark:bg-white dark:text-gray-900">
                             @{{ inputValue?.address }}<br>
-                            @{{ `${inputValue?.city}, ${inputValue?.state}, ${inputValue?.postcode}` }}<br>
-                            @{{ `${inputValue?.country}` }}<br>
+                            @{{ `${inputValue?.postcode} ${inputValue?.city}` }}<br>
+                            @{{ `${inputValue?.state}, ${inputValue?.country}` }}<br>
                         </span>
 
                         <div class="-mt-2 ml-4 h-3 w-3 rotate-45 bg-black dark:bg-white"></div>

@@ -37,8 +37,7 @@ class GroupController extends Controller
     public function store(): JsonResponse
     {
         $this->validate(request(), [
-            'name'        => 'required|unique:groups,name|max:50',
-            'description' => 'required|max:250',
+            'name' => 'required|unique:groups,name',
         ]);
 
         Event::dispatch('settings.group.create.before');
@@ -74,8 +73,7 @@ class GroupController extends Controller
     public function update(int $id): JsonResponse
     {
         $this->validate(request(), [
-            'name'        => 'required|max:50|unique:groups,name,'.$id,
-            'description' => 'required|max:250',
+            'name' => 'required|unique:groups,name,'.$id,
         ]);
 
         Event::dispatch('settings.group.update.before', $id);

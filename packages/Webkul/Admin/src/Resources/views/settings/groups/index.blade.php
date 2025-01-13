@@ -157,7 +157,7 @@
                                     type="text"
                                     id="name"
                                     name="name"
-                                    rules="required|min:0|max:50"
+                                    rules="required"
                                     :label="trans('admin::app.settings.groups.index.create.name')"
                                     :placeholder="trans('admin::app.settings.groups.index.create.name')"
                                 />
@@ -179,7 +179,7 @@
                                     type="textarea"
                                     id="description"
                                     name="description"
-                                    rules="required|max:250"
+                                    rules="required"
                                     :label="trans('admin::app.settings.groups.index.create.description')"
                                     :placeholder="trans('admin::app.settings.groups.index.create.description')"
                                 />
@@ -221,8 +221,6 @@
                 data() {
                     return {
                         isProcessing: false,
-
-                        selectedGroup: false,
                     };
                 },
         
@@ -244,8 +242,6 @@
 
                 methods: {
                     openModal() {
-                        this.selectedGroup=false;
-                        
                         this.$refs.groupUpdateAndCreateModal.toggle();
                     },
                     

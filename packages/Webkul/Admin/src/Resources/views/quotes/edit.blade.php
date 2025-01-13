@@ -41,9 +41,7 @@
                 </div>
             </div>
 
-            <v-quote :errors="errors">
-                <x-admin::shimmer.quotes />
-            </v-quote>
+            <v-quote :errors="errors"></v-quote>
         </div>
     </x-admin::form>
 
@@ -54,7 +52,7 @@
             type="text/x-template"
             id="v-quote-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">                    
                     {!! view_render_event('admin.contacts.quotes.edit.tags.before', ['quote' => $quote]) !!}
 
@@ -94,7 +92,7 @@
                             <p class="text-sm text-gray-600 dark:text-white">@lang('admin::app.quotes.create.quote-info-info')</p>
                         </div>
 
-                        <div class="lg:w-1/2">
+                        <div class="w-1/2">
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                     'entity_type' => 'quotes',
@@ -126,7 +124,7 @@
                                 :entity="$quote"
                             />
 
-                            <div class="flex flex-col gap-4 lg:flex-row">
+                            <div class="flex gap-4">
                                 <x-admin::attributes
                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -143,7 +141,7 @@
                                 />
                             </div>
 
-                            <div class="flex flex-col gap-4 lg:flex-row">
+                            <div class="flex gap-4">
                                 <x-admin::attributes
                                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                                         'entity_type' => 'quotes',
@@ -178,22 +176,6 @@
                                     ></v-lookup-component>
                                 </x-admin::form.control-group>
                             </div>
-
-                            <!-- Custom Attributes -->   
-                            <x-admin::attributes
-                                :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'quotes',
-                                    ['code', 'NOTIN', ['subject', 'description', 'expired_at', 'user_id', 'person_id','billing_address', 'shipping_address']],
-                                ])->sortBy('sort_order')"
-                                :custom-validations="[
-                                    'expired_at' => [
-                                        'required',
-                                        'date_format:yyyy-MM-dd',
-                                        'after:' .  \Carbon\Carbon::yesterday()->format('Y-m-d')
-                                    ],
-                                ]"
-                                :entity="$quote"
-                            />
                         </div>
                     </div>
 
@@ -216,20 +198,12 @@
                             </p>
                         </div>
 
-                        <div class="lg:w-1/2">
+                        <div class="w-1/2">
                             <x-admin::attributes
                                 :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                                    'entity_type' => 'quotes',
-                                    ['code', 'IN', ['billing_address', 'shipping_address']],
-                                ])"
-                                :custom-validations="[
-                                    'billing_address' => [
-                                        'max:100',
-                                    ],
-                                    'shipping_address' => [
-                                        'max:100',
-                                    ],
-                                ]"
+                                        'entity_type' => 'quotes',
+                                        ['code', 'IN', ['billing_address', 'shipping_address']],
+                                    ])"
                                 :entity="$quote"
                             />
                         </div>
@@ -269,7 +243,7 @@
             type="text/x-template"
             id="v-quote-item-list-template"
         >
-            <div class="overflow-x-scroll lg:overflow-hidden">
+            <div>
                 <!-- Table -->
                 <x-admin::table>
                     <!-- Table Head -->
@@ -332,77 +306,81 @@
 
             <!-- Add New Qoute Item -->
             <span
-                class="text-md cursor-pointer self-start font-semibold text-brandColor hover:underline dark:text-brandColor"
+                class="self-start text-md cursor-pointer font-semibold text-brandColor hover:underline dark:text-brandColor"
                 @click="addProduct"
             >
                 @lang('admin::app.quotes.create.add-item')
             </span>
 
-            <div class="flex items-center justify-center sm:justify-end md:justify-end lg:justify-end">
-                <div class="grid w-[350px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
-                    <div class="flex w-full justify-between gap-x-5">
-                        @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
+            <div class="mt-8 flex items-start gap-10 max-lg:gap-5">
+                <div class="flex-auto">
+                    <div class="flex justify-end">
+                        <div class="grid w-[348px] gap-4 rounded-lg bg-gray-100 p-4 text-sm dark:bg-gray-950 dark:text-white">
+                            <div class="flex w-full justify-between gap-x-5">
+                                @lang('admin::app.quotes.create.sub-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                        <input
-                            type="hidden"
-                            name="sub_total"
-                            class="control"
-                            :value="subTotal"
-                            readonly
-                        >
+                                <input
+                                    type="hidden"
+                                    name="sub_total"
+                                    class="control"
+                                    :value="subTotal"
+                                    readonly
+                                >
 
-                        <p>@{{ subTotal }}</p>
-                    </div>
+                                <p>@{{ subTotal }}</p>
+                            </div>
 
-                    <div class="flex w-full justify-between gap-x-5">
-                        @lang('admin::app.quotes.create.total-discount', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <div class="flex w-full justify-between gap-x-5">
+                                @lang('admin::app.quotes.create.total-discount', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                        <input
-                            type="hidden"
-                            name="discount_amount"
-                            :value="discountAmount"
-                        >
+                                <input
+                                    type="hidden"
+                                    name="discount_amount"
+                                    :value="discountAmount"
+                                >
 
-                        <p>@{{ discountAmount }}</p>
-                    </div>
+                                <p>@{{ discountAmount }}</p>
+                            </div>
 
-                    <div class="flex w-full justify-between gap-x-5">
-                        @lang('admin::app.quotes.create.total-tax', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <div class="flex w-full justify-between gap-x-5">
+                                @lang('admin::app.quotes.create.total-tax', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                        <input
-                            type="hidden"
-                            name="tax_amount"
-                            :value="taxAmount"
-                        >
+                                <input
+                                    type="hidden"
+                                    name="tax_amount"
+                                    :value="taxAmount"
+                                >
 
-                        <p>@{{ taxAmount }}</p>
-                    </div>
+                                <p>@{{ taxAmount }}</p>
+                            </div>
 
-                    <div class="flex w-full justify-between gap-x-5">
-                        @lang('admin::app.quotes.create.total-adjustment', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <div class="flex w-full justify-between gap-x-5">
+                                @lang('admin::app.quotes.create.total-adjustment', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                        <x-admin::form.control-group.control
-                            type="inline"
-                            ::name="`adjustment_amount`"
-                            ::value="adjustmentAmount"
-                            rules="required|decimal:4"
-                            ::errors="errors"
-                            :label="trans('admin::app.quotes.create.adjustment-amount')"
-                            :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
-                            @on-change="(event) => adjustmentAmount = event.value"
-                        />
-                    </div>
+                                <x-admin::form.control-group.control
+                                    type="inline"
+                                    ::name="`adjustment_amount`"
+                                    ::value="adjustmentAmount"
+                                    rules="required|decimal:4"
+                                    ::errors="errors"
+                                    :label="trans('admin::app.quotes.create.adjustment-amount')"
+                                    :placeholder="trans('admin::app.quotes.create.adjustment-amount')"
+                                    @on-change="(event) => adjustmentAmount = event.value"
+                                />
+                            </div>
 
-                    <div class="flex w-full justify-between gap-x-5">
-                        @lang('admin::app.quotes.create.grand-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
+                            <div class="flex w-full justify-between gap-x-5">
+                                @lang('admin::app.quotes.create.grand-total', ['symbol' => core()->currencySymbol(config('app.currency'))])
 
-                        <input
-                            type="hidden"
-                            name="grand_total"
-                            :value="grandTotal"
-                        >
+                                <input
+                                    type="hidden"
+                                    name="grand_total"
+                                    :value="grandTotal"
+                                >
 
-                        <p>@{{ grandTotal }}</p>
+                                <p>@{{ grandTotal }}</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

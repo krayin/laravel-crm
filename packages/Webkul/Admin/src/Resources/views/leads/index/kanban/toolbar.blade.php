@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.kanban.toolbar.before') !!}
 
-<div class="flex flex-col justify-between gap-2 md:flex-row lg:flex-row lg:gap-0">
+<div class="flex justify-between">
     <div class="flex w-full items-center gap-x-1.5">
         {!! view_render_event('admin.leads.index.kanban.toolbar.search.before') !!}
 

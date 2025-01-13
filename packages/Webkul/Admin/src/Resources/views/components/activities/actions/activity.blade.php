@@ -104,7 +104,7 @@
                                 <x-admin::form.control-group.control
                                     type="text"
                                     name="title"
-                                    rules="required|max:80"
+                                    rules="required"
                                     :label="trans('admin::app.components.activities.actions.activity.title-control')"
                                 />
 
@@ -120,10 +120,7 @@
                                 <x-admin::form.control-group.control
                                     type="textarea"
                                     name="comment"
-                                    rules="max:500"
                                 />
-
-                                <x-admin::form.control-group.error control-name="comment" />
                             </x-admin::form.control-group>
 
                             <!-- Participants -->

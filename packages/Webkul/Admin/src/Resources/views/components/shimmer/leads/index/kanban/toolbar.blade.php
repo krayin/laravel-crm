@@ -1,7 +1,7 @@
-<div class="flex flex-col justify-between gap-2 md:flex-row lg:flex-row">
+<div class="flex justify-between">
     <div class="flex w-full items-center gap-x-1.5">
-        <div class="shimmer light-shimmer-bg h-[38px] w-[264px] rounded-md max-sm:w-full"></div>
-        <div class="shimmer light-shimmer-bg h-[38px] w-[67px] rounded-md"></div>
+        <div class="shimmer light-shimmer-bg h-[38px] w-[264px] rounded-md"></div>
+        <div class="shimmer light-shimmer-bg h-9 w-[62px] rounded-md"></div>
     </div>
 
     <div class="flex gap-4">

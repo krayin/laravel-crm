@@ -12,7 +12,7 @@
     <script type="text/x-template" id="v-lead-stages-template">
         <!-- Stages Container -->
         <div
-            class="flex overflow-y-hidden overflow-x-scroll lg:overflow-hidden"
+            class="flex"
             :class="{'opacity-50 pointer-events-none': isUpdating}"
         >
             <!-- Stages Item -->
@@ -49,16 +49,12 @@
                             '!bg-green-500 text-white dark:text-gray-900 after:bg-green-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'won',
                             '!bg-red-500 text-white dark:text-gray-900 after:bg-red-500': ['won', 'lost'].includes(currentStage.code) && currentStage.code == 'lost',
                         }"
-                        @click="stageToggler = ! stageToggler"
                     >
                         <span class="z-20 whitespace-nowrap text-sm font-medium dark:text-white">
                             {{ __('admin::app.leads.view.stages.won-lost') }}
                         </span>
 
-                        <span 
-                            class="text-2xl dark:text-gray-900"
-                            :class="{'icon-up-arrow': stageToggler, 'icon-down-arrow': ! stageToggler}"
-                        ></span>
+                        <span class="icon-down-arrow text-2xl dark:text-gray-900"></span>
                     </div>
 
                     {!! view_render_event('admin.leads.view.stages.items.dropdown.toggle.after', ['lead' => $lead]) !!}
@@ -194,8 +190,6 @@
                     nextStage: null,
 
                     stages: @json($lead->pipeline->stages),
-
-                    stageToggler: '',
                 }
             },
 

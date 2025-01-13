@@ -9,7 +9,7 @@
         type="text/x-template" 
         id="v-product-list-template"
     >
-        <div class="flex flex-col gap-4 overflow-x-scroll lg:overflow-hidden">
+        <div class="flex flex-col gap-4">
             {!! view_render_event('admin.leads.create.products.form_controls.table.before') !!}
 
             <!-- Table -->

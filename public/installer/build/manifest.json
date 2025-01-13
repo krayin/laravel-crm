@@ -1,6 +1,6 @@
 {
   "src/Resources/assets/css/app.css": {
-    "file": "assets/app-e0866a20.css",
+    "file": "assets/app-9e25a9e6.css",
     "isEntry": true,
     "src": "src/Resources/assets/css/app.css"
   },
@@ -33,7 +33,7 @@
     "src": "src/Resources/assets/images/spinner.svg"
   },
   "src/Resources/assets/js/app.js": {
-    "file": "assets/app-b0695bcc.js",
+    "file": "assets/app-84f79663.js",
     "isEntry": true,
     "src": "src/Resources/assets/js/app.js"
   }

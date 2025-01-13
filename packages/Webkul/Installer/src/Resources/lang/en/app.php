@@ -281,7 +281,6 @@ return [
             'installation-description' => 'Krayin installation typically involves several steps. Here\'s a general outline of the installation process for Krayin',
             'installation-info'        => 'We are happy to see you here!',
             'installation-title'       => 'Welcome to Installation',
-            'installation-wizard'      => 'Installation Wizard language',
             'title'                    => 'Krayin Installer',
             'webkul'                   => 'Webkul',
         ],

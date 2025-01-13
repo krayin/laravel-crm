@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="mt-6 grid grid-rows-[1fr_2fr] gap-10 max-xl:flex-wrap lg:grid-cols-[1fr_2fr]">
+        <div class="mt-6 grid grid-cols-[1fr_2fr] gap-10 max-xl:flex-wrap">
             @foreach ($activeConfiguration->getChildren() as $child)
                 <div class="grid content-start gap-2.5">
                     <p class="text-base font-semibold text-gray-600 dark:text-gray-300">

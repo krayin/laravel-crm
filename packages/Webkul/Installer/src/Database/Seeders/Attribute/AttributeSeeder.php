@@ -352,7 +352,7 @@ class AttributeSeeder extends Seeder
             ], [
                 'code'            => 'price',
                 'name'            => trans('installer::app.seeders.attributes.products.price', [], $defaultLocale),
-                'type'            => 'price',
+                'type'            => 'text',
                 'entity_type'     => 'products',
                 'lookup_type'     => null,
                 'validation'      => 'decimal',

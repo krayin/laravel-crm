@@ -57,7 +57,13 @@
             </div>
 
             <div class="w-full">
-                <img src="{{ vite()->asset('images/error.svg') }}" />
+                <img 
+                    src="{{ 
+                        request()->cookie('dark_mode') 
+                        ? vite()->asset('images/dark-error.svg') 
+                        : vite()->asset('images/error.svg') 
+                    }}" 
+                />
             </div>
         </div>
 	</div>

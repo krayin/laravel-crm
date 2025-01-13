@@ -51,9 +51,7 @@
             <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ $lead->lead_pipeline_stage_id }}" />
 
             <!-- Lead Edit Component -->
-            <v-lead-edit :lead="{{ json_encode($lead) }}">
-                <x-admin::shimmer.leads.datagrid />
-            </v-lead-edit>
+            <v-lead-edit :lead="{{ json_encode($lead) }}"></v-lead-edit>
         </div>
     </x-admin::form>
 
@@ -64,7 +62,7 @@
             type="text/x-template"
             id="v-lead-edit-template"
         >
-            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+            <div class="box-shadow flex flex-col gap-4 rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 max-xl:flex-wrap">
                 <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     <!-- Tabs -->
                     <template v-for="tab in tabs" :key="tab.id">
@@ -104,7 +102,7 @@
                             </p>
                         </div>
 
-                        <div class="flex flex-col max-sm:!w-full lg:w-1/2">
+                        <div class="w-1/2">
                             {!! view_render_event('admin.leads.edit.lead_details.attributes.before', ['lead' => $lead]) !!}
 
                             <!-- Lead Details Title and Description -->
@@ -183,7 +181,7 @@
                             </p>
                         </div>
 
-                        <div class="lg:w-1/2">
+                        <div class="w-1/2">
                             <!-- Contact Person Component -->
                             @include('admin::leads.common.contact')
                         </div>

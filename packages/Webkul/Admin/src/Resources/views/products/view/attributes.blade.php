@@ -6,32 +6,17 @@
     </h4>
 
     {!! view_render_event('admin.products.view.attributes.view.before', ['product' => $product]) !!}
-    
-    <!-- Attributes Listing -->
-    <div>
-        <!-- Default Attributes --> 
-        <x-admin::attributes.view
-            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                'entity_type' => 'products',
-                ['code', 'IN', ['SKU', 'price', 'quantity', 'status']]
-            ])->sortBy('sort_order')"
-            :entity="$product"
-            :url="route('admin.products.update', $product->id)"   
-            :allow-edit="true"
-        />
 
-        <!-- Custom Attributes --> 
-        <x-admin::attributes.view
-            :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
-                'entity_type' => 'products',
-                ['code', 'NOTIN', ['SKU', 'price', 'quantity', 'status']]
-            ])->sortBy('sort_order')"
-            :entity="$product"
-            :url="route('admin.products.update', $product->id)"   
-            :allow-edit="true"
-        />
-    </div>
-    
+    <x-admin::attributes.view
+        :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
+            'entity_type' => 'products',
+            ['code', 'IN', ['SKU', 'price', 'quantity', 'status']]
+        ])->sortBy('sort_order')"
+        :entity="$product"
+        :url="route('admin.products.update', $product->id)"   
+        :allow-edit="true"
+    />
+
     {!! view_render_event('admin.products.view.attributes.view.after', ['product' => $product]) !!}
 </div>
 

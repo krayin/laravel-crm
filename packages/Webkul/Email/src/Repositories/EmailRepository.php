@@ -153,7 +153,7 @@ class EmailRepository extends Repository
         if (! isset($email)) {
             $email = $this->create(array_merge($headers, [
                 'folders'       => ['inbox'],
-                'reply'         => $reply, // $this->htmlFilter->HTMLFilter($reply, ''),
+                'reply'         => $reply, //$this->htmlFilter->HTMLFilter($reply, ''),
                 'unique_id'     => time().'@'.config('mail.domain'),
                 'reference_ids' => [$headers['message_id']],
                 'user_type'     => 'person',

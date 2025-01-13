@@ -21,7 +21,7 @@ class Common extends Mailable
         $message = $this
             ->to($this->data['to'])
             ->subject($this->data['subject'])
-            ->view('admin::emails.common.index', [
+            ->view('admin::emails.common', [
                 'body' => $this->data['body'],
             ]);
 

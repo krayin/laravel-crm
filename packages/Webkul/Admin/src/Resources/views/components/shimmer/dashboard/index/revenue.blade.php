@@ -1,5 +1,5 @@
 <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
-    <div class="flex flex-col gap-4 lg:flex-row">
+    <div class="flex gap-4">
         <!-- Total Revenue -->
         <div class="flex flex-col gap-2">
             <div class="flex min-w-[177px] flex-col gap-2 rounded-lg border border-gray-200 bg-white px-4 py-5 dark:border-gray-800 dark:bg-gray-900">

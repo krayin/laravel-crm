@@ -33,7 +33,7 @@
             </div>
         
             <!-- DataGrid Shimmer -->
-            <x-admin::shimmer.settings.web-forms />
+            <x-admin::shimmer.datagrid />
         </div>
     </v-webform>
 
@@ -75,38 +75,9 @@
                 </div>
             
                 {!! view_render_event('admin.settings.web_forms.index.datagrid.before') !!}
-
-                <!-- Datagrid -->
-                <x-admin::datagrid
-                    :src="route('admin.settings.web_forms.index')"
-                    ref="datagrid"
-                >
-                    <template #header="{
-                        isLoading,
-                        available,
-                        applied,
-                        selectAll,
-                        sort,
-                        performAction
-                    }">
-                        <template v-if="isLoading">
-                            <x-admin::shimmer.settings.web-forms.head />
-                        </template>
-                    </template>
-
-                    <template #body="{
-                        isLoading,
-                        available,
-                        applied,
-                        selectAll,
-                        sort,
-                        performAction
-                    }">
-                        <template v-if="isLoading">
-                            <x-admin::shimmer.settings.web-forms.body />
-                        </template>
-                    </template>
-                </x-admin::datagrid>
+            
+                <!-- DataGrid -->
+                <x-admin::datagrid :src="route('admin.settings.web_forms.index')" />
 
                 {!! view_render_event('admin.settings.web_forms.index.datagrid.after') !!}
             </div>

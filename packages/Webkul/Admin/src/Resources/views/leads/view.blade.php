@@ -4,14 +4,14 @@
     </x-slot>
 
     <!-- Content -->
-    <div class="relative flex flex-col gap-4 lg:flex-row">
+    <div class="relative flex gap-4">
         <!-- Left Panel -->
         {!! view_render_event('admin.leads.view.left.before', ['lead' => $lead]) !!}
 
-        <div class="[&>div:last-child]:border-b-0 top-[73px] flex flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:sticky lg:min-w-[394px] lg:max-w-[394px]">
+        <div class="[&>div:last-child]:border-b-0 sticky top-[73px] flex min-w-[394px] max-w-[394px] flex-col self-start rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
             <!-- Lead Information -->
             <div class="flex w-full flex-col gap-2 border-b border-gray-200 p-4 dark:border-gray-800">
-                <!-- Breadcrumb's -->
+                <!-- Breadcrums -->
                 <div class="flex items-center justify-between">
                     <x-admin::breadcrumbs
                         name="leads.view"
@@ -23,7 +23,7 @@
                     @if (($days = $lead->rotten_days) > 0)
                         @php
                             $lead->tags->prepend([
-                                'name'  => '<span class="icon-rotten text-base"></span>'.trans('admin::app.leads.view.rotten-days', ['days' => $days]),
+                                'name'  => '<span class="icon-rotten text-base"></span>' . trans('admin::app.leads.view.rotten-days', ['days' => $days]),
                                 'color' => '#FEE2E2'
                             ]);
                         @endphp
@@ -47,7 +47,7 @@
                 <!-- Title -->
                 <h3 class="text-lg font-bold dark:text-white">
                     {{ $lead->title }}
-                </h3>
+                </h1>
 
                 {!! view_render_event('admin.leads.view.title.after', ['lead' => $lead]) !!}
 

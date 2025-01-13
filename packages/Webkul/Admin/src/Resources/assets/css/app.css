@@ -11,7 +11,7 @@
     font-style: normal;
     font-display: block;
   }
-
+  
   [class^="icon-"], [class*=" icon-"] {
     /* use !important to prevent issues with browser extensions that change fonts */
     font-family: 'icomoon' !important;
@@ -21,24 +21,24 @@
     font-variant: normal;
     text-transform: none;
     line-height: 1;
-
+  
     /* Better Font Rendering =========== */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
-
+  
 @layer components {
     .icon-bookmark:before {
         content: "\e92c";
     }
-
+  
     .icon-bookmark-active:before {
         content: "\e92d";
     }
 
     .icon-stats-down:before {
         content: "\e94d";
-    }
+    }  
 
     .icon-error:before {
         content: "\e951";
@@ -300,10 +300,6 @@
         content: "\e911";
     }
 
-    .icon-hamburger-menu:before {
-        content: "\e955";
-    }
-    
     .icon-mail:before {
         content: "\e912";
     }
@@ -382,7 +378,7 @@
 
     .label-inactive {
         @apply max-w-max rounded-md bg-red-200 px-3 py-1.5 text-xs font-medium text-red-800;
-    }
+    }  
 
     [dir="ltr"] .sidebar-rounded::after {
         @apply content-[''] w-[30px] h-[30px] top-0 right-[-30px] absolute bg-no-repeat pointer-events-none bg-[url("../images/corner-clip.svg")] transition-all;
@@ -446,22 +442,10 @@
         border-top: 4px solid #f3f4f6;
     }
 
-    [dir="rtl"] .stage::after {
+     [dir="rtl"] .stage::after {
         display: none;
-    }
-
-    .dark\:bg-gray-400:is(.dark *) {
-       --tw-bg-opacity: 1 !important;
-        background-color: #1f2937 !important;
-        border: #111827 solid !important;
-        color: #e5e7eb !important;
-    }
-
-    .dark\:bg-gray-800:is(.dark *) {
-        --tw-bg-opacity: 1;
-        background-color: rgb(16 24 39);
-    }
-
+     }
+    
     .shimmer {
         animation-duration: 2.2s;
         animation-fill-mode: forwards;
@@ -556,7 +540,7 @@
     html.dark [class*=" icon-"]{
         color: #d1d5db;
     }
-
+        
     p {
         @apply text-[14px] !leading-[17px];
     }
@@ -597,7 +581,7 @@
         background-position-x: calc(100% - 10px);
         background-position-y: 50%;
     }
-
+    
     .dark .custom-select{
         background-image: url("data:image/svg+xml;utf8,<svg fill='white' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/><path d='M0 0h24v24H0z' fill='none'/></svg>");
     }

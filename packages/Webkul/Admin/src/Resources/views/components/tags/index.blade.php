@@ -17,7 +17,7 @@
         <div class="flex flex-wrap items-center gap-1">
             <!-- Tags -->
             <span
-                class="flex items-center gap-1 break-all rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                 :style="{
                     'background-color': tag.color,
                     'color': backgroundColors.find(color => color.background === tag.color)?.text
@@ -28,10 +28,7 @@
             </span>
 
             <!-- Add Button -->
-            <x-admin::dropdown
-                ::close-on-click="false"
-                position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}"
-            >
+            <x-admin::dropdown ::close-on-click="false" position="bottom-{{ in_array(app()->getLocale(), ['fa', 'ar']) ? 'right' : 'left' }}">
                 <x-slot:toggle>
                     <button class="icon-settings-tag rounded-md p-1 text-xl transition-all hover:bg-gray-200 dark:hover:bg-gray-950"></button>
                 </x-slot>
@@ -75,7 +72,7 @@
                                 >
                                     <ul class="p-2">
                                         <li
-                                            class="cursor-pointer break-all rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
+                                            class="cursor-pointer rounded-sm px-5 py-2 text-sm text-gray-800 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-950"
                                             v-for="tag in searchedTags"
                                             @click="attachToEntity(tag)"
                                         >
@@ -110,12 +107,12 @@
                             <ul class="flex flex-col">
                                 <template v-for="tag in tags">
                                     <li
-                                        class="flex items-center justify-between gap-2.5 rounded-sm p-2 text-sm text-gray-800 dark:text-white"
+                                        class="flex items-center justify-between rounded-sm p-2 text-sm text-gray-800 dark:text-white"
                                         v-if="tag.id"
                                     >
                                         <!-- Name -->
                                         <span
-                                            class="break-all rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                            class="rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
                                             :style="{
                                                 'background-color': tag.color,
                                                 'color': backgroundColors.find(color => color.background === tag.color)?.text
@@ -131,7 +128,7 @@
                                                     <x-slot:toggle>
                                                         <button class="flex cursor-pointer items-center gap-1 rounded border border-gray-200 px-2 py-0.5 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400">
                                                             <span
-                                                                class="h-4 w-4 break-all rounded-full"
+                                                                class="h-4 w-4 rounded-full"
                                                                 :style="'background-color: ' + (tag.color ? tag.color : '#546E7A')"
                                                             >
                                                             </span>
@@ -148,7 +145,7 @@
                                                             @click="update(tag, color)"
                                                         >
                                                             <span
-                                                                class="flex h-4 w-4 break-all rounded-full"
+                                                                class="flex h-4 w-4 rounded-full"
                                                                 :style="'background-color: ' + color.background"
                                                             >
                                                             </span>

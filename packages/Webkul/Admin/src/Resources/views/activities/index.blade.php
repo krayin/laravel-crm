@@ -66,8 +66,8 @@
             
                         <i
                             class="icon-calendar cursor-pointer rounded-md p-2 text-2xl"
-                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendar'}"
-                            @click="toggleView('calendar')"
+                            :class="{'bg-gray-200 dark:bg-gray-800 text-gray-800 dark:text-white': viewType == 'calendor'}"
+                            @click="toggleView('calendor')"
                         ></i>
                     </div>
 
@@ -97,7 +97,7 @@
                                 </template>
                     
                                 <template v-else>
-                                    <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center gap-x-2.5 border-b px-4 py-2.5 dark:border-gray-800">
+                                    <div class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 items-center border-b px-4 py-2.5 dark:border-gray-800">
                                         <div
                                             class="flex select-none items-center gap-2.5"
                                             v-for="(columnGroup, index) in [['id', 'title', 'created_by_id'], ['is_done'], ['comment', 'lead_title', 'type'], ['schedule_from', 'schedule_to', 'created_at']]"
@@ -147,7 +147,7 @@
                     
                                                 <i
                                                     class="align-text-bottom text-base text-gray-800 dark:text-white ltr:ml-1.5 rtl:mr-1.5"
-                                                    :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
+                                                    :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
                                                     v-if="columnGroup.includes(applied.sort.column)"
                                                 ></i>
                                             </p>
@@ -170,7 +170,7 @@
                     
                                 <template v-else>
                                     <div
-                                        class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 gap-x-2.5 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950"
+                                        class="row grid grid-cols-[.3fr_.1fr_.3fr_.5fr] grid-rows-1 border-b px-4 py-2.5 transition-all hover:bg-gray-50 dark:border-gray-800 dark:hover:bg-gray-950"
                                         v-for="record in available.records"
                                     >
                                         <!-- Mass Actions, Title and Created By -->
@@ -221,8 +221,7 @@
                                         <div class="flex gap-1.5">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
-                                                    {{-- @{{ record.comment }} --}}
-                                                    @{{ record.comment.length > 180 ? record.comment.slice(0, 180) + '...' : record.comment }}
+                                                    @{{ record.comment }}
                                                 </p>
 
                                                 <p v-html="record.lead_title"></p>
@@ -233,7 +232,7 @@
                                             </div>
                                         </div>
                                         
-                                        <div class="flex items-start justify-between gap-x-4">
+                                        <div class="flex items-center justify-between gap-x-4">
                                             <div class="flex flex-col gap-1.5">
                                                 <p class="text-gray-600 dark:text-gray-300">
                                                     @{{ record.schedule_from ?? 'N/A' }}
@@ -296,7 +295,7 @@
                 :events="events"
                 @ready="getActivities"
                 @view-change="getActivities"
-                @event-click="goToActivity"
+                :on-event-click="goToActivity"
                 locale="{{ app()->getLocale() }}"
             ></v-vue-cal>
         </script>

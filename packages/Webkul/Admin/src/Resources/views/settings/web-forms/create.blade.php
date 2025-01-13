@@ -6,7 +6,7 @@
 
     <x-admin::form :action="route('admin.settings.web_forms.store')">
         <div class="flex flex-col gap-4">
-            <div class="flex flex-col items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 md:flex-row lg:flex-row">
+            <div class="flex items-center justify-between rounded-lg border border-gray-200 bg-white px-4 py-2 text-sm dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300">
                 <div class="flex flex-col gap-2">
                     <div class="flex cursor-pointer items-center">
                         {!! view_render_event('admin.settings.webform.create.breadcrumbs.before') !!}
@@ -143,7 +143,7 @@
                             name="background_color"
                             title="@lang('admin::app.settings.webforms.create.background-color')"
                             value="{{ old('background_color') ?? '#F7F8F9' }}"
-                            class="w-full md:w-1/5 lg:w-1/5"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -165,7 +165,7 @@
                             name="form_background_color"
                             title="@lang('admin::app.settings.webforms.create.form-background-color')"
                             value="{{ old('form_background_color') ?? '#FFFFFF' }}"
-                            class="w-full md:w-1/5 lg:w-1/5"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -189,7 +189,7 @@
                             name="form_title_color"
                             title="@lang('admin::app.settings.webforms.create.form-title-color')"
                             value="{{ old('form_title_color') ?? '#263238' }}"
-                            class="w-full md:w-1/5 lg:w-1/5"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -213,7 +213,7 @@
                             name="form_submit_button_color"
                             title="@lang('admin::app.settings.webforms.create.form-submit-btn-color')"
                             value="{{ old('form_submit_button_color') ?? '#0E90D9' }}"
-                            class="w-full md:w-1/5 lg:w-1/5"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label>
@@ -237,7 +237,7 @@
                             name="attribute_label_color"
                             title="@lang('admin::app.settings.webforms.create.attribute-label-color')"
                             value="{{ old('attribute_label_color') ?? '#546E7A' }}"
-                            class="w-full md:w-1/5 lg:w-1/5"
+                            class="w-1/5"
                         >
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="">
@@ -256,7 +256,8 @@
                             </x-admin::form.control-group>
                         </v-color-picker>
 
-                        <!-- Attributes -->
+
+                         <!-- Attributes -->
                         <div class="mb-4 flex items-center justify-between gap-4">
                             <div class="flex flex-col gap-1">
                                 <p class="text-base font-semibold text-gray-800 dark:text-white">
@@ -314,7 +315,6 @@
                             <!-- Attributes -->
                             <draggable
                                 tag="tbody"
-                                class="w-[300px] overflow-x-scroll md:w-full md:overflow-hidden lg:w-full lg:overflow-hidden"
                                 ghost-class="draggable-ghost"
                                 handle=".icon-move"
                                 v-bind="{animation: 200}"

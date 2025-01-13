@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\StreamedResponse;
 use Webkul\Admin\DataGrids\Settings\AttributeDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
@@ -186,26 +187,10 @@ class AttributeController extends Controller
     }
 
     /**
-     * Get attribute options associated with attribute.
-     *
-     * @return \Illuminate\View\View
-     */
-    public function getAttributeOptions(int $id)
-    {
-        $attribute = $this->attributeRepository->findOrFail($id);
-
-        return $attribute->options()->orderBy('sort_order')->get();
-    }
-
-    /**
      * Download image or file
      */
-    public function download()
+    public function download(): StreamedResponse
     {
-        if (! request('path')) {
-            return false;
-        }
-
         return Storage::download(request('path'));
     }
 }

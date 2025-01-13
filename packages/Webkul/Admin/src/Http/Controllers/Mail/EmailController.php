@@ -45,11 +45,17 @@ class EmailController extends Controller
             abort(401, 'This action is unauthorized');
         }
 
-        if (request()->ajax()) {
-            return datagrid(EmailDataGrid::class)->process();
-        }
+        switch (request('route')) {
+            case 'compose':
+                return view('admin::mail.compose');
 
-        return view('admin::mail.index');
+            default:
+                if (request()->ajax()) {
+                    return datagrid(EmailDataGrid::class)->process();
+                }
+
+                return view('admin::mail.index');
+        }
     }
 
     /**

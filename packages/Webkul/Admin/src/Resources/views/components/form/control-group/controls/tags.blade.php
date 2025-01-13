@@ -1,7 +1,6 @@
 <v-control-tags
     :errors="errors"
     {{ $attributes }}
-    v-bind="$attrs"
 ></v-control-tags>
 
 @pushOnce('scripts')
@@ -10,10 +9,7 @@
         id="v-control-tags-template"
     >
         <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400">
-            <ul
-                class="flex flex-wrap items-center gap-1"
-                v-bind="$attrs"
-            >
+            <ul class="flex flex-wrap items-center gap-1">
                 <li
                     class="flex items-center gap-1 rounded-md bg-gray-100 dark:bg-gray-950 ltr:pl-2 rtl:pr-2"
                     v-for="(tag, index) in tags"
@@ -32,7 +28,7 @@
                     ></span>
                 </li>
 
-                <li :class="['w-full', tags.length && 'mt-1.5']">
+                <li>
                     <v-field
                         v-slot="{ field, errors }"
                         :name="'temp-' + name"
@@ -44,7 +40,7 @@
                             type="text"
                             :name="'temp-' + name"
                             v-bind="field"
-                            class="w-full dark:!bg-gray-900"
+                            class="dark:!bg-gray-900"
                             :placeholder="placeholder"
                             :label="label"
                             @keydown.enter.prevent="addTag"
@@ -119,7 +115,7 @@
                     }
 
                     this.tags.push(tag);
-
+                    
                     this.$emit('tags-updated', this.tags);
 
                     this.input = '';

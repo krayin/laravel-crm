@@ -50,7 +50,7 @@
             <!-- Total Leads Stats -->
             @include('admin::dashboard.index.total-leads')
 
-            <div class="flex gap-4 [&>*]:flex-1 max-sm:flex-col">
+            <div class="flex gap-4 [&>*]:flex-1">
                 <!-- Total Products -->
                 @include('admin::dashboard.index.top-selling-products')
 

@@ -40,7 +40,7 @@
             {!! view_render_event('admin.components.activities.content.before') !!}
 
             <div class="w-full rounded-md border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
-                <div class="flex gap-2 overflow-x-scroll border-b border-gray-200 dark:border-gray-800 lg:overflow-hidden">
+                <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                     {!! view_render_event('admin.components.activities.content.types.before') !!}
 
                     <div
@@ -84,7 +84,7 @@
 
                                 <!-- Activity Details -->
                                 <div
-                                    class="flex w-full justify-between gap-4 overflow-x-scroll rounded-md p-4 md:overflow-hidden lg:overflow-hidden"
+                                    class="flex w-full justify-between gap-4 rounded-md p-4"
                                     :class="{'bg-gray-100 dark:bg-gray-950': index % 2 != 0 }"
                                 >
                                     <div class="flex flex-col gap-2">

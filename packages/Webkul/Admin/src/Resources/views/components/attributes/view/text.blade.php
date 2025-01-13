@@ -3,7 +3,7 @@
     ::name="'{{ $attribute->code }}'"
     :value="$value"
     position="left"
-    rules="required|{{ $attribute->validation }}"
+    rules="required"
     :label="$attribute->name"
     :placeholder="$attribute->name"
     ::errors="errors"

@@ -58,20 +58,12 @@ class EmailDataGrid extends DataGrid
 
         $this->addColumn([
             'index'      => 'attachments',
-            'label'      => trans('admin::app.mail.index.datagrid.attachments'),
+            'label'      => '<span class="icon-attachment text-2xl"></span>',
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'sortable'   => true,
-            'closure'    => function ($row) {
-                $email = app(EmailRepository::class)->find($row->id);
-
-                $hasAttachments = collect($email->emails)->contains(function ($email) {
-                    return $email->attachments()->exists();
-                });
-
-                return $hasAttachments ? '<i class="icon-attachment text-2xl"></i>' : '';
-            },
+            'sortable'   => false,
+            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
         ]);
 
         $this->addColumn([
@@ -93,17 +85,8 @@ class EmailDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'reply',
-            'label'      => trans('admin::app.mail.index.datagrid.content'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
             'index'              => 'tags',
-            'label'              => trans('admin::app.mail.index.datagrid.tags'),
+            'label'              => trans('admin::app.mail.index.datagrid.tag-name'),
             'type'               => 'string',
             'searchable'         => false,
             'sortable'           => true,
@@ -127,7 +110,7 @@ class EmailDataGrid extends DataGrid
 
         $this->addColumn([
             'index'           => 'created_at',
-            'label'           => trans('admin::app.mail.index.datagrid.date'),
+            'label'           => trans('admin::app.mail.index.datagrid.created-at'),
             'type'            => 'date',
             'searchable'      => true,
             'filterable'      => true,

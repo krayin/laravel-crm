@@ -49,12 +49,12 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
                         {!! view_render_event('admin.activities.edit.form_controls.before') !!}
 
                         <!-- Schedule Date -->
                         <x-admin::form.control-group>
-                            <div class="flex flex-col gap-2 lg:flex-row"> 
+                            <div class="flex gap-2"> 
                                 <div class="w-full">
                                     <x-admin::form.control-group.label class="required">
                                         @lang('admin::app.activities.edit.schedule_from')
@@ -109,7 +109,7 @@
                                 @lang('admin::app.activities.edit.participants')
                             </x-admin::form.control-group.label>
 
-                            <!-- Participants Multi lookup Vue Component -->
+                            <!-- Participants Multilookup Vue Component -->
                             <v-multi-lookup-component>
                                 <div 
                                     class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
@@ -229,6 +229,7 @@
                                     name="location"
                                     id="location"
                                     :value="old('location') ?? $activity->location"
+                                    rules="required"
                                     :label="trans('admin::app.activities.edit.location')"
                                     :placeholder="trans('admin::app.activities.edit.location')"
                                 />

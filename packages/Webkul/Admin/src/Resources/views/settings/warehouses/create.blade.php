@@ -60,14 +60,6 @@
                                 ['code', 'NOTIN', ['name', 'description']],
                                 'entity_type' => 'warehouses',
                             ])->sortBy('sort_order')"
-                            :custom-validations="[
-                                'contact_address' => [
-                                    'max:100',
-                                ],
-                                'postcode' => [
-                                    'max:20',
-                                ],
-                            ]"
                         />
 
                         {!! view_render_event('admin.settings.warehouses.create.left.form_controls.after') !!}

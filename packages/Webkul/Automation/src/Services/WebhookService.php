@@ -82,12 +82,8 @@ class WebhookService
         ) {
             $formattedPayload[$payload['key']] = $payload['value'];
         } else {
-            foreach ($payload as $key => $item) {
-                if (is_array($item)) {
-                    $formattedPayload[$item['key']] = $item['value'];
-                } else {
-                    $formattedPayload[$key] = $item;
-                }
+            foreach ($payload as $item) {
+                $formattedPayload[$item['key']] = $item['value'];
             }
         }
 
