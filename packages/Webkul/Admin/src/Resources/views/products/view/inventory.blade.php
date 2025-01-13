@@ -297,7 +297,7 @@
                 <x-admin::form.control-group.error ::name="'inventories[inventory_' + index + '][allocated]'"/>
             </x-admin::table.td>
             
-            <x-admin::table.td class="!px-2">
+            <x-admin::table.td class="!px-2 !py-[22px]">
                 <i  
                     @click="remove"
                     class="icon-delete cursor-pointer text-2xl"
