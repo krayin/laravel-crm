@@ -1031,6 +1031,7 @@ return [
                 'form-submit-button-color'  => 'لون زر إرسال النموذج',
                 'form-title-color'          => 'لون عنوان النموذج',
                 'general'                   => 'عام',
+                'leads'                     => 'العملاء المحتملون',
                 'preview'                   => 'معاينة',
                 'person'                    => 'شخص',
                 'public-url'                => 'الرابط العام',

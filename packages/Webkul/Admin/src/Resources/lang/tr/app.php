@@ -1035,6 +1035,7 @@ return [
                 'form-submit-button-color'  => 'Form Gönderim Düğmesi Rengi',
                 'form-title-color'          => 'Form Başlık Rengi',
                 'general'                   => 'Genel',
+                'leads'                     => 'Fırsatlar',
                 'preview'                   => 'Önizleme',
                 'person'                    => 'Kişi',
                 'public-url'                => 'Genel URL',

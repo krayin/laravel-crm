@@ -1035,6 +1035,7 @@ return [
                 'form-submit-button-color'  => 'رنگ دکمه ارسال فرم',
                 'form-title-color'          => 'رنگ عنوان فرم',
                 'general'                   => 'عمومی',
+                'leads'                     => 'سرنخ‌ها',
                 'preview'                   => 'پیش‌نمایش',
                 'person'                    => 'شخص',
                 'public-url'                => 'آدرس عمومی',
