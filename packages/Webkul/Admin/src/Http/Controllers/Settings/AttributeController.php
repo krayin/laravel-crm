@@ -186,6 +186,18 @@ class AttributeController extends Controller
     }
 
     /**
+     * Get attribute options associated with attribute.
+     *
+     * @return \Illuminate\View\View
+     */
+    public function getAttributeOptions(int $id)
+    {
+        $attribute = $this->attributeRepository->findOrFail($id);
+
+        return $attribute->options()->orderBy('sort_order')->get();
+    }
+
+    /**
      * Download image or file
      */
     public function download()
