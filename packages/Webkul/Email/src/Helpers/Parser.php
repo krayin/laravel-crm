@@ -501,7 +501,7 @@ class Parser
                     && ! strpos($this->getPart('content-type', $part), 'image/')
                     && ! stripos($filename, 'noname') == false
                 ) {
-                    //skip
+                    // skip
                 } else {
                     $attachments[] = new Attachment(
                         $filename,
@@ -698,7 +698,7 @@ class Parser
         } elseif ($encodingType == 'quoted-printable') {
             return quoted_printable_decode($encodedString);
         } else {
-            return $encodedString; //8bit, 7bit, binary
+            return $encodedString; // 8bit, 7bit, binary
         }
     }
 
@@ -710,7 +710,7 @@ class Parser
      */
     private function decodeHeader($input)
     {
-        //Sometimes we have 2 label From so we take only the first
+        // Sometimes we have 2 label From so we take only the first
         if (is_array($input)) {
             return $this->decodeSingleHeader($input[0]);
         }

@@ -243,7 +243,7 @@ class Htmlfilter
                     return $retary;
                 }
 
-                //intentional fall-through
+                // intentional fall-through
             case '>':
                 return [$tagname, false, $tagtype, $lt, $pos];
                 break;
@@ -357,7 +357,7 @@ class Htmlfilter
                         return $retary;
                     }
 
-                    //intentional fall-through
+                    // intentional fall-through
                 case '>':
                     $attary[$attname] = '"yes"';
 
@@ -1283,8 +1283,8 @@ class Htmlfilter
                     $matches['5'][$i].
                     $matches['6'][$i].'</a>'.
                     $period, $str);
-            }//end for
-        }//end if
+            } //end for
+        } //end if
 
         return $str;
     }
