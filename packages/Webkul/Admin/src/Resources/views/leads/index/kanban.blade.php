@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.kanban.before') !!}
 
-<!-- Kanabn Vue Component -->
+<!-- Kanban Vue Component -->
 <v-leads-kanban>
     <div class="flex flex-col gap-4">
         <!-- Shimmer -->
@@ -11,7 +11,10 @@
 {!! view_render_event('admin.leads.index.kanban.after') !!}
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-leads-kanban-template">
+    <script
+        type="text/x-template"
+        id="v-leads-kanban-template"
+    >
         <template v-if="isLoading">
             <div class="flex flex-col gap-4">
                 <x-admin::shimmer.leads.index.kanban />
@@ -95,11 +98,11 @@
 
                                     <div class="flex flex-col items-center gap-4">
                                         <div class="flex flex-col items-center gap-2">
-                                            <p class="text-xl font-semibold dark:text-white">
+                                            <p class="!text-base font-semibold dark:text-white">
                                                 @lang('admin::app.leads.index.kanban.empty-list')
                                             </p>
 
-                                            <p class="text-gray-400 dark:text-gray-400">
+                                            <p class="!text-sm text-gray-400 dark:text-gray-400">
                                                 @lang('admin::app.leads.index.kanban.empty-list-description')
                                             </p>
                                         </div>
@@ -487,11 +490,11 @@
                 },
 
                 //=======================================================================================
-                // Support for previous applied values in kanbans. All code is based on local storage.
+                // Support for previous applied values in kanban's. All code is based on local storage.
                 //=======================================================================================
 
                 /**
-                 * Updates the kanbans stored in local storage with the latest data.
+                 * Updates the kanban's stored in local storage with the latest data.
                  *
                  * @returns {void}
                  */
@@ -539,9 +542,9 @@
                 },
 
                 /**
-                 * Returns the storage key for kanbans in local storage.
+                 * Returns the storage key for kanban's in local storage.
                  *
-                 * @returns {string} Storage key for kanbans.
+                 * @returns {string} Storage key for kanban's.
                  */
                 getKanbansStorageKey() {
                     return 'kanbans';
@@ -561,9 +564,9 @@
                 },
 
                 /**
-                 * Sets the kanbans in local storage.
+                 * Sets the kanban's in local storage.
                  *
-                 * @param {Array} kanbans - Kanbans to be stored in local storage.
+                 * @param {Array} kanbans - Kanban's to be stored in local storage.
                  * @returns {void}
                  */
                 setKanbans(kanbans) {
