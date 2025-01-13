@@ -148,10 +148,7 @@
                     class="flex gap-4"
                 >
                     <template #item="{ element, index }">
-                        <div
-                            ::class="{ draggable: canDrag(element) }"
-                            class="flex gap-4 overflow-x-auto"
-                        >
+                        <div class="draggable flex gap-4 overflow-x-auto">
                             <div class="flex min-w-[275px] max-w-[275px] flex-col justify-between rounded-lg border border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
                                 <div class="flex flex-col gap-6 px-4 py-3">
                                     <!-- Stage Title and Action -->
@@ -160,16 +157,12 @@
                                             @{{ element.name ? element.name : 'New Added' }} 
                                         </span>
 
-                                        <i
-                                            v-if="canDrag(element)" 
-                                            class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950"
-                                        >
+                                        <i class="icon-move cursor-grab rounded-md p-1 text-2xl transition-all hover:bg-gray-100 dark:hover:bg-gray-950">
                                         </i>
                                     </div>
                                     
-                                    <!-- Crads input fiels -->
                                     <div>
-                                        <!-- Hidden Inputs -->
+                                        <!-- Hidden Inputs Fields -->
                                         <!-- Code -->
                                         <input
                                             type="hidden"
@@ -186,6 +179,7 @@
 
                                         {!! view_render_event('admin.settings.pipelines.edit.form.stages.name.before', ['pipeline' => $pipeline]) !!}
 
+                                        <!-- Name -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.settings.pipelines.edit.name')
@@ -197,7 +191,6 @@
                                                 v-model="element['name']"
                                                 ::rules="getValidation"
                                                 :label="trans('admin::app.settings.pipelines.edit.name')"
-                                                ::readonly="! canDrag(element)"
                                             />
 
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][name]'" />
@@ -207,7 +200,7 @@
 
                                         {!! view_render_event('admin.settings.pipelines.edit.form.stages.probability.before', ['pipeline' => $pipeline]) !!}
 
-                                        <!-- Probabilty -->
+                                        <!-- Probability -->
                                         <x-admin::form.control-group>
                                             <x-admin::form.control-group.label class="required">
                                                 @lang('admin::app.settings.pipelines.edit.probability')
@@ -218,7 +211,7 @@
                                                 ::name="'stages[' + element.id + '][probability]'"
                                                 v-model="element['probability']"
                                                 rules="required|numeric|min_value:0|max_value:100"
-                                                ::readonly="element?.code != 'new' && ! canDrag(element)"
+                                                ::readonly="element?.code != 'new'"
                                                 :label="trans('admin::app.settings.pipelines.create.probability')"
                                             />
                                             <x-admin::form.control-group.error ::name="'stages[' + element.id + '][probability]'" />
@@ -234,7 +227,6 @@
                                 <div
                                     class="flex cursor-pointer items-center gap-2 border-t border-gray-200 p-2 text-red-600 dark:border-gray-800" 
                                     @click="remove(element)" 
-                                    v-if="canDrag(element)"
                                 >
                                     <i class="icon-delete text-2xl"></i>
                                     
@@ -328,14 +320,6 @@
                         });
                     },
 
-                    canDrag(stage) {
-                        if (['new', 'won', 'lost'].includes(stage.code)) {
-                            return false;
-                        }
-
-                        return true;
-                    },
-
                     slugify(name) {
                         return name
                             .toString()
@@ -348,7 +332,10 @@
 
                     extendValidations() {
                         defineRule('unique_name', (value, stages) => {
-                            if (! value || !value.length) {
+                            if (
+                                ! value
+                                || ! value.length
+                            ) {
                                 return true;
                             }
 
@@ -373,7 +360,11 @@
                     },
 
                     removeUniqueNameErrors() {
-                        if (!this.isDuplicateStageNameExists() && this.errors && Array.isArray(this.errors.items)) {
+                        if (
+                            ! this.isDuplicateStageNameExists()
+                            && this.errors
+                            && Array.isArray(this.errors.items)
+                        ) {
                             const uniqueNameErrorIds = this.errors.items
                                 .filter(error => error.rule === 'unique_name')
                                 .map(error => error.id);
@@ -387,7 +378,7 @@
                         
                         const relatedElement = event.relatedContext.element;
 
-                        return this.canDrag(draggedElement) && this.canDrag(relatedElement);
+                        return true;
                     },
                 },
             })
