@@ -281,6 +281,7 @@ return [
             'installation-description' => 'Krayin kurulumu genellikle birkaç adım içerir. İşte Krayin\'nun kurulum sürecine genel bir bakış',
             'installation-info'        => 'Sizi burada görmekten mutluluk duyuyoruz!',
             'installation-title'       => 'Kurulum\'a Hoş Geldiniz',
+            'installation-wizard'      => 'Kurulum Sihirbazı dili',
             'title'                    => 'Krayin Kurulum Sihirbazı',
             'webkul'                   => 'Webkul',
         ],
