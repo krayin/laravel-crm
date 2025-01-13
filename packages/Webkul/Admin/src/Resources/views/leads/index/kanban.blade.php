@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.kanban.before') !!}
 
-<!-- Kanabn Vue Component -->
+<!-- Kanban Vue Component -->
 <v-leads-kanban>
     <div class="flex flex-col gap-4">
         <!-- Shimmer -->
