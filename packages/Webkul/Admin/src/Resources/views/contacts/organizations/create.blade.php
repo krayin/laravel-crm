@@ -46,7 +46,6 @@
                 </div>
             </div>
 
-            <!-- Left sub-component -->
             <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                 {!! view_render_event('admin.contacts.organizations.create.form_controls.before') !!}
 
