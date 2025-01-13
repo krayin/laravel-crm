@@ -60,11 +60,11 @@
         >
             {!! view_render_event('admin.mail.'.request('route').'.datagrid.before') !!}
 
-           <!-- DataGrid -->
-           <x-admin::datagrid
+            <!-- DataGrid -->
+            <x-admin::datagrid
                 ref="datagrid"
                 :src="route('admin.mail.index', request('route'))"
-            >   
+            >
                 <template #header="{
                     isLoading,
                     available,
@@ -413,6 +413,14 @@
                             },
                         ],
                     };
+                },
+
+                mounted() {
+                    const params = new URLSearchParams(window.location.search);
+
+                    if (params.get('openModal')) {
+                        this.$refs.toggleComposeModal.toggle();
+                    }
                 },
 
                 methods: {

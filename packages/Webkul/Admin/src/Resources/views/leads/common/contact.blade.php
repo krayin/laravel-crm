@@ -96,7 +96,7 @@
             
             props: ['data'],
 
-            data: function () {
+            data () {
                 return {
                     is_searching: false,
 

@@ -68,12 +68,12 @@
                         </div>
 
                         <!-- Save Filter Title -->
-                        <div v-else class="flex items-center gap-x-2">
-                            <span
-                                class="icon-arrow-right rtl:icon-arrow-left mt-0.5 cursor-pointer text-3xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
+                        <div v-else class="flex items-center gap-x-1">
+                            <i
+                                class="icon-left-arrow rtl:icon-right-arrow mt-0.5 cursor-pointer text-[26px] !font-bold hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                 @click="backToFilters"
                             >
-                            </span>
+                            </i>
 
                             <p class="text-xl font-semibold text-gray-800 dark:text-white">
                                 @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
@@ -106,7 +106,7 @@
                                                 <span class="text-xs font-medium text-gray-800 dark:text-white">@{{ filter.name }}</span>
 
                                                 <span
-                                                    class="icon-cross-large-large rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
+                                                    class="icon-cross-large rounded p-1.5 text-lg hover:bg-gray-200 dark:hover:bg-gray-800"
                                                     @click.stop="deleteSavedFilter(filter)"
                                                 >
                                                 </span>
@@ -251,9 +251,7 @@
                                                         >
                                                         </p>
 
-                                                        <x-admin::flat-picker.date 
-                                                           ::allow-input="false"
-                                                        >
+                                                        <x-admin::flat-picker.date ::allow-input="false">
                                                             <input
                                                                 type="date"
                                                                 :name="`${column.index}[from]`"
@@ -326,7 +324,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mt-1.5 grid">
+                                                    <div class="mt-1.5 grid gap-1.5">
                                                         <x-admin::flat-picker.date ::allow-input="false">
                                                             <input
                                                                 type="date"
@@ -652,13 +650,13 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mb-2 mt-1.5 grid">
+                                                    <div class="mb-2 mt-1.5 grid gap-1.5">
                                                         <input
                                                             type="text"
                                                             class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                                             :name="column.index"
                                                             :placeholder="column.label"
-                                                            @keyup.enter="addFilter($event, column)"
+                                                            @change="addFilter($event, column)"
                                                         />
                                                     </div>
 
@@ -831,7 +829,7 @@
                                                         <div class="grid">
                                                             <div class="flex items-center gap-5 py-2.5">
                                                                 <img
-                                                                    src="{{ asset('images/icon-add-product.svg') }}"
+                                                                    src="{{ vite()->asset('images/empty-placeholders/products.svg') }}"
                                                                     class="h-20 w-20 dark:border-gray-800 dark:mix-blend-exclusion dark:invert"
                                                                 >
 
@@ -867,7 +865,7 @@
                                 type="button"
                                 v-if="hasAnyColumn"
                                 @click="isShowSavedFilters = ! isShowSavedFilters"
-                                class="text-gray-900"
+                                class="text-gray-900 dark:text-white"
                                 :disabled="isFilterDirty || ! filters.columns.length > 0"
                             >
                                 @{{ applied.savedFilterId ? '@lang('admin::app.components.datagrid.toolbar.filter.update-filter')' : '@lang('admin::app.components.datagrid.toolbar.filter.save-filter')' }}
