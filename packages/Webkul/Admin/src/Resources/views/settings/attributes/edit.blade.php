@@ -624,7 +624,6 @@
                         ],
 
                         optionsData: [],
-                        // optionsData: @json($attribute->options()->orderBy('sort_order')->get()),
 
                         optionIsNew: true,
 
@@ -637,8 +636,6 @@
                 },
 
                 created () {
-                    // console.log(this.optionsData);
-                    
                     this.getAttributesOption();
                 },
 
@@ -694,8 +691,6 @@
                                         this.optionsData[foundIndex].isDelete = true;
                                     }
                                 }
-
-                                console.log(this.optionsData);
 
                                 this.$emitter.emit('add-flash', { type: 'success', message: "@lang('admin::app.settings.attributes.edit.option-deleted')" });
                             }
