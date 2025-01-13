@@ -1,7 +1,8 @@
 <x-admin::form.control-group.controls.inline.text
     type="inline"
     ::name="'{{ $attribute->code }}'"
-    :value="$value"
+    :value="$value ?? ''"
+    :value-label="$value == '' ? '--' : $value"
     position="left"
     rules="required|{{ $attribute->validation }}"
     :label="$attribute->name"

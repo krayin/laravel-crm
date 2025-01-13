@@ -199,7 +199,7 @@
 
                             <div class="flex w-full items-center justify-between">
                                 <label
-                                    class="icon-attachment cursor-pointer rounded-md p-1 text-2xl transition-all hover:bg-gray-200"
+                                    class="icon-attachment cursor-pointer p-1 text-2xl hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"
                                     for="file-upload"
                                 ></label>
 
@@ -257,6 +257,8 @@
                 },
 
                 save(params, { resetForm, setErrors  }) {
+                    this.isStoring = true;
+
                     let formData = new FormData(this.$refs.mailActionForm);
 
                     this.$axios.post("{{ route('admin.leads.emails.store', 'replaceLeadId') }}".replace('replaceLeadId', this.entity.id), formData, {

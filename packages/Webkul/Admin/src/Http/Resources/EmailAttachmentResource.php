@@ -18,6 +18,7 @@ class EmailAttachmentResource extends JsonResource
             'id'           => $this->id,
             'name'         => $this->name,
             'path'         => $this->path,
+            'url'          => $this->url,
             'size'         => $this->size,
             'content_type' => $this->content_type,
             'content_id'   => $this->content_id,
