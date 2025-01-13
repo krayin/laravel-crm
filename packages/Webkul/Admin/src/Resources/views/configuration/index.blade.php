@@ -4,6 +4,9 @@
         @lang('admin::app.configuration.index.title')
     </x-slot>
 
+    <!-- Breadcrumbs -->
+    <x-admin::breadcrumbs name="configuration" />
+
     {!! view_render_event('admin.configuration.index.header.before') !!}
 
     <!-- Heading of the page -->

@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Hesabınız henüz etkinleştirilmedi. Lütfen yönetici ile iletişime geçin.',
         'login-error'      => 'Kimlik bilgileri kayıtlarımızla eşleşmiyor.',
+        'not-permission'   => 'Yönetici paneline erişim izniniz yok.',
 
         'login' => [
             'email'                => 'E-posta Adresi',
@@ -359,9 +360,13 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => ':webkul tarafından geliştirilen açık kaynaklı bir proje olan :krayin tarafından desteklenmektedir.',
+            ],
+
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Arama',
+                    'title'   => 'Mega Arama',
 
                     'tabs' => [
                         'leads'    => 'Müşteriler',
@@ -437,23 +442,25 @@ return [
             ],
 
             'pdf' => [
-                'title'            => 'Teklif',
-                'grand-total'      => 'Genel Toplam',
                 'adjustment'       => 'Düzenleme',
-                'discount'         => 'İndirim',
-                'tax'              => 'Vergi',
-                'sub-total'        => 'Ara Toplam',
                 'amount'           => 'Tutar',
-                'quantity'         => 'Miktar',
+                'billing-address'  => 'Fatura Adresi',
+                'date'             => 'Tarih',
+                'discount'         => 'İndirim',
+                'expired-at'       => 'Son Kullanma Tarihi',
+                'grand-total'      => 'Genel Toplam',
+                'person'           => 'Kişi',
                 'price'            => 'Fiyat',
                 'product-name'     => 'Ürün Adı',
-                'sku'              => 'SKU',
-                'shipping-address' => 'Teslimat Adresi',
-                'billing-address'  => 'Fatura Adresi',
-                'expired-at'       => 'Son Kullanma Tarihi',
-                'sales-person'     => 'Satış Temsilcisi',
-                'date'             => 'Tarih',
+                'quantity'         => 'Miktar',
                 'quote-id'         => 'Teklif ID',
+                'sales-person'     => 'Satış Temsilcisi',
+                'shipping-address' => 'Teslimat Adresi',
+                'sku'              => 'SKU',
+                'sub-total'        => 'Ara Toplam',
+                'subject'          => 'Konu',
+                'tax'              => 'Vergi',
+                'title'            => 'Teklif',
             ],
         ],
 
@@ -850,12 +857,12 @@ return [
 
                 'create' => [
                     'name'     => 'Ad',
-                    'save-btn' => 'Türü Kaydet',
-                    'title'    => 'Tür Oluştur',
+                    'save-btn' => 'Kaynağı Kaydet',
+                    'title'    => 'Kaynak Oluştur',
                 ],
 
                 'edit' => [
-                    'title' => 'Tür Düzenle',
+                    'title' => 'Kaynağı Düzenle',
                 ],
             ],
         ],
@@ -887,6 +894,7 @@ return [
                 'send-email-to-person'       => 'Kişiye e-posta gönder',
                 'add-tag'                    => 'Etiket Ekle',
                 'add-note-as-activity'       => 'Notu Aktivite Olarak Ekle',
+                'update-quote'               => 'Teklifi Güncelle',
             ],
 
             'create' => [
@@ -1027,6 +1035,7 @@ return [
                 'form-submit-button-color'  => 'Form Gönderim Düğmesi Rengi',
                 'form-title-color'          => 'Form Başlık Rengi',
                 'general'                   => 'Genel',
+                'leads'                     => 'Fırsatlar',
                 'preview'                   => 'Önizleme',
                 'person'                    => 'Kişi',
                 'public-url'                => 'Genel URL',
@@ -1378,10 +1387,10 @@ return [
             'index' => [
                 'title'              => 'Öznitelikler',
                 'create-btn'         => 'Öznitelik Oluştur',
-                'create-success'     => 'Öznitelikler başarıyla oluşturuldu.',
-                'update-success'     => 'Öznitelikler başarıyla güncellendi.',
-                'delete-success'     => 'Öznitelikler başarıyla silindi.',
-                'delete-failed'      => 'Öznitelikler silinemedi.',
+                'create-success'     => 'Öznitelik başarıyla oluşturuldu.',
+                'update-success'     => 'Öznitelik başarıyla güncellendi.',
+                'delete-success'     => 'Öznitelik başarıyla silindi.',
+                'delete-failed'      => 'Öznitelik silinemedi.',
                 'user-define-error'  => 'Sistem özniteliği silinemez.',
                 'mass-delete-failed' => 'Sistem öznitelikleri silinemez.',
 
@@ -1396,51 +1405,73 @@ return [
                     'is-default'  => 'Varsayılan mı',
                     'edit'        => 'Düzenle',
                     'delete'      => 'Sil',
+
+                    'entity-types' => [
+                        'leads'         => 'Potansiyeller',
+                        'organizations' => 'Organizasyonlar',
+                        'persons'       => 'Kişiler',
+                        'products'      => 'Ürünler',
+                        'quotes'        => 'Teklifler',
+                        'warehouses'    => 'Depolar',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Adres',
+                        'date'     => 'Tarih',
+                        'email'    => 'E-posta',
+                        'lookup'   => 'Arama',
+                        'phone'    => 'Telefon',
+                        'price'    => 'Fiyat',
+                        'select'   => 'Seç',
+                        'text'     => 'Metin',
+                        'textarea' => 'Metin Alanı',
+                    ],
                 ],
             ],
 
             'create'  => [
-                'title'                 => 'Öznitelik Oluştur',
-                'save-btn'              => 'Özniteliği Kaydet',
-                'code'                  => 'Kod',
-                'name'                  => 'Ad',
-                'entity-type'           => 'Varlık Türü',
-                'type'                  => 'Tür',
-                'validations'           => 'Doğrulamalar',
-                'is-required'           => 'Gerekli mi',
-                'input-validation'      => 'Girdi Doğrulaması',
-                'is-unique'             => 'Benzersiz mi',
-                'labels'                => 'Etiketler',
-                'general'               => 'Genel',
-                'numeric'               => 'Sayısal',
-                'decimal'               => 'Ondalık',
-                'url'                   => 'URL',
-                'options'               => 'Seçenekler',
-                'option-type'           => 'Seçenek Türü',
-                'lookup-type'           => 'Arama Türü',
-                'add-option'            => 'Seçenek Ekle',
-                'save-option'           => 'Seçeneği Kaydet',
-                'option-name'           => 'Seçenek Adı',
+                'actions'               => 'İşlemler',
                 'add-attribute-options' => 'Öznitelik Seçenekleri Ekle',
-                'text'                  => 'Metin',
-                'textarea'              => 'Metin Alanı',
-                'price'                 => 'Fiyat',
-                'boolean'               => 'Boolean',
-                'select'                => 'Seç',
-                'multiselect'           => 'Çoklu Seçim',
-                'email'                 => 'E-posta',
+                'add-option'            => 'Seçenek Ekle',
                 'address'               => 'Adres',
-                'phone'                 => 'Telefon',
-                'datetime'              => 'Tarih Saat',
-                'date'                  => 'Tarih',
-                'image'                 => 'Resim',
-                'file'                  => 'Dosya',
-                'lookup'                => 'Arama',
-                'entity_type'           => 'Varlık türü',
+                'boolean'               => 'Boolean',
                 'checkbox'              => 'Onay Kutusu',
+                'code'                  => 'Kod',
+                'date'                  => 'Tarih',
+                'datetime'              => 'Tarih Saat',
+                'decimal'               => 'Ondalık',
+                'email'                 => 'E-posta',
+                'entity-type'           => 'Varlık Türü',
+                'entity_type'           => 'Varlık türü',
+                'file'                  => 'Dosya',
+                'general'               => 'Genel',
+                'image'                 => 'Resim',
+                'input-validation'      => 'Girdi Doğrulaması',
+                'is-required'           => 'Gerekli mi',
+                'is-unique'             => 'Benzersiz mi',
                 'is_required'           => 'Gerekli mi',
                 'is_unique'             => 'Benzersiz mi',
-                'actions'               => 'İşlemler',
+                'labels'                => 'Etiketler',
+                'lookup'                => 'Arama',
+                'lookup-type'           => 'Arama Türü',
+                'multiselect'           => 'Çoklu Seçim',
+                'name'                  => 'Ad',
+                'numeric'               => 'Sayısal',
+                'option-deleted'        => 'Öznitelik Seçeneği başarıyla silindi',
+                'option-name'           => 'Seçenek Adı',
+                'option-type'           => 'Seçenek Türü',
+                'options'               => 'Seçenekler',
+                'phone'                 => 'Telefon',
+                'price'                 => 'Fiyat',
+                'save-btn'              => 'Özniteliği Kaydet',
+                'save-option'           => 'Seçeneği Kaydet',
+                'select'                => 'Seç',
+                'text'                  => 'Metin',
+                'textarea'              => 'Metin Alanı',
+                'title'                 => 'Öznitelik Oluştur',
+                'type'                  => 'Tür',
+                'url'                   => 'URL',
+                'validations'           => 'Doğrulamalar',
             ],
 
             'edit'  => [
@@ -1538,15 +1569,17 @@ return [
             'users'           => 'Kullanıcılar',
         ],
 
-        'updated'              => ':attribute güncellendi',
+        'updated'              => 'Güncellendi :attribute',
         'created'              => 'Oluşturuldu',
-        'duration-overlapping' => 'Katılımcıların bu zamanda başka bir toplantısı var. Devam etmek istiyor musunuz?',
+        'duration-overlapping' => 'Katılımcıların bu saatte başka bir toplantısı var. Devam etmek istiyor musunuz?',
         'create-success'       => 'Etkinlik başarıyla oluşturuldu.',
         'update-success'       => 'Etkinlik başarıyla güncellendi.',
-        'overlapping-error'    => 'Katılımcıların bu zamanda başka bir toplantısı var.',
-        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'overlapping-error'    => 'Katılımcıların bu saatte başka bir toplantısı var.',
         'destroy-success'      => 'Etkinlik başarıyla silindi.',
-        'delete-failed'        => 'Etkinlik silinemedi.',
+        'delete-failed'        => 'Etkinlik silinemiyor.',
+        'mass-update-success'  => 'Etkinlikler başarıyla güncellendi.',
+        'mass-destroy-success' => 'Etkinlikler başarıyla silindi.',
+        'mass-delete-failed'   => 'Etkinlikler silinemiyor.',
     ],
 
     'mail' => [
@@ -1573,11 +1606,13 @@ return [
 
             'datagrid' => [
                 'id'            => 'ID',
-                'from'          => 'Kimden',
-                'to'            => 'Kime',
+                'from'          => 'Gönderen',
+                'to'            => 'Alıcı',
                 'subject'       => 'Konu',
-                'tag-name'      => 'Etiket Adı',
-                'created-at'    => 'Oluşturulma Tarihi',
+                'tags'          => 'Etiketler',
+                'content'       => 'İçerik',
+                'content'       => 'Eklentiler',
+                'date'          => 'Tarih',
                 'move-to-inbox' => 'Gelen Kutusuna Taşı',
                 'edit'          => 'Düzenle',
                 'view'          => 'Görüntüle',
@@ -1652,6 +1687,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead başarıyla oluşturuldu.',
         'update-success'    => 'Lead başarıyla güncellendi.',
+        'update-failed'     => 'Potansiyel müşteriler silinemez.',
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
@@ -1670,7 +1706,7 @@ return [
                 'contact-person'      => 'İletişim Kişisi',
                 'stage'               => 'Aşama',
                 'rotten-lead'         => 'Çürümüş Lead',
-                'expected-close-date' => 'Beklenen Kapanış Tarihi',
+                'date-to'             => 'Bitiş Tarihi',
                 'created-at'          => 'Oluşturulma Tarihi',
                 'no'                  => 'Hayır',
                 'yes'                 => 'Evet',
@@ -1708,7 +1744,9 @@ return [
                         'clear-all'     => 'Tümünü Temizle',
                         'filter'        => 'Filtre',
                         'filters'       => 'Filtreler',
+                        'from'          => 'Kimden',
                         'select'        => 'Seç',
+                        'to'            => 'Kime',
                     ],
                 ],
             ],
@@ -1844,7 +1882,7 @@ return [
                     'info'            => 'Genel ayarlarınızı buradan güncelleyebilirsiniz.',
                     'locale-settings' => [
                         'title'       => 'Yerel Ayarlar',
-                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin İngilizce (en), Fransızca (fr) veya Japonca (ja).',
+                        'title-info'  => 'Kullanıcı arayüzünde kullanılan dili tanımlar, örneğin Arapça (ar), İngilizce (en), İspanyolca (es), Farsça (fa) ve Türkçe (tr).',
                     ],
                 ],
             ],
@@ -1901,7 +1939,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Durumlara Göre Açık Leadler',
+                'title'       => 'Aşamalara Göre Açık Leadler',
                 'empty-title' => 'Veri Bulunamadı',
                 'empty-info'  => 'Seçilen aralık için veri bulunamadı',
             ],
@@ -1909,7 +1947,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Sürüm : :version',
+        'app-version'          => 'Sürüm: :version',
         'dashboard'            => 'Gösterge Paneli',
         'leads'                => 'Leadler',
         'quotes'               => 'Teklifler',
@@ -1960,6 +1998,8 @@ return [
         'email-templates-info' => 'CRM’den e-posta şablonları ekleyin, düzenleyin veya silin',
         'workflows'            => 'İş Akışları',
         'workflows-info'       => 'CRM’den iş akışlarını ekleyin, düzenleyin veya silin',
+        'webhooks'             => 'Webhooklar',
+        'webhooks-info'        => 'CRM’den webhookları ekleyin, düzenleyin veya silin',
         'other-settings'       => 'Diğer Ayarlar',
         'other-settings-info'  => 'CRM’de tüm ekstra ayarlarınızı yönetin',
         'tags'                 => 'Etiketler',
@@ -2018,6 +2058,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'Bu sayfaya erişme yetkiniz yok',
+        'dashboard' => 'Kontrol Paneli',
+        'go-back'   => 'Geri Dön',
+        'support'   => 'Sorun devam ederse, yardım için bize <a href=":link" class=":class">:email</a> adresinden ulaşın.',
+
+        '404' => [
+            'description' => 'Oops! Aradığınız sayfa tatilde. Aradığınız şeyi bulamadık gibi görünüyor.',
+            'title'       => '404 Sayfa Bulunamadı',
+        ],
+
+        '401' => [
+            'description' => 'Oops! Bu sayfaya erişim izniniz yok gibi görünüyor. Gerekli yetkilere sahip değilsiniz.',
+            'title'       => '401 Yetkisiz',
+        ],
+
+        '403' => [
+            'description' => 'Oops! Bu sayfa erişime kapalı. Bu içeriği görüntülemek için gerekli izinlere sahip değilsiniz gibi görünüyor.',
+            'title'       => '403 Yasak',
+        ],
+
+        '500' => [
+            'description' => 'Oops! Bir şeyler ters gitti. Aradığınız sayfa yüklenirken sorun yaşıyoruz gibi görünüyor.',
+            'title'       => '500 Sunucu Hatası',
+        ],
+
+        '503' => [
+            'description' => 'Oops! Görünüşe göre geçici bir bakım nedeniyle kapalıyız. Lütfen kısa süre sonra tekrar kontrol edin.',
+            'title'       => '503 Hizmet Kullanılamıyor',
+        ],
     ],
 ];

@@ -44,6 +44,7 @@ return [
     'users' => [
         'activate-warning' => 'Tu cuenta aún no está activada. Por favor, contacta al administrador.',
         'login-error'      => 'Las credenciales no coinciden con nuestros registros.',
+        'not-permission'   => 'No tienes permiso para acceder al panel de administración.',
 
         'login' => [
             'email'                => 'Dirección de correo electrónico',
@@ -359,9 +360,13 @@ return [
         ],
 
         'layouts' => [
+            'powered-by' => [
+                'description' => 'Desarrollado por :krayin, un proyecto de código abierto de :webkul.',
+            ],
+
             'header' => [
                 'mega-search' => [
-                    'title'   => 'Buscar',
+                    'title'   => 'Búsqueda Mega',
 
                     'tabs' => [
                         'leads'    => 'Oportunidades',
@@ -437,23 +442,25 @@ return [
             ],
 
             'pdf' => [
-                'title'            => 'Cotización',
-                'grand-total'      => 'Total General',
                 'adjustment'       => 'Ajuste',
-                'discount'         => 'Descuento',
-                'tax'              => 'Impuesto',
-                'sub-total'        => 'Subtotal',
                 'amount'           => 'Monto',
-                'quantity'         => 'Cantidad',
+                'billing-address'  => 'Dirección de Facturación',
+                'date'             => 'Fecha',
+                'discount'         => 'Descuento',
+                'expired-at'       => 'Vence en',
+                'grand-total'      => 'Total General',
+                'person'           => 'Persona',
                 'price'            => 'Precio',
                 'product-name'     => 'Nombre del Producto',
-                'sku'              => 'SKU',
-                'shipping-address' => 'Dirección de Envío',
-                'billing-address'  => 'Dirección de Facturación',
-                'expired-at'       => 'Vence en',
-                'sales-person'     => 'Vendedor',
-                'date'             => 'Fecha',
+                'quantity'         => 'Cantidad',
                 'quote-id'         => 'ID de Cotización',
+                'sales-person'     => 'Vendedor',
+                'shipping-address' => 'Dirección de Envío',
+                'sku'              => 'SKU',
+                'sub-total'        => 'Subtotal',
+                'subject'          => 'Asunto',
+                'tax'              => 'Impuesto',
+                'title'            => 'Cotización',
             ],
         ],
 
@@ -850,12 +857,12 @@ return [
 
                 'create' => [
                     'name'     => 'Nombre',
-                    'save-btn' => 'Guardar Fuente',
-                    'title'    => 'Crear Fuente',
+                    'save-btn' => 'Guardar fuente',
+                    'title'    => 'Crear fuente',
                 ],
 
                 'edit' => [
-                    'title' => 'Editar Fuente',
+                    'title' => 'Editar fuente',
                 ],
             ],
         ],
@@ -887,6 +894,7 @@ return [
                 'send-email-to-person'       => 'Enviar correo a la persona',
                 'add-tag'                    => 'Agregar Etiqueta',
                 'add-note-as-activity'       => 'Agregar Nota como Actividad',
+                'update-quote'               => 'Actualizar cotización',
             ],
 
             'create' => [
@@ -1378,10 +1386,10 @@ return [
             'index' => [
                 'title'              => 'Atributos',
                 'create-btn'         => 'Crear Atributo',
-                'create-success'     => 'Atributos creados con éxito.',
-                'update-success'     => 'Atributos actualizados con éxito.',
-                'delete-success'     => 'Atributos eliminados con éxito.',
-                'delete-failed'      => 'No se pueden eliminar los atributos.',
+                'create-success'     => 'Atributo creados con éxito.',
+                'update-success'     => 'Atributo actualizados con éxito.',
+                'delete-success'     => 'Atributo eliminados con éxito.',
+                'delete-failed'      => 'No se pueden eliminar los atributo.',
                 'user-define-error'  => 'No se puede eliminar el atributo del sistema.',
                 'mass-delete-failed' => 'No se pueden eliminar los atributos del sistema.',
 
@@ -1396,51 +1404,73 @@ return [
                     'is-default'  => 'Es Predeterminado',
                     'edit'        => 'Editar',
                     'delete'      => 'Eliminar',
+
+                    'entity-types' => [
+                        'leads'         => 'Clientes potenciales',
+                        'organizations' => 'Organizaciones',
+                        'persons'       => 'Personas',
+                        'products'      => 'Productos',
+                        'quotes'        => 'Cotizaciones',
+                        'warehouses'    => 'Almacenes',
+                    ],
+
+                    'types'       => [
+                        'address'  => 'Dirección',
+                        'date'     => 'Fecha',
+                        'email'    => 'Correo Electrónico',
+                        'lookup'   => 'Búsqueda',
+                        'phone'    => 'Teléfono',
+                        'price'    => 'Precio',
+                        'select'   => 'Seleccionar',
+                        'text'     => 'Texto',
+                        'textarea' => 'Área de Texto',
+                    ],
                 ],
             ],
 
             'create'  => [
-                'title'                 => 'Crear Atributo',
-                'save-btn'              => 'Guardar Atributo',
-                'code'                  => 'Código',
-                'name'                  => 'Nombre',
-                'entity-type'           => 'Tipo de Entidad',
-                'type'                  => 'Tipo',
-                'validations'           => 'Validaciones',
-                'is-required'           => 'Es Requerido',
-                'input-validation'      => 'Validación de Entrada',
-                'is-unique'             => 'Es Único',
-                'labels'                => 'Etiquetas',
-                'general'               => 'General',
-                'numeric'               => 'Numérico',
-                'decimal'               => 'Decimal',
-                'url'                   => 'Url',
-                'options'               => 'Opciones',
-                'option-type'           => 'Tipo de Opción',
-                'lookup-type'           => 'Tipo de Búsqueda',
-                'add-option'            => 'Agregar Opción',
-                'save-option'           => 'Guardar Opción',
-                'option-name'           => 'Nombre de Opción',
+                'actions'               => 'Acciones',
                 'add-attribute-options' => 'Agregar Opciones de Atributo',
-                'text'                  => 'Texto',
-                'textarea'              => 'Área de Texto',
-                'price'                 => 'Precio',
-                'boolean'               => 'Booleano',
-                'select'                => 'Seleccionar',
-                'multiselect'           => 'Selección Múltiple',
-                'email'                 => 'Correo Electrónico',
+                'add-option'            => 'Agregar Opción',
                 'address'               => 'Dirección',
-                'phone'                 => 'Teléfono',
-                'datetime'              => 'Fecha y Hora',
-                'date'                  => 'Fecha',
-                'image'                 => 'Imagen',
-                'file'                  => 'Archivo',
-                'lookup'                => 'Búsqueda',
-                'entity_type'           => 'Tipo de Entidad',
+                'boolean'               => 'Booleano',
                 'checkbox'              => 'Casilla de Verificación',
+                'code'                  => 'Código',
+                'date'                  => 'Fecha',
+                'datetime'              => 'Fecha y Hora',
+                'decimal'               => 'Decimal',
+                'email'                 => 'Correo Electrónico',
+                'entity-type'           => 'Tipo de Entidad',
+                'entity_type'           => 'Tipo de Entidad',
+                'file'                  => 'Archivo',
+                'general'               => 'General',
+                'image'                 => 'Imagen',
+                'input-validation'      => 'Validación de Entrada',
+                'is-required'           => 'Es Requerido',
+                'is-unique'             => 'Es Único',
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
-                'actions'               => 'Acciones',
+                'labels'                => 'Etiquetas',
+                'lookup'                => 'Búsqueda',
+                'lookup-type'           => 'Tipo de Búsqueda',
+                'multiselect'           => 'Selección Múltiple',
+                'name'                  => 'Nombre',
+                'numeric'               => 'Numérico',
+                'option-deleted'        => 'Opción de atributo eliminada con éxito',
+                'option-name'           => 'Nombre de Opción',
+                'option-type'           => 'Tipo de Opción',
+                'options'               => 'Opciones',
+                'phone'                 => 'Teléfono',
+                'price'                 => 'Precio',
+                'save-btn'              => 'Guardar Atributo',
+                'save-option'           => 'Guardar Opción',
+                'select'                => 'Seleccionar',
+                'text'                  => 'Texto',
+                'textarea'              => 'Área de Texto',
+                'title'                 => 'Crear Atributo',
+                'type'                  => 'Tipo',
+                'url'                   => 'Url',
+                'validations'           => 'Validaciones',
             ],
 
             'edit'  => [
@@ -1540,13 +1570,15 @@ return [
 
         'updated'              => 'Actualizado :attribute',
         'created'              => 'Creado',
-        'duration-overlapping' => 'Los participantes tienen otra reunión a esta hora. ¿Desea continuar?',
+        'duration-overlapping' => 'Los participantes tienen otra reunión en este momento. ¿Deseas continuar?',
         'create-success'       => 'Actividad creada con éxito.',
         'update-success'       => 'Actividad actualizada con éxito.',
-        'overlapping-error'    => 'Los participantes tienen otra reunión a esta hora.',
-        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'overlapping-error'    => 'Los participantes tienen otra reunión en este momento.',
         'destroy-success'      => 'Actividad eliminada con éxito.',
         'delete-failed'        => 'No se puede eliminar la actividad.',
+        'mass-update-success'  => 'Actividades actualizadas con éxito.',
+        'mass-destroy-success' => 'Actividades eliminadas con éxito.',
+        'mass-delete-failed'   => 'No se pueden eliminar las actividades.',
     ],
 
     'mail' => [
@@ -1576,9 +1608,11 @@ return [
                 'from'          => 'De',
                 'to'            => 'Para',
                 'subject'       => 'Asunto',
-                'tag-name'      => 'Nombre de la etiqueta',
-                'created-at'    => 'Creado En',
-                'move-to-inbox' => 'Mover a Bandeja de Entrada',
+                'tags'          => 'Etiquetas',
+                'content'       => 'Contenido',
+                'attachments'   => 'Archivos adjuntos',
+                'date'          => 'Fecha',
+                'move-to-inbox' => 'Mover a la bandeja de entrada',
                 'edit'          => 'Editar',
                 'view'          => 'Ver',
                 'delete'        => 'Eliminar',
@@ -1652,6 +1686,7 @@ return [
     'leads' => [
         'create-success'    => 'Lead creado exitosamente.',
         'update-success'    => 'Lead actualizado exitosamente.',
+        'update-failed'     => 'No se pueden eliminar los clientes potenciales.',
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
@@ -1670,7 +1705,7 @@ return [
                 'contact-person'      => 'Persona de Contacto',
                 'stage'               => 'Etapa',
                 'rotten-lead'         => 'Lead Podrido',
-                'expected-close-date' => 'Fecha de Cierre Esperada',
+                'date-to'             => 'Fecha Hasta',
                 'created-at'          => 'Creado En',
                 'no'                  => 'No',
                 'yes'                 => 'Sí',
@@ -1708,7 +1743,9 @@ return [
                         'clear-all'     => 'Limpiar Todo',
                         'filter'        => 'Filtrar',
                         'filters'       => 'Filtros',
+                        'from'          => 'De',
                         'select'        => 'Seleccionar',
+                        'to'            => 'A',
                     ],
                 ],
             ],
@@ -1844,7 +1881,7 @@ return [
                     'info'            => 'Actualiza tus ajustes generales aquí.',
                     'locale-settings' => [
                         'title'       => 'Configuración Regional',
-                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como Inglés (en), Francés (fr) o Japonés (ja).',
+                        'title-info'  => 'Define el idioma utilizado en la interfaz de usuario, como árabe (ar), inglés (en), español (es), persa (fa) y turco (tr).',
                     ],
                 ],
             ],
@@ -1901,7 +1938,7 @@ return [
             ],
 
             'open-leads-by-states' => [
-                'title'       => 'Leads Abiertos por Estados',
+                'title'       => 'Leads Abiertos por Etapas',
                 'empty-title' => 'No Hay Datos Disponibles',
                 'empty-info'  => 'No hay datos disponibles para el intervalo seleccionado',
             ],
@@ -1909,7 +1946,7 @@ return [
     ],
 
     'layouts' => [
-        'app-version'          => 'Versión : :version',
+        'app-version'          => 'Versión: :version',
         'dashboard'            => 'Tablero',
         'leads'                => 'Leads',
         'quotes'               => 'Cotizaciones',
@@ -1960,6 +1997,8 @@ return [
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
+        'webhooks'             => 'Webhooks',
+        'webhooks-info'        => 'Agregar, editar o eliminar webhooks desde CRM',
         'other-settings'       => 'Otras Configuraciones',
         'other-settings-info'  => 'Administra todas tus configuraciones adicionales en el CRM',
         'tags'                 => 'Etiquetas',
@@ -2018,6 +2057,33 @@ return [
     ],
 
     'errors' => [
-        '401' => 'No estás autorizado para acceder a esta página',
+        'dashboard' => 'Tablero',
+        'go-back'   => 'Volver',
+        'support'   => 'Si el problema persiste, contáctanos en <a href=":link" class=":class">:email</a> para obtener ayuda.',
+
+        '404' => [
+            'description' => '¡Ups! La página que estás buscando está de vacaciones. Parece que no pudimos encontrar lo que estabas buscando.',
+            'title'       => '404 Página No Encontrada',
+        ],
+
+        '401' => [
+            'description' => '¡Ups! Parece que no tienes permiso para acceder a esta página. Parece que te faltan las credenciales necesarias.',
+            'title'       => '401 No Autorizado',
+        ],
+
+        '403' => [
+            'description' => '¡Ups! Esta página está fuera de límites. Parece que no tienes los permisos necesarios para ver este contenido.',
+            'title'       => '403 Prohibido',
+        ],
+
+        '500' => [
+            'description' => '¡Ups! Algo salió mal. Parece que tenemos problemas para cargar la página que estás buscando.',
+            'title'       => '500 Error Interno del Servidor',
+        ],
+
+        '503' => [
+            'description' => '¡Ups! Parece que estamos temporalmente fuera de servicio por mantenimiento. Vuelve a intentarlo en un rato.',
+            'title'       => '503 Servicio No Disponible',
+        ],
     ],
 ];

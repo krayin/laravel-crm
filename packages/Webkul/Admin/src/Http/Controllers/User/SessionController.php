@@ -54,6 +54,20 @@ class SessionController extends Controller
             return redirect()->route('admin.session.create');
         }
 
+        if (! bouncer()->hasPermission('dashboard')) {
+            $availableNextMenu = menu()->getItems('admin')?->first();
+
+            if (is_null($availableNextMenu)) {
+                session()->flash('error', trans('admin::app.users.not-permission'));
+
+                auth()->guard('user')->logout();
+
+                return redirect()->route('admin.session.create');
+            }
+
+            return redirect()->to($availableNextMenu->getUrl());
+        }
+
         return redirect()->intended(route('admin.dashboard.index'));
     }
 

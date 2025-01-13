@@ -8,7 +8,7 @@
     <!-- Input Form -->
     <x-admin::form
         :action="route('admin.settings.attributes.update', $attribute->id)"
-        enctype="multipart/form-data"
+        encType="multipart/form-data"
         method="PUT"
     >
         <div class="flex flex-col gap-4">
@@ -79,7 +79,7 @@
                 {!! view_render_event('admin.catalog.attributes.edit.card.label.before', ['attribute' => $attribute]) !!}
                 
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.settings.attributes.edit.labels')
                         </p>
@@ -132,7 +132,10 @@
                                     {!! view_render_event('admin.settings.attributes.edit.form_controls.option_type.before', ['attribute' => $attribute]) !!}
 
                                     <!-- Input Option Type -->
-                                    <x-admin::form.control-group v-if="attributeType != 'lookup'" class="mb-2.5 w-1/2">
+                                    <x-admin::form.control-group
+                                        v-if="attributeType != 'lookup'"
+                                        class="mb-2.5 w-1/2"
+                                    >
                                         <x-admin::form.control-group.label>
                                             @lang('admin::app.settings.attributes.create.option-type')
                                         </x-admin::form.control-group.label>
@@ -148,6 +151,7 @@
                                             <option value="lookup">
                                                 @lang('admin::app.settings.attributes.create.lookup')
                                             </option>
+
                                             <option value="options">
                                                 @lang('admin::app.settings.attributes.create.options')
                                             </option>
@@ -449,7 +453,7 @@
                                         disabled="disabled"
                                     >
                                         <!-- Here! All Needed types are defined -->
-                                        @foreach(['number', 'email', 'decimal', 'url'] as $type)
+                                        @foreach(['numeric', 'email', 'decimal', 'url'] as $type)
                                             <option value="{{ $type }}" {{ $attribute->validation == $type ? 'selected' : '' }}>
                                                 @lang('admin::app.settings.attributes.edit.' . $type)
                                             </option>
@@ -613,9 +617,13 @@
 
                         isNullOptionChecked: false,
 
-                        swatchValue: [],
+                        swatchValue: [
+                            {
+                                image: [],
+                            }
+                        ],
 
-                        optionsData: @json($attribute->options()->orderBy('sort_order')->get()),
+                        optionsData: [],
 
                         optionIsNew: true,
 
@@ -625,6 +633,10 @@
 
                         optionType: "{{ $attribute->lookup_type ? 'lookup' : 'options' }}",
                     }
+                },
+
+                created () {
+                    this.getAttributesOption();
                 },
 
                 methods: {
@@ -643,6 +655,12 @@
                         }
 
                         let formData = new FormData(this.$refs.editOptionsForm);
+
+                        const sliderImage = formData.get("swatch_value[]");
+
+                        if (sliderImage) {
+                            params.swatch_value = sliderImage;
+                        }
 
                         this.$refs.addOptionsRow.toggle();
 
@@ -683,6 +701,34 @@
                         if (! event.isActive) {
                             this.isNullOptionChecked = false;
                         }
+                    },
+
+                    getAttributesOption() {
+                        this.$axios.get(`{{ route('admin.settings.attributes.options', $attribute->id) }}`)
+                            .then(response => {
+                                let options = response.data;
+
+                                options.forEach((option) => {
+                                    let row = {
+                                        'id': option.id,
+                                        'name': option.name,
+                                        'sort_order': option.sort_order,
+                                        'attribute_id': option.attribute_id,
+                                        'isNew': false,
+                                        'isDelete': false,
+                                    };
+
+                                    if (! option.label) {
+                                        this.isNullOptionChecked = true;
+
+                                        row['notRequired'] = true;
+                                    } else {
+                                        row['notRequired'] = false;
+                                    }
+
+                                    this.optionsData.push(row);
+                                });
+                            });
                     },
 
                     setFile(file, id) {

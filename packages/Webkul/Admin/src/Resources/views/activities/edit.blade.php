@@ -109,7 +109,7 @@
                                 @lang('admin::app.activities.edit.participants')
                             </x-admin::form.control-group.label>
 
-                            <!-- Participants Multilookup Vue Component -->
+                            <!-- Participants Multi lookup Vue Component -->
                             <v-multi-lookup-component>
                                 <div 
                                     class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
@@ -229,7 +229,6 @@
                                     name="location"
                                     id="location"
                                     :value="old('location') ?? $activity->location"
-                                    rules="required"
                                     :label="trans('admin::app.activities.edit.location')"
                                     :placeholder="trans('admin::app.activities.edit.location')"
                                 />

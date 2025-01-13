@@ -51,7 +51,9 @@
             <input type="hidden" id="lead_pipeline_stage_id" name="lead_pipeline_stage_id" value="{{ $lead->lead_pipeline_stage_id }}" />
 
             <!-- Lead Edit Component -->
-            <v-lead-edit :lead="{{ json_encode($lead) }}"></v-lead-edit>
+            <v-lead-edit :lead="{{ json_encode($lead) }}">
+                <x-admin::shimmer.leads.datagrid />
+            </v-lead-edit>
         </div>
     </x-admin::form>
 

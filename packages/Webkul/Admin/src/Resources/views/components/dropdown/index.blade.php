@@ -12,7 +12,7 @@
     @isset($content)
         <template #content="{ isActive, positionStyles }">
             <div
-                {{ $content->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-5 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900']) }}
+                {{ $content->attributes->merge(['class' => 'absolute z-10 w-max rounded bg-white py-5 shadow-[0px_10px_20px_0px_#0000001F] dark:bg-gray-900 border border-gray-300 dark:border-gray-800']) }}
                 :style="positionStyles"
                 v-show="isActive"
             >
@@ -132,21 +132,21 @@
 
                         case 'top-left':
                             return [
-                                `min-width: ${this.toggleBlockWidth}px`
+                                `min-width: ${this.toggleBlockWidth}px`,
                                 `bottom: ${this.toggleBlockHeight*2}px`,
                                 'left: 0',
                             ];
 
                         case 'top-right':
                             return [
-                                `min-width: ${this.toggleBlockWidth}px`
+                                `min-width: ${this.toggleBlockWidth}px`,
                                 `bottom: ${this.toggleBlockHeight*2}px`,
                                 'right: 0',
                             ];
 
                         default:
                             return [
-                                `min-width: ${this.toggleBlockWidth}px`
+                                `min-width: ${this.toggleBlockWidth}px`,
                                 `top: ${this.toggleBlockHeight}px`,
                                 'left: 0',
                             ];

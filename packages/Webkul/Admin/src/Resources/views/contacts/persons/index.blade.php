@@ -38,7 +38,7 @@
 
         <v-persons>
             <!-- Datagrid shimmer -->
-            <x-admin::shimmer.datagrid />
+            <x-admin::shimmer.datagrid :is-multi-row="true"/>
         </v-persons>
 
         {!! view_render_event('admin.persons.index.datagrid.after') !!}
@@ -117,7 +117,7 @@
 
                                     <i
                                         class="align-text-bottom text-base text-gray-800 dark:text-white ltr:ml-1.5 rtl:mr-1.5"
-                                        :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
+                                        :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
                                         v-if="columnGroup.includes(applied.sort.column)"
                                     ></i>
                                 </p>

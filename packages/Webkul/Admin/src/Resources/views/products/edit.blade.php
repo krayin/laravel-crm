@@ -9,6 +9,7 @@
 
     <x-admin::form
         :action="route('admin.products.update', $product->id)"
+        encType="multipart/form-data"
         method="PUT"
     >
         <div class="flex flex-col gap-4">
@@ -47,7 +48,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         <p class="mb-4 text-base font-semibold text-gray-800 dark:text-white">
                             @lang('admin::app.products.create.general')
                         </p>

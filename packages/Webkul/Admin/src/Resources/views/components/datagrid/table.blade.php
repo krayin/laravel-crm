@@ -49,10 +49,10 @@
                                     >
 
                                     <span
-                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-blue-600"
+                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-500 peer-checked:text-brandColor"
                                         :class="[
                                             applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor ' : (
-                                                applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-partial peer-checked:brandColor' : ''
+                                                applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-multiple peer-checked:brandColor' : ''
                                             ),
                                         ]"
                                     >
@@ -62,25 +62,25 @@
 
                             <!-- Columns -->
                             <template v-for="column in available.columns">
-                                <p
+                                <div
                                     class="flex items-center gap-1.5 break-words"
                                     :class="{'cursor-pointer select-none hover:text-gray-800 dark:hover:text-white': column.sortable}"
                                     @click="sort(column)"
                                     v-if="column.visibility"
-                                >
+                                > 
                                     <p v-html="column.label"></p>
 
                                     <i
                                         class="align-text-bottom text-base text-gray-600 dark:text-gray-300"
-                                        :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
+                                        :class="[applied.sort.order === 'asc' ? 'icon-stats-down': 'icon-stats-up']"
                                         v-if="column.index == applied.sort.column"
                                     ></i>
-                                </p>
+                                </div>
                             </template>
 
                             <!-- Actions -->
                             <p
-                                class="place-self-end"
+                                class="text-end"
                                 v-if="available.actions.length"
                             >
                                 @lang('admin::app.components.datagrid.table.actions')

@@ -1,6 +1,6 @@
 {!! view_render_event('admin.leads.index.kanban.before') !!}
 
-<!-- Kanabn Vue Component -->
+<!-- Kanban Vue Component -->
 <v-leads-kanban>
     <div class="flex flex-col gap-4">
         <!-- Shimmer -->
@@ -11,7 +11,10 @@
 {!! view_render_event('admin.leads.index.kanban.after') !!}
 
 @pushOnce('scripts')
-    <script type="text/x-template" id="v-leads-kanban-template">
+    <script
+        type="text/x-template"
+        id="v-leads-kanban-template"
+    >
         <template v-if="isLoading">
             <div class="flex flex-col gap-4">
                 <x-admin::shimmer.leads.index.kanban />
@@ -95,11 +98,11 @@
 
                                     <div class="flex flex-col items-center gap-4">
                                         <div class="flex flex-col items-center gap-2">
-                                            <p class="text-xl font-semibold dark:text-white">
+                                            <p class="!text-base font-semibold dark:text-white">
                                                 @lang('admin::app.leads.index.kanban.empty-list')
                                             </p>
 
-                                            <p class="text-gray-400 dark:text-gray-400">
+                                            <p class="!text-sm text-gray-400 dark:text-gray-400">
                                                 @lang('admin::app.leads.index.kanban.empty-list-description')
                                             </p>
                                         </div>
@@ -289,8 +292,8 @@
 
                             this.get()
                                 .then(response => {
-                                    for (let [stageId, data] of Object.entries(response.data)) {
-                                        this.stageLeads[stageId] = data;
+                                    for (let [sortOrder, data] of Object.entries(response.data)) {
+                                        this.stageLeads[sortOrder] = data;
                                     }
                                 });
 
@@ -299,9 +302,9 @@
                     }
 
                     this.get()
-                        .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                        .then(response => {                            
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -377,8 +380,8 @@
 
                     this.get()
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -397,8 +400,8 @@
 
                     this.get()
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                this.stageLeads[sortOrder] = data;
                             }
                         });
                 },
@@ -412,13 +415,13 @@
                 append(params) {
                     this.get(params)
                         .then(response => {
-                            for (let [stageId, data] of Object.entries(response.data)) {
-                                if (! this.stageLeads[stageId]) {
-                                    this.stageLeads[stageId] = data;
+                            for (let [sortOrder, data] of Object.entries(response.data)) {
+                                if (! this.stageLeads[sortOrder]) {
+                                    this.stageLeads[sortOrder] = data;
                                 } else {
-                                    this.stageLeads[stageId].leads.data = this.stageLeads[stageId].leads.data.concat(data.leads.data);
+                                    this.stageLeads[sortOrder].leads.data = this.stageLeads[sortOrder].leads.data.concat(data.leads.data);
 
-                                    this.stageLeads[stageId].leads.meta = data.leads.meta;
+                                    this.stageLeads[sortOrder].leads.meta = data.leads.meta;
                                 }
                             }
                         });
@@ -432,17 +435,21 @@
                  * @returns {void}
                  */
                 updateStage: function (stage, event) {
+                    if (event.moved) {
+                        return;
+                    }
+
                     if (event.removed) {
                         stage.lead_value = parseFloat(stage.lead_value) - parseFloat(event.removed.element.lead_value);
 
-                        this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total - 1;
+                        this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total - 1;
 
                         return;
                     }
 
                     stage.lead_value = parseFloat(stage.lead_value) + parseFloat(event.added.element.lead_value);
 
-                    this.stageLeads[stage.id].leads.meta.total = this.stageLeads[stage.id].leads.meta.total + 1;
+                    this.stageLeads[stage.sort_order].leads.meta.total = this.stageLeads[stage.sort_order].leads.meta.total + 1;
 
                     this.$axios
                         .put("{{ route('admin.leads.stage.update', 'replace') }}".replace('replace', event.added.element.id), {
@@ -464,30 +471,30 @@
                  * @returns {void}
                  */
                 handleScroll(stage, event) {
-                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight
+                    const bottom = event.target.scrollHeight - event.target.scrollTop === event.target.clientHeight;
 
                     if (! bottom) {
                         return;
                     }
 
-                    if (this.stageLeads[stage.id].leads.meta.current_page == this.stageLeads[stage.id].leads.meta.last_page) {
+                    if (this.stageLeads[stage.sort_order].leads.meta.current_page == this.stageLeads[stage.sort_order].leads.meta.last_page) {
                         return;
                     }
 
                     this.append({
                         pipeline_stage_id: stage.id,
                         pipeline_id: stage.lead_pipeline_id,
-                        page: this.stageLeads[stage.id].leads.meta.current_page + 1,
+                        page: this.stageLeads[stage.sort_order].leads.meta.current_page + 1,
                         limit: 10,
                     });
                 },
 
                 //=======================================================================================
-                // Support for previous applied values in kanbans. All code is based on local storage.
+                // Support for previous applied values in kanban's. All code is based on local storage.
                 //=======================================================================================
 
                 /**
-                 * Updates the kanbans stored in local storage with the latest data.
+                 * Updates the kanban's stored in local storage with the latest data.
                  *
                  * @returns {void}
                  */
@@ -535,9 +542,9 @@
                 },
 
                 /**
-                 * Returns the storage key for kanbans in local storage.
+                 * Returns the storage key for kanban's in local storage.
                  *
-                 * @returns {string} Storage key for kanbans.
+                 * @returns {string} Storage key for kanban's.
                  */
                 getKanbansStorageKey() {
                     return 'kanbans';
@@ -557,9 +564,9 @@
                 },
 
                 /**
-                 * Sets the kanbans in local storage.
+                 * Sets the kanban's in local storage.
                  *
-                 * @param {Array} kanbans - Kanbans to be stored in local storage.
+                 * @param {Array} kanbans - Kanban's to be stored in local storage.
                  * @returns {void}
                  */
                 setKanbans(kanbans) {

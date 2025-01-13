@@ -6,7 +6,7 @@
     fill="none"
     aria-hidden="true"
     viewBox="0 0 24 24"
-    {{ $attributes->merge(['class' => 'h-5 w-5 animate-spin']) }}
+    {{ $attributes->merge(['class' => 'h-5 w-5 animate-spin dark:text-white']) }}
 >
     <circle
         class="opacity-25"

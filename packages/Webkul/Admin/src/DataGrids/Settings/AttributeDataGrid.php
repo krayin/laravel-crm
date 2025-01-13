@@ -4,6 +4,7 @@ namespace Webkul\Admin\DataGrids\Settings;
 
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\DataGrid\DataGrid;
 
 class AttributeDataGrid extends DataGrid
@@ -63,20 +64,43 @@ class AttributeDataGrid extends DataGrid
         ]);
 
         $this->addColumn([
-            'index'      => 'entity_type',
-            'label'      => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
-            'type'       => 'string',
-            'searchable' => false,
-            'filterable' => true,
+            'index'              => 'entity_type',
+            'label'              => trans('admin::app.settings.attributes.index.datagrid.entity-type'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'searchable'         => false,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app(AttributeRepository::class)
+                ->select('entity_type as label', 'entity_type as value')
+                ->distinct()
+                ->get()
+                ->map(function ($item) {
+                    $item->label = trans('admin::app.settings.attributes.index.datagrid.entity-types.'.$item->label);
+
+                    return $item;
+                })
+                ->toArray(),
             'closure'    => fn ($row) => ucfirst($row->entity_type),
         ]);
 
         $this->addColumn([
-            'index'      => 'type',
-            'label'      => trans('admin::app.settings.attributes.index.datagrid.type'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'filterable' => true,
+            'index'              => 'type',
+            'label'              => trans('admin::app.settings.attributes.index.datagrid.type'),
+            'type'               => 'string',
+            'sortable'           => true,
+            'filterable'         => true,
+            'filterable_type'    => 'dropdown',
+            'filterable_options' => app(AttributeRepository::class)
+                ->select('type as label', 'type as value')
+                ->distinct()
+                ->get()
+                ->map(function ($item) {
+                    $item->label = trans('admin::app.settings.attributes.index.datagrid.types.'.$item->label);
+
+                    return $item;
+                })
+                ->toArray(),
         ]);
 
         $this->addColumn([

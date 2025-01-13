@@ -24,7 +24,7 @@
                 <div class="flex flex-col gap-4 lg:flex-row">
                     <!-- Total Revenue -->
                     <div class="flex flex-col gap-2">
-                        <!-- Won Reveneue Card -->
+                        <!-- Won Revenue Card -->
                         <div class="flex flex-col gap-2 rounded-lg border border-gray-200 px-4 py-5 dark:border-gray-800">
                             <p class="text-xs font-medium text-gray-600 dark:text-gray-300">
                                 @lang('admin::app.dashboard.index.revenue.won-revenue')

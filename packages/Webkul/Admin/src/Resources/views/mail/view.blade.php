@@ -507,7 +507,7 @@
 
                                 <!-- Mailer Additional Deatils -->
                                 <div class="flex flex-col gap-1">
-                                    <span class="text-[10px]">@{{ email.person.job_title }}</span>
+                                    <span class="text-[10px] dark:text-gray-300">@{{ email.person.job_title }}</span>
 
                                     <!-- Emails -->
                                     <template v-for="email in email?.person?.emails.map(item => item.value)">
@@ -1257,18 +1257,12 @@
 
                 props: ['index', 'email', 'action'],
 
-                emits: ['on-discard'],
+                emits: ['on-discard', 'on-email-action'],
 
-                data() {
-                    return {
-                        hovering: '',
-                    };
-                },
-    
                 methods: {
                     emailAction(type) {
                         if (type != 'delete') {
-                            this.$emit('onEmailAction', {type, email: this.email});
+                            this.$emit('on-email-action', {type, email: this.email});
                         } else {
                             this.$emitter.emit('open-confirm-modal', {
                                 agree: () => {
@@ -1890,19 +1884,23 @@
                     },
 
                     unlinkContact() {
-                        this.unlinking.contact = true;
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                this.unlinking.contact = true;
 
-                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
-                            _method: 'PUT',
-                            person_id: null,
-                        })
-                            .then (response => {
-                                this.email['person'] = this.email['person_id'] = null;
+                                this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                                    _method: 'PUT',
+                                    person_id: null,
+                                })
+                                    .then (response => {
+                                        this.email['person'] = this.email['person_id'] = null;
 
-                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-                            })
-                            .catch (error => {})
-                            .finally(() => this.unlinking.contact = false);
+                                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    })
+                                    .catch (error => {})
+                                    .finally(() => this.unlinking.contact = false);
+                            },
+                        });
                     },
 
                     linkLead(lead) {
@@ -1921,19 +1919,23 @@
                     },
 
                     unlinkLead() {
-                        this.unlinking.lead = true;
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                this.unlinking.lead = true;
 
-                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
-                            _method: 'PUT',
-                            lead_id: null,
-                        })
-                            .then (response => {
-                                this.email['lead'] = this.email['lead_id'] = null;
+                                this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                                    _method: 'PUT',
+                                    lead_id: null,
+                                })
+                                    .then (response => {
+                                        this.email['lead'] = this.email['lead_id'] = null;
 
-                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-                            })
-                            .catch (error => {})
-                            .finally(() => this.unlinking.lead = false);
+                                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    })
+                                    .catch (error => {})
+                                    .finally(() => this.unlinking.lead = false);
+                            },
+                        });
                     },
 
                     openContactModal() {

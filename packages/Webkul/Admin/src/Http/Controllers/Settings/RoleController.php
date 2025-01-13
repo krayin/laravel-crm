@@ -48,6 +48,7 @@ class RoleController extends Controller
             'name'            => 'required',
             'permission_type' => 'required',
             'description'     => 'required',
+            'permissions'     => 'required',
         ]);
 
         Event::dispatch('settings.role.create.before');
@@ -93,6 +94,7 @@ class RoleController extends Controller
             'name'            => 'required',
             'permission_type' => 'required|in:all,custom',
             'description'     => 'required',
+            'permissions'     => 'required',
         ]);
 
         Event::dispatch('settings.role.update.before', $id);
@@ -125,7 +127,7 @@ class RoleController extends Controller
 
         $role = $this->roleRepository->findOrFail($id);
 
-        if ($role->admins && $role->admins->count() >= 1) {
+        if ($role->users && $role->users->count() >= 1) {
             $response['message'] = trans('admin::app.settings.roles.index.being-used');
 
             session()->flash('error', $response['message']);
