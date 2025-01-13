@@ -211,6 +211,7 @@
                                 <div class="relative">
                                     <x-admin::form.control-group.controls.tags
                                         name="reply_to"
+                                        class="w-[calc(100%-62px)]"
                                         rules="required"
                                         input-rules="email"
                                         ::data="draft.reply_to"
@@ -247,6 +248,7 @@
 
                                     <x-admin::form.control-group.controls.tags
                                         name="cc"
+                                        class="w-[calc(100%-62px)]"
                                         input-rules="email"
                                         ::data="draft.cc"
                                         :label="trans('admin::app.mail.index.mail.cc')"
@@ -266,6 +268,7 @@
 
                                     <x-admin::form.control-group.controls.tags
                                         name="bcc"
+                                        class="w-[calc(100%-62px)]"
                                         input-rules="email"
                                         ::data="draft.bcc"
                                         :label="trans('admin::app.mail.index.mail.bcc')"
