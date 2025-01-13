@@ -324,7 +324,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mt-1.5 grid">
+                                                    <div class="mt-1.5 grid gap-1.5">
                                                         <x-admin::flat-picker.date ::allow-input="false">
                                                             <input
                                                                 type="date"
@@ -650,7 +650,7 @@
                                                         </div>
                                                     </div>
 
-                                                    <div class="mb-2 mt-1.5 grid">
+                                                    <div class="mb-2 mt-1.5 grid gap-1.5">
                                                         <input
                                                             type="text"
                                                             class="block w-full rounded-md border bg-white px-2 py-1.5 text-sm leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
