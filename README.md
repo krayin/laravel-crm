@@ -17,6 +17,7 @@
 2. [Documentation](#documentation)
 3. [Requirements](#requirements)
 4. [Installation & Configuration](#installation-and-configuration)
+4. [Docker Installation](https://devdocs.krayincrm.com/2.0/introduction/docker.html)
 5. [License](#license)
 6. [Security Vulnerabilities](#security-vulnerabilities)
 

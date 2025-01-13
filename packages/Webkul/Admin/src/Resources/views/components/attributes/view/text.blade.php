@@ -4,7 +4,7 @@
     :value="$value ?? ''"
     :value-label="$value == '' ? '--' : $value"
     position="left"
-    rules="required"
+    rules="required|{{ $attribute->validation }}"
     :label="$attribute->name"
     :placeholder="$attribute->name"
     ::errors="errors"
