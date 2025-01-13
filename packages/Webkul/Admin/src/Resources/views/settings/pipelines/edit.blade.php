@@ -161,6 +161,7 @@
                                         </i>
                                     </div>
                                     
+                                    <!-- Cards input fields -->
                                     <div>
                                         <!-- Hidden Inputs Fields -->
                                         <!-- Code -->
@@ -189,7 +190,7 @@
                                                 type="text"
                                                 ::name="'stages[' + element.id + '][name]'"
                                                 v-model="element['name']"
-                                                ::rules="getValidation"
+                                                ::rules="{ required: true, unique_name: stages, min: 0, max: 100 }"
                                                 :label="trans('admin::app.settings.pipelines.edit.name')"
                                             />
 
@@ -281,15 +282,6 @@
 
                         stageCount: 1,
                     };
-                },
-                
-                computed: {
-                    getValidation() {
-                        return {
-                            required: true,
-                            unique_name: this.stages,
-                        };
-                    },
                 },
 
                 created() {
