@@ -306,10 +306,10 @@
                                     </div>
 
                                     <div class="flex h-72 flex-col justify-center gap-3 overflow-y-auto px-7 py-4">
-                                        <!-- Application Name -->
+                                        <!-- Installation Wizard -->
                                         <x-installer::form.control-group class="mb-2.5">
                                             <x-installer::form.control-group.label>
-                                                @lang('Installation Wizard language')
+                                                @lang('installer::app.installer.index.installation-wizard')
                                             </x-installer::form.control-group.label>
 
                                             <x-installer::form.control-group.control
@@ -939,7 +939,7 @@
                                     <x-installer::form.control-group.control
                                         type="password"
                                         name="password"
-                                        rules="required"
+                                        rules="required|min:6"
                                         :value="old('password')"
                                         :label="trans('installer::app.installer.index.create-administrator.password')"
                                     />

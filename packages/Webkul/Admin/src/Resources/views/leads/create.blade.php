@@ -50,7 +50,9 @@
             @endif
 
             <!-- Lead Create Component -->
-            <v-lead-create></v-lead-create>
+            <v-lead-create>
+                <x-admin::shimmer.leads.datagrid />
+            </v-lead-create>
         </div>
     </x-admin::form>
 
@@ -121,7 +123,7 @@
                                 ]"
                             />
 
-                            <!-- Lead Details Oter input fields -->
+                            <!-- Lead Details Other input fields -->
                             <div class="flex gap-4 max-sm:flex-wrap">
                                 <div class="w-full">
                                     <x-admin::attributes
