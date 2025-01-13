@@ -229,7 +229,6 @@
                                     name="location"
                                     id="location"
                                     :value="old('location') ?? $activity->location"
-                                    rules="required"
                                     :label="trans('admin::app.activities.edit.location')"
                                     :placeholder="trans('admin::app.activities.edit.location')"
                                 />
