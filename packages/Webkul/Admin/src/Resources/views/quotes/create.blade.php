@@ -49,7 +49,9 @@
                 </div>
             </div>
 
-            <v-quote :errors="errors"></v-quote>
+            <v-quote :errors="errors">
+                <x-admin::shimmer.quotes />
+            </v-quote>
         </div>
     </x-admin::form>
 
