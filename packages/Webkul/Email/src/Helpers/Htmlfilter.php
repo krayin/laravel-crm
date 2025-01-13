@@ -554,7 +554,12 @@ class Htmlfilter
         $trans_image_path,
         $block_external_images
     ) {
-        while ([$attname, $attvalue] = each($attary)) {
+        /**
+         * Convert to array if is not.
+         */
+        $attary = is_array($attary) ? $attary : [];
+
+        foreach ($attary as $attname => $attvalue) {
             /**
              * See if this attribute should be removed.
              */
@@ -564,7 +569,7 @@ class Htmlfilter
                         if (preg_match($matchattr, $attname)) {
                             unset($attary[$attname]);
 
-                            continue;
+                            continue 2;
                         }
                     }
                 }
