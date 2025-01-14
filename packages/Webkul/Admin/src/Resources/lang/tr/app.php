@@ -2087,4 +2087,13 @@ return [
             'title'       => '503 Hizmet Kullanılamıyor',
         ],
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'İndir',
+        'export'     => 'Dışa Aktar',
+        'no-records' => 'Dışa aktarılacak kayıt bulunamadı.',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];

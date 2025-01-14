@@ -2087,4 +2087,13 @@ return [
             'title'       => '503 Service Unavailable',
         ],
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'Download',
+        'export'     => 'Export',
+        'no-records' => 'Nothing to export',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];

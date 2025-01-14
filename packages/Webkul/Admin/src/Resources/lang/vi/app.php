@@ -2086,4 +2086,13 @@ return [
             'title'       => '503 Dịch Vụ Không Khả Dụng',
         ],
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'Tải Xuống',
+        'export'     => 'Xuất',
+        'no-records' => 'Không có bản ghi nào được tìm thấy.',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];
