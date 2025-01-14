@@ -94,7 +94,7 @@ class RoleController extends Controller
             'name'            => 'required',
             'permission_type' => 'required|in:all,custom',
             'description'     => 'required',
-            'permissions'     => 'required',
+            'permissions'     => 'required_if:permission_type,custom',
         ]);
 
         Event::dispatch('settings.role.update.before', $id);
