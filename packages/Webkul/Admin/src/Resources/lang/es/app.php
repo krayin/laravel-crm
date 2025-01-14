@@ -2086,4 +2086,13 @@ return [
             'title'       => '503 Servicio No Disponible',
         ],
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'Descargar',
+        'export'     => 'Exportar',
+        'no-records' => 'No se encontraron registros.',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];

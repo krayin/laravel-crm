@@ -51,7 +51,7 @@ class LeadController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|JsonResponse
+    public function index()
     {
         if (request()->ajax()) {
             return datagrid(LeadDataGrid::class)->process();
