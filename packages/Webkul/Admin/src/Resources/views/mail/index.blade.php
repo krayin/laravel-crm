@@ -197,13 +197,9 @@
 
                                 <div class="flex w-full items-center justify-between gap-4">
                                     <!-- Content -->
-                                    <div class="flex items-center gap-2">
-
-                                        <!-- Attachments (retains space even if empty) -->
-                                        <p
-                                            v-if="record.attachments"
-                                            v-html="record.attachments"
-                                        ></p>
+                                    <div class="flex-frow flex items-center gap-2">
+                                        <!-- Attachments -->
+                                        <p v-html="record.attachments"></p>
 
                                         <!-- Tags -->
                                         <span
@@ -222,9 +218,11 @@
                                             <!-- Subject -->
                                             <p class="line-clamp-1 text-sm text-gray-900 dark:text-gray-100" v-text="record.subject"></p>
 
-                                            <!-- Reply (Content) -->
-                                            <p class="line-clamp-1 text-sm text-gray-500 dark:text-gray-400" v-html="truncatedReply(record.reply)"></p>
-                                        </div>
+                                        <!-- Reply(Content) -->
+                                        <p
+                                            class="!font-normal"
+                                            v-html="truncatedReply(record.reply)"
+                                        ></p>
                                     </div>
 
                                     <!-- Time -->
@@ -491,16 +489,6 @@
                 },
 
                 methods: {
-                    truncatedReply(reply) {
-                        const maxLength = 100;
-
-                        if (reply.length > maxLength) {
-                            return `${reply.substring(0, maxLength)}...`;
-                        }
-                        
-                        return reply;
-                    },
-
                     toggleModal() {
                         this.draft.reply_to = [];
 
