@@ -11,7 +11,7 @@
                 <div class="flex cursor-pointer items-center">
                     {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.before') !!}
 
-                    <!-- Bredcrumbs -->
+                    <!-- Breadcrumbs -->
                     <x-admin::breadcrumbs name="settings.marketing.events" />
 
                     {!! view_render_event('admin.settings.marketing.events.index.breadcrumbs.after') !!}
@@ -181,7 +181,7 @@
                                             type="text"
                                             name="name"
                                             id="name"
-                                            rules="required"
+                                            rules="required|max:60"
                                             :label="trans('admin::app.settings.marketing.events.index.create.name')"
                                         />
         

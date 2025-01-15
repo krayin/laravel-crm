@@ -35,7 +35,7 @@ class EventController extends Controller
     public function store(): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'        => 'required',
+            'name'        => 'required|max:60',
             'description' => 'required',
             'date'        => 'required|date|after_or_equal:today',
         ]);
@@ -58,7 +58,7 @@ class EventController extends Controller
     public function update(int $id): JsonResponse
     {
         $validatedData = $this->validate(request(), [
-            'name'        => 'required',
+            'name'        => 'required|max:60',
             'description' => 'required',
             'date'        => 'required|date|after_or_equal:today',
         ]);
