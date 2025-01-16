@@ -230,7 +230,7 @@ return [
                 'ai-add-image-btn'  => 'Magic AI',
                 'allowed-types'     => 'png, jpeg, jpg',
                 'not-allowed-error' => 'Seuls les formats (.jpeg, .jpg, .png, ..) sont acceptés.',
-                //TODO
+                //TODO 
                 'placeholders' => [
                     'front'     => 'Front',
                     'next'      => 'Next',
