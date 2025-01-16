@@ -62,16 +62,8 @@ class EmailDataGrid extends DataGrid
             'type'       => 'string',
             'searchable' => false,
             'filterable' => false,
-            'sortable'   => true,
-            'closure'    => function ($row) {
-                $email = app(EmailRepository::class)->find($row->id);
-
-                $hasAttachments = collect($email->emails)->contains(function ($email) {
-                    return $email->attachments()->exists();
-                });
-
-                return $hasAttachments ? '<i class="icon-attachment text-2xl"></i>' : '';
-            },
+            'sortable'   => false,
+            'closure'    => fn ($row) => $row->attachments ? '<i class="icon-attachment text-2xl"></i>' : '',
         ]);
 
         $this->addColumn([

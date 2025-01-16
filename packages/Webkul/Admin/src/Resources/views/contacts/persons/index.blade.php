@@ -16,6 +16,9 @@
             </div>
 
             <div class="flex items-center gap-x-2.5">
+                <!-- Export Modal -->
+                <x-admin::datagrid.export :src="route('admin.contacts.persons.index')" />
+
                 <!-- Create button for person -->
                 <div class="flex items-center gap-x-2.5">
                     {!! view_render_event('admin.persons.index.create_button.before') !!}
@@ -44,8 +47,8 @@
         {!! view_render_event('admin.persons.index.datagrid.after') !!}
     </div>
 
-    @pushOnce('scripts')        
-        <script 
+    @pushOnce('scripts')
+        <script
             type="text/x-template"
             id="v-persons-template"
         >
@@ -167,7 +170,7 @@
                             <!-- Name -->
                             <div class="flex items-center gap-1.5 dark:text-gray-300">
                                 <x-admin::avatar ::name="record.person_name" />
-                            
+
                                 @{{ record.person_name }}
                             </div>
 
@@ -185,7 +188,7 @@
                             <p class="flex items-center dark:text-gray-300">
                                 @{{ record.organization }}
                             </p>
-                            
+
                             <!-- Actions -->
                             <div class="flex items-center justify-end gap-x-4">
                                 <div class="flex items-center gap-1.5">
@@ -202,7 +205,7 @@
                                         ></span>
                                     </p>
                                 </div>
-                            </div> 
+                            </div>
                         </div>
                     </template>
                 </template>

@@ -2083,4 +2083,13 @@ return [
             'title'       => '503 الخدمة غير متوفرة',
         ],
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'تحميل',
+        'export'     => 'تصدير',
+        'no-records' => 'لا توجد سجلات للتصدير',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];

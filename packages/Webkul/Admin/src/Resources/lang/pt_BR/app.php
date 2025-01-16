@@ -2051,4 +2051,13 @@ return [
     'errors' => [
         '401' => 'Você não tem autorização para acessar esta página',
     ],
+
+    'export' => [
+        'csv'        => 'CSV',
+        'download'   => 'Download',
+        'export'     => 'Exportar',
+        'no-records' => 'Nenhum registro encontrado.',
+        'xls'        => 'XLS',
+        'xlsx'       => 'XLSX',
+    ],
 ];
