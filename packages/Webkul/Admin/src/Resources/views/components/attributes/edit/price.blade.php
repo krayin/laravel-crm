@@ -31,7 +31,8 @@
             computed: {
                 getValidation() {
                     return {
-                        numeric: true,
+                        decimal: true,
+                        min_value: 0,
                         ...(this.validations === 'required' ? { required: true } : {}),
                     };
                 },
