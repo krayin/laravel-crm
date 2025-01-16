@@ -35,21 +35,32 @@
 
                 @if ($person->organization->address)
                     <div class="flex flex-col gap-0.5 dark:text-white">
-                        <span>
-                            {{ $person->organization->address['address'] }}
-                        </span>
+                        @isset($person->organization->address['address'])
+                            <span>
+                                {{ $person->organization->address['address'] }}
+                            </span>
+                        @endisset
                         
-                        <span>
-                            {{ $person->organization->address['postcode'] . '  ' . $person->organization->address['city'] }}
-                        </span>
+                        @if(
+                            isset($person->organization->address['postcode'])
+                            && isset($person->organization->address['city'])
+                        )
+                            <span>
+                                {{ $person->organization->address['postcode'] . '  ' . $person->organization->address['city'] }}
+                            </span>
+                        @endif
 
-                        <span>
-                            {{ core()->state_name($person->organization->address['state']) }}
-                        </span>
+                        @isset($person->organization->address['state'])
+                            <span>
+                                {{ core()->state_name($person->organization->address['state']) }}
+                            </span>
+                        @endisset
 
-                        <span>
-                            {{ core()->country_name($person->organization->address['country']) }}
-                        </span>
+                        @isset($person->organization->address['country'])
+                            <span>
+                                {{ core()->country_name($person->organization->address['country']) }}
+                            </span>
+                        @endisset
                     </div>
                 @endif
 
