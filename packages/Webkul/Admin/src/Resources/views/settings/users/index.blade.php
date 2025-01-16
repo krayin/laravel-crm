@@ -231,7 +231,7 @@
                             <div class="flex gap-4">
                                 <!-- Password -->
                                 <x-admin::form.control-group class="flex-1">
-                                    <x-admin::form.control-group.label class="required">
+                                    <x-admin::form.control-group.label ::class="user.id ? '' : 'required'">
                                         @lang('admin::app.settings.users.index.create.password')
                                     </x-admin::form.control-group.label>
 
@@ -457,7 +457,9 @@
         
                 methods: {
                     openModal() {
-                        this.user = {};
+                        this.user = {
+                            groups: [],
+                        };
 
                         this.$refs.userUpdateAndCreateModal.toggle();
                     },

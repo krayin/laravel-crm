@@ -1,5 +1,3 @@
-
-
 <x-admin::layouts>
     <x-slot:title>
         @lang('admin::app.mail.index.' . request('route'))
@@ -49,10 +47,10 @@
         <!-- Compose Mail Vue Component -->
         <v-mail ref="composeMail">
             <!-- Datagrid Shimmer -->
-            <x-admin::shimmer.mail.datagrid />
+            <x-admin::shimmer.mail.datagrid :is-multi-row="true"/>
         </v-mail>
     </div>
-    
+
     @pushOnce('scripts')
         <script
             type="text/x-template"
@@ -60,11 +58,11 @@
         >
             {!! view_render_event('admin.mail.'.request('route').'.datagrid.before') !!}
 
-           <!-- DataGrid -->
-           <x-admin::datagrid
+            <!-- DataGrid -->
+            <x-admin::datagrid
                 ref="datagrid"
                 :src="route('admin.mail.index', request('route'))"
-            >   
+            >
                 <template #header="{
                     isLoading,
                     available,
@@ -73,9 +71,70 @@
                     sort,
                     performAction
                 }">
-                    <div></div>
+                    <template v-if="isLoading">
+                        <x-admin::shimmer.mail.datagrid.table.head />
+                    </template>
+
+                    <template v-else>
+                        <div class="row grid grid-cols-[2fr_7fr_.0.3fr] grid-rows-1 items-center border-b px-8 py-4 dark:border-gray-800">
+                            <div
+                                class="flex items-center gap-6"
+                                v-for="(columnGroup, index) in [['name'], ['attachments', 'tags', 'subject', 'reply'], ['created_at']]"
+                            >
+                                <label
+                                    class="flex w-max cursor-pointer select-none items-center gap-2"
+                                    for="mass_action_select_all_records"
+                                    v-if="! index"
+                                >
+                                    <input
+                                        type="checkbox"
+                                        name="mass_action_select_all_records"
+                                        id="mass_action_select_all_records"
+                                        class="peer hidden"
+                                        :checked="['all', 'partial'].includes(applied.massActions.meta.mode)"
+                                        @change="selectAll"
+                                    >
+
+                                    <span
+                                        class="icon-checkbox-outline cursor-pointer rounded-md text-2xl text-gray-600 dark:text-gray-300"
+                                        :class="[
+                                            applied.massActions.meta.mode === 'all' ? 'peer-checked:icon-checkbox-select peer-checked:text-brandColor' : (
+                                                applied.massActions.meta.mode === 'partial' ? 'peer-checked:icon-checkbox-multiple peer-checked:text-brandColor' : ''
+                                            ),
+                                        ]"
+                                    >
+                                    </span>
+                                </label>
+
+                                <p class="text-gray-600 dark:text-gray-300">
+                                    <span class="[&>*]:after:content-['_/_']">
+                                        <template v-for="column in columnGroup">
+                                            <span
+                                                class="after:content-['/'] last:after:content-['']"
+                                                :class="{
+                                                    'font-medium text-gray-800 dark:text-white': applied.sort.column == column,
+                                                    'cursor-pointer hover:text-gray-800 dark:hover:text-white': available.columns.find(columnTemp => columnTemp.index === column)?.sortable,
+                                                }"
+                                                @click="
+                                                    available.columns.find(columnTemp => columnTemp.index === column)?.sortable ? sort(available.columns.find(columnTemp => columnTemp.index === column)): {}
+                                                "
+                                                v-html="available.columns.find(columnTemp => columnTemp.index === column)?.label"
+                                            >
+                                            </span>
+                                        </template>
+                                    </span>
+
+                                    <i
+                                        class="align-text-bottom text-base text-gray-800 dark:text-white ltr:ml-1.5 rtl:mr-1.5"
+                                        :class="[applied.sort.order === 'asc' ? 'icon-down-stat': 'icon-up-stat']"
+                                        v-if="columnGroup.includes(applied.sort.column)"
+                                    ></i>
+                                </p>
+                            </div>
+                        </div>
+                    </template>
                 </template>
-            
+
                 <template #body="{
                     isLoading,
                     available,
@@ -84,11 +143,11 @@
                     sort,
                     performAction
                 }">
-                
+
                     <template v-if="isLoading">
                         <x-admin::shimmer.mail.datagrid.table.body />
                     </template>
-        
+
                     <template v-else>
                         <div
                             v-for="record in available.records"
@@ -100,7 +159,7 @@
                             @click.stop="selectedMail=true; editModal(record.actions.find(action => action.index === 'edit'))"
                         >
                             <!-- Select Box -->
-                            <div class="flex w-full items-center justify-start gap-32">
+                            <div class="flex w-full items-center justify-start gap-[124px]">
                                 <div class="flex items-center gap-6">
                                     <div class="relative flex items-center">
                                         <!-- Dot Indicator -->
@@ -120,7 +179,7 @@
                                                 v-model="applied.massActions.indices"
                                                 @click.stop
                                             >
-                        
+
                                             <label
                                                 class="icon-checkbox-outline peer-checked:icon-checkbox-select cursor-pointer rounded-md text-2xl !text-gray-500 peer-checked:!text-brandColor dark:!text-gray-300"
                                                 :for="`mass_action_select_record_${record.id}`"
@@ -128,8 +187,12 @@
                                             ></label>
                                         </div>
                                     </div>
-                                
-                                    <p class="overflow-hidden text-ellipsis whitespace-nowrap leading-none">@{{ record.name }}</p>
+
+                                    <p class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap leading-none">
+                                        <x-admin::avatar ::name="record.name" />
+
+                                        @{{ record.name }}
+                                    </p>
                                 </div>
 
                                 <div class="flex w-full items-center justify-between gap-4">
@@ -140,7 +203,7 @@
 
                                         <!-- Tags -->
                                         <span
-                                            class="flex items-center gap-1 rounded-md bg-rose-100 px-3 py-1.5 text-xs font-medium"
+                                            class="flex items-center gap-1 rounded-2xl bg-rose-100 px-2 py-1"
                                             :style="{
                                                 'background-color': tag.color,
                                                 'color': backgroundColors.find(color => color.background === tag.color)?.text
@@ -150,8 +213,10 @@
                                         >
                                         </span>
 
-                                        <!-- Subject -->
-                                        <p v-text="record.subject"></p>
+                                        <!-- Subject, and Reply -->
+                                        <div class="min-w-0 flex-1">
+                                            <!-- Subject -->
+                                            <p class="line-clamp-1 text-sm text-gray-900 dark:text-gray-100" v-text="record.subject"></p>
 
                                         <!-- Reply(Content) -->
                                         <p
@@ -159,7 +224,7 @@
                                             v-html="truncatedReply(record.reply)"
                                         ></p>
                                     </div>
-                                
+
                                     <!-- Time -->
                                     <div class="min-w-[80px] flex-shrink-0 text-right">
                                         <p class="leading-none">@{{ record.created_at }}</p>
@@ -211,6 +276,7 @@
                                 <div class="relative">
                                     <x-admin::form.control-group.controls.tags
                                         name="reply_to"
+                                        class="w-[calc(100%-62px)]"
                                         rules="required"
                                         input-rules="email"
                                         ::data="draft.reply_to"
@@ -247,6 +313,7 @@
 
                                     <x-admin::form.control-group.controls.tags
                                         name="cc"
+                                        class="w-[calc(100%-62px)]"
                                         input-rules="email"
                                         ::data="draft.cc"
                                         :label="trans('admin::app.mail.index.mail.cc')"
@@ -266,6 +333,7 @@
 
                                     <x-admin::form.control-group.controls.tags
                                         name="bcc"
+                                        class="w-[calc(100%-62px)]"
                                         input-rules="email"
                                         ::data="draft.bcc"
                                         :label="trans('admin::app.mail.index.mail.bcc')"
@@ -412,17 +480,15 @@
                     };
                 },
 
+                mounted() {
+                    const params = new URLSearchParams(window.location.search);
+
+                    if (params.get('openModal')) {
+                        this.$refs.toggleComposeModal.toggle();
+                    }
+                },
+
                 methods: {
-                    truncatedReply(reply) {
-                        const maxLength = 100;
-
-                        if (reply.length > maxLength) {
-                            return `${reply.substring(0, maxLength)}...`;
-                        }
-                        
-                        return reply;
-                    },
-
                     toggleModal() {
                         this.draft.reply_to = [];
 

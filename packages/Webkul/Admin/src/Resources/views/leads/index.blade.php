@@ -11,7 +11,7 @@
 
         <div class="flex flex-col gap-2">
             <div class="flex cursor-pointer items-center">
-                <!-- Bredcrumbs -->
+                <!-- Breadcrumb's -->
                 <x-admin::breadcrumbs name="leads" />
             </div>
 
@@ -25,6 +25,11 @@
         {!! view_render_event('admin.leads.index.header.right.before') !!}
 
         <div class="flex items-center gap-x-2.5">
+            @if ((request()->view_type ?? "kanban") == "table")
+                <!-- Export Modal -->
+                <x-admin::datagrid.export :src="route('admin.leads.index')" />
+            @endif
+
             <!-- Create button for Leads -->
             <div class="flex items-center gap-x-2.5">
                 @if (bouncer()->hasPermission('leads.create'))

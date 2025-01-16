@@ -30,7 +30,7 @@ class PersonController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): View|JsonResponse
+    public function index()
     {
         if (request()->ajax()) {
             return datagrid(PersonDataGrid::class)->process();
@@ -103,6 +103,7 @@ class PersonController extends Controller
 
         if (request()->ajax()) {
             return response()->json([
+                'data'    => $person,
                 'message' => trans('admin::app.contacts.persons.index.update-success'),
             ], 200);
         }

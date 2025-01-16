@@ -14,12 +14,17 @@ class Lead extends AbstractReporting
     protected array $stageIds;
 
     /**
-     * The channel ids.
+     * The all stage ids.
+     */
+    protected array $allStageIds;
+
+    /**
+     * The won stage ids.
      */
     protected array $wonStageIds;
 
     /**
-     * The channel ids.
+     * The lost stage ids.
      */
     protected array $lostStageIds;
 
@@ -32,6 +37,8 @@ class Lead extends AbstractReporting
         protected LeadRepository $leadRepository,
         protected StageRepository $stageRepository
     ) {
+        $this->allStageIds = $this->stageRepository->pluck('id')->toArray();
+
         $this->wonStageIds = $this->stageRepository->where('code', 'won')->pluck('id')->toArray();
 
         $this->lostStageIds = $this->stageRepository->where('code', 'lost')->pluck('id')->toArray();
@@ -46,7 +53,7 @@ class Lead extends AbstractReporting
      */
     public function getTotalLeadsOverTime($period = 'auto'): array
     {
-        $this->stageIds = [];
+        $this->stageIds = $this->allStageIds;
 
         return $this->getOverTimeStats($this->startDate, $this->endDate, 'leads.id', 'created_at', $period);
     }
@@ -210,7 +217,7 @@ class Lead extends AbstractReporting
             ->resetModel()
             ->whereIn('lead_pipeline_stage_id', $this->wonStageIds)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->avg('lead_value');
+            ->sum('lead_value');
     }
 
     /**
@@ -239,7 +246,7 @@ class Lead extends AbstractReporting
             ->resetModel()
             ->whereIn('lead_pipeline_stage_id', $this->lostStageIds)
             ->whereBetween('created_at', [$startDate, $endDate])
-            ->avg('lead_value');
+            ->sum('lead_value');
     }
 
     /**

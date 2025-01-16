@@ -287,20 +287,27 @@
                 },
 
                 updateOrCreate(params) {
-                    this.inputValue = params.contact_numbers;
+                    this.inputValue = params.contact_numbers || this.inputValue;
 
                     if (this.url) {
+                        this.isProcessing = true;
+
                         this.$axios.put(this.url, {
                                 [this.name]: this.inputValue,
                             })
                             .then((response) => {
+                                this.contactNumbers = response.data.data.contact_numbers || this.contactNumbers;
+
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch((error) => {
                                 this.inputValue = this.value;
 
                                 this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
-                            });                        
+                            })
+                            .finally(() => {
+                                this.isProcessing = false;
+                            });
                     }
 
                     this.$emit('on-save', params);

@@ -53,6 +53,11 @@ class Column
     protected bool $sortable = false;
 
     /**
+     * Column's exportability.
+     */
+    protected bool $exportable = true;
+
+    /**
      * Column's visibility.
      */
     protected bool $visibility = true;
@@ -251,6 +256,22 @@ class Column
     public function getSortable(): bool
     {
         return $this->sortable;
+    }
+
+    /**
+     * Set exportable.
+     */
+    public function setExportable(bool $exportable): void
+    {
+        $this->exportable = $exportable;
+    }
+
+    /**
+     * Get exportable.
+     */
+    public function getExportable(): bool
+    {
+        return $this->exportable;
     }
 
     /**
