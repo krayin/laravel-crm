@@ -80,7 +80,7 @@
                                 <!-- Link to send new Mail-->
                                 @if (bouncer()->hasPermission('mail.create'))
                                     <div class="rounded-lg bg-white p-2 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-950">
-                                        <a href="{{ route('admin.mail.index', ['route' => 'inbox']) }}">
+                                        <a href="{{ route('admin.mail.index', ['route' => 'inbox', 'openModal' => 'true']) }}">
                                             <div class="flex flex-col gap-1">
                                                 <i class="icon-mail text-2xl text-gray-600"></i>
 
@@ -260,7 +260,7 @@
                 type="text"
                 class="peer block w-full rounded-3xl border bg-white px-10 py-1.5 leading-6 text-gray-600 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                 :class="{'border-gray-400': isDropdownOpen}"
-                placeholder="@lang('Search')"
+                placeholder="@lang('admin::app.components.layouts.header.mega-search.title')"
                 v-model.lazy="searchTerm"
                 @click="searchTerm.length >= 2 ? isDropdownOpen = true : {}"
                 v-debounce="500"

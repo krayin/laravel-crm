@@ -151,11 +151,6 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.contacts.persons.delete', 'admin.contacts.persons.mass_delete'],
         'sort'  => 4,
-    ], [
-        'key'   => 'contacts.persons.export',
-        'name'  => 'admin::app.acl.export',
-        'route' => 'ui.datagrid.export',
-        'sort'  => 4,
     ],  [
         'key'   => 'contacts.persons.view',
         'name'  => 'admin::app.acl.view',

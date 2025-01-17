@@ -33,7 +33,7 @@
                         @lang('admin::app.mail.view.title') 
                     </div>
                     
-                    <span class="label-active">{{ request('route') }}</span>
+                    <span class="label-active">{{ ucfirst(request('route')) }}</span>
 
                     {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
 
@@ -243,9 +243,9 @@
                     {!! view_render_event('admin.mail.view.mail_body.before', ['email' => $email]) !!}
 
                     <!-- Mail Body -->
-                    <div
-                        v-html="email.reply"
+                    <div 
                         class="dark:text-gray-300"
+                        v-safe-html="email.reply"
                     ></div>
                    
                     {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
@@ -1884,19 +1884,23 @@
                     },
 
                     unlinkContact() {
-                        this.unlinking.contact = true;
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                this.unlinking.contact = true;
 
-                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
-                            _method: 'PUT',
-                            person_id: null,
-                        })
-                            .then (response => {
-                                this.email['person'] = this.email['person_id'] = null;
+                                this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                                    _method: 'PUT',
+                                    person_id: null,
+                                })
+                                    .then (response => {
+                                        this.email['person'] = this.email['person_id'] = null;
 
-                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-                            })
-                            .catch (error => {})
-                            .finally(() => this.unlinking.contact = false);
+                                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    })
+                                    .catch (error => {})
+                                    .finally(() => this.unlinking.contact = false);
+                            },
+                        });
                     },
 
                     linkLead(lead) {
@@ -1915,19 +1919,23 @@
                     },
 
                     unlinkLead() {
-                        this.unlinking.lead = true;
+                        this.$emitter.emit('open-confirm-modal', {
+                            agree: () => {
+                                this.unlinking.lead = true;
 
-                        this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
-                            _method: 'PUT',
-                            lead_id: null,
-                        })
-                            .then (response => {
-                                this.email['lead'] = this.email['lead_id'] = null;
+                                this.$axios.post('{{ route('admin.mail.update', $email->id) }}', {
+                                    _method: 'PUT',
+                                    lead_id: null,
+                                })
+                                    .then (response => {
+                                        this.email['lead'] = this.email['lead_id'] = null;
 
-                                this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-                            })
-                            .catch (error => {})
-                            .finally(() => this.unlinking.lead = false);
+                                        this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    })
+                                    .catch (error => {})
+                                    .finally(() => this.unlinking.lead = false);
+                            },
+                        });
                     },
 
                     openContactModal() {

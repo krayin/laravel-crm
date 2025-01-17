@@ -49,7 +49,7 @@
             <div class="flex gap-2.5 max-xl:flex-wrap">
                 <!-- Left sub-component -->
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
-                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:bg-gray-900 dark:border-gray-800">
+                    <div class="box-shadow rounded-lg border border-gray-200 bg-white p-4 dark:border-gray-800 dark:bg-gray-900">
                         {!! view_render_event('admin.activities.edit.form_controls.before') !!}
 
                         <!-- Schedule Date -->
@@ -60,8 +60,9 @@
                                         @lang('admin::app.activities.edit.schedule_from')
                                     </x-admin::form.control-group.label>
 
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="false">
+                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
                                         <input
+                                            name="schedule_from"
                                             value="{{ old('schedule_from') ?? $activity->schedule_from }}"
                                             class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                             placeholder="@lang('admin::app.activities.edit.schedule_from')"
@@ -74,8 +75,9 @@
                                         @lang('admin::app.activities.edit.schedule_to')
                                     </x-admin::form.control-group.label>
 
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="false">
+                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
                                         <input
+                                            name="schedule_to"
                                             value="{{ old('schedule_to') ?? $activity->schedule_to }}"
                                             class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                             placeholder="@lang('admin::app.activities.edit.schedule_to')"
@@ -109,7 +111,7 @@
                                 @lang('admin::app.activities.edit.participants')
                             </x-admin::form.control-group.label>
 
-                            <!-- Participants Multilookup Vue Component -->
+                            <!-- Participants Multi lookup Vue Component -->
                             <v-multi-lookup-component>
                                 <div 
                                     class="relative rounded border border-gray-200 px-2 py-1 hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:hover:border-gray-400 dark:focus:border-gray-400" 
@@ -229,7 +231,6 @@
                                     name="location"
                                     id="location"
                                     :value="old('location') ?? $activity->location"
-                                    rules="required"
                                     :label="trans('admin::app.activities.edit.location')"
                                     :placeholder="trans('admin::app.activities.edit.location')"
                                 />

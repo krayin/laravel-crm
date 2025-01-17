@@ -17,20 +17,18 @@ class UserDataGrid extends DataGrid
         $queryBuilder = DB::table('users')
             ->distinct()
             ->addSelect(
-                'users.id',
-                'users.name',
-                'users.email',
-                'users.image',
-                'users.status',
-                'users.created_at'
+                'id',
+                'name',
+                'email',
+                'image',
+                'status',
+                'created_at'
             )
-            ->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id');
+            ->leftJoin('user_groups', 'id', '=', 'user_groups.user_id');
 
         if ($userIds = bouncer()->getAuthorizedUserIds()) {
-            $queryBuilder->whereIn('users.id', $userIds);
+            $queryBuilder->whereIn('id', $userIds);
         }
-
-        $this->addFilter('id', 'users.id');
 
         return $queryBuilder;
     }

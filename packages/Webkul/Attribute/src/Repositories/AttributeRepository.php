@@ -64,31 +64,30 @@ class AttributeRepository extends Repository
 
         $attribute->update($data);
 
-        $previousOptionIds = $attribute->options()->pluck('id');
-
-        if (in_array($attribute->type, ['select', 'multiselect', 'checkbox']) && isset($data['options'])) {
-            $sortOrder = 1;
-
-            foreach ($data['options'] as $optionId => $optionInputs) {
-                if (Str::contains($optionId, 'option_')) {
-                    $this->attributeOptionRepository->create(array_merge([
-                        'attribute_id' => $attribute->id,
-                        'sort_order'   => $sortOrder++,
-                    ], $optionInputs));
-                } else {
-                    if (is_numeric($index = $previousOptionIds->search($optionId))) {
-                        $previousOptionIds->forget($index);
-                    }
-
-                    $this->attributeOptionRepository->update(array_merge([
-                        'sort_order' => $sortOrder++,
-                    ], $optionInputs), $optionId);
-                }
-            }
+        if (! in_array($attribute->type, ['select', 'multiselect', 'checkbox'])) {
+            return $attribute;
         }
 
-        foreach ($previousOptionIds as $optionId) {
-            $this->attributeOptionRepository->delete($optionId);
+        if (! isset($data['options'])) {
+            return $attribute;
+        }
+
+        foreach ($data['options'] as $optionId => $optionInputs) {
+            $isNew = $optionInputs['isNew'] == 'true';
+
+            if ($isNew) {
+                $this->attributeOptionRepository->create(array_merge([
+                    'attribute_id' => $attribute->id,
+                ], $optionInputs));
+            } else {
+                $isDelete = $optionInputs['isDelete'] == 'true';
+
+                if ($isDelete) {
+                    $this->attributeOptionRepository->delete($optionId);
+                } else {
+                    $this->attributeOptionRepository->update($optionInputs, $optionId);
+                }
+            }
         }
 
         return $attribute;
@@ -128,12 +127,12 @@ class AttributeRepository extends Repository
 
             $currentUser = auth()->guard('user')->user();
 
-            if ($currentUser->view_permission === 'group') {
+            if ($currentUser?->view_permission === 'group') {
                 return $userRepository->leftJoin('user_groups', 'users.id', '=', 'user_groups.user_id')
                     ->where('users.name', 'like', '%'.urldecode($query).'%')
                     ->get();
-            } elseif ($currentUser->view_permission === 'individual') {
-                return $userRepository->where('users.id', $currentUser->id)->get();
+            } elseif ($currentUser?->view_permission === 'individual') {
+                return $userRepository->where('users.id', $currentUser->id);
             }
 
             return $userRepository->where('users.name', 'like', '%'.urldecode($query).'%')->get();

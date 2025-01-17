@@ -54,6 +54,17 @@
                     :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
                         'entity_type' => 'organizations',
                     ])"
+                    :custom-validations="[
+                        'name' => [
+                            'max:100',
+                        ],
+                        'address' => [
+                            'max:100',
+                        ],
+                        'postcode' => [
+                            'max:20',
+                        ],
+                    ]"
                     :entity="$organization"
                 />
                 

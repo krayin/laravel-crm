@@ -15,6 +15,7 @@
     active-type="{{ $activeType }}"
     @if($types):types='@json($types)'@endif
     @if($extraTypes):extra-types='@json($extraTypes)'@endif
+    ref="activities"
 >
     <!-- Shimmer -->
     <x-admin::shimmer.activities />
@@ -189,7 +190,7 @@
                                         <p
                                             class="dark:text-white"
                                             v-if="activity.comment"
-                                            v-html="activity.comment"
+                                            v-safe-html="activity.comment"
                                         ></p>
 
                                         {!! view_render_event('admin.components.activities.content.activity.item.description.after') !!}
@@ -556,59 +557,53 @@
                         });
                 },
 
-                markAsDone: function(activity) {
-                    let self = this;
-
+                markAsDone(activity) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
-                            self.isUpdating[activity.id] = true;
+                            this.isUpdating[activity.id] = true;
 
                             this.$axios.put("{{ route('admin.activities.update', 'replaceId') }}".replace('replaceId', activity.id), {
                                     'is_done': 1
                                 })
-                                .then (function(response) {
-                                    self.isUpdating[activity.id] = false;
+                                .then((response) => {
+                                    this.isUpdating[activity.id] = false;
 
                                     activity.is_done = 1;
 
-                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch (function (error) {
-                                    self.isUpdating[activity.id] = false;
+                                .catch((error) => {
+                                    this.isUpdating[activity.id] = false;
 
-                                    self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
                         },
                     });
                 },
 
-                remove: function(activity) {
-                    let self = this;
-
+                remove(activity) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
-                            self.isUpdating[activity.id] = true;
+                            this.isUpdating[activity.id] = true;
 
                             this.$axios.delete("{{ route('admin.activities.delete', 'replaceId') }}".replace('replaceId', activity.id))
-                                .then (function(response) {
-                                    self.isUpdating[activity.id] = false;
+                                .then((response) => {
+                                    this.isUpdating[activity.id] = false;
 
-                                    self.activities.splice(self.activities.indexOf(activity), 1);
+                                    this.activities.splice(this.activities.indexOf(activity), 1);
 
-                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch (function (error) {
-                                    self.isUpdating[activity.id] = false;
+                                .catch((error) => {
+                                    this.isUpdating[activity.id] = false;
 
-                                    self.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
                         },
                     });
                 },
 
-                unlinkEmail: function(activity) {
-                    let self = this;
-
+                unlinkEmail(activity) {
                     this.$emitter.emit('open-confirm-modal', {
                         agree: () => {
                             let emailId = activity.parent_id ?? activity.id;
@@ -618,26 +613,26 @@
                                         email_id: emailId,
                                     }
                                 })
-                                .then (response => {
-                                    let relatedActivities = self.activities.filter(activity => activity.parent_id == emailId || activity.id == emailId);
+                                .then((response) => {
+                                    let relatedActivities = this.activities.filter(activity => activity.parent_id == emailId || activity.id == emailId);
 
                                     relatedActivities.forEach(activity => {
-                                        const index = self.activities.findIndex(a => a === activity);
+                                        const index = this.activities.findIndex(a => a === activity);
 
                                         if (index !== -1) {
-                                            self.activities.splice(index, 1);
+                                            this.activities.splice(index, 1);
                                         }
                                     });
 
-                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                    this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                                 })
-                                .catch (error => {
-                                    self.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
+                                .catch((error) => {
+                                    this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
                                 });
                         }
                     });
                 },
-            }
+            },
         });
     </script>
 @endPushOnce
