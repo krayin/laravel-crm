@@ -6,7 +6,7 @@ return [
         'name'  => 'admin::app.layouts.dashboard',
         'route' => 'admin.dashboard.index',
         'sort'  => 1,
-    ],  [
+    ], [
         'key'   => 'leads',
         'name'  => 'admin::app.acl.leads',
         'route' => 'admin.leads.index',
@@ -56,7 +56,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.quotes.delete', 'admin.quotes.mass_delete'],
         'sort'  => 4,
-    ],  [
+    ], [
         'key'   => 'mail',
         'name'  => 'admin::app.acl.mail',
         'route' => 'admin.mail.index',
@@ -131,7 +131,7 @@ return [
         'name'  => 'admin::app.acl.contacts',
         'route' => 'admin.contacts.users.index',
         'sort'  => 6,
-    ],  [
+    ], [
         'key'   => 'contacts.persons',
         'name'  => 'admin::app.acl.persons',
         'route' => 'admin.contacts.persons.index',
@@ -176,7 +176,7 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.contacts.organizations.delete', 'admin.contacts.organizations.mass_delete'],
         'sort'  => 3,
-    ],  [
+    ], [
         'key'   => 'products',
         'name'  => 'admin::app.acl.products',
         'route' => 'admin.products.index',
@@ -401,8 +401,47 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => 'admin.settings.workflows.delete',
         'sort'  => 3,
-    ],
-    [
+    ], [
+        'key'   => 'settings.automation.events',
+        'name'  => 'admin::app.acl.event',
+        'route' => 'admin.settings.marketing.events.index',
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.events.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.marketing.events.create', 'admin.settings.marketing.events.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.events.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.marketing.events.edit', 'admin.settings.marketing.events.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.events.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => ['admin.settings.marketing.events.delete', 'admin.settings.marketing.events.mass_delete'],
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.automation.campaigns',
+        'name'  => 'admin::app.acl.campaigns',
+        'route' => 'admin.settings.marketing.campaigns.index',
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.campaigns.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => ['admin.settings.marketing.campaigns.create', 'admin.settings.marketing.campaigns.store'],
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.automation.campaigns.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => ['admin.settings.marketing.campaigns.edit', 'admin.settings.marketing.campaigns.update'],
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.automation.campaigns.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => ['admin.settings.marketing.campaigns.delete', 'admin.settings.marketing.campaigns.mass_delete'],
+        'sort'  => 3,
+    ], [
         'key'   => 'settings.automation.webhooks',
         'name'  => 'admin::app.acl.webhook',
         'route' => 'admin.settings.webhooks.index',
@@ -447,7 +486,39 @@ return [
         'name'  => 'admin::app.acl.delete',
         'route' => ['admin.settings.tags.delete', 'admin.settings.tags.mass_delete', 'admin.leads.tags.detach'],
         'sort'  => 2,
+    ],
+    [
+        'key'   => 'settings.data_transfer',
+        'name'  => 'admin::app.acl.data-transfer',
+        'route' => 'admin.settings.data_transfer.imports.index',
+        'sort'  => 10,
     ], [
+        'key'   => 'settings.data_transfer.imports',
+        'name'  => 'admin::app.acl.imports',
+        'route' => 'admin.settings.data_transfer.imports.index',
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.data_transfer.imports.create',
+        'name'  => 'admin::app.acl.create',
+        'route' => 'admin.settings.data_transfer.imports.create',
+        'sort'  => 1,
+    ], [
+        'key'   => 'settings.data_transfer.imports.edit',
+        'name'  => 'admin::app.acl.edit',
+        'route' => 'admin.settings.data_transfer.imports.edit',
+        'sort'  => 2,
+    ], [
+        'key'   => 'settings.data_transfer.imports.delete',
+        'name'  => 'admin::app.acl.delete',
+        'route' => 'admin.settings.data_transfer.imports.delete',
+        'sort'  => 3,
+    ], [
+        'key'   => 'settings.data_transfer.imports.import',
+        'name'  => 'admin::app.acl.import',
+        'route' => 'admin.settings.data_transfer.imports.imports',
+        'sort'  => 4,
+    ],
+    [
         'key'   => 'configuration',
         'name'  => 'admin::app.acl.configuration',
         'route' => 'admin.configuration.index',

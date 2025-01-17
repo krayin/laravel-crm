@@ -290,6 +290,17 @@ Breadcrumbs::for('settings.email_templates.edit', function (BreadcrumbTrail $tra
     $trail->push(trans('admin::app.settings.email-template.edit.title'), route('admin.settings.email_templates.edit', $emailTemplate->id));
 });
 
+// Settings > Marketing Events
+Breadcrumbs::for('settings.marketing.events', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.marketing.events.index.title'), route('admin.settings.marketing.events.index'));
+});
+
+Breadcrumbs::for('settings.marketing.campaigns', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.marketing.campaigns.index.title'), route('admin.settings.marketing.campaigns.index'));
+});
+
 // Settings > Workflows
 Breadcrumbs::for('settings.workflows', function (BreadcrumbTrail $trail) {
     $trail->parent('settings');
@@ -402,6 +413,30 @@ Breadcrumbs::for('settings.locations.create', function (BreadcrumbTrail $trail) 
 Breadcrumbs::for('settings.locations.edit', function (BreadcrumbTrail $trail, $location) {
     $trail->parent('settings.locations');
     $trail->push(trans('admin::app.settings.locations.edit-title'), route('admin.settings.locations.edit', $location->id));
+});
+
+// Dashboard > Settings > Data Transfers
+Breadcrumbs::for('settings.data_transfers', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.index.title'), route('admin.settings.data_transfer.imports.index'));
+});
+
+// Dashboard > Settings > Data Transfers > Create Data Transfer
+Breadcrumbs::for('settings.data_transfers.create', function (BreadcrumbTrail $trail) {
+    $trail->parent('settings.data_transfers');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.create.title'), route('admin.settings.data_transfer.imports.create'));
+});
+
+// Dashboard > Settings > Data Transfers > Edit Data Transfer
+Breadcrumbs::for('settings.data_transfers.edit', function (BreadcrumbTrail $trail, $import) {
+    $trail->parent('settings.data_transfers');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.edit.title'), route('admin.settings.data_transfer.imports.edit', $import->id));
+});
+
+// Dashboard > Settings > Data Transfers > Import Data Transfer
+Breadcrumbs::for('settings.data_transfers.import', function (BreadcrumbTrail $trail, $import) {
+    $trail->parent('settings.data_transfers');
+    $trail->push(trans('admin::app.settings.data-transfer.imports.import.title'), route('admin.settings.data_transfer.imports.import', $import->id));
 });
 
 // Configuration

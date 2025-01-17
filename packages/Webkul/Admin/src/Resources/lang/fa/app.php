@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'سایر تنظیمات',
         'tags'            => 'برچسب‌ها',
         'configuration'   => 'پیکربندی',
+        'campaigns'       => 'کمپین‌ها',
+        'event'           => 'رویداد',
         'create'          => 'ایجاد',
         'edit'            => 'ویرایش',
         'view'            => 'نمایش',
@@ -39,6 +41,9 @@ return [
         'delete'          => 'حذف',
         'export'          => 'صادر کردن',
         'mass-delete'     => 'حذف انبوه',
+        'data-transfer'   => 'انتقال داده',
+        'imports'         => 'واردات',
+        'import'          => 'وارد کردن',
     ],
 
     'users' => [
@@ -1091,6 +1096,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'ایجاد رویداد',
+                    'title'               => 'رویدادها',
+                    'create-success'      => 'رویداد با موفقیت ایجاد شد.',
+                    'update-success'      => 'رویداد با موفقیت به‌روزرسانی شد.',
+                    'delete-success'      => 'رویداد با موفقیت حذف شد.',
+                    'delete-failed'       => 'رویداد قابل حذف نیست.',
+                    'mass-delete-success' => 'رویدادها با موفقیت حذف شدند',
+
+                    'datagrid'   => [
+                        'delete'       => 'حذف',
+                        'edit'         => 'ویرایش',
+                        'id'           => 'شناسه',
+                        'name'         => 'نام',
+                        'description'  => 'توضیحات',
+                        'date'         => 'تاریخ',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'ایجاد رویداد',
+                        'name'        => 'نام',
+                        'date'        => 'تاریخ',
+                        'description' => 'توضیحات',
+                    ],
+
+                    'edit' => [
+                        'title' => 'ویرایش رویداد',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'ایجاد کمپین',
+                    'title'               => 'کمپین‌ها',
+                    'create-success'      => 'کمپین با موفقیت ایجاد شد.',
+                    'update-success'      => 'کمپین با موفقیت به‌روزرسانی شد.',
+                    'delete-success'      => 'کمپین با موفقیت حذف شد.',
+                    'delete-failed'       => 'کمپین قابل حذف نیست.',
+                    'mass-delete-success' => 'کمپین‌ها با موفقیت حذف شدند',
+
+                    'datagrid'   => [
+                        'id'       => 'شناسه',
+                        'name'     => 'نام',
+                        'subject'  => 'موضوع',
+                        'status'   => 'وضعیت',
+                        'active'   => 'فعال',
+                        'inactive' => 'غیرفعال',
+                        'edit'     => 'ویرایش',
+                        'delete'   => 'حذف',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'ایجاد کمپین',
+                        'name'           => 'نام',
+                        'type'           => 'نوع',
+                        'subject'        => 'موضوع',
+                        'event'          => 'رویداد',
+                        'email-template' => 'قالب ایمیل',
+                        'status'         => 'وضعیت',
+                    ],
+
+                    'edit' => [
+                        'title' => 'ویرایش کمپین',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'ایجاد برچسب',
@@ -1516,6 +1592,109 @@ return [
                 'is_required'           => 'الزامی است',
                 'is_unique'             => 'منحصربه‌فرد است',
                 'actions'               => 'عملیات',
+            ],
+        ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'عملیات',
+                    'allowed-errors'      => 'خطاهای مجاز',
+                    'back-btn'            => 'بازگشت',
+                    'create-update'       => 'ایجاد/به‌روزرسانی',
+                    'delete'              => 'حذف',
+                    'download-sample'     => 'دانلود نمونه',
+                    'field-separator'     => 'جداکننده فیلد',
+                    'file'                => 'فایل',
+                    'general'             => 'عمومی',
+                    'images-directory'    => 'مسیر پوشه تصاویر',
+                    'process-in-queue'    => 'پردازش در صف',
+                    'results'             => 'نتایج',
+                    'save-btn'            => 'ذخیره واردات',
+                    'settings'            => 'تنظیمات',
+                    'skip-errors'         => 'رد کردن خطاها',
+                    'stop-on-errors'      => 'توقف در صورت خطا',
+                    'title'               => 'ایجاد واردات',
+                    'type'                => 'نوع',
+                    'validation-strategy' => 'استراتژی اعتبارسنجی',
+                ],
+
+                'edit' => [
+                    'action'              => 'عملیات',
+                    'allowed-errors'      => 'خطاهای مجاز',
+                    'back-btn'            => 'بازگشت',
+                    'create-update'       => 'ایجاد/به‌روزرسانی',
+                    'delete'              => 'حذف',
+                    'download-sample'     => 'دانلود نمونه',
+                    'field-separator'     => 'جداکننده فیلد',
+                    'file'                => 'فایل',
+                    'general'             => 'عمومی',
+                    'images-directory'    => 'مسیر پوشه تصاویر',
+                    'process-in-queue'    => 'پردازش در صف',
+                    'results'             => 'نتایج',
+                    'save-btn'            => 'ذخیره واردات',
+                    'settings'            => 'تنظیمات',
+                    'skip-errors'         => 'رد کردن خطاها',
+                    'stop-on-errors'      => 'توقف در صورت خطا',
+                    'title'               => 'ویرایش واردات',
+                    'type'                => 'نوع',
+                    'validation-strategy' => 'استراتژی اعتبارسنجی',
+                ],
+
+                'index' => [
+                    'button-title' => 'ایجاد واردات',
+                    'title'        => 'واردات‌ها',
+
+                    'datagrid' => [
+                        'actions'       => 'عملیات',
+                        'completed-at'  => 'تکمیل شده در',
+                        'created'       => 'ایجاد شده',
+                        'delete'        => 'حذف',
+                        'deleted'       => 'حذف شده',
+                        'edit'          => 'ویرایش',
+                        'error-file'    => 'فایل خطا',
+                        'id'            => 'شناسه',
+                        'started-at'    => 'شروع شده در',
+                        'state'         => 'وضعیت',
+                        'summary'       => 'خلاصه',
+                        'type'          => 'نوع',
+                        'updated'       => 'به‌روزرسانی شده',
+                        'uploaded-file' => 'فایل آپلود شده',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'بازگشت',
+                    'completed-batches'       => 'کل دسته‌های تکمیل شده:',
+                    'download-error-report'   => 'دانلود گزارش کامل',
+                    'edit-btn'                => 'ویرایش',
+                    'imported-info'           => 'تبریک! واردات شما با موفقیت انجام شد.',
+                    'importing-info'          => 'واردات در حال انجام است',
+                    'indexing-info'           => 'ایندکس‌گذاری منابع (قیمت، موجودی و Elastic Search) در حال پیشرفت است',
+                    'linking-info'            => 'پیونددهی منابع در حال انجام است',
+                    'progress'                => 'پیشرفت:',
+                    'title'                   => 'واردات',
+                    'total-batches'           => 'کل دسته‌ها:',
+                    'total-created'           => 'کل رکوردهای ایجاد شده:',
+                    'total-deleted'           => 'کل رکوردهای حذف شده:',
+                    'total-errors'            => 'کل خطاها:',
+                    'total-invalid-rows'      => 'کل ردیف‌های نامعتبر:',
+                    'total-rows-processed'    => 'کل ردیف‌های پردازش شده:',
+                    'total-updated'           => 'کل رکوردهای به‌روزرسانی شده:',
+                    'validate'                => 'اعتبارسنجی',
+                    'validate-info'           => 'برای بررسی واردات خود، روی "اعتبارسنجی داده‌ها" کلیک کنید.',
+                    'validating-info'         => 'خواندن و اعتبارسنجی داده‌ها آغاز شده است',
+                    'validation-failed-info'  => 'واردات شما نامعتبر است. لطفاً خطاهای زیر را رفع کرده و دوباره تلاش کنید.',
+                    'validation-success-info' => 'واردات شما معتبر است. برای شروع فرآیند واردات، روی "واردات" کلیک کنید.',
+                ],
+
+                'create-success'    => 'واردات با موفقیت ایجاد شد.',
+                'delete-failed'     => 'حذف واردات به طور غیرمنتظره‌ای ناکام ماند.',
+                'delete-success'    => 'واردات با موفقیت حذف شد.',
+                'not-valid'         => 'واردات نامعتبر است',
+                'nothing-to-import' => 'هیچ منبعی برای واردات وجود ندارد.',
+                'setup-queue-error' => 'لطفاً درایور صف خود را به "database" یا "redis" تغییر دهید تا فرآیند واردات شروع شود.',
+                'update-success'    => 'واردات با موفقیت به‌روزرسانی شد.',
             ],
         ],
     ],
@@ -2017,6 +2196,10 @@ return [
         'email-templates'      => 'قالب‌های ایمیل',
         'email'                => 'ایمیل',
         'email-templates-info' => 'اضافه، ویرایش یا حذف قالب‌های ایمیل از CRM',
+        'events'               => 'رویدادها',
+        'events-info'          => 'افزودن، ویرایش یا حذف رویدادها از CRM',
+        'campaigns'            => 'کمپین‌ها',
+        'campaigns-info'       => 'افزودن، ویرایش یا حذف کمپین‌ها از CRM',
         'workflows'            => 'فرایندها',
         'workflows-info'       => 'اضافه، ویرایش یا حذف فرایندها از CRM',
         'webhooks'             => 'وب‌هوک‌ها',
@@ -2035,6 +2218,8 @@ return [
         'warehouses'           => 'انبارها',
         'warehouse'            => 'انبار',
         'warehouses-info'      => 'اضافه، ویرایش یا حذف انبارها از CRM',
+        'data_transfer'        => 'انتقال داده',
+        'data_transfer_info'   => 'مدیریت تنظیمات مربوط به انتقال داده‌های اشخاص، محصولات و سرنخ‌ها در CRM',
     ],
 
     'user' => [
@@ -2075,6 +2260,12 @@ return [
                     'thanks'            => 'متشکریم!',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => ':attribute باید یک عدد اعشاری باشد.',
         ],
     ],
 

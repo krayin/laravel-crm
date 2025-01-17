@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Otras configuraciones',
         'tags'            => 'Etiquetas',
         'configuration'   => 'Configuración',
+        'campaigns'       => 'Campañas',
+        'event'           => 'Evento',
         'create'          => 'Crear',
         'edit'            => 'Editar',
         'view'            => 'Ver',
@@ -39,6 +41,9 @@ return [
         'delete'          => 'Eliminar',
         'export'          => 'Exportar',
         'mass-delete'     => 'Eliminar en masa',
+        'data-transfer'   => 'Transferencia de Datos',
+        'imports'         => 'Importaciones',
+        'import'          => 'Importar',
     ],
 
     'users' => [
@@ -1090,6 +1095,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Crear Evento',
+                    'title'               => 'Eventos',
+                    'create-success'      => 'Evento creado con éxito.',
+                    'update-success'      => 'Evento actualizado con éxito.',
+                    'delete-success'      => 'Evento eliminado con éxito.',
+                    'delete-failed'       => 'No se puede eliminar el evento.',
+                    'mass-delete-success' => 'Eventos eliminados con éxito',
+
+                    'datagrid'   => [
+                        'delete'       => 'Eliminar',
+                        'edit'         => 'Editar',
+                        'id'           => 'ID',
+                        'name'         => 'Nombre',
+                        'description'  => 'Descripción',
+                        'date'         => 'Fecha',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Crear Evento',
+                        'name'        => 'Nombre',
+                        'date'        => 'Fecha',
+                        'description' => 'Descripción',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Evento',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Crear Campaña',
+                    'title'               => 'Campañas',
+                    'create-success'      => 'Campaña creada con éxito.',
+                    'update-success'      => 'Campaña actualizada con éxito.',
+                    'delete-success'      => 'Campaña eliminada con éxito.',
+                    'delete-failed'       => 'No se puede eliminar la campaña.',
+                    'mass-delete-success' => 'Campañas eliminadas con éxito.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Nombre',
+                        'subject'  => 'Asunto',
+                        'status'   => 'Estado',
+                        'active'   => 'Activo',
+                        'inactive' => 'Inactivo',
+                        'edit'     => 'Editar',
+                        'delete'   => 'Eliminar',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Crear Campaña',
+                        'name'           => 'Nombre',
+                        'type'           => 'Tipo',
+                        'subject'        => 'Asunto',
+                        'event'          => 'Evento',
+                        'email-template' => 'Plantilla de Correo',
+                        'status'         => 'Estado',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Campaña',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Crear Etiqueta',
@@ -1515,6 +1591,109 @@ return [
                 'is_required'           => 'Es Requerido',
                 'is_unique'             => 'Es Único',
                 'actions'               => 'Acciones',
+            ],
+        ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'Acción',
+                    'allowed-errors'      => 'Errores Permitidos',
+                    'back-btn'            => 'Atrás',
+                    'create-update'       => 'Crear/Actualizar',
+                    'delete'              => 'Eliminar',
+                    'download-sample'     => 'Descargar Muestra',
+                    'field-separator'     => 'Separador de Campos',
+                    'file'                => 'Archivo',
+                    'general'             => 'General',
+                    'images-directory'    => 'Ruta del Directorio de Imágenes',
+                    'process-in-queue'    => 'Procesar en Cola',
+                    'results'             => 'Resultados',
+                    'save-btn'            => 'Guardar Importación',
+                    'settings'            => 'Configuraciones',
+                    'skip-errors'         => 'Omitir Errores',
+                    'stop-on-errors'      => 'Detener en Errores',
+                    'title'               => 'Crear Importación',
+                    'type'                => 'Tipo',
+                    'validation-strategy' => 'Estrategia de Validación',
+                ],
+
+                'edit' => [
+                    'action'              => 'Acción',
+                    'allowed-errors'      => 'Errores Permitidos',
+                    'back-btn'            => 'Atrás',
+                    'create-update'       => 'Crear/Actualizar',
+                    'delete'              => 'Eliminar',
+                    'download-sample'     => 'Descargar Muestra',
+                    'field-separator'     => 'Separador de Campos',
+                    'file'                => 'Archivo',
+                    'general'             => 'General',
+                    'images-directory'    => 'Ruta del Directorio de Imágenes',
+                    'process-in-queue'    => 'Procesar en Cola',
+                    'results'             => 'Resultados',
+                    'save-btn'            => 'Guardar Importación',
+                    'settings'            => 'Configuraciones',
+                    'skip-errors'         => 'Omitir Errores',
+                    'stop-on-errors'      => 'Detener en Errores',
+                    'title'               => 'Editar Importación',
+                    'type'                => 'Tipo',
+                    'validation-strategy' => 'Estrategia de Validación',
+                ],
+
+                'index' => [
+                    'button-title' => 'Crear Importación',
+                    'title'        => 'Importaciones',
+
+                    'datagrid' => [
+                        'actions'       => 'Acciones',
+                        'completed-at'  => 'Completado en',
+                        'created'       => 'Creado',
+                        'delete'        => 'Eliminar',
+                        'deleted'       => 'Eliminado',
+                        'edit'          => 'Editar',
+                        'error-file'    => 'Archivo de Errores',
+                        'id'            => 'ID',
+                        'started-at'    => 'Iniciado en',
+                        'state'         => 'Estado',
+                        'summary'       => 'Resumen',
+                        'type'          => 'Tipo',
+                        'updated'       => 'Actualizado',
+                        'uploaded-file' => 'Archivo Subido',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'Atrás',
+                    'completed-batches'       => 'Total de Lotes Completados:',
+                    'download-error-report'   => 'Descargar Informe Completo',
+                    'edit-btn'                => 'Editar',
+                    'imported-info'           => '¡Felicidades! Tu importación fue exitosa.',
+                    'importing-info'          => 'Importación en Proceso',
+                    'indexing-info'           => 'Indexación de Recursos (Precios, Inventario y Elastic Search) en Progreso',
+                    'linking-info'            => 'Vinculación de Recursos en Progreso',
+                    'progress'                => 'Progreso:',
+                    'title'                   => 'Importación',
+                    'total-batches'           => 'Total de Lotes:',
+                    'total-created'           => 'Total de Registros Creados:',
+                    'total-deleted'           => 'Total de Registros Eliminados:',
+                    'total-errors'            => 'Total de Errores:',
+                    'total-invalid-rows'      => 'Total de Filas Inválidas:',
+                    'total-rows-processed'    => 'Total de Filas Procesadas:',
+                    'total-updated'           => 'Total de Registros Actualizados:',
+                    'validate'                => 'Validar',
+                    'validate-info'           => 'Haz clic en Validar Datos para comprobar tu importación.',
+                    'validating-info'         => 'La lectura y validación de los datos ha comenzado',
+                    'validation-failed-info'  => 'Tu importación no es válida. Por favor, corrige los siguientes errores e intenta de nuevo.',
+                    'validation-success-info' => 'Tu importación es válida. Haz clic en Importar para iniciar el proceso de importación.',
+                ],
+
+                'create-success'    => 'Importación creada exitosamente.',
+                'delete-failed'     => 'La eliminación de la importación falló inesperadamente.',
+                'delete-success'    => 'Importación eliminada exitosamente.',
+                'not-valid'         => 'La importación no es válida',
+                'nothing-to-import' => 'No hay recursos para importar.',
+                'setup-queue-error' => 'Por favor, cambia tu controlador de cola a "database" o "redis" para iniciar el proceso de importación.',
+                'update-success'    => 'Importación actualizada exitosamente.',
             ],
         ],
     ],
@@ -2016,6 +2195,10 @@ return [
         'email-templates'      => 'Plantillas de Correo',
         'email'                => 'Correo',
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
+        'events'               => 'Eventos',
+        'events-info'          => 'Agregar, editar o eliminar eventos del CRM',
+        'campaigns'            => 'Campañas',
+        'campaigns-info'       => 'Agregar, editar o eliminar campañas del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
         'webhooks'             => 'Webhooks',
@@ -2034,6 +2217,8 @@ return [
         'warehouses'           => 'Almacenes',
         'warehouse'            => 'Almacén',
         'warehouses-info'      => 'Agregar, editar o eliminar almacenes del CRM',
+        'data_transfer'        => 'Transferencia de Datos',
+        'data_transfer_info'   => 'Gestionar la configuración relacionada con la transferencia de datos de personas, productos y clientes potenciales en el CRM',
     ],
 
     'user' => [
@@ -2074,6 +2259,12 @@ return [
                     'thanks'            => '¡Gracias!',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => 'El :attribute debe ser un número decimal.',
         ],
     ],
 

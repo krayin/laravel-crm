@@ -60,8 +60,11 @@
             "Webkul\\Attribute\\": "packages/Webkul/Attribute/src",
             "Webkul\\Contact\\": "packages/Webkul/Contact/src",
             "Webkul\\Core\\": "packages/Webkul/Core/src",
+            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src",
+            "Webkul\\DataTransfer\\": "packages/Webkul/DataTransfer/src",
             "Webkul\\Email\\": "packages/Webkul/Email/src",
             "Webkul\\EmailTemplate\\": "packages/Webkul/EmailTemplate/src",
+            "Webkul\\Marketing\\": "packages/Webkul/Marketing/src",
             "Webkul\\Installer\\": "packages/Webkul/Installer/src",
             "Webkul\\Lead\\": "packages/Webkul/Lead/src",
             "Webkul\\Product\\": "packages/Webkul/Product/src",
@@ -70,8 +73,7 @@
             "Webkul\\User\\": "packages/Webkul/User/src",
             "Webkul\\Warehouse\\": "packages/Webkul/Warehouse/src",
             "Webkul\\WebForm\\": "packages/Webkul/WebForm/src",
-            "Webkul\\Automation\\": "packages/Webkul/Automation/src",
-            "Webkul\\DataGrid\\": "packages/Webkul/DataGrid/src"
+            "Webkul\\Automation\\": "packages/Webkul/Automation/src"
         }
     },
     "autoload-dev": {

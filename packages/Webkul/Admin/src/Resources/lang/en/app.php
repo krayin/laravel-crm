@@ -39,6 +39,9 @@ return [
         'delete'          => 'Delete',
         'export'          => 'Export',
         'mass-delete'     => 'Mass Delete',
+        'data-transfer'   => 'Data Transfer',
+        'imports'         => 'Imports',
+        'import'          => 'Import',
     ],
 
     'users' => [
@@ -1091,6 +1094,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Create Event',
+                    'title'               => 'Events',
+                    'create-success'      => 'Event created successfully.',
+                    'update-success'      => 'Event updated successfully.',
+                    'delete-success'      => 'Event deleted successfully.',
+                    'delete-failed'       => 'Event can not be deleted.',
+                    'mass-delete-success' => 'Events deleted successfully',
+
+                    'datagrid'   => [
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                        'id'           => 'ID',
+                        'name'         => 'Name',
+                        'description'  => 'Description',
+                        'date'         => 'Date',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Create Event',
+                        'name'        => 'Name',
+                        'date'        => 'Date',
+                        'description' => 'Description',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Event',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Create Campaigns',
+                    'title'               => 'Campaigns',
+                    'create-success'      => 'Campaign created successfully.',
+                    'update-success'      => 'Campaign updated successfully.',
+                    'delete-success'      => 'Campaign deleted successfully.',
+                    'delete-failed'       => 'Campaign can not be deleted.',
+                    'mass-delete-success' => 'Campaigns deleted successfully.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Name',
+                        'subject'  => 'Subject',
+                        'status'   => 'Status',
+                        'active'   => 'Active',
+                        'inactive' => 'Inactive',
+                        'edit'     => 'Edit',
+                        'delete'   => 'Delete',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Create Campaign',
+                        'name'           => 'Name',
+                        'type'           => 'Type',
+                        'subject'        => 'Subject',
+                        'event'          => 'Event',
+                        'email-template' => 'Email Template',
+                        'status'         => 'Status',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Campaign',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Create Tag',
@@ -1518,6 +1592,109 @@ return [
                 'validations'           => 'Validations',
             ],
         ],
+
+        'data-transfer' => [
+            'imports' => [
+                'create' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Allowed Errors',
+                    'back-btn'            => 'Back',
+                    'create-update'       => 'Create/Update',
+                    'delete'              => 'Delete',
+                    'download-sample'     => 'Download Sample',
+                    'field-separator'     => 'Field Separator',
+                    'file'                => 'File',
+                    'general'             => 'General',
+                    'images-directory'    => 'Images Directory Path',
+                    'process-in-queue'    => 'Process In Queue',
+                    'results'             => 'Results',
+                    'save-btn'            => 'Save Import',
+                    'settings'            => 'Settings',
+                    'skip-errors'         => 'Skip Errors',
+                    'stop-on-errors'      => 'Stop on Errors',
+                    'title'               => 'Create Import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Validation Strategy',
+                ],
+
+                'edit' => [
+                    'action'              => 'Action',
+                    'allowed-errors'      => 'Allowed Errors',
+                    'back-btn'            => 'Back',
+                    'create-update'       => 'Create/Update',
+                    'delete'              => 'Delete',
+                    'download-sample'     => 'Download Sample',
+                    'field-separator'     => 'Field Separator',
+                    'file'                => 'File',
+                    'general'             => 'General',
+                    'images-directory'    => 'Images Directory Path',
+                    'process-in-queue'    => 'Process In Queue',
+                    'results'             => 'Results',
+                    'save-btn'            => 'Save Import',
+                    'settings'            => 'Settings',
+                    'skip-errors'         => 'Skip Errors',
+                    'stop-on-errors'      => 'Stop on Errors',
+                    'title'               => 'Edit Import',
+                    'type'                => 'Type',
+                    'validation-strategy' => 'Validation Strategy',
+                ],
+
+                'index' => [
+                    'button-title' => 'Create Import',
+                    'title'        => 'Imports',
+
+                    'datagrid' => [
+                        'actions'       => 'Actions',
+                        'completed-at'  => 'Completed At',
+                        'created'       => 'Created',
+                        'delete'        => 'Delete',
+                        'deleted'       => 'Deleted',
+                        'edit'          => 'Edit',
+                        'error-file'    => 'Error File',
+                        'id'            => 'ID',
+                        'started-at'    => 'Started At',
+                        'state'         => 'State',
+                        'summary'       => 'Summary',
+                        'type'          => 'Type',
+                        'updated'       => 'Updated',
+                        'uploaded-file' => 'Uploaded File',
+                    ],
+                ],
+
+                'import' => [
+                    'back-btn'                => 'Back',
+                    'completed-batches'       => 'Total Batches Completed:',
+                    'download-error-report'   => 'Download Full Report',
+                    'edit-btn'                => 'Edit',
+                    'imported-info'           => 'Congratulations! Your import was successful.',
+                    'importing-info'          => 'Import In Process',
+                    'indexing-info'           => 'Resources Indexing (Price, Inventory and Elastic Search) In Progress',
+                    'linking-info'            => 'Resources Linking In Progress',
+                    'progress'                => 'Progress:',
+                    'title'                   => 'Import',
+                    'total-batches'           => 'Total Batches:',
+                    'total-created'           => 'Total Records Created:',
+                    'total-deleted'           => 'Total Records Deleted:',
+                    'total-errors'            => 'Total Errors:',
+                    'total-invalid-rows'      => 'Total Invalid Rows:',
+                    'total-rows-processed'    => 'Total Rows Processed:',
+                    'total-updated'           => 'Total Records Updated:',
+                    'validate'                => 'Validate',
+                    'validate-info'           => 'Click on Validate Data to check your import.',
+                    'validating-info'         => 'The data started reading and Validating',
+                    'validation-failed-info'  => 'Your import is invalid. Please fix the following errors and try again.',
+                    'validation-success-info' => 'Your import is valid. Click on Import to start the import process.',
+                ],
+
+                'create-success'    => 'Import created successfully.',
+                'delete-failed'     => 'Import deletion failed unexpectedly.',
+                'delete-success'    => 'Import deleted successfully.',
+                'not-valid'         => 'Import is invalid',
+                'nothing-to-import' => 'There are no resources to import.',
+                'setup-queue-error' => 'Please change your queue driver to "database" or "redis" to start the import process.',
+                'update-success'    => 'Import updated successfully.',
+            ],
+        ],
     ],
 
     'activities' => [
@@ -1812,7 +1989,7 @@ return [
                 'title' => 'About Lead',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Subject',
                 'expired-at'      => 'Expired At',
                 'sub-total'       => 'Sub Total',
@@ -2017,6 +2194,10 @@ return [
         'email-templates'      => 'Email Templates',
         'email'                => 'Email',
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
+        'events'               => 'Events',
+        'events-info'          => 'Add, edit or delete events from CRM',
+        'campaigns'            => 'Campaigns',
+        'campaigns-info'       => 'Add, edit or delete campaigns from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
         'webhooks'             => 'Webhooks',
@@ -2035,6 +2216,8 @@ return [
         'warehouses'           => 'Warehouses',
         'warehouse'            => 'Warehouse',
         'warehouses-info'      => 'Add, edit or delete warehouses from CRM',
+        'data_transfer'        => 'Data Transfer',
+        'data_transfer_info'   => 'Manage persons, products and leads data transfer related settings in the CRM',
     ],
 
     'user' => [
@@ -2075,6 +2258,12 @@ return [
                     'thanks'            => 'Thanks!',
                 ],
             ],
+        ],
+    ],
+
+    'validations' => [
+        'message' => [
+            'decimal' => 'The :attribute must be a decimal.',
         ],
     ],
 

@@ -2,9 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use Webkul\Admin\Http\Controllers\Settings\AttributeController;
+use Webkul\Admin\Http\Controllers\Settings\DataTransfer\ImportController;
 use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
+use Webkul\Admin\Http\Controllers\Settings\Marketing\CampaignsController;
+use Webkul\Admin\Http\Controllers\Settings\Marketing\EventController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\SettingController;
@@ -290,5 +293,79 @@ Route::prefix('settings')->group(function () {
         Route::put('edit/{id}', 'update')->name('admin.settings.email_templates.update');
 
         Route::delete('{id}', 'destroy')->name('admin.settings.email_templates.delete');
+    });
+
+    /**
+     * Events Routes.
+     */
+    Route::group(['prefix' => 'marketing'], function () {
+        Route::controller(EventController::class)->prefix('events')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.events.index');
+
+            Route::post('create', 'store')->name('admin.settings.marketing.events.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.marketing.events.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.marketing.events.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing.events.delete');
+
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.events.mass_delete');
+        });
+
+        Route::controller(CampaignsController::class)->prefix('campaigns')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.campaigns.index');
+
+            Route::get('events', 'getEvents')->name('admin.settings.marketing.campaigns.events');
+
+            Route::get('email-templates', 'getEmailTemplates')->name('admin.settings.marketing.campaigns.email-templates');
+
+            Route::post('', 'store')->name('admin.settings.marketing.campaigns.store');
+
+            Route::get('{id}', 'show')->name('admin.settings.marketing.campaigns.edit');
+
+            Route::put('{id}', 'update')->name('admin.settings.marketing.campaigns.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing.campaigns.delete');
+
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.campaigns.mass_delete');
+        });
+    });
+
+    Route::prefix('data-transfer')->group(function () {
+        /**
+         * Import routes.
+         */
+        Route::controller(ImportController::class)->prefix('imports')->group(function () {
+            Route::get('', 'index')->name('admin.settings.data_transfer.imports.index');
+
+            Route::get('create', 'create')->name('admin.settings.data_transfer.imports.create');
+
+            Route::post('create', 'store')->name('admin.settings.data_transfer.imports.store');
+
+            Route::get('edit/{id}', 'edit')->name('admin.settings.data_transfer.imports.edit');
+
+            Route::put('update/{id}', 'update')->name('admin.settings.data_transfer.imports.update');
+
+            Route::delete('destroy/{id}', 'destroy')->name('admin.settings.data_transfer.imports.delete');
+
+            Route::get('import/{id}', 'import')->name('admin.settings.data_transfer.imports.import');
+
+            Route::get('validate/{id}', 'validateImport')->name('admin.settings.data_transfer.imports.validate');
+
+            Route::get('start/{id}', 'start')->name('admin.settings.data_transfer.imports.start');
+
+            Route::get('link/{id}', 'link')->name('admin.settings.data_transfer.imports.link');
+
+            Route::get('index/{id}', 'indexData')->name('admin.settings.data_transfer.imports.index_data');
+
+            Route::get('stats/{id}/{state?}', 'stats')->name('admin.settings.data_transfer.imports.stats');
+
+            Route::get('download-sample/{sample?}', 'downloadSample')->name('admin.settings.data_transfer.imports.download_sample');
+
+            Route::get('download/{id}', 'download')->name('admin.settings.data_transfer.imports.download');
+
+            Route::get('download-error-report/{id}', 'downloadErrorReport')->name('admin.settings.data_transfer.imports.download_error_report');
+        });
     });
 });

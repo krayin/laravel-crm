@@ -1,0 +1,3 @@
+name,emails,contact_numbers,organization_id,job_title,user_id
+Wilson Fisk,"[{""label"": ""work"", ""value"": ""contact@wilson.com""}, {""label"": ""home"", ""value"": ""contact.home@wilson.com""}]","[{""label"": ""work"", ""value"": ""5454445454""}]",1,Sales Executive,1
+Sasha Calle,"[{""label"": ""work"", ""value"": ""contact@sasha.com""}]","[{""label"": ""work"", ""value"": ""15454445454""}]",1,Sales Representatives,1
