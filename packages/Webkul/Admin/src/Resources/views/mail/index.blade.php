@@ -8,7 +8,7 @@
             <div class="flex flex-col gap-2">
                 <div class="flex cursor-pointer items-center">
                     {!! view_render_event('admin.mail.create.breadcrumbs.before') !!}
-                    
+
                     <!-- breadcrumbs -->
                     <x-admin::breadcrumbs
                         name="mail.route"
@@ -218,11 +218,13 @@
                                             <!-- Subject -->
                                             <p class="line-clamp-1 text-sm text-gray-900 dark:text-gray-100" v-text="record.subject"></p>
 
-                                        <!-- Reply(Content) -->
-                                        <p
-                                            class="!font-normal"
-                                            v-html="truncatedReply(record.reply)"
-                                        ></p>
+                                            <!-- Reply (Content) -->
+                                            <p
+                                                class="!font-normal"
+                                                v-html="truncatedReply(record.reply)"
+                                            >
+                                            </p>
+                                        </div>
                                     </div>
 
                                     <!-- Time -->
@@ -283,7 +285,7 @@
                                         :label="trans('admin::app.mail.index.mail.to')"
                                         :placeholder="trans('admin::app.mail.index.mail.enter-emails')"
                                     />
-                                    
+
                                     <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
                                         <span
                                             class="cursor-pointer font-medium hover:underline dark:text-white"
@@ -489,6 +491,16 @@
                 },
 
                 methods: {
+                    truncatedReply(reply) {
+                        const maxLength = 100;
+
+                        if (reply.length > maxLength) {
+                            return `${reply.substring(0, maxLength)}...`;
+                        }
+
+                        return reply;
+                    },
+
                     toggleModal() {
                         this.draft.reply_to = [];
 
@@ -549,7 +561,7 @@
                                 this.showCC = this.draft.cc.length > 0;
 
                                 this.showBCC = this.draft.bcc.length > 0;
-                                
+
                             })
                             .catch(error => {});
                     },
