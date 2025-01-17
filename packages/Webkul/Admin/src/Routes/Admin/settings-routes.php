@@ -6,6 +6,8 @@ use Webkul\Admin\Http\Controllers\Settings\DataTransfer\ImportController;
 use Webkul\Admin\Http\Controllers\Settings\EmailTemplateController;
 use Webkul\Admin\Http\Controllers\Settings\GroupController;
 use Webkul\Admin\Http\Controllers\Settings\LocationController;
+use Webkul\Admin\Http\Controllers\Settings\Marketing\CampaignsController;
+use Webkul\Admin\Http\Controllers\Settings\Marketing\EventController;
 use Webkul\Admin\Http\Controllers\Settings\PipelineController;
 use Webkul\Admin\Http\Controllers\Settings\RoleController;
 use Webkul\Admin\Http\Controllers\Settings\SettingController;
@@ -291,6 +293,43 @@ Route::prefix('settings')->group(function () {
         Route::put('edit/{id}', 'update')->name('admin.settings.email_templates.update');
 
         Route::delete('{id}', 'destroy')->name('admin.settings.email_templates.delete');
+    });
+
+    /**
+     * Events Routes.
+     */
+    Route::group(['prefix' => 'marketing'], function () {
+        Route::controller(EventController::class)->prefix('events')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.events.index');
+
+            Route::post('create', 'store')->name('admin.settings.marketing.events.store');
+
+            Route::get('edit/{id?}', 'edit')->name('admin.settings.marketing.events.edit');
+
+            Route::put('edit/{id}', 'update')->name('admin.settings.marketing.events.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing.events.delete');
+
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.events.mass_delete');
+        });
+
+        Route::controller(CampaignsController::class)->prefix('campaigns')->group(function () {
+            Route::get('', 'index')->name('admin.settings.marketing.campaigns.index');
+
+            Route::get('events', 'getEvents')->name('admin.settings.marketing.campaigns.events');
+
+            Route::get('email-templates', 'getEmailTemplates')->name('admin.settings.marketing.campaigns.email-templates');
+
+            Route::post('', 'store')->name('admin.settings.marketing.campaigns.store');
+
+            Route::get('{id}', 'show')->name('admin.settings.marketing.campaigns.edit');
+
+            Route::put('{id}', 'update')->name('admin.settings.marketing.campaigns.update');
+
+            Route::delete('{id}', 'destroy')->name('admin.settings.marketing.campaigns.delete');
+
+            Route::post('mass-destroy', 'massDestroy')->name('admin.settings.marketing.campaigns.mass_delete');
+        });
     });
 
     Route::prefix('data-transfer')->group(function () {

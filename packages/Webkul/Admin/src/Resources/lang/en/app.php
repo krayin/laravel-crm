@@ -1094,6 +1094,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Create Event',
+                    'title'               => 'Events',
+                    'create-success'      => 'Event created successfully.',
+                    'update-success'      => 'Event updated successfully.',
+                    'delete-success'      => 'Event deleted successfully.',
+                    'delete-failed'       => 'Event can not be deleted.',
+                    'mass-delete-success' => 'Events deleted successfully',
+
+                    'datagrid'   => [
+                        'delete'       => 'Delete',
+                        'edit'         => 'Edit',
+                        'id'           => 'ID',
+                        'name'         => 'Name',
+                        'description'  => 'Description',
+                        'date'         => 'Date',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Create Event',
+                        'name'        => 'Name',
+                        'date'        => 'Date',
+                        'description' => 'Description',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Event',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Create Campaigns',
+                    'title'               => 'Campaigns',
+                    'create-success'      => 'Campaign created successfully.',
+                    'update-success'      => 'Campaign updated successfully.',
+                    'delete-success'      => 'Campaign deleted successfully.',
+                    'delete-failed'       => 'Campaign can not be deleted.',
+                    'mass-delete-success' => 'Campaigns deleted successfully.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Name',
+                        'subject'  => 'Subject',
+                        'status'   => 'Status',
+                        'active'   => 'Active',
+                        'inactive' => 'Inactive',
+                        'edit'     => 'Edit',
+                        'delete'   => 'Delete',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Create Campaign',
+                        'name'           => 'Name',
+                        'type'           => 'Type',
+                        'subject'        => 'Subject',
+                        'event'          => 'Event',
+                        'email-template' => 'Email Template',
+                        'status'         => 'Status',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Edit Campaign',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Create Tag',
@@ -1918,7 +1989,7 @@ return [
                 'title' => 'About Lead',
             ],
 
-            'quotes'=> [
+            'quotes' => [
                 'subject'         => 'Subject',
                 'expired-at'      => 'Expired At',
                 'sub-total'       => 'Sub Total',
@@ -2102,6 +2173,10 @@ return [
         'email-templates'      => 'Email Templates',
         'email'                => 'Email',
         'email-templates-info' => 'Add, edit or delete email templates from CRM',
+        'events'               => 'Events',
+        'events-info'          => 'Add, edit or delete events from CRM',
+        'campaigns'            => 'Campaigns',
+        'campaigns-info'       => 'Add, edit or delete campaigns from CRM',
         'workflows'            => 'Workflows',
         'workflows-info'       => 'Add, edit or delete workflows from CRM',
         'webhooks'             => 'Webhooks',

@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'Otras configuraciones',
         'tags'            => 'Etiquetas',
         'configuration'   => 'Configuración',
+        'campaigns'       => 'Campañas',
+        'event'           => 'Evento',
         'create'          => 'Crear',
         'edit'            => 'Editar',
         'view'            => 'Ver',
@@ -1093,6 +1095,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'Crear Evento',
+                    'title'               => 'Eventos',
+                    'create-success'      => 'Evento creado con éxito.',
+                    'update-success'      => 'Evento actualizado con éxito.',
+                    'delete-success'      => 'Evento eliminado con éxito.',
+                    'delete-failed'       => 'No se puede eliminar el evento.',
+                    'mass-delete-success' => 'Eventos eliminados con éxito',
+
+                    'datagrid'   => [
+                        'delete'       => 'Eliminar',
+                        'edit'         => 'Editar',
+                        'id'           => 'ID',
+                        'name'         => 'Nombre',
+                        'description'  => 'Descripción',
+                        'date'         => 'Fecha',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'Crear Evento',
+                        'name'        => 'Nombre',
+                        'date'        => 'Fecha',
+                        'description' => 'Descripción',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Evento',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'Crear Campaña',
+                    'title'               => 'Campañas',
+                    'create-success'      => 'Campaña creada con éxito.',
+                    'update-success'      => 'Campaña actualizada con éxito.',
+                    'delete-success'      => 'Campaña eliminada con éxito.',
+                    'delete-failed'       => 'No se puede eliminar la campaña.',
+                    'mass-delete-success' => 'Campañas eliminadas con éxito.',
+
+                    'datagrid'   => [
+                        'id'       => 'ID',
+                        'name'     => 'Nombre',
+                        'subject'  => 'Asunto',
+                        'status'   => 'Estado',
+                        'active'   => 'Activo',
+                        'inactive' => 'Inactivo',
+                        'edit'     => 'Editar',
+                        'delete'   => 'Eliminar',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'Crear Campaña',
+                        'name'           => 'Nombre',
+                        'type'           => 'Tipo',
+                        'subject'        => 'Asunto',
+                        'event'          => 'Evento',
+                        'email-template' => 'Plantilla de Correo',
+                        'status'         => 'Estado',
+                    ],
+
+                    'edit' => [
+                        'title' => 'Editar Campaña',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'Crear Etiqueta',
@@ -2101,6 +2174,10 @@ return [
         'email-templates'      => 'Plantillas de Correo',
         'email'                => 'Correo',
         'email-templates-info' => 'Agregar, editar o eliminar plantillas de correo del CRM',
+        'events'               => 'Eventos',
+        'events-info'          => 'Agregar, editar o eliminar eventos del CRM',
+        'campaigns'            => 'Campañas',
+        'campaigns-info'       => 'Agregar, editar o eliminar campañas del CRM',
         'workflows'            => 'Flujos de Trabajo',
         'workflows-info'       => 'Agregar, editar o eliminar flujos de trabajo del CRM',
         'webhooks'             => 'Webhooks',

@@ -241,8 +241,6 @@ class Htmlfilter
                     return $retary;
                 }
 
-                break;
-
                 // intentional fall-through
             case '>':
                 return [$tagname, false, $tagtype, $lt, $pos];
@@ -357,8 +355,6 @@ class Htmlfilter
 
                         return $retary;
                     }
-
-                    break;
 
                     // intentional fall-through
                 case '>':

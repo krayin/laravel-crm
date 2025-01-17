@@ -32,6 +32,8 @@ return [
         'other-settings'  => 'إعدادات أخرى',
         'tags'            => 'العلامات',
         'configuration'   => 'التكوين',
+        'campaigns'       => 'الحملات',
+        'event'           => 'الحدث',
         'create'          => 'إنشاء',
         'edit'            => 'تعديل',
         'view'            => 'عرض',
@@ -1090,6 +1092,77 @@ return [
             ],
         ],
 
+        'marketing' => [
+            'events' => [
+                'index' => [
+                    'create-btn'          => 'إنشاء حدث',
+                    'title'               => 'الأحداث',
+                    'create-success'      => 'تم إنشاء الحدث بنجاح.',
+                    'update-success'      => 'تم تحديث الحدث بنجاح.',
+                    'delete-success'      => 'تم حذف الحدث بنجاح.',
+                    'delete-failed'       => 'لا يمكن حذف الحدث.',
+                    'mass-delete-success' => 'تم حذف الأحداث بنجاح',
+
+                    'datagrid'   => [
+                        'delete'       => 'حذف',
+                        'edit'         => 'تحرير',
+                        'id'           => 'المعرف',
+                        'name'         => 'الاسم',
+                        'description'  => 'الوصف',
+                        'date'         => 'التاريخ',
+                    ],
+
+                    'create'     => [
+                        'title'       => 'إنشاء حدث',
+                        'name'        => 'الاسم',
+                        'date'        => 'التاريخ',
+                        'description' => 'الوصف',
+                    ],
+
+                    'edit' => [
+                        'title' => 'تحرير الحدث',
+                    ],
+                ],
+            ],
+
+            'campaigns' => [
+                'index' => [
+                    'create-btn'          => 'إنشاء حملة',
+                    'title'               => 'الحملات',
+                    'create-success'      => 'تم إنشاء الحملة بنجاح.',
+                    'update-success'      => 'تم تحديث الحملة بنجاح.',
+                    'delete-success'      => 'تم حذف الحملة بنجاح.',
+                    'delete-failed'       => 'لا يمكن حذف الحملة.',
+                    'mass-delete-success' => 'تم حذف الحملات بنجاح.',
+
+                    'datagrid'   => [
+                        'id'       => 'المعرف',
+                        'name'     => 'الاسم',
+                        'subject'  => 'الموضوع',
+                        'status'   => 'الحالة',
+                        'active'   => 'نشط',
+                        'inactive' => 'غير نشط',
+                        'edit'     => 'تحرير',
+                        'delete'   => 'حذف',
+                    ],
+
+                    'create'     => [
+                        'title'          => 'إنشاء حملة',
+                        'name'           => 'الاسم',
+                        'type'           => 'النوع',
+                        'subject'        => 'الموضوع',
+                        'event'          => 'الحدث',
+                        'email-template' => 'نموذج البريد الإلكتروني',
+                        'status'         => 'الحالة',
+                    ],
+
+                    'edit' => [
+                        'title' => 'تحرير الحملة',
+                    ],
+                ],
+            ],
+        ],
+
         'tags' => [
             'index' => [
                 'create-btn'     => 'إنشاء وسم',
@@ -2098,6 +2171,10 @@ return [
         'email-templates'      => 'قوالب البريد الإلكتروني',
         'email'                => 'البريد الإلكتروني',
         'email-templates-info' => 'إضافة أو تعديل أو حذف قوالب البريد الإلكتروني من نظام CRM',
+        'events'               => 'الفعاليات',
+        'events-info'          => 'إضافة، تعديل أو حذف الفعاليات من إدارة العلاقات',
+        'campaigns'            => 'الحملات',
+        'campaigns-info'       => 'إضافة، تعديل أو حذف الحملات من إدارة العلاقات',
         'workflows'            => 'سير العمل',
         'workflows-info'       => 'إضافة أو تعديل أو حذف سير العمل من نظام CRM',
         'webhooks'             => 'الويب هوك',
