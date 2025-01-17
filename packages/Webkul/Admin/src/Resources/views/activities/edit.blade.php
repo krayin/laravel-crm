@@ -60,8 +60,9 @@
                                         @lang('admin::app.activities.edit.schedule_from')
                                     </x-admin::form.control-group.label>
 
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="false">
+                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
                                         <input
+                                            name="schedule_from"
                                             value="{{ old('schedule_from') ?? $activity->schedule_from }}"
                                             class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                             placeholder="@lang('admin::app.activities.edit.schedule_from')"
@@ -74,8 +75,9 @@
                                         @lang('admin::app.activities.edit.schedule_to')
                                     </x-admin::form.control-group.label>
 
-                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="false">
+                                    <x-admin::flat-picker.datetime class="!w-full" ::allow-input="true">
                                         <input
+                                            name="schedule_to"
                                             value="{{ old('schedule_to') ?? $activity->schedule_to }}"
                                             class="flex w-full rounded-md border px-3 py-2 text-sm text-gray-600 transition-all hover:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400"
                                             placeholder="@lang('admin::app.activities.edit.schedule_to')"
