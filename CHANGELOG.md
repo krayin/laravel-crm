@@ -164,11 +164,12 @@
 
 * #1598[fixed] Translation Variables Displayed Instead of Text in Email Notifications
 
-* #1595[fixed] REST API: ReflectionException "Class 'Webkul\Attribute\Http\Requests\AttributeForm' does not exist" in Krayin CRM v2.0.1
-Bug
+* #1595[fixed] REST API: ReflectionException "Class 'Webkul\Attribute\Http\Requests\AttributeForm' does not exist" in Krayin CRM v2.0.1 Bug
 
-* #1595[fixed] REST API: ReflectionException "Class 'Webkul\Attribute\Http\Requests\AttributeForm' does not exist" in Krayin CRM v2.0.1
-Bug
+* #1961[fixed] Changing activity schedule from / to date not saving
+
+* #1954[fixed] Decimal values must be saved in product Price.
+
 
 
 ## **v2.0.4 (19th of December 2024)** - *Release*
