@@ -221,6 +221,8 @@ Route::prefix('settings')->group(function () {
 
         Route::delete('{id}', 'destroy')->name('admin.settings.attributes.delete');
 
+        Route::get('{id}/options', 'getAttributeOptions')->name('admin.settings.attributes.options');
+
         Route::post('mass-update', 'massUpdate')->name('admin.settings.attributes.mass_update');
 
         Route::post('mass-destroy', 'massDestroy')->name('admin.settings.attributes.mass_delete');

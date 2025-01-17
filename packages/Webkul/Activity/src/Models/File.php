@@ -8,7 +8,19 @@ use Webkul\Activity\Contracts\File as FileContract;
 
 class File extends Model implements FileContract
 {
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'activity_files';
+
+    /**
+     * The attributes that should be appended to the model.
+     *
+     * @var array
+     */
+    protected $appends = ['url'];
 
     /**
      * The attributes that are mass assignable.

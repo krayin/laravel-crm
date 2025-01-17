@@ -165,7 +165,6 @@ return [
                 'select-timezone'             => 'Selecionar Fuso Horário',
                 'warning-message'             => 'Atenção! As configurações de idioma e moeda padrão não podem ser alteradas após definidas.',
                 'united-states-dollar'        => 'Dólar Americano (USD)',
-                'brazilian-real'              => 'Real Brasileiro (BRL)',
             ],
 
             'installation-processing' => [
@@ -204,9 +203,16 @@ return [
             ],
 
             'back'                     => 'Voltar',
+            'krayin'                   => 'Krayin',
+            'krayin-info'              => 'um projeto comunitário de',
+            'krayin-logo'              => 'Logotipo Krayin',
             'continue'                 => 'Continuar',
+            'installation-description' => 'A instalação do Krayin geralmente envolve várias etapas. Aqui está uma visão geral do processo de instalação do Krayin',
+            'installation-info'        => 'Estamos felizes em ver você aqui!',
             'installation-title'       => 'Bem-vindo à Instalação',
-            'title'                    => 'Instalador Krayin',
+            'installation-wizard'      => 'Assistente de Instalação - Idioma',
+            'title'                    => 'Instalador do Krayin',
+            'webkul'                   => 'Webkul',
         ],
     ],
 ];
