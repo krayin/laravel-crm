@@ -207,6 +207,7 @@ return [
         Webkul\Contact\Providers\ContactServiceProvider::class,
         Webkul\Core\Providers\CoreServiceProvider::class,
         Webkul\DataGrid\Providers\DataGridServiceProvider::class,
+        Webkul\DataTransfer\Providers\DataTransferServiceProvider::class,
         Webkul\EmailTemplate\Providers\EmailTemplateServiceProvider::class,
         Webkul\Email\Providers\EmailServiceProvider::class,
         Webkul\Installer\Providers\InstallerServiceProvider::class,
