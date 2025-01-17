@@ -213,10 +213,14 @@
                                         >
                                         </span>
 
-                                        <!-- Subject, and Reply -->
+                                        <!-- Subject And Reply -->
                                         <div class="min-w-0 flex-1">
                                             <!-- Subject -->
-                                            <p class="line-clamp-1 text-sm text-gray-900 dark:text-gray-100" v-text="record.subject"></p>
+                                            <p
+                                                class="line-clamp-1 text-sm text-gray-900 dark:text-gray-100"
+                                                v-text="record.subject"
+                                            >
+                                            </p>
 
                                             <!-- Reply (Content) -->
                                             <p

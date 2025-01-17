@@ -7,7 +7,9 @@ use Webkul\Email\Helpers\Contracts\CharsetManager;
 class Charset implements CharsetManager
 {
     /**
-     * Charset Aliases
+     * Charset aliases.
+     *
+     * @var array
      */
     private $charsetAlias = [
         'ascii'                    => 'us-ascii',
@@ -310,11 +312,10 @@ class Charset implements CharsetManager
         'x-gbk'                    => 'gbk',
         'windows-936'              => 'gbk',
         'ansi-1251'                => 'windows-1251',
-        // '' => 'UTF-8',
     ];
 
     /**
-     * Decode the string from Charset
+     * Decode the string from charset.
      *
      * @param  string  $encodedString
      * @param  string  $charset
@@ -334,7 +335,7 @@ class Charset implements CharsetManager
     }
 
     /**
-     * Get charset alias
+     * Get charset alias.
      *
      * @param  string  $charset.
      * @return string
@@ -345,8 +346,8 @@ class Charset implements CharsetManager
 
         if (array_key_exists($charset, $this->charsetAlias)) {
             return $this->charsetAlias[$charset];
-        } else {
-            return null;
         }
+
+        return null;
     }
 }
