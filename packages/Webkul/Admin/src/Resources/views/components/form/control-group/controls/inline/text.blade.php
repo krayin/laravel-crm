@@ -37,7 +37,7 @@
                     :style="{ 'text-align': position }"
                 >
                     <span class="cursor-pointer truncate rounded">
-                        @{{ valueLabel ? valueLabel : inputValue?.length > 20 ? inputValue.substring(0, 20) + '...' : inputValue }}
+                        @{{ (valueLabel || inputValue || '').length > 20 ? (valueLabel || inputValue).substring(0, 20) + '...' : (valueLabel || inputValue) }}
                     </span>
                     
                     <!-- Tooltip -->
