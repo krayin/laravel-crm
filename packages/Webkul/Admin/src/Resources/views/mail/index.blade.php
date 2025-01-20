@@ -400,7 +400,7 @@
                                     <button
                                         type="submit"
                                         ref="submitBtn"
-                                        class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800"
+                                        class="transparent-button hover:bg-gray-200 dark:text-white dark:hover:bg-gray-800 dark:focus:bg-gray-800"
                                         :disabled="isStoring"
                                         @click="saveAsDraft = 1"
                                     >
