@@ -27,6 +27,7 @@ class EmailDataGrid extends DataGrid
             ->select(
                 'emails.id',
                 'emails.name',
+                'emails.from',
                 'emails.subject',
                 'emails.reply',
                 'emails.is_read',
@@ -55,15 +56,6 @@ class EmailDataGrid extends DataGrid
     public function prepareColumns(): void
     {
         $this->addColumn([
-            'index'      => 'id',
-            'label'      => trans('admin::app.mail.index.datagrid.id'),
-            'type'       => 'string',
-            'sortable'   => true,
-            'searchable' => true,
-            'filterable' => true,
-        ]);
-
-        $this->addColumn([
             'index'      => 'attachments',
             'label'      => trans('admin::app.mail.index.datagrid.attachments'),
             'type'       => 'string',
@@ -80,6 +72,11 @@ class EmailDataGrid extends DataGrid
             'sortable'   => true,
             'searchable' => true,
             'filterable' => true,
+            'closure'    => function ($row) {
+                return $row->name
+                    ? trim($row->name, "\"")
+                    : trim($row->from, "\"");
+            },
         ]);
 
         $this->addColumn([

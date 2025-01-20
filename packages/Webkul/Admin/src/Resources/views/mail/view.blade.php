@@ -1,7 +1,7 @@
 @php
     if (! $email->is_read) {
         $email->is_read = true;
-    
+
         $email->save();
     }
 @endphp
@@ -26,13 +26,13 @@
 
                     {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
                 </div>
-    
+
                 <!-- Title -->
                 <div class="flex items-center gap-2">
                     <div class="text-xl font-bold dark:text-gray-300">
-                        @lang('admin::app.mail.view.title') 
+                        @lang('admin::app.mail.view.title')
                     </div>
-                    
+
                     <span class="label-active">{{ ucfirst(request('route')) }}</span>
 
                     {!! view_render_event('admin.mail.view.tags.before', ['email' => $email]) !!}
@@ -63,7 +63,7 @@
         <script
             type="text/x-template"
             id="v-email-list-template"
-        >  
+        >
             <div class="mt-3.5 flex gap-2.5 max-xl:flex-wrap">
                 <div class="flex flex-1 flex-col gap-2 max-xl:flex-auto">
                     {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
@@ -81,7 +81,7 @@
                     {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
 
                     {!! view_render_event('admin.mail.view.email-item.before', ['email' => $email]) !!}
-            
+
                     <!-- Email Item Vue Component -->
                     <v-email-item
                         v-for='(email, index) in email.emails'
@@ -95,7 +95,7 @@
 
                     {!! view_render_event('admin.mail.view.email-item.after', ['email' => $email]) !!}
                 </div>
-            
+
                 @if (
                     bouncer()->hasPermission('contacts.persons.create')
                     || bouncer()->hasPermission('leads.create')
@@ -127,7 +127,7 @@
                             {!! view_render_event('admin.mail.view.avatar.before', ['email' => $email]) !!}
 
                             <!-- Mailer Sort name -->
-                            <x-admin::avatar ::name="email.name" />
+                            <x-admin::avatar ::name="email.name ?? email.from" />
 
                             {!! view_render_event('admin.mail.view.avatar.after', ['email' => $email]) !!}
 
@@ -136,8 +136,8 @@
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
-                                <span class="dark:text-gray-300">@{{ email.name }}</span>
-                                
+                                <span class="dark:text-gray-300">@{{ email.name ?? email.from }}</span>
+
                                 <div class="flex flex-col gap-1 dark:text-gray-300">
                                     <div class="flex items-center gap-1">
                                         <!-- Mail To -->
@@ -159,7 +159,7 @@
                                     >
                                         <span v-if="email?.cc">
                                             @lang('admin::app.mail.view.cc'):
-                                            
+
                                             @{{ email.cc.join(', ') }}
                                         </span>
 
@@ -186,7 +186,7 @@
                                     <x-slot:toggle>
                                         <button class="icon-more flex h-7 w-7 cursor-pointer items-center justify-center rounded-md text-2xl transition-all hover:rounded-md hover:bg-gray-100 dark:hover:bg-gray-950"></button>
                                     </x-slot>
-                        
+
                                     <!-- Admin Dropdown -->
                                     <x-slot:menu class="!min-w-40">
                                         <x-admin::dropdown.menu.item>
@@ -243,11 +243,11 @@
                     {!! view_render_event('admin.mail.view.mail_body.before', ['email' => $email]) !!}
 
                     <!-- Mail Body -->
-                    <div 
+                    <div
                         class="dark:text-gray-300"
                         v-safe-html="email.reply"
                     ></div>
-                   
+
                     {!! view_render_event('admin.mail.view.mail_body.after', ['email' => $email]) !!}
 
                     {!! view_render_event('admin.mail.view.attach.before', ['email' => $email]) !!}
@@ -324,11 +324,10 @@
             id="v-email-form-template"
         >
             <div class="flex w-full gap-2">
-                
-                <x-admin::avatar ::name="email.name" />
+                <x-admin::avatar ::name="email.name ?? email.from" />
 
                 {!! view_render_event('admin.mail.view.form.before', ['email' => $email]) !!}
-                
+
                 <div class="w-[926px] gap-2 rounded border p-4 dark:border-gray-800">
                     <x-admin::form
                         v-slot="{ meta, errors, handleSubmit }"
@@ -448,7 +447,7 @@
                                     <!-- Divider -->
                                     {{-- <hr class="h-1 dark:text-gray-800"> --}}
                                 </div>
-                            
+
                                 <!-- Action and Attachement -->
                                 <div class="flex w-full items-center justify-between">
                                     <label
@@ -456,10 +455,10 @@
                                         for="file-upload"
                                     >
                                         <i class="icon-attachment text-xl font-medium"></i>
-                        
+
                                         @lang('admin::app.mail.view.add-attachments')
                                     </label>
-                                                            
+
                                     <div class="flex items-center justify-center gap-4">
                                         <label
                                             class="flex cursor-pointer items-center gap-1 font-semibold dark:text-gray-300"
@@ -478,7 +477,7 @@
                                 </div>
                             </div>
                         </form>
-                    </x-admin::form>    
+                    </x-admin::form>
                 </div>
 
                 {!! view_render_event('admin.mail.view.form.after', ['email' => $email]) !!}
@@ -497,7 +496,7 @@
                     <div class="flex justify-between">
                         <div class="flex gap-2">
                             <x-admin::avatar ::name="email.person.name" />
-                    
+
                             <!-- Mailer receivers -->
                             <div class="flex flex-col gap-1">
                                 <!-- Mailer Name -->
@@ -511,7 +510,7 @@
 
                                     <!-- Emails -->
                                     <template v-for="email in email?.person?.emails.map(item => item.value)">
-                                        <a 
+                                        <a
                                             class="text-brandColor"
                                             :href="`mailto:${email}`"
                                         >
@@ -531,7 +530,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="flex gap-2">
                             <template v-if="! unlinking.contact">
                                 <button
@@ -568,7 +567,7 @@
                             <div class="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-800 dark:text-gray-300">
                                 @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-contact')'}}
                             </div>
-                            
+
                             <!-- Arrow down icon -->
                             <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                 <i class="fas fa-chevron-down text-gray-400"></i>
@@ -576,8 +575,8 @@
                         </div>
 
                         <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                            <div class="flex items-center justify-center space-x-1">                        
-                                <i 
+                            <div class="flex items-center justify-center space-x-1">
+                                <i
                                     class="text-2xl"
                                     :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
                                 ></i>
@@ -585,8 +584,8 @@
                         </span>
 
                         <!-- Popup Box -->
-                        <div 
-                            v-if="showPopup" 
+                        <div
+                            v-if="showPopup"
                             class="transcontact_lookup absolute top-full z-10 mt-1 flex w-full origin-top flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                         >
                             <!-- Search Bar -->
@@ -596,12 +595,12 @@
                                     type="text"
                                     v-model.lazy="searchTerm"
                                     v-debounce="500"
-                                    class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                                    class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                     placeholder="Search..."
                                     ref="searchInput"
                                     @keyup="search"
                                 />
-                            
+
                                 <!-- Search Icon (absolute positioned) -->
                                 <span class="absolute inset-y-0 right-0 flex items-center pr-3">
                                     <div class="flex items-center justify-center space-x-1">
@@ -612,7 +611,7 @@
                                         >
                                             <x-admin::spinner />
                                         </div>
-                            
+
                                         <!-- Search Icon -->
                                         <i class="fas fa-search text-gray-500"></i>
                                     </div>
@@ -621,26 +620,26 @@
 
                             <!-- Results List -->
                             <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto">
-                                <li 
-                                    v-for="person in persons" 
+                                <li
+                                    v-for="person in persons"
                                     :key="person.id"
                                     class="flex cursor-pointer gap-2 px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                     @click="linkContact(person)"
                                 >
                                     <x-admin::avatar ::name="person.name" />
-                            
+
                                     <!-- Mailer receivers -->
                                     <div class="flex flex-col gap-1">
                                         <!-- Mailer Name -->
                                         <span>@{{ person.name }}</span>
-                                        
+
                                         <div class="flex flex-col gap-1">
                                             <span class="text-sm">@{{ person.emails.map(item => item.value).join(', ') }}</span>
                                         </div>
                                     </div>
-                                </li>                       
-                            
-                                <li 
+                                </li>
+
+                                <li
                                     v-if="persons.length === 0"
                                     class="px-4 py-2 text-gray-800 dark:text-gray-300"
                                 >
@@ -656,7 +655,7 @@
                                     @click="toggleContactModal"
                                 >
                                     <i class="icon-add text-md !text-brandColor"></i>
-                
+
                                     @lang('admin::app.mail.view.add-new-contact')
                                 </button>
                             @endif
@@ -732,7 +731,7 @@
                                     ></a>
                                 </div>
                             </div>
-                            
+
                             <!-- Lead Title -->
                             <p class="text-xs font-medium">
                                 @{{ email.lead.title }}
@@ -760,12 +759,12 @@
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                     @{{ $admin.formatPrice(email.lead.lead_value) }}
                                 </div>
-                                
+
                                 <!-- Source Name -->
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                     @{{ email.lead.source?.name }}
                                 </div>
-                                
+
                                 <!-- Lead Type Name -->
                                 <div class="rounded-xl bg-slate-200 px-3 py-1 text-xs font-medium">
                                     @{{ email.lead.type?.name }}
@@ -790,7 +789,7 @@
                                 <div class="w-full cursor-pointer rounded-md border border-gray-300 px-3 py-2 text-gray-800 dark:border-gray-800 dark:text-gray-300">
                                     @{{ selectedItem.name ?? '@lang('admin::app.mail.view.search-an-existing-lead')'}}
                                 </div>
-                                
+
                                 <!-- Arrow down icon -->
                                 <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
                                     <i class="fas fa-chevron-down text-gray-400"></i>
@@ -799,8 +798,8 @@
 
                             <!-- toggle popup -->
                             <span class="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3">
-                                <div class="flex items-center justify-center space-x-1">                        
-                                    <i 
+                                <div class="flex items-center justify-center space-x-1">
+                                    <i
                                         class="text-2xl"
                                         :class="showPopup ? 'icon-up-arrow': 'icon-down-arrow'"
                                     ></i>
@@ -808,8 +807,8 @@
                             </span>
 
                             <!-- Popup Box -->
-                            <div 
-                                v-if="showPopup" 
+                            <div
+                                v-if="showPopup"
                                 class="absolute top-full z-10 mt-1 flex w-full origin-top transform flex-col gap-2 rounded-lg border border-gray-200 bg-white p-2 shadow-lg transition-transform dark:border-gray-900 dark:bg-gray-800"
                             >
                                 <!-- Search Bar -->
@@ -819,12 +818,12 @@
                                         type="text"
                                         v-model.lazy="searchTerm"
                                         v-debounce="500"
-                                        class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400" 
+                                        class="w-full rounded border border-gray-200 px-2.5 py-2 pr-10 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 focus:border-gray-400 dark:border-gray-800 dark:bg-gray-900 dark:text-gray-300 dark:hover:border-gray-400 dark:focus:border-gray-400"
                                         placeholder="@lang('admin::app.mail.view.search')"
                                         ref="searchInput"
                                         @keyup="search"
                                     />
-                                
+
                                     <!-- Search Icon (absolute positioned) -->
                                     <span class="absolute inset-y-0 right-0 flex items-center pr-3">
                                         <div class="flex items-center justify-center space-x-1">
@@ -835,7 +834,7 @@
                                             >
                                                 <x-admin::spinner />
                                             </div>
-                                
+
                                             <!-- Search Icon -->
                                             <i class="fas fa-search text-gray-500"></i>
                                         </div>
@@ -844,21 +843,21 @@
 
                                 <!-- Results List -->
                                 <ul class="max-h-40 divide-y divide-gray-100 overflow-y-auto dark:divide-gray-700">
-                                    <li 
-                                        v-for="lead in leads" 
+                                    <li
+                                        v-for="lead in leads"
                                         :key="lead.id"
                                         class="flex cursor-pointer gap-2 px-4 py-2 text-gray-800 transition-colors hover:bg-blue-100 dark:text-white dark:hover:bg-gray-900"
                                         @click="linkLead(lead)"
                                     >
                                         <x-admin::avatar ::name="lead.title" />
-                                
+
                                         <!-- Lead Title -->
                                         <div class="flex flex-col gap-1">
                                             <span>@{{ lead.title }}</span>
                                         </div>
-                                    </li>                       
-                                
-                                    <li 
+                                    </li>
+
+                                    <li
                                         v-if="leads.length === 0"
                                         class="px-4 py-2 text-gray-800 dark:text-gray-300"
                                     >
@@ -874,7 +873,7 @@
                                         @click="toggleLeadModal"
                                     >
                                         <i class="icon-add text-md !text-brandColor"></i>
-                    
+
                                         @lang('admin::app.mail.view.add-new-lead')
                                     </button>
                                 @endif
@@ -904,7 +903,7 @@
                         ref="contactForm"
                     >
                         <!-- Add Contact Modal -->
-                        <x-admin::modal 
+                        <x-admin::modal
                             ref="contactModal"
                             @toggle="toggleModal"
                         >
@@ -973,7 +972,7 @@
                                 <div class="flex flex-col gap-2">
                                     <div class="flex gap-2 border-b border-gray-200 dark:border-gray-800">
                                         <!-- Tabs -->
-                                        <template 
+                                        <template
                                             v-for="type in types"
                                             :key="type.name"
                                         >
@@ -1083,7 +1082,7 @@
                                                             ])"
                                                         />
                                                     </div>
-                                                    
+
                                                     <div class="w-1/2">
                                                         <x-admin::attributes
                                                             :custom-attributes="app('Webkul\Attribute\Repositories\AttributeRepository')->findWhere([
@@ -1102,12 +1101,12 @@
                                                 </div>
                                             </div>
                                         </div>
-                                            
+
                                         <div v-show="selectedType == 'person'">
                                             @include('admin::leads.common.contact')
                                         </div>
 
-                                        <div 
+                                        <div
                                             class="overflow-y-auto"
                                             v-show="selectedType == 'product'"
                                         >
@@ -1142,7 +1141,7 @@
             <div class="flex flex-col gap-4">
                 <!-- Contact Lookup -->
                 @if (
-                    bouncer()->hasPermission('contacts.persons.create') 
+                    bouncer()->hasPermission('contacts.persons.create')
                     || bouncer()->hasPermission('contacts.persons.edit')
                 )
                     <!-- Link to contact -->
@@ -1160,17 +1159,17 @@
                     ></v-contact-lookup>
                 @endif
 
-            
+
                 <!-- Lead Lookup -->
                 @if (
-                    bouncer()->hasPermission('leads.view') 
+                    bouncer()->hasPermission('leads.view')
                     || bouncer()->hasPermission('leads.create')
                 )
                     <!-- Link to Lead -->
                     <label class="font-semibold text-gray-800 dark:text-gray-300">
                         @{{ email?.lead ? "@lang('admin::app.mail.view.linked-lead')" : "@lang('admin::app.mail.view.link-to-lead')" }}
                     </label>
-                
+
                     <v-lead-lookup
                         @link-lead="linkLead"
                         @unlink-lead="unlinkLead"
@@ -1203,7 +1202,7 @@
                         action: {},
                     };
                 },
-                
+
                 mounted() {
                     this.$emitter.on('on-email-save', (email) => {
                         this.email.emails.push(email);
@@ -1238,7 +1237,7 @@
 
                     lastEmail() {
                         if (
-                            this.email.emails === undefined 
+                            this.email.emails === undefined
                             || ! this.email.emails.length
                         ) {
                             return this.email;
@@ -1273,7 +1272,7 @@
                                     .then ((response) => {
                                         if (response.status == 200) {
                                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
-    
+
                                             this.$emit('on-discard');
                                         }
                                     });
@@ -1310,13 +1309,13 @@
 
                         if (this.getActionType == 'reply-all') {
                             console.log(this.action.email);
-                            
+
                             console.log([
                                 this.action.email.from,
                                 ...(this.action.email?.cc || []),
                                 ...(this.action.email?.bcc || []),
                             ]);
-                            
+
                             return [
                                 this.action.email.from,
                                 ...(this.action.email?.cc || []),
@@ -1371,7 +1370,7 @@
                                 this.isStoring = false;
 
                                 this.$emitter.emit('on-email-save', response.data.data);
-                                
+
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch ((error) => {
@@ -1436,20 +1435,20 @@
                 computed: {
                     /**
                      * Filter the searchedResults based on the search query.
-                     * 
+                     *
                      * @return {Array}
                      */
                     persons() {
-                        return this.searchedResults.filter(item => 
+                        return this.searchedResults.filter(item =>
                             item.name.toLowerCase().includes(this.searchTerm.toLowerCase())
                         );
                     }
                 },
-                
+
                 methods: {
                     /**
                      * Toggle the popup.
-                     * 
+                     *
                      * @return {void}
                      */
                     toggle() {
@@ -1462,9 +1461,9 @@
 
                     /**
                      * Select an item from the list.
-                     * 
+                     *
                      * @param {Object} item
-                     * 
+                     *
                      * @return {void}
                      */
                     linkContact(person) {
@@ -1485,7 +1484,7 @@
 
                     /**
                      * Initialize the items.
-                     * 
+                     *
                      * @return {void}
                      */
                     search() {
@@ -1506,11 +1505,11 @@
                         this.cancelToken = this.$axios.CancelToken.source();
 
                         this.$axios.get('{{ route('admin.contacts.persons.search') }}', {
-                                params: { 
+                                params: {
                                     ...this.params,
                                     query: this.searchTerm
                                 },
-                                cancelToken: this.cancelToken.token, 
+                                cancelToken: this.cancelToken.token,
                             })
                             .then(response => {
                                 this.searchedResults = response.data.data;
@@ -1527,16 +1526,16 @@
 
                     /**
                      * Handle the focus out event.
-                     * 
+                     *
                      * @param {Event} event
-                     * 
+                     *
                      * @return {void}
                      */
                     handleFocusOut(event) {
                         const lookup = this.$refs.lookup;
 
                         if (
-                            lookup && 
+                            lookup &&
                             ! lookup.contains(event.target)
                         ) {
                             this.showPopup = false;
@@ -1600,20 +1599,20 @@
                 computed: {
                     /**
                      * Filter the searchedResults based on the search query.
-                     * 
+                     *
                      * @return {Array}
                      */
                     leads() {
-                        return this.searchedResults.filter(item => 
+                        return this.searchedResults.filter(item =>
                             item.title.toLowerCase().includes(this.searchTerm.toLowerCase())
                         );
                     },
                 },
-                
+
                 methods: {
                     /**
                      * Toggle the popup.
-                     * 
+                     *
                      * @return {void}
                      */
                     toggle() {
@@ -1626,9 +1625,9 @@
 
                     /**
                      * Select an item from the list.
-                     * 
+                     *
                      * @param {Object} item
-                     * 
+                     *
                      * @return {void}
                      */
                     linkLead(lead) {
@@ -1649,7 +1648,7 @@
 
                     /**
                      * Initialize the items.
-                     * 
+                     *
                      * @return {void}
                      */
                     search() {
@@ -1670,11 +1669,11 @@
                         this.cancelToken = this.$axios.CancelToken.source();
 
                         this.$axios.get('{{ route('admin.leads.search') }}', {
-                                params: { 
+                                params: {
                                     ...this.params,
                                     query: this.searchTerm
                                 },
-                                cancelToken: this.cancelToken.token, 
+                                cancelToken: this.cancelToken.token,
                             })
                             .then(response => {
                                 this.searchedResults = response.data.data;
@@ -1691,16 +1690,16 @@
 
                     /**
                      * Handle the focus out event.
-                     * 
+                     *
                      * @param {Event} event
-                     * 
+                     *
                      * @return {void}
                      */
                     handleFocusOut(event) {
                         const lookup = this.$refs.lookup;
 
                         if (
-                            lookup && 
+                            lookup &&
                             ! lookup.contains(event.target)
                         ) {
                             this.showPopup = false;
@@ -1771,7 +1770,7 @@
                     return {
                         isStoring: false,
 
-                        
+
                         selectedType: "lead",
 
                         types: [
@@ -1877,7 +1876,7 @@
                             _method: 'PUT',
                             person_id: person.id,
                         })
-                            .then (response => {                            
+                            .then (response => {
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
                             })
                             .catch (error => {});
