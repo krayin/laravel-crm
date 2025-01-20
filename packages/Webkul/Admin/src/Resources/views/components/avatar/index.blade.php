@@ -11,7 +11,7 @@
             class="flex h-9 min-w-9 items-center justify-center rounded-full text-xs font-medium"
             :class="colorClasses()"
         >
-            @{{ name.split(' ').slice(0, 2).map(word => word[0].toUpperCase()).join('') }}
+            @{{ name?.split(' ').slice(0, 2).map(word => word[0].toUpperCase()).join('') }}
         </div>
     </script>
 
