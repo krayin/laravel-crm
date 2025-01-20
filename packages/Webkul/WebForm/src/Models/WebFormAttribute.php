@@ -8,8 +8,18 @@ use Webkul\WebForm\Contracts\WebFormAttribute as WebFormAttributeContract;
 
 class WebFormAttribute extends Model implements WebFormAttributeContract
 {
+    /**
+     * Indicates if the model should be timestamped.
+     *
+     * @var string
+     */
     public $timestamps = false;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = [
         'name',
         'placeholder',
