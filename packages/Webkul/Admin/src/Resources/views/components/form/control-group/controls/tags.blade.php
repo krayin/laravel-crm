@@ -5,8 +5,8 @@
 ></v-control-tags>
 
 @pushOnce('scripts')
-    <script 
-        type="text/x-template" 
+    <script
+        type="text/x-template"
         id="v-control-tags-template"
     >
         <div class="flex min-h-[38px] w-full items-center rounded border border-gray-200 px-2.5 py-1.5 text-sm font-normal text-gray-800 transition-all hover:border-gray-400 dark:border-gray-800 dark:text-white dark:hover:border-gray-400">
@@ -88,15 +88,47 @@
         app.component('v-control-tags', {
             template: '#v-control-tags-template',
 
-            props: [
-                'name',
-                'label',
-                'placeholder',
-                'rules',
-                'inputRules',
-                'data',
-                'errors',
-            ],
+            props: {
+                name: {
+                    type: String,
+                    required: true,
+                },
+
+                label: {
+                    type: String,
+                    default: '',
+                },
+
+                placeholder: {
+                    type: String,
+                    default: '',
+                },
+
+                rules: {
+                    type: String,
+                    default: '',
+                },
+
+                inputRules: {
+                    type: String,
+                    default: '',
+                },
+
+                data: {
+                    type: Array,
+                    default: () => [],
+                },
+
+                errors: {
+                    type: Object,
+                    default: () => {},
+                },
+
+                allowDuplicates: {
+                    type: Boolean,
+                    default: true,
+                },
+            },
 
             data: function () {
                 return {
@@ -115,6 +147,15 @@
                     const tag = this.input.trim();
 
                     if (! tag) {
+                        return;
+                    }
+
+                    if (
+                        ! this.allowDuplicates
+                        && this.tags.includes(tag)
+                    ) {
+                        this.input = '';
+
                         return;
                     }
 

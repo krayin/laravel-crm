@@ -189,7 +189,7 @@
                                     </div>
 
                                     <p class="flex items-center gap-2 overflow-hidden text-ellipsis whitespace-nowrap leading-none">
-                                        <x-admin::avatar ::name="record.name" />
+                                        <x-admin::avatar ::name="record.name ?? record.from" />
 
                                         @{{ record.name }}
                                     </p>
@@ -288,6 +288,7 @@
                                         ::data="draft.reply_to"
                                         :label="trans('admin::app.mail.index.mail.to')"
                                         :placeholder="trans('admin::app.mail.index.mail.enter-emails')"
+                                        ::allow-duplicates="false"
                                     />
 
                                     <div class="absolute top-[9px] flex items-center gap-2 ltr:right-2 rtl:left-2">
