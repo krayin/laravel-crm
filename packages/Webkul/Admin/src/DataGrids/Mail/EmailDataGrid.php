@@ -74,8 +74,8 @@ class EmailDataGrid extends DataGrid
             'filterable' => true,
             'closure'    => function ($row) {
                 return $row->name
-                    ? trim($row->name, "\"")
-                    : trim($row->from, "\"");
+                    ? trim($row->name, '"')
+                    : trim($row->from, '"');
             },
         ]);
 
