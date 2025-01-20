@@ -84,7 +84,7 @@ return [
             [
                 'name'    => 'password',
                 'title'   => 'admin::app.configuration.index.email.imap.account.password',
-                'type'    => 'text',
+                'type'    => 'password',
                 'default' => config('imap.accounts.default.password'),
             ],
         ],
