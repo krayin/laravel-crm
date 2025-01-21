@@ -81,6 +81,7 @@
     {!! view_render_event('admin.dashboard.index.content.after') !!}
 
     @pushOnce('scripts')
+
         <script
             type="module"
             src="{{ vite()->asset('js/chart.js') }}"
