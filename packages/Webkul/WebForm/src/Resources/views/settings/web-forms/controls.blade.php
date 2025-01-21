@@ -113,7 +113,7 @@
                     type="text"
                     name="{{ $fieldName }}[0][value]"
                     id="{{ $fieldName }}[0][value]"
-                    rules="{{ $validations }}|numeric"
+                    rules="{{ $validations }}|phone
                     :label="$parentAttribute->name"
                     :placeholder="$attribute->placeholder"
                 />
