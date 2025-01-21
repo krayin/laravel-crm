@@ -103,7 +103,7 @@
             computed: {
                 getValidation() {
                     return {
-                        numeric: true,
+                        phone: true,
                         unique_contact_number: this.contactNumbers ?? [],
                         ...(this.validations === 'required' ? { required: true } : {}),
                     };

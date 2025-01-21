@@ -61,7 +61,7 @@
                             'max:100',
                         ],
                         'postcode' => [
-                            'max:20',
+                            'postcode',
                         ],
                     ]"
                 />
