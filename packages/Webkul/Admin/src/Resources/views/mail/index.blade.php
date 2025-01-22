@@ -258,6 +258,7 @@
                     <x-admin::modal
                         ref="toggleComposeModal"
                         position="bottom-right"
+                        @toggle="removeTinyMCE"
                     >
                         <x-slot:header>
                             <h3 class="text-lg font-bold text-gray-800 dark:text-white">
@@ -379,6 +380,7 @@
                                     rules="required"
                                     rows="8"
                                     ::value="draft.reply"
+                                    :tinymce="true"
                                     :label="trans('admin::app.mail.index.mail.message')"
                                 />
 
@@ -434,19 +436,19 @@
         <script type="module">
             app.component('v-mail', {
                 template: '#v-mail-template',
-
+        
                 data() {
                     return {
                         selectedMail: false,
-
+        
                         showCC: false,
-
+        
                         showBCC: false,
-
+        
                         isStoring: false,
-
+        
                         saveAsDraft: 0,
-
+        
                         draft: {
                             id: null,
                             reply_to: [],
@@ -456,7 +458,7 @@
                             reply: '',
                             attachments: [],
                         },
-
+        
                         backgroundColors: [
                             {
                                 label: "@lang('admin::app.components.tags.index.aquarelle-red')",
@@ -486,43 +488,47 @@
                         ],
                     };
                 },
-
+        
                 mounted() {
                     const params = new URLSearchParams(window.location.search);
-
+        
                     if (params.get('openModal')) {
                         this.$refs.toggleComposeModal.toggle();
                     }
                 },
-
+        
                 methods: {
+                    removeTinyMCE() {
+                        tinymce?.remove?.();
+                    },
+                    
                     truncatedReply(reply) {
                         const maxLength = 100;
-
+        
                         if (reply.length > maxLength) {
                             return `${reply.substring(0, maxLength)}...`;
                         }
-
+        
                         return reply;
                     },
-
+        
                     toggleModal() {
                         this.draft.reply_to = [];
-
+        
                         this.$refs.toggleComposeModal.toggle();
                     },
-
+        
                     save(params, { resetForm, setErrors  }) {
                         this.isStoring = true;
-
+        
                         let formData = new FormData(this.$refs.mailForm);
-
+        
                         formData.append('is_draft', this.saveAsDraft);
-
+        
                         if (this.draft.id) {
                             formData.append('_method', 'PUT');
                         }
-
+        
                         this.$axios.post(this.draft.id ? "{{ route('admin.mail.update', ':id') }}".replace(':id', this.draft.id) : '{{ route('admin.mail.store') }}', formData, {
                                 headers: {
                                     'Content-Type': 'multipart/form-data',
@@ -530,9 +536,9 @@
                             })
                             .then ((response) => {
                                 this.$refs.datagrid.get();
-
+        
                                 this.$emitter.emit('add-flash', { type: 'success', message: response.data?.message });
-
+        
                                 resetForm();
                             })
                             .catch ((error) => {
@@ -543,34 +549,34 @@
                                 }
                             }).finally(() => {
                                 this.$refs.toggleComposeModal.close();
-
+        
                                 this.isStoring = false;
-
+        
                                 this.resetForm();
                             });
                     },
-
+        
                     editModal(row) {
                         if(row.title == 'View') {
                             window.location.href = row.url;
-
+        
                             return;
                         }
-
+        
                         this.$axios.get(row.url)
                             .then(response => {
                                 this.draft = response.data.data;
-
+        
                                 this.$refs.toggleComposeModal.toggle();
-
+        
                                 this.showCC = this.draft.cc.length > 0;
-
+        
                                 this.showBCC = this.draft.bcc.length > 0;
-
+        
                             })
                             .catch(error => {});
                     },
-
+        
                     resetForm() {
                         this.draft = {
                             id: null,
