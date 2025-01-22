@@ -282,7 +282,6 @@
                     
                             <span class="max-w-[400px] truncate dark:text-white">
                                 @{{ attachment.name || attachment.path }} 
-                                <span v-if="attachment.name"> @{{ getFileExtension(attachment.path) }}</span>
                             </span>
 
                             <a 
@@ -1283,11 +1282,6 @@
                 emits: ['on-discard', 'on-email-action'],
 
                 methods: {
-                    getFileExtension(path) {
-                        const match = path.match(/\.(\w+)$/);
-                        return match ? `.${match[1]}` : 'Unknown'; 
-                    },
-
                     isImage(path) {
                         return /\.(jpg|jpeg|png|gif|webp)$/i.test(path);
                     },
