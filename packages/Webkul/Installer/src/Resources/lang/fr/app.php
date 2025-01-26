@@ -36,7 +36,6 @@ return [
                 'price'       => 'Prix',
                 'quantity'    => 'Quantité',
                 'sku'         => 'SKU',
-
             ],
 
             'quotes' => [
@@ -235,7 +234,6 @@ return [
 
             'ready-for-installation' => [
                 'create-databsae-table'   => 'Créer la table de la base de données',
-                'create-database-table'   => 'Créer la table de la base de données',
                 'install'                 => 'Installation',
                 'install-info'            => 'Krayin pour l\'installation',
                 'install-info-button'     => 'Cliquez sur le bouton ci-dessous pour',
@@ -283,6 +281,7 @@ return [
             'installation-description' => 'L\'installation de Krayin implique généralement plusieurs étapes. Voici un aperçu général du processus d\'installation de Krayin',
             'installation-info'        => 'Nous sommes ravis de vous voir ici !',
             'installation-title'       => 'Bienvenue dans l\'installation',
+            'installation-wizard'      => 'Lague de l\'assistant d\'installation',
             'title'                    => 'Installateur Krayin',
             'webkul'                   => 'Webkul',
         ],
