@@ -66,9 +66,12 @@ return [
                         'title' => 'Deepseek r1 8b',
                         'value' => 'deepseek-r1:8b',
                     ], [
-                        'title' => 'Llama 3.2',
+                        'title' => 'Ollama (llama3.2:latest)',
                         'value' => 'llama3.2:latest',
-                    ],
+                    ], [
+                        'title' => 'Llama 3.3 (Groq)',
+                        'value' => 'llama-3.3-70b-versatile',
+                    ]
                 ],
             ], [
                 'name'          => 'api_key',

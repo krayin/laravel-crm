@@ -641,6 +641,8 @@ class LeadController extends Controller
                 ], 400);
             }
 
+            dd($extractedData);
+
             $leadData = $this->mapAIDataToLead($extractedData);
 
             $validatedData = app(LeadForm::class)->validated();
