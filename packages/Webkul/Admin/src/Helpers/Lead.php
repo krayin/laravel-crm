@@ -2,8 +2,8 @@
 
 namespace Webkul\Admin\Helpers;
 
-use Smalot\PdfParser\Parser;
 use Exception;
+use Smalot\PdfParser\Parser;
 
 class Lead
 {
@@ -13,17 +13,17 @@ class Lead
     public static function extractDataFromPdf($pdfPath)
     {
         try {
-            $parser = new Parser();
+            $parser = new Parser;
             $pdf = $parser->parseFile($pdfPath);
             $text = trim($pdf->getText());
 
             if (empty($text)) {
-                throw new Exception("PDF content is empty or could not be extracted.");
+                throw new Exception('PDF content is empty or could not be extracted.');
             }
 
             return self::sendLLMRequest($text);
         } catch (Exception $e) {
-            return ["error" => $e->getMessage()];
+            return ['error' => $e->getMessage()];
         }
     }
 
@@ -38,7 +38,7 @@ class Lead
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
 
         if (empty($apiKey) || empty($model)) {
-            return ["error" => "Missing API key or model configuration."];
+            return ['error' => 'Missing API key or model configuration.'];
         }
 
         $data = [
@@ -68,21 +68,21 @@ class Lead
 
         try {
             $ch = curl_init();
-            
+
             curl_setopt($ch, CURLOPT_URL, $url);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
             curl_setopt($ch, CURLOPT_POST, true);
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                "Content-Type: application/json",
-                "Authorization: Bearer " . $apiKey
+                'Content-Type: application/json',
+                'Authorization: Bearer '.$apiKey,
             ]);
 
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if (curl_errno($ch)) {
-                throw new Exception("cURL Error: " . curl_error($ch));
+                throw new Exception('cURL Error: '.curl_error($ch));
             }
 
             curl_close($ch);
@@ -90,12 +90,12 @@ class Lead
             $decodedResponse = json_decode($response, true);
 
             if ($httpCode !== 200 || isset($decodedResponse['error'])) {
-                throw new Exception("LLM API Error: " . ($decodedResponse['error']['message'] ?? 'Unknown error'));
+                throw new Exception('LLM API Error: '.($decodedResponse['error']['message'] ?? 'Unknown error'));
             }
 
             return $decodedResponse;
         } catch (Exception $e) {
-            return ["error" => $e->getMessage()];
+            return ['error' => $e->getMessage()];
         }
     }
 }

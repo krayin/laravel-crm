@@ -666,9 +666,9 @@ class LeadController extends Controller
             'status'                 => 1,
             'title'                  => $aiData['lead_title'] ?? 'Untitled Lead',
             'person'                 => [
-                'name'  => $aiData['contact_name'] ?? 'Unknown',
-                'email' => $aiData['contact_email'] ?? null,
-                'phone' => $aiData['contact_phone'] ?? null,
+                'name'            => $aiData['contact_name'] ?? 'Unknown',
+                'email'           => $aiData['contact_email'] ?? null,
+                'phone'           => $aiData['contact_phone'] ?? null,
                 'organization_id' => $aiData['organization_id'] ?? null,
             ],
             'lead_pipeline_stage_id' => $aiData['pipeline_stage_id'] ?? null,
@@ -676,6 +676,4 @@ class LeadController extends Controller
             'source'                 => $aiData['source'] ?? 'AI Extracted',
         ];
     }
-
-
 }
