@@ -8,7 +8,7 @@ class Lead
 {
     public static function extractDataFromPdf($pdfPath)
     {
-        $parser = new Parser();
+        $parser = new Parser;
         $pdf = $parser->parseFile($pdfPath);
         $text = $pdf->getText();
 
