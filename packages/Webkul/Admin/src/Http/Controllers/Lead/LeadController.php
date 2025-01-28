@@ -9,6 +9,7 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
+use Webkul\Admin\Helpers\Lead;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\LeadForm;
@@ -624,5 +625,20 @@ class LeadController extends Controller
                 'filterable_options' => DateRangeOptionEnum::options(),
             ],
         ];
+    }
+
+    public function createByAI() {
+        if ($pdfFile = request()->file('file')) {
+            $pdfPath = $pdfFile->getPathName();
+
+            $extractedData = Lead::extractDataFromPdf($pdfPath);
+
+            dd($extractedData);
+
+            return response()->json([
+                'status' => 'success',
+                'data'   => $extractedData
+            ]);
+        }
     }
 }

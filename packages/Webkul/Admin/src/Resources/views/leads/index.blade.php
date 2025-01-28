@@ -26,7 +26,9 @@
 
         <div class="flex items-center gap-x-2.5">
             <!-- Upload File for Lead Creation -->
-            @include('admin::leads.index.upload')
+            @if(core()->getConfigData('general.magic_ai.pdf_generation.enabled'))
+                @include('admin::leads.index.upload')
+            @endif
 
             @if ((request()->view_type ?? "kanban") == "table")
                 <!-- Export Modal -->

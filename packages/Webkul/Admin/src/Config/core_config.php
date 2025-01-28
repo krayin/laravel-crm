@@ -54,37 +54,51 @@ return [
                 'depends'       => 'enable:1',
                 'options'       => [
                     [
-                        'title' => 'gpt-4o',
+                        'title' => 'GPT 4O',
                         'value' => 'gpt-4o',
                     ], [
-                        'title' => 'gemini/gemini-pro',
-                        'value' => 'gemini/gemini-pro',
+                        'title' => 'GPT 4O Mini',
+                        'value' => 'gpt-4o-mini',
                     ], [
-                        'title' => 'cohere key',
-                        'value' => 'command-r',
+                        'title' => 'Gemini 2.0 Flash',
+                        'value' => 'gemini-2.0-flash-exp',
                     ], [
-                        'title' => 'Ollama',
-                        'value' => 'ollama/llama2',
+                        'title' => 'Deepseek r1 8b',
+                        'value' => 'deepseek-r1:8b',
+                    ], [
+                        'title' => 'Llama 3.2',
+                        'value' => 'llama3.2:latest',
                     ],
                 ],
             ], [
                 'name'          => 'api_key',
                 'title'         => 'API Key',
                 'type'          => 'password',
-                'depends'       => 'enable:1',
-                'channel_based' => true,
+                'depends'       => 'enable:1,model:*',
+                'validation'    => 'required_if:enable,1',
+                'info'          => 'Please ensure that you use a unique API key for each model type to maintain optimal performance and security.',
             ], [
                 'name'          => 'organization',
                 'title'         => 'Organization',
                 'depends'       => 'enable:1',
                 'type'          => 'text',
-                'channel_based' => true,
             ], [
                 'name'          => 'api_domain',
                 'title'         => 'LLM API Domain',
                 'type'          => 'text',
                 'depends'       => 'enable:1',
-                'channel_based' => true,
+            ],
+        ],
+    ], [
+        'key'    => 'general.magic_ai.pdf_generation',
+        'name'   => 'PDF Generation',
+        'info'   => 'Enable the PDF Generation feature to automatically extract data from PDF files and convert them into text format. Enhance your productivity and efficiency by enabling this feature to streamline your workflow.',
+        'sort'   => 1,
+        'fields' => [
+            [
+                'name'          => 'enabled',
+                'title'         => 'Enabled',
+                'type'          => 'boolean',
             ],
         ],
     ],
