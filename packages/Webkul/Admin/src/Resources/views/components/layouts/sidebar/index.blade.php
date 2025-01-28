@@ -10,15 +10,22 @@
             @foreach (menu()->getItems('admin') as $menuItem)
                 <div class="px-4 group/item {{ $menuItem->isActive() ? 'active' : 'inactive' }}">
                     <a
-                        class="flex gap-2 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
+                        class="flex gap-2 p-1.5 items-center cursor-pointer hover:rounded-lg {{ $menuItem->isActive() == 'active' ? 'rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
+                        style="background-color: {{ $menuItem->isActive() == 'active' ? (core()->getConfigData('general.settings.menu_color.active_background_color') ?? '#0E90D9') : '' }}"
                         href="{{ ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren() ? 'javascript:void(0)' : $menuItem->getUrl() }}"
                         @mouseleave="!isMenuActive ? hoveringMenu = '' : {}"
                         @mouseover="hoveringMenu='{{$menuItem->getKey()}}'"
                         @click="isMenuActive = !isMenuActive"
                     >
-                        <span class="{{ $menuItem->getIcon() }} text-2xl {{ $menuItem->isActive() ? 'text-white' : ''}}"></span>
-                        
-                        <div class="flex-1 flex justify-between items-center text-gray-600 dark:text-gray-300 font-medium whitespace-nowrap group-[.sidebar-collapsed]/container:hidden {{ $menuItem->isActive() ? 'text-white' : ''}} group">
+                        <span
+                            class="{{ $menuItem->getIcon() }} text-2xl"
+                            style="color: {{ $menuItem->isActive() ? core()->getConfigData('general.settings.menu_color.active_text_color') : ''}}"
+                        ></span>
+
+                        <div
+                            class="group flex flex-1 items-center justify-between whitespace-nowrap font-medium text-gray-600 group-[.sidebar-collapsed]/container:hidden dark:text-gray-300" 
+                            style="color: {{ $menuItem->isActive() ? (core()->getConfigData('general.settings.menu_color.active_text_color') ?? '#ffffff') : '' }}"
+                        >
                             <p>{{ $menuItem->getName() }}</p>
                         
                             @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren())
