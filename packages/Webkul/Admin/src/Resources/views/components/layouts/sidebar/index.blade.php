@@ -19,12 +19,12 @@
                     >
                         <span
                             class="{{ $menuItem->getIcon() }} text-2xl"
-                            style="color: {{ $menuItem->isActive() ? core()->getConfigData('general.settings.menu_color.active_text_color') : ''}}"
+                            style="color: {{ $menuItem->isActive() ? (core()->getConfigData('general.settings.menu_color.active_text_color') ?? '#ffffff') : (core()->getConfigData('general.settings.menu_color.text_color') ?? '#757575') }}"
                         ></span>
 
                         <div
                             class="group flex flex-1 items-center justify-between whitespace-nowrap font-medium text-gray-600 group-[.sidebar-collapsed]/container:hidden dark:text-gray-300" 
-                            style="color: {{ $menuItem->isActive() ? (core()->getConfigData('general.settings.menu_color.active_text_color') ?? '#ffffff') : '' }}"
+                            style="color: {{ $menuItem->isActive() ? (core()->getConfigData('general.settings.menu_color.active_text_color') ?? '#ffffff') : (core()->getConfigData('general.settings.menu_color.text_color') ?? '#757575') }}"
                         >
                             <p>{{ core()->getConfigData('general.settings.menu.'.$menuItem->getKey()) ?? $menuItem->getName() }}</p>
                         
@@ -52,7 +52,10 @@
                                                     href="{{ $subMenuItem->getUrl() }}"
                                                     class="flex gap-2.5 p-2 items-center cursor-pointer hover:rounded-lg {{ $subMenuItem->isActive() == 'active' ? 'bg-brandColor rounded-lg' : ' hover:bg-gray-100 hover:dark:bg-gray-950' }} peer"
                                                 >
-                                                    <p class="text-gray-600 dark:text-gray-300 font-medium whitespace-nowrap {{ $subMenuItem->isActive() ? 'text-white' : ''}}">
+                                                    <p
+                                                        class="dark:text-gray-300 font-medium whitespace-nowrap {{ $subMenuItem->isActive() ? 'text-white' : ''}}"
+                                                        style="color: {{ core()->getConfigData('general.settings.menu_color.text_color') ?? '#757575' }}"
+                                                    >
                                                         {{ core()->getConfigData('general.settings.menu.'.$subMenuItem->getKey()) ?? $subMenuItem->getName() }}
                                                     </p>
                                                 </a>
