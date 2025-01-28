@@ -627,19 +627,53 @@ class LeadController extends Controller
         ];
     }
 
-    public function createByAI()
+    public function createByAI(LeadForm $request)
     {
-        if ($pdfFile = request()->file('file')) {
+        if ($pdfFile = $request->file('file')) {
             $pdfPath = $pdfFile->getPathName();
 
             $extractedData = Lead::extractDataFromPdf($pdfPath);
 
-            dd($extractedData);
+            if (isset($extractedData['error'])) {
+                return response()->json([
+                    'status'  => 'error',
+                    'message' => $extractedData['error'],
+                ], 400);
+            }
 
-            return response()->json([
-                'status' => 'success',
-                'data'   => $extractedData,
-            ]);
+            $leadData = $this->mapAIDataToLead($extractedData);
+
+            $validatedData = app(LeadForm::class)->validated();
+
+            $finalData = array_merge($validatedData, $leadData);
+
+            dd($finalData);
+
+            return $this->store(new LeadForm($finalData));
         }
+
+        return response()->json([
+            'status'  => 'error',
+            'message' => 'No file uploaded.',
+        ], 400);
     }
+
+    private function mapAIDataToLead($aiData)
+    {
+        return [
+            'status'                 => 1,
+            'title'                  => $aiData['lead_title'] ?? 'Untitled Lead',
+            'person'                 => [
+                'name'  => $aiData['contact_name'] ?? 'Unknown',
+                'email' => $aiData['contact_email'] ?? null,
+                'phone' => $aiData['contact_phone'] ?? null,
+                'organization_id' => $aiData['organization_id'] ?? null,
+            ],
+            'lead_pipeline_stage_id' => $aiData['pipeline_stage_id'] ?? null,
+            'value'                  => $aiData['lead_value'] ?? 0,
+            'source'                 => $aiData['source'] ?? 'AI Extracted',
+        ];
+    }
+
+
 }
