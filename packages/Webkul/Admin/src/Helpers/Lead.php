@@ -32,7 +32,7 @@ class Lead
      */
     private static function sendLLMRequest($prompt)
     {
-        $url = "https://api.groq.com/openai/v1/chat/completions";
+        $url = 'https://api.groq.com/openai/v1/chat/completions';
 
         $model = core()->getConfigData('general.magic_ai.settings.model');
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
@@ -42,27 +42,27 @@ class Lead
         }
 
         $data = [
-            "model" => $model,
-            "messages" => [
+            'model'    => $model,
+            'messages' => [
                 [
-                    "role" => "system", "content" => "You are an AI assistant. You have to extract the data from the PDF file. 
+                    'role' => 'system', 'content' => 'You are an AI assistant. You have to extract the data from the PDF file. 
                     Example Output:
                     {
-                        \"status\": 1,
-                        \"title\": \"Untitled Lead\",
-                        \"person\": {
-                            \"name\": \"Unknown\",
-                            \"email\": null,
-                            \"phone\": null,
-                            \"organization_id\": null
+                        "status": 1,
+                        "title": "Untitled Lead",
+                        "person": {
+                            "name": "Unknown",
+                            "email": null,
+                            "phone": null,
+                            "organization_id": null
                         },
-                        \"lead_pipeline_stage_id\": null,
-                        \"value\": 0,
-                        \"source\": \"AI Extracted\"
+                        "lead_pipeline_stage_id": null,
+                        "value": 0,
+                        "source": "AI Extracted"
                     }
-                        Note: Only return the output, Do not return or add any comments."
+                        Note: Only return the output, Do not return or add any comments.',
                 ],
-                ["role" => "user", "content"   => 'PDF:\n' . $prompt]
+                ['role' => 'user', 'content'   => 'PDF:\n'.$prompt],
             ],
         ];
 

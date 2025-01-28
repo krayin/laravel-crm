@@ -71,7 +71,7 @@ return [
                     ], [
                         'title' => 'Llama 3.3 (Groq)',
                         'value' => 'llama-3.3-70b-versatile',
-                    ]
+                    ],
                 ],
             ], [
                 'name'          => 'api_key',
