@@ -26,7 +26,7 @@
                             class="group flex flex-1 items-center justify-between whitespace-nowrap font-medium text-gray-600 group-[.sidebar-collapsed]/container:hidden dark:text-gray-300" 
                             style="color: {{ $menuItem->isActive() ? (core()->getConfigData('general.settings.menu_color.active_text_color') ?? '#ffffff') : '' }}"
                         >
-                            <p>{{ $menuItem->getName() }}</p>
+                            <p>{{ core()->getConfigData('general.settings.menu.'.$menuItem->getKey()) ?? $menuItem->getName() }}</p>
                         
                             @if ( ! in_array($menuItem->getKey(), ['settings', 'configuration']) && $menuItem->haveChildren())
                                 <i class="icon-right-arrow rtl:icon-left-arrow invisible text-2xl group-hover/item:visible {{ $menuItem->isActive() ? 'text-white' : ''}}"></i>
