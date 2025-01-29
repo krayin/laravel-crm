@@ -52,39 +52,11 @@ return [
         'sort'   => 1,
         'fields' => [
             [
-                'name'       => 'powered_by',
+                'name'       => 'label',
                 'title'      => 'admin::app.configuration.index.general.settings.footer.powered-by',
-                'type'       => 'text',
-                'default'    => 'Powered by',
-                'validation' => 'max:50',
-            ], [
-                'name'       => 'powered_by_redirection_title',
-                'title'      => 'admin::app.configuration.index.general.settings.footer.powered-by-redirection-title',
-                'type'       => 'text',
-                'default'    => 'Krayin',
-                'validation' => 'max:20',
-            ], [
-                'name'    => 'powered_by_redirection_link',
-                'title'   => 'admin::app.configuration.index.general.settings.footer.powered-by-redirection-link',
-                'default' => 'https://krayincrm.com',
-                'type'    => 'text',
-            ], [
-                'name'       => 'other',
-                'title'      => 'admin::app.configuration.index.general.settings.footer.other',
-                'type'       => 'text',
-                'default'    => 'an open-source project by',
-                'validation' => 'max:100',
-            ], [
-                'name'       => 'other_redirection_title',
-                'title'      => 'admin::app.configuration.index.general.settings.footer.other-redirection-title',
-                'type'       => 'text',
-                'default'    => 'Webkul',
-                'validation' => 'max:25',
-            ], [
-                'name'    => 'other_redirection_link',
-                'title'   => 'admin::app.configuration.index.general.settings.footer.other-redirection-link',
-                'default' => 'https://webkul.com',
-                'type'    => 'text',
+                'type'       => 'editor',
+                'default'    => 'Powered by <span style="color: rgb(14, 144, 217);"><a href="http://www.krayincrm.com" target="_blank">Krayin</a></span>, an open-source project by <span style="color: rgb(14, 144, 217);"><a href="https://webkul.com" target="_blank">Webkul</a></span>.',
+                'tinymce'    => true,
             ],
         ],
     ], [
@@ -198,20 +170,10 @@ return [
         'sort'   => 2,
         'fields' => [
             [
-                'name'       => 'active_background_color',
-                'title'      => 'admin::app.configuration.index.general.settings.menu-color.active-background-color',
-                'type'       => 'color',
-                'default'    => '#0E90D9',
-            ], [
-                'name'       => 'active_text_color',
-                'title'      => 'admin::app.configuration.index.general.settings.menu-color.active-text-color',
-                'type'       => 'color',
-                'default'    => '#ffffff',
-            ], [
-                'name'       => 'text_color',
-                'title'      => 'admin::app.configuration.index.general.settings.menu-color.text-color',
-                'type'       => 'color',
-                'default'    => '#757575',
+                'name'    => 'brand_color',
+                'title'   => 'admin::app.configuration.index.general.settings.menu-color.brand-color',
+                'type'    => 'color',
+                'default' => '#0E90D9',
             ],
         ],
     ],

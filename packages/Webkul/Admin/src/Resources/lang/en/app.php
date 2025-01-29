@@ -1906,14 +1906,9 @@ return [
                     'info'  => 'Update your settings here.',
 
                     'footer' => [
-                        'info'                         => 'We can configure the powered by section here.',
-                        'other'                        => 'Other',
-                        'other-redirection-link'       => 'Other Redirection Link',
-                        'other-redirection-title'      => 'Other Redirection Title',
-                        'powered-by'                   => 'Powered by',
-                        'powered-by-redirection-link'  => 'Powered by Redirection Link',
-                        'powered-by-redirection-title' => 'Powered by Redirection Title',
-                        'title'                        => 'Powered by Section Configurations',
+                        'info'       => 'We can configure the powered by section here.',
+                        'powered-by' => 'Powered by text editor',
+                        'title'      => 'Powered by Section Configurations',
                     ],
 
                     'menu' => [
@@ -1938,11 +1933,9 @@ return [
                     ],
 
                     'menu-color' => [
-                        'active-background-color' => 'Active Background Color',
-                        'active-text-color'       => 'Active Text Color',
-                        'info'                    => 'We can change the menu items colors here.',
-                        'text-color'              => 'Text Color',
-                        'title'                   => 'Menu Item Color Configurations',
+                        'brand-color' => 'Brand Color',
+                        'info'        => 'We can change the menu items colors here.',
+                        'title'       => 'Menu Item Color Configurations',
                     ],
                 ],
             ],

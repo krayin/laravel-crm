@@ -1906,14 +1906,9 @@ return [
                     'info'  => 'Ayarlarınızı burada güncelleyin.',
 
                     'footer' => [
-                        'info'                         => 'Powered by bölümünü burada yapılandırabiliriz.',
-                        'other'                        => 'Diğer',
-                        'other-redirection-link'       => 'Diğer Yönlendirme Bağlantısı',
-                        'other-redirection-title'      => 'Diğer Yönlendirme Başlığı',
-                        'powered-by'                   => 'Tarafından desteklenmektedir',
-                        'powered-by-redirection-link'  => 'Powered by Yönlendirme Bağlantısı',
-                        'powered-by-redirection-title' => 'Powered by Yönlendirme Başlığı',
-                        'title'                        => 'Powered by Bölüm Yapılandırmaları',
+                        'info'       => 'Powered by bölümünü burada yapılandırabiliriz.',
+                        'powered-by' => 'Powered by metin düzenleyici',
+                        'title'      => 'Powered by Bölüm Yapılandırmaları',
                     ],
 
                     'menu' => [

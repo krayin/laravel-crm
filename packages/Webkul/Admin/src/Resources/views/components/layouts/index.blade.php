@@ -74,9 +74,17 @@
         />
     @endif
 
+    @php
+        $brandColor = core()->getConfigData('general.settings.menu_color.brand_color') ?? '#0E90D9';
+    @endphp
+
     @stack('styles')
 
     <style>
+        :root {
+            --brand-color: {{ $brandColor }};
+        }
+
         {!! core()->getConfigData('general.content.custom_scripts.custom_css') !!}
     </style>
 
@@ -117,25 +125,7 @@
                 <!-- Powered By -->
                 <div class="mt-auto pt-6">
                     <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                        <p>
-                            {{ core()->getConfigData('general.settings.footer.powered_by') }}
-
-                            <a
-                                class="text-brandColor hover:underline dark:text-brandColor"
-                                href="{{ core()->getConfigData('general.settings.footer.powered_by_redirection_link') }}"
-                            >
-                                {{ core()->getConfigData('general.settings.footer.powered_by_redirection_title') }}
-                            </a>,
-
-                            {{ core()->getConfigData('general.settings.footer.other') }}
-
-                            <a
-                                class="text-brandColor hover:underline dark:text-brandColor"
-                                href="{{ core()->getConfigData('general.settings.footer.other_redirection_link') }}"
-                            >
-                                {{ core()->getConfigData('general.settings.footer.other_redirection_title') }}
-                            </a>
-                        </p>
+                        <p>{!! core()->getConfigData('general.settings.footer.label') !!}</p>
                     </div>
                 </div>
             </div>
