@@ -1872,22 +1872,76 @@ return [
 
     'configuration' => [
         'index' => [
-            'back'         => 'Quay Lại',
-            'save-btn'     => 'Lưu Cấu Hình',
-            'save-success' => 'Lưu Cấu Hình Thành Công.',
-            'search'       => 'Tìm Kiếm',
-            'title'        => 'Cấu Hình',
+            'back'           => 'Quay lại',
+            'delete'         => 'Xóa',
+            'save-btn'       => 'Lưu Cấu hình',
+            'save-success'   => 'Cấu hình đã được lưu thành công.',
+            'search'         => 'Tìm kiếm',
+            'select-country' => 'Chọn Quốc gia',
+            'select-state'   => 'Chọn Bang',
+            'title'          => 'Cấu hình',
 
             'general'  => [
                 'title'   => 'Chung',
-                'info'    => 'Cấu Hình Chung',
+                'info'    => 'Cấu hình chung',
 
                 'general' => [
                     'title'           => 'Chung',
                     'info'            => 'Cập nhật cài đặt chung của bạn tại đây.',
                     'locale-settings' => [
-                        'title'       => 'Cài Đặt Ngôn Ngữ',
-                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, chẳng hạn như tiếng Anh (en), tiếng Pháp (fr) hoặc tiếng Nhật (ja).',
+                        'title'       => 'Cài đặt Ngôn ngữ',
+                        'title-info'  => 'Định nghĩa ngôn ngữ sử dụng trong giao diện người dùng, như tiếng Ả Rập (ar), tiếng Anh (en), tiếng Tây Ban Nha (es), tiếng Ba Tư (fa) và tiếng Thổ Nhĩ Kỳ (tr).',
+                    ],
+
+                    'admin-logo' => [
+                        'logo-image' => 'Hình ảnh Logo',
+                        'title'      => 'Logo Quản trị',
+                        'title-info' => 'Cấu hình hình ảnh logo cho bảng điều khiển quản trị của bạn.',
+                    ],
+                ],
+
+                'settings' => [
+                    'title' => 'Cài đặt',
+                    'info'  => 'Cập nhật cài đặt của bạn tại đây.',
+
+                    'footer' => [
+                        'info'                         => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
+                        'other'                        => 'Khác',
+                        'other-redirection-link'       => 'Liên kết Chuyển hướng Khác',
+                        'other-redirection-title'      => 'Tiêu đề Chuyển hướng Khác',
+                        'powered-by'                   => 'Được hỗ trợ bởi',
+                        'powered-by-redirection-link'  => 'Liên kết Chuyển hướng Powered by',
+                        'powered-by-redirection-title' => 'Tiêu đề Chuyển hướng Powered by',
+                        'title'                        => 'Cấu hình Phần Powered by',
+                    ],
+
+                    'menu' => [
+                        'activities'     => 'Hoạt động',
+                        'configuration'  => 'Cấu hình',
+                        'contacts'       => 'Liên hệ',
+                        'dashboard'      => 'Bảng điều khiển',
+                        'draft'          => 'Thư nháp',
+                        'inbox'          => 'Hộp thư đến',
+                        'info'           => 'Chúng tôi có thể cấu hình tên các mục menu tại đây.',
+                        'leads'          => 'Khách hàng tiềm năng',
+                        'mail'           => 'Thư',
+                        'organizations'  => 'Tổ chức',
+                        'outbox'         => 'Hộp thư đi',
+                        'persons'        => 'Người',
+                        'products'       => 'Sản phẩm',
+                        'quotes'         => 'Báo giá',
+                        'sent'           => 'Đã gửi',
+                        'settings'       => 'Cài đặt',
+                        'title'          => 'Cấu hình Mục Menu',
+                        'trash'          => 'Thùng rác',
+                    ],
+
+                    'menu-color' => [
+                        'active-background-color' => 'Màu nền Hoạt động',
+                        'active-text-color'       => 'Màu chữ Hoạt động',
+                        'info'                    => 'Chúng tôi có thể thay đổi màu các mục menu tại đây.',
+                        'text-color'              => 'Màu chữ',
+                        'title'                   => 'Cấu hình Màu Mục Menu',
                     ],
                 ],
             ],

@@ -101,45 +101,78 @@ class CoreConfigRepository extends Repository
     {
         unset($data['_token']);
 
+        $preparedData = [];
+
         foreach ($data as $method => $fieldData) {
             $recursiveData = $this->recursiveArray($fieldData, $method);
 
             foreach ($recursiveData as $fieldName => $value) {
                 if (
-                    gettype($value) == 'array'
-                    && ! isset($value['delete'])
+                    is_array($value)
+                    && isset($value['delete'])
                 ) {
-                    $value = implode(',', $value);
-                }
+                    $coreConfigValues = $this->model->where('code', $fieldName)->get();
 
-                $coreConfigValue = $this->model
-                    ->where('code', $fieldName)
-                    ->get();
+                    if ($coreConfigValues->isNotEmpty()) {
+                        foreach ($coreConfigValues as $coreConfig) {
+                            if (! empty($coreConfig['value'])) {
+                                Storage::delete($coreConfig['value']);
+                            }
 
-                if (request()->hasFile($fieldName)) {
-                    $value = request()->file($fieldName)->store('configuration');
-                }
-
-                if (! count($coreConfigValue)) {
-                    parent::create([
-                        'code'         => $fieldName,
-                        'value'        => $value,
-                    ]);
-                } else {
-                    foreach ($coreConfigValue as $coreConfig) {
-                        if (request()->hasFile($fieldName)) {
-                            Storage::delete($coreConfig['value']);
-                        }
-
-                        if (isset($value['delete'])) {
                             parent::delete($coreConfig['id']);
-                        } else {
-                            parent::update([
-                                'code'         => $fieldName,
-                                'value'        => $value,
-                            ], $coreConfig->id);
                         }
                     }
+
+                    continue;
+                }
+            }
+
+            foreach ($recursiveData as $fieldName => $value) {
+                if (is_array($value)) {
+                    foreach ($value as $key => $val) {
+                        $fieldNameWithKey = $fieldName.'.'.$key;
+
+                        $coreConfigValues = $this->model->where('code', $fieldNameWithKey)->get();
+
+                        if (request()->hasFile($fieldNameWithKey)) {
+                            $val = request()->file($fieldNameWithKey)->store('configuration');
+                        }
+
+                        if ($coreConfigValues->isNotEmpty()) {
+                            foreach ($coreConfigValues as $coreConfig) {
+                                if (request()->hasFile($fieldNameWithKey)) {
+                                    Storage::delete($coreConfig['value']);
+                                }
+
+                                parent::update(['code' => $fieldNameWithKey, 'value' => $val], $coreConfig->id);
+                            }
+                        } else {
+                            parent::create(['code' => $fieldNameWithKey, 'value' => $val]);
+                        }
+                    }
+                } else {
+                    if (request()->hasFile($fieldName)) {
+                        $value = request()->file($fieldName)->store('configuration');
+                    }
+
+                    $preparedData[] = [
+                        'code'  => $fieldName,
+                        'value' => $value,
+                    ];
+                }
+            }
+        }
+
+        if (! empty($preparedData)) {
+            foreach ($preparedData as $dataItem) {
+                $coreConfigValues = $this->model->where('code', $dataItem['code'])->get();
+
+                if ($coreConfigValues->isNotEmpty()) {
+                    foreach ($coreConfigValues as $coreConfig) {
+                        parent::update($dataItem, $coreConfig->id);
+                    }
+                } else {
+                    parent::create($dataItem);
                 }
             }
         }

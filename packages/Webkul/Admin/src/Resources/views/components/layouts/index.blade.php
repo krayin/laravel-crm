@@ -108,19 +108,34 @@
             <!-- Page Sidebar Blade Component -->
             <x-admin::layouts.sidebar />
 
-            <div class="max-w-full flex flex-col min-h-[calc(100vh-62px)] flex-1 bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4">
+            <div class="flex min-h-[calc(100vh-62px)] max-w-full flex-1 flex-col bg-gray-100 pt-3 transition-all duration-300 dark:bg-gray-950 max-lg:!px-4">
                 <!-- Page Content Blade Component -->
-                <div class="pb-6 px-4 ltr:pl-[85px] rtl:pr-[85px] ">
+                <div class="px-4 pb-6 ltr:pl-[85px] rtl:pr-[85px]">
                     {{ $slot }}
                 </div>
                 
                 <!-- Powered By -->
                 <div class="mt-auto pt-6">
                     <div class="border-t bg-white py-5 text-center text-sm font-normal dark:border-gray-800 dark:bg-gray-900 dark:text-white">
-                         @lang('admin::app.components.layouts.powered-by.description', [
-                            'krayin' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://krayincrm.com/">Krayin</a>',
-                            'webkul' => '<a class="text-brandColor hover:underline dark:text-brandColor" href="https://webkul.com/">Webkul</a>',
-                        ]) 
+                        <p>
+                            {{ core()->getConfigData('general.settings.footer.powered_by') }}
+
+                            <a
+                                class="text-brandColor hover:underline dark:text-brandColor"
+                                href="{{ core()->getConfigData('general.settings.footer.powered_by_redirection_link') }}"
+                            >
+                                {{ core()->getConfigData('general.settings.footer.powered_by_redirection_title') }}
+                            </a>,
+
+                            {{ core()->getConfigData('general.settings.footer.other') }}
+
+                            <a
+                                class="text-brandColor hover:underline dark:text-brandColor"
+                                href="{{ core()->getConfigData('general.settings.footer.other_redirection_link') }}"
+                            >
+                                {{ core()->getConfigData('general.settings.footer.other_redirection_title') }}
+                            </a>
+                        </p>
                     </div>
                 </div>
             </div>
