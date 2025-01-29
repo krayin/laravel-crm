@@ -99,6 +99,7 @@ class Lead
 
             if (curl_errno($ch)) {
                 throw new Exception('cURL Error: '.curl_error($ch));
+                throw new Exception('cURL Error: '.curl_error($ch));
             }
 
             curl_close($ch);
