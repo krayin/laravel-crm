@@ -1905,14 +1905,9 @@ return [
                     'info'  => 'Cập nhật cài đặt của bạn tại đây.',
 
                     'footer' => [
-                        'info'                         => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
-                        'other'                        => 'Khác',
-                        'other-redirection-link'       => 'Liên kết Chuyển hướng Khác',
-                        'other-redirection-title'      => 'Tiêu đề Chuyển hướng Khác',
-                        'powered-by'                   => 'Được hỗ trợ bởi',
-                        'powered-by-redirection-link'  => 'Liên kết Chuyển hướng Powered by',
-                        'powered-by-redirection-title' => 'Tiêu đề Chuyển hướng Powered by',
-                        'title'                        => 'Cấu hình Phần Powered by',
+                        'info'       => 'Chúng tôi có thể cấu hình phần powered by tại đây.',
+                        'powered-by' => 'Được hỗ trợ bởi trình chỉnh sửa văn bản',
+                        'title'      => 'Cấu hình Phần Powered by',
                     ],
 
                     'menu' => [

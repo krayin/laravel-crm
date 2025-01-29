@@ -17,6 +17,7 @@
         depend-name="{{ $field->getDependFieldName() }}"
         src="{{ Storage::url($value) }}"
         field-data="{{ json_encode($field) }}"
+        :tinymce="{{ json_encode($field->getTinymce()) }}"
     >
         <div class="shimmer mb-1.5 h-5 w-24"></div>
 
@@ -109,9 +110,9 @@
                     />
                 </v-field>
             </template>
-        
+
             <!-- Textarea Input -->
-            <template v-if="field.type == 'textarea' && field.is_visible">
+            <template v-if="field.type == 'textarea' && field.is_visible && !field.tinymce">
                 <x-admin::form.control-group.control
                     type="textarea"
                     class="text-gray-600 dark:text-gray-300"
@@ -124,7 +125,7 @@
             </template>
 
             <!-- Textarea with tinymce -->
-            <template v-if="field.type == 'editor' && field.is_visible">
+            <template v-if="field.type == 'editor' && field.is_visible && field.tinymce">
                 <x-admin::form.control-group.control
                     type="textarea"
                     class="text-gray-600 dark:text-gray-300"
@@ -133,6 +134,7 @@
                     ::rules="validations"
                     ::value="value"
                     ::label="label"
+                    tinymce="true"
                 />
             </template>
         
@@ -430,6 +432,7 @@
                 'src',
                 'validations',
                 'value',
+                'tinymce',
             ],
 
             data() {

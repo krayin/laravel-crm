@@ -1899,14 +1899,9 @@ return [
                     'info'  => 'Atualize suas configurações aqui.',
 
                     'footer' => [
-                        'info'                         => 'Podemos configurar a seção powered by aqui.',
-                        'other'                        => 'Outro',
-                        'other-redirection-link'       => 'Outro Link de Redirecionamento',
-                        'other-redirection-title'      => 'Outro Título de Redirecionamento',
-                        'powered-by'                   => 'Powered by',
-                        'powered-by-redirection-link'  => 'Link de Redirecionamento Powered by',
-                        'powered-by-redirection-title' => 'Título de Redirecionamento Powered by',
-                        'title'                        => 'Configurações da Seção Powered by',
+                        'info'       => 'Podemos configurar a seção powered by aqui.',
+                        'powered-by' => 'Editor de texto "Powered by"',
+                        'title'      => 'Configurações da Seção Powered by',
                     ],
 
                     'menu' => [
