@@ -45,6 +45,7 @@ class LeadController extends Controller
         protected StageRepository $stageRepository,
         protected LeadRepository $leadRepository,
         protected ProductRepository $productRepository,
+        protected PersonRepository $personRepository
     ) {
         request()->request->add(['entity_type' => 'leads']);
     }
@@ -627,6 +628,9 @@ class LeadController extends Controller
         ];
     }
 
+    /**
+     * Create Lead with specified AI.
+     */
     public function createByAI(LeadForm $request)
     {
         if ($pdfFile = $request->file('file')) {
@@ -641,17 +645,13 @@ class LeadController extends Controller
                 ], 400);
             }
 
-            dd($extractedData);
-
             $leadData = $this->mapAIDataToLead($extractedData);
 
             $validatedData = app(LeadForm::class)->validated();
 
             $finalData = array_merge($validatedData, $leadData);
 
-            dd($finalData);
-
-            return $this->store(new LeadForm($finalData));
+            return self::leadCreate($finalData);
         }
 
         return response()->json([
@@ -660,20 +660,77 @@ class LeadController extends Controller
         ], 400);
     }
 
+    /**
+     * Mapped the receive Extracted AI data.  
+     */
     private function mapAIDataToLead($aiData)
     {
+        $content = $aiData['choices'][0]['message']['content'] ?? '';
+
+        $content = preg_replace('/<[^>]+>/', '', $content);
+
+        $jsonParts = preg_split('/(?=\{\s*"status"\s*:)/', $content);
+
+        $finalData = json_decode($jsonParts[1]);
+
         return [
-            'status'                 => 1,
-            'title'                  => $aiData['lead_title'] ?? 'Untitled Lead',
-            'person'                 => [
-                'name'            => $aiData['contact_name'] ?? 'Unknown',
-                'email'           => $aiData['contact_email'] ?? null,
-                'phone'           => $aiData['contact_phone'] ?? null,
-                'organization_id' => $aiData['organization_id'] ?? null,
+            'status'              => 1,
+            'title'               => $finalData->title ?? 'N/A',
+            'description'         => $finalData->description ?? null,
+            'lead_source_id'      => 1,
+            'lead_type_id'        => 1,
+            'lead_value'          => $finalData->lead_value ?? 0,
+            'person'              => [
+                'name'            => $finalData->person->name ?? 'Unknown',
+                'emails'          => [
+                    0 => [
+                        'value' => $finalData->person->emails->value ?? null,
+                        'label' => $finalData->person->emails->label ?? 'work',
+                    ],
+                ],
+                'contact_numbers' => [
+                    0 => [
+                        'value' => $finalData->person->contact_numbers->value ?? null,
+                        'label' => $finalData->person->contact_numbers->label ?? 'work',
+                    ],
+                ],
+                'entity_type'     => 'persons',
             ],
-            'lead_pipeline_stage_id' => $aiData['pipeline_stage_id'] ?? null,
-            'value'                  => $aiData['lead_value'] ?? 0,
-            'source'                 => $aiData['source'] ?? 'AI Extracted',
+            'entity_type'         => 'leads',
         ];
+    }
+
+    /**
+     * Create lead independent entity.
+     */
+    private function leadCreate($data)
+    {
+        $person = $this->personRepository->create($data['person']);
+
+        $pipeline = $this->pipelineRepository->getDefaultPipeline();
+
+        $stage = $pipeline->stages()->first();
+
+        $data = array_merge($data, [
+            'lead_pipeline_id'       => $pipeline->id,
+            'lead_pipeline_stage_id' => $stage->id,
+            'expected_close_date'    => Carbon::now()->addDays(7),
+            'person'                 => [
+                'id'              => $person->id,
+                'organization_id' => $data['person']['organization_id'] ?? null,
+            ]
+        ]);
+
+        if (in_array($stage->code, ['won', 'lost'])) {
+            $data['closed_at'] = Carbon::now();
+        }
+
+        $lead = $this->leadRepository->create($data);
+
+        Event::dispatch('lead.create.after', $lead);
+
+        return response()->json([
+            'message' => 'Lead successfully created.',
+        ], 200);
     }
 }

@@ -100,6 +100,8 @@
                             this.$emitter.emit('add-flash', { type: 'success', message: response.data.message });
 
                             this.$refs.userUpdateAndCreateModal.close();
+
+                            window.location.reload();
                         })
                         .catch (error => {
                             this.isLoading = false;
