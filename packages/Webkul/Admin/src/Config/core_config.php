@@ -89,6 +89,7 @@ return [
                 'name'          => 'api_domain',
                 'title'         => 'LLM API Domain',
                 'type'          => 'text',
+                'info'          => 'For Olama And Grow only, Exp:- http://localhost:11434',
                 'depends'       => 'enable:1',
             ],
         ],
