@@ -30,7 +30,7 @@ class Lead
     /**
      * Send a request to the LLM API.
      */
-     private static function sendLLMRequest($prompt)
+    private static function sendLLMRequest($prompt)
     {
         $model = core()->getConfigData('general.magic_ai.settings.model');
         $apiKey = core()->getConfigData('general.magic_ai.settings.api_key');
@@ -46,8 +46,8 @@ class Lead
         $apiUrlMap = [
             'gpt-4o'           => 'https://api.openai.com/v1/chat/completions',
             'gpt-4o-mini'      => 'https://api.openai.com/v1/chat/completions',
-            'llama3.2:latest'  => core()->getConfigData('general.magic_ai.settings.api_domain') . '/v1/chat/completions',
-            'deepseek-r1:8b'   => core()->getConfigData('general.magic_ai.settings.api_domain') . '/v1/chat/completions',
+            'llama3.2:latest'  => core()->getConfigData('general.magic_ai.settings.api_domain').'/v1/chat/completions',
+            'deepseek-r1:8b'   => core()->getConfigData('general.magic_ai.settings.api_domain').'/v1/chat/completions',
             'gemini-2.0-flash' => 'https://api.gemini-ai.com/v1/chat/completions',
         ];
 
@@ -60,10 +60,10 @@ class Lead
 
     private static function sendGeminiRequest($prompt, $model)
     {
-        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' . core()->getConfigData('general.magic_ai.settings.api_key');
-        
+        $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key='.core()->getConfigData('general.magic_ai.settings.api_key');
+
         $data = self::prepareRequestData($model, $prompt);
-        
+
         return self::makeCurlRequest($url, $model, json_encode($data), true);
     }
 
@@ -93,7 +93,7 @@ class Lead
                     }
                     Note: Only return the output, Do not return or add any comments.',
                 ],
-                ['role' => 'user', 'content' => 'PDF:\n' . $prompt],
+                ['role' => 'user', 'content' => 'PDF:\n'.$prompt],
             ],
         ];
 
@@ -106,14 +106,14 @@ class Lead
             curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
             curl_setopt($ch, CURLOPT_HTTPHEADER, [
                 'Content-Type: application/json',
-                'Authorization: Bearer ' . $apiKey,
+                'Authorization: Bearer '.$apiKey,
             ]);
 
             $response = curl_exec($ch);
             $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
             if (curl_errno($ch)) {
-                throw new Exception('cURL Error: ' . curl_error($ch));
+                throw new Exception('cURL Error: '.curl_error($ch));
             }
 
             curl_close($ch);
@@ -121,7 +121,7 @@ class Lead
             $decodedResponse = json_decode($response, true);
 
             if ($httpCode !== 200 || isset($decodedResponse['error'])) {
-                throw new Exception('LLM API Error: ' . ($decodedResponse['error']['message'] ?? 'Unknown error'));
+                throw new Exception('LLM API Error: '.($decodedResponse['error']['message'] ?? 'Unknown error'));
             }
 
             return $decodedResponse;
@@ -154,7 +154,7 @@ class Lead
                     }
                     Note: Only return the output, Do not return or add any comments.',
                 ],
-                ['role' => 'user', 'content' => 'PDF:\n' . $prompt],
+                ['role' => 'user', 'content' => 'PDF:\n'.$prompt],
             ],
         ];
     }
