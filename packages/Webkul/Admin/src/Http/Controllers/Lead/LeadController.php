@@ -661,7 +661,7 @@ class LeadController extends Controller
     }
 
     /**
-     * Mapped the receive Extracted AI data.  
+     * Mapped the receive Extracted AI data.
      */
     private function mapAIDataToLead($aiData)
     {
@@ -718,7 +718,7 @@ class LeadController extends Controller
             'person'                 => [
                 'id'              => $person->id,
                 'organization_id' => $data['person']['organization_id'] ?? null,
-            ]
+            ],
         ]);
 
         if (in_array($stage->code, ['won', 'lost'])) {
