@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
-use Webkul\Admin\Helpers\Lead;
 use Webkul\Admin\Http\Controllers\Controller;
 use Webkul\Admin\Http\Requests\LeadForm;
 use Webkul\Admin\Http\Requests\MassDestroyRequest;
@@ -27,6 +26,7 @@ use Webkul\Lead\Repositories\ProductRepository;
 use Webkul\Lead\Repositories\SourceRepository;
 use Webkul\Lead\Repositories\StageRepository;
 use Webkul\Lead\Repositories\TypeRepository;
+use Webkul\Lead\Services\LeadService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
 
@@ -641,7 +641,7 @@ class LeadController extends Controller
             ], 400);
         }
 
-        $extractedData = Lead::extractDataFromPdf($pdfFile->getPathName());
+        $extractedData = LeadService::extractDataFromPdf($pdfFile->getPathName());
 
         if (! empty($extractedData['error'])) {
             return response()->json([
@@ -652,7 +652,10 @@ class LeadController extends Controller
 
         $leadData = $this->mapAIDataToLead($extractedData);
 
-        if (! empty($leadData['status']) && $leadData['status'] === 'error') {
+        if (
+            ! empty($leadData['status'])
+            && $leadData['status'] === 'error'
+        ) {
             return response()->json([
                 'status'  => 'error',
                 'message' => $leadData['message'],
@@ -667,7 +670,13 @@ class LeadController extends Controller
      */
     private function mapAIDataToLead($aiData)
     {
-        $content = $aiData['choices'][0]['message']['content'] ?? '';
+        $model = core()->getConfigData('general.magic_ai.settings.model');
+
+        if (str_contains($model, 'gemini-1.5-flash')) {
+            $content = $aiData['candidates'][0]['content']['parts'][0]['text'] ?? '';
+        } else {
+            $content = $aiData['choices'][0]['message']['content'] ?? '';
+        }
 
         $content = strip_tags($content);
 
@@ -779,10 +788,6 @@ class LeadController extends Controller
                 'organization_id' => $data['person']['organization_id'] ?? null,
             ],
         ]);
-
-        if (in_array($stage->code, ['won', 'lost'])) {
-            $data['closed_at'] = Carbon::now();
-        }
 
         $lead = $this->leadRepository->create($data);
 
