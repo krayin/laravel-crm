@@ -60,8 +60,8 @@ return [
                         'title' => 'GPT 4O Mini',
                         'value' => 'gpt-4o-mini',
                     ], [
-                        'title' => 'Gemini 2.0 Flash',
-                        'value' => 'gemini-2.0-flash-exp',
+                        'title' => 'Gemini 1.5 Flash',
+                        'value' => 'gemini-1.5-flash',
                     ], [
                         'title' => 'Deepseek r1 8b',
                         'value' => 'deepseek-r1:8b',
@@ -77,7 +77,7 @@ return [
                 'name'          => 'api_key',
                 'title'         => 'API Key',
                 'type'          => 'password',
-                'depends'       => 'enable:1,model:*',
+                'depends'       => 'enable:1,model:gpt-4o,model:gpt-4o-mini,model:gemini-1.5-flash,model:llama-3.3-70b-versatile',
                 'validation'    => 'required_if:enable,1',
                 'info'          => 'Please ensure that you use a unique API key for each model type to maintain optimal performance and security.',
             ], [

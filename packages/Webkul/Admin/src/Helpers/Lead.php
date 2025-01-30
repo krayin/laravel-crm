@@ -69,9 +69,50 @@ class Lead
 
         $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
 
-        $data = self::prepareRequestData($model, $prompt);
-
-        $data['stream'] = false;
+        $data = [
+            "contents" => [
+                [
+                    "parts" => [
+                        [
+                            "text" => 'You are an AI assistant. You have to extract the data from the PDF file.
+                            Example Output:
+                            {
+                                "status": 1,
+                                "title": "Untitled Lead",
+                                "person": {
+                                    "name": "Unknown",
+                                    "emails": {
+                                        "value": null,
+                                        "label": null
+                                    },
+                                    "contact_numbers": {
+                                        "value": null,
+                                        "label": null
+                                    }
+                                },
+                                "lead_pipeline_stage_id": null,
+                                "lead_value": 0,
+                                "source": "AI Extracted"
+                            }
+                            Note: Only return the output, Do not return or add any comments.'
+                        ]
+                    ],
+                    "role" => "system"
+                ],
+                [
+                    "parts" => [
+                        ["text" => "PDF:\n$prompt"]
+                    ],
+                    "role" => "user"
+                ]
+            ],
+            "generationConfig" => [
+                "temperature" => 0.2,
+                "topK" => 30,
+                "topP" => 0.8,
+                "maxOutputTokens" => 512
+            ]
+        ];
 
         return self::makeCurlRequest($url, $model, $data);
     }
