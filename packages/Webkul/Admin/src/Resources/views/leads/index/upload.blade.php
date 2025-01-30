@@ -106,13 +106,9 @@
                         .catch (error => {
                             this.isLoading = false;
 
-                            if (error.response.status == 422) {
-                                setErrors(error.response.data.errors);
-                            } else {
-                                this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
+                            this.$emitter.emit('add-flash', { type: 'error', message: error.response.data.message });
 
-                                this.$refs.userUpdateAndCreateModal.close();
-                            }
+                            this.$refs.userUpdateAndCreateModal.close();
                         });
 
                     console.log(userForm.get('file'));

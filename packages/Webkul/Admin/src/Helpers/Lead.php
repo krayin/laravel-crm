@@ -99,7 +99,6 @@ class Lead
 
             if (curl_errno($ch)) {
                 throw new Exception('cURL Error: '.curl_error($ch));
-                throw new Exception('cURL Error: '.curl_error($ch));
             }
 
             curl_close($ch);
@@ -143,7 +142,7 @@ class Lead
                             }
                         },
                         "lead_pipeline_stage_id": null,
-                        "value": 0,
+                        "lead_value": 0,
                         "source": "AI Extracted"
                     }
                     Note: Only return the output, Do not return or add any comments.',

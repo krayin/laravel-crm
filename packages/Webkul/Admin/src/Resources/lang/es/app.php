@@ -1875,6 +1875,12 @@ return [
         'destroy-success'   => 'Lead eliminado exitosamente.',
         'destroy-failed'    => 'No se puede eliminar el lead.',
 
+        'file' => [
+            'invalid-format'   => 'Formato JSON inválido.',
+            'invalid-response' => 'Formato de respuesta de IA inválido.',
+            'not-found'        => 'Archivo no encontrado.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Crear Lead',

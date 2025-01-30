@@ -1876,6 +1876,12 @@ return [
         'destroy-success'   => 'سرنخ با موفقیت حذف شد.',
         'destroy-failed'    => 'سرنخ قابل حذف نیست.',
 
+        'file' => [
+            'invalid-format'   => 'فرمت JSON نامعتبر است.',
+            'invalid-response' => 'فرمت پاسخ AI نامعتبر است.',
+            'not-found'        => 'فایل یافت نشد.',
+        ],
+
         'index' => [
             'title'      => 'سرنخ‌ها',
             'create-btn' => 'ایجاد سرنخ',

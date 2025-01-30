@@ -1690,6 +1690,12 @@ return [
         'destroy-success'   => 'Lead excluído com sucesso.',
         'destroy-failed'    => 'Lead não pode ser excluído.',
 
+        'file' => [
+            'invalid-format'   => 'Formato JSON inválido.',
+            'invalid-response' => 'Formato de resposta AI inválido.',
+            'not-found'        => 'Arquivo não encontrado.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Criar Lead',

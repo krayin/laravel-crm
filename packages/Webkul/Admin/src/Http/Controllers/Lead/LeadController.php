@@ -7,6 +7,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -633,31 +634,32 @@ class LeadController extends Controller
      */
     public function createByAI(LeadForm $request)
     {
-        if ($pdfFile = $request->file('file')) {
-            $pdfPath = $pdfFile->getPathName();
-
-            $extractedData = Lead::extractDataFromPdf($pdfPath);
-
-            if (isset($extractedData['error'])) {
-                return response()->json([
-                    'status'  => 'error',
-                    'message' => $extractedData['error'],
-                ], 400);
-            }
-
-            $leadData = $this->mapAIDataToLead($extractedData);
-
-            $validatedData = app(LeadForm::class)->validated();
-
-            $finalData = array_merge($validatedData, $leadData);
-
-            return self::leadCreate($finalData);
+        if (! $pdfFile = $request->file('file')) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => trans('admin::app.leads.file.not-found'),
+            ], 400);
         }
 
-        return response()->json([
-            'status'  => 'error',
-            'message' => 'No file uploaded.',
-        ], 400);
+        $extractedData = Lead::extractDataFromPdf($pdfFile->getPathName());
+
+        if (! empty($extractedData['error'])) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $extractedData['error'],
+            ], 400);
+        }
+
+        $leadData = $this->mapAIDataToLead($extractedData);
+
+        if (! empty($leadData['status']) && $leadData['status'] === 'error') {
+            return response()->json([
+                'status'  => 'error',
+                'message' => $leadData['message'],
+            ], 400);
+        }
+
+        return self::leadCreate($leadData);
     }
 
     /**
@@ -667,37 +669,94 @@ class LeadController extends Controller
     {
         $content = $aiData['choices'][0]['message']['content'] ?? '';
 
-        $content = preg_replace('/<[^>]+>/', '', $content);
+        $content = strip_tags($content);
 
-        $jsonParts = preg_split('/(?=\{\s*"status"\s*:)/', $content);
+        preg_match('/\{.*\}/s', $content, $matches);
 
-        $finalData = json_decode($jsonParts[1]);
+        $jsonString = $matches[0] ?? null;
 
-        return [
-            'status'              => 1,
-            'title'               => $finalData->title ?? 'N/A',
-            'description'         => $finalData->description ?? null,
-            'lead_source_id'      => 1,
-            'lead_type_id'        => 1,
-            'lead_value'          => $finalData->lead_value ?? 0,
-            'person'              => [
-                'name'            => $finalData->person->name ?? 'Unknown',
-                'emails'          => [
-                    0 => [
-                        'value' => $finalData->person->emails->value ?? null,
-                        'label' => $finalData->person->emails->label ?? 'work',
+        if (! $jsonString) {
+            return [
+                'status'  => 'error',
+                'message' => trans('admin::app.leads.file.invalid-response'),
+            ];
+        }
+
+        $finalData = json_decode($jsonString);
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return [
+                'status'  => 'error',
+                'message' => trans('admin::app.leads.file.invalid-format'),
+            ];
+        }
+
+        try {
+            $this->validateLeadData($finalData);
+
+            $data = [
+                'status'              => 1,
+                'title'               => $finalData->title ?? 'N/A',
+                'description'         => $finalData->description ?? null,
+                'lead_source_id'      => 1,
+                'lead_type_id'        => 1,
+                'lead_value'          => $finalData->lead_value ?? 0,
+                'person'              => [
+                    'name'            => $finalData->person->name ?? 'Unknown',
+                    'emails'          => [
+                        [
+                            'value' => $finalData->person->emails->value ?? null,
+                            'label' => $finalData->person->emails->label ?? 'work',
+                        ],
                     ],
-                ],
-                'contact_numbers' => [
-                    0 => [
-                        'value' => $finalData->person->contact_numbers->value ?? null,
-                        'label' => $finalData->person->contact_numbers->label ?? 'work',
+                    'contact_numbers' => [
+                        [
+                            'value' => $finalData->person->contact_numbers->value ?? null,
+                            'label' => $finalData->person->contact_numbers->label ?? 'work',
+                        ],
                     ],
+                    'entity_type'     => 'persons',
                 ],
-                'entity_type'     => 'persons',
-            ],
-            'entity_type'         => 'leads',
-        ];
+                'entity_type'         => 'leads',
+            ];
+
+            $validatedData = app(LeadForm::class)->validated();
+
+            return array_merge($validatedData, $data);
+        } catch (\Exception $e) {
+            return [
+                'status'  => 'error',
+                'message' => $e->getMessage(),
+            ];
+        }
+    }
+
+    /**
+     * Validate the lead data.
+     */
+    private function validateLeadData($data)
+    {
+        $dataArray = json_decode(json_encode($data), true);
+
+        $validator = Validator::make($dataArray, [
+            'title'                         => 'required|string|max:255',
+            'lead_value'                    => 'required|numeric|min:0',
+            'person.name'                   => 'required|string|max:255',
+            'person.emails.value'           => 'required|email',
+            'person.contact_numbers.value'  => 'required|string|max:20',
+        ]);
+
+        if ($validator->fails()) {
+            throw new \Illuminate\Validation\ValidationException(
+                $validator,
+                response()->json([
+                    'status'  => 'error',
+                    'message' => $validator->errors()->getMessages(),
+                ], 400)
+            );
+        }
+
+        return $data;
     }
 
     /**
@@ -730,7 +789,7 @@ class LeadController extends Controller
         Event::dispatch('lead.create.after', $lead);
 
         return response()->json([
-            'message' => 'Lead successfully created.',
+            'message' => trans('admin::app.leads.create-success'),
         ], 200);
     }
 }

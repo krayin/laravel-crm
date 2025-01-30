@@ -1769,6 +1769,12 @@ return [
         'destroy-success'   => 'Xóa khách hàng tiềm năng thành công.',
         'destroy-failed'    => 'Không thể xóa khách hàng tiềm năng.',
 
+        'file' => [
+            'invalid-format'   => 'Định dạng JSON không hợp lệ.',
+            'invalid-response' => 'Định dạng phản hồi AI không hợp lệ.',
+            'not-found'        => 'Không tìm thấy tệp.',
+        ],
+
         'index' => [
             'title'      => 'Khách Hàng Tiềm Năng',
             'create-btn' => 'Tạo Khách Hàng Tiềm Năng',

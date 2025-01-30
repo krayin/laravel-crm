@@ -1876,6 +1876,12 @@ return [
         'destroy-success'   => 'Lead başarıyla silindi.',
         'destroy-failed'    => 'Lead silinemedi.',
 
+        'file' => [
+            'invalid-format'   => 'Geçersiz JSON formatı.',
+            'invalid-response' => 'Geçersiz AI yanıt formatı.',
+            'not-found'        => 'Dosya bulunamadı.',
+        ],
+
         'index' => [
             'title'      => 'Leads',
             'create-btn' => 'Lead Oluştur',
