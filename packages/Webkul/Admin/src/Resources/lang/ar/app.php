@@ -1942,6 +1942,15 @@ return [
                 'all-pipelines'       => 'كل المسارات',
                 'create-new-pipeline' => 'إنشاء مسار جديد',
             ],
+
+            'upload' => [
+                'create-lead' => 'إنشاء عميل محتمل باستخدام الذكاء الاصطناعي',
+                'file'        => 'تحميل ملف',
+                'file-info'   => 'يتم قبول ملفات بصيغة PDF فقط.',
+                'save-btn'    => 'حفظ',
+                'sample-pdf'  => 'نموذج PDF',
+                'upload-pdf'  => 'تحميل PDF',
+            ],
         ],
 
         'create' => [
@@ -2075,22 +2084,49 @@ return [
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'إعدادات البريد الإلكتروني',
+                'info'  => 'تكوين البريد الإلكتروني للتطبيق.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'إعدادات IMAP',
+                    'info'  => 'تكوين البريد الإلكتروني IMAP لتلقي الرسائل.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
-                        'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'title'         => 'حساب IMAP',
+                        'title-info'    => 'قم بتكوين إعدادات حساب IMAP هنا.',
+                        'host'          => 'المضيف',
+                        'port'          => 'المنفذ',
+                        'encryption'    => 'نوع التشفير',
+                        'validate-cert' => 'التحقق من شهادة SSL',
+                        'username'      => 'اسم مستخدم IMAP',
+                        'password'      => 'كلمة مرور IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'الذكاء الاصطناعي السحري',
+                'info'  => 'تكوين الذكاء الاصطناعي السحري للتطبيق.',
+
+                'settings' => [
+                    'api-domain'          => 'نطاق API لـ LLM',
+                    'api-domain-info'     => 'لـ Olama و Grow فقط، مثال: http://localhost:11434',
+                    'api-key'             => 'مفتاح API',
+                    'api-key-info'        => 'يرجى التأكد من استخدام مفتاح API فريد لكل نوع نموذج للحفاظ على الأداء الأمثل والأمان.',
+                    'enable'              => 'تمكين',
+                    'info'                => 'عزز تجربتك مع ميزة الذكاء الاصطناعي السحري عن طريق إدخال مفتاح API الحصري الخاص بك وتوضيح التكامل السهل. استحوذ على التحكم في بيانات اعتماد OpenAI الخاصة بك وقم بتخصيص الإعدادات وفقًا لاحتياجاتك الخاصة.',
+                    'pdf-generation'      => 'توليد PDF',
+                    'pdf-generation-info' => 'قم بتمكين ميزة توليد PDF لاستخراج البيانات تلقائيًا من ملفات PDF وتحويلها إلى تنسيق نصي. عزز إنتاجيتك وكفاءتك بتمكين هذه الميزة لتبسيط سير العمل الخاص بك.',
+                    'title'               => 'الإعدادات العامة',
+
+                    'models' => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'النماذج',
                     ],
                 ],
             ],

@@ -31,77 +31,72 @@ return [
         ],
     ], [
         'key'  => 'general.magic_ai',
-        'name' => 'Magic AI',
-        'info' => 'Magic AI',
+        'name' => 'admin::app.configuration.index.magic-ai.title',
+        'info' => 'admin::app.configuration.index.magic-ai.info',
         'icon' => 'icon-setting',
         'sort' => 3,
     ], [
         'key'    => 'general.magic_ai.settings',
-        'name'   => 'General Settings',
-        'info'   => 'Enhance your experience with the Magic AI feature by entering your exclusive API Key and indicating the pertinent Organization for effortless integration. Seize command over your OpenAI credentials and customize the settings according to your specific needs.',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.title',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.info',
         'sort'   => 1,
         'fields' => [
             [
                 'name'          => 'enable',
-                'title'         => 'Enabled',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
                 'type'          => 'boolean',
                 'channel_based' => true,
             ], [
                 'name'          => 'model',
-                'title'         => 'Models',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.models.title',
                 'type'          => 'select',
                 'channel_based' => true,
                 'depends'       => 'enable:1',
                 'options'       => [
                     [
-                        'title' => 'GPT 4O',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o',
                         'value' => 'gpt-4o',
                     ], [
-                        'title' => 'GPT 4O Mini',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gpt-4o-mini',
                         'value' => 'gpt-4o-mini',
                     ], [
-                        'title' => 'Gemini 1.5 Flash',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.gemini-flash',
                         'value' => 'gemini-1.5-flash',
                     ], [
-                        'title' => 'Deepseek r1 8b',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.deepseek-r1',
                         'value' => 'deepseek-r1:8b',
                     ], [
-                        'title' => 'Ollama (llama3.2:latest)',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.ollama',
                         'value' => 'llama3.2:latest',
                     ], [
-                        'title' => 'Llama 3.3 (Groq)',
+                        'title' => 'admin::app.configuration.index.magic-ai.settings.models.llama',
                         'value' => 'llama-3.3-70b-versatile',
                     ],
                 ],
             ], [
                 'name'          => 'api_key',
-                'title'         => 'API Key',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-key',
                 'type'          => 'password',
                 'depends'       => 'enable:1,model:gpt-4o,model:gpt-4o-mini,model:gemini-1.5-flash,model:llama-3.3-70b-versatile',
                 'validation'    => 'required_if:enable,1',
-                'info'          => 'Please ensure that you use a unique API key for each model type to maintain optimal performance and security.',
-            ], [
-                'name'          => 'organization',
-                'title'         => 'Organization',
-                'depends'       => 'enable:1',
-                'type'          => 'text',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-key-info',
             ], [
                 'name'          => 'api_domain',
-                'title'         => 'LLM API Domain',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.api-domain',
                 'type'          => 'text',
-                'info'          => 'For Olama And Grow only, Exp:- http://localhost:11434',
+                'info'          => 'admin::app.configuration.index.magic-ai.settings.api-domain-info',
                 'depends'       => 'enable:1',
             ],
         ],
     ], [
         'key'    => 'general.magic_ai.pdf_generation',
-        'name'   => 'PDF Generation',
-        'info'   => 'Enable the PDF Generation feature to automatically extract data from PDF files and convert them into text format. Enhance your productivity and efficiency by enabling this feature to streamline your workflow.',
+        'name'   => 'admin::app.configuration.index.magic-ai.settings.pdf-generation',
+        'info'   => 'admin::app.configuration.index.magic-ai.settings.pdf-generation-info',
         'sort'   => 1,
         'fields' => [
             [
                 'name'          => 'enabled',
-                'title'         => 'Enabled',
+                'title'         => 'admin::app.configuration.index.magic-ai.settings.enable',
                 'type'          => 'boolean',
             ],
         ],

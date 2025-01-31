@@ -1,6 +1,6 @@
 <v-upload>
     <button type="button" class="secondary-button">
-        @lang('Upload PDF')
+        @lang('admin::app.leads.index.upload.upload-pdf')
     </button>
 </v-upload>
 
@@ -12,7 +12,7 @@
                 class="secondary-button"
                 @click="$refs.userUpdateAndCreateModal.open()"
             >
-                @lang('Upload PDF')
+                @lang('admin::app.leads.index.upload.upload-pdf')
             </button>
 
             <x-admin::form
@@ -29,7 +29,7 @@
                         <!-- Modal Header -->
                         <x-slot:header>
                             <p class="text-lg font-bold text-gray-800 dark:text-white">
-                                @lang('Create Lead Using AI')
+                                @lang('admin::app.leads.index.upload.create-lead')
                             </p>
                         </x-slot>
 
@@ -37,7 +37,7 @@
                         <x-slot:content>
                             <x-admin::form.control-group>
                                 <x-admin::form.control-group.label class="required">
-                                    @lang('admin::app.settings.users.index.create.name')
+                                    @lang('admin::app.leads.index.upload.file')
                                 </x-admin::form.control-group.label>
 
                                 <x-admin::form.control-group.control
@@ -45,14 +45,25 @@
                                     id="file"
                                     name="file"
                                     rules="required|mimes:pdf"
-                                    :label="trans('admin::app.components.activities.actions.file.file')"
+                                    :label="trans('admin::app.leads.index.upload.file')"
                                     ::disabled="isLoading"
                                 />
 
-                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">@lang('Only PDF format files are accepted.')</p>
+                                <p class="mt-1 text-xs text-gray-600 dark:text-gray-300">@lang('admin::app.leads.index.upload.file-info')</p>
 
                                 <x-admin::form.control-group.error control-name="file" />
                             </x-admin::form.control-group>
+
+                            <!-- Sample Downloadable file -->
+                            <a
+                                href="{{ Storage::url('/lead-samples/sample.pdf') }}"
+                                target="_blank"
+                                id="source-sample"
+                                class="cursor-pointer text-sm text-blue-600 transition-all hover:underline"
+                                download
+                            >
+                                @lang('admin::app.leads.index.upload.sample-pdf')
+                            </a>
                         </x-slot>
 
                         <!-- Modal Footer -->
@@ -60,7 +71,7 @@
                             <x-admin::button
                                 button-type="submit"
                                 class="primary-button justify-center"
-                                :title="trans('admin::app.settings.users.index.create.save-btn')"
+                                :title="trans('admin::app.leads.index.upload.save-btn')"
                                 ::loading="isLoading"
                                 ::disabled="isLoading"
                             />

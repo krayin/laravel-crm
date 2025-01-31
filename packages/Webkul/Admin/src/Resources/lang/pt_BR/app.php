@@ -1760,6 +1760,15 @@ return [
                 'all-pipelines'       => 'Todos os Pipelines',
                 'create-new-pipeline' => 'Criar Novo Pipeline',
             ],
+
+            'upload' => [
+                'create-lead' => 'Criar Lead Usando AI',
+                'file'        => 'Upload de Arquivo',
+                'file-info'   => 'Apenas arquivos em formato PDF são aceitos.',
+                'save-btn'    => 'Salvar',
+                'sample-pdf'  => 'PDF de Exemplo',
+                'upload-pdf'  => 'Carregar PDF',
+            ],
         ],
 
         'create' => [
@@ -1874,8 +1883,8 @@ return [
         'index' => [
             'back'         => 'Voltar',
             'save-btn'     => 'Salvar Configuração',
-            'save-success' => 'Configuração salva com sucesso.',
-            'search'       => 'Buscar',
+            'save-success' => 'Configuração Salva com Sucesso.',
+            'search'       => 'Pesquisar',
             'title'        => 'Configuração',
 
             'general'  => [
@@ -1886,8 +1895,56 @@ return [
                     'title'           => 'Geral',
                     'info'            => 'Atualize suas configurações gerais aqui.',
                     'locale-settings' => [
-                        'title'       => 'Configurações de Localização',
-                        'title-info'  => 'Define o idioma usado na interface do usuário, como Inglês (en), Francês (fr) ou Japonês (ja).',
+                        'title'       => 'Configurações de Localidade',
+                        'title-info'  => 'Define o idioma usado na interface do usuário, como Árabe (ar), Inglês (en), Espanhol (es), Persa (fa) e Turco (tr).',
+                    ],
+                ],
+            ],
+
+            'email' => [
+                'title' => 'Configurações de Email',
+                'info'  => 'Configuração de email para a aplicação.',
+
+                'imap' => [
+                    'title' => 'Configurações IMAP',
+                    'info'  => 'Configuração de email IMAP para receber emails.',
+
+                    'account' => [
+                        'title'         => 'Conta IMAP',
+                        'title-info'    => 'Configure as configurações da sua conta IMAP aqui.',
+                        'host'          => 'Host',
+                        'port'          => 'Porta',
+                        'encryption'    => 'Tipo de Criptografia',
+                        'validate-cert' => 'Validar Certificado SSL',
+                        'username'      => 'Nome de Usuário IMAP',
+                        'password'      => 'Senha IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Configuração do Magic AI para a aplicação.',
+
+                'settings' => [
+                    'api-domain'          => 'Domínio da API LLM',
+                    'api-domain-info'     => 'Para Olama e Grow apenas, Ex: http://localhost:11434',
+                    'api-key'             => 'Chave API',
+                    'api-key-info'        => 'Certifique-se de usar uma chave API exclusiva para cada tipo de modelo para manter o desempenho e a segurança ideais.',
+                    'enable'              => 'Habilitar',
+                    'info'                => 'Melhore sua experiência com o recurso Magic AI inserindo sua Chave API exclusiva e indicando a integração sem esforço. Assuma o controle sobre suas credenciais OpenAI e personalize as configurações de acordo com suas necessidades específicas.',
+                    'pdf-generation'      => 'Geração de PDF',
+                    'pdf-generation-info' => 'Habilite o recurso de Geração de PDF para extrair automaticamente dados de arquivos PDF e convertê-los em formato de texto. Aumente sua produtividade e eficiência habilitando este recurso para simplificar seu fluxo de trabalho.',
+                    'title'               => 'Configurações Gerais',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modelos',
                     ],
                 ],
             ],

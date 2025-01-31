@@ -1946,6 +1946,15 @@ return [
                 'all-pipelines'       => 'Tüm Boru Hatları',
                 'create-new-pipeline' => 'Yeni Boru Hattı Oluştur',
             ],
+
+            'upload' => [
+                'create-lead' => 'AI Kullanarak Lead Oluştur',
+                'file'        => 'Dosya Yükle',
+                'file-info'   => 'Sadece PDF formatındaki dosyalar kabul edilir.',
+                'save-btn'    => 'Kaydet',
+                'sample-pdf'  => 'Örnek PDF',
+                'upload-pdf'  => 'PDF Yükle',
+            ],
         ],
 
         'create' => [
@@ -2095,6 +2104,33 @@ return [
                         'validate-cert' => 'Validate SSL Certificate',
                         'username'      => 'IMAP Username',
                         'password'      => 'IMAP Password',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Sihirli AI',
+                'info'  => 'Uygulama için Sihirli AI yapılandırması.',
+
+                'settings' => [
+                    'api-domain'          => 'LLM API Alanı',
+                    'api-domain-info'     => 'Sadece Olama ve Grow için, Ör: http://localhost:11434',
+                    'api-key'             => 'API Anahtarı',
+                    'api-key-info'        => 'Optimum performans ve güvenliği sağlamak için her model türü için benzersiz bir API anahtarı kullanmayı unutmayın.',
+                    'enable'              => 'Etkinleştir',
+                    'info'                => 'Benzersiz API Anahtarınızı girerek ve sorunsuz entegrasyonu belirterek Sihirli AI özelliği ile deneyiminizi geliştirin. OpenAI kimlik bilgilerinizi kontrol altına alın ve özel ihtiyaçlarınıza göre ayarları özelleştirin.',
+                    'pdf-generation'      => 'PDF Oluşturma',
+                    'pdf-generation-info' => 'PDF dosyalarından otomatik olarak veri çıkarmak ve bunları metin formatına dönüştürmek için PDF Oluşturma özelliğini etkinleştirin. Bu özelliği etkinleştirerek iş akışınızı basitleştirin ve verimliliğinizi artırın.',
+                    'title'               => 'Genel Ayarlar',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modeller',
                     ],
                 ],
             ],

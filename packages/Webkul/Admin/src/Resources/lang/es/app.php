@@ -1945,6 +1945,15 @@ return [
                 'all-pipelines'       => 'Todos los Canales',
                 'create-new-pipeline' => 'Crear Nuevo Canal',
             ],
+
+            'upload' => [
+                'create-lead' => 'Crear Lead Usando IA',
+                'file'        => 'Subir Archivo',
+                'file-info'   => 'Solo se aceptan archivos en formato PDF.',
+                'save-btn'    => 'Guardar',
+                'sample-pdf'  => 'PDF de Muestra',
+                'upload-pdf'  => 'Subir PDF',
+            ],
         ],
 
         'create' => [
@@ -2078,22 +2087,49 @@ return [
             ],
 
             'email' => [
-                'title' => 'Email Settings',
-                'info'  => 'Email configuration for the application.',
+                'title' => 'Configuración de Correo Electrónico',
+                'info'  => 'Configuración de correo electrónico para la aplicación.',
 
                 'imap' => [
-                    'title' => 'IMAP Settings',
-                    'info'  => 'IMAP email configuration for receiving emails.',
+                    'title' => 'Configuración IMAP',
+                    'info'  => 'Configuración de correo electrónico IMAP para recibir correos electrónicos.',
 
                     'account' => [
-                        'title'         => 'IMAP Account',
-                        'title-info'    => 'Configure your IMAP account settings here.',
+                        'title'         => 'Cuenta IMAP',
+                        'title-info'    => 'Configura los ajustes de tu cuenta IMAP aquí.',
                         'host'          => 'Host',
-                        'port'          => 'Port',
-                        'encryption'    => 'Encryption Type',
-                        'validate-cert' => 'Validate SSL Certificate',
-                        'username'      => 'IMAP Username',
-                        'password'      => 'IMAP Password',
+                        'port'          => 'Puerto',
+                        'encryption'    => 'Tipo de Cifrado',
+                        'validate-cert' => 'Validar Certificado SSL',
+                        'username'      => 'Nombre de Usuario IMAP',
+                        'password'      => 'Contraseña IMAP',
+                    ],
+                ],
+            ],
+
+            'magic-ai' => [
+                'title' => 'Magic AI',
+                'info'  => 'Configuración de Magic AI para la aplicación.',
+
+                'settings' => [
+                    'api-domain'          => 'Dominio de la API de LLM',
+                    'api-domain-info'     => 'Solo para Olama y Grow, Ejemplo: http://localhost:11434',
+                    'api-key'             => 'Clave API',
+                    'api-key-info'        => 'Asegúrese de usar una clave API única para cada tipo de modelo para mantener un rendimiento y seguridad óptimos.',
+                    'enable'              => 'Habilitar',
+                    'info'                => 'Mejore su experiencia con la función Magic AI ingresando su clave API exclusiva e indicando la integración sin esfuerzo. Tome el control de sus credenciales de OpenAI y personalice la configuración según sus necesidades específicas.',
+                    'pdf-generation'      => 'Generación de PDF',
+                    'pdf-generation-info' => 'Habilite la función de Generación de PDF para extraer automáticamente datos de archivos PDF y convertirlos en formato de texto. Mejore su productividad y eficiencia habilitando esta función para optimizar su flujo de trabajo.',
+                    'title'               => 'Configuraciones Generales',
+
+                    'models'     => [
+                        'deepseek-r1'  => 'DeepSeek-R1 8db',
+                        'gemini-flash' => 'Gemini-1.5 Flash',
+                        'gpt-4o'       => 'GPT-4.0',
+                        'gpt-4o-mini'  => 'GPT-4.0 mini',
+                        'llama'        => 'Llama 3.3 (Groq)',
+                        'ollama'       => 'Ollama (llama3.2:latest)',
+                        'title'        => 'Modelos',
                     ],
                 ],
             ],
