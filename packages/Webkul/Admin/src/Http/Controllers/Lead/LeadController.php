@@ -7,7 +7,6 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use Illuminate\Support\Facades\Event;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Prettus\Repository\Criteria\RequestCriteria;
 use Webkul\Admin\DataGrids\Lead\LeadDataGrid;
@@ -20,6 +19,7 @@ use Webkul\Admin\Http\Resources\StageResource;
 use Webkul\Attribute\Repositories\AttributeRepository;
 use Webkul\Contact\Repositories\PersonRepository;
 use Webkul\DataGrid\Enums\DateRangeOptionEnum;
+use Webkul\Lead\Helpers\Lead;
 use Webkul\Lead\Repositories\LeadRepository;
 use Webkul\Lead\Repositories\PipelineRepository;
 use Webkul\Lead\Repositories\ProductRepository;
@@ -29,6 +29,7 @@ use Webkul\Lead\Repositories\TypeRepository;
 use Webkul\Lead\Services\LeadService;
 use Webkul\Tag\Repositories\TagRepository;
 use Webkul\User\Repositories\UserRepository;
+
 
 class LeadController extends Controller
 {
@@ -650,7 +651,7 @@ class LeadController extends Controller
             ], 400);
         }
 
-        $leadData = $this->mapAIDataToLead($extractedData);
+        $leadData = Lead::mapAIDataToLead($extractedData);
 
         if (
             ! empty($leadData['status'])
@@ -663,109 +664,6 @@ class LeadController extends Controller
         }
 
         return self::leadCreate($leadData);
-    }
-
-    /**
-     * Mapped the receive Extracted AI data.
-     */
-    private function mapAIDataToLead($aiData)
-    {
-        $model = core()->getConfigData('general.magic_ai.settings.model');
-
-        if (str_contains($model, 'gemini-1.5-flash')) {
-            $content = $aiData['candidates'][0]['content']['parts'][0]['text'] ?? '';
-        } else {
-            $content = $aiData['choices'][0]['message']['content'] ?? '';
-        }
-
-        $content = strip_tags($content);
-
-        preg_match('/\{.*\}/s', $content, $matches);
-
-        $jsonString = $matches[0] ?? null;
-
-        if (! $jsonString) {
-            return [
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.file.invalid-response'),
-            ];
-        }
-
-        $finalData = json_decode($jsonString);
-
-        if (json_last_error() !== JSON_ERROR_NONE) {
-            return [
-                'status'  => 'error',
-                'message' => trans('admin::app.leads.file.invalid-format'),
-            ];
-        }
-
-        try {
-            $this->validateLeadData($finalData);
-
-            $data = [
-                'status'              => 1,
-                'title'               => $finalData->title ?? 'N/A',
-                'description'         => $finalData->description ?? null,
-                'lead_source_id'      => 1,
-                'lead_type_id'        => 1,
-                'lead_value'          => $finalData->lead_value ?? 0,
-                'person'              => [
-                    'name'            => $finalData->person->name ?? 'Unknown',
-                    'emails'          => [
-                        [
-                            'value' => $finalData->person->emails->value ?? null,
-                            'label' => $finalData->person->emails->label ?? 'work',
-                        ],
-                    ],
-                    'contact_numbers' => [
-                        [
-                            'value' => $finalData->person->contact_numbers->value ?? null,
-                            'label' => $finalData->person->contact_numbers->label ?? 'work',
-                        ],
-                    ],
-                    'entity_type'     => 'persons',
-                ],
-                'entity_type'         => 'leads',
-            ];
-
-            $validatedData = app(LeadForm::class)->validated();
-
-            return array_merge($validatedData, $data);
-        } catch (\Exception $e) {
-            return [
-                'status'  => 'error',
-                'message' => $e->getMessage(),
-            ];
-        }
-    }
-
-    /**
-     * Validate the lead data.
-     */
-    private function validateLeadData($data)
-    {
-        $dataArray = json_decode(json_encode($data), true);
-
-        $validator = Validator::make($dataArray, [
-            'title'                         => 'required|string|max:255',
-            'lead_value'                    => 'required|numeric|min:0',
-            'person.name'                   => 'required|string|max:255',
-            'person.emails.value'           => 'required|email',
-            'person.contact_numbers.value'  => 'required|string|max:20',
-        ]);
-
-        if ($validator->fails()) {
-            throw new \Illuminate\Validation\ValidationException(
-                $validator,
-                response()->json([
-                    'status'  => 'error',
-                    'message' => $validator->errors()->getMessages(),
-                ], 400)
-            );
-        }
-
-        return $data;
     }
 
     /**

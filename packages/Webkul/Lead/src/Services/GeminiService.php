@@ -13,42 +13,24 @@ class GeminiService
     {
         $url = "https://generativelanguage.googleapis.com/v1beta/models/{$model}:generateContent?key={$apiKey}";
 
-        return self::curlRequest($url, self::prepareRequestData($prompt));
+        return self::sendHttpRequest($url, self::prepareLeadExtractionRequestData($prompt));
     }
 
     /**
      * Request data to AI using Curl API.
      */
-    private static function curlRequest($url, array $data)
+    private static function sendHttpRequest($url, array $data)
     {
         try {
-            $ch = curl_init($url);
+            $response = \Http::withHeaders([
+                'Content-Type' => 'application/json',
+            ])->post($url, $data);
 
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST           => true,
-                CURLOPT_POSTFIELDS     => json_encode($data),
-                CURLOPT_HTTPHEADER     => [
-                    'Content-Type: application/json',
-                ],
-            ]);
-
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if (curl_errno($ch)) {
-                throw new Exception('cURL Error: '.curl_error($ch));
+            if ($response->failed()) {
+                throw new Exception($response->json('error.message'));
             }
 
-            curl_close($ch);
-
-            $decodedResponse = json_decode($response, true);
-
-            if ($httpCode !== 200 || isset($decodedResponse['error'])) {
-                throw new Exception('LLM API Error: '.($decodedResponse['error']['message'] ?? 'Unknown error'));
-            }
-
-            return $decodedResponse;
+            return $response->json();
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -57,7 +39,7 @@ class GeminiService
     /**
      * Prepare request data for AI.
      */
-    private static function prepareRequestData($prompt)
+    private static function prepareLeadExtractionRequestData($prompt)
     {
         return [
             'contents' => [

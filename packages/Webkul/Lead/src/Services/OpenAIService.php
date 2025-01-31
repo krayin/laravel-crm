@@ -3,64 +3,36 @@
 namespace Webkul\Lead\Services;
 
 use Exception;
+use Webkul\Lead\Helpers\Lead;
 
 class OpenAIService
 {
-    const OPEN_AI_MODEL_URL = 'https://api.openai.com/v1/chat/completions';
-
     /**
      * Send a request to the LLM API.
      */
     public static function ask($prompt, $model)
     {
-        $apiDomain = core()->getConfigData('general.magic_ai.settings.api_domain');
+        $apiUrl = self::getApiUrlForModel($model);
 
-        $apiUrlMap = [
-            'gpt-4o'          => self::OPEN_AI_MODEL_URL,
-            'gpt-4o-mini'     => self::OPEN_AI_MODEL_URL,
-            'llama3.2:latest' => "$apiDomain/v1/chat/completions",
-            'deepseek-r1:8b'  => "$apiDomain/v1/chat/completions",
-        ];
-
-        $apiUrl = $apiUrlMap[$model] ?? 'https://api.groq.com/openai/v1/chat/completions';
-
-        return self::curlRequest($apiUrl, self::prepareRequestData($model, $prompt));
+        return self::sendHttpRequest($apiUrl, self::prepareLeadExtractionRequestData($model, $prompt));
     }
 
     /**
      * Request data to AI using Curl API.
      */
-    private static function curlRequest($url, array $data)
+    private static function sendHttpRequest($url, array $data)
     {
         try {
-            $ch = curl_init($url);
+            $response = \Http::withHeaders([
+                'Content-Type'  => 'application/json',
+                'Authorization' => 'Bearer '.core()->getConfigData('general.magic_ai.settings.api_key'),
+            ])->post($url, $data);
 
-            curl_setopt_array($ch, [
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_POST           => true,
-                CURLOPT_POSTFIELDS     => json_encode($data),
-                CURLOPT_HTTPHEADER     => [
-                    'Content-Type: application/json',
-                    'Authorization: Bearer '.core()->getConfigData('general.magic_ai.settings.api_key'),
-                ],
-            ]);
-
-            $response = curl_exec($ch);
-            $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-
-            if (curl_errno($ch)) {
-                throw new Exception('cURL Error: '.curl_error($ch));
+            if ($response->failed()) {
+                throw new Exception($response->json('error.message'));
             }
 
-            curl_close($ch);
-
-            $decodedResponse = json_decode($response, true);
-
-            if ($httpCode !== 200 || isset($decodedResponse['error'])) {
-                throw new Exception('LLM API Error: '.($decodedResponse['error']['message'] ?? 'Unknown error'));
-            }
-
-            return $decodedResponse;
+            return $response->json();
         } catch (Exception $e) {
             return ['error' => $e->getMessage()];
         }
@@ -69,7 +41,7 @@ class OpenAIService
     /**
      * Prepare request data for AI.
      */
-    private static function prepareRequestData($model, $prompt)
+    private static function prepareLeadExtractionRequestData($model, $prompt)
     {
         return [
             'model'    => $model,
@@ -101,5 +73,22 @@ class OpenAIService
                 ['role' => 'user', 'content' => "PDF:\n$prompt"],
             ],
         ];
+    }
+
+    /**
+     * Get API Url for the model.
+     */
+    private static function getApiUrlForModel($model)
+    {
+        $apiDomain = core()->getConfigData('general.magic_ai.settings.api_domain');
+
+        $apiUrlMap = [
+            'gpt-4o'          => Lead::OPEN_AI_MODEL_URL,
+            'gpt-4o-mini'     => Lead::OPEN_AI_MODEL_URL,
+            'llama3.2:latest' => "$apiDomain/v1/chat/completions",
+            'deepseek-r1:8b'  => "$apiDomain/v1/chat/completions",
+        ];
+
+        return $apiUrlMap[$model] ?? 'https://api.groq.com/openai/v1/chat/completions';
     }
 }
